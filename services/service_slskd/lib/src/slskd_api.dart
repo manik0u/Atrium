@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:core_models/core_models.dart';
 import 'package:dio/dio.dart';
 
 import 'models/slskd_models.dart';
@@ -54,7 +55,7 @@ class SlskdApi {
 
   /// Disconnects from the Soulseek server.
   Future<void> disconnectServer({
-    String message = "Client déconnecté d'Atrium",
+    String message = S.t('clientDisconnectedFromAtrium'),
   }) async {
     await _dio.delete<void>(
       'api/v0/server',
@@ -152,7 +153,7 @@ class SlskdApi {
   /// Deletes a subdirectory within the downloads directory.
   Future<void> deleteDownloadDirectory(String subdirectory) async {
     if (subdirectory.trim().isEmpty) {
-      throw ArgumentError.value(subdirectory, 'subdirectory', 'Le chemin du répertoire ne peut pas être vide');
+      throw ArgumentError.value(subdirectory, 'subdirectory', S.t('directoryPathCannotBeEmpty'));
     }
     final b64 = Uri.encodeComponent(base64.encode(utf8.encode(subdirectory)));
     await _dio.delete<void>('api/v0/files/downloads/directories/$b64');
@@ -161,7 +162,7 @@ class SlskdApi {
   /// Deletes a file within the downloads directory.
   Future<void> deleteDownloadFile(String fileName) async {
     if (fileName.trim().isEmpty) {
-      throw ArgumentError.value(fileName, 'fileName', 'Le nom du fichier ne peut pas être vide');
+      throw ArgumentError.value(fileName, 'fileName', S.t('fileNameCannotBeEmpty'));
     }
     final b64 = Uri.encodeComponent(base64.encode(utf8.encode(fileName)));
     await _dio.delete<void>('api/v0/files/downloads/files/$b64');
@@ -200,7 +201,7 @@ class SlskdApi {
   /// Deletes a subdirectory within the incomplete directory.
   Future<void> deleteIncompleteDirectory(String subdirectory) async {
     if (subdirectory.trim().isEmpty) {
-      throw ArgumentError.value(subdirectory, 'subdirectory', 'Le chemin du répertoire ne peut pas être vide');
+      throw ArgumentError.value(subdirectory, 'subdirectory', S.t('directoryPathCannotBeEmpty'));
     }
     final b64 = Uri.encodeComponent(base64.encode(utf8.encode(subdirectory)));
     await _dio.delete<void>('api/v0/files/incomplete/directories/$b64');
@@ -209,7 +210,7 @@ class SlskdApi {
   /// Deletes a file within the incomplete directory.
   Future<void> deleteIncompleteFile(String fileName) async {
     if (fileName.trim().isEmpty) {
-      throw ArgumentError.value(fileName, 'fileName', 'Le nom du fichier ne peut pas être vide');
+      throw ArgumentError.value(fileName, 'fileName', S.t('fileNameCannotBeEmpty'));
     }
     final b64 = Uri.encodeComponent(base64.encode(utf8.encode(fileName)));
     await _dio.delete<void>('api/v0/files/incomplete/files/$b64');

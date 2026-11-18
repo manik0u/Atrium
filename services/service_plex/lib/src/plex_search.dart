@@ -41,7 +41,7 @@ class PlexSearchDelegate extends SearchDelegate<void> {
   @override
   Widget buildSuggestions(BuildContext context) {
     if (query.trim().isEmpty) {
-      return const Center(child: Text('Rechercher un film ou une série.'));
+      return Center(child: Text(S.t('searchForMoviesOrShows')));
     }
     return _SearchResults(instance: instance, query: query);
   }
@@ -60,7 +60,7 @@ class _SearchResults extends ConsumerWidget {
       return const Center(child: ExpressiveProgressIndicator());
     }
     if (query.trim().isEmpty) {
-      return const Center(child: Text('Rechercher un film ou une série.'));
+      return Center(child: Text(S.t('searchForMoviesOrShows')));
     }
 
     return FutureBuilder<List<PlexMetadata>>(
@@ -74,16 +74,16 @@ class _SearchResults extends ConsumerWidget {
         }
         if (snapshot.hasError) {
           return ErrorView(
-            title: 'Échec de la recherche',
+            title: S.t('searchFailed'),
             message: '${snapshot.error}',
           );
         }
         final List<PlexMetadata> list = snapshot.data ?? <PlexMetadata>[];
         if (list.isEmpty) {
-          return const EmptyView(
+          return EmptyView(
             icon: Icons.search_off,
-            title: 'Aucun résultat',
-            message: 'Aucun élément ne correspond à votre recherche.',
+            title: S.t('noResults'),
+            message: S.t('noItemsFoundMatchingYourSearch'),
           );
         }
         return MasonryGridView.extent(

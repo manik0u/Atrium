@@ -63,7 +63,7 @@ class _MediaTabState extends ConsumerState<MediaTab> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.menu),
-          tooltip: 'Ouvrir le menu',
+          tooltip: S.t('openMenu'),
           onPressed: () => Scaffold.of(context).openDrawer(),
         ),
         title: Column(
@@ -78,7 +78,7 @@ class _MediaTabState extends ConsumerState<MediaTab> {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              'Media',
+              S.t('media'),
               style: theme.textTheme.bodySmall?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
@@ -87,24 +87,24 @@ class _MediaTabState extends ConsumerState<MediaTab> {
         ),
       ),
       body: EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing library catalog...',
-          processingText: 'Refreshing library catalog...',
-          processedText: 'Updated',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshingLibraryCatalog'),
+          processingText: S.t('refreshingLibraryCatalog'),
+          processedText: S.t('updated'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
-        footer: const ClassicFooter(
+        footer: ClassicFooter(
           infiniteOffset: 200.0,
-          dragText: 'Pull to load more',
-          armedText: 'Release to load more',
-          readyText: 'Loading more media...',
-          processingText: 'Loading more media...',
-          processedText: 'Loaded',
+          dragText: S.t('pullToLoadMore'),
+          armedText: S.t('releaseToLoadMore'),
+          readyText: S.t('loadingMoreMedia'),
+          processingText: S.t('loadingMoreMedia'),
+          processedText: S.t('loaded'),
           failedText: 'Failed to load',
-          noMoreText: 'Tous les médias sont chargés',
+          noMoreText: S.t('allMediaLoaded'),
         ),
         onRefresh: _refreshAll,
         onLoad: () async {

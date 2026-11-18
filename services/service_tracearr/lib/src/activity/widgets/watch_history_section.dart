@@ -68,18 +68,18 @@ class _WatchHistorySectionState extends State<WatchHistorySection> {
                     visualDensity: VisualDensity.compact,
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  segments: const [
+                  segments: [
                     ButtonSegment(
                       value: HistoryFilter.all,
-                      label: Text('Tous', style: TextStyle(fontSize: 11)),
+                      label: Text(S.t('all'), style: TextStyle(fontSize: 11)),
                     ),
                     ButtonSegment(
                       value: HistoryFilter.completed,
-                      label: Text('Terminé', style: TextStyle(fontSize: 11)),
+                      label: Text(S.t('done'), style: TextStyle(fontSize: 11)),
                     ),
                     ButtonSegment(
                       value: HistoryFilter.partial,
-                      label: Text('Partiel', style: TextStyle(fontSize: 11)),
+                      label: Text(S.t('partial'), style: TextStyle(fontSize: 11)),
                     ),
                   ],
                   selected: {_selectedFilter},
@@ -124,7 +124,7 @@ class _WatchHistorySectionState extends State<WatchHistorySection> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.refresh),
-                      tooltip: 'Réessayer',
+                      tooltip: S.t('retry'),
                       onPressed: notifier.refresh,
                     ),
                   ],
@@ -144,7 +144,7 @@ class _WatchHistorySectionState extends State<WatchHistorySection> {
                 child: Center(
                   child: Text(
                     _selectedFilter == HistoryFilter.all
-                        ? 'Aucun historique de visionnage enregistré pour le moment.'
+                        ? S.t('noWatchHistoryRecordedYet')
                         : 'No ${_selectedFilter.name} history matches filter.',
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant,

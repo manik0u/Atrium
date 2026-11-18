@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'transmission_torrent.freezed.dart';
@@ -5,14 +6,14 @@ part 'transmission_torrent.g.dart';
 
 /// Transmission's `status` field, which arrives as a bare integer.
 enum TransmissionStatus {
-  stopped(0, 'Paused'),
-  checkWait(1, 'En file pour vérification'),
+  stopped(0, S.t('paused')),
+  checkWait(1, S.t('queuedForVerification')),
   checking(2, 'Verifying local data'),
-  downloadWait(3, 'En file pour téléchargement'),
-  downloading(4, 'Downloading'),
-  seedWait(5, 'En file pour seed'),
-  seeding(6, 'Seeding'),
-  unknown(-1, 'Unknown');
+  downloadWait(3, S.t('queuedForDownload')),
+  downloading(4, S.t('downloading')),
+  seedWait(5, S.t('queuedForSeeding')),
+  seeding(6, S.t('seeding')),
+  unknown(-1, S.t('unknown'));
 
   const TransmissionStatus(this.code, this.label);
 
@@ -172,7 +173,7 @@ abstract class TransmissionTorrent with _$TransmissionTorrent {
   /// A short line describing what the torrent is doing, folding in the
   /// stalled and error cases that the bare status code cannot express.
   String get statusLabel {
-    if (hasError) return 'Error';
+    if (hasError) return S.t('error');
     if (status == TransmissionStatus.checking) {
       return 'Verifying ${(recheckProgress * 100).toStringAsFixed(0)}%';
     }

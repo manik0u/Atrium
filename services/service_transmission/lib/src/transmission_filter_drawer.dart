@@ -88,14 +88,14 @@ class TransmissionFilterDrawer extends ConsumerWidget {
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    child: Text('Filtres', style: theme.textTheme.titleMedium),
+                    child: Text(S.t('filters'), style: theme.textTheme.titleMedium),
                   ),
                   if (filter.isActive)
                     TextButton(
                       onPressed: () => ref
                           .read(transmissionFilterProvider(instance).notifier)
                           .state = const TransmissionFilter(),
-                      child: const Text('Effacer'),
+                      child: Text(S.t('clear')),
                     ),
                 ],
               ),
@@ -134,7 +134,7 @@ class TransmissionFilterDrawer extends ConsumerWidget {
                   ],
                 ),
               ),
-            section('Status', <Widget>[
+            section(S.t('status'), <Widget>[
               for (final TransmissionFilterMode m
                   in TransmissionFilterMode.values)
                 // Private and Public say nothing on an all-public list, so
@@ -153,9 +153,9 @@ class TransmissionFilterDrawer extends ConsumerWidget {
                   ),
             ]),
             if (trackers.isNotEmpty)
-              section('Trackers', <Widget>[
+              section(S.t('trackers'), <Widget>[
                 tile(
-                  title: 'Tous les trackers',
+                  title: S.t('allTrackers'),
                   count: countFor(filter.copyWith(tracker: '')),
                   icon: Icons.dns,
                   selected: filter.tracker.isEmpty,
@@ -177,7 +177,7 @@ class TransmissionFilterDrawer extends ConsumerWidget {
             if (labels.isNotEmpty)
               section('Labels', <Widget>[
                 tile(
-                  title: 'Tous les labels',
+                  title: S.t('allLabels'),
                   count: countFor(filter.copyWith(label: '')),
                   icon: Icons.sell,
                   selected: filter.label.isEmpty,

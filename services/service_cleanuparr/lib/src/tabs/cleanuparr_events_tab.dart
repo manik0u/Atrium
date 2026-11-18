@@ -29,10 +29,10 @@ class _CleanuparrEventsTabState extends ConsumerState<CleanuparrEventsTab> {
   late final TextEditingController _searchController;
   Timer? _debounceTimer;
 
-  static const List<(String label, String? filterKey)> _filters = [
-    ('All', null),
+  static final List<(String label, String? filterKey)> _filters = [
+    (S.t('all'), null),
     ('Malware', 'malware'),
-    ('Strikes', 'strike'),
+    (S.t('strikes'), 'strike'),
     ('Deletions', 'delet'),
     ('Cleaned', 'clean'),
   ];
@@ -88,7 +88,7 @@ class _CleanuparrEventsTabState extends ConsumerState<CleanuparrEventsTab> {
                 onPressed: widget.onOpenDrawer,
               )
             : null,
-        title: const Text("Événements d'audit"),
+        title: Text(S.t('auditEvents')),
       ),
       body: EasyRefresh(
         onRefresh: _refresh,
@@ -100,7 +100,7 @@ class _CleanuparrEventsTabState extends ConsumerState<CleanuparrEventsTab> {
             TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: "Rechercher des événements d'audit",
+                hintText: S.t('searchAuditEvents'),
                 prefixIcon: const Icon(Icons.search, size: 20),
                 suffixIcon: _searchController.text.isNotEmpty
                     ? IconButton(
@@ -187,7 +187,7 @@ class _CleanuparrEventsTabState extends ConsumerState<CleanuparrEventsTab> {
               error: (err, _) => Center(
                 child: Padding(
                   padding: const EdgeInsets.all(Insets.xl),
-                  child: Text('Impossible de charger les événements : ${describeCleanuparrError(err)}'),
+                  child: Text(S.t('couldNotLoadEventsDescribeCleanuparrErrorErr1', [describeCleanuparrError(err)])),
                 ),
               ),
               data: (List<CleanuparrEvent> events) {
@@ -205,14 +205,14 @@ class _CleanuparrEventsTabState extends ConsumerState<CleanuparrEventsTab> {
                           ),
                           const SizedBox(height: Insets.md),
                           Text(
-                            'Aucun événement trouvé',
+                            S.t('noEventsFound'),
                             style: textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: Insets.xs),
                           Text(
-                            'Aucune activité récente ne correspond à votre filtre',
+                            S.t('noRecentActivityMatchingYourFilter'),
                             style: textTheme.bodySmall?.copyWith(
                               color: colorScheme.outline,
                             ),

@@ -36,7 +36,7 @@ void main() {
       expect(searchBarFinder, findsOneWidget);
       final searchBar = tester.widget<SearchBar>(searchBarFinder);
       expect(searchBar.controller?.text, isEmpty);
-      expect(find.text('Rechercher un film à ajouter'), findsOneWidget);
+      expect(find.text('Search for a movie to add'), findsOneWidget);
     });
 
     testWidgets(
@@ -99,7 +99,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Aucun film trouvé'), findsOneWidget);
+      expect(find.text('No movies found'), findsOneWidget);
       expect(find.textContaining('Search online for'), findsNothing);
     });
 
@@ -132,7 +132,7 @@ void main() {
       await tester.pumpAndSettle();
 
       final actionButtonFinder =
-          find.text('Rechercher en ligne « $query »');
+          find.text('Search online for "$query"');
       expect(actionButtonFinder, findsOneWidget);
 
       await tester.tap(actionButtonFinder);
@@ -182,7 +182,7 @@ void main() {
 
       final fabFinder = find.byType(FloatingActionButton);
       expect(fabFinder, findsWidgets);
-      final addMovieFab = find.widgetWithText(FloatingActionButton, 'Ajouter un film');
+      final addMovieFab = find.widgetWithText(FloatingActionButton, 'Add Movie');
       expect(addMovieFab, findsOneWidget);
 
       await tester.tap(addMovieFab);

@@ -100,7 +100,7 @@ class _MySpeedConfigTabState extends ConsumerState<MySpeedConfigTab> {
               _overviewRow(
                 context,
                 icon: Icons.schedule_rounded,
-                label: 'Planification cron',
+                label: S.t('cronSchedule'),
                 value: config.cron!,
                 color: colors.primary,
               ),
@@ -110,7 +110,7 @@ class _MySpeedConfigTabState extends ConsumerState<MySpeedConfigTab> {
               _overviewRow(
                 context,
                 icon: Icons.hub_rounded,
-                label: 'Tester le fournisseur',
+                label: S.t('testProvider'),
                 value: config.provider!,
                 color: colors.tertiary,
               ),
@@ -120,7 +120,7 @@ class _MySpeedConfigTabState extends ConsumerState<MySpeedConfigTab> {
               _overviewRow(
                 context,
                 icon: Icons.dns_rounded,
-                label: 'Serveur / Nœud',
+                label: S.t('serverNode'),
                 value: config.server!,
                 color: colors.secondary,
               ),
@@ -129,7 +129,7 @@ class _MySpeedConfigTabState extends ConsumerState<MySpeedConfigTab> {
             _overviewRow(
               context,
               icon: Icons.settings_ethernet_rounded,
-              label: 'Propriétés actives',
+              label: S.t('activeProperties'),
               value: '${config.entries.length} keys loaded',
               color: colors.primary,
             ),
@@ -160,7 +160,7 @@ class _MySpeedConfigTabState extends ConsumerState<MySpeedConfigTab> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              'Stockage et conservation',
+              S.t('storageAndRetention'),
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
@@ -178,7 +178,7 @@ class _MySpeedConfigTabState extends ConsumerState<MySpeedConfigTab> {
                 ),
               ),
               error: (error, _) => Text(
-                'Impossible de charger les infos de stockage',
+                S.t('couldNotLoadStorageInfo'),
                 style: theme.textTheme.bodySmall?.copyWith(color: colors.outline),
               ),
               data: (MySpeedStorage storage) {
@@ -188,7 +188,7 @@ class _MySpeedConfigTabState extends ConsumerState<MySpeedConfigTab> {
                     _overviewRow(
                       context,
                       icon: Icons.storage_rounded,
-                      label: 'Taille de la base de données',
+                      label: S.t('databaseSize'),
                       value: storage.formattedSize,
                       color: colors.primary,
                     ),
@@ -196,7 +196,7 @@ class _MySpeedConfigTabState extends ConsumerState<MySpeedConfigTab> {
                     _overviewRow(
                       context,
                       icon: Icons.analytics_outlined,
-                      label: 'Tests stockés',
+                      label: S.t('testsStored'),
                       value: '${storage.testCount ?? 0}',
                       color: colors.secondary,
                     ),
@@ -205,7 +205,7 @@ class _MySpeedConfigTabState extends ConsumerState<MySpeedConfigTab> {
                       _overviewRow(
                         context,
                         icon: Icons.auto_delete_outlined,
-                        label: 'Conservation des données',
+                        label: S.t('dataRetention'),
                         value: '$retention days',
                         color: colors.tertiary,
                       ),
@@ -256,7 +256,7 @@ class _MySpeedConfigTabState extends ConsumerState<MySpeedConfigTab> {
 
     return TextField(
       decoration: InputDecoration(
-        hintText: 'Filtrer les clés de configuration…',
+        hintText: S.t('filterConfigurationKeys'),
         prefixIcon: const Icon(Icons.search_rounded, size: 20),
         suffixIcon: _filterQuery.isNotEmpty
             ? IconButton(
@@ -301,7 +301,7 @@ class _MySpeedConfigTabState extends ConsumerState<MySpeedConfigTab> {
           padding: const EdgeInsets.symmetric(vertical: Insets.xl),
           child: Center(
             child: Text(
-              'Aucune clé de configuration correspondante.',
+              S.t('noMatchingConfigurationKeys'),
               style: theme.textTheme.bodyMedium?.copyWith(color: colors.outline),
             ),
           ),
@@ -343,12 +343,12 @@ class _MySpeedConfigTabState extends ConsumerState<MySpeedConfigTab> {
             ),
             trailing: IconButton(
               icon: const Icon(Icons.copy_rounded, size: 18),
-              tooltip: 'Copier la valeur',
+              tooltip: S.t('copyValue'),
               onPressed: () {
                 Clipboard.setData(ClipboardData(text: value.toString()));
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('« $key » copié dans le presse-papiers'),
+                    content: Text(S.t('copiedKeyToClipboard1', [key])),
                     duration: const Duration(seconds: 1),
                   ),
                 );

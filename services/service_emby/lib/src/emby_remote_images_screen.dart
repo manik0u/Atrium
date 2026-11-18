@@ -45,7 +45,7 @@ class _EmbyRemoteImagesScreenState
       final bool confirmed = await showDialog<bool>(
             context: context,
             builder: (BuildContext context) => AlertDialog(
-              title: Text('Remplacer ${widget.imageType.toLowerCase()} ?'),
+              title: Text(S.t('replaceWidgetImageTypeToLowerCase1', [widget.imageType.toLowerCase()])),
               content: Text(
                 'This replaces the current ${widget.imageType.toLowerCase()} '
                 'image and cannot be undone.',
@@ -53,11 +53,11 @@ class _EmbyRemoteImagesScreenState
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
-                  child: const Text('Annuler'),
+                  child: Text(S.t('cancel')),
                 ),
                 FilledButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  child: const Text('Remplacer'),
+                  child: Text(S.t('replace')),
                 ),
               ],
             ),
@@ -142,7 +142,7 @@ class _EmbyRemoteImagesScreenState
       Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('${widget.imageType} mis à jour'),
+          content: Text(S.t('widgetImageTypeUpdated1', [widget.imageType])),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
@@ -156,7 +156,7 @@ class _EmbyRemoteImagesScreenState
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content:
-              Text('Échec de la mise à jour de ${widget.imageType.toLowerCase()} : $e'),
+              Text(S.t('failedToUpdateWidgetImageTypeToLowerCaseE2', [widget.imageType.toLowerCase(), e])),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
@@ -177,7 +177,7 @@ class _EmbyRemoteImagesScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sélectionner : ${widget.imageType}'),
+        title: Text(S.t('selectWidgetImageType1', [widget.imageType])),
       ),
       body: Stack(
         children: <Widget>[
@@ -190,7 +190,7 @@ class _EmbyRemoteImagesScreenState
             ),
             data: (List<EmbyRemoteImage> images) {
               if (images.isEmpty) {
-                return const Center(child: Text('Aucune image alternative trouvée.'));
+                return Center(child: Text(S.t('noAlternateImagesFound')));
               }
               return GridView.builder(
                 padding: const EdgeInsets.all(Insets.lg),

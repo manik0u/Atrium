@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:core_models/core_models.dart';
 import 'package:dio/dio.dart';
 
 /// The product name plex.tv shows on the sign-in page and in the account's
@@ -406,11 +407,11 @@ class PlexAccountApi {
       return 'Plex rejected the sign-in. Try signing in again.';
     }
     if (status == 404) {
-      return 'Plex a oublié cette connexion. Recommencez.';
+      return S.t('plexForgotThisSignInStartAgain');
     }
     if (status != null) {
       return 'plex.tv answered HTTP $status.';
     }
-    return 'Impossible de joindre plex.tv.';
+    return S.t('couldNotReachPlexTv');
   }
 }

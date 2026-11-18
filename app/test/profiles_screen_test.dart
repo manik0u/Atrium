@@ -26,47 +26,47 @@ void main() {
   }
 
   Future<void> openMenu(WidgetTester tester, {int index = 0}) async {
-    await tester.tap(find.byTooltip('Actions sur le profil').at(index));
+    await tester.tap(find.byTooltip('Profile actions').at(index));
     await tester.pumpAndSettle();
   }
 
   Future<void> rename(WidgetTester tester, String to) async {
     await openMenu(tester);
-    await tester.tap(find.text('Renommer'));
+    await tester.tap(find.text('Rename'));
     await tester.pumpAndSettle();
-    expect(find.text('Renommer le profil'), findsOneWidget);
+    expect(find.text('Rename profile'), findsOneWidget);
     await tester.enterText(find.byType(TextField), to);
-    await tester.tap(find.widgetWithText(FilledButton, 'Renommer'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Rename'));
     await tester.pumpAndSettle();
   }
 
   testWidgets('a profile can be renamed from its menu',
       (WidgetTester tester) async {
-    await open(tester, <Profile>[Profile(id: 'p', name: 'Par défaut')]);
-    expect(find.text('Par défaut'), findsOneWidget);
+    await open(tester, <Profile>[Profile(id: 'p', name: 'Default')]);
+    expect(find.text('Default'), findsOneWidget);
 
     await rename(tester, '  Home  ');
 
     expect(profiles.saved.single.id, 'p');
-    expect(profiles.saved.single.name, 'Accueil');
-    expect(find.text('Accueil'), findsOneWidget);
-    expect(find.text('Par défaut'), findsNothing);
+    expect(profiles.saved.single.name, 'Home');
+    expect(find.text('Home'), findsOneWidget);
+    expect(find.text('Default'), findsNothing);
   });
 
   testWidgets('an empty or unchanged name saves nothing',
       (WidgetTester tester) async {
-    await open(tester, <Profile>[Profile(id: 'p', name: 'Par défaut')]);
+    await open(tester, <Profile>[Profile(id: 'p', name: 'Default')]);
 
     await rename(tester, '   ');
-    await rename(tester, 'Par défaut');
+    await rename(tester, 'Default');
 
     expect(profiles.saved, isEmpty);
-    expect(find.text('Par défaut'), findsOneWidget);
+    expect(find.text('Default'), findsOneWidget);
   });
 
   testWidgets('the last profile cannot be deleted',
       (WidgetTester tester) async {
-    await open(tester, <Profile>[Profile(id: 'p', name: 'Par défaut')]);
+    await open(tester, <Profile>[Profile(id: 'p', name: 'Default')]);
     await openMenu(tester);
 
     expect(_deleteItem(tester).enabled, isFalse);
@@ -74,12 +74,12 @@ void main() {
 
   testWidgets('a spare profile can be deleted', (WidgetTester tester) async {
     await open(tester, <Profile>[
-      Profile(id: 'p', name: 'Par défaut'),
+      Profile(id: 'p', name: 'Default'),
       Profile(id: 'q', name: 'Away'),
     ]);
     await openMenu(tester, index: 1);
     expect(_deleteItem(tester).enabled, isTrue);
-    await tester.tap(find.text('Supprimer'));
+    await tester.tap(find.text('Delete'));
     await tester.pumpAndSettle();
 
     expect(profiles.deleted, <String>['q']);
@@ -89,7 +89,7 @@ void main() {
 
 PopupMenuItem<dynamic> _deleteItem(WidgetTester tester) => tester.widget(
       find.ancestor(
-        of: find.text('Supprimer'),
+        of: find.text('Delete'),
         matching: find.byWidgetPredicate((Widget w) => w is PopupMenuItem),
       ),
     );

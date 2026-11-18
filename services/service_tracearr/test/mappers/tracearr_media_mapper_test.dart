@@ -18,7 +18,7 @@ void main() {
         title: 'Oppenheimer',
         year: 2023,
         imdbId: 'tt15398776',
-        genres: ['Biography', 'Drama', 'Historique'],
+        genres: ['Biography', 'Drama', 'History'],
         availability: [
           MediaAvailability(
             serverId: 'srv_1',
@@ -68,7 +68,7 @@ void main() {
       expect(detail.id, equals('med_uuid_1'));
       expect(detail.title, equals('Oppenheimer'));
       expect(detail.year, equals(2023));
-      expect(detail.genres, equals(['Biography', 'Drama', 'Historique']));
+      expect(detail.genres, equals(['Biography', 'Drama', 'History']));
       expect(detail.allTimePlays, equals(80));
       expect(detail.allTimeWatchTimeMs, equals(800000000));
       expect(detail.last30DaysPlays, equals(25));

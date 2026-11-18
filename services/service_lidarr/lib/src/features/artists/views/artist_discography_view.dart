@@ -42,7 +42,7 @@ class ArtistDiscographyView extends ConsumerWidget {
         ),
       );
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec de la mise à jour des albums');
+        throw Exception(resp.error?.message ?? S.t('failedToUpdateAlbums'));
       }
 
       ref.invalidate(
@@ -69,7 +69,7 @@ class ArtistDiscographyView extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Échec de la mise à jour de la surveillance de l'album : $e"),
+            content: Text(S.t('failedToUpdateAlbumMonitoringE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -79,15 +79,15 @@ class ArtistDiscographyView extends ConsumerWidget {
 
   String _formatGroupTitle(String groupType) {
     return switch (groupType.toLowerCase()) {
-      'studio' => 'Albums studio',
-      'album' => 'Albums',
-      'ep' => 'EP',
+      'studio' => S.t('studioAlbums'),
+      'album' => S.t('albums'),
+      'ep' => S.t('eps'),
       'single' => 'Singles',
-      'live' => 'Albums live',
-      'broadcast' => 'Émissions',
+      'live' => S.t('liveAlbums'),
+      'broadcast' => S.t('broadcasts'),
       'compilation' => 'Compilations',
-      'soundtrack' => 'Bandes-son',
-      _ => 'Releases de type $groupType',
+      'soundtrack' => S.t('soundtracks'),
+      _ => S.t('grouptypeReleases1', [groupType]),
     };
   }
 
@@ -101,19 +101,19 @@ class ArtistDiscographyView extends ConsumerWidget {
 
     final Map<String, List<AlbumResource>> grouped = groupBy(
       albums,
-      (AlbumResource a) => a.albumType ?? 'Autre',
+      (AlbumResource a) => a.albumType ?? S.t('other'),
     );
 
-    const List<String> canonicalOrder = [
+    final List<String> canonicalOrder = [
       'Studio',
-      'Album',
-      'EP',
+      S.t('album'),
+      S.t('eps'),
       'Single',
       'Live',
       'Broadcast',
       'Compilation',
       'Soundtrack',
-      'Other',
+      S.t('other'),
     ];
 
     final List<MapEntry<String, List<AlbumResource>>> sortedEntries =
@@ -203,7 +203,7 @@ class ArtistDiscographyView extends ConsumerWidget {
                           ),
                           const SizedBox(width: 5),
                           Text(
-                            allMonitored ? 'Monitored' : 'Unmonitored',
+                            allMonitored ? S.t('monitored') : S.t('unmonitored'),
                             style: theme.textTheme.labelSmall?.copyWith(
                               fontSize: 11,
                               fontWeight: FontWeight.w600,
@@ -252,14 +252,14 @@ class ArtistDiscographyView extends ConsumerWidget {
       physics: const AlwaysScrollableScrollPhysics(),
       slivers: [
         if (albums.isEmpty)
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.all(32.0),
               child: Center(
                 child: EmptyView(
                   icon: Icons.album_outlined,
-                  title: 'Aucun album trouvé',
-                  message: 'Aucun album disponible pour cet artiste.',
+                  title: S.t('noAlbumsFound'),
+                  message: S.t('noAlbumsAvailableForThisArtist'),
                 ),
               ),
             ),

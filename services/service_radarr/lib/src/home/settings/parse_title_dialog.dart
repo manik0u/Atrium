@@ -48,7 +48,7 @@ class _RadarrParseTitleDialogState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Analyser le titre de la release',
+                    S.t('parseReleaseTitle'),
                     style: theme.textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -61,7 +61,7 @@ class _RadarrParseTitleDialogState
               ),
               const SizedBox(height: Insets.sm),
               Text(
-                "Collez un nom de release ou un titre de torrent ci-dessous pour voir comment Radarr analyse le titre du film, l'année, la qualité et les correspondances de bibliothèque.",
+                S.t('pasteAReleaseNameOrTorrentTitleBelowToSeeHowRadarrParsesMovieTitleYearQualityAndMatchingLibraryDetails'),
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -71,7 +71,7 @@ class _RadarrParseTitleDialogState
                 controller: _controller,
                 maxLines: 3,
                 decoration: InputDecoration(
-                  hintText: 'ex. Inception.2010.1080p.BluRay.x264-GRP',
+                  hintText: S.t('eGInception20101080pBluRayX264GRP'),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -90,7 +90,7 @@ class _RadarrParseTitleDialogState
                         _query = '';
                       });
                     },
-                    child: const Text('Effacer'),
+                    child: Text(S.t('clear')),
                   ),
                   const SizedBox(width: Insets.sm),
                   ElevatedButton.icon(
@@ -100,7 +100,7 @@ class _RadarrParseTitleDialogState
                       });
                     },
                     icon: const Icon(Icons.search),
-                    label: const Text('Analyser'),
+                    label: Text(S.t('parse')),
                   ),
                 ],
               ),
@@ -110,15 +110,15 @@ class _RadarrParseTitleDialogState
                   child: parseAsync.when(
                     data: (data) {
                       if (data == null) {
-                        return const Center(
-                          child: Text("Échec de l'analyse du titre."),
+                        return Center(
+                          child: Text(S.t('failedToParseTitle')),
                         );
                       }
                       final parsedInfo =
                           data['parsedMovieInfo'] as Map<String, dynamic>?;
                       if (parsedInfo == null) {
-                        return const Center(
-                          child: Text("Impossible d'extraire les détails du film."),
+                        return Center(
+                          child: Text(S.t('couldNotExtractMovieDetails')),
                         );
                       }
 
@@ -155,7 +155,7 @@ class _RadarrParseTitleDialogState
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Extracted Metadata',
+                              S.t('extractedMetadata'),
                               style: theme.textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: theme.colorScheme.primary,
@@ -164,27 +164,27 @@ class _RadarrParseTitleDialogState
                             const SizedBox(height: Insets.sm),
                             _buildInfoRow(
                               theme,
-                              'Titre du film',
+                              S.t('movieTitle'),
                               movieTitle ?? 'N/A',
                             ),
                             _buildInfoRow(
                               theme,
-                              'Year',
+                              S.t('year'),
                               year?.toString() ?? 'N/A',
                             ),
                             _buildInfoRow(
                               theme,
-                              'Quality',
+                              S.t('quality'),
                               qualityName ?? 'N/A',
                             ),
                             _buildInfoRow(
                               theme,
-                              'Release Group',
+                              S.t('releaseGroup'),
                               releaseGroup ?? 'N/A',
                             ),
                             _buildInfoRow(
                               theme,
-                              'Language',
+                              S.t('language'),
                               languageNames.isNotEmpty
                                   ? languageNames.join(', ')
                                   : 'N/A',
@@ -201,7 +201,7 @@ class _RadarrParseTitleDialogState
                             _buildInfoRow(
                               theme,
                               'Matches Movie',
-                              matchingMovieTitle ?? 'Aucune correspondance dans la bibliothèque',
+                              matchingMovieTitle ?? S.t('noMatchInLibrary'),
                               valueColor: matchingMovieTitle != null
                                   ? theme.colorScheme.primary
                                   : theme.colorScheme.error,
@@ -218,7 +218,7 @@ class _RadarrParseTitleDialogState
                     ),
                     error: (e, _) => Center(
                       child: Text(
-                        "Erreur lors de l'analyse du titre : $e",
+                        S.t('errorParsingTitleE1', [e]),
                         style: TextStyle(color: theme.colorScheme.error),
                       ),
                     ),

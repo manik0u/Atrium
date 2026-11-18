@@ -80,8 +80,8 @@ class _SecurityIncidentLedgerSectionState
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'Marked reviewed on this device: ${item.rule} (@${item.username}). '
-          'Tracearr le signale toujours comme non résolu.',
+          'Marked reviewed on this device: ${item.rule} (@${item.username}). ' +
+          S.t('tracearrStillListsItAsUnresolved'),
         ),
         behavior: SnackBarBehavior.floating,
       ),
@@ -100,7 +100,7 @@ class _SecurityIncidentLedgerSectionState
         ),
         behavior: SnackBarBehavior.floating,
         action: SnackBarAction(
-          label: 'Annuler',
+          label: S.t('cancel'),
           onPressed: () {
             setState(() {
               _locallyDismissedIds.remove(item.id);
@@ -146,7 +146,7 @@ class _SecurityIncidentLedgerSectionState
             if (widget.onRetry != null)
               IconButton(
                 icon: const Icon(Icons.refresh),
-                tooltip: 'Réessayer',
+                tooltip: S.t('retry'),
                 onPressed: widget.onRetry,
               ),
           ],
@@ -175,7 +175,7 @@ class _SecurityIncidentLedgerSectionState
               child: Row(
                 children: [
                   FilterChip(
-                    label: Text('Tous ($activeItemsCount)'),
+                    label: Text(S.t('allActiveItemsCount1', [activeItemsCount])),
                     selected: _selectedFilter == SecurityFilterOption.all,
                     onSelected: (selected) {
                       if (selected) {
@@ -213,7 +213,7 @@ class _SecurityIncidentLedgerSectionState
                   ),
                   const SizedBox(width: Insets.xs),
                   FilterChip(
-                    label: const Text('Critique / Élevé'),
+                    label: Text(S.t('criticalHigh')),
                     selected:
                         _selectedFilter == SecurityFilterOption.criticalHigh,
                     onSelected: (selected) {
@@ -227,7 +227,7 @@ class _SecurityIncidentLedgerSectionState
                   ),
                   const SizedBox(width: Insets.xs),
                   FilterChip(
-                    label: const Text('Examinés'),
+                    label: Text(S.t('reviewed')),
                     selected: _selectedFilter == SecurityFilterOption.resolved,
                     onSelected: (selected) {
                       if (selected) {
@@ -264,7 +264,7 @@ class _SecurityIncidentLedgerSectionState
                     ),
                     const SizedBox(height: Insets.sm),
                     Text(
-                      'All Clear',
+                      S.t('allClear'),
                       style: theme.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: const Color(0xFF4CAF50),
@@ -273,8 +273,8 @@ class _SecurityIncidentLedgerSectionState
                     const SizedBox(height: 2),
                     Text(
                       _selectedFilter == SecurityFilterOption.all
-                          ? "Aucune violation de politique de sécurité enregistrée dans le registre d'audit Sentinel."
-                          : 'Aucun incident ne correspond au filtre actif.',
+                          ? S.t('noSecurityPolicyViolationsRecordedInTheSentinelAuditLedger')
+                          : S.t('noIncidentsMatchTheActiveFilter'),
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: colorScheme.onSurfaceVariant,
                       ),

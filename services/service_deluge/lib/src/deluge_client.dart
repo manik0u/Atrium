@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cookie_jar/cookie_jar.dart';
+import 'package:core_models/core_models.dart';
 import 'package:core_networking/core_networking.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
@@ -29,7 +30,7 @@ class _DelugeRpcException implements Exception {
   final String message;
 
   @override
-  String toString() => 'Erreur RPC Deluge $code : $message';
+  String toString() => S.t('delugeRPCErrorCodeMessage2', [code, message]);
 }
 
 /// Client for the Deluge 2.x Web UI JSON-RPC API.
@@ -413,7 +414,7 @@ class DelugeClient {
         final Object? code = error['code'];
         throw _DelugeRpcException(
           code is num ? code.toInt() : -1,
-          (error['message'] as String?) ?? 'erreur inconnue',
+          (error['message'] as String?) ?? S.t('unknownError_2'),
         );
       }
       return body['result'];
@@ -456,8 +457,8 @@ class DelugeClient {
   NetworkException _asNetworkException(_DelugeRpcException e) =>
       switch (e.code) {
         _notAuthenticated => NetworkAuthException(
-            'Deluge a refusé la session : ${e.message}',
+            S.t('delugeRefusedTheSessionEMessage1', [e.message]),
           ),
-        _ => NetworkServerException('Deluge : ${e.message}', status: 200),
+        _ => NetworkServerException(S.t('delugeEMessage1', [e.message]), status: 200),
       };
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -53,8 +54,8 @@ Future<void> launchJellyfinDeepLink(
 
 void _showNotInstalled(BuildContext context) {
   ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(
-      content: Text("Impossible d'ouvrir l'élément Jellyfin."),
+    SnackBar(
+      content: Text(S.t('couldNotOpenTheJellyfinItem')),
       behavior: SnackBarBehavior.floating,
       duration: Duration(seconds: 3),
     ),

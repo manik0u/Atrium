@@ -38,7 +38,7 @@ String seerrIssueRelativeTime(String? createdAt) {
   final DateTime local = date.toLocal();
   final Duration diff = DateTime.now().difference(local);
   if (diff.isNegative || diff.inMinutes < 1) {
-    return 'just now';
+    return S.t('justNow_2');
   }
   if (diff.inMinutes < 60) {
     return '${diff.inMinutes}m ago';
@@ -57,12 +57,12 @@ String seerrIssueRelativeTime(String? createdAt) {
 /// Display name for the user on an issue or comment.
 String seerrIssueUserName(SeerrUser? user) {
   if (user == null) {
-    return 'Unknown';
+    return S.t('unknown');
   }
   if (user.displayName.isNotEmpty) {
     return user.displayName;
   }
-  return user.username.isNotEmpty ? user.username : 'Unknown';
+  return user.username.isNotEmpty ? user.username : S.t('unknown');
 }
 
 /// Open / Resolved status pill in tonal M3 roles: error container while the
@@ -94,7 +94,7 @@ class SeerrIssueStatusPill extends StatelessWidget {
           ),
           const SizedBox(width: 4),
           Text(
-            isOpen ? 'Open' : 'Resolved',
+            isOpen ? S.t('open') : 'Resolved',
             style: theme.textTheme.labelSmall?.copyWith(
               color: fg,
               fontWeight: FontWeight.w600,
@@ -168,7 +168,7 @@ class _SeerrIssueDetailScreenState
     } catch (e) {
       if (mounted) {
         messenger.showSnackBar(
-          SnackBar(content: Text("Impossible d'ajouter le commentaire : $e")),
+          SnackBar(content: Text(S.t('couldNotAddCommentE1', [e]))),
         );
       }
     } finally {
@@ -191,13 +191,13 @@ class _SeerrIssueDetailScreenState
       _refreshIssue();
       messenger.showSnackBar(
         SnackBar(
-          content: Text(resolved ? 'Problème résolu' : 'Problème rouvert'),
+          content: Text(resolved ? S.t('issueResolved') : S.t('issueReopened')),
         ),
       );
     } catch (e) {
       if (mounted) {
         messenger.showSnackBar(
-          SnackBar(content: Text('Impossible de mettre à jour le problème : $e')),
+          SnackBar(content: Text(S.t('couldNotUpdateIssueE1', [e]))),
         );
       }
     } finally {
@@ -220,20 +220,20 @@ class _SeerrIssueDetailScreenState
             true;
 
     return Scaffold(
-      appBar: AppBar(title: Text('Problème n° ${issue.id}')),
+      appBar: AppBar(title: Text(S.t('issueIssueId1', [issue.id]))),
       body: SafeArea(
         child: Column(
           children: <Widget>[
             Expanded(
               child: EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
                 onRefresh: () async {
                   _refreshIssue();
@@ -252,14 +252,14 @@ class _SeerrIssueDetailScreenState
                                     ? null
                                     : () => _setStatus(resolved: true),
                                 icon: const Icon(Icons.check_circle_outline),
-                                label: const Text('Résoudre'),
+                                label: Text(S.t('resolve')),
                               )
                             : OutlinedButton.icon(
                                 onPressed: _updatingStatus
                                     ? null
                                     : () => _setStatus(resolved: false),
                                 icon: const Icon(Icons.refresh),
-                                label: const Text('Rouvrir'),
+                                label: Text(S.t('reopen')),
                               ),
                       ),
                     ],
@@ -272,7 +272,7 @@ class _SeerrIssueDetailScreenState
                     const SizedBox(height: Insets.sm),
                     if (comments.isEmpty)
                       Text(
-                        'Aucun commentaire pour le moment.',
+                        S.t('noCommentsYet'),
                         style: theme.textTheme.bodyMedium
                             ?.copyWith(color: theme.colorScheme.outline),
                       )
@@ -310,7 +310,7 @@ class _SeerrIssueDetailScreenState
               minLines: 1,
               maxLines: 4,
               decoration: InputDecoration(
-                hintText: 'Ajouter un commentaire',
+                hintText: S.t('addAComment'),
                 filled: true,
                 fillColor: theme.colorScheme.surfaceContainerLow,
                 contentPadding: const EdgeInsets.symmetric(
@@ -326,7 +326,7 @@ class _SeerrIssueDetailScreenState
           ),
           const SizedBox(width: Insets.sm),
           IconButton.filled(
-            tooltip: 'Envoyer',
+            tooltip: S.t('send'),
             onPressed: _sendingComment ? null : _sendComment,
             icon: _sendingComment
                 ? const SizedBox(
@@ -369,7 +369,7 @@ class _IssueHeader extends ConsumerWidget {
           )
           .value;
     }
-    final String title = details?.displayTitle ?? 'Problème n° ${issue.id}';
+    final String title = details?.displayTitle ?? S.t('issueIssueId1', [issue.id]);
     final SeerrApi? api = ref.watch(seerrApiProvider(instance)).value;
     final String? posterUrl = api?.imageUrl(details?.posterPath);
     final String time = seerrIssueRelativeTime(issue.createdAt);

@@ -10,7 +10,7 @@ import 'support/pump.dart';
 void main() {
   const Key domainField = Key('adguard-rewrite-domain');
   const Key answerField = Key('adguard-rewrite-answer');
-  final Finder save = find.widgetWithText(FilledButton, 'Enregistrer');
+  final Finder save = find.widgetWithText(FilledButton, 'Save');
 
   Future<Pumped> pumpRewrites(
     WidgetTester tester, {
@@ -62,7 +62,7 @@ void main() {
     expect(
       tester
           .widget<SwitchListTile>(
-            find.widgetWithText(SwitchListTile, 'Utiliser les réécritures'),
+            find.widgetWithText(SwitchListTile, 'Use rewrites'),
           )
           .value,
       isTrue,
@@ -84,14 +84,14 @@ void main() {
 
     expect(find.text('nas.home.example'), findsOneWidget);
     expect(find.byType(Switch), findsNothing);
-    expect(find.text('Utiliser les réécritures'), findsNothing);
+    expect(find.text('Use rewrites'), findsNothing);
   });
 
   testWidgets('the switch for all of them shows once its setting is read',
       (WidgetTester tester) async {
     await pumpRewrites(tester);
 
-    expect(find.text('Utiliser les réécritures'), findsOneWidget);
+    expect(find.text('Use rewrites'), findsOneWidget);
   });
 
   testWidgets('a rewrite is switched on or off', (WidgetTester tester) async {
@@ -107,7 +107,7 @@ void main() {
       (WidgetTester tester) async {
     final Pumped pumped = await pumpRewrites(tester);
 
-    await tester.tap(find.text('Utiliser les réécritures'));
+    await tester.tap(find.text('Use rewrites'));
     await tester.pumpAndSettle();
 
     expect(pumped.actions.calls, <String>['rewrites off']);
@@ -149,16 +149,16 @@ void main() {
   testWidgets('with none, says so', (WidgetTester tester) async {
     await pumpRewrites(tester, rewrites: const <AdguardHomeRewrite>[]);
 
-    expect(find.text('Aucune réécriture'), findsOneWidget);
+    expect(find.text('No rewrites'), findsOneWidget);
   });
 
   group('a rewrite in its form', () {
     testWidgets('a new one is added, on', (WidgetTester tester) async {
       final Pumped pumped = await pumpRewrites(tester);
 
-      await tester.tap(find.byTooltip('Ajouter une réécriture'));
+      await tester.tap(find.byTooltip('Add rewrite'));
       await tester.pumpAndSettle();
-      expect(find.text('Nouvelle réécriture'), findsOneWidget);
+      expect(find.text('New rewrite'), findsOneWidget);
       await tester.enterText(find.byKey(domainField), ' printer.home.example ');
       await tester.enterText(find.byKey(answerField), '192.168.1.60');
       await tester.tap(save);
@@ -174,7 +174,7 @@ void main() {
         (WidgetTester tester) async {
       final Pumped pumped = await pumpRewrites(tester);
 
-      await tester.tap(find.byTooltip('Ajouter une réécriture'));
+      await tester.tap(find.byTooltip('Add rewrite'));
       await tester.pumpAndSettle();
       await tester.tap(save);
       await tester.pumpAndSettle();
@@ -190,7 +190,7 @@ void main() {
 
       await tester.tap(find.text('*.lan.example'));
       await tester.pumpAndSettle();
-      expect(find.text('Modifier la réécriture'), findsOneWidget);
+      expect(find.text('Edit rewrite'), findsOneWidget);
       await tester.enterText(find.byKey(answerField), '10.0.0.9');
       await tester.tap(save);
       await tester.pumpAndSettle();
@@ -206,7 +206,7 @@ void main() {
         (WidgetTester tester) async {
       final Pumped pumped = await pumpRewrites(tester);
 
-      await tester.tap(find.byTooltip('Ajouter une réécriture'));
+      await tester.tap(find.byTooltip('Add rewrite'));
       await tester.pumpAndSettle();
       await tester.enterText(find.byKey(domainField), 'a.example');
       await tester.enterText(find.byKey(answerField), '   ');
@@ -225,7 +225,7 @@ void main() {
         'normalizing: invalid CNAME target "x y"',
       );
 
-      await tester.tap(find.byTooltip('Ajouter une réécriture'));
+      await tester.tap(find.byTooltip('Add rewrite'));
       await tester.pumpAndSettle();
       await tester.enterText(find.byKey(domainField), 'a.example');
       await tester.enterText(find.byKey(answerField), 'x y');
@@ -235,7 +235,7 @@ void main() {
       expect(find.textContaining('invalid CNAME target'), findsOneWidget);
       await tester.tap(find.text('OK'));
       await tester.pumpAndSettle();
-      expect(find.text('Nouvelle réécriture'), findsOneWidget);
+      expect(find.text('New rewrite'), findsOneWidget);
     });
 
     testWidgets('delete asks first', (WidgetTester tester) async {
@@ -243,19 +243,19 @@ void main() {
 
       await tester.tap(find.text('*.lan.example'));
       await tester.pumpAndSettle();
-      await tester.tap(find.byTooltip('Supprimer la réécriture'));
+      await tester.tap(find.byTooltip('Delete rewrite'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Annuler'));
+      await tester.tap(find.text('Cancel'));
       await tester.pumpAndSettle();
       expect(pumped.actions.calls, isEmpty);
 
-      await tester.tap(find.byTooltip('Supprimer la réécriture'));
+      await tester.tap(find.byTooltip('Delete rewrite'));
       await tester.pumpAndSettle();
-      await tester.tap(find.widgetWithText(FilledButton, 'Supprimer'));
+      await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
       await tester.pumpAndSettle();
 
       expect(pumped.actions.calls, <String>['delete *.lan.example']);
-      expect(find.text('Modifier la réécriture'), findsNothing);
+      expect(find.text('Edit rewrite'), findsNothing);
       expect(find.text('Rewrite deleted'), findsOneWidget);
     });
 
@@ -272,7 +272,7 @@ void main() {
 
       await tester.tap(find.text('a.lan').first);
       await tester.pumpAndSettle();
-      await tester.tap(find.byTooltip('Supprimer la réécriture'));
+      await tester.tap(find.byTooltip('Delete rewrite'));
       await tester.pumpAndSettle();
 
       expect(
@@ -286,13 +286,13 @@ void main() {
       final Pumped pumped = await pumpRewrites(tester);
       pumped.actions.writeFailure = const AdguardHomeSignInRefused();
 
-      await tester.tap(find.byTooltip('Ajouter une réécriture'));
+      await tester.tap(find.byTooltip('Add rewrite'));
       await tester.pumpAndSettle();
       await tester.enterText(find.byKey(domainField), 'printer.home.example');
       await tester.enterText(find.byKey(answerField), '192.168.1.60');
       await tester.tap(save);
       await tester.pumpAndSettle();
-      await tester.tap(find.widgetWithText(FilledButton, 'Réessayer'));
+      await tester.tap(find.widgetWithText(FilledButton, 'Try again'));
       await tester.pumpAndSettle();
 
       expect(pumped.actions.calls, <String>[
@@ -308,7 +308,7 @@ void main() {
       final Pumped pumped = await pumpRewrites(tester);
       pumped.actions.writeFailure = const AdguardHomeRequestRefused('nope');
 
-      await tester.tap(find.byTooltip('Ajouter une réécriture'));
+      await tester.tap(find.byTooltip('Add rewrite'));
       await tester.pumpAndSettle();
       await tester.enterText(find.byKey(domainField), 'printer.home.example');
       await tester.enterText(find.byKey(answerField), '192.168.1.60');
@@ -316,7 +316,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('nope'), findsOneWidget);
-      expect(find.text('Réessayer'), findsNothing);
+      expect(find.text('Try again'), findsNothing);
       expect(find.text('OK'), findsOneWidget);
     });
 
@@ -324,7 +324,7 @@ void main() {
       final Pumped pumped = await pumpRewrites(tester);
       pumped.actions.writeHold = Completer<void>();
 
-      await tester.tap(find.byTooltip('Ajouter une réécriture'));
+      await tester.tap(find.byTooltip('Add rewrite'));
       await tester.pumpAndSettle();
       await tester.enterText(find.byKey(domainField), 'a.example');
       await tester.enterText(find.byKey(answerField), 'A');

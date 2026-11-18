@@ -59,8 +59,8 @@ class _SlskdOptionsSheetState extends ConsumerState<SlskdOptionsSheet>
       await api.collectGarbage();
       if (!mounted) return;
       messenger.showSnackBar(
-        const SnackBar(
-          content: Text('Nettoyage de la mémoire .NET CLR terminé'),
+        SnackBar(
+          content: Text(S.t('netCLRGarbageCollectionCompleted')),
           duration: Duration(seconds: 2),
         ),
       );
@@ -98,8 +98,8 @@ class _SlskdOptionsSheetState extends ConsumerState<SlskdOptionsSheet>
       };
       await api.loopbackTest(testPayload);
       messenger.showSnackBar(
-        const SnackBar(
-          content: Text("Test d'écho en boucle locale réussi (HTTP 200 OK)"),
+        SnackBar(
+          content: Text(S.t('loopbackEchoTestSucceededHTTP200OK')),
           duration: Duration(seconds: 2),
         ),
       );
@@ -171,7 +171,7 @@ class _SlskdOptionsSheetState extends ConsumerState<SlskdOptionsSheet>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'Configuration & Diagnostics',
+                            S.t('configurationDiagnostics_2'),
                             style: textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -207,9 +207,9 @@ class _SlskdOptionsSheetState extends ConsumerState<SlskdOptionsSheet>
                   fontWeight: FontWeight.bold,
                 ),
                 unselectedLabelStyle: textTheme.titleSmall,
-                tabs: const <Widget>[
-                  Tab(text: "Vue d'ensemble"),
-                  Tab(text: 'Diagnostics'),
+                tabs: <Widget>[
+                  Tab(text: S.t('overview')),
+                  Tab(text: S.t('diagnostics')),
                 ],
               ),
 
@@ -296,7 +296,7 @@ class _SlskdOptionsSheetState extends ConsumerState<SlskdOptionsSheet>
                       ],
                     ),
                     const SizedBox(height: Insets.sm),
-                    _buildConfigRow('Username', soulseek['username']?.toString() ?? 'N/A'),
+                    _buildConfigRow(S.t('username'), soulseek['username']?.toString() ?? 'N/A'),
                     _buildConfigRow('Listen Port', soulseek['listenPort']?.toString() ?? 'Auto'),
                     _buildConfigRow('UPnP Enabled', (network['upnp'] ?? false).toString()),
                     _buildConfigRow('Remote Config Allowed', (options['remoteConfiguration'] ?? false).toString()),
@@ -331,8 +331,8 @@ class _SlskdOptionsSheetState extends ConsumerState<SlskdOptionsSheet>
                       ],
                     ),
                     const SizedBox(height: Insets.sm),
-                    _buildConfigRow('Downloads Dir', directories['downloads']?.toString() ?? 'Default'),
-                    _buildConfigRow('Incomplete Dir', directories['incomplete']?.toString() ?? 'Default'),
+                    _buildConfigRow('Downloads Dir', directories['downloads']?.toString() ?? S.t('default')),
+                    _buildConfigRow('Incomplete Dir', directories['incomplete']?.toString() ?? S.t('default')),
                     _buildConfigRow('Remote File Mgmt', (options['remoteFileManagement'] ?? false).toString()),
                   ],
                 ),
@@ -366,7 +366,7 @@ class _SlskdOptionsSheetState extends ConsumerState<SlskdOptionsSheet>
                     ),
                     const SizedBox(height: Insets.sm),
                     _buildConfigRow('Debug Mode', (options['debug'] ?? false).toString()),
-                    _buildConfigRow('Aucune surveillance de config', (flags['noConfigWatch'] ?? false).toString()),
+                    _buildConfigRow(S.t('noConfigWatch'), (flags['noConfigWatch'] ?? false).toString()),
                     _buildConfigRow('Dumpable', (flags['dumpable'] ?? false).toString()),
                   ],
                 ),
@@ -438,11 +438,11 @@ class _SlskdOptionsSheetState extends ConsumerState<SlskdOptionsSheet>
           ),
           child: ListTile(
             leading: Icon(Icons.cleaning_services_rounded, color: colorScheme.primary),
-            title: const Text('Forcer le nettoyage de la mémoire'),
-            subtitle: const Text("Déclenche immédiatement le nettoyage de la mémoire d'exécution .NET CLR."),
+            title: Text(S.t('forceGarbageCollection')),
+            subtitle: Text(S.t('triggersNETCLRRuntimeMemoryCleanupImmediately')),
             trailing: FilledButton.tonal(
               onPressed: _isActionInProgress ? null : _triggerGarbageCollection,
-              child: const Text('Lancer le GC'),
+              child: Text(S.t('runGC')),
             ),
           ),
         ),
@@ -459,11 +459,11 @@ class _SlskdOptionsSheetState extends ConsumerState<SlskdOptionsSheet>
           ),
           child: ListTile(
             leading: Icon(Icons.repeat_rounded, color: colorScheme.secondary),
-            title: const Text("Test d'écho en boucle locale"),
-            subtitle: const Text("Vérifie l'entrée de l'API REST du démon et l'aller-retour des données JSON."),
+            title: Text(S.t('loopbackEchoTest')),
+            subtitle: Text(S.t('verifiesDaemonRESTAPIIngressAndJSONPayloadRoundtrip')),
             trailing: FilledButton.tonal(
               onPressed: _isActionInProgress ? null : _triggerLoopbackTest,
-              child: const Text('Ping'),
+              child: Text(S.t('ping')),
             ),
           ),
         ),
@@ -485,7 +485,7 @@ class _SlskdOptionsSheetState extends ConsumerState<SlskdOptionsSheet>
             color: colorScheme.surfaceContainerLow,
             child: Padding(
               padding: const EdgeInsets.all(Insets.md),
-              child: Text('État de débogage indisponible : $err'),
+              child: Text(S.t('debugStateUnavailableErr1', [err])),
             ),
           ),
           data: (debugData) {
@@ -499,7 +499,7 @@ class _SlskdOptionsSheetState extends ConsumerState<SlskdOptionsSheet>
               child: Padding(
                 padding: const EdgeInsets.all(Insets.md),
                 child: SelectableText(
-                  debugData.isEmpty ? 'Aucune poignée de débogage active.' : debugData.toString(),
+                  debugData.isEmpty ? S.t('noActiveDebugHandles') : debugData.toString(),
                   style: textTheme.bodySmall?.copyWith(fontSize: 11),
                 ),
               ),

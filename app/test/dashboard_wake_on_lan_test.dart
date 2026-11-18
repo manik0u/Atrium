@@ -39,7 +39,7 @@ void main() {
   });
 
   test('it has a label and an icon like any other widget', () {
-    expect(DashboardWidgetKind.wakeOnLan.label, 'Wake-on-LAN');
+    expect(DashboardWidgetKind.wakeOnLan.label, 'Wake on LAN');
     expect(DashboardWidgetKind.wakeOnLan.icon, isNotNull);
   });
 

@@ -100,10 +100,10 @@ class _BazarrProvidersScreenState extends ConsumerState<BazarrProvidersScreen> {
       await api.setEnabledProviders(_enabled.toList());
       ref.invalidate(bazarrSettingsProvider(widget.instance));
       ref.invalidate(bazarrProviderStatusesProvider(widget.instance));
-      messenger.showSnackBar(const SnackBar(content: Text('Fournisseurs enregistrés')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('providersSaved'))));
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text("Échec de l'enregistrement : ${_err(e)}")),
+        SnackBar(content: Text(S.t('saveFailedErrE1', [_err(e)]))),
       );
     } finally {
       if (mounted) {
@@ -118,7 +118,7 @@ class _BazarrProvidersScreenState extends ConsumerState<BazarrProvidersScreen> {
         ref.watch(bazarrSettingsProvider(widget.instance));
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fournisseurs (${_enabled.length})'),
+        title: Text(S.t('providersEnabledLength1', [_enabled.length])),
         actions: <Widget>[
           if (_saving)
             const Padding(
@@ -133,7 +133,7 @@ class _BazarrProvidersScreenState extends ConsumerState<BazarrProvidersScreen> {
             )
           else
             IconButton(
-              tooltip: 'Enregistrer',
+              tooltip: S.t('save'),
               icon: const Icon(Icons.save_outlined),
               onPressed: _seeded ? _save : null,
             ),
@@ -173,8 +173,8 @@ class _BazarrProvidersScreenState extends ConsumerState<BazarrProvidersScreen> {
                 padding: Insets.page,
                 child: TextField(
                   controller: _query,
-                  decoration: const InputDecoration(
-                    hintText: 'Rechercher des fournisseurs…',
+                  decoration: InputDecoration(
+                    hintText: S.t('searchProviders'),
                     prefixIcon: Icon(Icons.search),
                     border: OutlineInputBorder(),
                   ),
@@ -188,7 +188,7 @@ class _BazarrProvidersScreenState extends ConsumerState<BazarrProvidersScreen> {
                     final MapEntry<String, String> p = entries[i];
                     return ListTile(
                       title: Text(p.value),
-                      subtitle: const Text('Touchez pour configurer'),
+                      subtitle: Text(S.t('tapToConfigure')),
                       trailing: Switch(
                         value: _enabled.contains(p.key),
                         onChanged: (bool v) => setState(() {
@@ -274,12 +274,12 @@ class _BazarrProviderConfigScreenState
       await api.setProviderConfig(widget.providerKey, fields);
       ref.invalidate(bazarrSettingsProvider(widget.instance));
       messenger.showSnackBar(
-        SnackBar(content: Text('${widget.providerName} enregistré')),
+        SnackBar(content: Text(S.t('widgetProviderNameSaved1', [widget.providerName]))),
       );
       nav.pop();
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text("Échec de l'enregistrement : ${_err(e)}")),
+        SnackBar(content: Text(S.t('saveFailedErrE1', [_err(e)]))),
       );
       if (mounted) {
         setState(() => _saving = false);
@@ -309,7 +309,7 @@ class _BazarrProviderConfigScreenState
             )
           else
             IconButton(
-              tooltip: 'Enregistrer',
+              tooltip: S.t('save'),
               icon: const Icon(Icons.save_outlined),
               onPressed: _seeded ? _save : null,
             ),
@@ -341,10 +341,10 @@ class _BazarrProviderConfigScreenState
             _seeded = true;
           }
           if (fields.isEmpty) {
-            return const EmptyView(
+            return EmptyView(
               icon: Icons.tune,
-              title: 'Aucun paramètre modifiable',
-              message: "Ce fournisseur n'a aucune option scalaire à configurer ici.",
+              title: S.t('noEditableSettings'),
+              message: S.t('thisProviderHasNoScalarOptionsToConfigureHere'),
             );
           }
           return ListView(

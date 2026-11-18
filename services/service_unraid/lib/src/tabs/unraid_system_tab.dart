@@ -32,8 +32,8 @@ class _SystemBody extends ConsumerWidget {
     final UnraidMetrics? metrics = async.value;
     if (metrics == null) {
       return UnraidSectionHeader(
-        title: 'Système',
-        trailing: async.hasError ? 'Unavailable' : 'Reading...',
+        title: S.t('system'),
+        trailing: async.hasError ? S.t('unavailable') : S.t('reading'),
       );
     }
 
@@ -45,7 +45,7 @@ class _SystemBody extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         UnraidSectionHeader(
-          title: 'Système',
+          title: S.t('system'),
           trailing: cores == 0
               ? null
               : cores == 1
@@ -73,7 +73,7 @@ class _SystemBody extends ConsumerWidget {
             const SizedBox(width: Insets.sm),
             Expanded(
               child: _LoadCard(
-                label: 'MÉMOIRE',
+                label: S.t('memory_2'),
                 percent: memory?.usedFraction == null
                     ? null
                     : memory!.usedFraction! * 100,
@@ -385,8 +385,7 @@ class _CoreBars extends StatelessWidget {
                   if (i > 0) const SizedBox(width: 3),
                   Expanded(
                     child: Tooltip(
-                      message: 'Cœur $i : '
-                          '${(cores[i].percentTotal ?? 0).toStringAsFixed(0)}%',
+                      message: S.t('core0CoresIPercentTotal0ToStringAsFixed01', [i, (cores[i].percentTotal ?? 0).toStringAsFixed(0)]),
                       child: _Bar(
                         percent: (cores[i].percentTotal ?? 0).clamp(0, 100),
                         color: fill(cores[i].percentTotal ?? 0),
@@ -512,16 +511,16 @@ class _SystemInfoCard extends ConsumerWidget {
     final String? cpu = info.cpuLabel;
     final List<_Fact> facts = <_Fact>[
       if (info.uptimeLabel.isNotEmpty)
-        _Fact(Icons.schedule_rounded, 'Uptime', info.uptimeLabel, live: true),
+        _Fact(Icons.schedule_rounded, S.t('uptime'), info.uptimeLabel, live: true),
       if (info.osLabel != null)
-        _Fact(Icons.sell_outlined, 'Version', info.osLabel!),
+        _Fact(Icons.sell_outlined, S.t('version'), info.osLabel!),
       if (info.kernel != null)
         _Fact(Icons.terminal_rounded, 'Kernel', info.kernel!),
       // Absent on anything virtual, which is most test setups.
       if (info.boardLabel != null)
         _Fact(Icons.developer_board_rounded, 'Board', info.boardLabel!),
       if (info.memoryCapacityLabel != null)
-        _Fact(Icons.memory_rounded, 'Memory', info.memoryCapacityLabel!),
+        _Fact(Icons.memory_rounded, S.t('memory'), info.memoryCapacityLabel!),
       if (info.hostname != null)
         _Fact(Icons.badge_outlined, 'Hostname', info.hostname!),
     ];

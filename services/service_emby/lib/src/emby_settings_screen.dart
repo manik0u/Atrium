@@ -18,25 +18,25 @@ class EmbySettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Paramètres Emby'),
+        title: Text(S.t('embySettings')),
       ),
       body: ListView(
         children: <Widget>[
           ListTile(
             leading: const Icon(Icons.sync),
-            title: const Text('Analyser la bibliothèque multimédia'),
+            title: Text(S.t('scanMediaLibrary')),
             subtitle: scanState.when(
               data: (({double progress, String state})? data) {
                 if (data == null || data.state == 'Idle') {
-                  return const Text('Prêt');
+                  return Text(S.t('ready'));
                 }
                 return Text(
                   '${data.state} - ${data.progress.toStringAsFixed(1)}%',
                 );
               },
-              loading: () => const Text('Vérification du statut…'),
+              loading: () => Text(S.t('checkingStatus')),
               error: (Object err, StackTrace stack) =>
-                  const Text('Erreur lors de la vérification du statut'),
+                  Text(S.t('errorCheckingStatus')),
             ),
             trailing: scanState.maybeWhen(
               data: (({double progress, String state})? data) {
@@ -57,7 +57,7 @@ class EmbySettingsScreen extends ConsumerWidget {
                     } catch (e) {
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Échec du démarrage de l'analyse : $e")),
+                          SnackBar(content: Text(S.t('failedToStartScanE1', [e]))),
                         );
                       }
                     }

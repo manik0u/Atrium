@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:core_models/core_models.dart';
 import 'package:xml/xml.dart';
 
 /// A fault returned inside an XML-RPC `methodResponse`.
@@ -15,7 +16,7 @@ class XmlRpcFault implements Exception {
   final String message;
 
   @override
-  String toString() => 'Faute XML-RPC $code : $message';
+  String toString() => S.t('xmlRPCFaultCodeMessage2', [code, message]);
 }
 
 /// Minimal XML-RPC codec, covering exactly what rTorrent speaks.
@@ -116,7 +117,7 @@ abstract final class XmlRpc {
     try {
       doc = XmlDocument.parse(body);
     } on XmlException catch (e) {
-      throw FormatException('pas du XML : ${e.message}');
+      throw FormatException(S.t('notXMLEMessage1', [e.message]));
     }
     final XmlElement? root = doc.getElement('methodResponse');
     if (root == null) {

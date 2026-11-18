@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -143,7 +144,7 @@ class _PlexSignInSheetState extends State<_PlexSignInSheet> {
   Future<void> _check(PlexPin pin) async {
     if (pin.hasExpired) {
       _poll?.cancel();
-      _fail('Ce code a expiré. Recommencez.');
+      _fail(S.t('thatCodeExpiredStartAgain'));
       return;
     }
     try {
@@ -229,7 +230,7 @@ class _PlexSignInSheetState extends State<_PlexSignInSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              'Sign in with Plex',
+              S.t('signInWithPlex'),
               style: theme.textTheme.titleLarge
                   ?.copyWith(fontWeight: FontWeight.w600),
             ),
@@ -258,7 +259,7 @@ class _PlexSignInSheetState extends State<_PlexSignInSheet> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Text(
-          "Terminez la connexion sur la page qui s'est ouverte, puis revenez ici.",
+          S.t('finishSigningInOnThePageThatOpenedThenComeBackHere'),
           style: theme.textTheme.bodyMedium,
         ),
         const SizedBox(height: Insets.lg),
@@ -270,23 +271,23 @@ class _PlexSignInSheetState extends State<_PlexSignInSheet> {
               child: CircularProgressIndicator(strokeWidth: 2),
             ),
             const SizedBox(width: Insets.md),
-            Text('En attente de Plex', style: theme.textTheme.bodyMedium),
+            Text(S.t('waitingForPlex'), style: theme.textTheme.bodyMedium),
           ],
         ),
         const SizedBox(height: Insets.lg),
         FilledButton.tonalIcon(
           onPressed: () => unawaited(_openBrowser()),
           icon: const Icon(Icons.open_in_new_rounded),
-          label: const Text('Rouvrez la page'),
+          label: Text(S.t('openThePageAgain')),
         ),
         const SizedBox(height: Insets.sm),
         TextButton.icon(
           onPressed: _copyLink,
           icon: const Icon(Icons.link_rounded),
-          label: const Text('Copier le lien de connexion'),
+          label: Text(S.t('copyTheSignInLink')),
         ),
         Text(
-          "Collez-le dans n'importe quel navigateur, sur ce téléphone ou un autre appareil.",
+          S.t('pasteItIntoAnyBrowserOnThisPhoneOrAnotherDevice'),
           style: theme.textTheme.bodySmall?.copyWith(
             color: cs.onSurfaceVariant,
           ),
@@ -313,7 +314,7 @@ class _PlexSignInSheetState extends State<_PlexSignInSheet> {
     );
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Lien de connexion copié')),
+        SnackBar(content: Text(S.t('signInLinkCopied'))),
       );
     }
   }
@@ -326,7 +327,7 @@ class _PlexSignInSheetState extends State<_PlexSignInSheet> {
       children: <Widget>[
         Text(
           _servers.isEmpty
-              ? "Connecté. Aucun serveur n'est revenu de votre compte."
+              ? S.t('signedInNoServersCameBackFromYourAccount')
               : 'Signed in. Pick a server to fill in its address.',
           style: theme.textTheme.bodyMedium,
         ),
@@ -347,7 +348,7 @@ class _PlexSignInSheetState extends State<_PlexSignInSheet> {
         const SizedBox(height: Insets.sm),
         TextButton(
           onPressed: _checking != null ? null : () => unawaited(_finish(null)),
-          child: const Text('Utilisez directement le jeton'),
+          child: Text(S.t('justUseTheToken')),
         ),
       ],
     );
@@ -359,14 +360,14 @@ class _PlexSignInSheetState extends State<_PlexSignInSheet> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Text(
-          _error ?? "La connexion n'a pas fonctionné.",
+          _error ?? S.t('signingInDidNotWork'),
           style: theme.textTheme.bodyMedium
               ?.copyWith(color: theme.colorScheme.error),
         ),
         const SizedBox(height: Insets.lg),
         FilledButton(
           onPressed: () => unawaited(_start()),
-          child: const Text('Réessayer'),
+          child: Text(S.t('retry')),
         ),
       ],
     );
@@ -408,8 +409,8 @@ class _ServerTile extends StatelessWidget {
       title: Text(server.name),
       subtitle: Text(
         checking
-            ? 'Vérification des adresses qui répondent'
-            : (notes.isEmpty ? 'Aucune adresse utilisable' : notes.join(' • ')),
+            ? S.t('checkingWhichAddressesAnswer')
+            : (notes.isEmpty ? S.t('noUsableAddress') : notes.join(' • ')),
         style: theme.textTheme.bodySmall,
       ),
       trailing: checking

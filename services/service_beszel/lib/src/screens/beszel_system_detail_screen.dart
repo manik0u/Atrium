@@ -58,16 +58,16 @@ class _BeszelSystemDetailScreenState extends ConsumerState<BeszelSystemDetailScr
             _currentIndex = index;
           });
         },
-        destinations: const [
+        destinations: [
           NavigationDestination(
             icon: Icon(Icons.analytics_outlined),
             selectedIcon: Icon(Icons.analytics),
-            label: 'Statistiques système',
+            label: S.t('systemStats'),
           ),
           NavigationDestination(
             icon: Icon(Icons.inventory_2_outlined),
             selectedIcon: Icon(Icons.inventory_2),
-            label: 'Conteneurs',
+            label: S.t('containers'),
           ),
           NavigationDestination(
             icon: Icon(Icons.miscellaneous_services_outlined),
@@ -85,15 +85,15 @@ class _BeszelSystemDetailScreenState extends ConsumerState<BeszelSystemDetailScr
     final statsAsync = ref.watch(beszelSystemStatsProvider(args));
 
     return EasyRefresh(
-      header: const ClassicHeader(
+      header: ClassicHeader(
         position: IndicatorPosition.locator,
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async => ref.refresh(beszelSystemStatsProvider(args).future),
       child: CustomScrollView(
@@ -171,8 +171,8 @@ class _BeszelSystemDetailScreenState extends ConsumerState<BeszelSystemDetailScr
             skipLoadingOnRefresh: true,
             data: (statsList) {
               if (statsList.isEmpty) {
-                return const SliverToBoxAdapter(
-                  child: Center(child: Text('Aucune donnée historique')),
+                return SliverToBoxAdapter(
+                  child: Center(child: Text(S.t('noHistoricalData'))),
                 );
               }
               final reversed = statsList.reversed.toList();
@@ -339,7 +339,7 @@ class _BeszelSystemDetailScreenState extends ConsumerState<BeszelSystemDetailScr
               child: Center(child: CircularProgressIndicator()),
             ),
             error: (e, st) => SliverToBoxAdapter(
-              child: Center(child: Text('Erreur : $e')),
+              child: Center(child: Text(S.t('errorE1', [e]))),
             ),
           ),
         ),
@@ -382,15 +382,15 @@ class _BeszelSystemDetailScreenState extends ConsumerState<BeszelSystemDetailScr
     final asyncContainers = ref.watch(beszelContainersProvider(args));
 
     return EasyRefresh(
-      header: const ClassicHeader(
+      header: ClassicHeader(
         position: IndicatorPosition.locator,
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async => ref.refresh(beszelContainersProvider(args).future),
       child: CustomScrollView(
@@ -404,8 +404,8 @@ class _BeszelSystemDetailScreenState extends ConsumerState<BeszelSystemDetailScr
             skipLoadingOnRefresh: true,
             data: (containers) {
               if (containers.isEmpty) {
-                return const SliverToBoxAdapter(
-                  child: Center(child: Text('Aucun conteneur trouvé')),
+                return SliverToBoxAdapter(
+                  child: Center(child: Text(S.t('noContainersFound'))),
                 );
               }
               return SliverList(
@@ -424,7 +424,7 @@ class _BeszelSystemDetailScreenState extends ConsumerState<BeszelSystemDetailScr
               child: Center(child: CircularProgressIndicator()),
             ),
             error: (e, st) => SliverToBoxAdapter(
-              child: Center(child: Text('Erreur : $e')),
+              child: Center(child: Text(S.t('errorE1', [e]))),
             ),
           ),
         ),
@@ -438,15 +438,15 @@ class _BeszelSystemDetailScreenState extends ConsumerState<BeszelSystemDetailScr
     final asyncSystemd = ref.watch(beszelSystemdServicesProvider(args));
 
     return EasyRefresh(
-      header: const ClassicHeader(
+      header: ClassicHeader(
         position: IndicatorPosition.locator,
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async => ref.refresh(beszelSystemdServicesProvider(args).future),
       child: CustomScrollView(
@@ -469,7 +469,7 @@ class _BeszelSystemDetailScreenState extends ConsumerState<BeszelSystemDetailScr
                         Icon(Icons.info_outline, size: 48, color: Theme.of(context).colorScheme.primary),
                         const SizedBox(height: 16),
                         Text(
-                          'Aucun service systemd trouvé.',
+                          S.t('noSystemdServicesFound'),
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ],
@@ -491,7 +491,7 @@ class _BeszelSystemDetailScreenState extends ConsumerState<BeszelSystemDetailScr
               child: Center(child: CircularProgressIndicator()),
             ),
             error: (e, st) => SliverToBoxAdapter(
-              child: Center(child: Text('Erreur : $e')),
+              child: Center(child: Text(S.t('errorE1', [e]))),
             ),
           ),
         ),
@@ -560,7 +560,7 @@ class _BeszelSystemdServiceCard extends StatelessWidget {
               crossAxisSpacing: Insets.sm,
               children: [
                 _buildStatItem(context, Icons.memory, 'CPU', '${service.cpu.toStringAsFixed(1)}%'),
-                _buildStatItem(context, Icons.storage, 'Memory', _formatBytes(service.memory)),
+                _buildStatItem(context, Icons.storage, S.t('memory'), _formatBytes(service.memory)),
               ],
             ),
           ],
@@ -643,7 +643,7 @@ class _BeszelContainerCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    container.status ?? 'Unknown',
+                    container.status ?? S.t('unknown'),
                     style: TextStyle(color: statusColor, fontSize: 12, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -661,7 +661,7 @@ class _BeszelContainerCard extends StatelessWidget {
               crossAxisSpacing: Insets.sm,
               children: [
                 _buildStatItem(context, Icons.memory, 'CPU', '${(container.cpu ?? 0.0).toStringAsFixed(1)}%'),
-                _buildStatItem(context, Icons.storage, 'Memory', '${(container.memory ?? 0.0).toStringAsFixed(1)} MB'),
+                _buildStatItem(context, Icons.storage, S.t('memory'), '${(container.memory ?? 0.0).toStringAsFixed(1)} MB'),
                 _buildStatItem(context, Icons.network_check, 'Net', _formatNetworkTraffic(container.net)),
               ],
             ),
@@ -669,7 +669,7 @@ class _BeszelContainerCard extends StatelessWidget {
               const SizedBox(height: Insets.sm),
               const Divider(),
               const SizedBox(height: Insets.sm),
-              _buildStatItem(context, Icons.inventory_2_outlined, 'Image', container.image!),
+              _buildStatItem(context, Icons.inventory_2_outlined, S.t('image'), container.image!),
             ],
             if (container.ports != null && container.ports!.isNotEmpty) ...[
               const SizedBox(height: Insets.sm),

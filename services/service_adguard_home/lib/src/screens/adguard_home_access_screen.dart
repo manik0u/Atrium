@@ -75,7 +75,7 @@ class _AdguardHomeAccessScreenState
     final bool? sure = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text("Enregistrer les paramètres d'accès ?"),
+        title: Text(S.t('saveTheAccessSettings')),
         content: Text(
           allowlist
               ? 'Only the allowed clients will get answers. A device not on '
@@ -86,11 +86,11 @@ class _AdguardHomeAccessScreenState
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Enregistrer'),
+            child: Text(S.t('save')),
           ),
         ],
       ),
@@ -110,7 +110,7 @@ class _AdguardHomeAccessScreenState
         save: () => ref
             .read(adguardHomeActionsProvider(_instance))
             .saveAccessList(before: before, after: after),
-        done: 'Access settings saved',
+        done: S.t('accessSettingsSaved'),
         setBusy: (bool busy) => setState(() => _busy = busy),
         // Asked once already: Try again goes straight to the write.
         retry: () => _write(before, after),
@@ -124,7 +124,7 @@ class _AdguardHomeAccessScreenState
     // Filled once. A later read must not replace what is being typed.
     if (_before == null && value != null) _fill(value);
     return AdguardHomeSettingsForm(
-      title: 'Accès',
+      title: S.t('access'),
       busy: _busy,
       changed: _changed,
       onSave: _save,
@@ -161,7 +161,7 @@ class _AdguardHomeAccessScreenState
           'disallowed',
           _disallowed,
           allowlist
-              ? "Sans effet tant qu'il y a des clients autorisés."
+              ? S.t('notInForceWhileThereAreAllowedClients')
               : 'IP addresses, ranges or ClientIDs, one per line. These get '
                   'no answers.',
           enabled: !allowlist,

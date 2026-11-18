@@ -198,7 +198,7 @@ class _EmbySessionDetailScreenState
                               }
                             } catch (_) {
                               messenger.showSnackBar(
-                                const SnackBar(content: Text("Échec de l'action")),
+                                SnackBar(content: Text(S.t('actionFailed'))),
                               );
                             }
                           },
@@ -252,8 +252,8 @@ class _EmbySessionDetailScreenState
                                   }
                                 } catch (_) {
                                   messenger.showSnackBar(
-                                    const SnackBar(
-                                      content: Text("Échec de l'action"),
+                                    SnackBar(
+                                      content: Text(S.t('actionFailed')),
                                     ),
                                   );
                                 }
@@ -420,8 +420,8 @@ class _EmbySessionDetailScreenState
                                   );
                                 } catch (_) {
                                   messenger.showSnackBar(
-                                    const SnackBar(
-                                      content: Text("Échec de l'action"),
+                                    SnackBar(
+                                      content: Text(S.t('actionFailed')),
                                     ),
                                   );
                                 }
@@ -494,8 +494,8 @@ class _EmbySessionDetailScreenState
                                 );
                               } catch (_) {
                                 messenger.showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Échec de l'action"),
+                                  SnackBar(
+                                    content: Text(S.t('actionFailed')),
                                   ),
                                 );
                               }
@@ -531,8 +531,8 @@ class _EmbySessionDetailScreenState
                                 );
                               } catch (_) {
                                 messenger.showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Échec de l'action"),
+                                  SnackBar(
+                                    content: Text(S.t('actionFailed')),
                                   ),
                                 );
                               }
@@ -578,8 +578,8 @@ class _EmbySessionDetailScreenState
                                 );
                               } catch (_) {
                                 messenger.showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Échec de l'action"),
+                                  SnackBar(
+                                    content: Text(S.t('actionFailed')),
                                   ),
                                 );
                               }
@@ -627,8 +627,8 @@ class _EmbySessionDetailScreenState
                                 );
                               } catch (_) {
                                 messenger.showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Échec de l'action"),
+                                  SnackBar(
+                                    content: Text(S.t('actionFailed')),
                                   ),
                                 );
                               }
@@ -667,8 +667,8 @@ class _EmbySessionDetailScreenState
                                 navigator.pop();
                               } catch (_) {
                                 messenger.showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Échec de l'action"),
+                                  SnackBar(
+                                    content: Text(S.t('actionFailed')),
                                   ),
                                 );
                               }
@@ -704,8 +704,8 @@ class _EmbySessionDetailScreenState
                                 );
                               } catch (_) {
                                 messenger.showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Échec de l'action"),
+                                  SnackBar(
+                                    content: Text(S.t('actionFailed')),
                                   ),
                                 );
                               }

@@ -64,7 +64,7 @@ void main() {
     test('is a POST to /graphql carrying the query as JSON', () async {
       respond = (HttpRequest req) => writeJson(req, <String, dynamic>{
             'data': <String, dynamic>{
-              'array': <String, dynamic>{'state': 'DÉMARRÉ'},
+              'array': <String, dynamic>{'state': 'STARTED'},
             },
           });
 
@@ -82,7 +82,7 @@ void main() {
       // every parity and cache disk without reporting anything wrong.
       respond = (HttpRequest req) => writeJson(req, <String, dynamic>{
             'data': <String, dynamic>{
-              'array': <String, dynamic>{'state': 'DÉMARRÉ'},
+              'array': <String, dynamic>{'state': 'STARTED'},
             },
           });
 
@@ -100,7 +100,7 @@ void main() {
       respond = (HttpRequest req) => writeJson(req, <String, dynamic>{
             'data': <String, dynamic>{
               'array': <String, dynamic>{
-                'state': 'DÉMARRÉ',
+                'state': 'STARTED',
                 'parities': <dynamic>[
                   <String, dynamic>{
                     'name': 'parity',
@@ -147,7 +147,7 @@ void main() {
                   <String, dynamic>{
                     'id': 'a1',
                     'names': <dynamic>['/plex'],
-                    'state': 'EN COURS',
+                    'state': 'RUNNING',
                     'status': 'Up 3 hours (unhealthy)',
                     'autoStart': true,
                   },
@@ -288,7 +288,7 @@ void main() {
 
     test('starting sends the id as a variable, not spliced into the query',
         () async {
-      answerWith('EN COURS');
+      answerWith('RUNNING');
 
       final UnraidContainer c =
           await UnraidClient(dio).startContainer('srv:c1');

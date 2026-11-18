@@ -20,20 +20,20 @@ class TagsSection extends ConsumerWidget {
     await showDialog<void>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Ajouter une balise'),
+        title: Text(S.t('addTag')),
         content: TextField(
           controller: tagController,
           autofocus: true,
-          decoration: const InputDecoration(
-            labelText: 'Libellé de la balise',
-            hintText: 'ex. favorite, lossless',
+          decoration: InputDecoration(
+            labelText: S.t('tagLabel'),
+            hintText: S.t('eGFavoriteLossless'),
             border: OutlineInputBorder(),
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () async {
@@ -46,23 +46,23 @@ class TagsSection extends ConsumerWidget {
                 final ApiResponse<TagResource> resp =
                     await api.tag.postTag(body: TagResource(label: label));
                 if (!resp.isSuccess) {
-                  throw Exception(resp.error?.message ?? "Échec de l'ajout de la balise");
+                  throw Exception(resp.error?.message ?? S.t('failedToAddTag'));
                 }
 
                 ref.invalidate(lidarrTagsProvider(instance));
                 if (ctx.mounted) {
                   Navigator.pop(ctx);
                   messenger.showSnackBar(
-                    const SnackBar(content: Text('Balise ajoutée avec succès !')),
+                    SnackBar(content: Text(S.t('tagAddedSuccessfully'))),
                   );
                 }
               } catch (e) {
                 if (ctx.mounted) {
-                  messenger.showSnackBar(SnackBar(content: Text('Erreur : $e')));
+                  messenger.showSnackBar(SnackBar(content: Text(S.t('errorE1', [e]))));
                 }
               }
             },
-            child: const Text('Ajouter'),
+            child: Text(S.t('add')),
           ),
         ],
       ),
@@ -81,19 +81,19 @@ class TagsSection extends ConsumerWidget {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Supprimer la balise'),
-        content: Text('Voulez-vous vraiment supprimer la balise « ${tag.label} » ?'),
+        title: Text(S.t('deleteTag_2')),
+        content: Text(S.t('areYouSureYouWantToDeleteTagTagLabel1', [tag.label])),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
               backgroundColor: Theme.of(ctx).colorScheme.error,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Supprimer'),
+            child: Text(S.t('delete')),
           ),
         ],
       ),
@@ -106,11 +106,11 @@ class TagsSection extends ConsumerWidget {
       await api.tag.deleteTagById(id: id);
       ref.invalidate(lidarrTagsProvider(instance));
       messenger.showSnackBar(
-        SnackBar(content: Text('Balise « ${tag.label} » supprimée.')),
+        SnackBar(content: Text(S.t('tagTagLabelDeleted1', [tag.label]))),
       );
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la suppression de la balise : $e')),
+        SnackBar(content: Text(S.t('failedToDeleteTagE1', [e]))),
       );
     }
   }
@@ -138,7 +138,7 @@ class TagsSection extends ConsumerWidget {
 
             return AlertDialog(
               title: Text(
-                isNew ? 'Add Auto-Tagging Rule' : 'Edit Auto-Tagging Rule',
+                isNew ? S.t('addAutoTaggingRule') : 'Edit Auto-Tagging Rule',
               ),
               content: SizedBox(
                 width: double.maxFinite,
@@ -149,16 +149,16 @@ class TagsSection extends ConsumerWidget {
                     children: [
                       TextField(
                         controller: nameController,
-                        decoration: const InputDecoration(
-                          labelText: 'Nom de la règle',
+                        decoration: InputDecoration(
+                          labelText: S.t('ruleName'),
                           border: OutlineInputBorder(),
                         ),
                       ),
                       const SizedBox(height: Insets.sm),
                       SwitchListTile(
-                        title: const Text('Retirer automatiquement les balises'),
-                        subtitle: const Text(
-                          'Retirer la balise si les conditions ne sont plus remplies',
+                        title: Text(S.t('removeTagsAutomatically')),
+                        subtitle: Text(
+                          S.t('removeTagIfConditionsAreNoLongerMet'),
                         ),
                         value: removeTagsAutomatically,
                         contentPadding: EdgeInsets.zero,
@@ -174,7 +174,7 @@ class TagsSection extends ConsumerWidget {
                       asyncTags.when(
                         data: (List<TagResource> allTags) {
                           if (allTags.isEmpty) {
-                            return const Text('Aucune balise disponible.');
+                            return Text(S.t('noTagsAvailable'));
                           }
                           return Wrap(
                             spacing: 6,
@@ -185,7 +185,7 @@ class TagsSection extends ConsumerWidget {
                               final bool isSelected =
                                   selectedTags.contains(tId);
                               return FilterChip(
-                                label: Text(t.label ?? 'Balise $tId'),
+                                label: Text(t.label ?? S.t('tagTId1', [tId])),
                                 selected: isSelected,
                                 onSelected: (bool selected) {
                                   setDialogState(() {
@@ -210,7 +210,7 @@ class TagsSection extends ConsumerWidget {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(dCtx),
-                  child: const Text('Annuler'),
+                  child: Text(S.t('cancel')),
                 ),
                 FilledButton(
                   onPressed: () async {
@@ -265,12 +265,12 @@ class TagsSection extends ConsumerWidget {
                     } catch (e) {
                       if (dCtx.mounted) {
                         messenger.showSnackBar(
-                          SnackBar(content: Text('Erreur : $e')),
+                          SnackBar(content: Text(S.t('errorE1', [e]))),
                         );
                       }
                     }
                   },
-                  child: const Text('Enregistrer'),
+                  child: Text(S.t('save')),
                 ),
               ],
             );
@@ -291,12 +291,12 @@ class TagsSection extends ConsumerWidget {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text("Supprimer la règle d'auto-tag ?"),
-        content: Text('Voulez-vous vraiment supprimer « ${rule.name} » ?'),
+        title: Text(S.t('deleteAutoTaggingRule')),
+        content: Text(S.t('areYouSureYouWantToDeleteRuleName1', [rule.name])),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -304,7 +304,7 @@ class TagsSection extends ConsumerWidget {
               foregroundColor: Theme.of(ctx).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Supprimer'),
+            child: Text(S.t('delete')),
           ),
         ],
       ),
@@ -319,17 +319,17 @@ class TagsSection extends ConsumerWidget {
           await api.autoTagging.deleteAutotaggingById(id: id);
       if (!resp.isSuccess) {
         throw Exception(
-          resp.error?.message ?? "Échec de la suppression de la règle d'auto-tag",
+          resp.error?.message ?? S.t('failedToDeleteAutoTaggingRule'),
         );
       }
 
       ref.invalidate(lidarrAutoTaggingProvider(instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text("Règle d'auto-tag supprimée.")),
+        SnackBar(content: Text(S.t('autoTaggingRuleDeleted'))),
       );
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text("Échec de la suppression de la règle d'auto-tag : $e")),
+        SnackBar(content: Text(S.t('failedToDeleteAutoTaggingRuleE1', [e]))),
       );
     }
   }
@@ -360,7 +360,7 @@ class TagsSection extends ConsumerWidget {
                   Icon(Icons.label_outline, size: 20, color: cs.primary),
                   const SizedBox(width: 8),
                   Text(
-                    'Tags',
+                    S.t('tags'),
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -369,7 +369,7 @@ class TagsSection extends ConsumerWidget {
               ),
               IconButton.filledTonal(
                 icon: const Icon(Icons.add, size: 18),
-                tooltip: 'Ajouter une balise',
+                tooltip: S.t('addTag'),
                 onPressed: () => _showAddTagDialog(context, ref),
               ),
             ],
@@ -400,7 +400,7 @@ class TagsSection extends ConsumerWidget {
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(
-                            'Aucune balise créée. Utilisez les balises pour étiqueter et filtrer les artistes ou albums.',
+                            S.t('noTagsCreatedUseTagsToLabelAndFilterArtistsOrAlbums'),
                             style: TextStyle(
                               color: cs.onSurfaceVariant,
                               fontSize: 13,
@@ -420,7 +420,7 @@ class TagsSection extends ConsumerWidget {
                   return Chip(
                     avatar: const Icon(Icons.tag, size: 16),
                     label: Text(
-                      tag.label ?? 'Balise ${tag.id}',
+                      tag.label ?? S.t('tagTagId1', [tag.id]),
                       style: const TextStyle(fontWeight: FontWeight.w500),
                     ),
                     backgroundColor: cs.surfaceContainerHigh,
@@ -450,7 +450,7 @@ class TagsSection extends ConsumerWidget {
               ),
               IconButton.filledTonal(
                 icon: const Icon(Icons.add, size: 18),
-                tooltip: "Ajouter une règle d'auto-tag",
+                tooltip: S.t('addAutoTaggingRule'),
                 onPressed: () => _showAddEditAutoTaggingDialog(context, ref),
               ),
             ],
@@ -481,7 +481,7 @@ class TagsSection extends ConsumerWidget {
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(
-                            "Aucune règle d'auto-tag configurée.",
+                            S.t('noAutoTaggingRulesConfigured'),
                             style: TextStyle(
                               color: cs.onSurfaceVariant,
                               fontSize: 13,
@@ -526,7 +526,7 @@ class TagsSection extends ConsumerWidget {
                           ),
                         ),
                         title: Text(
-                          rule.name ?? 'Rule',
+                          rule.name ?? S.t('rule'),
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.w600,
                             fontSize: 15,
@@ -541,7 +541,7 @@ class TagsSection extends ConsumerWidget {
                         ),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete_outline, size: 20),
-                          tooltip: 'Supprimer la règle',
+                          tooltip: S.t('deleteRule'),
                           onPressed: () =>
                               _deleteAutoTagging(context, ref, rule),
                         ),

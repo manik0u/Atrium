@@ -45,7 +45,7 @@ void main() {
 
   test('Ombi is registered as an apiKey request service', () {
     expect(ServiceKind.ombi.displayName, 'Ombi');
-    expect(ServiceKind.ombi.tagline, 'Demandes');
+    expect(ServiceKind.ombi.tagline, 'Requests');
     expect(ServiceKind.ombi.isBeta, isFalse);
     expect(ServiceKind.ombi.defaultPort, 3579);
     expect(ServiceKind.ombi.authStyle, AuthStyle.apiKey);
@@ -55,7 +55,7 @@ void main() {
 
   test('MySpeed is registered as an apiKey analytics service', () {
     expect(ServiceKind.myspeed.displayName, 'MySpeed');
-    expect(ServiceKind.myspeed.tagline, 'Vitesse Internet');
+    expect(ServiceKind.myspeed.tagline, 'Internet speed');
     expect(ServiceKind.myspeed.isBeta, isFalse);
     expect(ServiceKind.myspeed.defaultPort, 5216);
     expect(ServiceKind.myspeed.authStyle, AuthStyle.apiKey);
@@ -128,7 +128,7 @@ void main() {
 
   test('AdGuard Home is registered as a userPass analytics service', () {
     expect(ServiceKind.adguardHome.displayName, 'AdGuard Home');
-    expect(ServiceKind.adguardHome.tagline, "Blocage à l'échelle du réseau");
+    expect(ServiceKind.adguardHome.tagline, 'Network-wide blocking');
     expect(ServiceKind.adguardHome.isBeta, isFalse);
     expect(ServiceKind.adguardHome.defaultPort, 80);
     expect(ServiceKind.adguardHome.authStyle, AuthStyle.userPass);
@@ -138,7 +138,7 @@ void main() {
 
   test('aria2 is registered as an apiKey download client', () {
     expect(ServiceKind.aria2.displayName, 'aria2');
-    expect(ServiceKind.aria2.tagline, 'Client de téléchargement');
+    expect(ServiceKind.aria2.tagline, 'Download client');
     expect(ServiceKind.aria2.isBeta, isTrue);
     expect(ServiceKind.aria2.defaultPort, 6800);
     // The credential is the daemon's `--rpc-secret`, which travels as the
@@ -151,7 +151,7 @@ void main() {
 
   test('Cleanuparr is registered as an apiKey service under Extra', () {
     expect(ServiceKind.cleanuparr.displayName, 'Cleanuparr');
-    expect(ServiceKind.cleanuparr.tagline, 'Bloqueur de malwares et nettoyeur');
+    expect(ServiceKind.cleanuparr.tagline, 'Malware blocker & cleaner');
     expect(ServiceKind.cleanuparr.isBeta, isTrue);
     expect(ServiceKind.cleanuparr.defaultPort, 11011);
     expect(ServiceKind.cleanuparr.authStyle, AuthStyle.apiKey);
@@ -161,7 +161,7 @@ void main() {
 
   test('slskd is registered as an apiKey downloader service', () {
     expect(ServiceKind.slskd.displayName, 'slskd');
-    expect(ServiceKind.slskd.tagline, 'Client Soulseek');
+    expect(ServiceKind.slskd.tagline, 'Soulseek client');
     expect(ServiceKind.slskd.isBeta, isTrue);
     expect(ServiceKind.slskd.defaultPort, 5030);
     expect(ServiceKind.slskd.authStyle, AuthStyle.apiKey);

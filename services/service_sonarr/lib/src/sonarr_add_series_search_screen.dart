@@ -143,7 +143,7 @@ class _SonarrAddSeriesSearchScreenState
             child: SearchBar(
               focusNode: _searchFocusNode,
               controller: _searchController,
-              hintText: 'Rechercher dans le catalogue en ligne…',
+              hintText: S.t('searchOnlineCatalog'),
               onTapOutside: (event) {
                 if (_searchFocusNode.hasFocus) {
                   _searchFocusNode.unfocus();
@@ -185,7 +185,7 @@ class _SonarrAddSeriesSearchScreenState
                     ),
                     const SizedBox(height: Insets.md),
                     Text(
-                      'Rechercher une série à ajouter',
+                      S.t('searchForATVShowToAdd'),
                       style: theme.textTheme.bodyLarge?.copyWith(
                         color: cs.onSurfaceVariant,
                       ),
@@ -204,11 +204,11 @@ class _SonarrAddSeriesSearchScreenState
                 },
                 data: (List<SonarrSeries> results) {
                   if (results.isEmpty) {
-                    return const EmptyView(
+                    return EmptyView(
                       icon: Icons.search_off_outlined,
-                      title: 'Aucune série trouvée',
+                      title: S.t('noSeriesFound'),
                       message:
-                          "Nous n'avons trouvé aucune série correspondant à votre requête.",
+                          S.t('weCouldnTFindAnySeriesMatchingYourQuery'),
                     );
                   }
 
@@ -376,7 +376,7 @@ class _SonarrAddSeriesSearchScreenState
                                                     ),
                                                     const SizedBox(width: 4),
                                                     Text(
-                                                      'Added',
+                                                      S.t('added'),
                                                       style: theme
                                                           .textTheme.labelSmall
                                                           ?.copyWith(

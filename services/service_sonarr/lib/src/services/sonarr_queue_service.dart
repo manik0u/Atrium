@@ -4,6 +4,7 @@ import '../generated/api/raw_queue_status_api.dart';
 import '../generated/models/queue_resource.dart';
 import '../generated/models/queue_status_resource.dart';
 import '../generated/responses/sonarr_exception.dart';
+import 'package:core_models/core_models.dart';
 
 /// High-level service wrapper for Sonarr active download queue and sessions.
 class SonarrQueueService {
@@ -35,12 +36,12 @@ class SonarrQueueService {
     }
     if (response.error != null) {
       throw SonarrException(
-        response.error!.message ?? "Échec de la récupération de la file d'attente",
+        response.error!.message ?? S.t('failedToFetchQueue'),
         statusCode: response.statusCode,
         error: response.error,
       );
     }
-    throw SonarrException('Failed to fetch queue', statusCode: response.statusCode);
+    throw SonarrException(S.t('failedToFetchQueue'), statusCode: response.statusCode);
   }
 
   /// Retrieves detailed download queue records, optionally filtered by seriesId or episodeIds.
@@ -57,12 +58,12 @@ class SonarrQueueService {
     }
     if (response.error != null) {
       throw SonarrException(
-        response.error!.message ?? 'Échec de la récupération des détails de la file',
+        response.error!.message ?? S.t('failedToFetchQueueDetails'),
         statusCode: response.statusCode,
         error: response.error,
       );
     }
-    throw SonarrException('Failed to fetch queue details', statusCode: response.statusCode);
+    throw SonarrException(S.t('failedToFetchQueueDetails'), statusCode: response.statusCode);
   }
 
   /// Retrieves status counts for active download queues.
@@ -73,11 +74,11 @@ class SonarrQueueService {
     }
     if (response.error != null) {
       throw SonarrException(
-        response.error!.message ?? 'Échec de la récupération du statut de la file',
+        response.error!.message ?? S.t('failedToFetchQueueStatus'),
         statusCode: response.statusCode,
         error: response.error,
       );
     }
-    throw SonarrException('Failed to fetch queue status', statusCode: response.statusCode);
+    throw SonarrException(S.t('failedToFetchQueueStatus'), statusCode: response.statusCode);
   }
 }

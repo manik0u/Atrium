@@ -56,7 +56,7 @@ class NavidromeArtistScreen extends ConsumerWidget {
               onPressed: () {
                 showNavidromeRatingModal(
                   context: context,
-                  title: "Noter l'artiste",
+                  title: S.t('rateArtist'),
                   subtitle: artist.name,
                   initialRating: artist.userRating ?? 0,
                   onRatingChanged: (int newRating) async {
@@ -83,8 +83,8 @@ class NavidromeArtistScreen extends ConsumerWidget {
                 color: artist.isStarred ? Colors.redAccent : null,
               ),
               tooltip: artist.isStarred
-                  ? 'Retirer des favoris'
-                  : 'Add to favorites',
+                  ? S.t('removeFromFavorites')
+                  : S.t('addToFavorites'),
               onPressed: () async {
                 final bool willStar = !artist.isStarred;
                 try {
@@ -101,7 +101,7 @@ class NavidromeArtistScreen extends ConsumerWidget {
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Échec de la mise à jour des favoris : $e')),
+                      SnackBar(content: Text(S.t('failedToUpdateFavoriteE1', [e]))),
                     );
                   }
                 }
@@ -241,7 +241,7 @@ class NavidromeArtistScreen extends ConsumerWidget {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Text(
-                                    '${detail.albums.length} ${detail.albums.length == 1 ? 'Album' : 'Albums'}',
+                                    '${detail.albums.length} ${detail.albums.length == 1 ? S.t('album') : S.t('albums')}',
                                     style:
                                         theme.textTheme.labelMedium?.copyWith(
                                       color: cs.onSecondaryContainer,
@@ -292,7 +292,7 @@ class NavidromeArtistScreen extends ConsumerWidget {
                 ),
                 sliver: SliverToBoxAdapter(
                   child: Text(
-                    'Albums',
+                    S.t('albums'),
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -300,10 +300,10 @@ class NavidromeArtistScreen extends ConsumerWidget {
                 ),
               ),
               if (detail.albums.isEmpty)
-                const SliverFillRemaining(
+                SliverFillRemaining(
                   hasScrollBody: false,
                   child: Center(
-                    child: Text('Aucun album trouvé pour cet artiste'),
+                    child: Text(S.t('noAlbumsFoundForThisArtist')),
                   ),
                 )
               else
@@ -414,13 +414,13 @@ class NavidromeArtistScreen extends ConsumerWidget {
                 color: Colors.red,
               ),
               const SizedBox(height: Insets.md),
-              Text("Échec du chargement de l'artiste : $err"),
+              Text(S.t('failedToLoadArtistErr1', [err])),
               const SizedBox(height: Insets.md),
               FilledButton.tonal(
                 onPressed: () => ref.invalidate(
                   navidromeArtistDetailProvider((instance, artistId)),
                 ),
-                child: const Text('Réessayer'),
+                child: Text(S.t('retry')),
               ),
             ],
           ),
@@ -455,7 +455,7 @@ class _ArtistBiographyState extends State<_ArtistBiography> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'About',
+          S.t('about'),
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
           ),

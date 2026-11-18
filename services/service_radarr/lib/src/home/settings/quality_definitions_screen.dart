@@ -39,8 +39,8 @@ class _QualityDefinitionsScreenState
       ref.invalidate(radarrQualityDefinitionsProvider(widget.instance));
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Définitions de qualité mises à jour avec succès !'),
+          SnackBar(
+            content: Text(S.t('qualityDefinitionsUpdatedSuccessfully')),
           ),
         );
         Navigator.pop(context);
@@ -48,7 +48,7 @@ class _QualityDefinitionsScreenState
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec de la mise à jour des définitions de qualité : $e')),
+          SnackBar(content: Text(S.t('failedToUpdateQualityDefinitionsE1', [e]))),
         );
       }
     } finally {
@@ -64,7 +64,7 @@ class _QualityDefinitionsScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Définitions de qualité'),
+        title: Text(S.t('qualityDefinitions')),
         actions: [
           if (_saving)
             const Padding(
@@ -84,7 +84,7 @@ class _QualityDefinitionsScreenState
       ),
       body: definitionsAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Erreur : $err')),
+        error: (err, stack) => Center(child: Text(S.t('errorErr1', [err]))),
         data: (data) {
           _initializeValues(data);
 
@@ -94,7 +94,7 @@ class _QualityDefinitionsScreenState
             itemBuilder: (context, index) {
               final def = _definitions[index];
               final qualityMap = def['quality'] as Map<String, dynamic>?;
-              final qName = (qualityMap?['name'] as String?) ?? 'Unknown';
+              final qName = (qualityMap?['name'] as String?) ?? S.t('unknown');
 
               final double minVal = (def['minSize'] as num?)?.toDouble() ?? 0.0;
               final double? maxVal = (def['maxSize'] as num?)?.toDouble();
@@ -173,7 +173,7 @@ class _QualityDefinitionsScreenState
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Text('Illimité'),
+                              Text(S.t('unlimited')),
                               Checkbox(
                                 value: isUnlimited,
                                 onChanged: (checked) {

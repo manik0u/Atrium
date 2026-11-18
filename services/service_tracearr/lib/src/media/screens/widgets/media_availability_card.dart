@@ -153,7 +153,7 @@ class MediaAvailabilityCard extends StatelessWidget {
                     ),
                     IconButton(
                       icon: const Icon(Icons.open_in_new, size: 18),
-                      tooltip: 'Voir dans le serveur multimédia',
+                      tooltip: S.t('viewInMediaServer'),
                       onPressed: () => _handleDeepLink(context, item),
                     ),
                   ],

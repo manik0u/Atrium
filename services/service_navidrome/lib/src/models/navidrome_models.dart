@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:flutter/foundation.dart';
 
 /// Helper to parse fields that can be either a List or a single Map (XML-to-JSON quirk in Subsonic).
@@ -55,7 +56,7 @@ class NavidromeArtist {
       id: (json['id'] as String?) ?? '',
       name: (json['name'] as String?) ??
           (json['title'] as String?) ??
-          'Unknown Artist',
+          S.t('unknownArtist'),
       albumCount: (json['albumCount'] as num?)?.toInt() ?? 0,
       coverArt: json['coverArt'] as String?,
       artistImageUrl: json['artistImageUrl'] as String?,
@@ -122,8 +123,8 @@ class NavidromeAlbum {
       id: (json['id'] as String?) ?? '',
       name: (json['name'] as String?) ??
           (json['title'] as String?) ??
-          'Unknown Album',
-      artist: (json['artist'] as String?) ?? 'Unknown Artist',
+          S.t('unknownAlbum'),
+      artist: (json['artist'] as String?) ?? S.t('unknownArtist'),
       artistId: json['artistId'] as String?,
       coverArt: json['coverArt'] as String?,
       songCount: (json['songCount'] as num?)?.toInt() ?? 0,
@@ -188,10 +189,10 @@ class NavidromeSong {
   factory NavidromeSong.fromJson(Map<String, dynamic> json) {
     return NavidromeSong(
       id: (json['id'] as String?) ?? '',
-      title: (json['title'] as String?) ?? 'Titre inconnu',
+      title: (json['title'] as String?) ?? S.t('unknownTitle'),
       album: (json['album'] as String?) ?? '',
       albumId: json['albumId'] as String?,
-      artist: (json['artist'] as String?) ?? 'Unknown Artist',
+      artist: (json['artist'] as String?) ?? S.t('unknownArtist'),
       artistId: json['artistId'] as String?,
       track: (json['track'] as num?)?.toInt(),
       discNumber: (json['discNumber'] as num?)?.toInt(),

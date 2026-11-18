@@ -18,14 +18,14 @@ class ProwlarrSystemTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
       onRefresh: () async {
         ref
@@ -102,7 +102,7 @@ class _HealthSection extends ConsumerWidget {
     final AsyncValue<List<ProwlarrHealth>> health =
         ref.watch(prowlarrHealthProvider(instance));
     return _SectionCard(
-      title: 'Santé',
+      title: S.t('health'),
       child: health.when(
         loading: () => const Padding(
           padding: EdgeInsets.symmetric(vertical: Insets.md),
@@ -118,7 +118,7 @@ class _HealthSection extends ConsumerWidget {
             return _StatusRow(
               icon: Icons.check_circle,
               color: cs.tertiary,
-              text: 'Tout est sain',
+              text: S.t('allHealthy'),
               pill: 'OK',
             );
           }
@@ -155,9 +155,9 @@ class _HealthSection extends ConsumerWidget {
       };
 
   String? _healthPill(String type) => switch (type.toLowerCase()) {
-        'error' => 'Erreur',
-        'warning' => 'Avertissement',
-        'notice' => 'Remarque',
+        'error' => S.t('error'),
+        'warning' => S.t('warning'),
+        'notice' => S.t('notice'),
         _ => null,
       };
 }
@@ -172,7 +172,7 @@ class _TasksSection extends ConsumerWidget {
     final AsyncValue<List<ProwlarrSystemTask>> tasks =
         ref.watch(prowlarrTasksProvider(instance));
     return _SectionCard(
-      title: 'Tâches',
+      title: S.t('tasks'),
       child: tasks.when(
         loading: () => const SizedBox.shrink(),
         error: (Object e, _) => _StatusRow(
@@ -214,11 +214,11 @@ class _TaskTileState extends ConsumerState<_TaskTile> {
           await ref.read(prowlarrApiProvider(widget.instance).future);
       await api.runCommand(widget.task.taskName);
       messenger.showSnackBar(
-        SnackBar(content: Text('${widget.task.name} démarré')),
+        SnackBar(content: Text(S.t('startedWidgetTaskName1', [widget.task.name]))),
       );
       ref.invalidate(prowlarrTasksProvider(widget.instance));
     } on Object catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text('Échec : ${_msg(e)}')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('failedMsgE1', [_msg(e)]))));
     } finally {
       if (mounted) {
         setState(() => _running = false);
@@ -273,7 +273,7 @@ class _TaskTileState extends ConsumerState<_TaskTile> {
                 child: ExpressiveProgressIndicator(strokeWidth: 2),
               )
             : IconButton(
-                tooltip: 'Exécuter maintenant',
+                tooltip: S.t('runNow'),
                 icon: const Icon(Icons.play_arrow),
                 onPressed: _run,
               ),
@@ -305,12 +305,12 @@ class _BackupsSection extends ConsumerWidget {
     try {
       final ProwlarrApi api =
           await ref.read(prowlarrApiProvider(instance).future);
-      await api.runCommand('Backup');
+      await api.runCommand(S.t('backup'));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Sauvegarde démarrée ; tirez pour actualiser')),
+        SnackBar(content: Text(S.t('backupStartedPullToRefresh'))),
       );
     } on Object catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text('Échec : ${_msg(e)}')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('failedMsgE1', [_msg(e)]))));
     }
   }
 
@@ -322,12 +322,12 @@ class _BackupsSection extends ConsumerWidget {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Supprimer la sauvegarde ?'),
+        title: Text(S.t('deleteBackup')),
         content: Text(backup.name),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -335,7 +335,7 @@ class _BackupsSection extends ConsumerWidget {
               foregroundColor: Theme.of(context).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Supprimer'),
+            child: Text(S.t('delete')),
           ),
         ],
       ),
@@ -349,9 +349,9 @@ class _BackupsSection extends ConsumerWidget {
           await ref.read(prowlarrApiProvider(instance).future);
       await api.deleteBackup(backup.id);
       ref.invalidate(prowlarrBackupsProvider(instance));
-      messenger.showSnackBar(const SnackBar(content: Text('Sauvegarde supprimée')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('backupDeleted_2'))));
     } on Object catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text('Échec : ${_msg(e)}')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('failedMsgE1', [_msg(e)]))));
     }
   }
 
@@ -362,11 +362,11 @@ class _BackupsSection extends ConsumerWidget {
     final AsyncValue<List<ProwlarrBackup>> backups =
         ref.watch(prowlarrBackupsProvider(instance));
     return _SectionCard(
-      title: 'Sauvegardes',
+      title: S.t('backups'),
       action: TextButton.icon(
         onPressed: () => _create(context, ref),
         icon: const Icon(Icons.add, size: 18),
-        label: const Text('Créer'),
+        label: Text(S.t('create')),
       ),
       child: backups.when(
         loading: () => const SizedBox.shrink(),
@@ -378,7 +378,7 @@ class _BackupsSection extends ConsumerWidget {
         data: (List<ProwlarrBackup> list) {
           if (list.isEmpty) {
             return Text(
-              'Aucune sauvegarde pour le moment.',
+              S.t('noBackupsYet'),
               style: theme.textTheme.bodyMedium
                   ?.copyWith(color: cs.onSurfaceVariant),
             );
@@ -448,7 +448,7 @@ class _BackupRow extends StatelessWidget {
           ),
         ),
         IconButton(
-          tooltip: 'Supprimer',
+          tooltip: S.t('delete'),
           icon: Icon(Icons.delete_outline, color: cs.error),
           onPressed: onDelete,
         ),
@@ -468,7 +468,7 @@ class _StatusSection extends ConsumerWidget {
     final AsyncValue<ProwlarrSystemStatus> status =
         ref.watch(prowlarrSystemStatusProvider(instance));
     return _SectionCard(
-      title: 'Statut',
+      title: S.t('status'),
       child: status.when(
         loading: () => const SizedBox.shrink(),
         error: (Object e, _) => _StatusRow(
@@ -484,12 +484,12 @@ class _StatusSection extends ConsumerWidget {
             if (author.isNotEmpty) 'by $author',
           ].join(' ');
           final List<(String, String?)> rows = <(String, String?)>[
-            ('Version', s.version),
-            ('Package', pkg),
+            (S.t('version'), s.version),
+            (S.t('package'), pkg),
             ('.NET', s.runtimeVersion),
-            ('Docker', s.isDocker ? 'Yes' : 'No'),
+            ('Docker', s.isDocker ? S.t('yes') : S.t('no')),
             (
-              'Database',
+              S.t('database'),
               <String?>[s.databaseType, s.databaseVersion]
                   .where((String? v) => v != null && v.isNotEmpty)
                   .join(' '),
@@ -502,9 +502,9 @@ class _StatusSection extends ConsumerWidget {
                   .join(' '),
             ),
             ('AppData', s.appData),
-            ('Startup', s.startupPath),
-            ('Mode', s.mode),
-            ('Uptime', _uptime(s.startTime)),
+            (S.t('startup'), s.startupPath),
+            (S.t('mode'), s.mode),
+            (S.t('uptime'), _uptime(s.startTime)),
           ];
           return Column(
             children: <Widget>[
@@ -689,7 +689,7 @@ String _relativeTime(DateTime? date) {
     return 'in ${ahead.inDays}d';
   }
   if (diff.inSeconds < 60) {
-    return 'just now';
+    return S.t('justNow_2');
   }
   if (diff.inMinutes < 60) {
     return '${diff.inMinutes}m ago';

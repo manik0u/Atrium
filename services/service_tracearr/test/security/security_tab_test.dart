@@ -89,14 +89,14 @@ void main() {
       // Filter chips
       expect(find.text('All (3)'), findsOneWidget);
       expect(find.text('Not reviewed (2)'), findsOneWidget);
-      expect(find.text('Critique / Élevé'), findsOneWidget);
-      expect(find.text('Examinés'), findsOneWidget);
+      expect(find.text('Critical / High'), findsOneWidget);
+      expect(find.text('Reviewed'), findsOneWidget);
 
       // Incident 1
       expect(find.text('CRITICAL'), findsOneWidget);
       expect(find.text('ConcurrentStreamLimit'), findsOneWidget);
       expect(find.text('@Alex'), findsOneWidget);
-      expect(find.text('Accuser réception'), findsNWidgets(2)); // 2 unacknowledged
+      expect(find.text('Acknowledge'), findsNWidgets(2)); // 2 unacknowledged
 
       // Incident 3 (acknowledged)
       expect(find.text('Acknowledged'), findsOneWidget);
@@ -124,7 +124,7 @@ void main() {
       expect(find.text('BandwidthExceeded'), findsNothing);
 
       // Filter: Critical / High
-      await tester.tap(find.text('Critique / Élevé'));
+      await tester.tap(find.text('Critical / High'));
       await tester.pumpAndSettle();
 
       expect(find.byType(SecurityIncidentCard), findsOneWidget);
@@ -132,7 +132,7 @@ void main() {
       expect(find.text('GeoLocationMismatch'), findsNothing);
 
       // Filter: Resolved
-      await tester.tap(find.text('Examinés'));
+      await tester.tap(find.text('Reviewed'));
       await tester.pumpAndSettle();
 
       expect(find.byType(SecurityIncidentCard), findsOneWidget);
@@ -151,7 +151,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Acknowledge first unacknowledged violation
-      await tester.tap(find.text('Accuser réception').first);
+      await tester.tap(find.text('Acknowledge').first);
       await tester.pumpAndSettle();
 
       // Now 2 should show Acknowledged status
@@ -181,7 +181,7 @@ void main() {
       expect(find.text('All (2)'), findsOneWidget);
 
       // Tap Undo in SnackBar
-      await tester.tap(find.text('Annuler'));
+      await tester.tap(find.text('Undo'));
       await tester.pumpAndSettle();
 
       // Card count restored to 3
@@ -204,7 +204,7 @@ void main() {
       expect(find.text('All Clear'), findsOneWidget);
       expect(
         find.text(
-          "Aucune violation de politique de sécurité enregistrée dans le registre d'audit Sentinel.",
+          'No security policy violations recorded in the Sentinel audit ledger.',
         ),
         findsOneWidget,
       );

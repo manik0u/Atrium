@@ -39,10 +39,10 @@ class EmbySeasonScreen extends ConsumerWidget {
             ref.invalidate(embyEpisodesProvider((instance, seasonId))),
         data: (List<EmbyItem> episodes) {
           if (episodes.isEmpty) {
-            return const EmptyView(
+            return EmptyView(
               icon: Icons.tv,
-              title: 'Aucun épisode',
-              message: "Cette saison n'a aucun épisode.",
+              title: S.t('noEpisodes'),
+              message: S.t('thisSeasonHasNoEpisodes'),
             );
           }
           return ListView.separated(

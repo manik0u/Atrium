@@ -140,7 +140,7 @@ void main() {
       await actions().saveList(
         original: off,
         allowlist: false,
-        name: 'Renommée',
+        name: 'Renamed',
         url: 'https://lists.example/moved.txt',
       );
 
@@ -153,7 +153,7 @@ void main() {
         'url': off.url,
         'whitelist': false,
         'data': <String, dynamic>{
-          'name': 'Renommée',
+          'name': 'Renamed',
           'url': 'https://lists.example/moved.txt',
           'enabled': false,
         },
@@ -172,7 +172,7 @@ void main() {
       server.on(
         'GET',
         'control/filtering/status',
-        withOff((Map<String, dynamic> list) => list['name'] = 'Renommée'),
+        withOff((Map<String, dynamic> list) => list['name'] = 'Renamed'),
       );
 
       await actions().setListEnabled(off, allowlist: false, enabled: true);
@@ -180,7 +180,7 @@ void main() {
       expect(
         (body('POST', 'control/filtering/set_url')! as Map<String, dynamic>)[
             'data'],
-        <String, dynamic>{'name': 'Renommée', 'url': off.url, 'enabled': true},
+        <String, dynamic>{'name': 'Renamed', 'url': off.url, 'enabled': true},
       );
     });
 
@@ -195,7 +195,7 @@ void main() {
       await actions().saveList(
         original: off,
         allowlist: false,
-        name: 'Renommée',
+        name: 'Renamed',
         url: off.url,
       );
 
@@ -222,7 +222,7 @@ void main() {
         actions().saveList(
           original: off,
           allowlist: false,
-          name: 'Renommée',
+          name: 'Renamed',
           url: off.url,
         ),
         throwsA(isA<AdguardHomeEntryGone>()),
@@ -284,7 +284,7 @@ void main() {
       await expectLater(
         actions().saveList(
           allowlist: false,
-          name: 'Autre',
+          name: 'Other',
           url: 'https://lists.example/other.txt',
         ),
         throwsA(isA<NetworkTimeoutException>()),
@@ -606,7 +606,7 @@ void main() {
   test('says rules changed elsewhere in a sentence', () {
     expect(
       describeAdguardHomeError(const AdguardHomeRulesChanged(<String>[])),
-      'Les règles personnalisées ont été modifiées sur le serveur depuis que vous les avez ouvertes.',
+      'The custom rules were changed on the server since you opened them.',
     );
   });
 }

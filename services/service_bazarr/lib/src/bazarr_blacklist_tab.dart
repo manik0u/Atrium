@@ -26,38 +26,38 @@ class BazarrBlacklistTab extends ConsumerWidget {
             
           if (items.isEmpty) {
             return EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: () async => ref.invalidate(bazarrBlacklistProvider(instance)),
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          children: const <Widget>[
+          children: <Widget>[
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.block,
-              title: 'Liste noire vide',
-              message: 'Les sous-titres en liste noire apparaîtront ici.',
+              title: S.t('blacklistEmpty'),
+              message: S.t('blacklistedSubtitlesWillAppearHere'),
             ),
           ],
         ),
       );
           }
           return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async => ref.invalidate(bazarrBlacklistProvider(instance)),
       child: ListView.separated(
@@ -123,7 +123,7 @@ class _BlacklistTile extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    title.isEmpty ? 'Inconnu' : title,
+                    title.isEmpty ? S.t('unknown') : title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.bodyMedium
@@ -141,7 +141,7 @@ class _BlacklistTile extends ConsumerWidget {
               ),
             ),
             IconButton(
-              tooltip: 'Retirer de la liste noire',
+              tooltip: S.t('removeFromBlacklist'),
               visualDensity: VisualDensity.compact,
               icon: const Icon(Icons.delete_outline),
               onPressed: () => _confirmRemove(context, ref),
@@ -157,18 +157,18 @@ class _BlacklistTile extends ConsumerWidget {
     final bool? ok = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Retirer de la liste noire ?'),
-        content: const Text(
-          'Bazarr pourra télécharger ce sous-titre à nouveau.',
+        title: Text(S.t('removeFromBlacklist_2')),
+        content: Text(
+          S.t('bazarrWillBeAllowedToDownloadThisSubtitleAgain'),
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Retirer'),
+            child: Text(S.t('remove')),
           ),
         ],
       ),
@@ -191,11 +191,11 @@ class _BlacklistTile extends ConsumerWidget {
       }
       ref.invalidate(bazarrBlacklistProvider(instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Retiré de la liste noire')),
+        SnackBar(content: Text(S.t('removedFromBlacklist'))),
       );
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la suppression : ${_err(e)}')),
+        SnackBar(content: Text(S.t('deleteFailedErrE1', [_err(e)]))),
       );
     }
   }

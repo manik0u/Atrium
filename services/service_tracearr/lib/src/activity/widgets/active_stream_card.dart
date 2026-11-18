@@ -61,12 +61,12 @@ class ActiveStreamCard extends StatelessWidget {
         !isDirectStream;
 
     final String transcodeLabel = isDirectPlay
-        ? 'Direct Play'
+        ? S.t('directPlay')
         : isDirectStream
-            ? 'Direct Stream'
+            ? S.t('directStream')
             : isHw
-                ? 'HW Transcode'
-                : 'CPU Transcode';
+                ? S.t('hwTranscode')
+                : S.t('cpuTranscode');
 
     final Color transcodeColor = isDirectPlay
         ? const Color(0xFF4CAF50)
@@ -271,7 +271,7 @@ class ActiveStreamCard extends StatelessWidget {
                       color: colorScheme.error,
                       size: 24,
                     ),
-                    tooltip: 'Interrompre le flux',
+                    tooltip: S.t('terminateStream'),
                     onPressed: () => TerminateStreamDialog.show(
                       context,
                       instance: instance,

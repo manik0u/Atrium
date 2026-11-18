@@ -65,7 +65,7 @@ class _OmbiRequestSheetState extends ConsumerState<OmbiRequestSheet> {
       ref.invalidate(ombiTitleStateProvider(_key));
       navigator.pop();
       messenger.showSnackBar(
-        SnackBar(content: Text('Demandé : ${widget.hit.title}')),
+        SnackBar(content: Text(S.t('requestedWidgetHitTitle1', [widget.hit.title]))),
       );
     } on Object catch (error) {
       messenger.showSnackBar(
@@ -176,7 +176,7 @@ class _OmbiRequestSheetState extends ConsumerState<OmbiRequestSheet> {
                           TextButton(
                             onPressed: () =>
                                 ref.invalidate(ombiTitleStateProvider(_key)),
-                            child: const Text('Réessayer'),
+                            child: Text(S.t('retry')),
                           ),
                         ],
                       ),
@@ -199,7 +199,7 @@ class _OmbiRequestSheetState extends ConsumerState<OmbiRequestSheet> {
     if (state.available) {
       return _Standing(
         icon: Icons.check_circle_outline_rounded,
-        label: 'Disponible',
+        label: S.t('available'),
         foreground: cs.onTertiaryContainer,
         background: cs.tertiaryContainer,
       );
@@ -207,7 +207,7 @@ class _OmbiRequestSheetState extends ConsumerState<OmbiRequestSheet> {
     if (state.denied) {
       return _Standing(
         icon: Icons.block_rounded,
-        label: 'Refusée',
+        label: S.t('denied'),
         detail: state.deniedReason,
         foreground: cs.onErrorContainer,
         background: cs.errorContainer,
@@ -216,7 +216,7 @@ class _OmbiRequestSheetState extends ConsumerState<OmbiRequestSheet> {
     if (state.requested) {
       return _Standing(
         icon: Icons.schedule_rounded,
-        label: 'Demandé',
+        label: S.t('requested'),
         foreground: cs.onPrimaryContainer,
         background: cs.primaryContainer,
       );
@@ -235,7 +235,7 @@ class _OmbiRequestSheetState extends ConsumerState<OmbiRequestSheet> {
         if (state.partlyAvailable) ...<Widget>[
           _Standing(
             icon: Icons.incomplete_circle_rounded,
-            label: 'Partiellement disponible',
+            label: S.t('partiallyAvailable'),
             foreground: cs.onSecondaryContainer,
             background: cs.secondaryContainer,
           ),
@@ -250,12 +250,12 @@ class _OmbiRequestSheetState extends ConsumerState<OmbiRequestSheet> {
                           c.requestService.requestMovie(hit.tmdbId),
                     ),
             icon: const Icon(Icons.add),
-            label: const Text('Demande'),
+            label: Text(S.t('request')),
           )
         else ...<Widget>[
           FilledButton(
             onPressed: tv(OmbiTvSeasons.all),
-            child: const Text('Toutes les saisons'),
+            child: Text(S.t('allSeasons')),
           ),
           const SizedBox(height: Insets.sm),
           Row(
@@ -263,14 +263,14 @@ class _OmbiRequestSheetState extends ConsumerState<OmbiRequestSheet> {
               Expanded(
                 child: FilledButton.tonal(
                   onPressed: tv(OmbiTvSeasons.first),
-                  child: const Text('Première saison'),
+                  child: Text(S.t('firstSeason')),
                 ),
               ),
               const SizedBox(width: Insets.sm),
               Expanded(
                 child: FilledButton.tonal(
                   onPressed: tv(OmbiTvSeasons.latest),
-                  child: const Text('Dernière saison'),
+                  child: Text(S.t('latestSeason')),
                 ),
               ),
             ],

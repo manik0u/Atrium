@@ -53,13 +53,13 @@ class _TransmissionSettingsTabState
           await ref.read(transmissionApiProvider(widget.instance).future);
       await api.setSession(<String, Object?>{key: value});
       messenger.showSnackBar(
-        const SnackBar(
-          content: Text('Paramètre enregistré'),
+        SnackBar(
+          content: Text(S.t('settingSaved')),
           duration: Duration(seconds: 1),
         ),
       );
     } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text("Impossible d'enregistrer : $e")));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('couldNotSaveE1', [e]))));
     } finally {
       // Whether it took or not, show what the daemon has now.
       ref.invalidate(transmissionSessionProvider(widget.instance));
@@ -123,12 +123,12 @@ class _TransmissionSettingsTabState
           await ref.read(transmissionApiProvider(widget.instance).future);
       final int rules = await api.updateBlocklist();
       messenger.showSnackBar(
-        SnackBar(content: Text('Liste de blocage mise à jour : $rules règles')),
+        SnackBar(content: Text(S.t('blocklistUpdatedRulesRules1', [rules]))),
       );
       ref.invalidate(transmissionSessionProvider(widget.instance));
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la mise à jour de la liste de blocage : $e')),
+        SnackBar(content: Text(S.t('blocklistUpdateFailedE1', [e]))),
       );
     } finally {
       if (mounted) setState(() => _updatingBlocklist = false);
@@ -154,7 +154,7 @@ class _TransmissionSettingsTabState
       }
       if (mounted) setState(() => _portResults = results);
     } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text('Échec du test de port : $e')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('portTestFailedE1', [e]))));
     } finally {
       if (mounted) setState(() => _testingPort = false);
     }
@@ -186,10 +186,10 @@ class _TransmissionSettingsTabState
           onPressed:
               widget.onOpenDrawer ?? () => Scaffold.of(context).openDrawer(),
         ),
-        title: Text('Paramètres de ${widget.instance.name}'),
+        title: Text(S.t('widgetInstanceNameSettings1', [widget.instance.name])),
         actions: <Widget>[
           IconButton(
-            tooltip: 'Actualiser',
+            tooltip: S.t('refresh'),
             icon: const Icon(Icons.refresh),
             onPressed: () {
               ref
@@ -218,11 +218,11 @@ class _TransmissionSettingsTabState
             _StatisticsCard(instance: widget.instance),
             const SizedBox(height: Insets.sm),
             _Group(
-              title: 'Torrents',
+              title: S.t('torrents'),
               children: <Widget>[
-                _pathTile('Download to', s.downloadDir, 'download-dir'),
+                _pathTile(S.t('downloadTo'), s.downloadDir, 'download-dir'),
                 _switchTile(
-                  'Start when added',
+                  S.t('startWhenAdded'),
                   s.startAddedTorrents,
                   'start-added-torrents',
                 ),
@@ -258,41 +258,41 @@ class _TransmissionSettingsTabState
                   'incomplete-dir',
                 ),
                 _switchTile(
-                  'Append ".part" to incomplete files',
+                  S.t('appendPartToIncompleteFiles'),
                   s.renamePartialFiles,
                   'rename-partial-files',
                 ),
                 _switchTile(
-                  'Limiter la file de téléchargement',
+                  S.t('limitTheDownloadQueue'),
                   s.downloadQueueEnabled,
                   'download-queue-enabled',
                 ),
                 _numberTile(
-                  'Download queue size',
+                  S.t('downloadQueueSize'),
                   s.downloadQueueSize,
                   'download-queue-size',
                 ),
                 if (s.supportsDefaultTrackers)
                   ListTile(
                     contentPadding: EdgeInsets.zero,
-                    title: const Text('Trackers publics par défaut'),
+                    title: Text(S.t('defaultPublicTrackers')),
                     subtitle: Text(_trackerCount(s.defaultTrackers)),
                     onTap: () => _editText(
-                      title: 'Trackers publics par défaut',
+                      title: S.t('defaultPublicTrackers'),
                       key: 'default-trackers',
                       initial: s.defaultTrackers,
                       multiline: true,
-                      helper: 'One URL per line, a blank line between tiers',
+                      helper: S.t('oneURLPerLineABlankLineBetweenTiers'),
                     ),
                   ),
               ],
             ),
             const SizedBox(height: Insets.sm),
             _Group(
-              title: 'Vitesse',
+              title: S.t('speed'),
               children: <Widget>[
                 _switchTile(
-                  'Limit upload',
+                  S.t('limitUpload'),
                   s.speedLimitUpEnabled,
                   'speed-limit-up-enabled',
                 ),
@@ -302,7 +302,7 @@ class _TransmissionSettingsTabState
                   'speed-limit-up',
                 ),
                 _switchTile(
-                  'Limit download',
+                  S.t('limitDownload'),
                   s.speedLimitDownEnabled,
                   'speed-limit-down-enabled',
                 ),
@@ -322,13 +322,13 @@ class _TransmissionSettingsTabState
                   'alt-speed-down',
                 ),
                 _switchTile(
-                  'Scheduled alternative limits',
+                  S.t('scheduledAlternativeLimits'),
                   s.altSpeedTimeEnabled,
                   'alt-speed-time-enabled',
                 ),
                 ListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('De'),
+                  title: Text(S.t('from')),
                   subtitle: Text(_clock(s.altSpeedTimeBegin)),
                   onTap: () => _pickTime(
                     key: 'alt-speed-time-begin',
@@ -337,7 +337,7 @@ class _TransmissionSettingsTabState
                 ),
                 ListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('À'),
+                  title: Text(S.t('to')),
                   subtitle: Text(_clock(s.altSpeedTimeEnd)),
                   onTap: () => _pickTime(
                     key: 'alt-speed-time-end',
@@ -346,16 +346,16 @@ class _TransmissionSettingsTabState
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: Insets.xs),
-                  child: Text('Jours : ${trDaySummary(s.altSpeedTimeDay)}'),
+                  child: Text(S.t('onDaysTrDaySummarySAltSpeedTimeDay1', [trDaySummary(s.altSpeedTimeDay)])),
                 ),
                 Wrap(
                   spacing: Insets.xs,
                   runSpacing: Insets.xs,
                   children: <Widget>[
                     for (final (int mask, String name) in <(int, String)>[
-                      (trEveryDay, 'Every day'),
-                      (trWeekdays, 'Weekdays'),
-                      (trWeekends, 'Weekends'),
+                      (trEveryDay, S.t('everyDay')),
+                      (trWeekdays, S.t('weekdays')),
+                      (trWeekends, S.t('weekends')),
                     ])
                       ChoiceChip(
                         label: Text(name),
@@ -377,27 +377,27 @@ class _TransmissionSettingsTabState
             ),
             const SizedBox(height: Insets.sm),
             _Group(
-              title: 'Pairs',
+              title: S.t('peers'),
               children: <Widget>[
                 _numberTile(
-                  'Max peers per torrent',
+                  S.t('maxPeersPerTorrent'),
                   s.peerLimitPerTorrent,
                   'peer-limit-per-torrent',
                 ),
                 _numberTile(
-                  'Max peers overall',
+                  S.t('maxPeersOverall'),
                   s.peerLimitGlobal,
                   'peer-limit-global',
                 ),
                 ListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('Chiffrement'),
+                  title: Text(S.t('encryption')),
                   subtitle: Text(_encryptionLabel(s.encryption)),
                   onTap: () async {
                     final String? mode = await showDialog<String>(
                       context: context,
                       builder: (BuildContext context) => SimpleDialog(
-                        title: const Text('Chiffrement'),
+                        title: Text(S.t('encryption')),
                         children: <Widget>[
                           RadioGroup<String>(
                             groupValue: _encryptionValue(s.encryption),
@@ -422,7 +422,7 @@ class _TransmissionSettingsTabState
                   },
                 ),
                 _switchTile(
-                  'Use PEX to find more peers',
+                  S.t('usePEXToFindMorePeers'),
                   s.pexEnabled,
                   'pex-enabled',
                 ),
@@ -437,11 +437,11 @@ class _TransmissionSettingsTabState
                   'lpd-enabled',
                 ),
                 _switchTile(
-                  'Enable blocklist',
+                  S.t('enableBlocklist'),
                   s.blocklistEnabled,
                   'blocklist-enabled',
                 ),
-                _pathTile('Blocklist URL', s.blocklistUrl, 'blocklist-url'),
+                _pathTile(S.t('blocklistURL'), s.blocklistUrl, 'blocklist-url'),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: Insets.xs),
                   child: Row(
@@ -449,7 +449,7 @@ class _TransmissionSettingsTabState
                       Expanded(
                         child: TransmissionPill(
                           icon: Icons.block,
-                          label: 'La liste de blocage contient ${s.blocklistSize} règles',
+                          label: S.t('blocklistHasSBlocklistSizeRules1', [s.blocklistSize]),
                           foreground: cs.onSurfaceVariant,
                           background: cs.surfaceContainerHighest,
                         ),
@@ -457,7 +457,7 @@ class _TransmissionSettingsTabState
                       const SizedBox(width: Insets.sm),
                       FilledButton.tonal(
                         onPressed: _updatingBlocklist ? null : _updateBlocklist,
-                        child: const Text('Mettre à jour la liste de blocage'),
+                        child: Text(S.t('updateBlocklist')),
                       ),
                     ],
                   ),
@@ -466,20 +466,20 @@ class _TransmissionSettingsTabState
             ),
             const SizedBox(height: Insets.sm),
             _Group(
-              title: 'Réseau',
+              title: S.t('network'),
               children: <Widget>[
-                _numberTile('Peer listening port', s.peerPort, 'peer-port'),
+                _numberTile(S.t('peerListeningPort'), s.peerPort, 'peer-port'),
                 _switchTile(
-                  'Randomize port on launch',
+                  S.t('randomizePortOnLaunch'),
                   s.peerPortRandomOnStart,
                   'peer-port-random-on-start',
                 ),
                 _switchTile(
-                  'Use port forwarding (UPnP or NAT-PMP)',
+                  S.t('usePortForwardingUPnPOrNATPMP'),
                   s.portForwardingEnabled,
                   'port-forwarding-enabled',
                 ),
-                _switchTile('Enable uTP', s.utpEnabled, 'utp-enabled'),
+                _switchTile(S.t('enableUTP'), s.utpEnabled, 'utp-enabled'),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: Insets.xs),
                   child: Row(
@@ -495,8 +495,8 @@ class _TransmissionSettingsTabState
                                 icon: r.value
                                     ? Icons.check_circle_outline
                                     : Icons.error_outline,
-                                label: '${_protocolLabel(r.key)} est '
-                                    '${r.value ? 'Open' : 'Closed'}',
+                                label: S.t('protocollabelRKeyIs1', [_protocolLabel(r.key)]) +
+                                    '${r.value ? S.t('open') : S.t('closed')}',
                                 foreground: r.value
                                     ? cs.onTertiaryContainer
                                     : cs.onErrorContainer,
@@ -510,7 +510,7 @@ class _TransmissionSettingsTabState
                       const SizedBox(width: Insets.sm),
                       FilledButton.tonal(
                         onPressed: _testingPort ? null : () => _testPort(s),
-                        child: const Text('Tester le port'),
+                        child: Text(S.t('testPort')),
                       ),
                     ],
                   ),
@@ -561,12 +561,12 @@ class _TransmissionSettingsTabState
   Widget _pathTile(String title, String value, String key) => ListTile(
         contentPadding: EdgeInsets.zero,
         title: Text(title),
-        subtitle: Text(value.isEmpty ? 'Non défini' : value),
+        subtitle: Text(value.isEmpty ? S.t('notSet') : value),
         onTap: () => _editText(
           title: title,
           key: key,
           initial: value,
-          helper: 'A path as the server sees it, not your phone',
+          helper: S.t('aPathAsTheServerSeesItNotYourPhone'),
         ),
       );
 
@@ -583,16 +583,16 @@ class _TransmissionSettingsTabState
   }
 
   static String _protocolLabel(String protocol) => switch (protocol) {
-        'ipv4' => 'Port IPv4',
-        'ipv6' => 'Port IPv6',
-        _ => 'Port',
+        'ipv4' => S.t('ipv4Port'),
+        'ipv6' => S.t('ipv6Port'),
+        _ => S.t('port'),
       };
 
   /// The daemon writes `allowed` but reads it back as `tolerated`.
-  static const List<(String, String)> _encryptionModes = <(String, String)>[
-    ('allowed', 'Allow encryption'),
-    ('preferred', 'Prefer encryption'),
-    ('required', 'Require encryption'),
+  static final List<(String, String)> _encryptionModes = <(String, String)>[
+    ('allowed', S.t('allowEncryption')),
+    ('preferred', S.t('preferEncryption')),
+    ('required', S.t('requireEncryption')),
   ];
 
   static String _encryptionValue(String raw) =>
@@ -689,11 +689,11 @@ class _EditDialogState extends State<_EditDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(_controller.text.trim()),
-          child: const Text('Enregistrer'),
+          child: Text(S.t('save')),
         ),
       ],
     );
@@ -779,10 +779,10 @@ class _StatisticsCard extends ConsumerWidget {
                   children: <Widget>[
                     for (final (String label, String value)
                         in <(String, String)>[
-                      ('Uploaded', trFmtBytes(b.uploadedBytes)),
-                      ('Downloaded', trFmtBytes(b.downloadedBytes)),
+                      (S.t('uploaded'), trFmtBytes(b.uploadedBytes)),
+                      (S.t('downloaded'), trFmtBytes(b.downloadedBytes)),
                       ('Ratio', trRatioString(ratio)),
-                      ('Running time', trTimeInterval(b.secondsActive)),
+                      (S.t('runningTime'), trTimeInterval(b.secondsActive)),
                     ])
                       SizedBox(
                         width: column,
@@ -807,7 +807,7 @@ class _StatisticsCard extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const TransmissionPanelTitle('Statistics'),
+          TransmissionPanelTitle(S.t('statistics')),
           block(
             'This session',
             Icons.timelapse_rounded,

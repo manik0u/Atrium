@@ -85,7 +85,7 @@ void main() {
     // Prefilled with the first torrent's folder.
     expect(find.widgetWithText(TextField, '/downloads'), findsOneWidget);
     await tester.enterText(find.byType(TextField), '/data/iso');
-    await tester.tap(find.text('Appliquer'));
+    await tester.tap(find.text('Apply'));
     await settle(tester);
 
     expect(fake.single('torrent-set-location').arguments, <String, dynamic>{
@@ -101,7 +101,7 @@ void main() {
     await run(tester, TransmissionTorrentAction.rename);
     await tester.enterText(find.byType(TextField), 'Alpha 2');
     // The dialog's title says Rename too; the button is the filled one.
-    await tester.tap(find.widgetWithText(FilledButton, 'Renommer'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Rename'));
     await settle(tester);
 
     expect(fake.single('torrent-rename-path').arguments, <String, dynamic>{
@@ -116,7 +116,7 @@ void main() {
     await pumpHarness(tester);
     await run(tester, TransmissionTorrentAction.editLabels);
     await tester.enterText(find.byType(TextField), ' linux, iso ,,');
-    await tester.tap(find.text('Enregistrer'));
+    await tester.tap(find.text('Save'));
     await settle(tester);
 
     expect(fake.single('torrent-set').arguments, <String, dynamic>{
@@ -131,7 +131,7 @@ void main() {
     await run(tester, TransmissionTorrentAction.trash);
     final Checkbox box = tester.widget<Checkbox>(find.byType(Checkbox));
     expect(box.value, isTrue);
-    await tester.tap(find.widgetWithText(FilledButton, 'Retirer'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Remove'));
     await settle(tester);
 
     expect(fake.single('torrent-remove').arguments, <String, dynamic>{
@@ -166,7 +166,7 @@ void main() {
     await run(tester, TransmissionTorrentAction.copyMagnet);
 
     expect(copied, 'magnet:?xt=urn:btih:a');
-    expect(find.text('Lien magnet copié'), findsOneWidget);
+    expect(find.text('Magnet link copied'), findsOneWidget);
   });
 
   testWidgets('a failure lands in a snackbar', (WidgetTester tester) async {

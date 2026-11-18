@@ -5,6 +5,7 @@ import '../generated/models/user_stats_response.dart';
 import '../media/tracearr_media_url_resolver.dart';
 import '../models/tracearr_models.dart';
 import 'tracearr_history_mapper.dart';
+import 'package:core_models/core_models.dart';
 
 /// Pure transformation for user identities, accounts, statistics, and detail profiles.
 class TracearrUserMapper {
@@ -67,7 +68,7 @@ class TracearrUserMapper {
 
     return TracearrUserSummary(
       id: identity.id ?? '',
-      username: identity.username ?? 'Unknown',
+      username: identity.username ?? S.t('unknown'),
       email: identity.email,
       avatarUrl: avatarUrl,
       allTimePlays: totalPlays,
@@ -121,7 +122,7 @@ class TracearrUserMapper {
           if (g is Map<String, dynamic>) {
             topGenres.add(
               TracearrGenreStat(
-                genre: (g['genre'] as String?) ?? 'Unknown',
+                genre: (g['genre'] as String?) ?? S.t('unknown'),
                 plays: (g['plays'] as num?)?.toInt() ?? 0,
               ),
             );
@@ -148,7 +149,7 @@ class TracearrUserMapper {
 
     return TracearrUserDetail(
       id: identity.id ?? '',
-      username: identity.username ?? 'Unknown',
+      username: identity.username ?? S.t('unknown'),
       email: identity.email,
       plexAccountId: identity.plexAccountId,
       accounts: accounts,

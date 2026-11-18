@@ -167,7 +167,7 @@ class SlskdTransfersStatsBar extends ConsumerWidget {
                       padding: const EdgeInsets.symmetric(horizontal: Insets.sm),
                     ),
                     icon: const Icon(Icons.cleaning_services_outlined, size: 16),
-                    label: const Text('Effacer'),
+                    label: Text(S.t('clear')),
                     onPressed: () async {
                       try {
                         final api = await ref.read(slskdApiProvider(instance).future);
@@ -187,8 +187,8 @@ class SlskdTransfersStatsBar extends ConsumerWidget {
                         }
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Transferts terminés effacés'),
+                            SnackBar(
+                              content: Text(S.t('clearedCompletedTransfers')),
                               duration: Duration(seconds: 2),
                             ),
                           );
@@ -198,7 +198,7 @@ class SlskdTransfersStatsBar extends ConsumerWidget {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                'Failed to clear: $e',
+                                S.t('failedToClearE1', [e]),
                                 style: TextStyle(color: colorScheme.onError),
                               ),
                               backgroundColor: colorScheme.error,
@@ -217,22 +217,22 @@ class SlskdTransfersStatsBar extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 _StatBadge(
-                  label: 'Actif',
+                  label: S.t('active'),
                   count: activeCount,
                   color: activeCount > 0 ? colorScheme.primary : colorScheme.onSurfaceVariant,
                 ),
                 _StatBadge(
-                  label: "En file d'attente",
+                  label: S.t('queued'),
                   count: queuedCount,
                   color: queuedCount > 0 ? colorScheme.secondary : colorScheme.onSurfaceVariant,
                 ),
                 _StatBadge(
-                  label: 'Terminé',
+                  label: S.t('done'),
                   count: completedCount,
                   color: completedCount > 0 ? colorScheme.tertiary : colorScheme.onSurfaceVariant,
                 ),
                 _StatBadge(
-                  label: 'Échec',
+                  label: S.t('failed'),
                   count: failedCount,
                   color: failedCount > 0 ? colorScheme.error : colorScheme.onSurfaceVariant,
                 ),

@@ -114,7 +114,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Échec pour quitter le salon : $e'),
+            content: Text(S.t('failedToLeaveRoomE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -135,7 +135,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Échec de l'envoi du message : $e"),
+            content: Text(S.t('failedToSendMessageE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -157,13 +157,13 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
         if (!mounted) return;
         ref.invalidate(slskdRoomDetailProvider((widget.instance, roomName)));
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Ticker du salon mis à jour')),
+          SnackBar(content: Text(S.t('roomTickerUpdated'))),
         );
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Échec de la mise à jour du ticker : $e'),
+              content: Text(S.t('failedToUpdateTickerE1', [e])),
               backgroundColor: Theme.of(context).colorScheme.error,
             ),
           );
@@ -185,7 +185,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Échec de l'envoi du MP : $e"),
+            content: Text(S.t('failedToSendDME1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -218,7 +218,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Échec de la fermeture de la conversation : $e'),
+            content: Text(S.t('failedToCloseConversationE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -327,7 +327,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
         titleSpacing: widget.onOpenDrawer != null ? Insets.xs : Insets.md,
         title: SearchBar(
           controller: isDmTab ? _dmSearchController : _roomSearchController,
-          hintText: isDmTab ? 'Rechercher des messages privés…' : 'Rechercher des salons rejoints…',
+          hintText: isDmTab ? S.t('searchDirectMessages') : S.t('searchJoinedRooms'),
           elevation: const WidgetStatePropertyAll<double>(0),
           backgroundColor: WidgetStatePropertyAll<Color>(colorScheme.surfaceContainerHigh),
           padding: const WidgetStatePropertyAll<EdgeInsets>(
@@ -372,7 +372,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
                 children: <Widget>[
                   const Icon(Icons.chat_bubble_outline_rounded, size: 18),
                   const SizedBox(width: Insets.xs),
-                  Text('Messages privés ($dmCount)'),
+                  Text(S.t('directMessagesDmCount1', [dmCount])),
                 ],
               ),
             ),
@@ -382,7 +382,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
                 children: <Widget>[
                   const Icon(Icons.forum_outlined, size: 18),
                   const SizedBox(width: Insets.xs),
-                  Text('Salons de discussion ($joinedCount)'),
+                  Text(S.t('chatRoomsJoinedCount1', [joinedCount])),
                 ],
               ),
             ),
@@ -399,7 +399,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
       floatingActionButton: _tabController.index == 0
           ? FloatingActionButton(
               key: const ValueKey('new_dm_fab'),
-              tooltip: 'Nouveau message privé',
+              tooltip: S.t('newDirectMessage'),
               elevation: 0,
               highlightElevation: 0,
               focusElevation: 0,
@@ -409,7 +409,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
             )
           : FloatingActionButton(
               key: const ValueKey('discover_rooms_fab'),
-              tooltip: 'Découvrir les salons publics',
+              tooltip: S.t('discoverPublicRooms'),
               elevation: 0,
               highlightElevation: 0,
               focusElevation: 0,
@@ -452,7 +452,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
           ? const Center(child: ExpressiveProgressIndicator())
           : !convosAsync.hasValue
               ? _buildLoadError(
-                  title: 'Impossible de charger les messages privés',
+                  title: S.t('couldNotLoadDirectMessages'),
                   error: convosAsync.error,
                   controller: _dmScrollController,
                   onRetry: () => ref.invalidate(slskdConversationsProvider(widget.instance)),
@@ -486,8 +486,8 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
                               const SizedBox(height: Insets.sm),
                               Text(
                                 _dmSearchQuery.isEmpty
-                                    ? 'Aucun message privé pour le moment.'
-                                    : 'Aucun message privé ne correspond à « $_dmSearchQuery ».',
+                                    ? S.t('noDirectMessagesYet')
+                                    : S.t('noDirectMessagesMatchingDmSearchQuery1', [_dmSearchQuery]),
                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                       color: colorScheme.onSurfaceVariant,
                                     ),
@@ -496,7 +496,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
                               if (_dmSearchQuery.isEmpty) ...<Widget>[
                                 const SizedBox(height: Insets.xs),
                                 Text(
-                                  'Touchez le bouton de rédaction ci-dessous pour écrire à un pair.',
+                                  S.t('tapTheComposeButtonBelowToMessageAPeer'),
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                         color: colorScheme.outline,
                                       ),
@@ -582,7 +582,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
           ? const Center(child: ExpressiveProgressIndicator())
           : !joinedRoomsAsync.hasValue
               ? _buildLoadError(
-                  title: 'Impossible de charger vos salons',
+                  title: S.t('couldNotLoadYourRooms'),
                   error: joinedRoomsAsync.error,
                   controller: _roomScrollController,
                   onRetry: () => ref.invalidate(slskdJoinedRoomNamesProvider(widget.instance)),
@@ -616,8 +616,8 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
                               const SizedBox(height: Insets.sm),
                               Text(
                                 _roomSearchQuery.isEmpty
-                                    ? 'Aucun salon rejoint pour le moment.'
-                                    : 'Aucun salon rejoint ne correspond à « $_roomSearchQuery ».',
+                                    ? S.t('noChatRoomsJoinedYet')
+                                    : S.t('noJoinedRoomsMatchingRoomSearchQuery1', [_roomSearchQuery]),
                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                       color: colorScheme.onSurfaceVariant,
                                     ),
@@ -626,7 +626,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
                               if (_roomSearchQuery.isEmpty) ...<Widget>[
                                 const SizedBox(height: Insets.xs),
                                 Text(
-                                  'Touchez + ci-dessous pour découvrir et rejoindre des salons publics.',
+                                  S.t('tapBelowToDiscoverAndJoinPublicRooms'),
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                         color: colorScheme.outline,
                                       ),
@@ -713,7 +713,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
         ),
         actions: <Widget>[
           IconButton(
-            tooltip: 'Voir les membres actifs',
+            tooltip: S.t('viewActiveMembers'),
             icon: const Icon(Icons.people_outline_rounded),
             onPressed: () {
               showSlskdRoomMembersSheet(
@@ -724,7 +724,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
             },
           ),
           IconButton(
-            tooltip: 'Actualiser les messages',
+            tooltip: S.t('refreshMessages'),
             icon: const Icon(Icons.refresh_rounded),
             onPressed: () {
               ref.invalidate(slskdRoomMessagesProvider((widget.instance, roomName)));
@@ -732,7 +732,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
             },
           ),
           PopupMenuButton<String>(
-            tooltip: 'Options du salon',
+            tooltip: S.t('roomOptions'),
             icon: const Icon(Icons.more_vert_rounded),
             onSelected: (val) {
               if (val == 'ticker') {
@@ -748,21 +748,21 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
               }
             },
             itemBuilder: (context) => <PopupMenuEntry<String>>[
-              const PopupMenuItem<String>(
+              PopupMenuItem<String>(
                 value: 'ticker',
                 child: ListTile(
                   dense: true,
                   leading: Icon(Icons.campaign_outlined),
-                  title: Text('Définir le ticker du salon'),
+                  title: Text(S.t('setRoomTicker')),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
-              const PopupMenuItem<String>(
+              PopupMenuItem<String>(
                 value: 'members',
                 child: ListTile(
                   dense: true,
                   leading: Icon(Icons.people_outline_rounded),
-                  title: Text('Membres du salon'),
+                  title: Text(S.t('roomMembers')),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
@@ -772,7 +772,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
                 child: ListTile(
                   dense: true,
                   leading: Icon(Icons.exit_to_app_rounded, color: colorScheme.error),
-                  title: Text('Quitter le salon', style: TextStyle(color: colorScheme.error)),
+                  title: Text(S.t('leaveRoom'), style: TextStyle(color: colorScheme.error)),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
@@ -807,12 +807,12 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
                           Icon(Icons.forum_outlined, size: 48, color: colorScheme.outline),
                           const SizedBox(height: Insets.sm),
                           Text(
-                            'Aucun message dans #$roomName pour le moment.',
+                            S.t('noMessagesInRoomNameYet1', [roomName]),
                             style: textTheme.bodyMedium?.copyWith(color: colorScheme.outline),
                           ),
                           const SizedBox(height: Insets.xs),
                           Text(
-                            'Dites bonjour pour commencer la conversation !',
+                            S.t('sayHiToStartTheConversation'),
                             style: textTheme.bodySmall?.copyWith(color: colorScheme.outline),
                           ),
                         ],
@@ -848,7 +848,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
 
             // Sticky Bottom Composer
             SlskdChatComposer(
-              hintText: 'Message pour $roomName…',
+              hintText: S.t('messageRoomName1', [roomName]),
               onSend: (String text) => _sendRoomMessage(roomName, text),
             ),
           ],
@@ -882,7 +882,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
     final bool isAway = userStatus?.isAway ?? false;
     final String statusText = !userStatusAsync.hasValue
         ? 'Connecting...'
-        : (isOnline ? 'Online' : (isAway ? 'Away' : 'Offline'));
+        : (isOnline ? S.t('online') : (isAway ? 'Away' : S.t('offline')));
     final Color statusColor = slskdPresenceColor(
       colorScheme,
       isOnline: isOnline,
@@ -960,7 +960,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
         ),
         actions: <Widget>[
           IconButton(
-            tooltip: 'Parcourir les partages de $username',
+            tooltip: S.t('browseUsernameShares1', [username]),
             icon: const Icon(Icons.folder_shared_outlined),
             onPressed: () {
               ref.read(slskdBrowseUsernameProvider(widget.instance).notifier).state = username;
@@ -971,7 +971,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
             },
           ),
           IconButton(
-            tooltip: 'Bio du profil utilisateur',
+            tooltip: S.t('userProfileBio'),
             icon: const Icon(Icons.info_outline_rounded),
             onPressed: () {
               showSlskdUserBioSheet(
@@ -983,7 +983,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
             },
           ),
           IconButton(
-            tooltip: 'Actualiser les messages',
+            tooltip: S.t('refreshMessages'),
             icon: const Icon(Icons.refresh_rounded),
             onPressed: () {
               ref.invalidate(slskdConversationMessagesProvider((widget.instance, username)));
@@ -1018,12 +1018,12 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
                           Icon(Icons.chat_bubble_outline_rounded, size: 48, color: colorScheme.outline),
                           const SizedBox(height: Insets.sm),
                           Text(
-                            'Aucun historique de conversation avec $username pour le moment.',
+                            S.t('noConversationHistoryWithUsernameYet1', [username]),
                             style: textTheme.bodyMedium?.copyWith(color: colorScheme.outline),
                           ),
                           const SizedBox(height: Insets.xs),
                           Text(
-                            'Envoyez un message privé pour commencer !',
+                            S.t('sendAPrivateMessageToGetStarted'),
                             style: textTheme.bodySmall?.copyWith(color: colorScheme.outline),
                           ),
                         ],
@@ -1057,7 +1057,7 @@ class _SlskdCommunityTabState extends ConsumerState<SlskdCommunityTab>
 
             // Sticky Bottom Composer
             SlskdChatComposer(
-              hintText: 'Message pour $username…',
+              hintText: S.t('messageUsername1', [username]),
               onSend: (String text) => _sendDirectMessage(username, text),
             ),
           ],
@@ -1088,20 +1088,20 @@ class _NewChatDialogState extends State<_NewChatDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Nouveau message privé'),
+      title: Text(S.t('newDirectMessage')),
       content: TextField(
         controller: _userCtrl,
         autofocus: true,
-        decoration: const InputDecoration(
-          labelText: 'Nom du pair',
-          hintText: 'Saisissez un utilisateur Soulseek…',
+        decoration: InputDecoration(
+          labelText: S.t('peerUsername'),
+          hintText: S.t('enterSoulseekUser'),
           prefixIcon: Icon(Icons.person_outline_rounded),
         ),
       ),
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: () {
@@ -1109,7 +1109,7 @@ class _NewChatDialogState extends State<_NewChatDialog> {
             if (target.isEmpty) return;
             Navigator.of(context).pop(target);
           },
-          child: const Text('Démarrer la discussion'),
+          child: Text(S.t('startChat')),
         ),
       ],
     );
@@ -1137,27 +1137,27 @@ class _SetTickerDialogState extends State<_SetTickerDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Définir le ticker de #${widget.roomName}'),
+      title: Text(S.t('setTickerForWidgetRoomName1', [widget.roomName])),
       content: TextField(
         controller: _controller,
         autofocus: true,
         maxLines: 2,
-        decoration: const InputDecoration(
-          labelText: 'Annonce / Ticker',
-          hintText: 'Saisissez le message du ticker du salon',
+        decoration: InputDecoration(
+          labelText: S.t('announcementTicker'),
+          hintText: S.t('enterRoomTickerMessage'),
         ),
       ),
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: () {
             final text = _controller.text.trim();
             Navigator.of(context).pop(text);
           },
-          child: const Text('Définir le ticker'),
+          child: Text(S.t('setTicker')),
         ),
       ],
     );

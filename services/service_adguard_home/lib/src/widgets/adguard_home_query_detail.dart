@@ -128,7 +128,7 @@ class _AdguardHomeQueryDetailState
         ref.watch(adguardHomeFilteringProvider(instance)).value;
     final String name =
         entry.clientName.isNotEmpty ? entry.clientName : entry.clientId;
-    final String action = entry.isFiltered ? 'Unblock' : 'Block';
+    final String action = entry.isFiltered ? S.t('unblock') : S.t('block');
     // A query for the root has no name, and a rule for no name is "||^".
     final bool named = entry.domain.isNotEmpty;
 
@@ -162,14 +162,14 @@ class _AdguardHomeQueryDetailState
                   label: entry.resultLabel,
                   tone: entry.result.tone,
                 ),
-                const AdguardHomeHeading('Request'),
+                AdguardHomeHeading(S.t('request')),
                 AdguardHomeField(
                   'Time',
                   formatAdguardHomeLogMoment(entry.time),
                 ),
-                AdguardHomeField('Type', entry.type),
+                AdguardHomeField(S.t('type'), entry.type),
                 AdguardHomeField(
-                  'Protocol',
+                  S.t('protocol'),
                   adguardHomeProtocolLabel(entry.protocol),
                 ),
                 const AdguardHomeHeading('Response'),
@@ -185,18 +185,18 @@ class _AdguardHomeQueryDetailState
                               ?.nameOf(entry.serviceName) ??
                           entry.serviceName,
                 ),
-                AdguardHomeField('DNS server', entry.upstream),
+                AdguardHomeField(S.t('dnsServer'), entry.upstream),
                 if (entry.cached)
-                  const AdguardHomeField('Servi depuis le cache', 'Yes'),
+                  AdguardHomeField(S.t('servedFromCache'), S.t('yes')),
                 if (entry.dnssec)
-                  const AdguardHomeField('Validé avec DNSSEC', 'Yes'),
+                  AdguardHomeField(S.t('validatedWithDNSSEC'), S.t('yes')),
                 AdguardHomeField(
                   'Elapsed',
                   formatAdguardHomeElapsed(entry.elapsed),
                 ),
                 if (entry.rules.isNotEmpty)
                   AdguardHomeBlock(
-                    entry.rules.length == 1 ? 'Rule' : 'Rules',
+                    entry.rules.length == 1 ? S.t('rule') : S.t('rules'),
                     <Widget>[
                       for (final AdguardHomeMatchedRule rule
                           in entry.rules) ...<Widget>[
@@ -217,18 +217,18 @@ class _AdguardHomeQueryDetailState
                     _records(theme, entry.originalAnswers),
                   ),
                 if (entry.client.isNotEmpty || name.isNotEmpty) ...<Widget>[
-                  const AdguardHomeHeading('Client'),
+                  AdguardHomeHeading(S.t('client')),
                   AdguardHomeField('IP address', entry.client),
-                  AdguardHomeField('Name', name),
+                  AdguardHomeField(S.t('name'), name),
                   AdguardHomeField('Country', entry.clientCountry),
                   AdguardHomeField('City', entry.clientCity),
-                  AdguardHomeField('Network', entry.clientNetwork),
+                  AdguardHomeField(S.t('network'), entry.clientNetwork),
                   if (entry.clientDisallowed)
                     Padding(
                       padding: const EdgeInsets.only(top: Insets.sm),
                       child: Text(
                         entry.clientDisallowedRule.isEmpty
-                            ? 'Pas parmi les clients autorisés'
+                            ? S.t('notAmongTheAllowedClients')
                             : 'Disallowed by ${entry.clientDisallowedRule}',
                         style: theme.textTheme.bodyMedium
                             ?.copyWith(color: cs.error),
@@ -267,7 +267,7 @@ class _AdguardHomeQueryDetailState
                   const SizedBox(width: Insets.sm)
                 else
                   PopupMenuButton<_ClientAction>(
-                    tooltip: "Plus d'actions",
+                    tooltip: S.t('moreActions'),
                     useRootNavigator: true,
                     enabled: !_busy,
                     onSelected: (_ClientAction chosen) {
@@ -297,21 +297,21 @@ class _AdguardHomeQueryDetailState
                     },
                     itemBuilder: (BuildContext _) =>
                         <PopupMenuEntry<_ClientAction>>[
-                      const PopupMenuItem<_ClientAction>(
+                      PopupMenuItem<_ClientAction>(
                         value: _ClientAction.show,
-                        child: Text('Afficher le client'),
+                        child: Text(S.t('showClient')),
                       ),
                       PopupMenuItem<_ClientAction>(
                         value: _ClientAction.blockForClient,
                         enabled: named,
-                        child: Text('$action pour ce client uniquement'),
+                        child: Text(S.t('actionForThisClientOnly1', [action])),
                       ),
                       PopupMenuItem<_ClientAction>(
                         value: _ClientAction.access,
                         child: Text(
                           entry.clientDisallowed
-                              ? 'Autoriser ce client'
-                              : 'Interdire ce client',
+                              ? S.t('allowThisClient_2')
+                              : S.t('disallowThisClient_2'),
                           style: TextStyle(color: cs.error),
                         ),
                       ),

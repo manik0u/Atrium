@@ -134,13 +134,13 @@ void main() {
   });
 
   test('aria2StatusLabel names the statuses the daemon sends', () {
-    expect(aria2StatusLabel('active'), 'Téléchargement en cours');
-    expect(aria2StatusLabel('active', seeder: true), 'Seed en cours');
-    expect(aria2StatusLabel('waiting'), "En file d'attente");
-    expect(aria2StatusLabel('paused'), 'En pause');
-    expect(aria2StatusLabel('complete'), 'Terminé');
-    expect(aria2StatusLabel('error'), 'Erreur');
-    expect(aria2StatusLabel(''), 'Inconnu');
+    expect(aria2StatusLabel('active'), 'Downloading');
+    expect(aria2StatusLabel('active', seeder: true), 'Seeding');
+    expect(aria2StatusLabel('waiting'), 'Queued');
+    expect(aria2StatusLabel('paused'), 'Paused');
+    expect(aria2StatusLabel('complete'), 'Complete');
+    expect(aria2StatusLabel('error'), 'Error');
+    expect(aria2StatusLabel(''), 'Unknown');
   });
 
   test('Aria2Download isSeeding detects BitTorrent seeders', () {

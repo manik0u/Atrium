@@ -53,7 +53,7 @@ Future<bool?> showLidarrDeleteAlbumDialog(
           final ColorScheme cs = theme.colorScheme;
 
           return AlertDialog(
-            title: Text('Supprimer ${album.title ?? 'Album'}?'),
+            title: Text(S.t('deleteAlbumTitle')Album'}?'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,16 +73,16 @@ Future<bool?> showLidarrDeleteAlbumDialog(
                 ],
                 const SizedBox(height: 12),
                 CheckboxListTile(
-                  title: const Text('Supprimer les fichiers du disque'),
-                  subtitle: const Text('Supprimer définitivement les fichiers audio'),
+                  title: Text(S.t('deleteFilesFromDisk')),
+                  subtitle: Text(S.t('permanentlyRemoveAudioFiles')),
                   value: deleteFiles,
                   contentPadding: EdgeInsets.zero,
                   onChanged: (bool? val) =>
                       setState(() => deleteFiles = val ?? false),
                 ),
                 CheckboxListTile(
-                  title: const Text("Ajouter une exclusion de liste d'import"),
-                  subtitle: const Text('Empêcher le rajout par les listes automatiques'),
+                  title: Text(S.t('addImportListExclusion')),
+                  subtitle: Text(S.t('preventReAddingByAutomatedLists')),
                   value: addImportListExclusion,
                   contentPadding: EdgeInsets.zero,
                   onChanged: (bool? val) =>
@@ -93,7 +93,7 @@ Future<bool?> showLidarrDeleteAlbumDialog(
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.of(ctx).pop(false),
-                child: const Text('Annuler'),
+                child: Text(S.t('cancel')),
               ),
               FilledButton(
                 style: FilledButton.styleFrom(
@@ -101,7 +101,7 @@ Future<bool?> showLidarrDeleteAlbumDialog(
                   foregroundColor: cs.onError,
                 ),
                 onPressed: () => Navigator.of(ctx).pop(true),
-                child: const Text('Supprimer'),
+                child: Text(S.t('delete')),
               ),
             ],
           );
@@ -121,7 +121,7 @@ Future<bool?> showLidarrDeleteAlbumDialog(
     );
 
     if (!resp.isSuccess) {
-      throw Exception(resp.error?.message ?? "Échec de la suppression de l'album");
+      throw Exception(resp.error?.message ?? S.t('failedToDeleteAlbum'));
     }
 
     ref.invalidate(lidarrAlbumsForArtistProvider((instance, artistId)));
@@ -136,7 +136,7 @@ Future<bool?> showLidarrDeleteAlbumDialog(
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Supprimé « ${album.title ?? 'Album'}"'),
+          content: Text(S.t('deletedAlbumTitle')Album'}"'),
         ),
       );
     }
@@ -145,7 +145,7 @@ Future<bool?> showLidarrDeleteAlbumDialog(
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Échec de la suppression : $e'),
+          content: Text(S.t('failedToRemoveE1', [e])),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
@@ -228,7 +228,7 @@ class _LidarrEditAlbumSheetState extends ConsumerState<LidarrEditAlbumSheet> {
       );
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? "Échec de la mise à jour de l'album");
+        throw Exception(resp.error?.message ?? S.t('failedToUpdateAlbum'));
       }
 
       if (!mounted) return;
@@ -249,7 +249,7 @@ class _LidarrEditAlbumSheetState extends ConsumerState<LidarrEditAlbumSheet> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Modifié « ${widget.album.title ?? 'Album'}" settings'),
+          content: Text(S.t('updatedWidgetAlbumTitle')Album'}" settings'),
         ),
       );
       Navigator.of(context).pop(true);
@@ -257,7 +257,7 @@ class _LidarrEditAlbumSheetState extends ConsumerState<LidarrEditAlbumSheet> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Échec de la mise à jour : $e'),
+            content: Text(S.t('failedToUpdateE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -274,7 +274,7 @@ class _LidarrEditAlbumSheetState extends ConsumerState<LidarrEditAlbumSheet> {
     final ThemeData theme = Theme.of(context);
     final ColorScheme cs = theme.colorScheme;
 
-    final String albumTitle = widget.album.title ?? 'Album';
+    final String albumTitle = widget.album.title ?? S.t('album');
     final String typeTag =
         widget.album.albumType != null ? ' [${widget.album.albumType}]' : '';
 
@@ -302,7 +302,7 @@ class _LidarrEditAlbumSheetState extends ConsumerState<LidarrEditAlbumSheet> {
             ),
             actions: <Widget>[
               IconButton(
-                tooltip: "Supprimer l'album",
+                tooltip: S.t('deleteAlbum'),
                 icon: Icon(Icons.delete_outline, color: cs.error),
                 onPressed: () async {
                   final bool? deleted = await showLidarrDeleteAlbumDialog(
@@ -329,9 +329,9 @@ class _LidarrEditAlbumSheetState extends ConsumerState<LidarrEditAlbumSheet> {
                     // Monitored Toggle
                     SwitchListTile(
                       contentPadding: EdgeInsets.zero,
-                      title: const Text('Surveillé'),
-                      subtitle: const Text(
-                        'Rechercher et surveiller les pistes de cet album',
+                      title: Text(S.t('monitored')),
+                      subtitle: Text(
+                        S.t('searchForAndMonitorTracksForThisAlbum'),
                       ),
                       value: _monitored,
                       onChanged: (bool val) => setState(() => _monitored = val),
@@ -341,7 +341,7 @@ class _LidarrEditAlbumSheetState extends ConsumerState<LidarrEditAlbumSheet> {
                     // Automatically Switch Release
                     SwitchListTile(
                       contentPadding: EdgeInsets.zero,
-                      title: const Text('Changer automatiquement de release'),
+                      title: Text(S.t('automaticallySwitchRelease')),
                       subtitle: const Text(
                         'Allow Lidarr to match audio files against any available release of this album',
                       ),
@@ -432,7 +432,7 @@ class _LidarrEditAlbumSheetState extends ConsumerState<LidarrEditAlbumSheet> {
                               child:
                                   ExpressiveProgressIndicator(strokeWidth: 2),
                             )
-                          : const Text('Enregistrer les modifications'),
+                          : Text(S.t('saveChanges')),
                     ),
                   ),
                 ),

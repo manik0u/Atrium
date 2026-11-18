@@ -190,7 +190,7 @@ class _SlskdShareContentsSheetState
                 child: TextField(
                   controller: _filterController,
                   decoration: InputDecoration(
-                    hintText: 'Filtrer les fichiers et sous-dossiers…',
+                    hintText: S.t('filterFilesSubfolders'),
                     prefixIcon: const Icon(Icons.search_rounded, size: 20),
                     suffixIcon: _filterQuery.isNotEmpty
                         ? IconButton(
@@ -231,7 +231,7 @@ class _SlskdShareContentsSheetState
                     children: <Widget>[
                       ActionChip(
                         avatar: const Icon(Icons.home_rounded, size: 16),
-                        label: const Text('Racine'),
+                        label: Text(S.t('root')),
                         visualDensity: VisualDensity.compact,
                         onPressed: _pathSegments.isEmpty
                             ? null
@@ -276,7 +276,7 @@ class _SlskdShareContentsSheetState
                               size: 48, color: colorScheme.error),
                           const SizedBox(height: Insets.md),
                           Text(
-                            'Échec du chargement du contenu partagé',
+                            S.t('failedToLoadSharedContent'),
                             style: textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -305,7 +305,7 @@ class _SlskdShareContentsSheetState
                                   size: 48, color: colorScheme.outline),
                               const SizedBox(height: Insets.md),
                               Text(
-                                'Aucun fichier indexé dans ce partage',
+                                S.t('noFilesIndexedInThisShare'),
                                 style: textTheme.titleSmall?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -348,8 +348,8 @@ class _SlskdShareContentsSheetState
                           padding: const EdgeInsets.all(Insets.xl),
                           child: Text(
                             _filterQuery.isNotEmpty
-                                ? 'Aucun dossier ou fichier correspondant'
-                                : 'Dossier vide',
+                                ? S.t('noMatchingFoldersOrFiles')
+                                : S.t('emptyFolder'),
                             style: textTheme.bodyMedium?.copyWith(
                               color: colorScheme.onSurfaceVariant,
                             ),
@@ -372,7 +372,7 @@ class _SlskdShareContentsSheetState
                             return ListTile(
                               leading: const Icon(Icons.arrow_upward_rounded),
                               title: const Text('..'),
-                              subtitle: const Text('Retour au dossier parent'),
+                              subtitle: Text(S.t('backToParentFolder')),
                               onTap: _navigateBack,
                             );
                           }

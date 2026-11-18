@@ -85,7 +85,7 @@ class RadarrCalendarEvent extends CalendarEvent {
   String get primaryTitle => movie.title;
 
   @override
-  String get subtitle => movie.year == null ? 'Film' : '${movie.year} - Film';
+  String get subtitle => movie.year == null ? S.t('movie') : S.t('movieYearMovie1', [movie.year]);
 
   static DateTime? _parseDate(String? s) {
     if (s == null || s.isEmpty) return null;
@@ -127,7 +127,7 @@ class SonarrCalendarEvent extends CalendarEvent {
       episode.monitored && (episode.series?.monitored ?? true);
 
   @override
-  String get primaryTitle => episode.series?.title ?? 'Série inconnue';
+  String get primaryTitle => episode.series?.title ?? S.t('unknownSeries');
 
   @override
   String get subtitle {
@@ -149,7 +149,7 @@ class LidarrCalendarEvent extends CalendarEvent {
   @override
   String get title => album.artist?.artistName != null
       ? '${album.artist!.artistName} - ${album.title ?? 'Unknown Album'}'
-      : album.title ?? 'Album inconnu';
+      : album.title ?? S.t('unknownAlbum');
 
   @override
   DateTime get date {
@@ -170,11 +170,11 @@ class LidarrCalendarEvent extends CalendarEvent {
   bool get monitored => album.monitored ?? false;
 
   @override
-  String get primaryTitle => album.artist?.artistName ?? 'Artiste inconnu';
+  String get primaryTitle => album.artist?.artistName ?? S.t('unknownArtist');
 
   @override
   String get subtitle {
-    final String type = album.albumType ?? 'Album';
+    final String type = album.albumType ?? S.t('album');
     final String title = album.title ?? '';
     return title.isEmpty ? type : '$type - $title';
   }
@@ -533,11 +533,11 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                 );
               },
             ),
-            title: const Text('Calendrier'),
+            title: Text(S.t('calendar')),
           ),
-          body: const EmptyView(
+          body: EmptyView(
             icon: Icons.calendar_today_outlined,
-            title: 'Aucun service de calendrier',
+            title: S.t('noCalendarServices'),
             message:
                 'Add a Sonarr, Radarr, or Lidarr service to see your release schedule here.',
           ),
@@ -563,15 +563,15 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
               );
             },
           ),
-          title: const Text('Calendrier'),
+          title: Text(S.t('calendar')),
           actions: <Widget>[
             IconButton(
               icon: Icon(
                 showUnmonitored ? Icons.bookmark_border : Icons.bookmark,
               ),
               tooltip: showUnmonitored
-                  ? 'Affichage des surveillés et non surveillés'
-                  : 'Affichage des surveillés uniquement',
+                  ? S.t('showingMonitoredAndUnmonitored')
+                  : S.t('showingMonitoredOnly'),
               onPressed: () => ref
                   .read(preferencesProvider.notifier)
                   .setCalendarShowUnmonitored(!showUnmonitored),
@@ -686,7 +686,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                                 horizontal: Insets.sm),
                           ),
                           icon: const Icon(Icons.today, size: 16),
-                          label: const Text("Aujourd'hui"),
+                          label: Text(S.t('today')),
                         ),
                         IconButton(
                           icon: const Icon(Icons.chevron_left),
@@ -721,7 +721,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                               ),
                               const SizedBox(height: Insets.md),
                               Text(
-                                'Aucune sortie prévue ce mois-ci',
+                                S.t('noReleasesScheduledThisMonth'),
                                 style: theme.textTheme.titleMedium?.copyWith(
                                   color: theme.colorScheme.outline,
                                 ),
@@ -823,7 +823,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                               const EdgeInsets.symmetric(horizontal: Insets.sm),
                         ),
                         icon: const Icon(Icons.today, size: 16),
-                        label: const Text("Aujourd'hui"),
+                        label: Text(S.t('today')),
                       ),
                       IconButton(
                         icon: const Icon(Icons.chevron_left),
@@ -847,13 +847,13 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      _buildWeekdayHeader(theme, 'Sun'),
-                      _buildWeekdayHeader(theme, 'Mon'),
-                      _buildWeekdayHeader(theme, 'Tue'),
-                      _buildWeekdayHeader(theme, 'Wed'),
-                      _buildWeekdayHeader(theme, 'Thu'),
-                      _buildWeekdayHeader(theme, 'Fri'),
-                      _buildWeekdayHeader(theme, 'Sat'),
+                      _buildWeekdayHeader(theme, S.t('sun')),
+                      _buildWeekdayHeader(theme, S.t('mon')),
+                      _buildWeekdayHeader(theme, S.t('tue')),
+                      _buildWeekdayHeader(theme, S.t('wed')),
+                      _buildWeekdayHeader(theme, S.t('thu')),
+                      _buildWeekdayHeader(theme, S.t('fri')),
+                      _buildWeekdayHeader(theme, S.t('sat')),
                     ],
                   ),
                   const SizedBox(height: Insets.xs),
@@ -986,7 +986,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                             ),
                             const SizedBox(height: Insets.sm),
                             Text(
-                              'Aucune sortie prévue',
+                              S.t('noReleasesScheduled'),
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 color: theme.colorScheme.outline,
                               ),
@@ -1003,14 +1003,14 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
             }
 
             return EasyRefresh(
-              header: const ClassicHeader(
-                dragText: 'Pull to refresh',
-                armedText: 'Release ready',
-                readyText: 'Refreshing...',
-                processingText: 'Refreshing...',
-                processedText: 'Succeeded',
-                failedText: 'Failed',
-                messageText: 'Last updated at %T',
+              header: ClassicHeader(
+                dragText: S.t('pullToRefresh'),
+                armedText: S.t('releaseReady'),
+                readyText: S.t('refreshing'),
+                processingText: S.t('refreshing'),
+                processedText: S.t('succeeded'),
+                failedText: S.t('failed'),
+                messageText: S.t('lastUpdatedAtT'),
               ),
               onRefresh: _handleRefresh,
               child: content,
@@ -1075,7 +1075,7 @@ class _DateHeader extends StatelessWidget {
 
     final DateTime compare = DateTime(date.year, date.month, date.day);
     if (compare == today) {
-      return 'Today';
+      return S.t('today');
     } else if (compare == tomorrow) {
       return 'Tomorrow';
     } else if (compare == yesterday) {
@@ -1157,7 +1157,7 @@ class _EventTile extends ConsumerWidget {
           LidarrArtwork.albumCoverUrl(instance, album.images) ??
               LidarrArtwork.artistPosterUrl(instance, album.artist?.images);
 
-      releaseType = album.albumType ?? 'Album';
+      releaseType = album.albumType ?? S.t('album');
 
       onTap = () {
         if (album.artistId != null) {
@@ -1179,7 +1179,7 @@ class _EventTile extends ConsumerWidget {
     final bool isFuture = event.date.isAfter(DateTime.now());
     final (String label, Color bg, Color fg, Color accentColor) = event.hasFile
         ? (
-            'Downloaded',
+            S.t('downloaded'),
             theme.colorScheme.primaryContainer,
             theme.colorScheme.onPrimaryContainer,
             theme.colorScheme.tertiary,
@@ -1192,7 +1192,7 @@ class _EventTile extends ConsumerWidget {
                 theme.colorScheme.primary,
               )
             : (
-                'Missing',
+                S.t('missing'),
                 theme.colorScheme.errorContainer,
                 theme.colorScheme.onErrorContainer,
                 theme.colorScheme.error,
@@ -1305,7 +1305,7 @@ class _EventTile extends ConsumerWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          event.monitored ? 'Monitored' : 'Unmonitored',
+                          event.monitored ? S.t('monitored') : S.t('unmonitored'),
                           style: theme.textTheme.labelMedium?.copyWith(
                             color: theme.colorScheme.outline,
                           ),

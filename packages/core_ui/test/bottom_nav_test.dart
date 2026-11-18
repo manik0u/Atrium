@@ -20,8 +20,8 @@ Widget _wrap({required double inset, bool visible = true}) => MaterialApp(
             selectedIndex: 0,
             onDestinationSelected: (_) {},
             destinations: const <NavigationDestination>[
-              NavigationDestination(icon: Icon(Icons.dns), label: 'Tableau'),
-              NavigationDestination(icon: Icon(Icons.speed), label: 'Système'),
+              NavigationDestination(icon: Icon(Icons.dns), label: 'Array'),
+              NavigationDestination(icon: Icon(Icons.speed), label: 'System'),
             ],
           ),
         ),
@@ -80,7 +80,7 @@ void main() {
   testWidgets('destinations reach the bar', (WidgetTester tester) async {
     await tester.pumpWidget(_wrap(inset: 48));
 
-    expect(find.text('Tableau'), findsOneWidget);
-    expect(find.text('Système'), findsOneWidget);
+    expect(find.text('Array'), findsOneWidget);
+    expect(find.text('System'), findsOneWidget);
   });
 }

@@ -129,7 +129,7 @@ void main() {
         isA<PlexAccountException>().having(
           (PlexAccountException e) => e.message,
           'message',
-          'Plex a oublié cette connexion. Recommencez.',
+          'Plex forgot this sign-in. Start again.',
         ),
       ),
     );

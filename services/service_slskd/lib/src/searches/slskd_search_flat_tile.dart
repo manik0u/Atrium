@@ -88,7 +88,7 @@ class SlskdSearchFlatTile extends ConsumerWidget {
                   const SizedBox(width: Insets.xs / 2),
                 ],
                 IconButton(
-                  tooltip: file.isLocked ? 'Le fichier est verrouillé' : 'Télécharger la piste',
+                  tooltip: file.isLocked ? S.t('fileIsLocked') : S.t('downloadTrack'),
                   visualDensity: VisualDensity.compact,
                   icon: Icon(
                     file.isLocked
@@ -157,7 +157,7 @@ class SlskdSearchFlatTile extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
-                      'Free Slot',
+                      S.t('freeSlot'),
                       style: textTheme.labelSmall?.copyWith(
                         fontSize: 9,
                         fontWeight: FontWeight.bold,

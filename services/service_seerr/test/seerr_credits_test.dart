@@ -12,7 +12,7 @@ const Map<String, dynamic> movieDetailJson = <String, dynamic>{
   'posterPath': '/poster.jpg',
   'backdropPath': '/backdrop.jpg',
   'runtime': 139,
-  'status': 'Sortie',
+  'status': 'Released',
   'genres': <dynamic>[
     <String, dynamic>{'id': 18, 'name': 'Drama'},
   ],

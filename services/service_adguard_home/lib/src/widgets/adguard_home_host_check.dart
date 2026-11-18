@@ -153,7 +153,7 @@ class _AdguardHomeHostCheckSheetState
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   leading: const Icon(Icons.devices_other),
-                  title: const Text('Vérifié pour'),
+                  title: Text(S.t('checkedFor')),
                   subtitle: Text(_client.description),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: _pickClient,
@@ -170,7 +170,7 @@ class _AdguardHomeHostCheckSheetState
                   FilledButton.tonalIcon(
                     onPressed: _retry,
                     icon: const Icon(Icons.refresh),
-                    label: const Text('Réessayer'),
+                    label: Text(S.t('retry')),
                   ),
                 ] else
                   const Padding(
@@ -189,7 +189,7 @@ class _AdguardHomeHostCheckSheetState
               padding: const EdgeInsets.all(Insets.lg),
               child: FilledButton.tonal(
                 onPressed: () => _toggle(check),
-                child: Text(check.isFiltered ? 'Débloquer' : 'Bloquer'),
+                child: Text(check.isFiltered ? S.t('unblock') : S.t('block')),
               ),
             ),
           ),
@@ -230,7 +230,7 @@ class _AdguardHomeHostCheckSheetState
         ),
       if (check.rules.isNotEmpty)
         AdguardHomeBlock(
-          check.rules.length == 1 ? 'Rule' : 'Rules',
+          check.rules.length == 1 ? S.t('rule') : S.t('rules'),
           <Widget>[
             for (final AdguardHomeMatchedRule rule in check.rules) ...<Widget>[
               Text(
@@ -250,12 +250,12 @@ class _AdguardHomeHostCheckSheetState
         Padding(
           padding: const EdgeInsets.only(top: Insets.sm),
           child: Text(
-            'Aucune règle ne correspond à ce nom.',
+            S.t('noRuleMatchesThisName'),
             style: theme.textTheme.bodyMedium,
           ),
         ),
       AdguardHomeField('CNAME', check.cname),
-      AdguardHomeField('Addresses', check.ipAddresses.join('\n')),
+      AdguardHomeField(S.t('addresses'), check.ipAddresses.join('\n')),
     ];
   }
 }

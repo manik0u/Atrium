@@ -178,7 +178,7 @@ class MediaStorageSummaryBar extends StatelessWidget {
                     child: Row(
                       children: [
                         FilterChip(
-                          label: const Text('Toutes les bibliothèques'),
+                          label: Text(S.t('allLibraries')),
                           selected:
                               selectedFilter == 'all' || selectedFilter.isEmpty,
                           onSelected: (selected) {
@@ -201,15 +201,15 @@ class MediaStorageSummaryBar extends StatelessWidget {
                           if (lib.movieCount > 0 &&
                               lib.showCount == 0 &&
                               lib.trackCount == 0) {
-                            typeName = 'Movies';
+                            typeName = S.t('movies');
                           } else if (lib.showCount > 0 &&
                               lib.movieCount == 0 &&
                               lib.trackCount == 0) {
-                            typeName = 'TV Shows';
+                            typeName = S.t('tvShows');
                           } else if (lib.trackCount > 0 &&
                               lib.movieCount == 0 &&
                               lib.showCount == 0) {
-                            typeName = 'Music';
+                            typeName = S.t('music');
                           } else {
                             typeName = '';
                           }

@@ -45,9 +45,9 @@ class MovieDetailScreen extends ConsumerWidget {
         ),
         loading: () => const Center(child: ExpressiveProgressIndicator()),
         error: (error, stack) => Scaffold(
-          appBar: AppBar(title: const Text('Erreur')),
+          appBar: AppBar(title: Text(S.t('error'))),
           body: ErrorView(
-            title: 'Échec du chargement des détails du film',
+            title: S.t('failedToLoadMovieDetails'),
             message: error.toString(),
             onRetry: () =>
                 ref.invalidate(radarrMovieByIdProvider((instance, movieId))),
@@ -117,7 +117,7 @@ class _MovieDetailBodyState extends ConsumerState<_MovieDetailBody> {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Échec de l'actualisation : $e")),
+          SnackBar(content: Text(S.t('failedToRefreshE1', [e]))),
         );
       }
     } finally {
@@ -195,15 +195,15 @@ class _MovieDetailBodyState extends ConsumerState<_MovieDetailBody> {
         },
       ),
       body: EasyRefresh(
-          header: const ClassicHeader(
+          header: ClassicHeader(
             position: IndicatorPosition.locator,
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
       onRefresh: () => _refresh(context),
       child: CustomScrollView(
@@ -584,7 +584,7 @@ class _StatusPill extends StatelessWidget {
     final bool hasFile = movie.hasFile;
     final Color background = hasFile ? cs.primaryContainer : cs.errorContainer;
     final Color tint = hasFile ? cs.onPrimaryContainer : cs.onErrorContainer;
-    final String label = hasFile ? 'Téléchargé' : 'Manquant';
+    final String label = hasFile ? S.t('downloaded') : S.t('missing');
     final IconData icon = hasFile ? Icons.check : Icons.warning_amber_rounded;
 
     return Container(
@@ -630,7 +630,7 @@ class _OverviewSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              'Overview',
+              S.t('overview'),
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -684,8 +684,8 @@ class _CollectionSectionState extends ConsumerState<_CollectionSection> {
         SnackBar(
           content: Text(
             newMonitored
-                ? 'Collection « ${collection.title ?? 'Collection'}" monitored.'
-                : 'Collection « ${collection.title ?? 'Collection'}" unmonitored.',
+                ? S.t('collectionCollectionTitle')Collection'}" monitored.'
+                : S.t('collectionCollectionTitle')Collection'}" unmonitored.',
           ),
         ),
       );
@@ -697,7 +697,7 @@ class _CollectionSectionState extends ConsumerState<_CollectionSection> {
       widget.onRefreshed();
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la mise à jour de la surveillance de la collection : $e')),
+        SnackBar(content: Text(S.t('failedToUpdateCollectionMonitoringE1', [e]))),
       );
     } finally {
       if (mounted) {
@@ -817,7 +817,7 @@ class _CollectionSectionState extends ConsumerState<_CollectionSection> {
                               ),
                               icon:
                                   const Icon(Icons.bookmark_border, size: 18),
-                              label: const Text('Collection non surveillée'),
+                              label: Text(S.t('collectionUnmonitored')),
                               onPressed:
                                   (collection == null || collection.id <= 0)
                                       ? null
@@ -860,7 +860,7 @@ class _FileSection extends StatelessWidget {
             const SizedBox(height: Insets.md),
             _buildDetailRow(
               context,
-              'Status',
+              S.t('status'),
               movie.hasFile ? 'File downloaded' : 'File missing',
               icon: movie.hasFile
                   ? Icons.check_circle_outline
@@ -871,7 +871,7 @@ class _FileSection extends StatelessWidget {
               const Divider(height: 24),
               _buildDetailRow(
                 context,
-                'Size on Disk',
+                S.t('sizeOnDisk'),
                 _formatSize(movie.sizeOnDisk),
                 icon: Icons.sd_storage_outlined,
               ),
@@ -880,7 +880,7 @@ class _FileSection extends StatelessWidget {
               const Divider(height: 24),
               _buildDetailRow(
                 context,
-                'Path',
+                S.t('path'),
                 movie.path!,
                 icon: Icons.folder_open_outlined,
               ),
@@ -982,7 +982,7 @@ class _ReleaseDatesSection extends StatelessWidget {
             if (inCinemasDate != null)
               _buildReleaseRow(
                 context,
-                'In Cinemas',
+                S.t('inCinemas'),
                 formatter.format(inCinemasDate),
                 Icons.local_play_outlined,
               ),
@@ -1078,8 +1078,8 @@ class _ActionsRow extends ConsumerWidget {
                     ),
                   ),
                   icon: const Icon(Icons.bookmark, size: 20),
-                  label: const Text(
-                    'Monitored',
+                  label: Text(
+                    S.t('monitored'),
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   onPressed: () => _toggleMonitored(context, ref),
@@ -1093,7 +1093,7 @@ class _ActionsRow extends ConsumerWidget {
                     ),
                   ),
                   icon: const Icon(Icons.bookmark_border, size: 20),
-                  label: const Text('Non surveillé'),
+                  label: Text(S.t('unmonitored')),
                   onPressed: () => _toggleMonitored(context, ref),
                 ),
         ),
@@ -1107,8 +1107,8 @@ class _ActionsRow extends ConsumerWidget {
               ),
             ),
             icon: const Icon(Icons.search, size: 20),
-            label: const Text(
-              'Search',
+            label: Text(
+              S.t('search'),
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             onPressed: () async {
@@ -1122,11 +1122,11 @@ class _ActionsRow extends ConsumerWidget {
                   'movieIds': <int>[movie.id],
                 });
                 messenger.showSnackBar(
-                  const SnackBar(content: Text('Recherche lancée')),
+                  SnackBar(content: Text(S.t('searchStarted'))),
                 );
               } catch (e) {
                 messenger.showSnackBar(
-                  SnackBar(content: Text('Échec du démarrage de la recherche : $e')),
+                  SnackBar(content: Text(S.t('failedToStartSearchE1', [e]))),
                 );
               }
             },
@@ -1135,7 +1135,7 @@ class _ActionsRow extends ConsumerWidget {
         const SizedBox(width: Insets.sm),
         IconButton.filledTonal(
           icon: const Icon(Icons.manage_search),
-          tooltip: 'Recherche manuelle',
+          tooltip: S.t('manualSearch'),
           onPressed: () {
             Navigator.of(context, rootNavigator: true).push(
               FadePageRoute<void>(
@@ -1167,7 +1167,7 @@ class _ActionsRow extends ConsumerWidget {
       onRefreshed();
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la mise à jour de la surveillance : $e')),
+        SnackBar(content: Text(S.t('failedToUpdateMonitoringE1', [e]))),
       );
     }
   }
@@ -1204,44 +1204,44 @@ class _OverflowMenu extends ConsumerWidget {
         }
       },
       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-        const PopupMenuItem<String>(
+        PopupMenuItem<String>(
           value: 'edit',
           child: ListTile(
             leading: Icon(Icons.edit_outlined),
-            title: Text('Modifier les paramètres'),
+            title: Text(S.t('editSettings')),
             contentPadding: EdgeInsets.zero,
           ),
         ),
-        const PopupMenuItem<String>(
+        PopupMenuItem<String>(
           value: 'rename',
           child: ListTile(
             leading: Icon(Icons.drive_file_rename_outline),
-            title: Text('Renommer les fichiers'),
+            title: Text(S.t('renameFiles')),
             contentPadding: EdgeInsets.zero,
           ),
         ),
-        const PopupMenuItem<String>(
+        PopupMenuItem<String>(
           value: 'history',
           child: ListTile(
             leading: Icon(Icons.history),
-            title: Text('Historique'),
+            title: Text(S.t('history')),
             contentPadding: EdgeInsets.zero,
           ),
         ),
         if (movie.hasFile && movie.movieFileId != null)
-          const PopupMenuItem<String>(
+          PopupMenuItem<String>(
             value: 'delete_file',
             child: ListTile(
               leading: Icon(Icons.delete_sweep_outlined),
-              title: Text('Supprimer le fichier du film'),
+              title: Text(S.t('deleteMovieFile')),
               contentPadding: EdgeInsets.zero,
             ),
           ),
-        const PopupMenuItem<String>(
+        PopupMenuItem<String>(
           value: 'delete',
           child: ListTile(
             leading: Icon(Icons.delete_outline),
-            title: Text('Supprimer le film'),
+            title: Text(S.t('deleteMovie')),
             contentPadding: EdgeInsets.zero,
           ),
         ),
@@ -1288,19 +1288,19 @@ class _OverflowMenu extends ConsumerWidget {
       context: context,
       builder: (BuildContext context) => StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) => AlertDialog(
-          title: const Text('Supprimer le fichier du film ?'),
+          title: Text(S.t('deleteMovieFile_2')),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'Voulez-vous vraiment supprimer le fichier de « ${movie.title} » du disque ? La fiche restera dans Radarr.',
+                S.t('areYouSureYouWantToDeleteTheFileForMovieTitleFromDiskTheMovieEntryWillRemainInRadarr1', [movie.title]),
               ),
               const SizedBox(height: Insets.sm),
               CheckboxListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Ne plus surveiller le film'),
-                subtitle: const Text('Empêcher les re-téléchargements automatiques'),
+                title: Text(S.t('unmonitorMovie')),
+                subtitle: Text(S.t('preventAutomaticReDownloads')),
                 value: unmonitor,
                 onChanged: (bool? v) => setState(() => unmonitor = v ?? false),
               ),
@@ -1309,7 +1309,7 @@ class _OverflowMenu extends ConsumerWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             FilledButton(
               style: FilledButton.styleFrom(
@@ -1317,7 +1317,7 @@ class _OverflowMenu extends ConsumerWidget {
                 foregroundColor: Theme.of(context).colorScheme.onError,
               ),
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('Supprimer le fichier'),
+              child: Text(S.t('deleteFile')),
             ),
           ],
         ),
@@ -1364,15 +1364,15 @@ class _OverflowMenu extends ConsumerWidget {
           SnackBar(
             content: Text(
               unmonitored
-                  ? 'Fichier supprimé et film non surveillé.'
-                  : 'Fichier supprimé du disque.',
+                  ? S.t('fileDeletedAndMovieUnmonitored')
+                  : S.t('fileDeletedFromDisk'),
             ),
           ),
         );
       }
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la suppression du fichier : $e')),
+        SnackBar(content: Text(S.t('failedToDeleteFileE1', [e]))),
       );
     }
   }
@@ -1384,7 +1384,7 @@ class _OverflowMenu extends ConsumerWidget {
       context: context,
       builder: (BuildContext context) => StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) => AlertDialog(
-          title: const Text('Supprimer le film ?'),
+          title: Text(S.t('deleteMovie_2')),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1392,7 +1392,7 @@ class _OverflowMenu extends ConsumerWidget {
               Text(movie.title),
               CheckboxListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Supprimer aussi le fichier du disque'),
+                title: Text(S.t('alsoDeleteFileOnDisk')),
                 value: deleteFiles,
                 onChanged: (bool? v) =>
                     setState(() => deleteFiles = v ?? false),
@@ -1402,11 +1402,11 @@ class _OverflowMenu extends ConsumerWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             FilledButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('Supprimer'),
+              child: Text(S.t('delete')),
             ),
           ],
         ),
@@ -1424,7 +1424,7 @@ class _OverflowMenu extends ConsumerWidget {
       }
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la suppression du film : $e')),
+        SnackBar(content: Text(S.t('failedToDeleteMovieE1', [e]))),
       );
     }
   }
@@ -1639,13 +1639,13 @@ class RadarrMovieHistoryScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${movie.title} - Historique'),
+        title: Text(S.t('movieTitleHistory1', [movie.title])),
         surfaceTintColor: Colors.transparent,
       ),
       body: historyAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
         error: (Object error, StackTrace? _) => ErrorView(
-          title: "Échec du chargement de l'historique",
+          title: S.t('failedToLoadHistory'),
           message: error.toString(),
           onRetry: () => ref.invalidate(radarrMovieHistoryProvider((instance, movie.id))),
         ),
@@ -1662,7 +1662,7 @@ class RadarrMovieHistoryScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: Insets.lg),
                   Text(
-                    "Aucun élément dans l'historique.",
+                    S.t('noHistoryItemsFound'),
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: cs.outline,
                     ),
@@ -1698,7 +1698,7 @@ class RadarrMovieHistoryScreen extends ConsumerWidget {
                     ),
                   ),
                   subtitle: Text(
-                    item.sourceTitle ?? 'Sans titre de release',
+                    item.sourceTitle ?? S.t('noReleaseTitle'),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -1761,7 +1761,7 @@ class _DetailRow extends StatelessWidget {
 }
 
 String _formatDateTime(String? isoDate) {
-  if (isoDate == null) return 'Unknown Date';
+  if (isoDate == null) return S.t('unknownDate');
   try {
     final DateTime dt = DateTime.parse(isoDate).toLocal();
     final String monthStr = dt.month.toString().padLeft(2, '0');
@@ -1810,7 +1810,7 @@ void _showHistoryDetails(
   RadarrHistoryItem item,
 ) {
   final ThemeData theme = Theme.of(context);
-  final String eventType = item.eventType ?? 'Unknown';
+  final String eventType = item.eventType ?? S.t('unknown');
 
   showDialog<void>(
     context: context,
@@ -1818,7 +1818,7 @@ void _showHistoryDetails(
       return AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
         title: Text(
-          'History Event Details',
+          S.t('historyEventDetails'),
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -1828,18 +1828,18 @@ void _showHistoryDetails(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              _DetailRow(label: "Type d'événement", value: eventType.toUpperCase()),
-              _DetailRow(label: 'Date', value: _formatDateTime(item.date)),
+              _DetailRow(label: S.t('eventType'), value: eventType.toUpperCase()),
+              _DetailRow(label: S.t('date'), value: _formatDateTime(item.date)),
               _DetailRow(
-                label: 'Titre source',
+                label: S.t('sourceTitle'),
                 value: item.sourceTitle ?? 'None',
               ),
               if (item.downloadId != null)
-                _DetailRow(label: 'ID de téléchargement', value: item.downloadId!),
+                _DetailRow(label: S.t('downloadID'), value: item.downloadId!),
               if (item.data != null && item.data!.isNotEmpty) ...[
                 const SizedBox(height: 12),
                 Text(
-                  'Metadata:',
+                  S.t('metadata_2'),
                   style: theme.textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -1894,16 +1894,16 @@ void _showHistoryDetails(
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Échec du marquage de la release : $e')),
+                      SnackBar(content: Text(S.t('failedToFlagReleaseE1', [e]))),
                     );
                   }
                 }
               },
-              child: const Text('Marquer comme échoué'),
+              child: Text(S.t('markFailed')),
             ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Fermer'),
+            child: Text(S.t('close')),
           ),
         ],
       );

@@ -197,7 +197,7 @@ class _JellyfinSessionDetailScreenState
                               }
                             } catch (_) {
                               messenger.showSnackBar(
-                                const SnackBar(content: Text("Échec de l'action")),
+                                SnackBar(content: Text(S.t('actionFailed'))),
                               );
                             }
                           },
@@ -252,8 +252,8 @@ class _JellyfinSessionDetailScreenState
                                   }
                                 } catch (_) {
                                   messenger.showSnackBar(
-                                    const SnackBar(
-                                      content: Text("Échec de l'action"),
+                                    SnackBar(
+                                      content: Text(S.t('actionFailed')),
                                     ),
                                   );
                                 }
@@ -423,8 +423,8 @@ class _JellyfinSessionDetailScreenState
                                   );
                                 } catch (_) {
                                   messenger.showSnackBar(
-                                    const SnackBar(
-                                      content: Text("Échec de l'action"),
+                                    SnackBar(
+                                      content: Text(S.t('actionFailed')),
                                     ),
                                   );
                                 }
@@ -498,8 +498,8 @@ class _JellyfinSessionDetailScreenState
                                 );
                               } catch (_) {
                                 messenger.showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Échec de l'action"),
+                                  SnackBar(
+                                    content: Text(S.t('actionFailed')),
                                   ),
                                 );
                               }
@@ -536,8 +536,8 @@ class _JellyfinSessionDetailScreenState
                                 );
                               } catch (_) {
                                 messenger.showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Échec de l'action"),
+                                  SnackBar(
+                                    content: Text(S.t('actionFailed')),
                                   ),
                                 );
                               }
@@ -584,8 +584,8 @@ class _JellyfinSessionDetailScreenState
                                 );
                               } catch (_) {
                                 messenger.showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Échec de l'action"),
+                                  SnackBar(
+                                    content: Text(S.t('actionFailed')),
                                   ),
                                 );
                               }
@@ -634,8 +634,8 @@ class _JellyfinSessionDetailScreenState
                                 );
                               } catch (_) {
                                 messenger.showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Échec de l'action"),
+                                  SnackBar(
+                                    content: Text(S.t('actionFailed')),
                                   ),
                                 );
                               }
@@ -675,8 +675,8 @@ class _JellyfinSessionDetailScreenState
                                 navigator.pop();
                               } catch (_) {
                                 messenger.showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Échec de l'action"),
+                                  SnackBar(
+                                    content: Text(S.t('actionFailed')),
                                   ),
                                 );
                               }
@@ -713,8 +713,8 @@ class _JellyfinSessionDetailScreenState
                                 );
                               } catch (_) {
                                 messenger.showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Échec de l'action"),
+                                  SnackBar(
+                                    content: Text(S.t('actionFailed')),
                                   ),
                                 );
                               }

@@ -75,7 +75,7 @@ void showLidarrAlbumActionSheet(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          album.title ?? 'Album',
+                          album.title ?? S.t('album'),
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -116,7 +116,7 @@ void showLidarrAlbumActionSheet(
                   Expanded(
                     child: FilledButton.tonalIcon(
                       icon: const Icon(Icons.search, size: 18),
-                      label: const Text('Recherche automatique'),
+                      label: Text(S.t('autoSearch')),
                       onPressed: () async {
                         Navigator.pop(ctx);
                         final int? albumId = album.id;
@@ -132,14 +132,14 @@ void showLidarrAlbumActionSheet(
                           );
                           if (!resp.isSuccess) {
                             throw Exception(
-                              resp.error?.message ?? "Échec de la recherche de l'album",
+                              resp.error?.message ?? S.t('failedToSearchAlbum'),
                             );
                           }
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content:
-                                    Text('Recherche de « ${album.title} »…'),
+                                    Text(S.t('searchingForAlbumTitle1', [album.title])),
                                 duration: const Duration(seconds: 2),
                               ),
                             );
@@ -148,7 +148,7 @@ void showLidarrAlbumActionSheet(
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text("Échec de la recherche de l'album : $e"),
+                                content: Text(S.t('failedToSearchAlbumE1', [e])),
                                 backgroundColor: cs.error,
                               ),
                             );
@@ -161,13 +161,13 @@ void showLidarrAlbumActionSheet(
                   Expanded(
                     child: FilledButton.tonalIcon(
                       icon: const Icon(Icons.manage_search_outlined, size: 18),
-                      label: const Text('Interactif'),
+                      label: Text(S.t('interactive')),
                       onPressed: () {
                         Navigator.pop(ctx);
                         LidarrInteractiveSearchScreen.show(
                           context,
                           instance: instance,
-                          title: album.title ?? 'Album',
+                          title: album.title ?? S.t('album'),
                           albumId: album.id,
                         );
                       },
@@ -183,7 +183,7 @@ void showLidarrAlbumActionSheet(
               ListTile(
                 dense: true,
                 leading: const Icon(Icons.edit_outlined),
-                title: const Text("Modifier l'album"),
+                title: Text(S.t('editAlbum')),
                 contentPadding: EdgeInsets.zero,
                 onTap: () {
                   Navigator.pop(ctx);
@@ -199,7 +199,7 @@ void showLidarrAlbumActionSheet(
               ListTile(
                 dense: true,
                 leading: const Icon(Icons.audio_file_outlined),
-                title: const Text('Éditeur de fichiers de pistes'),
+                title: Text(S.t('trackFilesEditor')),
                 contentPadding: EdgeInsets.zero,
                 onTap: () {
                   Navigator.pop(ctx);
@@ -215,7 +215,7 @@ void showLidarrAlbumActionSheet(
               ListTile(
                 dense: true,
                 leading: const Icon(Icons.drive_file_rename_outline),
-                title: const Text('Renommer les fichiers'),
+                title: Text(S.t('renameFiles')),
                 contentPadding: EdgeInsets.zero,
                 onTap: () {
                   Navigator.pop(ctx);
@@ -231,7 +231,7 @@ void showLidarrAlbumActionSheet(
               ListTile(
                 dense: true,
                 leading: const Icon(Icons.label_outlined),
-                title: const Text('Re-tagger les fichiers'),
+                title: Text(S.t('retagFiles')),
                 contentPadding: EdgeInsets.zero,
                 onTap: () {
                   Navigator.pop(ctx);
@@ -248,7 +248,7 @@ void showLidarrAlbumActionSheet(
                 dense: true,
                 leading: Icon(Icons.delete_outline, color: cs.error),
                 title: Text(
-                  'Delete Album',
+                  S.t('deleteAlbum'),
                   style: TextStyle(color: cs.error),
                 ),
                 contentPadding: EdgeInsets.zero,
@@ -312,7 +312,7 @@ class _AlbumCardState extends ConsumerState<AlbumCard> {
         ),
       );
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? "Échec du basculement de l'album");
+        throw Exception(resp.error?.message ?? S.t('failedToToggleAlbum'));
       }
 
       ref.invalidate(
@@ -326,7 +326,7 @@ class _AlbumCardState extends ConsumerState<AlbumCard> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Échec du basculement de l'album : $e"),
+            content: Text(S.t('failedToToggleAlbumE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -435,7 +435,7 @@ class _AlbumCardState extends ConsumerState<AlbumCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.album.title ?? 'Album inconnu',
+                      widget.album.title ?? S.t('unknownAlbum'),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.titleSmall?.copyWith(
@@ -519,7 +519,7 @@ class _AlbumCardState extends ConsumerState<AlbumCard> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      tooltip: isMonitored ? 'Surveillé' : 'Non surveillé',
+                      tooltip: isMonitored ? S.t('monitored') : S.t('unmonitored'),
                       visualDensity: VisualDensity.compact,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(
@@ -534,7 +534,7 @@ class _AlbumCardState extends ConsumerState<AlbumCard> {
                       onPressed: _toggleMonitored,
                     ),
                     IconButton(
-                      tooltip: "Options de l'album",
+                      tooltip: S.t('albumOptions'),
                       visualDensity: VisualDensity.compact,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(

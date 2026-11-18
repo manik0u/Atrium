@@ -47,7 +47,7 @@ class _BulkTagsDialogState extends ConsumerState<BulkTagsDialog> {
       final ApiResponse<void> resp =
           await api.artistEditor.putArtistEditor(body: resource);
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec de la mise à jour des balises');
+        throw Exception(resp.error?.message ?? S.t('failedToUpdateTags'));
       }
 
       if (!mounted) return;
@@ -71,7 +71,7 @@ class _BulkTagsDialogState extends ConsumerState<BulkTagsDialog> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Échec de la mise à jour de la balise : $e'),
+            content: Text(S.t('tagUpdateFailedE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -89,14 +89,14 @@ class _BulkTagsDialogState extends ConsumerState<BulkTagsDialog> {
         ref.watch(lidarrTagsProvider(widget.instance));
 
     return AlertDialog(
-      title: Text('Balises (${widget.selectedIds.length} artistes)'),
+      title: Text(S.t('tagsWidgetSelectedIdsLengthArtists1', [widget.selectedIds.length])),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Action mode:',
+            Text(
+              S.t('actionMode'),
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 4),
@@ -105,23 +105,23 @@ class _BulkTagsDialogState extends ConsumerState<BulkTagsDialog> {
               onChanged: (ApplyTags? val) {
                 if (val != null) setState(() => _applyMode = val);
               },
-              child: const Column(
+              child: Column(
                 children: [
                   RadioListTile<ApplyTags>(
-                    title: Text('Ajouter des balises'),
-                    subtitle: Text('Ajouter les balises sélectionnées aux balises existantes'),
+                    title: Text(S.t('addTags')),
+                    subtitle: Text(S.t('appendSelectedTagsToExistingTags')),
                     value: ApplyTags.add,
                     contentPadding: EdgeInsets.zero,
                   ),
                   RadioListTile<ApplyTags>(
-                    title: Text('Retirer des balises'),
-                    subtitle: Text('Retirer les balises sélectionnées si présentes'),
+                    title: Text(S.t('removeTags')),
+                    subtitle: Text(S.t('removeSelectedTagsIfPresent')),
                     value: ApplyTags.remove,
                     contentPadding: EdgeInsets.zero,
                   ),
                   RadioListTile<ApplyTags>(
-                    title: Text('Remplacer les balises'),
-                    subtitle: Text('Écraser toutes les balises par celles sélectionnées'),
+                    title: Text(S.t('replaceTags')),
+                    subtitle: Text(S.t('overwriteAllTagsWithSelectedOnes')),
                     value: ApplyTags.replace,
                     contentPadding: EdgeInsets.zero,
                   ),
@@ -137,7 +137,7 @@ class _BulkTagsDialogState extends ConsumerState<BulkTagsDialog> {
             tagsAsync.when(
               data: (tags) {
                 if (tags.isEmpty) {
-                  return const Text('Aucune balise configurée dans Lidarr.');
+                  return Text(S.t('noTagsConfiguredInLidarr'));
                 }
                 return Wrap(
                   spacing: 6,
@@ -146,7 +146,7 @@ class _BulkTagsDialogState extends ConsumerState<BulkTagsDialog> {
                     for (final TagResource tag in tags)
                       if (tag.id != null)
                         FilterChip(
-                          label: Text(tag.label ?? 'Balise ${tag.id}'),
+                          label: Text(tag.label ?? S.t('tagTagId1', [tag.id])),
                           selected: _selectedTagIds.contains(tag.id!),
                           onSelected: (bool selected) {
                             setState(() {
@@ -162,7 +162,7 @@ class _BulkTagsDialogState extends ConsumerState<BulkTagsDialog> {
                 );
               },
               loading: () => const Center(child: ExpressiveProgressIndicator()),
-              error: (err, _) => Text('Échec du chargement des balises : $err'),
+              error: (err, _) => Text(S.t('failedToLoadTagsErr1', [err])),
             ),
           ],
         ),
@@ -170,7 +170,7 @@ class _BulkTagsDialogState extends ConsumerState<BulkTagsDialog> {
       actions: [
         TextButton(
           onPressed: _submitting ? null : () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: _submitting ? null : _submit,
@@ -180,7 +180,7 @@ class _BulkTagsDialogState extends ConsumerState<BulkTagsDialog> {
                   height: 16,
                   child: ExpressiveProgressIndicator(strokeWidth: 2),
                 )
-              : const Text('Appliquer les balises'),
+              : Text(S.t('applyTags')),
         ),
       ],
     );

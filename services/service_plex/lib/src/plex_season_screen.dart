@@ -148,39 +148,39 @@ class PlexEpisodeList extends ConsumerWidget {
             
             if (list.isEmpty) {
               return EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: () async =>
             ref.invalidate(plexChildrenProvider((instance, season.ratingKey))),
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          children: const <Widget>[
+          children: <Widget>[
             SizedBox(height: 100),
             EmptyView(
                 icon: Icons.tv_outlined,
-                title: 'Aucun épisode',
-                message: "Cette saison n'a pas encore d'épisodes.",
+                title: S.t('noEpisodes'),
+                message: S.t('thisSeasonHasNoEpisodesYet'),
               ),
           ],
         ),
       );
             }
             return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async =>
             ref.invalidate(plexChildrenProvider((instance, season.ratingKey))),
@@ -229,7 +229,7 @@ class _EpisodeTile extends ConsumerWidget {
       title: Text(label, maxLines: 2, overflow: TextOverflow.ellipsis),
       subtitle: minutes > 0 ? Text('$minutes min') : null,
       trailing: IconButton(
-        tooltip: watched ? 'Marquer comme non vu' : 'Marquer comme vu',
+        tooltip: watched ? S.t('markAsUnwatched') : S.t('markAsWatched'),
         icon: Icon(
           watched ? Icons.check_circle : Icons.check_circle_outline,
           color: watched ? theme.colorScheme.primary : null,
@@ -243,8 +243,8 @@ class _EpisodeTile extends ConsumerWidget {
                   await api!.setWatched(episode.ratingKey, watched: !watched);
                 } catch (_) {
                   messenger.showSnackBar(
-                    const SnackBar(
-                      content: Text("Impossible de mettre à jour l'état de visionnage"),
+                    SnackBar(
+                      content: Text(S.t('couldNotUpdateWatchedState')),
                     ),
                   );
                   return;

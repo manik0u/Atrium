@@ -56,18 +56,18 @@ void main() {
       await tester.pumpAndSettle();
 
       // Check SearchBar and artist cards
-      expect(find.text('Rechercher des artistes…'), findsOneWidget);
+      expect(find.text('Search artists...'), findsOneWidget);
       expect(find.text('Radiohead'), findsOneWidget);
       expect(find.text('Daft Punk'), findsOneWidget);
-      expect(find.text('Artistes'), findsOneWidget);
-      expect(find.text('Activité'), findsOneWidget);
+      expect(find.text('Artists'), findsOneWidget);
+      expect(find.text('Activity'), findsOneWidget);
 
       // Switch to Activity tab
-      await tester.tap(find.text('Activité'));
+      await tester.tap(find.text('Activity'));
       await tester.pumpAndSettle();
 
-      expect(find.text("File d'attente"), findsOneWidget);
-      expect(find.text('Historique'), findsOneWidget);
+      expect(find.text('Queue'), findsOneWidget);
+      expect(find.text('History'), findsOneWidget);
       expect(find.text('Daft Punk - Discovery FLAC'), findsOneWidget);
     });
 
@@ -95,7 +95,7 @@ void main() {
 
       // Verify navigated to search screen
       expect(find.byType(SearchBar), findsOneWidget);
-      expect(find.text("Rechercher dans le catalogue d'artistes en ligne…"), findsOneWidget);
+      expect(find.text('Search online artist catalog...'), findsOneWidget);
     });
   });
 }

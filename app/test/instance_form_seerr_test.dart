@@ -80,8 +80,8 @@ void main() {
       (WidgetTester tester) async {
     await edit(tester, seerr(const InstanceAuth.apiKey(apiKey: 'k')));
 
-    expect(field('Clé API'), findsOneWidget);
-    expect(field('E-mail'), findsNothing);
+    expect(field('API key'), findsOneWidget);
+    expect(field('Email'), findsNothing);
 
     await tap(tester, 'Save changes');
     expect(profiles.saved.single.auth, const InstanceAuth.apiKey(apiKey: 'k'));
@@ -91,13 +91,13 @@ void main() {
       (WidgetTester tester) async {
     await edit(tester, seerr(const InstanceAuth.apiKey(apiKey: 'k')));
 
-    await tap(tester, 'Se connecter');
-    expect(field('Clé API'), findsNothing);
-    expect(field('E-mail'), findsOneWidget);
-    expect(field('Mot de passe'), findsOneWidget);
+    await tap(tester, 'Sign in');
+    expect(field('API key'), findsNothing);
+    expect(field('Email'), findsOneWidget);
+    expect(field('Password'), findsOneWidget);
 
-    await tester.enterText(field('E-mail'), 'kid@example.com');
-    await tester.enterText(field('Mot de passe'), 'pw');
+    await tester.enterText(field('Email'), 'kid@example.com');
+    await tester.enterText(field('Password'), 'pw');
     await tap(tester, 'Save changes');
 
     expect(
@@ -113,12 +113,12 @@ void main() {
       'optional', (WidgetTester tester) async {
     await edit(tester, seerr(const InstanceAuth.apiKey(apiKey: 'k')));
 
-    await tap(tester, 'Se connecter');
-    await tap(tester, 'Jellyfin ou Emby');
-    expect(field("Nom d'utilisateur"), findsOneWidget);
-    expect(field('Mot de passe (facultatif)'), findsOneWidget);
+    await tap(tester, 'Sign in');
+    await tap(tester, 'Jellyfin or Emby');
+    expect(field('Username'), findsOneWidget);
+    expect(field('Password (Optional)'), findsOneWidget);
 
-    await tester.enterText(field("Nom d'utilisateur"), 'kid');
+    await tester.enterText(field('Username'), 'kid');
     await tap(tester, 'Save changes');
 
     expect(
@@ -134,9 +134,9 @@ void main() {
       seerr(const InstanceAuth.userPass(username: 'kid', password: 'pw')),
     );
 
-    expect(field('Clé API'), findsNothing);
+    expect(field('API key'), findsNothing);
     expect(find.text('kid'), findsOneWidget);
-    expect(field('Mot de passe (facultatif)'), findsOneWidget);
+    expect(field('Password (Optional)'), findsOneWidget);
   });
 }
 
@@ -148,7 +148,7 @@ class _Profiles extends ProfileListController {
 
   @override
   Future<List<Profile>> build() async => <Profile>[
-        Profile(id: 'p', name: 'Par défaut', instances: <Instance>[instance]),
+        Profile(id: 'p', name: 'Default', instances: <Instance>[instance]),
       ];
 
   @override

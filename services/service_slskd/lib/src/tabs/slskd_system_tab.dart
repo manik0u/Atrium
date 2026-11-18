@@ -97,11 +97,11 @@ class _SlskdSystemTabState extends ConsumerState<SlskdSystemTab>
                 onPressed: widget.onOpenDrawer,
               )
             : null,
-        title: const Text('Système et santé'),
+        title: Text(S.t('systemHealth')),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.refresh_rounded),
-            tooltip: 'Actualiser les infos système',
+            tooltip: S.t('refreshSystemInfo'),
             onPressed: () {
               ref.invalidate(slskdApplicationStateProvider(widget.instance));
               ref.invalidate(slskdSharesProvider(widget.instance));
@@ -120,29 +120,29 @@ class _SlskdSystemTabState extends ConsumerState<SlskdSystemTab>
               }
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-              const PopupMenuItem<String>(
+              PopupMenuItem<String>(
                 value: 'analytics',
                 child: ListTile(
                   leading: Icon(Icons.analytics_outlined),
-                  title: Text('Analyses et indicateurs des transferts'),
+                  title: Text(S.t('transferAnalyticsKPIs')),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
-              const PopupMenuItem<String>(
+              PopupMenuItem<String>(
                 value: 'storage',
                 child: ListTile(
                   leading: Icon(Icons.folder_open_rounded),
-                  title: Text("Explorateur de stockage de l'hôte"),
+                  title: Text(S.t('hostStorageExplorer')),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
-              const PopupMenuItem<String>(
+              PopupMenuItem<String>(
                 value: 'options',
                 child: ListTile(
                   leading: Icon(Icons.settings_suggest_rounded),
-                  title: Text('Configuration et diagnostics'),
+                  title: Text(S.t('configurationDiagnostics')),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
@@ -156,14 +156,14 @@ class _SlskdSystemTabState extends ConsumerState<SlskdSystemTab>
           unselectedLabelColor: colorScheme.onSurfaceVariant,
           indicatorColor: colorScheme.primary,
           indicatorSize: TabBarIndicatorSize.tab,
-          tabs: const <Widget>[
+          tabs: <Widget>[
             Tab(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Icon(Icons.health_and_safety_outlined, size: 18),
                   SizedBox(width: Insets.xs),
-                  Text('Santé'),
+                  Text(S.t('health')),
                 ],
               ),
             ),
@@ -173,7 +173,7 @@ class _SlskdSystemTabState extends ConsumerState<SlskdSystemTab>
                 children: <Widget>[
                   Icon(Icons.folder_shared_outlined, size: 18),
                   SizedBox(width: Insets.xs),
-                  Text('Partages'),
+                  Text(S.t('shares')),
                 ],
               ),
             ),
@@ -183,7 +183,7 @@ class _SlskdSystemTabState extends ConsumerState<SlskdSystemTab>
                 children: <Widget>[
                   Icon(Icons.article_outlined, size: 18),
                   SizedBox(width: Insets.xs),
-                  Text('Journaux'),
+                  Text(S.t('logs')),
                 ],
               ),
             ),

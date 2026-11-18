@@ -30,7 +30,7 @@ class QbittorrentActionUtils {
       context: context,
       builder: (BuildContext context) => StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) => AlertDialog(
-          title: const Text('Supprimer les torrents sélectionnés ?'),
+          title: Text(S.t('deleteSelectTorrents')),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -40,7 +40,7 @@ class QbittorrentActionUtils {
               const SizedBox(height: Insets.md),
               CheckboxListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Supprimer les fichiers'),
+                title: Text(S.t('deleteFiles')),
                 value: deleteFiles,
                 onChanged: (bool? v) =>
                     setState(() => deleteFiles = v ?? false),
@@ -50,11 +50,11 @@ class QbittorrentActionUtils {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('ANNULER'),
+              child: Text(S.t('cancel_2')),
             ),
             FilledButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('CONFIRMER'),
+              child: Text(S.t('confirm')),
             ),
           ],
         ),
@@ -81,11 +81,11 @@ class QbittorrentActionUtils {
     final String? chosen = await showDialog<String>(
       context: context,
       builder: (BuildContext context) => SimpleDialog(
-        title: const Text('Définir la catégorie'),
+        title: Text(S.t('setCategory')),
         children: <Widget>[
           SimpleDialogOption(
             onPressed: () => Navigator.of(context).pop(''),
-            child: const Text('Aucun'),
+            child: Text(S.t('none')),
           ),
           for (final String c in cats)
             SimpleDialogOption(
@@ -114,7 +114,7 @@ class QbittorrentActionUtils {
     final String? chosen = await showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Définir les balises'),
+        title: Text(S.t('setTags')),
         content: TextField(
           controller: ctrl,
           decoration: const InputDecoration(hintText: 'tag1, tag2'),
@@ -122,11 +122,11 @@ class QbittorrentActionUtils {
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(ctrl.text),
-            child: const Text('Enregistrer'),
+            child: Text(S.t('save')),
           ),
         ],
       ),
@@ -150,7 +150,7 @@ class QbittorrentActionUtils {
     final String? chosen = await showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text("Définir le chemin d'enregistrement"),
+        title: Text(S.t('setSavePath')),
         content: TextField(
           controller: ctrl,
           decoration: const InputDecoration(hintText: '/downloads/new_path'),
@@ -158,11 +158,11 @@ class QbittorrentActionUtils {
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(ctrl.text),
-            child: const Text('Enregistrer'),
+            child: Text(S.t('save')),
           ),
         ],
       ),
@@ -186,19 +186,19 @@ class QbittorrentActionUtils {
     final String? chosen = await showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Renommer'),
+        title: Text(S.t('rename')),
         content: TextField(
           controller: ctrl,
-          decoration: const InputDecoration(hintText: 'Nouveau nom'),
+          decoration: InputDecoration(hintText: S.t('newName')),
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(ctrl.text),
-            child: const Text('Enregistrer'),
+            child: Text(S.t('save')),
           ),
         ],
       ),

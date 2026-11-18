@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_networking/core_networking.dart';
 
 /// AdGuard Home answered 401.
@@ -9,7 +10,7 @@ class AdguardHomeSignInRefused implements Exception {
   const AdguardHomeSignInRefused();
 
   @override
-  String toString() => 'AdGuard Home a refusé la connexion.';
+  String toString() => S.t('adguardHomeRefusedTheSignIn');
 }
 
 /// AdGuard Home turned a request down and said why, in its own words.
@@ -28,7 +29,7 @@ class AdguardHomeUnexpectedAnswer implements Exception {
   const AdguardHomeUnexpectedAnswer();
 
   @override
-  String toString() => 'Cette adresse a répondu, mais pas comme AdGuard Home.';
+  String toString() => S.t('thisAddressAnsweredButNotAsAdGuardHome');
 }
 
 /// The client is the only entry of the allowed clients, so it cannot be
@@ -51,8 +52,8 @@ class AdguardHomeLastAllowedClient implements Exception {
 class AdguardHomeAllowedByWiderEntry implements Exception {
   const AdguardHomeAllowedByWiderEntry();
 
-  static const String message =
-      'Seuls les clients autorisés reçoivent une réponse, et celui-ci est admis par un '
+  static final String message =
+      S.t('onlyTheAllowedClientsAreAnsweredAndThisOneIsLetInByAn') +
       'entry that covers more than itself, such as a range. It has no entry '
       'of its own to take off. Change the allowed clients in AdGuard Home '
       'instead.';
@@ -89,8 +90,8 @@ class AdguardHomeRulesChanged implements Exception {
   /// The rules as the server has them now.
   final List<String> rules;
 
-  static const String message =
-      'Les règles personnalisées ont été modifiées sur le serveur depuis que vous les avez ouvertes.';
+  static final String message =
+      S.t('theCustomRulesWereChangedOnTheServerSinceYouOpenedThem');
 
   @override
   String toString() => message;
@@ -105,8 +106,8 @@ class AdguardHomeEntryGone implements Exception {
   /// What it was, as a sentence names it: "list", "rewrite".
   final String what;
 
-  String get message => "$what n'est plus sur le serveur tel qu'il était. "
-      'Elle a été modifiée ou supprimée ailleurs.';
+  String get message => S.t('theWhatIsNoLongerOnTheServerAsItWas1', [what])
+      S.t('itWasChangedOrRemovedSomewhereElse');
 
   @override
   String toString() => message;
@@ -123,7 +124,7 @@ class AdguardHomeRewriteRepeated implements Exception {
   /// How many there are.
   final int copies;
 
-  String get message => 'AdGuard Home conserve la réécriture de $domain $copies '
+  String get message => S.t('adguardHomeHoldsTheRewriteOfDomainCopies2', [domain, copies]) +
       'times and can only change the first. Delete it and add it again.';
 
   @override
@@ -132,7 +133,7 @@ class AdguardHomeRewriteRepeated implements Exception {
 
 /// One sentence for whatever went wrong, fit to show as it is.
 String describeAdguardHomeError(Object error) => switch (error) {
-      AdguardHomeSignInRefused() => 'AdGuard Home a refusé la connexion.',
+      AdguardHomeSignInRefused() => S.t('adguardHomeRefusedTheSignIn'),
       AdguardHomeClientGone(:final String message) => message,
       AdguardHomeEntryGone(:final String message) => message,
       AdguardHomeRewriteRepeated(:final String message) => message,
@@ -142,7 +143,7 @@ String describeAdguardHomeError(Object error) => switch (error) {
         AdguardHomeAllowedByWiderEntry.message,
       AdguardHomeRequestRefused(:final String message) => message,
       AdguardHomeUnexpectedAnswer() =>
-        'This address answered, but not as AdGuard Home.',
+        S.t('thisAddressAnsweredButNotAsAdGuardHome'),
       NetworkException(:final String message) => message,
-      _ => 'Un problème est survenu en communiquant avec AdGuard Home.',
+      _ => S.t('somethingWentWrongTalkingToAdGuardHome'),
     };

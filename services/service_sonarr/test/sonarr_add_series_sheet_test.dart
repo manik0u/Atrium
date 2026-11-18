@@ -94,7 +94,7 @@ void main() {
     await tester.tap(find.text('Open Sheet'));
     await tester.pumpAndSettle();
 
-    final Finder add = find.widgetWithText(FilledButton, 'Ajouter une série');
+    final Finder add = find.widgetWithText(FilledButton, 'Add Series');
     await tester.scrollUntilVisible(add, 100);
     await tester.pumpAndSettle();
     await tester.tap(add);

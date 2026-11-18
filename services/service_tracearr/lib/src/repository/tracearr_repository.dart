@@ -14,6 +14,7 @@ import '../generated/responses/tracearr_exception.dart';
 import '../mappers/mappers.dart';
 import '../media/tracearr_media_url_resolver.dart';
 import '../models/tracearr_models.dart';
+import 'package:core_models/core_models.dart';
 
 /// Intermediate Repository for Tracearr.
 ///
@@ -348,7 +349,7 @@ class TracearrRepository {
           (u) =>
               u.username?.toLowerCase() == userId.toLowerCase() ||
               u.id?.toLowerCase() == userId.toLowerCase(),
-          orElse: () => throw TracearrException('Utilisateur introuvable : $userId'),
+          orElse: () => throw TracearrException(S.t('userNotFoundUserId1', [userId])),
         );
         effectiveId = match.id ?? userId;
         identity = match;

@@ -140,8 +140,8 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                             color: isStarred ? Colors.redAccent : null,
                           ),
                           tooltip: isStarred
-                              ? 'Retirer des favoris'
-                              : 'Add to favorites',
+                              ? S.t('removeFromFavorites')
+                              : S.t('addToFavorites'),
                           onPressed: () async {
                             final bool willStar = !isStarred;
                             setModalState(() {
@@ -167,7 +167,7 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content:
-                                        Text('Échec de la mise à jour des favoris : $e'),
+                                        Text(S.t('failedToUpdateFavoriteE1', [e])),
                                   ),
                                 );
                               }
@@ -193,7 +193,7 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Text(
-                                'Rating',
+                                S.t('rating'),
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -235,7 +235,7 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content:
-                                            Text('Échec de la définition de la note : $e'),
+                                            Text(S.t('failedToSetRatingE1', [e])),
                                       ),
                                     );
                                   }
@@ -255,8 +255,8 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                       tileColor:
                           cs.surfaceContainerHighest.withValues(alpha: 0.45),
                       leading: const Icon(Icons.playlist_add_rounded),
-                      title: const Text(
-                        'Add to Another Playlist',
+                      title: Text(
+                        S.t('addToAnotherPlaylist'),
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
                       trailing:
@@ -284,7 +284,7 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                           ),
                           const SizedBox(width: Insets.sm),
                           Text(
-                            'Duration',
+                            S.t('duration'),
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: cs.onSurfaceVariant,
                             ),
@@ -332,7 +332,7 @@ class NavidromePlaylistScreen extends ConsumerWidget {
             final ColorScheme cs = theme.colorScheme;
 
             return AlertDialog(
-              title: const Text('Modifier la playlist'),
+              title: Text(S.t('editPlaylist')),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -340,7 +340,7 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                     TextField(
                       controller: nameController,
                       decoration: InputDecoration(
-                        labelText: 'Nom de la playlist *',
+                        labelText: S.t('playlistName'),
                         errorText: errorText,
                         border: const OutlineInputBorder(),
                       ),
@@ -354,19 +354,19 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                     TextField(
                       controller: commentController,
                       maxLines: 2,
-                      decoration: const InputDecoration(
-                        labelText: 'Description (facultatif)',
+                      decoration: InputDecoration(
+                        labelText: S.t('descriptionOptional'),
                         border: OutlineInputBorder(),
                       ),
                     ),
                     const SizedBox(height: Insets.sm),
                     SwitchListTile.adaptive(
                       contentPadding: EdgeInsets.zero,
-                      title: const Text('Playlist publique'),
+                      title: Text(S.t('publicPlaylist')),
                       subtitle: Text(
                         isPublic
-                            ? 'Visible par tous les utilisateurs'
-                            : 'Visible uniquement par vous',
+                            ? S.t('visibleToAllUsers')
+                            : S.t('onlyVisibleToYou'),
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: cs.onSurfaceVariant,
                         ),
@@ -384,7 +384,7 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                   onPressed: isSubmitting
                       ? null
                       : () => Navigator.of(dialogContext).pop(),
-                  child: const Text('Annuler'),
+                  child: Text(S.t('cancel')),
                 ),
                 FilledButton(
                   onPressed: isSubmitting
@@ -393,7 +393,7 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                           final String name = nameController.text.trim();
                           if (name.isEmpty) {
                             setDialogState(() {
-                              errorText = 'Please enter a name';
+                              errorText = S.t('pleaseEnterAName');
                             });
                             return;
                           }
@@ -428,7 +428,7 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                           } catch (e) {
                             setDialogState(() {
                               isSubmitting = false;
-                              errorText = 'Failed to update: $e';
+                              errorText = S.t('failedToUpdateE1', [e]);
                             });
                           }
                         },
@@ -438,7 +438,7 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                           height: 18,
                           child: CircularProgressIndicator(strokeWidth: 2),
                         )
-                      : const Text('Enregistrer'),
+                      : Text(S.t('save')),
                 ),
               ],
             );
@@ -457,14 +457,14 @@ class NavidromePlaylistScreen extends ConsumerWidget {
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: const Text('Supprimer la playlist ?'),
+          title: Text(S.t('deletePlaylist')),
           content: Text(
             'Are you sure you want to delete "${playlist.name}"? This action cannot be undone.',
           ),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             FilledButton(
               style: FilledButton.styleFrom(
@@ -482,7 +482,7 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                     Navigator.of(context).pop();
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('Playlist « ${playlist.name} » supprimée'),
+                        content: Text(S.t('deletedPlaylistPlaylistName1', [playlist.name])),
                       ),
                     );
                   }
@@ -490,13 +490,13 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('Échec de la suppression de la playlist : $e'),
+                        content: Text(S.t('failedToDeletePlaylistE1', [e])),
                       ),
                     );
                   }
                 }
               },
-              child: const Text('Supprimer'),
+              child: Text(S.t('delete')),
             ),
           ],
         );
@@ -621,7 +621,7 @@ class NavidromePlaylistScreen extends ConsumerWidget {
           if (playlist != null)
             PopupMenuButton<String>(
               icon: const Icon(Icons.more_vert_rounded),
-              tooltip: 'Options de la playlist',
+              tooltip: S.t('playlistOptions'),
               onSelected: (String action) {
                 if (action == 'edit') {
                   _showEditPlaylistDialog(context, ref, playlist);
@@ -630,13 +630,13 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                 }
               },
               itemBuilder: (BuildContext _) => <PopupMenuEntry<String>>[
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'edit',
                   child: Row(
                     children: <Widget>[
                       Icon(Icons.edit_rounded, size: 20),
                       SizedBox(width: Insets.sm),
-                      Text('Modifier les détails'),
+                      Text(S.t('editDetails')),
                     ],
                   ),
                 ),
@@ -855,7 +855,7 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                       _PlaylistBadge(
                         icon: Icons.queue_music_rounded,
                         label:
-                            '${detail.songs.length} ${detail.songs.length == 1 ? 'Track' : 'Tracks'}',
+                            '${detail.songs.length} ${detail.songs.length == 1 ? S.t('track') : S.t('tracks')}',
                       ),
                       if (pl.duration > 0)
                         _PlaylistBadge(
@@ -866,7 +866,7 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                         icon: pl.public
                             ? Icons.public_rounded
                             : Icons.lock_outline_rounded,
-                        label: pl.public ? 'Public' : 'Privé',
+                        label: pl.public ? S.t('public') : S.t('private'),
                       ),
                     ],
                   ),
@@ -890,7 +890,7 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                 ),
                 sliver: SliverToBoxAdapter(
                   child: Text(
-                    'Tracks',
+                    S.t('tracks'),
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -898,12 +898,12 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                 ),
               ),
               if (detail.songs.isEmpty)
-                const SliverFillRemaining(
+                SliverFillRemaining(
                   hasScrollBody: false,
                   child: Center(
                     child: Padding(
                       padding: EdgeInsets.all(Insets.xl),
-                      child: Text('Cette playlist ne contient aucun morceau pour le moment.\nAjoutez des morceaux depuis les vues album ou recherche.'),
+                      child: Text(S.t('thisPlaylistHasNoSongsYetAddSongsFromAlbumOrSearchViews')),
                     ),
                   ),
                 )
@@ -1067,7 +1067,7 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                                             .showSnackBar(
                                           SnackBar(
                                             content: Text(
-                                              '« ${song.title} » retiré de la playlist',
+                                              S.t('removedSongTitleFromPlaylist1', [song.title]),
                                             ),
                                           ),
                                         );
@@ -1088,7 +1088,7 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                                 },
                                 itemBuilder: (BuildContext _) =>
                                     <PopupMenuEntry<String>>[
-                                  const PopupMenuItem<String>(
+                                  PopupMenuItem<String>(
                                     value: 'details',
                                     child: Row(
                                       children: <Widget>[
@@ -1097,11 +1097,11 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                                           size: 18,
                                         ),
                                         SizedBox(width: Insets.sm),
-                                        Text('Détails du morceau et note'),
+                                        Text(S.t('songDetailsRate')),
                                       ],
                                     ),
                                   ),
-                                  const PopupMenuItem<String>(
+                                  PopupMenuItem<String>(
                                     value: 'add_to_playlist',
                                     child: Row(
                                       children: <Widget>[
@@ -1110,12 +1110,12 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                                           size: 18,
                                         ),
                                         SizedBox(width: Insets.sm),
-                                        Text('Ajouter à la playlist'),
+                                        Text(S.t('addToPlaylist')),
                                       ],
                                     ),
                                   ),
                                   const PopupMenuDivider(),
-                                  const PopupMenuItem<String>(
+                                  PopupMenuItem<String>(
                                     value: 'remove',
                                     child: Row(
                                       children: <Widget>[
@@ -1126,7 +1126,7 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                                         ),
                                         SizedBox(width: Insets.sm),
                                         Text(
-                                          'Retirer de la playlist',
+                                          S.t('removeFromPlaylist'),
                                           style: TextStyle(
                                             color: Colors.redAccent,
                                           ),
@@ -1165,13 +1165,13 @@ class NavidromePlaylistScreen extends ConsumerWidget {
                 color: Colors.red,
               ),
               const SizedBox(height: Insets.md),
-              Text('Échec du chargement de la playlist : $err'),
+              Text(S.t('failedToLoadPlaylistErr1', [err])),
               const SizedBox(height: Insets.md),
               FilledButton.tonal(
                 onPressed: () => ref.invalidate(
                   navidromePlaylistDetailProvider((instance, playlistId)),
                 ),
-                child: const Text('Réessayer'),
+                child: Text(S.t('retry')),
               ),
             ],
           ),

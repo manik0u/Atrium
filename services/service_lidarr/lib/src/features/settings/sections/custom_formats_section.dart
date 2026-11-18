@@ -46,7 +46,7 @@ class CustomFormatsSection extends ConsumerWidget {
             final ColorScheme cs = Theme.of(dCtx).colorScheme;
 
             return AlertDialog(
-              title: Text(isNew ? 'Ajouter un format personnalisé' : 'Modifier le format personnalisé'),
+              title: Text(isNew ? S.t('addCustomFormat') : S.t('editCustomFormat')),
               content: SizedBox(
                 width: double.maxFinite,
                 child: SingleChildScrollView(
@@ -56,17 +56,17 @@ class CustomFormatsSection extends ConsumerWidget {
                     children: [
                       TextField(
                         controller: nameController,
-                        decoration: const InputDecoration(
-                          labelText: 'Nom du format personnalisé',
-                          hintText: 'ex. Lossless 24 bits, Vinyl Rip',
+                        decoration: InputDecoration(
+                          labelText: S.t('customFormatName'),
+                          hintText: S.t('eGLossless24BitVinylRip'),
                           border: OutlineInputBorder(),
                         ),
                       ),
                       const SizedBox(height: Insets.sm),
                       SwitchListTile(
-                        title: const Text('Inclure dans le renommage'),
-                        subtitle: const Text(
-                          'Inclure le token de format personnalisé dans le renommage des pistes',
+                        title: Text(S.t('includeInRename')),
+                        subtitle: Text(
+                          S.t('includeCustomFormatTokenWhenRenamingTracks'),
                         ),
                         value: includeInRenaming,
                         contentPadding: EdgeInsets.zero,
@@ -84,7 +84,7 @@ class CustomFormatsSection extends ConsumerWidget {
                           ),
                           TextButton.icon(
                             icon: const Icon(Icons.add, size: 18),
-                            label: const Text('Ajouter une condition'),
+                            label: Text(S.t('addCondition')),
                             onPressed: () async {
                               final List<CustomFormatSpecificationSchema>
                                   schemas = ref
@@ -97,9 +97,9 @@ class CustomFormatsSection extends ConsumerWidget {
                                       <CustomFormatSpecificationSchema>[];
                               if (schemas.isEmpty) {
                                 messenger.showSnackBar(
-                                  const SnackBar(
+                                  SnackBar(
                                     content: Text(
-                                      'Aucun modèle de spécification disponible.',
+                                      S.t('noSpecificationTemplatesAvailable'),
                                     ),
                                   ),
                                 );
@@ -198,7 +198,7 @@ class CustomFormatsSection extends ConsumerWidget {
                               const EdgeInsets.symmetric(vertical: Insets.md),
                           child: Center(
                             child: Text(
-                              'Aucune condition ajoutée. Ajoutez au moins une condition de spécification.',
+                              S.t('noConditionsAddedYetAddAtLeastOneSpecificationCondition'),
                               style: TextStyle(
                                 color: cs.onSurfaceVariant,
                                 fontStyle: FontStyle.italic,
@@ -244,7 +244,7 @@ class CustomFormatsSection extends ConsumerWidget {
                                           Icons.delete_outline,
                                           size: 18,
                                         ),
-                                        tooltip: 'Retirer la condition',
+                                        tooltip: S.t('removeCondition'),
                                         onPressed: () {
                                           setDialogState(() {
                                             specifications.removeAt(idx);
@@ -256,7 +256,7 @@ class CustomFormatsSection extends ConsumerWidget {
                                   Row(
                                     children: [
                                       FilterChip(
-                                        label: const Text('Nier'),
+                                        label: Text(S.t('negate')),
                                         selected: spec.negate == true,
                                         onSelected: (bool val) {
                                           setDialogState(() {
@@ -267,7 +267,7 @@ class CustomFormatsSection extends ConsumerWidget {
                                       ),
                                       const SizedBox(width: Insets.xs),
                                       FilterChip(
-                                        label: const Text('Requis'),
+                                        label: Text(S.t('req')),
                                         selected: spec.requiredVal == true,
                                         onSelected: (bool val) {
                                           setDialogState(() {
@@ -295,7 +295,7 @@ class CustomFormatsSection extends ConsumerWidget {
                                               f.value?.toString() ?? '',
                                           decoration: InputDecoration(
                                             labelText:
-                                                f.label ?? f.name ?? 'Valeur',
+                                                f.label ?? f.name ?? S.t('value'),
                                             hintText:
                                                 f.helpText ?? f.placeholder,
                                             isDense: true,
@@ -326,15 +326,15 @@ class CustomFormatsSection extends ConsumerWidget {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(dCtx),
-                  child: const Text('Annuler'),
+                  child: Text(S.t('cancel')),
                 ),
                 FilledButton(
                   onPressed: () async {
                     final String name = nameController.text.trim();
                     if (name.isEmpty) {
                       messenger.showSnackBar(
-                        const SnackBar(
-                          content: Text('Veuillez saisir un nom de format.'),
+                        SnackBar(
+                          content: Text(S.t('pleaseEnterAFormatName')),
                         ),
                       );
                       return;
@@ -388,12 +388,12 @@ class CustomFormatsSection extends ConsumerWidget {
                     } catch (e) {
                       if (dCtx.mounted) {
                         messenger.showSnackBar(
-                          SnackBar(content: Text('Erreur : $e')),
+                          SnackBar(content: Text(S.t('errorE1', [e]))),
                         );
                       }
                     }
                   },
-                  child: const Text('Enregistrer'),
+                  child: Text(S.t('save')),
                 ),
               ],
             );
@@ -414,14 +414,14 @@ class CustomFormatsSection extends ConsumerWidget {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: Text('Supprimer ${format.name ?? 'Custom Format'}?'),
+        title: Text(S.t('deleteFormatName')Custom Format'}?'),
         content: Text(
           'Are you sure you want to delete the "${format.name}" custom format?',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -429,7 +429,7 @@ class CustomFormatsSection extends ConsumerWidget {
               foregroundColor: Theme.of(ctx).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Supprimer'),
+            child: Text(S.t('delete')),
           ),
         ],
       ),
@@ -444,17 +444,17 @@ class CustomFormatsSection extends ConsumerWidget {
           await api.customFormat.deleteCustomformatById(id: id);
       if (!resp.isSuccess) {
         throw Exception(
-          resp.error?.message ?? 'Échec de la suppression du format personnalisé',
+          resp.error?.message ?? S.t('failedToDeleteCustomFormat'),
         );
       }
 
       ref.invalidate(lidarrCustomFormatsProvider(instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Format personnalisé supprimé.')),
+        SnackBar(content: Text(S.t('customFormatDeleted_2'))),
       );
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la suppression du format personnalisé : $e')),
+        SnackBar(content: Text(S.t('failedToDeleteCustomFormatE1', [e]))),
       );
     }
   }
@@ -472,7 +472,7 @@ class CustomFormatsSection extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         heroTag: 'add_custom_format_fab',
         onPressed: () => _showAddEditCustomFormatDialog(context, ref),
-        tooltip: 'Ajouter un format personnalisé',
+        tooltip: S.t('addCustomFormat'),
         child: const Icon(Icons.add),
       ),
       body: EasyRefresh(
@@ -486,14 +486,14 @@ class CustomFormatsSection extends ConsumerWidget {
               return Center(
                 child: EmptyView(
                   icon: Icons.tune,
-                  title: 'Aucun format personnalisé',
+                  title: S.t('noCustomFormats'),
                   message:
-                      'Les formats personnalisés permettent de noter et filtrer les releases selon des attributs comme le titre, le modificateur de qualité et la taille.',
+                      S.t('customFormatsAllowScoringAndFilteringReleasesByAttributesLikeReleaseTitleQualityModifierAndSize'),
                   action: FilledButton.icon(
                     onPressed: () =>
                         _showAddEditCustomFormatDialog(context, ref),
                     icon: const Icon(Icons.add),
-                    label: const Text('Ajouter un format personnalisé'),
+                    label: Text(S.t('addCustomFormat')),
                   ),
                 ),
               );
@@ -613,7 +613,7 @@ class CustomFormatsSection extends ConsumerWidget {
                     ),
                     trailing: IconButton(
                       icon: const Icon(Icons.delete_outline, size: 20),
-                      tooltip: 'Supprimer le format personnalisé',
+                      tooltip: S.t('deleteCustomFormat'),
                       onPressed: () => _deleteCustomFormat(context, ref, item),
                     ),
                     onTap: () => _showAddEditCustomFormatDialog(

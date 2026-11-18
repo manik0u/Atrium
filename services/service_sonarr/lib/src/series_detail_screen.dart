@@ -112,7 +112,7 @@ class _SeriesDetailBodyState extends ConsumerState<_SeriesDetailBody> {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Échec de l'actualisation : $e")),
+          SnackBar(content: Text(S.t('failedToRefreshE1', [e]))),
         );
       }
     } finally {
@@ -178,15 +178,15 @@ class _SeriesDetailBodyState extends ConsumerState<_SeriesDetailBody> {
         },
       ),
       body: EasyRefresh(
-          header: const ClassicHeader(
+          header: ClassicHeader(
             position: IndicatorPosition.locator,
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
       onRefresh: () => _refresh(context),
       child: CustomScrollView(
@@ -325,7 +325,7 @@ class _SeriesDetailBodyState extends ConsumerState<_SeriesDetailBody> {
                           child: Row(
                             children: [
                               ActionChip(
-                                label: const Text('Tous'),
+                                label: Text(S.t('all')),
                                 onPressed: () {
                                   if (_seasonsHeaderKey.currentContext !=
                                       null) {
@@ -340,8 +340,8 @@ class _SeriesDetailBodyState extends ConsumerState<_SeriesDetailBody> {
                               ),
                               ...sortedSeasons.map((seasonNum) {
                                 final label = seasonNum == 0
-                                    ? 'Specials'
-                                    : 'Season $seasonNum';
+                                    ? S.t('specials')
+                                    : S.t('seasonSeasonNum1', [seasonNum]);
                                 return Padding(
                                   padding:
                                       const EdgeInsets.only(left: Insets.xs),
@@ -421,7 +421,7 @@ class _SeriesDetailBodyState extends ConsumerState<_SeriesDetailBody> {
                                     (widget.instance, widget.series.id),
                                   ),
                                 ),
-                                child: const Text('Réessayer'),
+                                child: Text(S.t('retry')),
                               ),
                             ],
                           ),
@@ -706,8 +706,8 @@ class _ActionsRow extends ConsumerWidget {
                     shape: const StadiumBorder(),
                   ),
                   icon: const Icon(Icons.bookmark, size: 20),
-                  label: const Text(
-                    'Monitored',
+                  label: Text(
+                    S.t('monitored'),
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   onPressed: () => _toggleMonitored(context, ref),
@@ -719,7 +719,7 @@ class _ActionsRow extends ConsumerWidget {
                     shape: const StadiumBorder(),
                   ),
                   icon: const Icon(Icons.bookmark_border, size: 20),
-                  label: const Text('Non surveillé'),
+                  label: Text(S.t('unmonitored')),
                   onPressed: () => _toggleMonitored(context, ref),
                 ),
         ),
@@ -734,8 +734,8 @@ class _ActionsRow extends ConsumerWidget {
               shape: const StadiumBorder(),
             ),
             icon: const Icon(Icons.search, size: 20),
-            label: const Text(
-              'Search',
+            label: Text(
+              S.t('search'),
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             onPressed: () => _searchSeries(context, ref),
@@ -764,7 +764,7 @@ class _ActionsRow extends ConsumerWidget {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec de la mise à jour de la surveillance : $e')),
+          SnackBar(content: Text(S.t('failedToUpdateMonitoringE1', [e]))),
         );
       }
     }
@@ -779,13 +779,13 @@ class _ActionsRow extends ConsumerWidget {
       });
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Recherche lancée pour la série.')),
+          SnackBar(content: Text(S.t('searchStartedForSeries'))),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec du déclenchement de la recherche : $e')),
+          SnackBar(content: Text(S.t('failedToTriggerSearchE1', [e]))),
         );
       }
     }
@@ -824,7 +824,7 @@ class _OverviewSectionState extends State<_OverviewSection> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Overview',
+            S.t('overview'),
             style: theme.textTheme.titleSmall
                 ?.copyWith(fontWeight: FontWeight.bold),
           ),
@@ -897,7 +897,7 @@ class _InfoSection extends StatelessWidget {
           if (series.path != null) ...<Widget>[
             _InfoRow(
               icon: Icons.folder_outlined,
-              label: 'Chemin',
+              label: S.t('path'),
               value: series.path!,
             ),
           ],
@@ -905,7 +905,7 @@ class _InfoSection extends StatelessWidget {
             if (series.path != null) const SizedBox(height: Insets.sm),
             _InfoRow(
               icon: Icons.schedule,
-              label: 'Prochaine diffusion',
+              label: S.t('nextAiring'),
               value: _formatDateTime(series.nextAiring!),
             ),
           ],
@@ -913,7 +913,7 @@ class _InfoSection extends StatelessWidget {
             const SizedBox(height: Insets.sm),
             _InfoRow(
               icon: Icons.history,
-              label: 'Diffusion précédente',
+              label: S.t('previousAiring'),
               value: _formatDateTime(series.previousAiring!),
             ),
           ],
@@ -1102,8 +1102,8 @@ class _SeasonCard extends ConsumerWidget {
                       children: <Widget>[
                         Text(
                           seasonNumber == 0
-                              ? 'Specials'
-                              : 'Season $seasonNumber',
+                              ? S.t('specials')
+                              : S.t('seasonSeasonNum1', [seasonNumber]),
                           style: theme.textTheme.titleSmall
                               ?.copyWith(fontWeight: FontWeight.bold),
                         ),
@@ -1207,8 +1207,8 @@ class _SeasonCard extends ConsumerWidget {
                       Expanded(
                         child: TextButton.icon(
                           icon: const Icon(Icons.search, size: 16),
-                          label: const Text(
-                            'Search',
+                          label: Text(
+                            S.t('search'),
                             style: TextStyle(fontSize: 12),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -1221,8 +1221,8 @@ class _SeasonCard extends ConsumerWidget {
                       Expanded(
                         child: TextButton.icon(
                           icon: const Icon(Icons.person_search, size: 16),
-                          label: const Text(
-                            'Interactive',
+                          label: Text(
+                            S.t('interactive'),
                             style: TextStyle(fontSize: 12),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -1243,7 +1243,7 @@ class _SeasonCard extends ConsumerWidget {
                               size: 16,
                             ),
                             label: Text(
-                              'Delete',
+                              S.t('delete'),
                               style: TextStyle(color: cs.error, fontSize: 12),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -1336,7 +1336,7 @@ class _SeasonCard extends ConsumerWidget {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec de la mise à jour de la surveillance : $e')),
+          SnackBar(content: Text(S.t('failedToUpdateMonitoringE1', [e]))),
         );
       }
     }
@@ -1352,19 +1352,19 @@ class _SeasonCard extends ConsumerWidget {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: Text('Supprimer les fichiers de la saison $seasonNumber'),
+          title: Text(S.t('deleteSeasonSeasonNumberFiles1', [seasonNumber])),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'Voulez-vous vraiment supprimer tous les fichiers des épisodes de la saison $seasonNumber ? Cela supprimera les fichiers du disque et est irréversible.',
+                S.t('areYouSureYouWantToDeleteAllEpisodeFilesForSeasonSeasonNumberThisWillDeleteTheFilesFromDiskAndCannotBeUndone1', [seasonNumber]),
               ),
               const SizedBox(height: Insets.sm),
               CheckboxListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Ne plus surveiller la saison'),
-                subtitle: const Text('Empêcher les re-téléchargements automatiques'),
+                title: Text(S.t('unmonitorSeason')),
+                subtitle: Text(S.t('preventAutomaticReDownloads')),
                 value: unmonitor,
                 onChanged: (v) => setState(() => unmonitor = v ?? false),
               ),
@@ -1373,7 +1373,7 @@ class _SeasonCard extends ConsumerWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             FilledButton(
               style: FilledButton.styleFrom(
@@ -1381,7 +1381,7 @@ class _SeasonCard extends ConsumerWidget {
                 foregroundColor: theme.colorScheme.onError,
               ),
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('Supprimer'),
+              child: Text(S.t('delete')),
             ),
           ],
         ),
@@ -1392,8 +1392,8 @@ class _SeasonCard extends ConsumerWidget {
       if (!context.mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Suppression des fichiers de la saison…'),
+        SnackBar(
+          content: Text(S.t('deletingSeasonFiles')),
           duration: Duration(seconds: 1),
         ),
       );
@@ -1438,7 +1438,7 @@ class _SeasonCard extends ConsumerWidget {
       } catch (e) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Échec de la suppression des fichiers de la saison : $e')),
+            SnackBar(content: Text(S.t('failedToDeleteSeasonFilesE1', [e]))),
           );
         }
         return;
@@ -1464,7 +1464,7 @@ class _SeasonCard extends ConsumerWidget {
             SnackBar(
               content: Text(
                 unmonitored
-                    ? '$deletedCount fichier(s) supprimé(s) et saison non surveillée.'
+                    ? S.t('successfullyDeletedDeletedCountFileSAndUnmonitoredSeason1', [deletedCount])
                     : 'Successfully deleted $deletedCount file(s).',
               ),
             ),
@@ -1496,13 +1496,13 @@ class _SeasonCard extends ConsumerWidget {
       });
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Recherche en file d'attente pour la saison $seasonNum.")),
+          SnackBar(content: Text(S.t('searchQueuedForSeasonSeasonNum1', [seasonNum]))),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec : $e')),
+          SnackBar(content: Text(S.t('failedE1', [e]))),
         );
       }
     }
@@ -1551,7 +1551,7 @@ class _EpisodeRow extends ConsumerWidget {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec de la mise à jour : $e')),
+          SnackBar(content: Text(S.t('failedToUpdateE1', [e]))),
         );
       }
     }
@@ -1728,7 +1728,7 @@ class _EpisodeRow extends ConsumerWidget {
                 size: 20,
                 color: episode.monitored ? cs.primary : cs.outline,
               ),
-              tooltip: episode.monitored ? 'Ne plus surveiller' : 'Surveiller',
+              tooltip: episode.monitored ? S.t('unmonitor') : S.t('monitor'),
               onPressed: () => _toggleEpisodeMonitored(context, ref),
               visualDensity: VisualDensity.compact,
             ),
@@ -1792,11 +1792,11 @@ void _showEpisodeBottomSheet({
                   runSpacing: Insets.xs,
                   children: <Widget>[
                     if (episode.airDate != null)
-                      _MetaChip(label: 'Diffusé le : ${episode.airDate}'),
+                      _MetaChip(label: S.t('airedEpisodeAirDate1', [episode.airDate])),
                     if (quality != null) _MetaChip(label: quality),
                     if (sizeStr != null) _MetaChip(label: sizeStr),
                     _MetaChip(
-                      label: episode.monitored ? 'Surveillé' : 'Non surveillé',
+                      label: episode.monitored ? S.t('monitored') : S.t('unmonitored'),
                     ),
                   ],
                 ),
@@ -1804,7 +1804,7 @@ void _showEpisodeBottomSheet({
 
                 // Synopsis / Overview
                 Text(
-                  'Overview',
+                  S.t('overview'),
                   style: theme.textTheme.titleSmall
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),
@@ -1812,7 +1812,7 @@ void _showEpisodeBottomSheet({
                 Text(
                   episode.overview != null && episode.overview!.isNotEmpty
                       ? episode.overview!
-                      : 'Aucun résumé disponible.',
+                      : S.t('noOverviewAvailable'),
                   style: theme.textTheme.bodyMedium
                       ?.copyWith(color: cs.onSurfaceVariant),
                 ),
@@ -1821,7 +1821,7 @@ void _showEpisodeBottomSheet({
                 // File Path (if downloaded)
                 if (relativePath != null) ...[
                   Text(
-                    'Path',
+                    S.t('path'),
                     style: theme.textTheme.titleSmall
                         ?.copyWith(fontWeight: FontWeight.bold),
                   ),
@@ -1858,7 +1858,7 @@ void _showEpisodeBottomSheet({
                           } catch (e) {
                             if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Échec : $e')),
+                                SnackBar(content: Text(S.t('failedE1', [e]))),
                               );
                             }
                           }
@@ -1875,7 +1875,7 @@ void _showEpisodeBottomSheet({
                             const SizedBox(width: 4),
                             Flexible(
                               child: Text(
-                                episode.monitored ? 'Unmonitor' : 'Monitor',
+                                episode.monitored ? S.t('unmonitor') : S.t('monitor'),
                                 style: const TextStyle(fontSize: 13),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -1905,8 +1905,8 @@ void _showEpisodeBottomSheet({
                             });
                             if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("Recherche en file d'attente pour l'épisode."),
+                                SnackBar(
+                                  content: Text(S.t('searchQueuedForEpisode')),
                                 ),
                               );
                             }
@@ -1914,20 +1914,20 @@ void _showEpisodeBottomSheet({
                             if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text("Échec de la mise en file d'attente de la recherche : $e"),
+                                  content: Text(S.t('failedToQueueSearchE1', [e])),
                                 ),
                               );
                             }
                           }
                         },
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Icon(Icons.search, size: 16),
                             SizedBox(width: 4),
                             Flexible(
                               child: Text(
-                                'Auto Search',
+                                S.t('autoSearch'),
                                 style: TextStyle(fontSize: 13),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -1956,14 +1956,14 @@ void _showEpisodeBottomSheet({
                             ),
                           );
                         },
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Icon(Icons.person_search, size: 16),
                             SizedBox(width: 4),
                             Flexible(
                               child: Text(
-                                'Interactive',
+                                S.t('interactive'),
                                 style: TextStyle(fontSize: 13),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -1978,7 +1978,7 @@ void _showEpisodeBottomSheet({
                     if (episode.hasFile && episode.episodeFileId != null) ...[
                       const SizedBox(width: Insets.xs),
                       Tooltip(
-                        message: 'Supprimer le fichier',
+                        message: S.t('deleteFile'),
                         child: IconButton.filledTonal(
                           icon: Icon(Icons.delete_outline, color: cs.error),
                           onPressed: () async {
@@ -1988,19 +1988,19 @@ void _showEpisodeBottomSheet({
                               context: context,
                               builder: (context) => StatefulBuilder(
                                 builder: (context, setState) => AlertDialog(
-                                  title: const Text("Supprimer le fichier de l'épisode"),
+                                  title: Text(S.t('deleteEpisodeFile')),
                                   content: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      const Text(
-                                        'Voulez-vous vraiment ? Cela supprimera le fichier du disque et est irréversible.',
+                                      Text(
+                                        S.t('areYouSureThisWillDeleteTheFileFromDiskAndCannotBeUndone'),
                                       ),
                                       const SizedBox(height: Insets.sm),
                                       CheckboxListTile(
                                         contentPadding: EdgeInsets.zero,
-                                        title: const Text("Ne plus surveiller l'épisode"),
-                                        subtitle: const Text('Empêcher les re-téléchargements automatiques'),
+                                        title: Text(S.t('unmonitorEpisode')),
+                                        subtitle: Text(S.t('preventAutomaticReDownloads')),
                                         value: unmonitor,
                                         onChanged: (v) => setState(() => unmonitor = v ?? false),
                                       ),
@@ -2010,7 +2010,7 @@ void _showEpisodeBottomSheet({
                                     TextButton(
                                       onPressed: () =>
                                           Navigator.pop(context, false),
-                                      child: const Text('Annuler'),
+                                      child: Text(S.t('cancel')),
                                     ),
                                     FilledButton(
                                       style: FilledButton.styleFrom(
@@ -2018,7 +2018,7 @@ void _showEpisodeBottomSheet({
                                         foregroundColor: cs.onError,
                                       ),
                                       onPressed: () => Navigator.pop(context, true),
-                                      child: const Text('Supprimer'),
+                                      child: Text(S.t('delete')),
                                     ),
                                   ],
                                 ),
@@ -2063,7 +2063,7 @@ void _showEpisodeBottomSheet({
                                       SnackBar(
                                         content: Text(
                                           unmonitored
-                                              ? 'Fichier supprimé et épisode non surveillé.'
+                                              ? S.t('fileDeletedAndEpisodeUnmonitored')
                                               : 'File deleted.',
                                         ),
                                       ),
@@ -2074,7 +2074,7 @@ void _showEpisodeBottomSheet({
                                 if (context.mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      content: Text('Échec de la suppression : $e'),
+                                      content: Text(S.t('failedToRemoveE1', [e])),
                                     ),
                                   );
                                 }
@@ -2118,35 +2118,35 @@ class _OverflowMenu extends ConsumerWidget {
       icon: Icon(Icons.more_vert, color: iconColor),
       onSelected: (String value) => _handleAction(context, ref, value),
       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-        const PopupMenuItem<String>(
+        PopupMenuItem<String>(
           value: 'edit',
           child: ListTile(
             leading: Icon(Icons.edit_outlined),
-            title: Text('Modifier la série'),
+            title: Text(S.t('editSeries')),
             contentPadding: EdgeInsets.zero,
           ),
         ),
-        const PopupMenuItem<String>(
+        PopupMenuItem<String>(
           value: 'rename',
           child: ListTile(
             leading: Icon(Icons.drive_file_rename_outline),
-            title: Text('Renommer les fichiers'),
+            title: Text(S.t('renameFiles')),
             contentPadding: EdgeInsets.zero,
           ),
         ),
-        const PopupMenuItem<String>(
+        PopupMenuItem<String>(
           value: 'monitoring_options',
           child: ListTile(
             leading: Icon(Icons.settings_suggest_outlined),
-            title: Text('Options de surveillance'),
+            title: Text(S.t('monitoringOptions')),
             contentPadding: EdgeInsets.zero,
           ),
         ),
-        const PopupMenuItem<String>(
+        PopupMenuItem<String>(
           value: 'history',
           child: ListTile(
             leading: Icon(Icons.history),
-            title: Text('Historique'),
+            title: Text(S.t('history')),
             contentPadding: EdgeInsets.zero,
           ),
         ),
@@ -2159,7 +2159,7 @@ class _OverflowMenu extends ConsumerWidget {
               color: Theme.of(context).colorScheme.error,
             ),
             title: Text(
-              'Delete Series',
+              S.t('deleteSeries'),
               style: TextStyle(color: Theme.of(context).colorScheme.error),
             ),
             contentPadding: EdgeInsets.zero,
@@ -2218,16 +2218,16 @@ class _OverflowMenu extends ConsumerWidget {
       context: context,
       builder: (BuildContext ctx) => StatefulBuilder(
         builder: (BuildContext ctx, StateSetter setState) => AlertDialog(
-          title: const Text('Supprimer la série'),
+          title: Text(S.t('deleteSeries')),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('Voulez-vous vraiment supprimer « ${series.title} » ?'),
+              Text(S.t('areYouSureYouWantToDeleteSeriesTitle1', [series.title])),
               const SizedBox(height: Insets.md),
               CheckboxListTile(
-                title: const Text(
-                  'Delete files from disk',
+                title: Text(
+                  S.t('deleteFilesFromDisk'),
                   style: TextStyle(fontSize: 14),
                 ),
                 dense: true,
@@ -2242,7 +2242,7 @@ class _OverflowMenu extends ConsumerWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(ctx, false),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             FilledButton(
               style: FilledButton.styleFrom(
@@ -2250,7 +2250,7 @@ class _OverflowMenu extends ConsumerWidget {
                 foregroundColor: Theme.of(ctx).colorScheme.onError,
               ),
               onPressed: () => Navigator.pop(ctx, true),
-              child: const Text('Supprimer'),
+              child: Text(S.t('delete')),
             ),
           ],
         ),
@@ -2264,13 +2264,13 @@ class _OverflowMenu extends ConsumerWidget {
         if (!context.mounted) return;
         ref.invalidate(sonarrSeriesProvider(instance));
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Série supprimée.')),
+          SnackBar(content: Text(S.t('seriesDeleted'))),
         );
         Navigator.pop(context);
       } catch (e) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Échec de la suppression : $e')),
+            SnackBar(content: Text(S.t('failedToRemoveE1', [e]))),
           );
         }
       }
@@ -2289,17 +2289,17 @@ void _showMonitorSeriesDialog({
   String selectedType = series.monitored ? 'all' : 'none';
 
   final Map<String, String> options = {
-    'all': 'All Episodes',
-    'future': 'Future Episodes',
-    'missing': 'Missing Episodes',
-    'existing': 'Existing Episodes',
-    'firstSeason': 'First Season',
+    'all': S.t('allEpisodes'),
+    'future': S.t('futureEpisodes'),
+    'missing': S.t('missingEpisodes'),
+    'existing': S.t('existingEpisodes'),
+    'firstSeason': S.t('firstSeason_2'),
     'lastSeason': 'Last Season',
     'pilot': 'Pilot Episode',
     'recent': 'Recent Episodes',
     'monitorSpecials': 'Monitor Specials',
     'unmonitorSpecials': 'Unmonitor Specials',
-    'none': 'Aucun (ne plus rien surveiller)',
+    'none': S.t('noneUnmonitorAll'),
   };
 
   showDialog<void>(
@@ -2322,14 +2322,14 @@ void _showMonitorSeriesDialog({
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Choisissez quels épisodes de « ${series.title} » doivent être surveillés par Sonarr :',
+                  S.t('chooseWhichEpisodesOfSeriesTitleShouldBeMonitoredBySonarr1', [series.title]),
                   style: theme.textTheme.bodyMedium,
                 ),
                 const SizedBox(height: 20),
                 DropdownButtonFormField<String>(
                   initialValue: selectedType,
                   decoration: InputDecoration(
-                    labelText: 'Surveillance',
+                    labelText: S.t('monitoring'),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -2357,7 +2357,7 @@ void _showMonitorSeriesDialog({
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Annuler'),
+                child: Text(S.t('cancel')),
               ),
               FilledButton(
                 onPressed: () async {
@@ -2385,13 +2385,13 @@ void _showMonitorSeriesDialog({
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Échec de la mise à jour de la surveillance : $e'),
+                          content: Text(S.t('failedToUpdateMonitoringE1', [e])),
                         ),
                       );
                     }
                   }
                 },
-                child: const Text('Enregistrer'),
+                child: Text(S.t('save')),
               ),
             ],
           );
@@ -2443,7 +2443,7 @@ class _StatusPill extends StatelessWidget {
     final bool isContinuing = status?.toLowerCase() == 'continuing';
     final Color tint =
         isContinuing ? theme.colorScheme.tertiary : theme.colorScheme.outline;
-    final String label = status ?? 'Inconnu';
+    final String label = status ?? S.t('unknown');
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -2724,13 +2724,13 @@ class SonarrSeriesHistoryScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${series.title} - Historique'),
+        title: Text(S.t('seriesTitleHistory1', [series.title])),
         surfaceTintColor: Colors.transparent,
       ),
       body: historyAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
         error: (Object error, StackTrace? _) => ErrorView(
-          title: "Échec du chargement de l'historique",
+          title: S.t('failedToLoadHistory'),
           message: error.toString(),
           onRetry: () => ref.invalidate(sonarrSeriesHistoryProvider((instance, series.id))),
         ),
@@ -2747,7 +2747,7 @@ class SonarrSeriesHistoryScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: Insets.lg),
                   Text(
-                    "Aucun élément dans l'historique.",
+                    S.t('noHistoryItemsFound'),
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: cs.outline,
                     ),
@@ -2858,7 +2858,7 @@ class _DetailRow extends StatelessWidget {
 }
 
 String _formatDateTime(String? isoDate) {
-  if (isoDate == null) return 'Unknown Date';
+  if (isoDate == null) return S.t('unknownDate');
   try {
     final DateTime dt = DateTime.parse(isoDate).toLocal();
     final String monthStr = dt.month.toString().padLeft(2, '0');
@@ -2920,7 +2920,7 @@ void _showHistoryDetails(
   SonarrHistoryItem item,
 ) {
   final ThemeData theme = Theme.of(context);
-  final String eventType = item.eventType ?? 'Unknown';
+  final String eventType = item.eventType ?? S.t('unknown');
 
   showDialog<void>(
     context: context,
@@ -2928,7 +2928,7 @@ void _showHistoryDetails(
       return AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
         title: Text(
-          'History Event Details',
+          S.t('historyEventDetails'),
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -2938,18 +2938,18 @@ void _showHistoryDetails(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              _DetailRow(label: "Type d'événement", value: eventType.toUpperCase()),
-              _DetailRow(label: 'Date', value: _formatDateTime(item.date)),
+              _DetailRow(label: S.t('eventType'), value: eventType.toUpperCase()),
+              _DetailRow(label: S.t('date'), value: _formatDateTime(item.date)),
               _DetailRow(
-                label: 'Titre source',
+                label: S.t('sourceTitle'),
                 value: item.sourceTitle ?? 'None',
               ),
               if (item.downloadId != null)
-                _DetailRow(label: 'ID de téléchargement', value: item.downloadId!),
+                _DetailRow(label: S.t('downloadID'), value: item.downloadId!),
               if (item.data != null && item.data!.isNotEmpty) ...[
                 const SizedBox(height: 12),
                 Text(
-                  'Metadata:',
+                  S.t('metadata_2'),
                   style: theme.textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -3004,16 +3004,16 @@ void _showHistoryDetails(
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Échec du marquage de la release : $e')),
+                      SnackBar(content: Text(S.t('failedToFlagReleaseE1', [e]))),
                     );
                   }
                 }
               },
-              child: const Text('Marquer comme échoué'),
+              child: Text(S.t('markFailed')),
             ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Fermer'),
+            child: Text(S.t('close')),
           ),
         ],
       );

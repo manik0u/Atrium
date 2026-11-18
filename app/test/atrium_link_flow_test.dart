@@ -122,8 +122,8 @@ void main() {
       instances: <Instance>[_sonarr, _sonarr2],
     );
     expect(o.went, isEmpty);
-    expect(find.text('Ouvrir dans'), findsOneWidget);
-    expect(find.text('Ajouter à'), findsNothing);
+    expect(find.text('Open in'), findsOneWidget);
+    expect(find.text('Add to'), findsNothing);
     await tester.tap(find.text('Sonarr Two'));
     await tester.pumpAndSettle();
     expect(o.went, <String>['/service/sonarr/Sonarr Two']);
@@ -148,7 +148,7 @@ void main() {
       const AtriumLink(service: ServiceKind.sonarr, instanceName: 'sonarr two'),
       instances: <Instance>[_sonarr, _sonarr2],
     );
-    expect(find.text('Ajouter à'), findsNothing);
+    expect(find.text('Add to'), findsNothing);
     expect(o.went, <String>['/service/sonarr/Sonarr Two']);
   });
 

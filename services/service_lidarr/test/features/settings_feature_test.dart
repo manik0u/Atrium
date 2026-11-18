@@ -88,8 +88,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // 1. Profiles Card
-      expect(find.text('Profils'), findsOneWidget);
-      await tester.tap(find.text('Profils'));
+      expect(find.text('Profiles'), findsOneWidget);
+      await tester.tap(find.text('Profiles'));
       await tester.pumpAndSettle();
 
       expect(find.text('Lossless Audio'), findsOneWidget);
@@ -99,7 +99,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // 2. Root Folders Card
-      await tester.tap(find.text('Dossiers racine'));
+      await tester.tap(find.text('Root Folders'));
       await tester.pumpAndSettle();
 
       expect(find.text('/data/media/music'), findsOneWidget);
@@ -108,7 +108,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // 3. Tags Card
-      await tester.tap(find.text('Balises'));
+      await tester.tap(find.text('Tags'));
       await tester.pumpAndSettle();
 
       expect(find.text('favorites'), findsOneWidget);
@@ -117,7 +117,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // 4. Indexers Card
-      await tester.tap(find.text('Indexeurs'));
+      await tester.tap(find.text('Indexers'));
       await tester.pumpAndSettle();
 
       expect(find.text('Nyaa.si'), findsOneWidget);
@@ -126,7 +126,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // 5. Download Clients Card
-      await tester.tap(find.text('Clients de téléchargement'));
+      await tester.tap(find.text('Download Clients'));
       await tester.pumpAndSettle();
 
       expect(find.text('qBittorrent'), findsWidgets);
@@ -223,7 +223,7 @@ void main() {
                           },
                           {
                             'name': 'apiKey',
-                            'label': 'Clé API',
+                            'label': 'API Key',
                             'type': 'password',
                             'value': 'secret-key',
                           },
@@ -298,34 +298,34 @@ void main() {
         await tester.pumpAndSettle();
 
         // Navigate to Indexers sub-page
-        await tester.tap(find.text('Indexeurs'));
+        await tester.tap(find.text('Indexers'));
         await tester.pumpAndSettle();
 
         expect(find.text('Existing Indexer'), findsOneWidget);
-        expect(find.byTooltip('Ajouter un indexeur'), findsOneWidget);
+        expect(find.byTooltip('Add Indexer'), findsOneWidget);
 
         // 1. Add Indexer flow
-        await tester.tap(find.byTooltip('Ajouter un indexeur'));
+        await tester.tap(find.byTooltip('Add Indexer'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Ajouter un indexeur'), findsOneWidget);
+        expect(find.text('Add Indexer'), findsOneWidget);
         expect(find.text('Torznab'), findsWidgets);
 
         await tester.tap(find.text('Torznab').first);
         await tester.pumpAndSettle();
 
         expect(find.text('Add Torznab'), findsOneWidget);
-        expect(find.text('Tester'), findsOneWidget);
-        expect(find.text('Enregistrer'), findsOneWidget);
+        expect(find.text('Test'), findsOneWidget);
+        expect(find.text('Save'), findsOneWidget);
 
         // Test connection
-        await tester.tap(find.text('Tester'));
+        await tester.tap(find.text('Test'));
         await tester.pumpAndSettle();
         expect(postTestCalled, isTrue);
         expect(find.text('Connection Test Successful!'), findsOneWidget);
 
         // Save new indexer
-        await tester.tap(find.text('Enregistrer'));
+        await tester.tap(find.text('Save'));
         await tester.pumpAndSettle();
         expect(postIndexerCalled, isTrue);
 
@@ -340,7 +340,7 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(find.text('Edit Existing Indexer'), findsOneWidget);
-        await tester.tap(find.text('Enregistrer'));
+        await tester.tap(find.text('Save'));
         await tester.pumpAndSettle();
         expect(putIndexerCalled, isTrue);
 
@@ -351,11 +351,11 @@ void main() {
         await tester.pumpAndSettle();
 
         // 3. Delete existing indexer flow
-        await tester.tap(find.byTooltip("Supprimer l'indexeur"));
+        await tester.tap(find.byTooltip('Delete Indexer'));
         await tester.pumpAndSettle();
 
         expect(find.text('Delete Existing Indexer?'), findsOneWidget);
-        await tester.tap(find.widgetWithText(FilledButton, 'Supprimer'));
+        await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
         await tester.pumpAndSettle();
 
         expect(deleteIndexerCalled, isTrue);
@@ -422,7 +422,7 @@ void main() {
                         'fields': [
                           {
                             'name': 'host',
-                            'label': 'Hôte',
+                            'label': 'Host',
                             'type': 'textbox',
                             'value': 'localhost',
                           },
@@ -446,13 +446,13 @@ void main() {
                         'fields': [
                           {
                             'name': 'host',
-                            'label': 'Hôte',
+                            'label': 'Host',
                             'type': 'textbox',
                             'value': 'localhost',
                           },
                           {
                             'name': 'apiKey',
-                            'label': 'Clé API',
+                            'label': 'API Key',
                             'type': 'password',
                             'value': 'sab-secret',
                           },
@@ -527,34 +527,34 @@ void main() {
         await tester.pumpAndSettle();
 
         // Navigate to Download Clients sub-page
-        await tester.tap(find.text('Clients de téléchargement'));
+        await tester.tap(find.text('Download Clients'));
         await tester.pumpAndSettle();
 
         expect(find.text('Existing qBittorrent'), findsOneWidget);
-        expect(find.byTooltip('Ajouter un client de téléchargement'), findsOneWidget);
+        expect(find.byTooltip('Add Download Client'), findsOneWidget);
 
         // 1. Add Download Client flow
-        await tester.tap(find.byTooltip('Ajouter un client de téléchargement'));
+        await tester.tap(find.byTooltip('Add Download Client'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Ajouter un client de téléchargement'), findsOneWidget);
+        expect(find.text('Add Download Client'), findsOneWidget);
         expect(find.text('SABnzbd'), findsWidgets);
 
         await tester.tap(find.text('SABnzbd').first);
         await tester.pumpAndSettle();
 
         expect(find.text('Add SABnzbd'), findsOneWidget);
-        expect(find.text('Tester'), findsOneWidget);
-        expect(find.text('Enregistrer'), findsOneWidget);
+        expect(find.text('Test'), findsOneWidget);
+        expect(find.text('Save'), findsOneWidget);
 
         // Test connection
-        await tester.tap(find.text('Tester'));
+        await tester.tap(find.text('Test'));
         await tester.pumpAndSettle();
         expect(postTestCalled, isTrue);
         expect(find.text('Connection Test Successful!'), findsOneWidget);
 
         // Save new client
-        await tester.tap(find.text('Enregistrer'));
+        await tester.tap(find.text('Save'));
         await tester.pumpAndSettle();
         expect(postClientCalled, isTrue);
 
@@ -569,7 +569,7 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(find.text('Edit Existing qBittorrent'), findsOneWidget);
-        await tester.tap(find.text('Enregistrer'));
+        await tester.tap(find.text('Save'));
         await tester.pumpAndSettle();
         expect(putClientCalled, isTrue);
 
@@ -580,11 +580,11 @@ void main() {
         await tester.pumpAndSettle();
 
         // 3. Delete existing client flow
-        await tester.tap(find.byTooltip('Supprimer le client'));
+        await tester.tap(find.byTooltip('Delete Client'));
         await tester.pumpAndSettle();
 
         expect(find.text('Delete Existing qBittorrent?'), findsOneWidget);
-        await tester.tap(find.widgetWithText(FilledButton, 'Supprimer'));
+        await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
         await tester.pumpAndSettle();
 
         expect(deleteClientCalled, isTrue);
@@ -800,7 +800,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Navigate to Connect sub-page
-        await tester.tap(find.text('Se connecter'));
+        await tester.tap(find.text('Connect'));
         await tester.pumpAndSettle();
 
         expect(
@@ -814,22 +814,22 @@ void main() {
 
         expect(find.text('Edit My Discord Alerts'), findsOneWidget);
         expect(find.text('Trigger Events'), findsOneWidget);
-        expect(find.text('Tester'), findsOneWidget);
+        expect(find.text('Test'), findsOneWidget);
 
-        await tester.tap(find.text('Tester'));
+        await tester.tap(find.text('Test'));
         await tester.pumpAndSettle();
 
         expect(testNotificationCalled, isTrue);
 
         // Close editor
-        await tester.tap(find.text('Annuler'));
+        await tester.tap(find.text('Cancel'));
         await tester.pumpAndSettle();
 
         // Add Telegram notification
-        await tester.tap(find.byTooltip('Ajouter une notification'));
+        await tester.tap(find.byTooltip('Add Notification'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Ajouter une intégration de notification'), findsOneWidget);
+        expect(find.text('Add Notification Integration'), findsOneWidget);
         expect(find.text('Telegram'), findsOneWidget);
 
         await tester.tap(find.text('Telegram'));
@@ -838,17 +838,17 @@ void main() {
         expect(find.text('Add Telegram'), findsOneWidget);
 
         // Save
-        await tester.tap(find.text('Enregistrer'));
+        await tester.tap(find.text('Save'));
         await tester.pumpAndSettle();
 
         expect(postNotificationCalled, isTrue);
 
         // Delete notification
-        await tester.tap(find.byTooltip('Supprimer la notification'));
+        await tester.tap(find.byTooltip('Delete Notification'));
         await tester.pumpAndSettle();
 
         expect(find.text('Delete My Discord Alerts?'), findsOneWidget);
-        await tester.tap(find.text('Supprimer'));
+        await tester.tap(find.text('Delete'));
         await tester.pumpAndSettle();
 
         expect(deleteNotificationCalled, isTrue);
@@ -1240,7 +1240,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Navigate to Profiles sub-page
-        await tester.tap(find.text('Profils'));
+        await tester.tap(find.text('Profiles'));
         await tester.pumpAndSettle();
 
         // 1. Verify Quality Profiles overview
@@ -1251,34 +1251,34 @@ void main() {
         await tester.tap(find.text('Standard Lossless'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Modifier le profil de qualité'), findsOneWidget);
+        expect(find.text('Edit Quality Profile'), findsOneWidget);
         expect(find.text('Qualities (Allowed)'), findsOneWidget);
 
-        await tester.tap(find.text('Enregistrer'));
+        await tester.tap(find.text('Save'));
         await tester.pumpAndSettle();
 
         expect(putQualityCalled, isTrue);
 
         // 3. Add new Quality Profile
-        await tester.tap(find.byTooltip('Ajouter un profil de qualité'));
+        await tester.tap(find.byTooltip('Add Quality Profile'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Ajouter un profil de qualité'), findsOneWidget);
+        expect(find.text('Add Quality Profile'), findsOneWidget);
         await tester.enterText(
-          find.widgetWithText(TextField, 'Nom du profil'),
+          find.widgetWithText(TextField, 'Profile Name'),
           'Ultra Hi-Res',
         );
-        await tester.tap(find.text('Enregistrer'));
+        await tester.tap(find.text('Save'));
         await tester.pumpAndSettle();
 
         expect(postQualityCalled, isTrue);
 
         // 4. Delete Quality Profile
-        await tester.tap(find.byTooltip('Supprimer le profil de qualité'));
+        await tester.tap(find.byTooltip('Delete Quality Profile'));
         await tester.pumpAndSettle();
 
         expect(find.text('Delete Standard Lossless?'), findsOneWidget);
-        await tester.tap(find.text('Supprimer'));
+        await tester.tap(find.text('Delete'));
         await tester.pumpAndSettle();
 
         expect(deleteQualityCalled, isTrue);
@@ -1291,31 +1291,31 @@ void main() {
         expect(find.text('Edit Metadata Profile'), findsOneWidget);
         expect(find.text('Primary Album Types'), findsOneWidget);
 
-        await tester.tap(find.text('Enregistrer'));
+        await tester.tap(find.text('Save'));
         await tester.pumpAndSettle();
 
         expect(putMetadataCalled, isTrue);
 
         // 6. Add new Metadata Profile
-        await tester.tap(find.byTooltip('Ajouter un profil de métadonnées'));
+        await tester.tap(find.byTooltip('Add Metadata Profile'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Ajouter un profil de métadonnées'), findsOneWidget);
+        expect(find.text('Add Metadata Profile'), findsOneWidget);
         await tester.enterText(
-          find.widgetWithText(TextField, 'Nom du profil'),
+          find.widgetWithText(TextField, 'Profile Name'),
           'All Releases',
         );
-        await tester.tap(find.text('Enregistrer'));
+        await tester.tap(find.text('Save'));
         await tester.pumpAndSettle();
 
         expect(postMetadataCalled, isTrue);
 
         // 7. Delete Metadata Profile
-        await tester.tap(find.byTooltip('Supprimer le profil de métadonnées'));
+        await tester.tap(find.byTooltip('Delete Metadata Profile'));
         await tester.pumpAndSettle();
 
         expect(find.text('Delete Standard Discography?'), findsOneWidget);
-        await tester.tap(find.text('Supprimer'));
+        await tester.tap(find.text('Delete'));
         await tester.pumpAndSettle();
 
         expect(deleteMetadataCalled, isTrue);
@@ -1324,22 +1324,22 @@ void main() {
         expect(find.text('Preferred: USENET'), findsOneWidget);
         await tester.tap(find.text('Preferred: USENET'));
         await tester.pumpAndSettle();
-        expect(find.text('Modifier le profil de délai'), findsOneWidget);
-        await tester.tap(find.text('Enregistrer'));
+        expect(find.text('Edit Delay Profile'), findsOneWidget);
+        await tester.tap(find.text('Save'));
         await tester.pumpAndSettle();
         expect(putDelayCalled, isTrue);
 
-        await tester.tap(find.byTooltip('Ajouter un profil de délai'));
+        await tester.tap(find.byTooltip('Add Delay Profile'));
         await tester.pumpAndSettle();
-        expect(find.text('Ajouter un profil de délai'), findsOneWidget);
-        await tester.tap(find.text('Enregistrer'));
+        expect(find.text('Add Delay Profile'), findsOneWidget);
+        await tester.tap(find.text('Save'));
         await tester.pumpAndSettle();
         expect(postDelayCalled, isTrue);
 
-        await tester.tap(find.byTooltip('Supprimer le profil de délai'));
+        await tester.tap(find.byTooltip('Delete Delay Profile'));
         await tester.pumpAndSettle();
-        expect(find.text('Supprimer le profil de délai ?'), findsOneWidget);
-        await tester.tap(find.text('Supprimer'));
+        expect(find.text('Delete Delay Profile?'), findsOneWidget);
+        await tester.tap(find.text('Delete'));
         await tester.pumpAndSettle();
         expect(deleteDelayCalled, isTrue);
 
@@ -1347,22 +1347,22 @@ void main() {
         expect(find.text('Release Filter (Active)'), findsOneWidget);
         await tester.tap(find.text('Release Filter (Active)'));
         await tester.pumpAndSettle();
-        expect(find.text('Modifier le profil de release'), findsOneWidget);
-        await tester.tap(find.text('Enregistrer'));
+        expect(find.text('Edit Release Profile'), findsOneWidget);
+        await tester.tap(find.text('Save'));
         await tester.pumpAndSettle();
         expect(putReleaseCalled, isTrue);
 
-        await tester.tap(find.byTooltip('Ajouter un profil de release'));
+        await tester.tap(find.byTooltip('Add Release Profile'));
         await tester.pumpAndSettle();
-        expect(find.text('Ajouter un profil de release'), findsOneWidget);
-        await tester.tap(find.text('Enregistrer'));
+        expect(find.text('Add Release Profile'), findsOneWidget);
+        await tester.tap(find.text('Save'));
         await tester.pumpAndSettle();
         expect(postReleaseCalled, isTrue);
 
-        await tester.tap(find.byTooltip('Supprimer le profil de release'));
+        await tester.tap(find.byTooltip('Delete Release Profile'));
         await tester.pumpAndSettle();
-        expect(find.text('Supprimer le profil de release ?'), findsOneWidget);
-        await tester.tap(find.text('Supprimer'));
+        expect(find.text('Delete Release Profile?'), findsOneWidget);
+        await tester.tap(find.text('Delete'));
         await tester.pumpAndSettle();
         expect(deleteReleaseCalled, isTrue);
       },
@@ -1603,17 +1603,17 @@ void main() {
         await tester.pumpAndSettle();
 
         // Navigate to Import Lists sub-page
-        await tester.tap(find.text("Listes d'import"));
+        await tester.tap(find.text('Import Lists'));
         await tester.pumpAndSettle();
 
         expect(find.text('My Spotify Top'), findsOneWidget);
         expect(find.text('Spotify • Auto-Add Enabled'), findsOneWidget);
 
         // 1. Add from preset flow
-        await tester.tap(find.byTooltip("Ajouter une liste d'import"));
+        await tester.tap(find.byTooltip('Add Import List'));
         await tester.pumpAndSettle();
 
-        expect(find.text("Ajouter une liste d'import"), findsOneWidget);
+        expect(find.text('Add Import List'), findsOneWidget);
         expect(find.text('Last.fm User Library'), findsOneWidget);
 
         await tester.tap(find.text('Last.fm User Library'));
@@ -1621,7 +1621,7 @@ void main() {
 
         expect(find.text('Add Last.fm User Library'), findsOneWidget);
 
-        await tester.tap(find.text('Enregistrer'));
+        await tester.tap(find.text('Save'));
         await tester.pumpAndSettle();
 
         expect(postListCalled, isTrue);
@@ -1638,12 +1638,12 @@ void main() {
         expect(find.text('Edit My Spotify Top'), findsOneWidget);
         expect(find.text('Provider Settings'), findsOneWidget);
 
-        await tester.tap(find.text('Tester'));
+        await tester.tap(find.text('Test'));
         await tester.pumpAndSettle();
 
         expect(testListCalled, isTrue);
 
-        await tester.tap(find.text('Enregistrer'));
+        await tester.tap(find.text('Save'));
         await tester.pumpAndSettle();
 
         expect(putListCalled, isTrue);
@@ -1654,11 +1654,11 @@ void main() {
         await tester.pumpAndSettle();
 
         // 3. Delete import list flow
-        await tester.tap(find.byTooltip("Supprimer la liste d'import"));
+        await tester.tap(find.byTooltip('Delete Import List'));
         await tester.pumpAndSettle();
 
         expect(find.text('Delete My Spotify Top?'), findsOneWidget);
-        await tester.tap(find.text('Supprimer'));
+        await tester.tap(find.text('Delete'));
         await tester.pumpAndSettle();
 
         expect(deleteListCalled, isTrue);
@@ -1763,7 +1763,7 @@ void main() {
                             'id': 1,
                             'name': 'Release Title Specification',
                             'implementation': 'ReleaseTitleSpecification',
-                            'implementationName': 'Titre de la release',
+                            'implementationName': 'Release Title',
                             'negate': false,
                             'required': true,
                             'fields': [
@@ -1791,7 +1791,7 @@ void main() {
                         'id': 1,
                         'name': 'Size Specification',
                         'implementation': 'SizeSpecification',
-                        'implementationName': 'Taille',
+                        'implementationName': 'Size',
                         'negate': false,
                         'required': false,
                         'fields': [
@@ -1870,7 +1870,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Navigate to Custom Formats sub-page
-        await tester.tap(find.text('Formats personnalisés'));
+        await tester.tap(find.text('Custom Formats'));
         await tester.pumpAndSettle();
 
         expect(find.text('Lossless 24-bit'), findsOneWidget);
@@ -1878,18 +1878,18 @@ void main() {
         expect(find.text('1 Conditions'), findsOneWidget);
 
         // 1. Add custom format flow
-        await tester.tap(find.byTooltip('Ajouter un format personnalisé'));
+        await tester.tap(find.byTooltip('Add Custom Format'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Ajouter un format personnalisé'), findsOneWidget);
+        expect(find.text('Add Custom Format'), findsOneWidget);
         await tester.enterText(
-          find.widgetWithText(TextField, 'Nom du format personnalisé'),
+          find.widgetWithText(TextField, 'Custom Format Name'),
           'Vinyl Rip',
         );
         await tester.pumpAndSettle();
 
         // Add a condition from schema bottom sheet
-        await tester.tap(find.text('Ajouter une condition'));
+        await tester.tap(find.text('Add Condition'));
         await tester.pumpAndSettle();
 
         expect(find.text('Select Specification Type'), findsOneWidget);
@@ -1900,7 +1900,7 @@ void main() {
 
         expect(find.text('Specifications (1)'), findsOneWidget);
 
-        await tester.tap(find.text('Enregistrer'));
+        await tester.tap(find.text('Save'));
         await tester.pumpAndSettle();
 
         expect(postFormatCalled, isTrue);
@@ -1914,11 +1914,11 @@ void main() {
         await tester.tap(find.text('Lossless 24-bit'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Modifier le format personnalisé'), findsOneWidget);
-        await tester.tap(find.text('Nier'));
+        expect(find.text('Edit Custom Format'), findsOneWidget);
+        await tester.tap(find.text('Negate'));
         await tester.pumpAndSettle();
 
-        await tester.tap(find.text('Enregistrer'));
+        await tester.tap(find.text('Save'));
         await tester.pumpAndSettle();
 
         expect(putFormatCalled, isTrue);
@@ -1929,11 +1929,11 @@ void main() {
         await tester.pumpAndSettle();
 
         // 3. Delete custom format flow
-        await tester.tap(find.byTooltip('Supprimer le format personnalisé'));
+        await tester.tap(find.byTooltip('Delete Custom Format'));
         await tester.pumpAndSettle();
 
         expect(find.text('Delete Lossless 24-bit?'), findsOneWidget);
-        await tester.tap(find.text('Supprimer'));
+        await tester.tap(find.text('Delete'));
         await tester.pumpAndSettle();
 
         expect(deleteFormatCalled, isTrue);
@@ -2010,7 +2010,7 @@ void main() {
                     data: {
                       'id': 1,
                       'renameTracks': true,
-                      'standardTrackFormat': '{Titre de la piste}',
+                      'standardTrackFormat': '{Track Title}',
                     },
                   ),
                 );
@@ -2118,7 +2118,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // 1. Quality Definitions Card
-        await tester.tap(find.text('Définitions de qualité'));
+        await tester.tap(find.text('Quality Definitions'));
         await tester.pumpAndSettle();
 
         expect(find.text('FLAC'), findsOneWidget);
@@ -2126,7 +2126,7 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(find.text('Edit FLAC'), findsOneWidget);
-        await tester.tap(find.text('Enregistrer'));
+        await tester.tap(find.text('Save'));
         await tester.pumpAndSettle();
 
         expect(qualityPutCalled, isTrue);
@@ -2140,15 +2140,15 @@ void main() {
         await tester.pumpAndSettle();
 
         // 2. Media Management Card
-        await tester.tap(find.text('Gestion des médias'));
+        await tester.tap(find.text('Media Management'));
         await tester.pumpAndSettle();
 
         expect(find.text('Track Naming Formats'), findsOneWidget);
         expect(find.text('Media Management Options'), findsOneWidget);
 
-        await tester.ensureVisible(find.text('Enregistrer les formats de nommage'));
+        await tester.ensureVisible(find.text('Save Naming Formats'));
         await tester.pumpAndSettle();
-        await tester.tap(find.text('Enregistrer les formats de nommage'));
+        await tester.tap(find.text('Save Naming Formats'));
         await tester.pumpAndSettle();
         expect(namingPutCalled, isTrue);
 
@@ -2157,9 +2157,9 @@ void main() {
             .clearSnackBars();
         await tester.pumpAndSettle();
 
-        await tester.ensureVisible(find.text('Enregistrer la gestion des médias'));
+        await tester.ensureVisible(find.text('Save Media Management'));
         await tester.pumpAndSettle();
-        await tester.tap(find.text('Enregistrer la gestion des médias'));
+        await tester.tap(find.text('Save Media Management'));
         await tester.pumpAndSettle();
         expect(mmPutCalled, isTrue);
 
@@ -2172,7 +2172,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // 3. Metadata Consumers Card
-        await tester.tap(find.text('Consommateurs de métadonnées'));
+        await tester.tap(find.text('Metadata Consumers'));
         await tester.pumpAndSettle();
 
         expect(find.text('Kodi Metadata'), findsOneWidget);
@@ -2181,15 +2181,15 @@ void main() {
         await tester.pumpAndSettle();
 
         // 4. General Card
-        await tester.tap(find.text('Général'));
+        await tester.tap(find.text('General'));
         await tester.pumpAndSettle();
 
         expect(find.text('Host & Network Settings'), findsOneWidget);
         expect(find.text('API Key: mock-api-key-12345'), findsOneWidget);
 
-        await tester.ensureVisible(find.text("Enregistrer les paramètres de l'hôte"));
+        await tester.ensureVisible(find.text('Save Host Settings'));
         await tester.pumpAndSettle();
-        await tester.tap(find.text("Enregistrer les paramètres de l'hôte"));
+        await tester.tap(find.text('Save Host Settings'));
         await tester.pumpAndSettle();
         expect(hostPutCalled, isTrue);
       },

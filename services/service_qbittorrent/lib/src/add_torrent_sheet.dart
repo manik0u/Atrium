@@ -116,8 +116,8 @@ class _AddTorrentSheetState extends ConsumerState<AddTorrentSheet> {
   }
 
   String get _fileLabel => switch (_files.length) {
-        0 => 'Choisir des fichiers .torrent',
-        1 => _files.first.name ?? 'Un torrent',
+        0 => S.t('chooseTorrentFiles'),
+        1 => _files.first.name ?? S.t('oneTorrent'),
         final int n => '$n torrents',
       };
 
@@ -211,7 +211,7 @@ class _AddTorrentSheetState extends ConsumerState<AddTorrentSheet> {
         if (failed == _files.length) {
           throw StateError(
             _files.length == 1
-                ? "Impossible d'ajouter ce torrent."
+                ? S.t('couldNotAddThatTorrent')
                 : 'None of the ${_files.length} torrents could be added.',
           );
         }
@@ -222,7 +222,7 @@ class _AddTorrentSheetState extends ConsumerState<AddTorrentSheet> {
     } catch (e) {
       setState(() {
         _busy = false;
-        _error = "Impossible d'ajouter : $e";
+        _error = S.t('couldNotAddE1', [e]);
       });
     }
   }
@@ -269,7 +269,7 @@ class _AddTorrentSheetState extends ConsumerState<AddTorrentSheet> {
     );
 
     return AlertDialog(
-      title: const Text('Ajouter un torrent'),
+      title: Text(S.t('addTorrent')),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -281,9 +281,9 @@ class _AddTorrentSheetState extends ConsumerState<AddTorrentSheet> {
                 minLines: 2,
                 maxLines: 5,
                 autofocus: true,
-                decoration: const InputDecoration(
-                  labelText: 'Liens magnet ou URL de .torrent',
-                  hintText: 'magnet:?xt=… (un par ligne)',
+                decoration: InputDecoration(
+                  labelText: S.t('magnetLinksOrTorrentURLs'),
+                  hintText: S.t('magnetXtOnePerLine'),
                   border: OutlineInputBorder(),
                 ),
                 onChanged: (_) => setState(() {}),
@@ -300,13 +300,13 @@ class _AddTorrentSheetState extends ConsumerState<AddTorrentSheet> {
                 final List<String> cats = paths.keys.toList()..sort();
                 return DropdownButtonFormField<String>(
                   initialValue: _category,
-                  decoration: const InputDecoration(
-                    labelText: 'Catégorie (facultatif)',
+                  decoration: InputDecoration(
+                    labelText: S.t('categoryOptional'),
                     border: OutlineInputBorder(),
                   ),
                   items: <DropdownMenuItem<String>>[
-                    const DropdownMenuItem<String>(
-                      child: Text('Aucun'),
+                    DropdownMenuItem<String>(
+                      child: Text(S.t('none')),
                     ),
                     ...cats.map(
                       (String c) => DropdownMenuItem<String>(
@@ -330,28 +330,28 @@ class _AddTorrentSheetState extends ConsumerState<AddTorrentSheet> {
             TextField(
               controller: _savePath,
               onChanged: (_) => _savePathEdited = true,
-              decoration: const InputDecoration(
-                labelText: "Chemin d'enregistrement",
-                hintText: 'Laissez vide pour la valeur par défaut',
+              decoration: InputDecoration(
+                labelText: S.t('savePath'),
+                hintText: S.t('leaveBlankForTheDefault'),
                 border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: Insets.sm),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Démarrer en pause'),
+              title: Text(S.t('startPaused')),
               value: _paused,
               onChanged: (bool v) => setState(() => _paused = v),
             ),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text("Télécharger dans l'ordre séquentiel"),
+              title: Text(S.t('downloadInSequentialOrder')),
               value: _sequential,
               onChanged: (bool v) => setState(() => _sequential = v),
             ),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Ignorer la vérification du hash'),
+              title: Text(S.t('skipHashCheck')),
               subtitle: const Text(
                 'Assume the files are already complete and correct. '
                 'qBittorrent rechecks the whole torrent if a piece later '
@@ -370,7 +370,7 @@ class _AddTorrentSheetState extends ConsumerState<AddTorrentSheet> {
       actions: <Widget>[
         TextButton(
           onPressed: _busy ? null : () => Navigator.of(context).pop(false),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton.icon(
           onPressed: _canSubmit ? _submit : null,
@@ -390,7 +390,7 @@ class _AddTorrentSheetState extends ConsumerState<AddTorrentSheet> {
   /// A batch can take a while, so the button counts rather than just spinning.
   String get _addLabel {
     if (_mode != AddTorrentMode.file || _files.length <= 1) {
-      return 'Add';
+      return S.t('add');
     }
     return _busy ? 'Adding $_done of ${_files.length}' : 'Add ${_files.length}';
   }

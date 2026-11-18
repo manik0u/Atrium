@@ -138,14 +138,14 @@ class _LidarrUnmappedFilesScreenState
       builder: (BuildContext dCtx) {
         final cs = Theme.of(dCtx).colorScheme;
         return AlertDialog(
-          title: const Text('Supprimer le fichier non mappé ?'),
+          title: Text(S.t('deleteUnmappedFile')),
           content: Text(
             'Are you sure you want to delete "${file.path ?? 'this file'}" from disk?',
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(dCtx, false),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             FilledButton(
               style: FilledButton.styleFrom(
@@ -153,7 +153,7 @@ class _LidarrUnmappedFilesScreenState
                 foregroundColor: cs.onError,
               ),
               onPressed: () => Navigator.pop(dCtx, true),
-              child: const Text('Supprimer'),
+              child: Text(S.t('delete')),
             ),
           ],
         );
@@ -168,7 +168,7 @@ class _LidarrUnmappedFilesScreenState
       final ApiResponse<void> resp =
           await api.trackFile.deleteTrackfileById(id: file.id!);
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec de la suppression du fichier');
+        throw Exception(resp.error?.message ?? S.t('failedToDeleteFile'));
       }
 
       ref.invalidate(
@@ -185,11 +185,11 @@ class _LidarrUnmappedFilesScreenState
       });
 
       messenger.showSnackBar(
-        const SnackBar(content: Text('Fichier audio non mappé supprimé.')),
+        SnackBar(content: Text(S.t('unmappedAudioFileDeleted'))),
       );
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la suppression du fichier : $e')),
+        SnackBar(content: Text(S.t('failedToDeleteFileE1', [e]))),
       );
     }
   }
@@ -203,14 +203,14 @@ class _LidarrUnmappedFilesScreenState
       builder: (BuildContext dCtx) {
         final cs = Theme.of(dCtx).colorScheme;
         return AlertDialog(
-          title: Text('Supprimer ${_selectedIds.length} fichiers non mappés ?'),
+          title: Text(S.t('deleteSelectedIdsLengthUnmappedFiles1', [_selectedIds.length])),
           content: Text(
             'Are you sure you want to permanently delete ${_selectedIds.length} unmapped file(s) from disk? This cannot be undone.',
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(dCtx, false),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             FilledButton(
               style: FilledButton.styleFrom(
@@ -218,7 +218,7 @@ class _LidarrUnmappedFilesScreenState
                 foregroundColor: cs.onError,
               ),
               onPressed: () => Navigator.pop(dCtx, true),
-              child: const Text('Supprimer définitivement'),
+              child: Text(S.t('deletePermanently')),
             ),
           ],
         );
@@ -240,7 +240,7 @@ class _LidarrUnmappedFilesScreenState
       final ApiResponse<void> resp =
           await api.trackFile.deleteTrackfileBulk(body: payload);
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec de la suppression groupée des fichiers');
+        throw Exception(resp.error?.message ?? S.t('failedToBulkDeleteFiles'));
       }
 
       ref.invalidate(
@@ -259,12 +259,12 @@ class _LidarrUnmappedFilesScreenState
       });
 
       messenger.showSnackBar(
-        SnackBar(content: Text('$deletedCount fichier(s) non mappé(s) supprimé(s).')),
+        SnackBar(content: Text(S.t('deletedDeletedCountUnmappedFileS1', [deletedCount]))),
       );
     } catch (e) {
       setState(() => _isProcessing = false);
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la suppression des fichiers : $e')),
+        SnackBar(content: Text(S.t('failedToDeleteFilesE1', [e]))),
       );
     }
   }
@@ -319,7 +319,7 @@ class _LidarrUnmappedFilesScreenState
         actions: [
           IconButton(
             icon: const Icon(Icons.drive_folder_upload_outlined),
-            tooltip: 'Tout importer manuellement',
+            tooltip: S.t('manualImportAll'),
             onPressed: () {
               final files = asyncUnmapped.value ?? <TrackFileResource>[];
               String? folder;
@@ -346,15 +346,15 @@ class _LidarrUnmappedFilesScreenState
         behavior: HitTestBehavior.translucent,
         child: asyncUnmapped.when(
           loading: () => const Center(child: ExpressiveProgressIndicator()),
-          error: (err, _) => Center(child: Text('Erreur : $err')),
+          error: (err, _) => Center(child: Text(S.t('errorErr1', [err]))),
           data: (List<TrackFileResource> files) {
             if (files.isEmpty) {
-              return const Center(
+              return Center(
                 child: EmptyView(
                   icon: Icons.check_circle_outline,
-                  title: 'Aucun fichier non mappé',
+                  title: S.t('noUnmappedFiles'),
                   message:
-                      "Tous les fichiers audio du dossier de l'artiste sont mappés à des albums et pistes.",
+                      S.t('allAudioFilesInTheArtistFolderAreMappedToAlbumsAndTracks'),
                 ),
               );
             }
@@ -389,7 +389,7 @@ class _LidarrUnmappedFilesScreenState
                           controller: _searchController,
                           focusNode: _searchFocusNode,
                           decoration: InputDecoration(
-                            hintText: 'Rechercher des fichiers non mappés…',
+                            hintText: S.t('searchUnmappedFiles'),
                             prefixIcon: const Icon(Icons.search, size: 20),
                             suffixIcon: _searchQuery.isNotEmpty
                                 ? IconButton(
@@ -431,7 +431,7 @@ class _LidarrUnmappedFilesScreenState
                           size: 18,
                         ),
                         label: Text(
-                          allSelected ? 'Deselect' : 'Select All',
+                          allSelected ? 'Deselect' : S.t('selectAll'),
                           style: const TextStyle(fontSize: 12),
                         ),
                         onPressed: () {
@@ -451,7 +451,7 @@ class _LidarrUnmappedFilesScreenState
                   child: filteredFiles.isEmpty
                       ? Center(
                           child: Text(
-                            'Aucun fichier non mappé ne correspond à « $_searchQuery »',
+                            S.t('noUnmappedFilesMatchSearchQuery1', [_searchQuery]),
                             style: TextStyle(color: cs.onSurfaceVariant),
                           ),
                         )
@@ -613,7 +613,7 @@ class _LidarrUnmappedFilesScreenState
                                               Icons.copy_outlined,
                                               size: 16,
                                             ),
-                                            tooltip: 'Copier le chemin',
+                                            tooltip: S.t('copyPath'),
                                             visualDensity:
                                                 VisualDensity.compact,
                                             onPressed: file.path != null
@@ -626,9 +626,9 @@ class _LidarrUnmappedFilesScreenState
                                                     ScaffoldMessenger.of(
                                                       context,
                                                     ).showSnackBar(
-                                                      const SnackBar(
+                                                      SnackBar(
                                                         content: Text(
-                                                          'File path copied to clipboard',
+                                                          S.t('filePathCopiedToClipboard'),
                                                         ),
                                                         duration: Duration(
                                                           seconds: 1,
@@ -759,7 +759,7 @@ class _LidarrUnmappedFilesScreenState
                                               Icons.download_outlined,
                                               size: 16,
                                             ),
-                                            label: const Text('Import manuel'),
+                                            label: Text(S.t('manualImport')),
                                             onPressed: () {
                                               showLidarrManualImportFlow(
                                                 context,
@@ -775,7 +775,7 @@ class _LidarrUnmappedFilesScreenState
                                               Icons.delete_outline,
                                             ),
                                             color: cs.error,
-                                            tooltip: 'Supprimer le fichier',
+                                            tooltip: S.t('deleteFile'),
                                             onPressed: () =>
                                                 _deleteUnmappedFile(file),
                                           ),
@@ -838,7 +838,7 @@ class _LidarrUnmappedFilesScreenState
                           ),
                         ),
                         icon: const Icon(Icons.download, size: 16),
-                        label: const Text('Importer'),
+                        label: Text(S.t('import')),
                         onPressed: () {
                           final TrackFileResource? sel = files
                               .where((f) => _selectedIds.contains(f.id))
@@ -883,7 +883,7 @@ class _LidarrUnmappedFilesScreenState
                                 Icons.delete_outline,
                                 size: 16,
                               ),
-                        label: Text('Supprimer (${_selectedIds.length})'),
+                        label: Text(S.t('deleteSelectedIdsLength1', [_selectedIds.length])),
                         onPressed: _isProcessing
                             ? null
                             : () => _bulkDeleteFiles(files),

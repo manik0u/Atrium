@@ -29,8 +29,8 @@ Future<void> _pump(WidgetTester tester, UpdateCheckState state, Widget child) {
 void main() {
   testWidgets('tile shows Tap to check when idle', (WidgetTester tester) async {
     await _pump(tester, const UpdateCheckState(), const UpdateCheckTile());
-    expect(find.text('Rechercher des mises à jour'), findsOneWidget);
-    expect(find.text('Touchez pour vérifier'), findsOneWidget);
+    expect(find.text('Check for updates'), findsOneWidget);
+    expect(find.text('Tap to check'), findsOneWidget);
   });
 
   testWidgets('tile shows the available version and an open icon',

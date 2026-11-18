@@ -46,13 +46,13 @@ class _Aria2SettingsTabState extends ConsumerState<Aria2SettingsTab> {
       );
       await api.changeGlobalOption(<String, String>{key: value});
       messenger.showSnackBar(
-        const SnackBar(
-          content: Text('Paramètre enregistré'),
+        SnackBar(
+          content: Text(S.t('settingSaved')),
           duration: Duration(seconds: 1),
         ),
       );
     } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text("Impossible d'enregistrer : $e")));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('couldNotSaveE1', [e]))));
     } finally {
       ref.invalidate(aria2GlobalOptionsProvider(widget.instance));
     }
@@ -122,7 +122,7 @@ class _Aria2SettingsTabState extends ConsumerState<Aria2SettingsTab> {
           onPressed: widget.onOpenDrawer ??
               () => Scaffold.of(context).openDrawer(),
         ),
-        title: const Text('Paramètres aria2'),
+        title: Text(S.t('aria2Settings')),
       ),
       body: AsyncValueView<Map<String, String>>(
         value: options,
@@ -157,7 +157,7 @@ class _Aria2SettingsTabState extends ConsumerState<Aria2SettingsTab> {
 
           String formatRate(String bytesStr) {
             final int? b = int.tryParse(bytesStr);
-            if (b == null || b <= 0) return 'Unlimited (0)';
+            if (b == null || b <= 0) return S.t('unlimited0');
             return aria2FmtRate(b);
           }
 
@@ -180,15 +180,15 @@ class _Aria2SettingsTabState extends ConsumerState<Aria2SettingsTab> {
               children: <Widget>[
                 // Group 1: Bandwidth & Limits
                 _SettingsGroup(
-                  title: 'Bande passante et limites',
+                  title: S.t('bandwidthLimits'),
                   icon: Icons.speed_outlined,
                   children: <Widget>[
                     ListTile(
-                      title: const Text('Limite de vitesse de téléchargement globale'),
+                      title: Text(S.t('overallDownloadSpeedLimit')),
                       subtitle: Text(formatRate(dlLimit)),
                       trailing: const Icon(Icons.chevron_right, size: 20),
                       onTap: () => _editNumber(
-                        title: 'Limite de téléchargement globale (octets/s)',
+                        title: S.t('globalDownloadLimitBytesS'),
                         key: 'max-overall-download-limit',
                         initial: dlLimit,
                         helper: '0 for unlimited, e.g. 1048576 for 1 MB/s',
@@ -196,11 +196,11 @@ class _Aria2SettingsTabState extends ConsumerState<Aria2SettingsTab> {
                     ),
                     const Divider(height: 1),
                     ListTile(
-                      title: const Text("Limite de vitesse d'envoi globale"),
+                      title: Text(S.t('overallUploadSpeedLimit')),
                       subtitle: Text(formatRate(ulLimit)),
                       trailing: const Icon(Icons.chevron_right, size: 20),
                       onTap: () => _editNumber(
-                        title: "Limite d'envoi globale (octets/s)",
+                        title: S.t('globalUploadLimitBytesS'),
                         key: 'max-overall-upload-limit',
                         initial: ulLimit,
                         helper: '0 for unlimited, e.g. 524288 for 512 KB/s',
@@ -208,26 +208,26 @@ class _Aria2SettingsTabState extends ConsumerState<Aria2SettingsTab> {
                     ),
                     const Divider(height: 1),
                     ListTile(
-                      title: const Text('Limite de téléchargement par défaut des tâches'),
+                      title: Text(S.t('defaultTaskDownloadLimit')),
                       subtitle: Text(formatRate(taskDlLimit)),
                       trailing: const Icon(Icons.chevron_right, size: 20),
                       onTap: () => _editNumber(
-                        title: 'Limite de téléchargement des tâches (octets/s)',
+                        title: S.t('taskDownloadLimitBytesSec'),
                         key: 'max-download-limit',
                         initial: taskDlLimit,
-                        helper: 'Speed limit per download (0 = unlimited)',
+                        helper: S.t('speedLimitPerDownload0Unlimited'),
                       ),
                     ),
                     const Divider(height: 1),
                     ListTile(
-                      title: const Text("Limite d'envoi par défaut des tâches"),
+                      title: Text(S.t('defaultTaskUploadLimit')),
                       subtitle: Text(formatRate(taskUlLimit)),
                       trailing: const Icon(Icons.chevron_right, size: 20),
                       onTap: () => _editNumber(
-                        title: "Limite d'envoi des tâches (octets/s)",
+                        title: S.t('taskUploadLimitBytesSec'),
                         key: 'max-upload-limit',
                         initial: taskUlLimit,
-                        helper: 'Upload limit per download (0 = unlimited)',
+                        helper: S.t('uploadLimitPerDownload0Unlimited'),
                       ),
                     ),
                   ],
@@ -236,63 +236,63 @@ class _Aria2SettingsTabState extends ConsumerState<Aria2SettingsTab> {
 
                 // Group 2: Tasks & Concurrency
                 _SettingsGroup(
-                  title: 'Tâches et concurrence',
+                  title: S.t('tasksConcurrency'),
                   icon: Icons.alt_route_outlined,
                   children: <Widget>[
                     ListTile(
-                      title: const Text('Téléchargements simultanés max'),
-                      subtitle: Text('$maxConcurrent téléchargements actifs à la fois'),
+                      title: Text(S.t('maxConcurrentDownloads')),
+                      subtitle: Text(S.t('maxconcurrentActiveDownloadsAtOnce1', [maxConcurrent])),
                       trailing: const Icon(Icons.chevron_right, size: 20),
                       onTap: () => _editNumber(
-                        title: 'Téléchargements simultanés max',
+                        title: S.t('maxConcurrentDownloads'),
                         key: 'max-concurrent-downloads',
                         initial: maxConcurrent,
-                        helper: 'Number of parallel downloads (default: 5)',
+                        helper: S.t('numberOfParallelDownloadsDefault5'),
                       ),
                     ),
                     const Divider(height: 1),
                     ListTile(
-                      title: const Text('Connexions par serveur'),
-                      subtitle: Text('$maxConnPerServer par hôte'),
+                      title: Text(S.t('connPerServer')),
+                      subtitle: Text(S.t('maxconnperserverPerHost1', [maxConnPerServer])),
                       trailing: const Icon(Icons.chevron_right, size: 20),
                       onTap: () => _editNumber(
-                        title: 'Connexions max par serveur',
+                        title: S.t('maxConnectionsPerServer'),
                         key: 'max-connection-per-server',
                         initial: maxConnPerServer,
-                        helper: '1 to 16 (default: 1)',
+                        helper: S.t('k1To16Default1'),
                       ),
                     ),
                     const Divider(height: 1),
                     ListTile(
-                      title: const Text('Nombre de morceaux'),
-                      subtitle: Text('Télécharger le fichier en $split morceaux'),
+                      title: Text(S.t('splitCount')),
+                      subtitle: Text(S.t('downloadFileInSplitPieces1', [split])),
                       trailing: const Icon(Icons.chevron_right, size: 20),
                       onTap: () => _editNumber(
-                        title: 'Nombre de morceaux',
+                        title: S.t('splitCount'),
                         key: 'split',
                         initial: split,
-                        helper: 'Number of pieces to split a file into (1 to 16)',
+                        helper: S.t('numberOfPiecesToSplitAFileInto1To16'),
                       ),
                     ),
                     const Divider(height: 1),
                     ListTile(
-                      title: const Text('Taille minimale des morceaux'),
+                      title: Text(S.t('minSplitSize')),
                       subtitle: Text(minSplitSize),
                       trailing: const Icon(Icons.chevron_right, size: 20),
                       onTap: () => _editText(
-                        title: 'Taille min des morceaux',
+                        title: S.t('minSplitSize_2'),
                         key: 'min-split-size',
                         initial: minSplitSize,
-                        helper: 'e.g. 10M, 20M, 50M',
+                        helper: S.t('eG10M20M50M'),
                       ),
                     ),
                     const Divider(height: 1),
                     ListTile(
-                      title: const Text('Délai de connexion'),
-                      subtitle: Text('$connectTimeout secondes'),
+                      title: Text(S.t('connectionTimeout')),
+                      subtitle: Text(S.t('connecttimeoutSeconds1', [connectTimeout])),
                       trailing: const Icon(Icons.chevron_right, size: 20),
                       onTap: () => _editNumber(
-                        title: 'Délai de connexion (secondes)',
+                        title: S.t('connectTimeoutSeconds'),
                         key: 'connect-timeout',
                         initial: connectTimeout,
                       ),
@@ -303,39 +303,39 @@ class _Aria2SettingsTabState extends ConsumerState<Aria2SettingsTab> {
 
                 // Group 3: Storage & Directories
                 _SettingsGroup(
-                  title: 'Stockage et répertoires',
+                  title: S.t('storageDirectories'),
                   icon: Icons.folder_outlined,
                   children: <Widget>[
                     ListTile(
-                      title: const Text('Répertoire de téléchargement'),
+                      title: Text(S.t('downloadDirectory')),
                       subtitle: Text(
-                        downloadDir.isEmpty ? 'Default' : downloadDir,
+                        downloadDir.isEmpty ? S.t('default') : downloadDir,
                       ),
                       trailing: const Icon(Icons.chevron_right, size: 20),
                       onTap: () => _editText(
-                        title: 'Répertoire de téléchargement par défaut',
+                        title: S.t('defaultDownloadDirectory'),
                         key: 'dir',
                         initial: downloadDir,
-                        helper: "Chemin absolu sur l'hôte aria2",
+                        helper: S.t('absoluteFilesystemPathOnTheAria2Host'),
                       ),
                     ),
                     const Divider(height: 1),
                     ListTile(
-                      title: const Text('Cache disque'),
+                      title: Text(S.t('diskCache')),
                       subtitle: Text(
                         '${diskCache.isEmpty ? 'Disabled' : diskCache} (startup only • set in aria2.conf)',
                       ),
                     ),
                     const Divider(height: 1),
                     ListTile(
-                      title: const Text("Méthode d'allocation des fichiers"),
+                      title: Text(S.t('fileAllocationMethod')),
                       subtitle: Text(fileAlloc),
                       trailing: const Icon(Icons.chevron_right, size: 20),
                       onTap: () async {
                         final String? selected = await showDialog<String>(
                           context: context,
                           builder: (BuildContext ctx) => SimpleDialog(
-                            title: const Text("Méthode d'allocation des fichiers"),
+                            title: Text(S.t('fileAllocationMethod')),
                             children: <Widget>[
                               for (final String m in <String>[
                                 'none',
@@ -357,7 +357,7 @@ class _Aria2SettingsTabState extends ConsumerState<Aria2SettingsTab> {
                     ),
                     const Divider(height: 1),
                     SwitchListTile(
-                      title: const Text('Renommage automatique des fichiers'),
+                      title: Text(S.t('autoFileRenaming')),
                       subtitle: const Text(
                         'Rename file if filename already exists',
                       ),
@@ -367,9 +367,9 @@ class _Aria2SettingsTabState extends ConsumerState<Aria2SettingsTab> {
                     ),
                     const Divider(height: 1),
                     SwitchListTile(
-                      title: const Text('GET conditionnel'),
-                      subtitle: const Text(
-                        'Ignorer le téléchargement si le fichier local a la même date',
+                      title: Text(S.t('conditionalGET')),
+                      subtitle: Text(
+                        S.t('skipDownloadingIfLocalFileHasMatchingTimestamp'),
                       ),
                       value: conditionalGet,
                       onChanged: (bool val) =>
@@ -381,33 +381,33 @@ class _Aria2SettingsTabState extends ConsumerState<Aria2SettingsTab> {
 
                 // Group 4: BitTorrent & Seeding
                 _SettingsGroup(
-                  title: 'BitTorrent et seed',
+                  title: S.t('bittorrentSeeding'),
                   icon: Icons.grain_outlined,
                   children: <Widget>[
                     ListTile(
-                      title: const Text('Ratio de seed'),
+                      title: Text(S.t('seedRatio')),
                       subtitle: Text(
                         seedRatio == '0' || seedRatio == '0.0'
-                            ? 'Infinite seeding'
+                            ? S.t('infiniteSeeding')
                             : '${seedRatio}x',
                       ),
                       trailing: const Icon(Icons.chevron_right, size: 20),
                       onTap: () => _editNumber(
-                        title: 'Ratio de seed',
+                        title: S.t('seedRatio'),
                         key: 'seed-ratio',
                         initial: seedRatio,
                         decimal: true,
-                        helper: '0.0 for unlimited, or e.g. 1.0, 2.0',
+                        helper: S.t('k00ForUnlimitedOrEG1020'),
                       ),
                     ),
                     if (seedTime.isNotEmpty) ...<Widget>[
                       const Divider(height: 1),
                       ListTile(
-                        title: const Text('Temps de seed'),
+                        title: Text(S.t('seedTime')),
                         subtitle: Text('$seedTime minutes'),
                         trailing: const Icon(Icons.chevron_right, size: 20),
                         onTap: () => _editNumber(
-                          title: 'Temps de seed (minutes)',
+                          title: S.t('seedTimeMinutes'),
                           key: 'seed-time',
                           initial: seedTime,
                         ),
@@ -415,25 +415,25 @@ class _Aria2SettingsTabState extends ConsumerState<Aria2SettingsTab> {
                     ],
                     const Divider(height: 1),
                     ListTile(
-                      title: const Text('Activer DHT'),
+                      title: Text(S.t('enableDHT')),
                       subtitle: Text(
-                        '${enableDht ? 'Enabled' : 'Disabled'} (startup only • set in aria2.conf)',
+                        '${enableDht ? S.t('enabled') : S.t('disabled')} (startup only • set in aria2.conf)',
                       ),
                     ),
                     const Divider(height: 1),
                     ListTile(
-                      title: const Text('Pairs max'),
-                      subtitle: Text('$btMaxPeers pairs'),
+                      title: Text(S.t('maxPeers')),
+                      subtitle: Text(S.t('btmaxpeersPeers1', [btMaxPeers])),
                       trailing: const Icon(Icons.chevron_right, size: 20),
                       onTap: () => _editNumber(
-                        title: 'Pairs BitTorrent max',
+                        title: S.t('maxBitTorrentPeers'),
                         key: 'bt-max-peers',
                         initial: btMaxPeers,
                       ),
                     ),
                     const Divider(height: 1),
                     ListTile(
-                      title: const Text("Port d'écoute"),
+                      title: Text(S.t('listenPort')),
                       subtitle: Text(
                         '${listenPort.isEmpty ? 'Default' : listenPort} (startup only • set in aria2.conf)',
                       ),
@@ -553,11 +553,11 @@ class _EditDialogState extends State<_EditDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(_controller.text.trim()),
-          child: const Text('Enregistrer'),
+          child: Text(S.t('save')),
         ),
       ],
     );

@@ -218,10 +218,10 @@ void main() {
         'last_external_address_v6': '',
       });
 
-      expect(find.text('IPv4 externe'), findsOneWidget);
+      expect(find.text('External IPv4'), findsOneWidget);
       expect(find.text('203.0.113.7'), findsOneWidget);
       // No IPv6 address, which is most connections: no row for it.
-      expect(find.text('IPv6 externe'), findsNothing);
+      expect(find.text('External IPv6'), findsNothing);
 
       await tester.tap(find.text('203.0.113.7'));
       await tester.pump();
@@ -255,7 +255,7 @@ void main() {
         'last_external_address_v6': '2001:db8:85a3::8a2e:370:7334',
       });
 
-      expect(find.text('IPv6 externe'), findsOneWidget);
+      expect(find.text('External IPv6'), findsOneWidget);
       expect(find.text('2001:db8:85a3::8a2e:370:7334'), findsOneWidget);
       await close(tester);
     });
@@ -267,9 +267,9 @@ void main() {
         'last_external_address_v6': '',
       });
 
-      expect(find.text('IPv4 externe'), findsOneWidget);
-      expect(find.text('Pas encore connu'), findsOneWidget);
-      await tester.tap(find.text('Pas encore connu'));
+      expect(find.text('External IPv4'), findsOneWidget);
+      expect(find.text('Not known yet'), findsOneWidget);
+      await tester.tap(find.text('Not known yet'));
       await tester.pump();
       expect(copied, isEmpty);
       await close(tester);
@@ -279,7 +279,7 @@ void main() {
         (WidgetTester tester) async {
       await open(tester, <String, dynamic>{'connection_status': 'connected'});
 
-      expect(find.text('État de la connexion'), findsOneWidget);
+      expect(find.text('Connection Status'), findsOneWidget);
       expect(find.textContaining('External IP'), findsNothing);
       await close(tester);
     });

@@ -111,7 +111,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Tous les systèmes sont opérationnels'), findsOneWidget);
+      expect(find.text('All Systems Operational'), findsOneWidget);
       expect(find.text('2 of 2 media servers reachable'), findsOneWidget);
       expect(find.text('v2.4.1'), findsOneWidget);
       expect(find.text('CONNECTED MEDIA SERVERS (2)'), findsOneWidget);
@@ -159,7 +159,7 @@ void main() {
 
       expect(find.text('Degraded Performance'), findsOneWidget);
       expect(find.text('1 of 2 media servers reachable'), findsOneWidget);
-      expect(find.text('Hors ligne'), findsOneWidget);
+      expect(find.text('Offline'), findsOneWidget);
     });
 
     testWidgets(
@@ -246,7 +246,7 @@ void main() {
 
       expect(find.text('0'), findsWidgets);
       expect(
-        find.text('Tous les serveurs multimédias connectés sont actuellement inactifs.'),
+        find.text('All connected media servers are currently idle.'),
         findsOneWidget,
       );
     });
@@ -327,13 +327,13 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('34'), findsOneWidget);
-      expect(find.text("Lectures aujourd'hui"), findsOneWidget);
+      expect(find.text('Plays Today'), findsOneWidget);
       expect(find.text('14.8h'), findsOneWidget);
-      expect(find.text('Temps de visionnage'), findsOneWidget);
+      expect(find.text('Watch Time'), findsOneWidget);
       expect(find.text('9'), findsOneWidget);
-      expect(find.text('Utilisateurs actifs'), findsOneWidget);
+      expect(find.text('Active Users'), findsOneWidget);
       expect(find.text('2'), findsOneWidget);
-      expect(find.text('Alertes 24 h'), findsOneWidget);
+      expect(find.text('24h Alerts'), findsOneWidget);
     });
 
     testWidgets('renders 7-day activity trend histogram with buckets',
@@ -397,7 +397,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.text("Impossible de récupérer l'état de santé du serveur"),
+        find.text('Could not fetch server health status'),
         findsOneWidget,
       );
       expect(

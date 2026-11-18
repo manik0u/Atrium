@@ -25,9 +25,9 @@ class SeerrIssuesScreen extends ConsumerStatefulWidget {
 
 class _SeerrIssuesScreenState extends ConsumerState<SeerrIssuesScreen>
     with SeerrKeptFilter<SeerrIssuesScreen, String> {
-  static const Map<String, String> _filters = <String, String>{
-    'all': 'All',
-    'open': 'Open',
+  static final Map<String, String> _filters = <String, String>{
+    'all': S.t('all'),
+    'open': S.t('open'),
     'resolved': 'Resolved',
   };
 
@@ -59,40 +59,40 @@ class _SeerrIssuesScreenState extends ConsumerState<SeerrIssuesScreen>
             
                 if (list.isEmpty) {
                   return EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: () async {
               ref.invalidate(seerrIssuesProvider(args));
             },
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          children: const <Widget>[
+          children: <Widget>[
             SizedBox(height: 100),
             EmptyView(
                     icon: Icons.report_off_outlined,
-                    title: 'Aucun problème',
-                    message: "Rien n'a été signalé.",
+                    title: S.t('noIssues'),
+                    message: S.t('nothingHasBeenReported'),
                   ),
           ],
         ),
       );
                 }
                 return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async {
               ref.invalidate(seerrIssuesProvider(args));
@@ -145,7 +145,7 @@ class _IssueCard extends ConsumerWidget {
           )
           .value;
     }
-    final String title = details?.displayTitle ?? 'Problème n° ${issue.id}';
+    final String title = details?.displayTitle ?? S.t('issueIssueId1', [issue.id]);
     final SeerrApi? api = ref.watch(seerrApiProvider(instance)).value;
     final String? posterUrl = api?.imageUrl(details?.posterPath);
     final String time = seerrIssueRelativeTime(issue.createdAt);

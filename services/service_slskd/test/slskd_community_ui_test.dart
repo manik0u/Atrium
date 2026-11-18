@@ -141,7 +141,7 @@ void main() {
     ),
     SlskdRoomMessage(
       timestamp: DateTime(2026, 10, 24, 18, 47),
-      username: 'Système',
+      username: 'System',
       message: 'AmbientLover joined the room.',
       roomName: 'electronic',
     ),
@@ -273,7 +273,7 @@ void main() {
       // -----------------------------------------------------------------------
       // 2. Direct Messages Search Filtering
       // -----------------------------------------------------------------------
-      final dmSearchFinder = find.widgetWithText(SearchBar, 'Rechercher des messages privés…');
+      final dmSearchFinder = find.widgetWithText(SearchBar, 'Search direct messages...');
       expect(dmSearchFinder, findsOneWidget);
 
       await tester.enterText(
@@ -374,13 +374,13 @@ void main() {
       await tester.tap(find.byIcon(Icons.more_vert_rounded));
       await tester.pumpAndSettle();
 
-      expect(find.text('Définir le ticker du salon'), findsOneWidget);
-      await tester.tap(find.text('Définir le ticker du salon'));
+      expect(find.text('Set Room Ticker'), findsOneWidget);
+      await tester.tap(find.text('Set Room Ticker'));
       await tester.pumpAndSettle();
 
       expect(find.text('Set Ticker for #electronic'), findsOneWidget);
       await tester.enterText(find.byType(TextField).last, 'Welcome to electronic room! No spam please.');
-      await tester.tap(find.text('Annuler'));
+      await tester.tap(find.text('Cancel'));
       await tester.pumpAndSettle();
 
       // Navigate back to Community root tab view
@@ -405,7 +405,7 @@ void main() {
       await capture(tester, repaintKey, 'slskd_community_active_dm.png');
 
       // The profile button shows the peer's bio, not an empty placeholder.
-      await tester.tap(find.byTooltip('Bio du profil utilisateur'));
+      await tester.tap(find.byTooltip('User profile bio'));
       await tester.pumpAndSettle();
       expect(find.text('Sharing 24-bit FLAC vinyl rips.'), findsOneWidget);
       Navigator.of(tester.element(find.byType(SlskdUserBioSheet))).pop();
@@ -417,7 +417,7 @@ void main() {
       await tester.tap(find.byIcon(Icons.folder_shared_outlined));
       await tester.pumpAndSettle();
 
-      expect(find.text('Explorateur de bibliothèque du pair'), findsNothing);
+      expect(find.text('Peer Library Explorer'), findsNothing);
       expect(find.text('AudioPhile99'), findsWidgets);
     });
 
@@ -443,17 +443,17 @@ void main() {
       await tester.pumpAndSettle();
 
       // Cancelling disposes nothing the closing dialog still draws.
-      await tester.tap(find.byTooltip('Nouveau message privé'));
+      await tester.tap(find.byTooltip('New direct message'));
       await tester.pumpAndSettle();
       await tester.enterText(find.byType(TextField).last, 'NewPeer');
-      await tester.tap(find.text('Annuler'));
+      await tester.tap(find.text('Cancel'));
       await tester.pumpAndSettle();
-      expect(find.text('Nouveau message privé'), findsNothing);
+      expect(find.text('New Direct Message'), findsNothing);
 
-      await tester.tap(find.byTooltip('Nouveau message privé'));
+      await tester.tap(find.byTooltip('New direct message'));
       await tester.pumpAndSettle();
       await tester.enterText(find.byType(TextField).last, 'NewPeer');
-      await tester.tap(find.text('Démarrer la discussion'));
+      await tester.tap(find.text('Start Chat'));
       await tester.pumpAndSettle();
       expect(find.text('Message NewPeer...'), findsOneWidget);
     });
@@ -483,18 +483,18 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Impossible de charger les messages privés'), findsOneWidget);
-      expect(find.text('Aucun message privé pour le moment.'), findsNothing);
+      expect(find.text('Could not load direct messages'), findsOneWidget);
+      expect(find.text('No direct messages yet.'), findsNothing);
 
       await tester.tap(find.text('Chat Rooms (0)'));
       await tester.pumpAndSettle();
-      expect(find.text('Impossible de charger vos salons'), findsOneWidget);
-      expect(find.text('Aucun salon rejoint pour le moment.'), findsNothing);
+      expect(find.text('Could not load your rooms'), findsOneWidget);
+      expect(find.text('No chat rooms joined yet.'), findsNothing);
 
-      await tester.tap(find.byTooltip('Découvrir les salons publics'));
+      await tester.tap(find.byTooltip('Discover public rooms'));
       await tester.pumpAndSettle();
-      expect(find.text('Impossible de charger les salons'), findsOneWidget);
-      expect(find.text('Aucun salon public trouvé.'), findsNothing);
+      expect(find.text('Could not load rooms'), findsOneWidget);
+      expect(find.text('No public rooms found.'), findsNothing);
     });
 
     testWidgets('composer keeps the message when sending fails', (WidgetTester tester) async {
@@ -627,7 +627,7 @@ void main() {
             // Browse is still inside another peer's folder.
             slskdBrowseUsernameProvider(testInstance).overrideWith((ref) => 'OtherPeer'),
             slskdBrowsePathSegmentsProvider(testInstance).overrideWith(
-              (ref) => const <String>['Musique', 'Rock'],
+              (ref) => const <String>['Music', 'Rock'],
             ),
             slskdUserDirectoriesProvider((testInstance, 'OtherPeer')).overrideWith(
               (ref) => const <SlskdDirectory>[],

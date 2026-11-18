@@ -131,7 +131,7 @@ class _LidarrAddArtistSearchScreenState
             child: SearchBar(
               focusNode: _searchFocusNode,
               controller: _searchController,
-              hintText: "Rechercher dans le catalogue d'artistes en ligne…",
+              hintText: S.t('searchOnlineArtistCatalog'),
               textInputAction: TextInputAction.search,
               onSubmitted: (_) {
                 if (_searchFocusNode.hasFocus) {
@@ -179,7 +179,7 @@ class _LidarrAddArtistSearchScreenState
                     ),
                     const SizedBox(height: Insets.md),
                     Text(
-                      'Rechercher un artiste à ajouter',
+                      S.t('searchForAnArtistToAdd'),
                       style: theme.textTheme.bodyLarge?.copyWith(
                         color: cs.onSurfaceVariant,
                       ),
@@ -198,11 +198,11 @@ class _LidarrAddArtistSearchScreenState
                 },
                 data: (List<ArtistResource> results) {
                   if (results.isEmpty) {
-                    return const EmptyView(
+                    return EmptyView(
                       icon: Icons.search_off_outlined,
-                      title: 'Aucun artiste trouvé',
+                      title: S.t('noArtistsFound'),
                       message:
-                          "Nous n'avons trouvé aucun artiste correspondant à votre requête.",
+                          S.t('weCouldnTFindAnyArtistsMatchingYourQuery'),
                     );
                   }
 
@@ -306,7 +306,7 @@ class _LidarrAddArtistSearchScreenState
                                           children: [
                                             Text(
                                               artist.artistName ??
-                                                  'Unknown Artist',
+                                                  S.t('unknownArtist'),
                                               style: theme.textTheme.titleMedium
                                                   ?.copyWith(
                                                 fontWeight: FontWeight.bold,
@@ -418,7 +418,7 @@ class _LidarrAddArtistSearchScreenState
                                                     ),
                                                     const SizedBox(width: 4),
                                                     Text(
-                                                      'Added',
+                                                      S.t('added'),
                                                       style: theme
                                                           .textTheme.labelSmall
                                                           ?.copyWith(

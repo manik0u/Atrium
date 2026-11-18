@@ -1,5 +1,6 @@
 import '../generated/models/violation.dart';
 import '../models/tracearr_models.dart';
+import 'package:core_models/core_models.dart';
 
 /// Pure transformation from raw [Violation] DTO to domain [TracearrViolationItem].
 class TracearrViolationMapper {
@@ -17,7 +18,7 @@ class TracearrViolationMapper {
     }
 
     String? userId;
-    String userName = 'Unknown';
+    String userName = S.t('unknown');
     if (item.user != null) {
       if (item.user is String) {
         userName = item.user as String;

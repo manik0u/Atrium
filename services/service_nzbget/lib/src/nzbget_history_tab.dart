@@ -23,7 +23,7 @@ class NzbgetHistoryTab extends ConsumerWidget {
           await ref.read(nzbgetApiProvider(instance).future);
       await action(api);
     } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text("Échec de l'action : $e")));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('actionFailedE1', [e]))));
     } finally {
       if (context.mounted) {
         ref.invalidate(nzbgetHistoryProvider(instance));
@@ -40,10 +40,10 @@ class NzbgetHistoryTab extends ConsumerWidget {
       onRetry: () => ref.invalidate(nzbgetHistoryProvider(instance)),
       data: (List<NzbgetHistoryEntry> entries) {
         if (entries.isEmpty) {
-          return const EmptyView(
+          return EmptyView(
             icon: Icons.history,
-            title: 'Aucun historique',
-            message: 'Les téléchargements terminés apparaîtront ici.',
+            title: S.t('noHistory'),
+            message: S.t('completedDownloadsWillShowUpHere'),
           );
         }
         return EasyRefresh(
@@ -77,7 +77,7 @@ class NzbgetHistoryTab extends ConsumerWidget {
                   children: <Widget>[
                     if (entry.isFailure)
                       IconButton(
-                        tooltip: 'Réessayer',
+                        tooltip: S.t('retry'),
                         icon: const Icon(Icons.refresh),
                         onPressed: () => _run(
                           context,
@@ -87,24 +87,24 @@ class NzbgetHistoryTab extends ConsumerWidget {
                         ),
                       ),
                     IconButton(
-                      tooltip: 'Supprimer',
+                      tooltip: S.t('delete'),
                       icon: const Icon(Icons.delete_outline),
                       onPressed: () async {
                         final bool? confirmed = await showDialog<bool>(
                           context: context,
                           builder: (BuildContext dialogContext) => AlertDialog(
-                            title: const Text("Supprimer l'entrée de l'historique ?"),
+                            title: Text(S.t('deleteHistoryEntry')),
                             content: Text(entry.name),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () =>
                                     Navigator.of(dialogContext).pop(false),
-                                child: const Text('Annuler'),
+                                child: Text(S.t('cancel')),
                               ),
                               FilledButton(
                                 onPressed: () =>
                                     Navigator.of(dialogContext).pop(true),
-                                child: const Text('Supprimer'),
+                                child: Text(S.t('delete')),
                               ),
                             ],
                           ),

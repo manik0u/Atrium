@@ -22,15 +22,15 @@ class BeszelHome extends ConsumerWidget {
       data: (systems) {
         if (systems.isEmpty) {
           return EasyRefresh(
-            header: const ClassicHeader(
+            header: ClassicHeader(
               position: IndicatorPosition.locator,
-              dragText: 'Pull to refresh',
-              armedText: 'Release ready',
-              readyText: 'Refreshing...',
-              processingText: 'Refreshing...',
-              processedText: 'Succeeded',
-              failedText: 'Failed',
-              messageText: 'Last updated at %T',
+              dragText: S.t('pullToRefresh'),
+              armedText: S.t('releaseReady'),
+              readyText: S.t('refreshing'),
+              processingText: S.t('refreshing'),
+              processedText: S.t('succeeded'),
+              failedText: S.t('failed'),
+              messageText: S.t('lastUpdatedAtT'),
             ),
             onRefresh: () async =>
                 ref.refresh(beszelSystemsProvider(instance).future),
@@ -42,7 +42,7 @@ class BeszelHome extends ConsumerWidget {
                   hasScrollBody: false,
                   child: Container(
                     alignment: Alignment.center,
-                    child: const Text('Aucun système trouvé'),
+                    child: Text(S.t('noSystemsFound')),
                   ),
                 ),
               ],
@@ -51,15 +51,15 @@ class BeszelHome extends ConsumerWidget {
         }
         
         return EasyRefresh(
-          header: const ClassicHeader(
+          header: ClassicHeader(
             position: IndicatorPosition.locator,
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
           onRefresh: () async =>
               ref.refresh(beszelSystemsProvider(instance).future),
@@ -104,7 +104,7 @@ class BeszelHome extends ConsumerWidget {
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (e, st) => Center(child: Text('Erreur : $e')),
+      error: (e, st) => Center(child: Text(S.t('errorE1', [e]))),
     );
   }
 }

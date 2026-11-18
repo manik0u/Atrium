@@ -33,6 +33,7 @@ class Preferences {
     this.customImageColorsCsv,
     this.calendarShowUnmonitored = false,
     this.calendarListView = false,
+    this.languageCode,
   });
 
   final ThemeMode themeMode;
@@ -51,6 +52,9 @@ class Preferences {
   /// Whether the calendar renders in list view rather than monthly grid view.
   final bool calendarListView;
 
+  /// Forced UI language code (e.g. `en`, `fr`); null follows the system locale.
+  final String? languageCode;
+
   Preferences copyWith({
     ThemeMode? themeMode,
     bool? biometricEnabled,
@@ -62,6 +66,7 @@ class Preferences {
     String? Function()? customImageColorsCsv,
     bool? calendarShowUnmonitored,
     bool? calendarListView,
+    String? Function()? languageCode,
   }) =>
       Preferences(
         themeMode: themeMode ?? this.themeMode,
@@ -80,6 +85,7 @@ class Preferences {
         calendarShowUnmonitored:
             calendarShowUnmonitored ?? this.calendarShowUnmonitored,
         calendarListView: calendarListView ?? this.calendarListView,
+        languageCode: languageCode != null ? languageCode() : this.languageCode,
       );
 }
 
@@ -107,6 +113,7 @@ class PreferencesController extends Notifier<Preferences> {
   static const String _calendarShowUnmonitoredKey =
       'pref.calendarShowUnmonitored';
   static const String _calendarListViewKey = 'pref.calendarListView';
+  static const String _languageCodeKey = 'pref.languageCode';
 
   Box<String> get _box => ref.read(settingsBoxProvider);
 
@@ -142,6 +149,7 @@ class PreferencesController extends Notifier<Preferences> {
       calendarShowUnmonitored:
           _box.get(_calendarShowUnmonitoredKey) == 'true',
       calendarListView: _box.get(_calendarListViewKey) == 'true',
+      languageCode: _box.get(_languageCodeKey),
     );
   }
 
@@ -153,6 +161,15 @@ class PreferencesController extends Notifier<Preferences> {
   Future<void> setCalendarShowUnmonitored(bool show) async {
     await _box.put(_calendarShowUnmonitoredKey, '$show');
     state = state.copyWith(calendarShowUnmonitored: show);
+  }
+
+  Future<void> setLanguageCode(String? code) async {
+    if (code == null) {
+      await _box.delete(_languageCodeKey);
+    } else {
+      await _box.put(_languageCodeKey, code);
+    }
+    state = state.copyWith(languageCode: () => code);
   }
 
   Future<void> setThemeMode(ThemeMode mode) async {

@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -95,7 +96,7 @@ class SlskdUserCard extends StatelessWidget {
                       Text(
                         user.isPrivileged
                             ? 'Privileged (${user.privilegesRemaining}d)'
-                            : 'Standard',
+                            : S.t('standard'),
                         style: textTheme.labelSmall?.copyWith(
                           color: user.isPrivileged
                               ? colorScheme.onPrimaryContainer
@@ -115,7 +116,7 @@ class SlskdUserCard extends StatelessWidget {
                 Expanded(
                   child: _StatBox(
                     icon: Icons.speed_rounded,
-                    label: 'Vitesse moyenne',
+                    label: S.t('avgSpeed'),
                     value: slskdFormatRate(user.averageSpeed),
                   ),
                 ),
@@ -123,7 +124,7 @@ class SlskdUserCard extends StatelessWidget {
                 Expanded(
                   child: _StatBox(
                     icon: Icons.cloud_upload_rounded,
-                    label: 'Envois',
+                    label: S.t('uploads'),
                     value: '${user.uploadCount}',
                   ),
                 ),
@@ -135,7 +136,7 @@ class SlskdUserCard extends StatelessWidget {
                 Expanded(
                   child: _StatBox(
                     icon: Icons.insert_drive_file_rounded,
-                    label: 'Fichiers partagés',
+                    label: S.t('sharedFiles'),
                     value: '${user.fileCount}',
                   ),
                 ),
@@ -143,7 +144,7 @@ class SlskdUserCard extends StatelessWidget {
                 Expanded(
                   child: _StatBox(
                     icon: Icons.folder_rounded,
-                    label: 'Répertoires',
+                    label: S.t('directories'),
                     value: '${user.directoryCount}',
                   ),
                 ),

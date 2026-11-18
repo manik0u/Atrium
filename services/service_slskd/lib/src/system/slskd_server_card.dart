@@ -35,14 +35,14 @@ class _SlskdServerCardState extends ConsumerState<SlskdServerCard> {
           await ref.read(slskdApiProvider(widget.instance).future);
       await api.reconnectServer();
       messenger.showSnackBar(
-        const SnackBar(
-          content: Text('Connexion au réseau Soulseek…'),
+        SnackBar(
+          content: Text(S.t('connectingToSoulseekNetwork')),
           duration: Duration(seconds: 2),
         ),
       );
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la connexion : $e')),
+        SnackBar(content: Text(S.t('failedToConnectE1', [e]))),
       );
     } finally {
       if (mounted) {
@@ -56,14 +56,14 @@ class _SlskdServerCardState extends ConsumerState<SlskdServerCard> {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Se déconnecter du réseau Soulseek ?'),
-        content: const Text(
-          "Les recherches actives, salons et messages privés seront en pause jusqu'à la reconnexion.",
+        title: Text(S.t('disconnectFromSoulseek')),
+        content: Text(
+          S.t('activeSearchesChatRoomsAndDirectMessagesWillBePausedUntilReconnected'),
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -71,7 +71,7 @@ class _SlskdServerCardState extends ConsumerState<SlskdServerCard> {
               foregroundColor: Theme.of(ctx).colorScheme.onError,
             ),
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Déconnecter'),
+            child: Text(S.t('disconnect')),
           ),
         ],
       ),
@@ -86,14 +86,14 @@ class _SlskdServerCardState extends ConsumerState<SlskdServerCard> {
           await ref.read(slskdApiProvider(widget.instance).future);
       await api.disconnectServer();
       messenger.showSnackBar(
-        const SnackBar(
-          content: Text('Déconnecté du réseau Soulseek'),
+        SnackBar(
+          content: Text(S.t('disconnectedFromSoulseekNetwork')),
           duration: Duration(seconds: 2),
         ),
       );
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la déconnexion : $e')),
+        SnackBar(content: Text(S.t('failedToDisconnectE1', [e]))),
       );
     } finally {
       if (mounted) {
@@ -130,7 +130,7 @@ class _SlskdServerCardState extends ConsumerState<SlskdServerCard> {
             ? colorScheme.onPrimaryContainer
             : colorScheme.onErrorContainer);
 
-    String statusLabel = 'Disconnected';
+    String statusLabel = S.t('disconnected');
     if (isTransitioning) {
       if (widget.server.isDisconnecting) {
         statusLabel = 'Disconnecting...';
@@ -273,7 +273,7 @@ class _SlskdServerCardState extends ConsumerState<SlskdServerCard> {
                       ),
                       onPressed: _isActionInProgress ? null : _handleDisconnect,
                       icon: const Icon(Icons.link_off_rounded, size: 18),
-                      label: const Text('Déconnecter'),
+                      label: Text(S.t('disconnect')),
                     ),
                   ),
                   const SizedBox(width: Insets.sm),
@@ -284,7 +284,7 @@ class _SlskdServerCardState extends ConsumerState<SlskdServerCard> {
                       ),
                       onPressed: _isActionInProgress ? null : _handleConnect,
                       icon: const Icon(Icons.refresh_rounded, size: 18),
-                      label: const Text('Se reconnecter'),
+                      label: Text(S.t('reconnect')),
                     ),
                   ),
                 ] else ...<Widget>[
@@ -295,7 +295,7 @@ class _SlskdServerCardState extends ConsumerState<SlskdServerCard> {
                       ),
                       onPressed: _isActionInProgress ? null : _handleConnect,
                       icon: const Icon(Icons.link_rounded, size: 18),
-                      label: const Text('Se connecter à Soulseek'),
+                      label: Text(S.t('connectToSoulseek')),
                     ),
                   ),
                 ],

@@ -105,7 +105,7 @@ Future<void> _open(
 }
 
 Future<void> _add(WidgetTester tester) async {
-  await tester.tap(find.widgetWithText(FilledButton, 'Ajouter un film'));
+  await tester.tap(find.widgetWithText(FilledButton, 'Add Movie'));
   await tester.pumpAndSettle();
 }
 
@@ -225,14 +225,14 @@ void main() {
       (WidgetTester tester) async {
     final _Adapter adapter = _Adapter()..gate = Completer<void>();
     await _open(tester, adapter);
-    await tester.tap(find.widgetWithText(FilledButton, 'Ajouter un film'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Add Movie'));
     for (int i = 0; i < 50 && adapter.posted == null; i++) {
       await tester.pump(const Duration(milliseconds: 10));
     }
     expect(adapter.posted, isNotNull);
 
     final Finder tile =
-        find.widgetWithText(SwitchListTile, 'Lancer la recherche du film');
+        find.widgetWithText(SwitchListTile, 'Start search for movie');
     await tester.ensureVisible(tile);
     await tester.pump();
     await tester.tap(tile);
@@ -255,7 +255,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Ultra-HD').last);
     await tester.pumpAndSettle();
-    await _flip(tester, 'Lancer la recherche du film');
+    await _flip(tester, 'Start search for movie');
     await _add(tester);
 
     expect(adapter.posted!['qualityProfileId'], 2);

@@ -63,9 +63,9 @@ Future<void> runTitleShare(
       .toList(growable: false);
 
   final String? missing = switch (share.kind) {
-    TitleKind.movie when radarrs.isEmpty => 'Aucun Radarr configuré',
-    TitleKind.show when sonarrs.isEmpty => 'Aucun Sonarr configuré',
-    _ when radarrs.isEmpty && sonarrs.isEmpty => "Ni Radarr ni Sonarr n'est configuré",
+    TitleKind.movie when radarrs.isEmpty => S.t('noRadarrIsSetUp'),
+    TitleKind.show when sonarrs.isEmpty => S.t('noSonarrIsSetUp'),
+    _ when radarrs.isEmpty && sonarrs.isEmpty => S.t('noRadarrOrSonarrIsSetUp'),
     _ => null,
   };
   if (missing != null) {
@@ -89,11 +89,10 @@ Future<void> runTitleShare(
   if (resolution.matches.isEmpty) {
     await tell(
       resolution.unreachable.isNotEmpty
-          ? 'Impossible de joindre '
+          ? S.t('couldNotReach') +
               '${resolution.unreachable.map((Instance i) => i.name).join(', ')}'
               ', so nothing was added.'
-          : "Titre introuvable dans Radarr ou Sonarr, rien n'a donc été "
-              'added.',
+          : S.t('couldNotFindThatTitleInRadarrOrSonarrSoNothingWasAdded'),
     );
     return;
   }
@@ -191,7 +190,7 @@ Future<T> _whileFinding<T>(
                 ),
                 const SizedBox(width: 20),
                 Text(
-                  'Recherche du titre…',
+                  S.t('findingThatTitle'),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
@@ -233,7 +232,7 @@ Future<TitleMatch?> _pickMatch(
           Padding(
             padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
             child: Text(
-              'Choisissez le titre',
+              S.t('pickTheTitle'),
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
@@ -258,7 +257,7 @@ class _MatchTile extends ConsumerWidget {
           movie.title,
           movie.year,
           _radarrPoster(ref, match.source, movie),
-          'Movie',
+          S.t('movie'),
         ),
       SeriesMatch(series: final SonarrSeries s) => (
           s.title,
@@ -318,7 +317,7 @@ String? _sonarrPoster(WidgetRef ref, Instance on, SonarrSeries s) {
 Future<Instance?> pickInstance(
   BuildContext? context,
   List<Instance> instances, {
-  String title = 'Ajouter à',
+  String title = S.t('addTo'),
 }) async {
   if (context == null || !context.mounted) {
     return null;

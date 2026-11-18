@@ -96,7 +96,7 @@ class ProfileRepository {
   Future<void> upsertInstance(String profileId, Instance instance) async {
     final Profile? profile = await getProfile(profileId);
     if (profile == null) {
-      throw StateError("Aucun profil avec l'id $profileId");
+      throw StateError(S.t('noProfileWithIdProfileId1', [profileId]));
     }
     final List<Instance> next = List<Instance>.of(profile.instances);
     final int idx = next.indexWhere((Instance i) => i.id == instance.id);

@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:dio/dio.dart';
 
 import 'title_share.dart';
@@ -34,7 +35,7 @@ RegExpMatch? _button(String html, String action, RegExp link) {
 /// no TMDB button. An ID too long to be a number counts as missing. Null
 /// when no ID is found at all.
 LetterboxdFilm? parseLetterboxdFilmPage(String html) {
-  final String? imdbId = _button(html, 'IMDb', _imdbLink)?.group(1);
+  final String? imdbId = _button(html, S.t('imdb'), _imdbLink)?.group(1);
   final RegExpMatch? tmdb = _button(html, 'TMDB', _tmdbLink);
   final int? buttonId = tmdb == null ? null : int.tryParse(tmdb.group(2)!);
   if (buttonId != null) {

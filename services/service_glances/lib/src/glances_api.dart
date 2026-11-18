@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_networking/core_networking.dart';
 import 'package:dio/dio.dart';
 
@@ -103,7 +104,7 @@ class GlancesApi {
       final List<GlancesNetwork> network = networkData.map((dynamic n) {
         final Map<String, dynamic> map = n as Map<String, dynamic>;
         return GlancesNetwork(
-          interface: map['interface_name'] as String? ?? 'Unknown',
+          interface: map['interface_name'] as String? ?? S.t('unknown'),
           rxSpeed: (map['bytes_recv_rate_per_sec'] as num?)?.toInt() ?? 0,
           txSpeed: (map['bytes_sent_rate_per_sec'] as num?)?.toInt() ?? 0,
         );
@@ -112,7 +113,7 @@ class GlancesApi {
       final List<GlancesDisk> disks = fsData.map((dynamic d) {
         final Map<String, dynamic> map = d as Map<String, dynamic>;
         return GlancesDisk(
-          path: map['mnt_point'] as String? ?? 'Unknown',
+          path: map['mnt_point'] as String? ?? S.t('unknown'),
           percentage: (map['percent'] as num?)?.toDouble() ?? 0.0,
           used: (map['used'] as num?)?.toInt() ?? 0,
           total: (map['size'] as num?)?.toInt() ?? 0,

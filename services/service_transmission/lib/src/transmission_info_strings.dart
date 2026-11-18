@@ -1,6 +1,7 @@
 import 'models/transmission_detail.dart';
 import 'models/transmission_torrent.dart';
 import 'transmission_format.dart';
+import 'package:core_models/core_models.dart';
 
 // The Info tab's strings, each worded as the web UI's inspector words it.
 
@@ -46,12 +47,12 @@ String trRunningTime(
 }
 
 String trRemaining(TransmissionTorrent t) =>
-    t.eta < 0 ? 'Unknown' : trTimeInterval(t.eta);
+    t.eta < 0 ? S.t('unknown') : trTimeInterval(t.eta);
 
 String trLastActivity(TransmissionTorrent t, {required int now}) {
   if (t.activityDate <= 0 || t.activityDate > now) return 'None';
   final int idle = now - t.activityDate;
-  return idle < 5 ? 'Active now' : '${trTimeInterval(idle)} ago';
+  return idle < 5 ? S.t('activeNow') : '${trTimeInterval(idle)} ago';
 }
 
 String trSizeLine(TransmissionTorrent t, TransmissionDetail d) =>
@@ -65,7 +66,7 @@ String trPrivacy(TransmissionDetail d) => d.isPrivate
 String trOrigin(TransmissionDetail d) {
   final bool hasCreator = d.creator.isNotEmpty;
   final bool hasDate = d.dateCreated > 0;
-  if (!hasCreator && !hasDate) return 'Unknown';
+  if (!hasCreator && !hasDate) return S.t('unknown');
   if (!hasDate) return 'Created by ${d.creator}';
   if (!hasCreator) return 'Created on ${trTimestamp(d.dateCreated)}';
   return 'Created by ${d.creator} on ${trTimestamp(d.dateCreated)}';
@@ -75,14 +76,13 @@ String trOrigin(TransmissionDetail d) {
 /// 3 active.
 String trAnnounceState(TransmissionTracker tr, {required int now}) =>
     switch (tr.announceState) {
-      3 => 'Annonce en cours',
-      1 => 'Prochaine annonce dans '
-          '${trTimeInterval((tr.nextAnnounceTime - now).clamp(0, 1 << 31))}',
-      2 => "Annonce en file d'attente",
+      3 => S.t('announceInProgress'),
+      1 => S.t('nextAnnounceInTrTimeIntervalTrNextAnnounceTimeNowClamp01311', [trTimeInterval((tr.nextAnnounceTime - now).clamp(0, 1 << 31))]),
+      2 => S.t('announceIsQueued'),
       0 => tr.isBackup
-          ? 'Le tracker sera utilisé en secours'
-          : 'Annonce non planifiée',
-      _ => "État d'annonce inconnu : ${tr.announceState}",
+          ? S.t('trackerWillBeUsedAsABackup')
+          : S.t('announceNotScheduled'),
+      _ => S.t('unknownAnnounceStateTrAnnounceState1', [tr.announceState]),
     };
 
 /// A label and its value, since a failed announce changes the label too.

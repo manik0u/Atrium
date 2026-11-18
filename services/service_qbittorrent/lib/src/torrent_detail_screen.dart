@@ -66,12 +66,12 @@ class TorrentDetailScreen extends ConsumerWidget {
                         : 'magnet:?xt=urn:btih:${current.hash}&dn=${Uri.encodeComponent(current.name)}';
                     await Clipboard.setData(ClipboardData(text: magnet));
                     messenger.showSnackBar(
-                      const SnackBar(content: Text('Lien magnet copié')),
+                      SnackBar(content: Text(S.t('magnetLinkCopied'))),
                     );
                   case 'copy_hash':
                     await Clipboard.setData(ClipboardData(text: current.hash));
                     messenger.showSnackBar(
-                      const SnackBar(content: Text('Hash du torrent copié')),
+                      SnackBar(content: Text(S.t('torrentHashCopied'))),
                     );
                   default:
                     try {
@@ -104,70 +104,70 @@ class TorrentDetailScreen extends ConsumerWidget {
                       ref.invalidate(qbitRawTorrentsProvider(instance));
                     } catch (_) {
                       messenger.showSnackBar(
-                        const SnackBar(content: Text("Échec de l'action")),
+                        SnackBar(content: Text(S.t('actionFailed'))),
                       );
                     }
                 }
               },
               itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'pause',
-                  child: Text('Pause'),
+                  child: Text(S.t('pause')),
                 ),
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'resume',
-                  child: Text('Reprendre'),
+                  child: Text(S.t('resume')),
                 ),
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'forcestart',
-                  child: Text('Forcer le démarrage'),
+                  child: Text(S.t('forceStart')),
                 ),
                 const PopupMenuDivider(),
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'queue_top',
-                  child: Text('En haut de la file'),
+                  child: Text(S.t('queueToTop')),
                 ),
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'queue_up',
-                  child: Text('Monter dans la file'),
+                  child: Text(S.t('queueUp')),
                 ),
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'queue_down',
-                  child: Text('Descendre dans la file'),
+                  child: Text(S.t('queueDown')),
                 ),
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'queue_bottom',
-                  child: Text('En bas de la file'),
+                  child: Text(S.t('queueToBottom')),
                 ),
                 const PopupMenuDivider(),
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'copy_magnet',
-                  child: Text('Copier le lien magnet'),
+                  child: Text(S.t('copyMagnetLink')),
                 ),
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'copy_hash',
-                  child: Text('Copier le hash'),
+                  child: Text(S.t('copyHash')),
                 ),
                 const PopupMenuDivider(),
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'recheck',
-                  child: Text('Forcer la revérification'),
+                  child: Text(S.t('forceRecheck')),
                 ),
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'reannounce',
-                  child: Text('Forcer le ré-annonce'),
+                  child: Text(S.t('forceReannounce')),
                 ),
               ],
             ),
           ],
-          bottom: const TabBar(
+          bottom: TabBar(
             isScrollable: true,
             tabAlignment: TabAlignment.start,
             tabs: <Widget>[
-              Tab(text: "Vue d'ensemble"),
-              Tab(text: 'Fichiers'),
-              Tab(text: 'Trackers'),
-              Tab(text: 'Pairs'),
+              Tab(text: S.t('overview')),
+              Tab(text: S.t('files')),
+              Tab(text: S.t('trackers')),
+              Tab(text: S.t('peers')),
             ],
           ),
         ),
@@ -278,14 +278,14 @@ class _OverviewTab extends ConsumerWidget {
         // nothing before qBittorrent 5.0.
         final bool? isPrivate = qbitIsPrivate(p);
         return EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
           onRefresh: () async =>
               ref.invalidate(qbitPropertiesProvider((instance, torrent.hash))),
@@ -385,7 +385,7 @@ class _OverviewTab extends ConsumerWidget {
                                   icon: isPrivate
                                       ? Icons.lock_outline
                                       : Icons.public,
-                                  label: isPrivate ? 'Privé' : 'Public',
+                                  label: isPrivate ? S.t('private') : S.t('public'),
                                   // Not the outline colour: that one is
                                   // for borders and reads as disabled.
                                   color: isPrivate
@@ -432,7 +432,7 @@ class _OverviewTab extends ConsumerWidget {
                               isPaused ? Icons.play_arrow : Icons.pause,
                               size: 18,
                             ),
-                            label: Text(isPaused ? 'Reprendre' : 'Pause'),
+                            label: Text(isPaused ? S.t('resume') : S.t('pause')),
                             onPressed: () async {
                               final ScaffoldMessengerState messenger =
                                   ScaffoldMessenger.of(context);
@@ -451,8 +451,8 @@ class _OverviewTab extends ConsumerWidget {
                                 );
                               } catch (_) {
                                 messenger.showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Échec de l'action"),
+                                  SnackBar(
+                                    content: Text(S.t('actionFailed')),
                                   ),
                                 );
                               }
@@ -469,7 +469,7 @@ class _OverviewTab extends ConsumerWidget {
                               ),
                             ),
                             icon: const Icon(Icons.fast_forward, size: 18),
-                            label: const Text('Forcer le démarrage'),
+                            label: Text(S.t('forceStart')),
                             onPressed: () async {
                               final ScaffoldMessengerState messenger =
                                   ScaffoldMessenger.of(context);
@@ -487,8 +487,8 @@ class _OverviewTab extends ConsumerWidget {
                                 );
                               } catch (_) {
                                 messenger.showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Échec de l'action"),
+                                  SnackBar(
+                                    content: Text(S.t('actionFailed')),
                                   ),
                                 );
                               }
@@ -504,7 +504,7 @@ class _OverviewTab extends ConsumerWidget {
                               ),
                             ),
                             icon: const Icon(Icons.link, size: 18),
-                            label: const Text('Magnet'),
+                            label: Text(S.t('magnet')),
                             onPressed: () async {
                               final ScaffoldMessengerState messenger =
                                   ScaffoldMessenger.of(context);
@@ -515,8 +515,8 @@ class _OverviewTab extends ConsumerWidget {
                                 ClipboardData(text: magnet),
                               );
                               messenger.showSnackBar(
-                                const SnackBar(
-                                  content: Text('Lien magnet copié'),
+                                SnackBar(
+                                  content: Text(S.t('magnetLinkCopied')),
                                 ),
                               );
                             },
@@ -531,7 +531,7 @@ class _OverviewTab extends ConsumerWidget {
                               ),
                             ),
                             icon: const Icon(Icons.tag, size: 18),
-                            label: const Text('Hash'),
+                            label: Text(S.t('hash')),
                             onPressed: () async {
                               final ScaffoldMessengerState messenger =
                                   ScaffoldMessenger.of(context);
@@ -539,8 +539,8 @@ class _OverviewTab extends ConsumerWidget {
                                 ClipboardData(text: torrent.hash),
                               );
                               messenger.showSnackBar(
-                                const SnackBar(
-                                  content: Text('Hash du torrent copié'),
+                                SnackBar(
+                                  content: Text(S.t('torrentHashCopied')),
                                 ),
                               );
                             },
@@ -555,7 +555,7 @@ class _OverviewTab extends ConsumerWidget {
                               ),
                             ),
                             icon: const Icon(Icons.delete, size: 18),
-                            label: const Text('Supprimer'),
+                            label: Text(S.t('delete')),
                             onPressed: () async {
                               final bool? shouldDeleteFiles =
                                   await showDialog<bool>(
@@ -568,14 +568,14 @@ class _OverviewTab extends ConsumerWidget {
                                       StateSetter setState,
                                     ) {
                                       return AlertDialog(
-                                        title: const Text('Supprimer le torrent'),
+                                        title: Text(S.t('deleteTorrent')),
                                         content: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            const Text(
-                                              'Voulez-vous vraiment supprimer ce torrent ?',
+                                            Text(
+                                              S.t('areYouSureYouWantToDeleteThisTorrent'),
                                             ),
                                             const SizedBox(height: 16),
                                             CheckboxListTile(
@@ -601,7 +601,7 @@ class _OverviewTab extends ConsumerWidget {
                                           TextButton(
                                             onPressed: () =>
                                                 Navigator.of(context).pop(),
-                                            child: const Text('Annuler'),
+                                            child: Text(S.t('cancel')),
                                           ),
                                           TextButton(
                                             onPressed: () =>
@@ -612,7 +612,7 @@ class _OverviewTab extends ConsumerWidget {
                                                   .colorScheme
                                                   .error,
                                             ),
-                                            child: const Text('Supprimer'),
+                                            child: Text(S.t('delete')),
                                           ),
                                         ],
                                       );
@@ -639,8 +639,8 @@ class _OverviewTab extends ConsumerWidget {
                                 Navigator.of(context).pop();
                               } catch (_) {
                                 messenger.showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Échec de l'action"),
+                                  SnackBar(
+                                    content: Text(S.t('actionFailed')),
                                   ),
                                 );
                               }
@@ -654,13 +654,13 @@ class _OverviewTab extends ConsumerWidget {
               ),
               const SizedBox(height: Insets.md),
               _SectionCard(
-                title: 'Transfert',
+                title: S.t('transfer'),
                 rows: <(String, String)>[
-                  ('Downloaded', fmtBytes(p.totalDownloaded)),
-                  ('Uploaded', fmtBytes(p.totalUploaded)),
+                  (S.t('downloaded'), fmtBytes(p.totalDownloaded)),
+                  (S.t('uploaded'), fmtBytes(p.totalUploaded)),
                   ('Ratio', p.shareRatio.toStringAsFixed(2)),
-                  ('Seeds', '${p.seeds} connected (${p.seedsTotal} total)'),
-                  ('Peers', '${p.peers} connected (${p.peersTotal} total)'),
+                  (S.t('seeds'), '${p.seeds} connected (${p.seedsTotal} total)'),
+                  (S.t('peers'), '${p.peers} connected (${p.peersTotal} total)'),
                   (
                     'Pieces',
                     '${p.piecesHave}/${p.piecesNum} × ${fmtBytes(p.pieceSize)}',
@@ -669,13 +669,13 @@ class _OverviewTab extends ConsumerWidget {
               ),
               const SizedBox(height: Insets.md),
               _SectionCard(
-                title: 'Infos',
+                title: S.t('info'),
                 rows: <(String, String)>[
-                  ('Save path', p.savePath),
-                  ('Added', date(p.additionDate)),
-                  ('Completed', date(p.completionDate)),
+                  (S.t('savePath'), p.savePath),
+                  (S.t('added'), date(p.additionDate)),
+                  (S.t('completed'), date(p.completionDate)),
                   if (torrent.category.isNotEmpty)
-                    ('Category', torrent.category),
+                    (S.t('category'), torrent.category),
                   if (p.comment.isNotEmpty) ('Comment', p.comment),
                 ],
               ),
@@ -807,7 +807,7 @@ class _TagsCard extends ConsumerWidget {
     } catch (e) {
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Échec de la mise à jour de la balise : $e')),
+        SnackBar(content: Text(S.t('tagUpdateFailedE1', [e]))),
       );
     }
   }
@@ -825,7 +825,7 @@ class _TagsCard extends ConsumerWidget {
     final String? chosen = await showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Ajouter une balise'),
+        title: Text(S.t('addTag')),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -833,7 +833,7 @@ class _TagsCard extends ConsumerWidget {
             TextField(
               controller: ctrl,
               autofocus: true,
-              decoration: const InputDecoration(hintText: 'Nouvelle balise'),
+              decoration: InputDecoration(hintText: S.t('newTag')),
               onSubmitted: (String v) => Navigator.of(context).pop(v.trim()),
             ),
             if (available.isNotEmpty) ...<Widget>[
@@ -855,11 +855,11 @@ class _TagsCard extends ConsumerWidget {
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(ctrl.text.trim()),
-            child: const Text('Ajouter'),
+            child: Text(S.t('add')),
           ),
         ],
       ),
@@ -892,7 +892,7 @@ class _TagsCard extends ConsumerWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  'Tags',
+                  S.t('tags'),
                   style: theme.textTheme.titleMedium
                       ?.copyWith(fontWeight: FontWeight.w700),
                 ),
@@ -900,14 +900,14 @@ class _TagsCard extends ConsumerWidget {
               TextButton.icon(
                 onPressed: () => _addTag(context, ref),
                 icon: const Icon(Icons.add, size: 18),
-                label: const Text('Ajouter'),
+                label: Text(S.t('add')),
               ),
             ],
           ),
           const SizedBox(height: Insets.sm),
           if (tags.isEmpty)
             Text(
-              'No tags',
+              S.t('noTags'),
               style: theme.textTheme.bodyMedium
                   ?.copyWith(color: cs.onSurfaceVariant),
             )
@@ -1065,25 +1065,25 @@ class _FilesTabState extends ConsumerState<_FilesTab>
       data: (List<QbitFile> list) {
         if (list.isEmpty) {
           return EasyRefresh(
-            header: const ClassicHeader(
-              dragText: 'Pull to refresh',
-              armedText: 'Release ready',
-              readyText: 'Refreshing...',
-              processingText: 'Refreshing...',
-              processedText: 'Succeeded',
-              failedText: 'Failed',
-              messageText: 'Last updated at %T',
+            header: ClassicHeader(
+              dragText: S.t('pullToRefresh'),
+              armedText: S.t('releaseReady'),
+              readyText: S.t('refreshing'),
+              processingText: S.t('refreshing'),
+              processedText: S.t('succeeded'),
+              failedText: S.t('failed'),
+              messageText: S.t('lastUpdatedAtT'),
             ),
             onRefresh: () async => ref
                 .invalidate(qbitFilesProvider((widget.instance, widget.hash))),
             child: ListView(
               physics: const AlwaysScrollableScrollPhysics(),
-              children: const <Widget>[
+              children: <Widget>[
                 SizedBox(height: 100),
                 EmptyView(
                   icon: Icons.description_outlined,
-                  title: 'Aucun fichier',
-                  message: 'Métadonnées pas encore téléchargées.',
+                  title: S.t('noFiles'),
+                  message: S.t('metadataNotDownloadedYet'),
                 ),
               ],
             ),
@@ -1092,14 +1092,14 @@ class _FilesTabState extends ConsumerState<_FilesTab>
         final List<_FileNode> nodes = _buildFileTree(list, _collapsedPaths);
 
         return EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
           onRefresh: () async =>
               ref.invalidate(qbitFilesProvider((widget.instance, widget.hash))),
@@ -1242,7 +1242,7 @@ class _TrackersTab extends ConsumerWidget {
       await action(client);
       return true;
     } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text('$failed : $e')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('failedE2', [failed, e]))));
       return false;
     } finally {
       // The screen may have been left while the server answered, and a
@@ -1268,7 +1268,7 @@ class _TrackersTab extends ConsumerWidget {
     _refresh(ref);
     if (saved == true) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Trackers mis à jour')),
+        SnackBar(content: Text(S.t('trackersUpdated'))),
       );
     }
   }
@@ -1286,7 +1286,7 @@ class _TrackersTab extends ConsumerWidget {
           final String value = ctrl.text.trim();
           final bool valid = qbitIsTrackerUrl(value) && value != tracker.url;
           return AlertDialog(
-            title: const Text("Modifier l'URL du tracker"),
+            title: Text(S.t('editTrackerURL')),
             content: TextField(
               controller: ctrl,
               autofocus: true,
@@ -1295,7 +1295,7 @@ class _TrackersTab extends ConsumerWidget {
               decoration: InputDecoration(
                 errorText: value.isEmpty || qbitIsTrackerUrl(value)
                     ? null
-                    : 'Pas une URL de tracker',
+                    : S.t('notATrackerURL'),
               ),
               onChanged: (_) => setState(() {}),
               onSubmitted: (_) {
@@ -1305,11 +1305,11 @@ class _TrackersTab extends ConsumerWidget {
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Annuler'),
+                child: Text(S.t('cancel')),
               ),
               FilledButton(
                 onPressed: valid ? () => Navigator.of(context).pop(value) : null,
-                child: const Text('Enregistrer'),
+                child: Text(S.t('save')),
               ),
             ],
           );
@@ -1320,7 +1320,7 @@ class _TrackersTab extends ConsumerWidget {
     await _apply(
       context,
       ref,
-      'Impossible de modifier le tracker',
+      S.t('couldNotChangeTheTracker'),
       (QbittorrentClient c) => c.editTracker(hash, tracker.url, newUrl),
     );
   }
@@ -1333,16 +1333,16 @@ class _TrackersTab extends ConsumerWidget {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Retirer le tracker ?'),
+        title: Text(S.t('removeTracker')),
         content: Text(tracker.url),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Retirer'),
+            child: Text(S.t('remove')),
           ),
         ],
       ),
@@ -1351,7 +1351,7 @@ class _TrackersTab extends ConsumerWidget {
     await _apply(
       context,
       ref,
-      'Impossible de retirer le tracker',
+      S.t('couldNotRemoveTheTracker'),
       (QbittorrentClient c) => c.removeTrackers(hash, <String>[tracker.url]),
     );
   }
@@ -1363,14 +1363,14 @@ class _TrackersTab extends ConsumerWidget {
     final AsyncValue<List<QbitTracker>> trackers =
         ref.watch(qbitTrackersProvider((instance, hash)));
 
-    const ClassicHeader header = ClassicHeader(
-      dragText: 'Pull to refresh',
-      armedText: 'Release ready',
-      readyText: 'Refreshing...',
-      processingText: 'Refreshing...',
-      processedText: 'Succeeded',
-      failedText: 'Failed',
-      messageText: 'Last updated at %T',
+    final ClassicHeader header = ClassicHeader(
+      dragText: S.t('pullToRefresh'),
+      armedText: S.t('releaseReady'),
+      readyText: S.t('refreshing'),
+      processingText: S.t('refreshing'),
+      processedText: S.t('succeeded'),
+      failedText: S.t('failed'),
+      messageText: S.t('lastUpdatedAtT'),
     );
 
     return AsyncValueView<List<QbitTracker>>(
@@ -1387,17 +1387,17 @@ class _TrackersTab extends ConsumerWidget {
               physics: const AlwaysScrollableScrollPhysics(),
               children: <Widget>[
                 const SizedBox(height: 100),
-                const EmptyView(
+                EmptyView(
                   icon: Icons.dns_outlined,
-                  title: 'Aucun tracker',
-                  message: "Ce torrent n'a aucun tracker HTTP (DHT uniquement).",
+                  title: S.t('noTrackers'),
+                  message: S.t('thisTorrentHasNoHTTPTrackersDHTOnly'),
                 ),
                 const SizedBox(height: Insets.lg),
                 Center(
                   child: FilledButton.tonalIcon(
                     onPressed: () => _openEditor(context, ref, list),
                     icon: const Icon(Icons.add),
-                    label: const Text('Ajouter des trackers'),
+                    label: Text(S.t('addTrackers')),
                   ),
                 ),
               ],
@@ -1425,25 +1425,25 @@ class _TrackersTab extends ConsumerWidget {
                     TextButton.icon(
                       onPressed: () => _openEditor(context, ref, list),
                       icon: const Icon(Icons.edit_outlined, size: 18),
-                      label: const Text('Modifier les trackers'),
+                      label: Text(S.t('editTrackers')),
                     ),
                   ],
                 );
               }
               final QbitTracker t = real[index - 1];
               final (Color c, IconData ic, String label) = switch (t.status) {
-                2 => (cs.tertiary, Icons.check_circle, 'Fonctionne'),
-                3 => (cs.primary, Icons.sync, 'Mise à jour en cours'),
-                4 => (cs.error, Icons.error_outline, 'Ne fonctionne pas'),
-                5 => (cs.error, Icons.error_outline, 'Erreur de tracker'),
-                6 => (cs.error, Icons.cloud_off_outlined, 'Injoignable'),
+                2 => (cs.tertiary, Icons.check_circle, S.t('working')),
+                3 => (cs.primary, Icons.sync, S.t('updating')),
+                4 => (cs.error, Icons.error_outline, S.t('notWorking')),
+                5 => (cs.error, Icons.error_outline, S.t('trackerError')),
+                6 => (cs.error, Icons.cloud_off_outlined, S.t('unreachable')),
                 1 => (
                     cs.outline,
                     Icons.radio_button_unchecked,
                     'Not contacted'
                   ),
-                0 => (cs.outline, Icons.block, 'Désactivé'),
-                _ => (cs.outline, Icons.help_outline, 'Inconnu'),
+                0 => (cs.outline, Icons.block, S.t('disabled')),
+                _ => (cs.outline, Icons.help_outline, S.t('unknown')),
               };
               final bool failing = t.status >= 4 && t.status <= 6;
               return Container(
@@ -1509,15 +1509,15 @@ class _TrackersTab extends ConsumerWidget {
                     ),
                     PopupMenuButton<String>(
                       icon: const Icon(Icons.more_vert, size: 20),
-                      tooltip: 'Actions sur le tracker',
+                      tooltip: S.t('trackerActions'),
                       onSelected: (String action) async {
                         switch (action) {
                           case 'copy':
                             await Clipboard.setData(ClipboardData(text: t.url));
                             if (!context.mounted) return;
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('URL du tracker copiée'),
+                              SnackBar(
+                                content: Text(S.t('trackerURLCopied')),
                               ),
                             );
                           case 'edit':
@@ -1527,18 +1527,18 @@ class _TrackersTab extends ConsumerWidget {
                         }
                       },
                       itemBuilder: (BuildContext context) =>
-                          const <PopupMenuEntry<String>>[
+                          <PopupMenuEntry<String>>[
                         PopupMenuItem<String>(
                           value: 'copy',
-                          child: Text("Copier l'URL"),
+                          child: Text(S.t('copyURL')),
                         ),
                         PopupMenuItem<String>(
                           value: 'edit',
-                          child: Text("Modifier l'URL"),
+                          child: Text(S.t('editURL')),
                         ),
                         PopupMenuItem<String>(
                           value: 'remove',
-                          child: Text('Retirer'),
+                          child: Text(S.t('remove')),
                         ),
                       ],
                     ),
@@ -1624,7 +1624,7 @@ class _TrackerEditorSheetState extends ConsumerState<_TrackerEditorSheet> {
         setState(() {
           if (now != null) _current = now;
           _saving = false;
-          _error = 'Could not save: $e';
+          _error = S.t('couldNotSaveE1', [e]);
         });
       }
     }
@@ -1655,7 +1655,7 @@ class _TrackerEditorSheetState extends ConsumerState<_TrackerEditorSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Text('Modifier les trackers', style: theme.textTheme.titleLarge),
+            Text(S.t('editTrackers'), style: theme.textTheme.titleLarge),
             const SizedBox(height: Insets.xs),
             Text(
               'One URL per line. A blank line starts the next tier. Trackers '
@@ -1701,7 +1701,7 @@ class _TrackerEditorSheetState extends ConsumerState<_TrackerEditorSheet> {
               children: <Widget>[
                 TextButton(
                   onPressed: _saving ? null : () => Navigator.of(context).pop(),
-                  child: const Text('Annuler'),
+                  child: Text(S.t('cancel')),
                 ),
                 const SizedBox(width: Insets.sm),
                 FilledButton(
@@ -1716,7 +1716,7 @@ class _TrackerEditorSheetState extends ConsumerState<_TrackerEditorSheet> {
                             size: CircularProgressM3ESize.s,
                           ),
                         )
-                      : const Text('Enregistrer'),
+                      : Text(S.t('save')),
                 ),
               ],
             ),
@@ -1754,39 +1754,39 @@ class _PeersTab extends ConsumerWidget {
       data: (List<QbitPeer> list) {
         if (list.isEmpty) {
           return EasyRefresh(
-            header: const ClassicHeader(
-              dragText: 'Pull to refresh',
-              armedText: 'Release ready',
-              readyText: 'Refreshing...',
-              processingText: 'Refreshing...',
-              processedText: 'Succeeded',
-              failedText: 'Failed',
-              messageText: 'Last updated at %T',
+            header: ClassicHeader(
+              dragText: S.t('pullToRefresh'),
+              armedText: S.t('releaseReady'),
+              readyText: S.t('refreshing'),
+              processingText: S.t('refreshing'),
+              processedText: S.t('succeeded'),
+              failedText: S.t('failed'),
+              messageText: S.t('lastUpdatedAtT'),
             ),
             onRefresh: () async =>
                 ref.invalidate(qbitPeersProvider((instance, hash))),
             child: ListView(
               physics: const AlwaysScrollableScrollPhysics(),
-              children: const <Widget>[
+              children: <Widget>[
                 SizedBox(height: 100),
                 EmptyView(
                   icon: Icons.people_outline,
-                  title: 'Aucun pair',
-                  message: 'Connecté à aucun pair.',
+                  title: S.t('noPeers'),
+                  message: S.t('notConnectedToAnyPeers'),
                 ),
               ],
             ),
           );
         }
         return EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
           onRefresh: () async =>
               ref.invalidate(qbitPeersProvider((instance, hash))),

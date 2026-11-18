@@ -98,7 +98,7 @@ class _SonarrAddSeriesSheetState extends ConsumerState<SonarrAddSeriesSheet> {
             scrolledUnderElevation: 0.0,
             backgroundColor: cs.surface,
             automaticallyImplyLeading: false,
-            title: const Text("Options d'ajout de la série"),
+            title: Text(S.t('addSeriesOptions')),
             centerTitle: true,
             actions: [
               IconButton(
@@ -158,7 +158,7 @@ class _SonarrAddSeriesSheetState extends ConsumerState<SonarrAddSeriesSheet> {
                                   const SizedBox(height: 8),
                                   Text(
                                     widget.series.overview ??
-                                        'Aucun résumé disponible.',
+                                        S.t('noOverviewAvailable'),
                                     style: theme.textTheme.bodyMedium?.copyWith(
                                       color: cs.onSurfaceVariant,
                                     ),
@@ -200,7 +200,7 @@ class _SonarrAddSeriesSheetState extends ConsumerState<SonarrAddSeriesSheet> {
                               data: (List<Map<String, dynamic>> folders) {
                                 if (folders.isEmpty) {
                                   return Text(
-                                    'Aucun dossier racine configuré dans Sonarr.',
+                                    S.t('noRootFolderConfiguredInSonarr'),
                                     style: TextStyle(color: cs.error),
                                   );
                                 }
@@ -217,7 +217,7 @@ class _SonarrAddSeriesSheetState extends ConsumerState<SonarrAddSeriesSheet> {
                                 return DropdownButtonFormField<String>(
                                   initialValue: _selectedRootFolder,
                                   decoration: InputDecoration(
-                                    labelText: 'Dossier racine',
+                                    labelText: S.t('rootFolder'),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12),
                                     ),
@@ -246,7 +246,7 @@ class _SonarrAddSeriesSheetState extends ConsumerState<SonarrAddSeriesSheet> {
                                 shape: ProgressM3EShape.flat,
                               ),
                               error: (e, s) =>
-                                  Text('Erreur lors du chargement des dossiers : $e'),
+                                  Text(S.t('errorLoadingFoldersE1', [e])),
                             ),
                             const SizedBox(height: Insets.md),
 
@@ -255,7 +255,7 @@ class _SonarrAddSeriesSheetState extends ConsumerState<SonarrAddSeriesSheet> {
                               data: (List<Map<String, dynamic>> profiles) {
                                 if (profiles.isEmpty) {
                                   return Text(
-                                    'Aucun profil de qualité trouvé.',
+                                    S.t('noQualityProfilesFound'),
                                     style: TextStyle(color: cs.error),
                                   );
                                 }
@@ -271,7 +271,7 @@ class _SonarrAddSeriesSheetState extends ConsumerState<SonarrAddSeriesSheet> {
                                 return DropdownButtonFormField<int>(
                                   initialValue: _selectedQualityProfileId,
                                   decoration: InputDecoration(
-                                    labelText: 'Profil de qualité',
+                                    labelText: S.t('qualityProfile'),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12),
                                     ),
@@ -291,7 +291,7 @@ class _SonarrAddSeriesSheetState extends ConsumerState<SonarrAddSeriesSheet> {
                               },
                               loading: () => const SizedBox.shrink(),
                               error: (e, s) =>
-                                  Text('Erreur lors du chargement des profils : $e'),
+                                  Text(S.t('errorLoadingProfilesE1', [e])),
                             ),
                             const SizedBox(height: Insets.md),
 
@@ -299,39 +299,39 @@ class _SonarrAddSeriesSheetState extends ConsumerState<SonarrAddSeriesSheet> {
                             DropdownButtonFormField<String>(
                               initialValue: _selectedMonitorType,
                               decoration: InputDecoration(
-                                labelText: 'Surveiller',
+                                labelText: S.t('monitor'),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
-                              items: const [
+                              items: [
                                 DropdownMenuItem(
                                   value: 'all',
-                                  child: Text('Tous les épisodes'),
+                                  child: Text(S.t('allEpisodes')),
                                 ),
                                 DropdownMenuItem(
                                   value: 'future',
-                                  child: Text('Épisodes à venir'),
+                                  child: Text(S.t('futureEpisodes')),
                                 ),
                                 DropdownMenuItem(
                                   value: 'missing',
-                                  child: Text('Épisodes manquants'),
+                                  child: Text(S.t('missingEpisodes')),
                                 ),
                                 DropdownMenuItem(
                                   value: 'existing',
-                                  child: Text('Épisodes existants'),
+                                  child: Text(S.t('existingEpisodes')),
                                 ),
                                 DropdownMenuItem(
                                   value: 'firstSeason',
-                                  child: Text('Première saison'),
+                                  child: Text(S.t('firstSeason')),
                                 ),
                                 DropdownMenuItem(
                                   value: 'latestSeason',
-                                  child: Text('Dernière saison'),
+                                  child: Text(S.t('latestSeason')),
                                 ),
                                 DropdownMenuItem(
                                   value: 'none',
-                                  child: Text('Aucun'),
+                                  child: Text(S.t('none')),
                                 ),
                               ],
                               onChanged: (val) {
@@ -346,23 +346,23 @@ class _SonarrAddSeriesSheetState extends ConsumerState<SonarrAddSeriesSheet> {
                             DropdownButtonFormField<String>(
                               initialValue: _selectedSeriesType,
                               decoration: InputDecoration(
-                                labelText: 'Type de série',
+                                labelText: S.t('seriesType'),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
-                              items: const [
+                              items: [
                                 DropdownMenuItem(
                                   value: 'standard',
-                                  child: Text('Standard'),
+                                  child: Text(S.t('standard')),
                                 ),
                                 DropdownMenuItem(
                                   value: 'daily',
-                                  child: Text('Quotidien'),
+                                  child: Text(S.t('daily')),
                                 ),
                                 DropdownMenuItem(
                                   value: 'anime',
-                                  child: Text('Anime'),
+                                  child: Text(S.t('anime')),
                                 ),
                               ],
                               onChanged: (val) {
@@ -387,9 +387,9 @@ class _SonarrAddSeriesSheetState extends ConsumerState<SonarrAddSeriesSheet> {
                       child: Column(
                         children: [
                           SwitchListTile(
-                            title: const Text('Dossier de saison'),
+                            title: Text(S.t('seasonFolder')),
                             subtitle:
-                                const Text('Stocker les fichiers dans des dossiers de saison'),
+                                Text(S.t('storeFilesInSeasonFolders')),
                             value: _seasonFolder,
                             onChanged: (val) {
                               setState(() {
@@ -399,9 +399,9 @@ class _SonarrAddSeriesSheetState extends ConsumerState<SonarrAddSeriesSheet> {
                           ),
                           const Divider(height: 1),
                           SwitchListTile(
-                            title: const Text('Rechercher les épisodes manquants'),
+                            title: Text(S.t('searchMissingEpisodes')),
                             subtitle:
-                                const Text('Rechercher les fichiers manquants sur les indexeurs'),
+                                Text(S.t('searchIndexersForMissingFiles')),
                             value: _searchForMissing,
                             onChanged: (val) {
                               setState(() {
@@ -411,8 +411,8 @@ class _SonarrAddSeriesSheetState extends ConsumerState<SonarrAddSeriesSheet> {
                           ),
                           const Divider(height: 1),
                           SwitchListTile(
-                            title: const Text('Rechercher les cutoff non atteints'),
-                            subtitle: const Text('Mettre à niveau les fichiers de qualité inférieure'),
+                            title: Text(S.t('searchCutoffUnmet')),
+                            subtitle: Text(S.t('upgradeLowerQualityFiles')),
                             value: _searchForCutoffUnmet,
                             onChanged: (val) {
                               setState(() {
@@ -441,7 +441,7 @@ class _SonarrAddSeriesSheetState extends ConsumerState<SonarrAddSeriesSheet> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Tags',
+                                  S.t('tags'),
                                   style: theme.textTheme.titleSmall?.copyWith(
                                     color: cs.primary,
                                     fontWeight: FontWeight.bold,
@@ -500,8 +500,8 @@ class _SonarrAddSeriesSheetState extends ConsumerState<SonarrAddSeriesSheet> {
                     onPressed: _submitting ? null : _submit,
                     child: _submitting
                         ? ExpressiveProgressIndicator(color: cs.onPrimary)
-                        : const Text(
-                            'Add Series',
+                        : Text(
+                            S.t('addSeries'),
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -522,7 +522,7 @@ class _SonarrAddSeriesSheetState extends ConsumerState<SonarrAddSeriesSheet> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content:
-              const Text('Veuillez sélectionner un dossier racine et un profil de qualité.'),
+              Text(S.t('pleaseSelectARootFolderAndQualityProfile')),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
@@ -577,7 +577,7 @@ class _SonarrAddSeriesSheetState extends ConsumerState<SonarrAddSeriesSheet> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('« ${widget.series.title} » ajoutée avec succès !'),
+            content: Text(S.t('addedWidgetSeriesTitleSuccessfully1', [widget.series.title])),
             backgroundColor: Theme.of(context).colorScheme.primary,
           ),
         );
@@ -590,7 +590,7 @@ class _SonarrAddSeriesSheetState extends ConsumerState<SonarrAddSeriesSheet> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Échec de l'ajout de la série : $e"),
+            content: Text(S.t('failedToAddSeriesE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );

@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -130,7 +131,7 @@ class SlskdBrowseFileTile extends StatelessWidget {
             // 1-Tap download track button
             IconButton(
               tooltip: file.isLocked
-                  ? 'File is locked'
+                  ? S.t('fileIsLocked')
                   : 'Download track (${file.trackTitle})',
               visualDensity: VisualDensity.compact,
               icon: Icon(

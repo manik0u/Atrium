@@ -76,7 +76,8 @@ final class TorrentShareFiles extends TorrentShare {
 
 /// Something arrived but cannot be added. Carries the message to show.
 final class TorrentShareProblem extends TorrentShare {
-  const TorrentShareProblem(this.message, {this.title = "Rien d'ajouté"});
+  TorrentShareProblem(this.message, {String? title})
+      : title = title ?? S.t('nothingAdded');
 
   final String message;
 
@@ -231,8 +232,8 @@ TorrentShare? decodeTorrentShare(Object? payload) {
       if (title != null) {
         return title;
       }
-      return const TorrentShareProblem(
-        'Ce partage ne contenait ni torrent ni film ou série, donc '
+      return TorrentShareProblem(
+        S.t('thatShareHadNoTorrentAndNoMovieOrShowInItSoThereWas') +
         'nothing to add.',
       );
 
@@ -286,8 +287,8 @@ TorrentShare? decodeTorrentShare(Object? payload) {
       );
 
     case 'empty':
-      return const TorrentShareProblem(
-        "Ce fichier était vide, il n'y avait donc rien à ajouter.",
+      return TorrentShareProblem(
+        S.t('thatFileWasEmptySoThereWasNothingToAdd'),
       );
 
     case 'unreadable':
@@ -298,8 +299,8 @@ TorrentShare? decodeTorrentShare(Object? payload) {
       );
 
     case 'tooLarge':
-      return const TorrentShareProblem(
-        "Ce fichier est bien trop volumineux pour être un .torrent, rien n'a été ajouté.",
+      return TorrentShareProblem(
+        S.t('thatFileIsFarTooLargeToBeATorrentSoNothingWasAdded'),
       );
 
     default:

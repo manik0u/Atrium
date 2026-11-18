@@ -23,7 +23,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
     final presets = schemasAsync.value ?? [];
     if (presets.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Chargement des préréglages de notifications…')),
+        SnackBar(content: Text(S.t('loadingNotificationPresets'))),
       );
       return;
     }
@@ -40,7 +40,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Add Notification Integration',
+                S.t('addNotificationIntegration'),
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -51,7 +51,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                   itemCount: presets.length,
                   itemBuilder: (context, index) {
                     final preset = presets[index];
-                    final name = preset['name'] as String? ?? 'Notification';
+                    final name = preset['name'] as String? ?? S.t('notification');
                     final implementation =
                         preset['implementationName'] as String? ?? '';
 
@@ -122,8 +122,8 @@ class ConnectSettingsScreen extends ConsumerWidget {
                     children: [
                       TextField(
                         controller: nameController,
-                        decoration: const InputDecoration(
-                          labelText: 'Nom',
+                        decoration: InputDecoration(
+                          labelText: S.t('name'),
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -143,7 +143,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Trigger Events',
+                                S.t('triggerEvents'),
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium
@@ -151,14 +151,14 @@ class ConnectSettingsScreen extends ConsumerWidget {
                               ),
                               CheckboxListTile(
                                 contentPadding: EdgeInsets.zero,
-                                title: const Text('Lors du grab'),
+                                title: Text(S.t('onGrab')),
                                 value: onGrab,
                                 onChanged: (val) =>
                                     setDialogState(() => onGrab = val ?? false),
                               ),
                               CheckboxListTile(
                                 contentPadding: EdgeInsets.zero,
-                                title: const Text('Lors du téléchargement'),
+                                title: Text(S.t('onDownload')),
                                 value: onDownload,
                                 onChanged: (val) => setDialogState(
                                   () => onDownload = val ?? false,
@@ -166,7 +166,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                               ),
                               CheckboxListTile(
                                 contentPadding: EdgeInsets.zero,
-                                title: const Text('Lors de la mise à niveau'),
+                                title: Text(S.t('onUpgrade')),
                                 value: onUpgrade,
                                 onChanged: (val) => setDialogState(
                                   () => onUpgrade = val ?? false,
@@ -174,7 +174,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                               ),
                               CheckboxListTile(
                                 contentPadding: EdgeInsets.zero,
-                                title: const Text('Lors du renommage'),
+                                title: Text(S.t('onRename')),
                                 value: onRename,
                                 onChanged: (val) => setDialogState(
                                   () => onRename = val ?? false,
@@ -182,7 +182,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                               ),
                               CheckboxListTile(
                                 contentPadding: EdgeInsets.zero,
-                                title: const Text('Série ajoutée'),
+                                title: Text(S.t('onSeriesAdd')),
                                 value: onSeriesAdd,
                                 onChanged: (val) => setDialogState(
                                   () => onSeriesAdd = val ?? false,
@@ -190,7 +190,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                               ),
                               CheckboxListTile(
                                 contentPadding: EdgeInsets.zero,
-                                title: const Text('Série supprimée'),
+                                title: Text(S.t('onSeriesDelete')),
                                 value: onSeriesDelete,
                                 onChanged: (val) => setDialogState(
                                   () => onSeriesDelete = val ?? false,
@@ -198,7 +198,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                               ),
                               CheckboxListTile(
                                 contentPadding: EdgeInsets.zero,
-                                title: const Text("Fichier d'épisode supprimé"),
+                                title: Text(S.t('onEpisodeFileDelete')),
                                 value: onEpisodeFileDelete,
                                 onChanged: (val) => setDialogState(
                                   () => onEpisodeFileDelete = val ?? false,
@@ -206,7 +206,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                               ),
                               CheckboxListTile(
                                 contentPadding: EdgeInsets.zero,
-                                title: const Text('En cas de problème de santé'),
+                                title: Text(S.t('onHealthIssue')),
                                 value: onHealthIssue,
                                 onChanged: (val) => setDialogState(
                                   () => onHealthIssue = val ?? false,
@@ -279,7 +279,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    'Failed to save notification: $e',
+                                    S.t('failedToSaveNotificationE1', [e]),
                                   ),
                                 ),
                               );
@@ -310,13 +310,13 @@ class ConnectSettingsScreen extends ConsumerWidget {
       ref.invalidate(sonarrNotificationsProvider(instance));
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Notification supprimée !')),
+          SnackBar(content: Text(S.t('notificationDeleted'))),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec de la suppression de la notification : $e')),
+          SnackBar(content: Text(S.t('failedToDeleteNotificationE1', [e]))),
         );
       }
     }
@@ -331,7 +331,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Connexion (notifications)'),
+        title: Text(S.t('connectNotifications_2')),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _selectNotificationPresetAndAdd(context, ref),
@@ -339,11 +339,11 @@ class ConnectSettingsScreen extends ConsumerWidget {
       ),
       body: notificationsAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Erreur : $err')),
+        error: (err, stack) => Center(child: Text(S.t('errorErr1', [err]))),
         data: (notifications) {
           if (notifications.isEmpty) {
-            return const Center(
-              child: Text('Aucune connexion de notification configurée.'),
+            return Center(
+              child: Text(S.t('noNotificationConnectionsConfigured')),
             );
           }
 
@@ -353,28 +353,28 @@ class ConnectSettingsScreen extends ConsumerWidget {
             itemBuilder: (context, index) {
               final notification = notifications[index];
               final id = notification['id'] as int;
-              final name = (notification['name'] as String?) ?? 'Connect';
+              final name = (notification['name'] as String?) ?? S.t('connect');
               final implementation =
                   (notification['implementationName'] as String?) ?? '';
 
               final List<String> activeEvents = [];
               if (notification['onGrab'] as bool? ?? false) {
-                activeEvents.add('Grab');
+                activeEvents.add(S.t('grab'));
               }
               if (notification['onDownload'] as bool? ?? false) {
-                activeEvents.add('Download');
+                activeEvents.add(S.t('download'));
               }
               if (notification['onUpgrade'] as bool? ?? false) {
                 activeEvents.add('Upgrade');
               }
               if (notification['onRename'] as bool? ?? false) {
-                activeEvents.add('Rename');
+                activeEvents.add(S.t('rename'));
               }
               if (notification['onSeriesAdd'] as bool? ?? false) {
-                activeEvents.add('Series Add');
+                activeEvents.add(S.t('seriesAdd'));
               }
               if (notification['onHealthIssue'] as bool? ?? false) {
-                activeEvents.add('Health');
+                activeEvents.add(S.t('health'));
               }
 
               return Card(

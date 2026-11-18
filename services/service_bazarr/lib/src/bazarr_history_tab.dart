@@ -24,38 +24,38 @@ class BazarrHistoryTab extends ConsumerWidget {
             
           if (items.isEmpty) {
             return EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: () async => ref.invalidate(bazarrHistoryProvider(instance)),
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          children: const <Widget>[
+          children: <Widget>[
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.history,
-              title: 'Aucun historique',
-              message: 'Les téléchargements et modifications de sous-titres apparaîtront ici.',
+              title: S.t('noHistory'),
+              message: S.t('subtitleDownloadsAndChangesWillAppearHere'),
             ),
           ],
         ),
       );
           }
           return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async => ref.invalidate(bazarrHistoryProvider(instance)),
       child: ListView.separated(
@@ -118,7 +118,7 @@ class _HistoryTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    title.isEmpty ? 'Inconnu' : title,
+                    title.isEmpty ? S.t('unknown') : title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.bodyMedium

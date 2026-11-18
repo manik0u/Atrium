@@ -130,7 +130,7 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            '« ${widget.file.filename ?? 'Log'}" (${content.length} chars)',
+            S.t('copiedWidgetFileFilename')Log'}" (${content.length} chars)',
           ),
           behavior: SnackBarBehavior.floating,
         ),
@@ -165,7 +165,7 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
       if (!launched && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Impossible d'ouvrir l'URL de téléchargement : $downloadUrl"),
+            content: Text(S.t('couldNotOpenDownloadURLDownloadUrl1', [downloadUrl])),
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -174,7 +174,7 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Échec du déclenchement du téléchargement : $e'),
+            content: Text(S.t('failedToTriggerDownloadE1', [e])),
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -233,7 +233,7 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
                 autofocus: true,
                 style: TextStyle(color: cs.onSurface),
                 decoration: InputDecoration(
-                  hintText: 'Rechercher dans le journal…',
+                  hintText: S.t('searchInLog'),
                   border: InputBorder.none,
                   hintStyle: TextStyle(
                     color: cs.onSurfaceVariant.withValues(alpha: 0.7),
@@ -250,7 +250,7 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.file.filename ?? 'Log File',
+                    widget.file.filename ?? S.t('logFile'),
                     style: const TextStyle(fontSize: 16),
                   ),
                   if (widget.file.lastWriteTime != null)
@@ -280,7 +280,7 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
               ),
             IconButton(
               icon: const Icon(Icons.keyboard_arrow_up),
-              tooltip: 'Correspondance précédente',
+              tooltip: S.t('previousMatch'),
               onPressed: () {
                 asyncContent.whenData((String content) {
                   _previousMatch(content.split('\n').length);
@@ -289,7 +289,7 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
             ),
             IconButton(
               icon: const Icon(Icons.keyboard_arrow_down),
-              tooltip: 'Correspondance suivante',
+              tooltip: S.t('nextMatch'),
               onPressed: () {
                 asyncContent.whenData((String content) {
                   _nextMatch(content.split('\n').length);
@@ -298,7 +298,7 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
             ),
             IconButton(
               icon: const Icon(Icons.close),
-              tooltip: 'Fermer la recherche',
+              tooltip: S.t('closeSearch'),
               onPressed: () {
                 setState(() {
                   _isSearching = false;
@@ -311,26 +311,26 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
           ] else ...[
             IconButton(
               icon: const Icon(Icons.search),
-              tooltip: 'Rechercher dans le journal',
+              tooltip: S.t('searchInLog_2'),
               onPressed: () {
                 setState(() => _isSearching = true);
               },
             ),
             IconButton(
               icon: const Icon(Icons.copy),
-              tooltip: 'Tout copier dans le presse-papiers',
+              tooltip: S.t('copyAllToClipboard'),
               onPressed: () {
                 asyncContent.whenData(_copyFullLog);
               },
             ),
             IconButton(
               icon: const Icon(Icons.download),
-              tooltip: 'Télécharger le fichier journal',
+              tooltip: S.t('downloadLogFile'),
               onPressed: _downloadLogFile,
             ),
             IconButton(
               icon: const Icon(Icons.refresh),
-              tooltip: 'Actualiser',
+              tooltip: S.t('refresh'),
               onPressed: () {
                 ref.invalidate(
                   lidarrLogFileContentProvider(
@@ -351,11 +351,11 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
         value: asyncContent,
         data: (String content) {
           if (content.trim().isEmpty) {
-            return const Center(
+            return Center(
               child: EmptyView(
                 icon: Icons.article_outlined,
-                title: 'Fichier journal vide',
-                message: 'Ce fichier journal ne contient encore aucune entrée.',
+                title: S.t('emptyLogFile'),
+                message: S.t('thisLogFileContainsNoEntriesYet'),
               ),
             );
           }
@@ -519,7 +519,7 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
                           FloatingActionButton.small(
                             heroTag: 'log_scroll_top',
                             onPressed: _jumpToTop,
-                            tooltip: 'Aller en haut',
+                            tooltip: S.t('jumpToTop'),
                             backgroundColor: cs.surfaceContainerHigh,
                             foregroundColor: cs.onSurface,
                             child: const Icon(Icons.arrow_upward, size: 18),
@@ -528,7 +528,7 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
                           FloatingActionButton.small(
                             heroTag: 'log_scroll_bottom',
                             onPressed: _jumpToBottom,
-                            tooltip: 'Aller en bas',
+                            tooltip: S.t('jumpToBottom'),
                             backgroundColor: cs.primaryContainer,
                             foregroundColor: cs.onPrimaryContainer,
                             child: const Icon(Icons.arrow_downward, size: 18),

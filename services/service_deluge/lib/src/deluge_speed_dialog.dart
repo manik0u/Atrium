@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 
 import 'deluge_format.dart';
@@ -73,9 +74,9 @@ class _SpeedDialogContentState extends State<_SpeedDialogContent> {
               keyboardType: const TextInputType.numberWithOptions(
                 decimal: true,
               ),
-              decoration: const InputDecoration(
-                labelText: 'Personnalisée (Ko/s)',
-                helperText: '0 arrête complètement les transferts',
+              decoration: InputDecoration(
+                labelText: S.t('customKBS'),
+                helperText: S.t('k0StopsTransfersEntirely'),
               ),
               onSubmitted: (_) => _submitCustom(),
             ),
@@ -85,11 +86,11 @@ class _SpeedDialogContentState extends State<_SpeedDialogContent> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: _submitCustom,
-          child: const Text('Définir'),
+          child: Text(S.t('set')),
         ),
       ],
     );

@@ -10,7 +10,7 @@ void main() {
   FormField<String> passwordField(WidgetTester tester) =>
       tester.widget<TextFormField>(
         find.ancestor(
-          of: find.text('Mot de passe (facultatif)'),
+          of: find.text('Password (optional)'),
           matching: find.byType(TextFormField),
         ),
       );
@@ -37,7 +37,7 @@ void main() {
     final TextField textField = tester.widget<TextField>(
       find.descendant(
         of: find.ancestor(
-          of: find.text('Mot de passe (facultatif)'),
+          of: find.text('Password (optional)'),
           matching: find.byType(TextFormField),
         ),
         matching: find.byType(TextField),
@@ -79,13 +79,13 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Modifier le service'), findsOneWidget);
-    expect(find.text('Mot de passe (facultatif)'), findsOneWidget);
+    expect(find.text('Edit service'), findsOneWidget);
+    expect(find.text('Password (optional)'), findsOneWidget);
 
     final TextField textField = tester.widget<TextField>(
       find.descendant(
         of: find.ancestor(
-          of: find.text('Mot de passe (facultatif)'),
+          of: find.text('Password (optional)'),
           matching: find.byType(TextFormField),
         ),
         matching: find.byType(TextField),

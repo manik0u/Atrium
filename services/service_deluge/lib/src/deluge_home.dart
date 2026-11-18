@@ -49,7 +49,7 @@ class _DelugeHomeState extends ConsumerState<DelugeHome> {
           await ref.read(delugeClientProvider(widget.instance).future);
       await action(client);
     } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text("Échec de l'action : $e")));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('actionFailedE1', [e]))));
     } finally {
       if (mounted) _refresh();
     }
@@ -61,7 +61,7 @@ class _DelugeHomeState extends ConsumerState<DelugeHome> {
       context: context,
       builder: (BuildContext context) => StatefulBuilder(
         builder: (BuildContext context, StateSetter setLocal) => AlertDialog(
-          title: const Text('Retirer le torrent'),
+          title: Text(S.t('removeTorrent')),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,18 +73,18 @@ class _DelugeHomeState extends ConsumerState<DelugeHome> {
                 value: withData,
                 onChanged: (bool? v) =>
                     setLocal(() => withData = v ?? false),
-                title: const Text('Supprimer aussi les fichiers téléchargés'),
+                title: Text(S.t('alsoDeleteDownloadedFiles')),
               ),
             ],
           ),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             FilledButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('Retirer'),
+              child: Text(S.t('remove')),
             ),
           ],
         ),
@@ -120,7 +120,7 @@ class _DelugeHomeState extends ConsumerState<DelugeHome> {
       // Adding a torrent is the one global action here, so it floats over the
       // list instead of crowding the session card.
       floatingActionButton: FloatingActionButton(
-        tooltip: 'Ajouter un torrent',
+        tooltip: S.t('addTorrent'),
         onPressed: () => showDelugeAddSheet(context, widget.instance),
         child: const Icon(Icons.add),
       ),
@@ -160,10 +160,10 @@ class _DelugeHomeState extends ConsumerState<DelugeHome> {
                     padding: const EdgeInsets.only(top: Insets.xl),
                     child: EmptyView(
                       icon: Icons.download_done_outlined,
-                      title: 'Aucun torrent',
+                      title: S.t('noTorrents'),
                       message: filtered
-                          ? 'Rien ne correspond à ce filtre.'
-                          : 'Ajoutez-en un avec le bouton +.',
+                          ? S.t('nothingMatchesThisFilter')
+                          : S.t('addOneWithTheButton'),
                     ),
                   )
                 else
@@ -252,7 +252,7 @@ class _SessionSummary extends ConsumerWidget {
                   Expanded(
                     child: _StatBox(
                       icon: Icons.south,
-                      label: 'Télécharger',
+                      label: S.t('download'),
                       value: downValue,
                       unit: downUnit,
                       background: scheme.primaryContainer,
@@ -264,7 +264,7 @@ class _SessionSummary extends ConsumerWidget {
                   Expanded(
                     child: _StatBox(
                       icon: Icons.north,
-                      label: 'Téléverser',
+                      label: S.t('upload'),
                       value: upValue,
                       unit: upUnit,
                       background: scheme.tertiaryContainer,
@@ -276,7 +276,7 @@ class _SessionSummary extends ConsumerWidget {
                   Expanded(
                     child: _StatBox(
                       icon: Icons.storage_outlined,
-                      label: 'Espace libre',
+                      label: S.t('freeSpace'),
                       value: freeValue,
                       unit: freeUnit,
                       background: scheme.surfaceContainerHighest,
@@ -296,7 +296,7 @@ class _SessionSummary extends ConsumerWidget {
               crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
                 IconButton.filledTonal(
-                  tooltip: paused ? 'Reprendre la session' : 'Mettre la session en pause',
+                  tooltip: paused ? S.t('resumeSession') : S.t('pauseSession'),
                   onPressed: () => onTogglePause(!paused),
                   icon: Icon(paused ? Icons.play_arrow : Icons.pause),
                 ),
@@ -306,7 +306,7 @@ class _SessionSummary extends ConsumerWidget {
                   onPressed: () async {
                     final double? kib = await showDelugeSpeedDialog(
                       context,
-                      title: 'Limite de téléchargement',
+                      title: S.t('downloadLimit'),
                       current: limits.maxDownloadKib,
                     );
                     if (kib != null) onSetDownLimit(kib);
@@ -318,7 +318,7 @@ class _SessionSummary extends ConsumerWidget {
                   onPressed: () async {
                     final double? kib = await showDelugeSpeedDialog(
                       context,
-                      title: "Limite d'envoi",
+                      title: S.t('uploadLimit'),
                       current: limits.maxUploadKib,
                     );
                     if (kib != null) onSetUpLimit(kib);
@@ -478,7 +478,7 @@ class _FilterBar extends ConsumerWidget {
             state: filter.state,
             onClear: () => ref
                 .read(delugeFilterProvider(instance).notifier)
-                .update((DelugeFilter f) => f.copyWith(state: 'Tous')),
+                .update((DelugeFilter f) => f.copyWith(state: 'All')),
           );
     if (tree.states.isEmpty) return active ?? const SizedBox.shrink();
 
@@ -528,7 +528,7 @@ class _ActiveStateFilter extends StatelessWidget {
       key: const ValueKey<String>('deluge-active-filter'),
       children: <Widget>[
         Text(
-          'Filtered:',
+          S.t('filtered'),
           style: theme.textTheme.labelMedium?.copyWith(
             color: scheme.onSurfaceVariant,
             fontWeight: FontWeight.w600,
@@ -541,7 +541,7 @@ class _ActiveStateFilter extends StatelessWidget {
           foreground: scheme.onPrimaryContainer,
         ),
         const Spacer(),
-        TextButton(onPressed: onClear, child: const Text('Effacer')),
+        TextButton(onPressed: onClear, child: Text(S.t('clear'))),
       ],
     );
   }
@@ -569,7 +569,7 @@ class _ChipRow extends StatelessWidget {
               padding: const EdgeInsets.only(right: Insets.xs),
               child: FilterChip(
                 label: Text(
-                  b.name.isEmpty ? 'None' : '${b.name} (${b.count})',
+                  '${b.name.isEmpty ? S.t('none') : b.name == 'All' ? S.t('all') : b.name} (${b.count})',
                 ),
                 selected: b.name == selected,
                 onSelected: (_) => onSelected(b.name),
@@ -612,7 +612,7 @@ class _SortMenu extends ConsumerWidget {
           ),
         ),
         IconButton(
-          tooltip: descending ? 'Décroissant' : 'Croissant',
+          tooltip: descending ? S.t('descending') : S.t('ascending'),
           icon: Icon(descending ? Icons.arrow_downward : Icons.arrow_upward),
           onPressed: () => ref
               .read(delugeSortDescendingProvider(instance).notifier)
@@ -671,45 +671,45 @@ class _TorrentRow extends StatelessWidget {
                 leading: Icon(
                   torrent.isPaused ? Icons.play_arrow : Icons.pause,
                 ),
-                title: Text(torrent.isPaused ? 'Reprendre' : 'Pause'),
+                title: Text(torrent.isPaused ? S.t('resume') : S.t('pause')),
                 onTap: () => run(onPauseResume),
               ),
               ListTile(
                 leading: const Icon(Icons.fact_check_outlined),
-                title: const Text('Forcer la revérification'),
+                title: Text(S.t('forceRecheck')),
                 onTap: () => run(onRecheck),
               ),
               ListTile(
                 leading: const Icon(Icons.campaign_outlined),
-                title: const Text('Ré-annoncer'),
+                title: Text(S.t('reannounce')),
                 onTap: () => run(onReannounce),
               ),
               const Divider(),
               ListTile(
                 leading: const Icon(Icons.vertical_align_top),
-                title: const Text('En haut de la file'),
+                title: Text(S.t('queueToTop')),
                 onTap: () => run(onQueueTop),
               ),
               ListTile(
                 leading: const Icon(Icons.arrow_upward),
-                title: const Text('Monter dans la file'),
+                title: Text(S.t('queueUp')),
                 onTap: () => run(onQueueUp),
               ),
               ListTile(
                 leading: const Icon(Icons.arrow_downward),
-                title: const Text('Descendre dans la file'),
+                title: Text(S.t('queueDown')),
                 onTap: () => run(onQueueDown),
               ),
               ListTile(
                 leading: const Icon(Icons.vertical_align_bottom),
-                title: const Text('En bas de la file'),
+                title: Text(S.t('queueToBottom')),
                 onTap: () => run(onQueueBottom),
               ),
               const Divider(),
               ListTile(
                 leading: Icon(Icons.delete_outline, color: scheme.error),
                 title: Text(
-                  'Remove',
+                  S.t('remove'),
                   style: TextStyle(color: scheme.error),
                 ),
                 onTap: () => run(onRemove),
@@ -789,7 +789,7 @@ class _TorrentRow extends StatelessWidget {
                             children: <Widget>[
                               _StatePill(
                                 label: torrent.state.isEmpty
-                                    ? 'Unknown'
+                                    ? S.t('unknown')
                                     : torrent.state,
                                 background: stateContainer,
                                 foreground: stateOnContainer,

@@ -9,8 +9,8 @@ import '../../../state/api_providers.dart';
 /// Sort options for Wanted views.
 enum WantedSortKey {
   releaseDate('releaseDate', 'Release Date'),
-  artistName('artist.artistName', 'Artist Name'),
-  title('title', "Titre de l'album");
+  artistName('artist.artistName', S.t('artistName_2')),
+  title('title', S.t('albumTitle'));
 
   const WantedSortKey(this.value, this.label);
   final String value;

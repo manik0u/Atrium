@@ -16,9 +16,9 @@ class OmbiDiscoverTab extends ConsumerWidget {
 
   final Instance instance;
 
-  static const List<(OmbiDiscoverRow, String)> _rows =
+  static final List<(OmbiDiscoverRow, String)> _rows =
       <(OmbiDiscoverRow, String)>[
-    (OmbiDiscoverRow.popularMovies, 'Popular movies'),
+    (OmbiDiscoverRow.popularMovies, S.t('popularMovies_2')),
     (OmbiDiscoverRow.upcomingMovies, 'Upcoming movies'),
     (OmbiDiscoverRow.popularTv, 'Popular TV'),
     (OmbiDiscoverRow.trendingTv, 'Trending TV'),
@@ -96,7 +96,7 @@ class _DiscoverRow extends ConsumerWidget {
                       TextButton(
                         onPressed: () =>
                             ref.invalidate(ombiDiscoverProvider(key)),
-                        child: const Text('Réessayer'),
+                        child: Text(S.t('retry')),
                       ),
                     ],
                   ),
@@ -104,7 +104,7 @@ class _DiscoverRow extends ConsumerWidget {
                 data: (List<OmbiSearchHit> hits) => hits.isEmpty
                     ? Center(
                         child: Text(
-                          'Rien ici pour le moment',
+                          S.t('nothingHereRightNow'),
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: theme.colorScheme.onSurfaceVariant,
                           ),
@@ -186,13 +186,13 @@ class _DiscoverCard extends StatelessWidget {
                       alignment: Alignment.topRight,
                       child: hit.available
                           ? OmbiPill(
-                              label: 'Disponible',
+                              label: S.t('available'),
                               icon: Icons.check_circle_outline_rounded,
                               foreground: cs.onTertiaryContainer,
                               background: cs.tertiaryContainer,
                             )
                           : OmbiPill(
-                              label: 'Demandé',
+                              label: S.t('requested'),
                               icon: Icons.schedule_rounded,
                               foreground: cs.onPrimaryContainer,
                               background: cs.primaryContainer,

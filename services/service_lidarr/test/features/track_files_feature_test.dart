@@ -126,12 +126,12 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify Setup Dialog
-      expect(find.text('Import manuel'), findsOneWidget);
-      expect(find.text('Chemin du dossier'), findsOneWidget);
+      expect(find.text('Manual Import'), findsOneWidget);
+      expect(find.text('Folder Path'), findsOneWidget);
       expect(find.text('/downloads'), findsOneWidget);
 
       // Tap Scan Folder
-      await tester.tap(find.text('Analyser le dossier'));
+      await tester.tap(find.text('Scan Folder'));
       await tester.pumpAndSettle();
 
       // Verify Results Dialog
@@ -144,7 +144,7 @@ void main() {
       expect(find.text('+Score: 100'), findsOneWidget);
 
       // Execute Import
-      await tester.tap(find.text('Importer la sélection'));
+      await tester.tap(find.text('Import Selected'));
       await tester.pumpAndSettle();
 
       expect(commandDispatched, equals('ManualImport'));
@@ -329,9 +329,9 @@ void main() {
 
         // Verify Empty State Content
         expect(find.text('Rename Radiohead'), findsOneWidget);
-        expect(find.text('Tous les fichiers sont correctement nommés'), findsOneWidget);
+        expect(find.text('All files are correctly named'), findsOneWidget);
         expect(
-          find.text("Aucun fichier audio n'a besoin d'être organisé ou renommé."),
+          find.text('No audio files need to be organized or renamed.'),
           findsOneWidget,
         );
       },
@@ -368,7 +368,7 @@ void main() {
                             '/music/Radiohead/A Moon Shaped Pool/01 - Burn the Witch.flac',
                         'changes': [
                           {
-                            'field': 'Titre',
+                            'field': 'Title',
                             'oldValue': 'Burn the Witch (Live)',
                             'newValue': 'Burn the Witch',
                           },
@@ -440,7 +440,7 @@ void main() {
         expect(find.text('1 of 1 selected'), findsOneWidget);
         expect(find.text('Track 1'), findsOneWidget);
         expect(find.text('01 - Burn the Witch.flac'), findsOneWidget);
-        expect(find.text('Titre'), findsOneWidget);
+        expect(find.text('Title'), findsOneWidget);
         expect(find.text('Burn the Witch (Live)'), findsOneWidget);
         expect(find.text('Burn the Witch'), findsOneWidget);
 
@@ -516,9 +516,9 @@ void main() {
 
         // Verify Empty State Content
         expect(find.text('Retag Radiohead'), findsOneWidget);
-        expect(find.text('Toutes les balises sont à jour'), findsOneWidget);
+        expect(find.text('All tags are up-to-date'), findsOneWidget);
         expect(
-          find.text("Aucun fichier audio n'a besoin de modification de balises."),
+          find.text('No audio files need tag modifications.'),
           findsOneWidget,
         );
       },
@@ -641,7 +641,7 @@ void main() {
 
         await tester.pumpAndSettle();
 
-        expect(find.text('Éditeur de fichiers de pistes'), findsOneWidget);
+        expect(find.text('Track Files Editor'), findsOneWidget);
         expect(find.text('01 Burn the Witch.flac'), findsOneWidget);
         expect(find.text('02 Daydreaming.flac'), findsOneWidget);
 
@@ -650,15 +650,15 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(find.text('1 / 2 selected'), findsOneWidget);
-        expect(find.byTooltip('Modifier la qualité'), findsOneWidget);
-        expect(find.byTooltip('Supprimer la sélection'), findsOneWidget);
+        expect(find.byTooltip('Edit Quality'), findsOneWidget);
+        expect(find.byTooltip('Delete Selected'), findsOneWidget);
 
         // Bulk edit quality
-        await tester.tap(find.byTooltip('Modifier la qualité'));
+        await tester.tap(find.byTooltip('Edit Quality'));
         await tester.pumpAndSettle();
 
         expect(find.text('Edit 1 Track Files'), findsOneWidget);
-        await tester.tap(find.text('Appliquer les modifications'));
+        await tester.tap(find.text('Apply Changes'));
         await tester.pumpAndSettle();
 
         expect(editorPayload, isNotNull);
@@ -668,11 +668,11 @@ void main() {
         await tester.tap(find.text('01 Burn the Witch.flac'));
         await tester.pumpAndSettle();
 
-        await tester.tap(find.byTooltip('Supprimer la sélection'));
+        await tester.tap(find.byTooltip('Delete Selected'));
         await tester.pumpAndSettle();
 
         expect(find.text('Delete 1 Audio Files?'), findsOneWidget);
-        await tester.tap(find.text('Supprimer définitivement'));
+        await tester.tap(find.text('Delete Permanently'));
         await tester.pumpAndSettle();
 
         expect(bulkDeletePayload, isNotNull);
@@ -755,14 +755,14 @@ void main() {
         expect(find.text('Unmapped Files — Radiohead'), findsOneWidget);
         expect(find.text('bonus_track.mp3'), findsOneWidget);
         expect(find.text('Radiohead — B-Sides — Bonus Track'), findsOneWidget);
-        expect(find.text('Import manuel'), findsOneWidget);
+        expect(find.text('Manual Import'), findsOneWidget);
 
         // Delete unmapped file
-        await tester.tap(find.byTooltip('Supprimer le fichier'));
+        await tester.tap(find.byTooltip('Delete File'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Supprimer le fichier non mappé ?'), findsOneWidget);
-        await tester.tap(find.text('Supprimer'));
+        expect(find.text('Delete Unmapped File?'), findsOneWidget);
+        await tester.tap(find.text('Delete'));
         await tester.pumpAndSettle();
 
         expect(deleteCalled, isTrue);

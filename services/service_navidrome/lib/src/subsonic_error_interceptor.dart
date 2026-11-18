@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:dio/dio.dart';
 
 /// Turns a failed Subsonic envelope into a [DioException].
@@ -37,8 +38,8 @@ class SubsonicErrorInterceptor extends Interceptor {
 
     final Object? error = envelope['error'];
     final String message = error is Map
-        ? (error['message'] as String? ?? 'Échec de la demande')
-        : 'Request failed';
+        ? (error['message'] as String? ?? S.t('requestFailed'))
+        : S.t('requestFailed');
     final int? code =
         error is Map ? (error['code'] as num?)?.toInt() : null;
 
@@ -47,7 +48,7 @@ class SubsonicErrorInterceptor extends Interceptor {
         requestOptions: response.requestOptions,
         response: response,
         type: DioExceptionType.badResponse,
-        error: code == null ? message : '$message (erreur Subsonic $code)',
+        error: code == null ? message : S.t('messageSubsonicErrorCode2', [message, code]),
       ),
       true,
     );

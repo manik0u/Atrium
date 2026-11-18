@@ -200,7 +200,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
                   : SearchBar(
                       focusNode: _searchFocusNode,
                       controller: _searchController,
-                      hintText: "Rechercher dans l'activité…",
+                      hintText: S.t('searchActivity'),
                       onTapOutside: (event) {
                         if (_searchFocusNode.hasFocus) {
                           _searchFocusNode.unfocus();
@@ -249,8 +249,8 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
                           : Icons.group_work_outlined,
                     ),
                     tooltip: grouped
-                        ? 'Switch to plain list'
-                        : 'Switch to grouped view',
+                        ? S.t('switchToPlainList')
+                        : S.t('switchToGroupedView'),
                     onPressed: () {
                       ref
                           .read(
@@ -274,10 +274,10 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
                   fontWeight: FontWeight.bold,
                 ),
                 unselectedLabelStyle: theme.textTheme.titleSmall,
-                tabs: const <Widget>[
-                  Tab(text: "File d'attente"),
-                  Tab(text: 'Historique'),
-                  Tab(text: 'Liste de blocage'),
+                tabs: <Widget>[
+                  Tab(text: S.t('queue')),
+                  Tab(text: S.t('history')),
+                  Tab(text: S.t('blocklist')),
                 ],
               ),
             ),
@@ -321,14 +321,14 @@ class _QueueView extends ConsumerWidget {
 
         if (filteredItems.isEmpty) {
           return EasyRefresh(
-            header: const ClassicHeader(
-              dragText: 'Pull to refresh',
-              armedText: 'Release ready',
-              readyText: 'Refreshing...',
-              processingText: 'Refreshing...',
-              processedText: 'Succeeded',
-              failedText: 'Failed',
-              messageText: 'Last updated at %T',
+            header: ClassicHeader(
+              dragText: S.t('pullToRefresh'),
+              armedText: S.t('releaseReady'),
+              readyText: S.t('refreshing'),
+              processingText: S.t('refreshing'),
+              processedText: S.t('succeeded'),
+              failedText: S.t('failed'),
+              messageText: S.t('lastUpdatedAtT'),
             ),
             onRefresh: () async {
               try {
@@ -356,7 +356,7 @@ class _QueueView extends ConsumerWidget {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        "Votre file d'attente active est vide",
+                        S.t('yourActiveQueueIsEmpty'),
                         style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -370,14 +370,14 @@ class _QueueView extends ConsumerWidget {
         }
 
         return EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
           onRefresh: () async {
             try {
@@ -405,7 +405,7 @@ class _QueueView extends ConsumerWidget {
       },
       loading: () => const Center(child: ExpressiveProgressIndicator()),
       error: (err, __) => ErrorView(
-        title: "Échec du chargement de la file d'attente",
+        title: S.t('failedToLoadQueue'),
         message: err.toString(),
         onRetry: () => ref.invalidate(radarrQueueProvider(instance)),
       ),
@@ -511,7 +511,7 @@ class _QueueCard extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      item.movie?.title ?? item.title ?? 'Film inconnu',
+                      item.movie?.title ?? item.title ?? S.t('unknownMovie'),
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -520,7 +520,7 @@ class _QueueCard extends ConsumerWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      item.title ?? 'Sans nom de release',
+                      item.title ?? S.t('noReleaseName'),
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
@@ -654,7 +654,7 @@ class _QueueCard extends ConsumerWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
           title: Text(
-            'Queue Details',
+            S.t('queueDetails'),
             style: theme.textTheme.titleLarge
                 ?.copyWith(fontWeight: FontWeight.bold),
           ),
@@ -663,25 +663,25 @@ class _QueueCard extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                _DetailRow(label: 'Titre', value: i.title ?? 'Sans titre'),
-                _DetailRow(label: 'Film', value: i.movie?.title ?? 'Inconnu'),
-                _DetailRow(label: 'Statut', value: i.status ?? 'Inconnu'),
+                _DetailRow(label: S.t('title'), value: i.title ?? S.t('noTitle')),
+                _DetailRow(label: S.t('movie'), value: i.movie?.title ?? S.t('unknown')),
+                _DetailRow(label: S.t('status'), value: i.status ?? S.t('unknown')),
                 _DetailRow(
-                  label: 'État de suivi',
+                  label: S.t('trackedState'),
                   value: i.trackedDownloadState ?? 'None',
                 ),
                 _DetailRow(
-                  label: 'Client de téléchargement',
-                  value: i.downloadClient ?? 'Unknown',
+                  label: S.t('downloadClient'),
+                  value: i.downloadClient ?? S.t('unknown'),
                 ),
                 _DetailRow(
-                  label: 'ID de téléchargement',
-                  value: i.downloadId ?? 'Unknown',
+                  label: S.t('downloadID'),
+                  value: i.downloadId ?? S.t('unknown'),
                 ),
-                _DetailRow(label: 'Indexeur', value: i.indexer ?? 'Inconnu'),
+                _DetailRow(label: S.t('indexer'), value: i.indexer ?? S.t('unknown')),
                 _DetailRow(
-                  label: 'Chemin de sortie',
-                  value: i.outputPath ?? 'Unknown',
+                  label: S.t('outputPath'),
+                  value: i.outputPath ?? S.t('unknown'),
                 ),
               ],
             ),
@@ -689,7 +689,7 @@ class _QueueCard extends ConsumerWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Fermer'),
+              child: Text(S.t('close')),
             ),
           ],
         );
@@ -704,14 +704,14 @@ class _QueueCard extends ConsumerWidget {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: const Text('Annuler le téléchargement ?'),
+          title: Text(S.t('cancelDownload_2')),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Voulez-vous vraiment annuler ce téléchargement ?'),
+              Text(S.t('areYouSureYouWantToCancelThisDownload')),
               CheckboxListTile(
-                title: const Text('Ajouter la release à la liste de blocage'),
+                title: Text(S.t('addReleaseToBlocklist')),
                 value: blocklist,
                 contentPadding: EdgeInsets.zero,
                 onChanged: (val) => setState(() => blocklist = val ?? false),
@@ -721,11 +721,11 @@ class _QueueCard extends ConsumerWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('Annuler le téléchargement'),
+              child: Text(S.t('cancelDownload')),
             ),
           ],
         ),
@@ -739,7 +739,7 @@ class _QueueCard extends ConsumerWidget {
         ref.invalidate(radarrQueueProvider(instance));
       } catch (e) {
         messenger.showSnackBar(
-          SnackBar(content: Text("Échec de l'annulation : $e")),
+          SnackBar(content: Text(S.t('failedToCancelE1', [e]))),
         );
       }
     }
@@ -806,14 +806,14 @@ class _HistoryView extends ConsumerWidget {
 
         if (filteredItems.isEmpty) {
           return EasyRefresh(
-            header: const ClassicHeader(
-              dragText: 'Pull to refresh',
-              armedText: 'Release ready',
-              readyText: 'Refreshing...',
-              processingText: 'Refreshing...',
-              processedText: 'Succeeded',
-              failedText: 'Failed',
-              messageText: 'Last updated at %T',
+            header: ClassicHeader(
+              dragText: S.t('pullToRefresh'),
+              armedText: S.t('releaseReady'),
+              readyText: S.t('refreshing'),
+              processingText: S.t('refreshing'),
+              processedText: S.t('succeeded'),
+              failedText: S.t('failed'),
+              messageText: S.t('lastUpdatedAtT'),
             ),
             onRefresh: () async {
               ref.invalidate(radarrHistoryProvider(instance));
@@ -834,7 +834,7 @@ class _HistoryView extends ConsumerWidget {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        "Aucune entrée d'historique trouvée",
+                        S.t('noHistoryEntriesFound'),
                         style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -854,14 +854,14 @@ class _HistoryView extends ConsumerWidget {
           );
           final keys = groupedMap.keys.toList();
           return EasyRefresh(
-            header: const ClassicHeader(
-              dragText: 'Pull to refresh',
-              armedText: 'Release ready',
-              readyText: 'Refreshing...',
-              processingText: 'Refreshing...',
-              processedText: 'Succeeded',
-              failedText: 'Failed',
-              messageText: 'Last updated at %T',
+            header: ClassicHeader(
+              dragText: S.t('pullToRefresh'),
+              armedText: S.t('releaseReady'),
+              readyText: S.t('refreshing'),
+              processingText: S.t('refreshing'),
+              processedText: S.t('succeeded'),
+              failedText: S.t('failed'),
+              messageText: S.t('lastUpdatedAtT'),
             ),
             onRefresh: () async {
               ref.invalidate(radarrHistoryProvider(instance));
@@ -884,14 +884,14 @@ class _HistoryView extends ConsumerWidget {
         }
 
         return EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
           onRefresh: () async {
             ref.invalidate(radarrHistoryProvider(instance));
@@ -912,7 +912,7 @@ class _HistoryView extends ConsumerWidget {
       },
       loading: () => const Center(child: ExpressiveProgressIndicator()),
       error: (err, __) => ErrorView(
-        title: "Échec du chargement de l'historique",
+        title: S.t('failedToLoadHistory'),
         message: err.toString(),
         onRetry: () => ref.invalidate(radarrHistoryProvider(instance)),
       ),
@@ -1006,11 +1006,11 @@ void _showHistoryDetails(
       date != null ? DateFormat.yMMMd().add_jm().format(date) : null;
 
   final rows = <Widget>[];
-  addRow(rows, 'Film', item.movie?.title);
-  addRow(rows, 'Event', item.eventType);
-  addRow(rows, 'Titre source', item.sourceTitle);
-  addRow(rows, 'Date', formattedDate);
-  addRow(rows, 'Download ID', item.downloadId);
+  addRow(rows, S.t('movie'), item.movie?.title);
+  addRow(rows, S.t('event'), item.eventType);
+  addRow(rows, S.t('sourceTitle'), item.sourceTitle);
+  addRow(rows, S.t('date'), formattedDate);
+  addRow(rows, S.t('downloadID'), item.downloadId);
   if (item.data != null) {
     item.data!.forEach((k, v) {
       if (v != null && v.isNotEmpty) {
@@ -1048,7 +1048,7 @@ void _showHistoryDetails(
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              'History Details',
+              S.t('historyDetails'),
               style: theme.textTheme.titleLarge
                   ?.copyWith(fontWeight: FontWeight.bold),
             ),
@@ -1088,13 +1088,13 @@ void _showHistoryDetails(
                       } catch (e) {
                         messenger.showSnackBar(
                           SnackBar(
-                            content: Text('Échec du marquage de la release : $e'),
+                            content: Text(S.t('failedToFlagReleaseE1', [e])),
                           ),
                         );
                       }
                     },
                     icon: const Icon(Icons.report_gmailerrorred_outlined),
-                    label: const Text('Marquer comme échoué'),
+                    label: Text(S.t('markFailed')),
                   ),
                 ],
               ],
@@ -1115,18 +1115,18 @@ Future<void> _confirmDeleteBlocklistItem(
   final bool? ok = await showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Retirer de la liste de blocage ?'),
-      content: const Text(
-        'Voulez-vous vraiment retirer cette entrée de votre liste de blocage ?',
+      title: Text(S.t('deleteFromBlocklist')),
+      content: Text(
+        S.t('areYouSureYouWantToRemoveThisEntryFromYourBlocklist'),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context, false),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: () => Navigator.pop(context, true),
-          child: const Text('Retirer'),
+          child: Text(S.t('remove')),
         ),
       ],
     ),
@@ -1140,7 +1140,7 @@ Future<void> _confirmDeleteBlocklistItem(
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec de la suppression : $e')),
+          SnackBar(content: Text(S.t('failedToRemoveE1', [e]))),
         );
       }
     }
@@ -1220,7 +1220,7 @@ class _HistoryCard extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      item.movie?.title ?? 'Film inconnu',
+                      item.movie?.title ?? S.t('unknownMovie'),
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
@@ -1230,7 +1230,7 @@ class _HistoryCard extends ConsumerWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      item.sourceTitle ?? 'Sans titre de release',
+                      item.sourceTitle ?? S.t('noReleaseTitle'),
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
@@ -1394,7 +1394,7 @@ class _GroupedHistoryCardState extends ConsumerState<_GroupedHistoryCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.movie?.title ?? 'Film inconnu',
+                          widget.movie?.title ?? S.t('unknownMovie'),
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -1461,7 +1461,7 @@ class _GroupedHistoryCardState extends ConsumerState<_GroupedHistoryCard> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                item.sourceTitle ?? 'Unknown Release',
+                                item.sourceTitle ?? S.t('unknownRelease'),
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -1527,14 +1527,14 @@ class _BlocklistView extends ConsumerWidget {
 
         if (filteredItems.isEmpty) {
           return EasyRefresh(
-            header: const ClassicHeader(
-              dragText: 'Pull to refresh',
-              armedText: 'Release ready',
-              readyText: 'Refreshing...',
-              processingText: 'Refreshing...',
-              processedText: 'Succeeded',
-              failedText: 'Failed',
-              messageText: 'Last updated at %T',
+            header: ClassicHeader(
+              dragText: S.t('pullToRefresh'),
+              armedText: S.t('releaseReady'),
+              readyText: S.t('refreshing'),
+              processingText: S.t('refreshing'),
+              processedText: S.t('succeeded'),
+              failedText: S.t('failed'),
+              messageText: S.t('lastUpdatedAtT'),
             ),
             onRefresh: () async {
               ref.invalidate(radarrBlocklistProvider(instance));
@@ -1555,7 +1555,7 @@ class _BlocklistView extends ConsumerWidget {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        'Aucune entrée de liste de blocage trouvée',
+                        S.t('noBlocklistEntriesFound'),
                         style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -1575,14 +1575,14 @@ class _BlocklistView extends ConsumerWidget {
           );
           final keys = groupedMap.keys.toList();
           return EasyRefresh(
-            header: const ClassicHeader(
-              dragText: 'Pull to refresh',
-              armedText: 'Release ready',
-              readyText: 'Refreshing...',
-              processingText: 'Refreshing...',
-              processedText: 'Succeeded',
-              failedText: 'Failed',
-              messageText: 'Last updated at %T',
+            header: ClassicHeader(
+              dragText: S.t('pullToRefresh'),
+              armedText: S.t('releaseReady'),
+              readyText: S.t('refreshing'),
+              processingText: S.t('refreshing'),
+              processedText: S.t('succeeded'),
+              failedText: S.t('failed'),
+              messageText: S.t('lastUpdatedAtT'),
             ),
             onRefresh: () async {
               ref.invalidate(radarrBlocklistProvider(instance));
@@ -1605,14 +1605,14 @@ class _BlocklistView extends ConsumerWidget {
         }
 
         return EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
           onRefresh: () async {
             ref.invalidate(radarrBlocklistProvider(instance));
@@ -1633,7 +1633,7 @@ class _BlocklistView extends ConsumerWidget {
       },
       loading: () => const Center(child: ExpressiveProgressIndicator()),
       error: (err, __) => ErrorView(
-        title: 'Échec du chargement de la liste de blocage',
+        title: S.t('failedToLoadBlocklist'),
         message: err.toString(),
         onRetry: () => ref.invalidate(radarrBlocklistProvider(instance)),
       ),
@@ -1733,7 +1733,7 @@ class _BlocklistCard extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      item.movie?.title ?? 'Film inconnu',
+                      item.movie?.title ?? S.t('unknownMovie'),
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
@@ -1743,7 +1743,7 @@ class _BlocklistCard extends ConsumerWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      item.sourceTitle ?? 'Sans titre de release',
+                      item.sourceTitle ?? S.t('noReleaseTitle'),
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
@@ -1787,18 +1787,18 @@ class _BlocklistCard extends ConsumerWidget {
     final bool? ok = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Retirer de la liste de blocage ?'),
-        content: const Text(
-          'Voulez-vous vraiment retirer cette entrée de votre liste de blocage ?',
+        title: Text(S.t('deleteFromBlocklist')),
+        content: Text(
+          S.t('areYouSureYouWantToRemoveThisEntryFromYourBlocklist'),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Retirer'),
+            child: Text(S.t('remove')),
           ),
         ],
       ),
@@ -1811,7 +1811,7 @@ class _BlocklistCard extends ConsumerWidget {
         ref.invalidate(radarrBlocklistProvider(instance));
       } catch (e) {
         messenger.showSnackBar(
-          SnackBar(content: Text('Échec de la suppression : $e')),
+          SnackBar(content: Text(S.t('failedToRemoveE1', [e]))),
         );
       }
     }
@@ -1961,7 +1961,7 @@ class _GroupedBlocklistCardState extends ConsumerState<_GroupedBlocklistCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.movie?.title ?? 'Film inconnu',
+                          widget.movie?.title ?? S.t('unknownMovie'),
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -2051,7 +2051,7 @@ class _GroupedBlocklistCardState extends ConsumerState<_GroupedBlocklistCard> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                item.sourceTitle ?? 'Unknown Release',
+                                item.sourceTitle ?? S.t('unknownRelease'),
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -2154,7 +2154,7 @@ class _ActivityBulkActionsBar extends StatelessWidget {
                 ).ignore();
               },
               icon: const Icon(Icons.download_outlined),
-              label: const Text('Grab forcé'),
+              label: Text(S.t('forceGrab')),
             ),
             TextButton.icon(
               style: TextButton.styleFrom(
@@ -2162,7 +2162,7 @@ class _ActivityBulkActionsBar extends StatelessWidget {
               ),
               onPressed: () => _confirmBulkQueueDelete(context),
               icon: const Icon(Icons.cancel_outlined),
-              label: const Text('Annuler les téléchargements'),
+              label: Text(S.t('cancelDownloads')),
             ),
           ] else ...[
             TextButton.icon(
@@ -2171,7 +2171,7 @@ class _ActivityBulkActionsBar extends StatelessWidget {
               ),
               onPressed: () => _confirmBulkBlocklistDelete(context),
               icon: const Icon(Icons.delete_outline),
-              label: const Text('Supprimer les entrées'),
+              label: Text(S.t('removeEntries')),
             ),
           ],
         ],
@@ -2187,16 +2187,16 @@ class _ActivityBulkActionsBar extends StatelessWidget {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: Text('Annuler ${selectedIds.length} téléchargements ?'),
+          title: Text(S.t('cancelSelectedIdsLengthDownloads1', [selectedIds.length])),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Voulez-vous vraiment annuler les téléchargements sélectionnés ?',
+              Text(
+                S.t('areYouSureYouWantToCancelTheSelectedDownloads'),
               ),
               CheckboxListTile(
-                title: const Text('Ajouter les releases à la liste de blocage'),
+                title: Text(S.t('addReleasesToBlocklist')),
                 value: blocklist,
                 contentPadding: EdgeInsets.zero,
                 onChanged: (val) => setState(() => blocklist = val ?? false),
@@ -2206,11 +2206,11 @@ class _ActivityBulkActionsBar extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('Non'),
+              child: Text(S.t('no')),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('Oui'),
+              child: Text(S.t('yes')),
             ),
           ],
         ),
@@ -2226,7 +2226,7 @@ class _ActivityBulkActionsBar extends StatelessWidget {
       } catch (e) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Échec de l'annulation groupée : $e")),
+            SnackBar(content: Text(S.t('failedToBulkCancelE1', [e]))),
           );
         }
       }
@@ -2238,18 +2238,18 @@ class _ActivityBulkActionsBar extends StatelessWidget {
     final bool? ok = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Supprimer ${selectedIds.length} entrées ?'),
-        content: const Text(
-          'Voulez-vous vraiment retirer les entrées sélectionnées de la liste de blocage ?',
+        title: Text(S.t('removeSelectedIdsLengthEntries1', [selectedIds.length])),
+        content: Text(
+          S.t('areYouSureYouWantToRemoveTheSelectedEntriesFromTheBlocklist'),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Non'),
+            child: Text(S.t('no')),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Oui'),
+            child: Text(S.t('yes')),
           ),
         ],
       ),
@@ -2264,7 +2264,7 @@ class _ActivityBulkActionsBar extends StatelessWidget {
       } catch (e) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Échec de la suppression groupée : $e')),
+            SnackBar(content: Text(S.t('failedToBulkRemoveE1', [e]))),
           );
         }
       }
@@ -2286,14 +2286,14 @@ class _QueueBulkGrabDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
-      title: Text('Forcer le grab de ${selectedIds.length} releases ?'),
-      content: const Text(
-        'Voulez-vous vraiment forcer le téléchargement des releases sélectionnées depuis la file ?',
+      title: Text(S.t('forceGrabSelectedIdsLengthReleases1', [selectedIds.length])),
+      content: Text(
+        S.t('areYouSureYouWantToForceDownloadTheSelectedReleasesFromTheQueue'),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         ElevatedButton(
           onPressed: () async {
@@ -2321,7 +2321,7 @@ class _QueueBulkGrabDialog extends ConsumerWidget {
             if (!context.mounted) return;
             if (error != null) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Erreur lors du grab des éléments : $error')),
+                SnackBar(content: Text(S.t('errorGrabbingItemsError1', [error]))),
               );
               return;
             }
@@ -2330,12 +2330,12 @@ class _QueueBulkGrabDialog extends ConsumerWidget {
             Navigator.pop(context); // pop dialog
 
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Grab forcé déclenché avec succès'),
+              SnackBar(
+                content: Text(S.t('forcedGrabSuccessfullyTriggered')),
               ),
             );
           },
-          child: const Text('Grab forcé'),
+          child: Text(S.t('forceGrab')),
         ),
       ],
     );

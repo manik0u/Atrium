@@ -102,7 +102,7 @@ class _QbittorrentLogsTabState extends ConsumerState<QbittorrentLogsTab> {
     try {
       await Clipboard.setData(ClipboardData(text: text));
     } on PlatformException {
-      message = 'Impossible de copier dans le presse-papiers';
+      message = S.t('couldNotCopyToTheClipboard');
     }
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
@@ -136,18 +136,18 @@ class _QbittorrentLogsTabState extends ConsumerState<QbittorrentLogsTab> {
                 autofocus: true,
                 style: theme.textTheme.titleMedium,
                 decoration: InputDecoration(
-                  hintText: 'Rechercher dans les journaux…',
+                  hintText: S.t('searchLogs'),
                   border: InputBorder.none,
                   hintStyle: theme.textTheme.titleMedium
                       ?.copyWith(color: cs.onSurfaceVariant),
                 ),
               )
-            : Text('Journaux de ${widget.instance.name}'),
+            : Text(S.t('widgetInstanceNameLogs1', [widget.instance.name])),
         actions: <Widget>[
           if (_isSearching)
             IconButton(
               icon: const Icon(Icons.close),
-              tooltip: 'Fermer la recherche',
+              tooltip: S.t('closeSearch'),
               onPressed: () {
                 setState(() {
                   _isSearching = false;
@@ -159,13 +159,13 @@ class _QbittorrentLogsTabState extends ConsumerState<QbittorrentLogsTab> {
           else ...<Widget>[
             IconButton(
               icon: const Icon(Icons.search),
-              tooltip: 'Rechercher dans les journaux',
+              tooltip: S.t('searchLogs_2'),
               onPressed: () => setState(() => _isSearching = true),
             ),
             IconButton(
               icon: const Icon(Icons.copy_all_outlined),
               // It copies what the filter and search leave, not everything.
-              tooltip: 'Copier les journaux',
+              tooltip: S.t('copyLogs'),
               onPressed: () {
                 final List<QbitLogEntry>? currentLogs = logsAsync.value;
                 if (currentLogs != null) {
@@ -176,7 +176,7 @@ class _QbittorrentLogsTabState extends ConsumerState<QbittorrentLogsTab> {
             ),
             IconButton(
               icon: const Icon(Icons.refresh),
-              tooltip: 'Actualiser',
+              tooltip: S.t('refresh'),
               onPressed: () => ref.invalidate(qbitLogsProvider(widget.instance)),
             ),
           ],
@@ -198,11 +198,11 @@ class _QbittorrentLogsTabState extends ConsumerState<QbittorrentLogsTab> {
                   return EmptyView(
                     icon: Icons.article_outlined,
                     title: allLogs.isEmpty
-                        ? 'Aucun journal disponible'
-                        : 'Aucun journal correspondant',
+                        ? S.t('noLogsAvailable')
+                        : S.t('noMatchingLogs'),
                     message: allLogs.isEmpty
                         ? 'qBittorrent has not reported any log entries yet.'
-                        : 'Essayez de changer votre requête ou votre filtre de niveau.',
+                        : S.t('tryChangingYourSearchQueryOrLevelFilter'),
                   );
                 }
 
@@ -210,14 +210,14 @@ class _QbittorrentLogsTabState extends ConsumerState<QbittorrentLogsTab> {
                 final List<QbitLogEntry> reversed = filtered.reversed.toList();
 
                 return EasyRefresh(
-                  header: const ClassicHeader(
-                    dragText: 'Pull to refresh',
-                    armedText: 'Release ready',
-                    readyText: 'Refreshing...',
-                    processingText: 'Refreshing...',
-                    processedText: 'Succeeded',
-                    failedText: 'Failed',
-                    messageText: 'Last updated at %T',
+                  header: ClassicHeader(
+                    dragText: S.t('pullToRefresh'),
+                    armedText: S.t('releaseReady'),
+                    readyText: S.t('refreshing'),
+                    processingText: S.t('refreshing'),
+                    processedText: S.t('succeeded'),
+                    failedText: S.t('failed'),
+                    messageText: S.t('lastUpdatedAtT'),
                   ),
                   onRefresh: () async {
                     ref.invalidate(qbitLogsProvider(widget.instance));
@@ -272,7 +272,7 @@ class _QbittorrentLogsTabState extends ConsumerState<QbittorrentLogsTab> {
             padding: const EdgeInsets.only(right: Insets.xs),
             child: FilterChip(
               selected: _selectedLevel == null,
-              label: const Text('Tous'),
+              label: Text(S.t('all')),
               onSelected: (_) => setState(() => _selectedLevel = null),
             ),
           ),

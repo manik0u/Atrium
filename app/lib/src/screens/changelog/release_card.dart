@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -5,9 +6,9 @@ import 'release_notes.dart';
 
 /// The label shown for a change category.
 String categoryLabel(ChangeCategory category) => switch (category) {
-      ChangeCategory.added => 'Nouveau',
-      ChangeCategory.improved => 'Amélioré',
-      ChangeCategory.fixed => 'Corrigé',
+      ChangeCategory.added => S.t('new'),
+      ChangeCategory.improved => S.t('improved'),
+      ChangeCategory.fixed => S.t('fixed'),
     };
 
 /// The dynamic color for a change category, taken from the color scheme.
@@ -133,7 +134,7 @@ class _InstalledPill extends StatelessWidget {
         borderRadius: BorderRadius.circular(999),
       ),
       child: Text(
-        'Installed',
+        S.t('installed'),
         style: textTheme.labelSmall?.copyWith(
           color: scheme.onPrimaryContainer,
           fontWeight: FontWeight.w600,

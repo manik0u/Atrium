@@ -110,9 +110,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Open Activity History from overflow menu
-      await tester.tap(find.byTooltip("Plus d'options"));
+      await tester.tap(find.byTooltip('More options'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text("Historique d'activité"));
+      await tester.tap(find.text('Activity History'));
       await tester.pumpAndSettle();
 
       expect(find.text('Radiohead - OK Computer (FLAC)'), findsOneWidget);
@@ -269,7 +269,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // 1. Tap Refresh & Scan button in AppBar
-      await tester.tap(find.byTooltip('Actualiser et analyser'));
+      await tester.tap(find.byTooltip('Refresh & Scan'));
       await tester.pumpAndSettle();
 
       expect(dispatchedCommands, hasLength(1));
@@ -291,10 +291,10 @@ void main() {
         scrollable: find.byType(Scrollable).first,
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.byTooltip("Options de l'album").first);
+      await tester.tap(find.byTooltip('Album options').first);
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Recherche automatique'));
+      await tester.tap(find.text('Auto Search'));
       await tester.pumpAndSettle();
 
       expect(dispatchedCommands, hasLength(3));
@@ -322,7 +322,7 @@ void main() {
 
       expect(find.text('Media & File Information'), findsOneWidget);
       expect(find.textContaining('FLAC'), findsAtLeast(1));
-      expect(find.text('Supprimer le fichier audio'), findsOneWidget);
+      expect(find.text('Delete Audio File'), findsOneWidget);
 
       // Close track details sheet and pop AlbumDetailScreen
       Navigator.of(tester.element(find.text('Media & File Information'))).pop();
@@ -331,7 +331,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // 6. Open Artist Info & Links modal bottom sheet
-      await tester.tap(find.byTooltip("Infos et liens de l'artiste"));
+      await tester.tap(find.byTooltip('Artist Info & Links'));
       await tester.pumpAndSettle();
 
       expect(find.text('Configuration & Library'), findsOneWidget);
@@ -446,10 +446,10 @@ void main() {
         scrollable: find.byType(Scrollable).first,
       );
       expect(find.text('Studio Albums (2)'), findsOneWidget);
-      expect(find.text('Surveillé'), findsAtLeast(1));
+      expect(find.text('Monitored'), findsAtLeast(1));
 
       // Tap the section monitoring button to unmonitor studio albums
-      await tester.tap(find.widgetWithText(TextButton, 'Surveillé').first);
+      await tester.tap(find.widgetWithText(TextButton, 'Monitored').first);
       await tester.pumpAndSettle();
 
       expect(putCalls, hasLength(1));
@@ -570,20 +570,20 @@ void main() {
 
       // Verify contextual selection AppBar and bulk actions bar
       expect(find.text('1 selected'), findsOneWidget);
-      expect(find.text('Tout sélectionner'), findsOneWidget);
-      expect(find.text('Inverser'), findsOneWidget);
-      expect(find.text('Surveiller'), findsOneWidget);
-      expect(find.text('Ne plus surveiller'), findsOneWidget);
-      expect(find.text('Rechercher'), findsOneWidget);
-      expect(find.text('Supprimer'), findsOneWidget);
+      expect(find.text('Select All'), findsOneWidget);
+      expect(find.text('Invert'), findsOneWidget);
+      expect(find.text('Monitor'), findsOneWidget);
+      expect(find.text('Unmonitor'), findsOneWidget);
+      expect(find.text('Search'), findsOneWidget);
+      expect(find.text('Delete'), findsOneWidget);
 
       // Tap Select All
-      await tester.tap(find.text('Tout sélectionner'));
+      await tester.tap(find.text('Select All'));
       await tester.pumpAndSettle();
       expect(find.text('2 selected'), findsOneWidget);
 
       // Tap Bulk Search
-      await tester.tap(find.text('Rechercher'));
+      await tester.tap(find.text('Search'));
       await tester.pumpAndSettle();
 
       expect(commands, hasLength(1));
@@ -598,7 +598,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('1 selected'), findsOneWidget);
 
-      await tester.tap(find.text('Ne plus surveiller'));
+      await tester.tap(find.text('Unmonitor'));
       await tester.pumpAndSettle();
 
       expect(putCalls, hasLength(1));
@@ -643,7 +643,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Initially shows empty search prompt
-      expect(find.text('Rechercher un artiste à ajouter'), findsOneWidget);
+      expect(find.text('Search for an artist to add'), findsOneWidget);
 
       // Enter search text
       await tester.enterText(find.byType(SearchBar), 'The Smile');
@@ -656,7 +656,7 @@ void main() {
       expect(find.widgetWithText(Card, 'The Smile'), findsOneWidget);
 
       // Radiohead has 'Added' badge
-      expect(find.text('Ajouté'), findsOneWidget);
+      expect(find.text('Added'), findsOneWidget);
 
       // The Smile has add circle icon
       expect(find.byIcon(Icons.add_circle_outline), findsOneWidget);
@@ -780,17 +780,17 @@ void main() {
       await tester.pumpAndSettle();
 
       // Check artist identity
-      expect(find.text("Options d'ajout de l'artiste"), findsOneWidget);
+      expect(find.text('Add Artist Options'), findsOneWidget);
       expect(find.text('The Smile'), findsOneWidget);
       expect(find.text('(UK rock group)'), findsOneWidget);
       expect(find.text('Alternative Rock, Post-Punk'), findsOneWidget);
 
       // Check section cards
       expect(find.text('Paths & Profiles'), findsOneWidget);
-      expect(find.text('Options de surveillance'), findsOneWidget);
-      expect(find.text('Surveillé'), findsOneWidget);
-      expect(find.text('Rechercher les albums manquants'), findsOneWidget);
-      expect(find.text('Balises'), findsOneWidget);
+      expect(find.text('Monitoring Options'), findsOneWidget);
+      expect(find.text('Monitored'), findsOneWidget);
+      expect(find.text('Search for Missing Albums'), findsOneWidget);
+      expect(find.text('Tags'), findsOneWidget);
 
       // Check tag chips
       expect(find.text('favorite'), findsOneWidget);
@@ -802,12 +802,12 @@ void main() {
 
       // Toggle search for missing albums switch
       await tester.tap(
-        find.widgetWithText(SwitchListTile, 'Rechercher les albums manquants'),
+        find.widgetWithText(SwitchListTile, 'Search for Missing Albums'),
       );
       await tester.pumpAndSettle();
 
       // Tap Add Artist button
-      await tester.tap(find.widgetWithText(FilledButton, 'Ajouter un artiste'));
+      await tester.tap(find.widgetWithText(FilledButton, 'Add Artist'));
       await tester.pumpAndSettle();
 
       // Verify POST call was triggered with correct fields
@@ -947,10 +947,10 @@ void main() {
 
       expect(find.text('Edit Radiohead'), findsOneWidget);
       expect(find.text('Profiles & Paths'), findsOneWidget);
-      expect(find.text('Surveillance'), findsOneWidget);
+      expect(find.text('Monitoring'), findsOneWidget);
 
       // Tap Save Changes
-      await tester.tap(find.widgetWithText(FilledButton, 'Enregistrer les modifications'));
+      await tester.tap(find.widgetWithText(FilledButton, 'Save Changes'));
       await tester.pumpAndSettle();
 
       expect(putCalled, isTrue);
@@ -1110,21 +1110,21 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(find.text('1 selected'), findsOneWidget);
-        expect(find.text('Modifier'), findsOneWidget);
-        expect(find.text('Supprimer'), findsOneWidget);
-        expect(find.byTooltip("Plus d'actions groupées"), findsOneWidget);
+        expect(find.text('Edit'), findsOneWidget);
+        expect(find.text('Delete'), findsOneWidget);
+        expect(find.byTooltip('More bulk actions'), findsOneWidget);
 
         // 3. Select All
-        await tester.tap(find.text('Tout sélectionner'));
+        await tester.tap(find.text('Select All'));
         await tester.pumpAndSettle();
         expect(find.text('2 selected'), findsOneWidget);
 
         // 4. Test Bulk Edit Dialog
-        await tester.tap(find.text('Modifier'));
+        await tester.tap(find.text('Edit'));
         await tester.pumpAndSettle();
 
         expect(find.text('Edit 2 artists'), findsOneWidget);
-        await tester.tap(find.text('Appliquer les modifications'));
+        await tester.tap(find.text('Apply Changes'));
         await tester.pumpAndSettle();
 
         expect(lastPutPayload?['artistIds'], unorderedEquals([1, 2]));
@@ -1138,12 +1138,12 @@ void main() {
         await tester.pumpAndSettle();
         expect(find.text('1 selected'), findsOneWidget);
 
-        await tester.tap(find.byTooltip("Plus d'actions groupées"));
+        await tester.tap(find.byTooltip('More bulk actions'));
         await tester.pumpAndSettle();
-        await tester.tap(find.widgetWithText(ListTile, 'Renommer les fichiers'));
+        await tester.tap(find.widgetWithText(ListTile, 'Rename Files'));
         await tester.pumpAndSettle();
-        expect(find.text('Renommer les fichiers'), findsWidgets);
-        await tester.tap(find.widgetWithText(FilledButton, 'Renommer les fichiers'));
+        expect(find.text('Rename Files'), findsWidgets);
+        await tester.tap(find.widgetWithText(FilledButton, 'Rename Files'));
         await tester.pumpAndSettle();
 
         expect(lastCommand, equals('RenameArtist'));
@@ -1156,7 +1156,7 @@ void main() {
         await tester.longPress(find.text('Radiohead'));
         await tester.pumpAndSettle();
 
-        await tester.tap(find.text('Supprimer'));
+        await tester.tap(find.text('Delete'));
         await tester.pumpAndSettle();
 
         expect(find.text('Delete 1 Artists?'), findsOneWidget);
@@ -1248,13 +1248,13 @@ void main() {
         await tester.pumpAndSettle();
 
         // 1. Album Studio Action
-        await tester.tap(find.byTooltip("Plus d'options"));
+        await tester.tap(find.byTooltip('More options'));
         await tester.pumpAndSettle();
-        expect(find.text("Studio d'albums"), findsOneWidget);
-        await tester.tap(find.text("Studio d'albums"));
+        expect(find.text('Album Studio'), findsOneWidget);
+        await tester.tap(find.text('Album Studio'));
         await tester.pumpAndSettle();
 
-        expect(find.text("Studio d'albums"), findsWidgets);
+        expect(find.text('Album Studio'), findsWidgets);
         expect(find.text('Radiohead'), findsWidgets);
 
         // Close Album Studio
@@ -1262,16 +1262,16 @@ void main() {
         await tester.pumpAndSettle();
 
         // 2. Calendar Feed Action
-        await tester.tap(find.byTooltip("Plus d'options"));
+        await tester.tap(find.byTooltip('More options'));
         await tester.pumpAndSettle();
-        expect(find.text('Flux calendrier iCal'), findsOneWidget);
-        await tester.tap(find.text('Flux calendrier iCal'));
+        expect(find.text('iCal Calendar Feed'), findsOneWidget);
+        await tester.tap(find.text('iCal Calendar Feed'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Flux calendrier iCal'), findsWidgets);
-        expect(find.byTooltip("Copier l'URL"), findsOneWidget);
+        expect(find.text('iCal Calendar Feed'), findsWidgets);
+        expect(find.byTooltip('Copy URL'), findsOneWidget);
 
-        await tester.tap(find.text('Fermer'));
+        await tester.tap(find.text('Close'));
         await tester.pumpAndSettle();
       },
     );

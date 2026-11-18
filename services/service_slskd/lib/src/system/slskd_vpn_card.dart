@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -60,13 +61,13 @@ class SlskdVpnCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        'VPN Protection',
+                        S.t('vpnProtection'),
                         style: textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        vpn.location ?? (isConnected ? 'Protected' : 'Inactive'),
+                        vpn.location ?? (isConnected ? 'Protected' : S.t('inactive')),
                         style: textTheme.bodySmall?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),
@@ -84,7 +85,7 @@ class SlskdVpnCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    isConnected ? 'Protected' : 'Disconnected',
+                    isConnected ? 'Protected' : S.t('disconnected'),
                     style: textTheme.labelSmall?.copyWith(
                       color: statusText,
                       fontWeight: FontWeight.bold,

@@ -92,7 +92,7 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Régénérer la clé API ?'),
+        title: Text(S.t('regenerateAPIKey')),
         content: const Text(
           'This replaces the Radarr API key. The server key changes '
           'immediately once you save, and this app will lose access to this '
@@ -101,11 +101,11 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(dialogContext, true),
-            child: const Text('Régénérer'),
+            child: Text(S.t('regenerate')),
           ),
         ],
       ),
@@ -147,8 +147,8 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Paramètres généraux enregistrés !'),
+          SnackBar(
+            content: Text(S.t('generalConfigurationSettingsSaved')),
           ),
         );
         Navigator.pop(context);
@@ -156,7 +156,7 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Échec de l'enregistrement des paramètres généraux : $e")),
+          SnackBar(content: Text(S.t('failedToSaveGeneralConfigurationE1', [e]))),
         );
       }
     } finally {
@@ -172,7 +172,7 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Paramètres généraux'),
+        title: Text(S.t('generalSettings')),
         actions: [
           if (_saving)
             const Padding(
@@ -192,7 +192,7 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
       ),
       body: hostConfigAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Erreur : $err')),
+        error: (err, stack) => Center(child: Text(S.t('errorErr1', [err]))),
         data: (config) {
           _initializeValues(config);
 
@@ -214,38 +214,38 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Host Config',
+                          S.t('hostConfig'),
                           style: theme.textTheme.titleMedium
                               ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: Insets.md),
                         TextFormField(
                           controller: _bindAddressController,
-                          decoration: const InputDecoration(
-                            labelText: 'Adresse de liaison',
+                          decoration: InputDecoration(
+                            labelText: S.t('bindAddress'),
                             border: OutlineInputBorder(),
-                            helperText: 'Utilisez * pour toutes les interfaces',
+                            helperText: S.t('useForAllInterfaces'),
                           ),
                           validator: (val) => val == null || val.trim().isEmpty
-                              ? 'Required'
+                              ? S.t('required')
                               : null,
                         ),
                         const SizedBox(height: Insets.md),
                         TextFormField(
                           controller: _portController,
                           keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Port',
+                          decoration: InputDecoration(
+                            labelText: S.t('port'),
                             border: OutlineInputBorder(),
                           ),
                           validator: (val) => val == null || val.trim().isEmpty
-                              ? 'Required'
+                              ? S.t('required')
                               : null,
                         ),
                         const SizedBox(height: Insets.md),
                         SwitchListTile(
                           contentPadding: EdgeInsets.zero,
-                          title: const Text('Activer SSL'),
+                          title: Text(S.t('enableSSL')),
                           value: _enableSsl,
                           onChanged: (val) => setState(() => _enableSsl = val),
                         ),
@@ -254,13 +254,13 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
                           TextFormField(
                             controller: _sslPortController,
                             keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              labelText: 'Port SSL',
+                            decoration: InputDecoration(
+                              labelText: S.t('sslPort'),
                               border: OutlineInputBorder(),
                             ),
                             validator: (val) =>
                                 val == null || val.trim().isEmpty
-                                    ? 'Required'
+                                    ? S.t('required')
                                     : null,
                           ),
                         ],
@@ -282,15 +282,15 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Security Config',
+                          S.t('securityConfig'),
                           style: theme.textTheme.titleMedium
                               ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: Insets.md),
                         TextFormField(
                           controller: _usernameController,
-                          decoration: const InputDecoration(
-                            labelText: "Nom d'utilisateur",
+                          decoration: InputDecoration(
+                            labelText: S.t('username'),
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -298,9 +298,9 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
                         TextFormField(
                           controller: _passwordController,
                           obscureText: true,
-                          decoration: const InputDecoration(
-                            labelText: 'Mot de passe',
-                            helperText: 'Laissez vide pour conserver le mot de passe existant',
+                          decoration: InputDecoration(
+                            labelText: S.t('password'),
+                            helperText: S.t('leaveEmptyToKeepExistingPassword'),
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -311,8 +311,8 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
                               child: TextFormField(
                                 controller: _apiKeyController,
                                 readOnly: true,
-                                decoration: const InputDecoration(
-                                  labelText: 'Clé API',
+                                decoration: InputDecoration(
+                                  labelText: S.t('apiKey'),
                                   border: OutlineInputBorder(),
                                 ),
                               ),
@@ -329,9 +329,9 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
                                   ClipboardData(text: _apiKeyController.text),
                                 );
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
+                                  SnackBar(
                                     content:
-                                        Text('Clé API copiée dans le presse-papiers !'),
+                                        Text(S.t('apiKeyCopiedToClipboard')),
                                   ),
                                 );
                               },
@@ -356,15 +356,15 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Logging & Updates',
+                          S.t('loggingUpdates'),
                           style: theme.textTheme.titleMedium
                               ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: Insets.md),
                         DropdownButtonFormField<String>(
                           initialValue: _logLevel,
-                          decoration: const InputDecoration(
-                            labelText: 'Niveau de journalisation',
+                          decoration: InputDecoration(
+                            labelText: S.t('logLevel'),
                             border: OutlineInputBorder(),
                           ),
                           items: _logLevels
@@ -382,12 +382,12 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
                         const SizedBox(height: Insets.md),
                         TextFormField(
                           controller: _branchController,
-                          decoration: const InputDecoration(
-                            labelText: 'Branche',
+                          decoration: InputDecoration(
+                            labelText: S.t('branch'),
                             border: OutlineInputBorder(),
                           ),
                           validator: (val) => val == null || val.trim().isEmpty
-                              ? 'Required'
+                              ? S.t('required')
                               : null,
                         ),
                       ],

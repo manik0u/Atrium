@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'plex_session.freezed.dart';
@@ -64,7 +65,7 @@ abstract class PlexSession with _$PlexSession {
       (transcode!.videoDecision == 'transcode' ||
           transcode!.audioDecision == 'transcode');
 
-  String get decisionLabel => isTranscode ? 'Transcodage' : 'Lecture directe';
+  String get decisionLabel => isTranscode ? S.t('transcoding') : S.t('directPlay');
 }
 
 @freezed

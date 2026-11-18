@@ -36,7 +36,7 @@ class ImportListsSection extends ConsumerWidget {
     if (presets == null || presets.isEmpty) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Échec du chargement des préréglages de listes d'import.")),
+          SnackBar(content: Text(S.t('failedToLoadImportListPresets'))),
         );
       }
       return;
@@ -47,14 +47,14 @@ class ImportListsSection extends ConsumerWidget {
     final ImportListResource? selectedPreset =
         await showSchemaPresetPicker<ImportListResource>(
       context: context,
-      title: "Ajouter une liste d'import",
+      title: S.t('addImportList'),
       presets: presets,
       titleBuilder: (preset) {
         final String impl = preset.implementationName?.trim() ?? '';
         final String name = preset.name?.trim() ?? '';
         if (impl.isNotEmpty) return impl;
         if (name.isNotEmpty && name != 'Import List') return name;
-        return preset.implementation ?? 'Import List';
+        return preset.implementation ?? S.t('importList');
       },
       subtitleBuilder: (preset) {
         final String impl = preset.implementationName?.trim() ?? '';
@@ -151,16 +151,16 @@ class ImportListsSection extends ConsumerWidget {
                     children: [
                       TextField(
                         controller: nameController,
-                        decoration: const InputDecoration(
-                          labelText: 'Nom de la liste',
+                        decoration: InputDecoration(
+                          labelText: S.t('listName'),
                           border: OutlineInputBorder(),
                         ),
                       ),
                       const SizedBox(height: Insets.sm),
                       SwitchListTile(
-                        title: const Text("Activer l'ajout automatique"),
+                        title: Text(S.t('enableAutomaticAdd')),
                         subtitle:
-                            const Text('Ajouter automatiquement les nouveaux artistes/albums'),
+                            Text(S.t('automaticallyAddNewArtistsAlbums')),
                         value: enableAutomaticAdd,
                         contentPadding: EdgeInsets.zero,
                         dense: true,
@@ -168,9 +168,9 @@ class ImportListsSection extends ConsumerWidget {
                             setDialogState(() => enableAutomaticAdd = val),
                       ),
                       SwitchListTile(
-                        title: const Text("Rechercher à l'ajout"),
-                        subtitle: const Text(
-                          'Lancer la recherche automatique pour les albums ajoutés',
+                        title: Text(S.t('searchOnAdd')),
+                        subtitle: Text(
+                          S.t('startAutomaticSearchForAddedAlbums'),
                         ),
                         value: shouldSearch,
                         contentPadding: EdgeInsets.zero,
@@ -183,15 +183,15 @@ class ImportListsSection extends ConsumerWidget {
                         DropdownButtonFormField<String>(
                           isExpanded: true,
                           initialValue: rootFolderPath,
-                          decoration: const InputDecoration(
-                            labelText: 'Dossier racine',
+                          decoration: InputDecoration(
+                            labelText: S.t('rootFolder'),
                             border: OutlineInputBorder(),
                           ),
                           items: rootFolders.map((RootFolderResource rf) {
                             return DropdownMenuItem<String>(
                               value: rf.path,
                               child: Text(
-                                rf.path ?? 'Unknown',
+                                rf.path ?? S.t('unknown'),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             );
@@ -205,15 +205,15 @@ class ImportListsSection extends ConsumerWidget {
                         DropdownButtonFormField<int>(
                           isExpanded: true,
                           initialValue: qualityProfileId,
-                          decoration: const InputDecoration(
-                            labelText: 'Profil de qualité',
+                          decoration: InputDecoration(
+                            labelText: S.t('qualityProfile'),
                             border: OutlineInputBorder(),
                           ),
                           items:
                               qualityProfiles.map((QualityProfileResource qp) {
                             return DropdownMenuItem<int>(
                               value: qp.id,
-                              child: Text(qp.name ?? 'Profil de qualité'),
+                              child: Text(qp.name ?? S.t('qualityProfile')),
                             );
                           }).toList(),
                           onChanged: (int? val) =>
@@ -225,15 +225,15 @@ class ImportListsSection extends ConsumerWidget {
                         DropdownButtonFormField<int>(
                           isExpanded: true,
                           initialValue: metadataProfileId,
-                          decoration: const InputDecoration(
-                            labelText: 'Profil de métadonnées',
+                          decoration: InputDecoration(
+                            labelText: S.t('metadataProfile'),
                             border: OutlineInputBorder(),
                           ),
                           items: metadataProfiles
                               .map((MetadataProfileResource mp) {
                             return DropdownMenuItem<int>(
                               value: mp.id,
-                              child: Text(mp.name ?? 'Profil de métadonnées'),
+                              child: Text(mp.name ?? S.t('metadataProfile')),
                             );
                           }).toList(),
                           onChanged: (int? val) =>
@@ -268,7 +268,7 @@ class ImportListsSection extends ConsumerWidget {
                               .postImportlistTest(body: payload);
                           if (!resp.isSuccess) {
                             throw Exception(
-                              resp.error?.message ?? 'Échec du test de la liste',
+                              resp.error?.message ?? S.t('listTestFailed'),
                             );
                           }
                         },
@@ -333,7 +333,7 @@ class ImportListsSection extends ConsumerWidget {
                               messenger.showSnackBar(
                                 SnackBar(
                                   content:
-                                      Text("Échec de l'enregistrement de la liste d'import : $e"),
+                                      Text(S.t('failedToSaveImportListE1', [e])),
                                 ),
                               );
                             }
@@ -368,7 +368,7 @@ class ImportListsSection extends ConsumerWidget {
       builder: (BuildContext ctx) {
         return AlertDialog(
           title: Text(
-            isNew ? 'Add Import List Exclusion' : 'Edit Exclusion',
+            isNew ? S.t('addImportListExclusion_2') : S.t('editExclusion'),
           ),
           content: Form(
             key: formKey,
@@ -378,9 +378,9 @@ class ImportListsSection extends ConsumerWidget {
                 children: <Widget>[
                   TextFormField(
                     controller: artistNameController,
-                    decoration: const InputDecoration(
-                      labelText: "Nom de l'artiste",
-                      hintText: 'ex. The Beatles',
+                    decoration: InputDecoration(
+                      labelText: S.t('artistName_2'),
+                      hintText: S.t('eGTheBeatles'),
                       border: OutlineInputBorder(),
                     ),
                     validator: (String? value) {
@@ -393,8 +393,8 @@ class ImportListsSection extends ConsumerWidget {
                   const SizedBox(height: Insets.sm),
                   TextFormField(
                     controller: foreignIdController,
-                    decoration: const InputDecoration(
-                      labelText: "ID MusicBrainz de l'artiste",
+                    decoration: InputDecoration(
+                      labelText: S.t('musicbrainzArtistID'),
                       hintText: 'e.g. b10bbbfc-cf9e-42e0-be17-e2c3e1d52350',
                       border: OutlineInputBorder(),
                     ),
@@ -412,7 +412,7 @@ class ImportListsSection extends ConsumerWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             FilledButton(
               onPressed: () async {
@@ -473,13 +473,13 @@ class ImportListsSection extends ConsumerWidget {
                   if (ctx.mounted) {
                     messenger.showSnackBar(
                       SnackBar(
-                        content: Text("Erreur lors de l'enregistrement de l'exclusion : $e"),
+                        content: Text(S.t('errorSavingExclusionE1', [e])),
                       ),
                     );
                   }
                 }
               },
-              child: const Text('Enregistrer'),
+              child: Text(S.t('save')),
             ),
           ],
         );
@@ -498,13 +498,13 @@ class ImportListsSection extends ConsumerWidget {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: Text('Supprimer ${list.name ?? 'Import List'}?'),
+        title: Text(S.t('deleteListName')Import List'}?'),
         content:
-            const Text("Voulez-vous vraiment supprimer cette liste d'import ?"),
+            Text(S.t('areYouSureYouWantToDeleteThisImportList')),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -512,7 +512,7 @@ class ImportListsSection extends ConsumerWidget {
               foregroundColor: Theme.of(ctx).colorScheme.onError,
             ),
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Supprimer'),
+            child: Text(S.t('delete')),
           ),
         ],
       ),
@@ -527,17 +527,17 @@ class ImportListsSection extends ConsumerWidget {
           await api.importList.deleteImportlistById(id: id);
       if (!resp.isSuccess) {
         throw Exception(
-          resp.error?.message ?? "Échec de la suppression de la liste d'import",
+          resp.error?.message ?? S.t('failedToDeleteImportList'),
         );
       }
 
       ref.invalidate(lidarrImportListsProvider(instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text("Liste d'import supprimée.")),
+        SnackBar(content: Text(S.t('importListDeleted_2'))),
       );
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text("Échec de la suppression de la liste d'import : $e")),
+        SnackBar(content: Text(S.t('failedToDeleteImportListE1', [e]))),
       );
     }
   }
@@ -553,14 +553,14 @@ class ImportListsSection extends ConsumerWidget {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text("Supprimer l'exclusion ?"),
+        title: Text(S.t('deleteExclusion')),
         content: Text(
           'Are you sure you want to remove "${exclusion.artistName ?? 'Artist'}" from the exclusions list?',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -568,7 +568,7 @@ class ImportListsSection extends ConsumerWidget {
               foregroundColor: Theme.of(ctx).colorScheme.onError,
             ),
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Supprimer'),
+            child: Text(S.t('delete')),
           ),
         ],
       ),
@@ -583,17 +583,17 @@ class ImportListsSection extends ConsumerWidget {
           await api.importListExclusion.deleteImportlistexclusionById(id: id);
       if (!resp.isSuccess) {
         throw Exception(
-          resp.error?.message ?? "Échec de la suppression de l'exclusion",
+          resp.error?.message ?? S.t('failedToDeleteExclusion'),
         );
       }
 
       ref.invalidate(lidarrImportListExclusionsProvider(instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Exclusion retirée.')),
+        SnackBar(content: Text(S.t('exclusionRemoved'))),
       );
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text("Échec de la suppression de l'exclusion : $e")),
+        SnackBar(content: Text(S.t('failedToDeleteExclusionE1', [e]))),
       );
     }
   }
@@ -617,7 +617,7 @@ class ImportListsSection extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         heroTag: 'add_import_list',
         onPressed: () => _selectListPresetAndAdd(context, ref),
-        tooltip: "Ajouter une liste d'import",
+        tooltip: S.t('addImportList'),
         child: const Icon(Icons.add),
       ),
       body: EasyRefresh(
@@ -633,7 +633,7 @@ class ImportListsSection extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  'Import Lists',
+                  S.t('importLists'),
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -673,7 +673,7 @@ class ImportListsSection extends ConsumerWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            "Aucune liste d'import",
+                            S.t('noImportLists'),
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -726,7 +726,7 @@ class ImportListsSection extends ConsumerWidget {
                             ),
                           ),
                           title: Text(
-                            item.name ?? 'Import List',
+                            item.name ?? S.t('importList'),
                             style: theme.textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                               fontSize: 15,
@@ -749,7 +749,7 @@ class ImportListsSection extends ConsumerWidget {
                           ),
                           trailing: IconButton(
                             icon: const Icon(Icons.delete_outline, size: 20),
-                            tooltip: "Supprimer la liste d'import",
+                            tooltip: S.t('deleteImportList'),
                             onPressed: () =>
                                 _deleteImportList(context, ref, item),
                           ),
@@ -773,14 +773,14 @@ class ImportListsSection extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  'Import List Exclusions',
+                  S.t('importListExclusions'),
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.add, size: 20),
-                  tooltip: 'Ajouter une exclusion',
+                  tooltip: S.t('addExclusion'),
                   onPressed: () => _showExclusionEditorDialog(context, ref),
                 ),
               ],
@@ -821,7 +821,7 @@ class ImportListsSection extends ConsumerWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            "Artistes empêchés d'être ajoutés automatiquement par les listes d'import.",
+                            S.t('artistsPreventedFromBeingAutoAddedByImportLists'),
                             textAlign: TextAlign.center,
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: cs.onSurfaceVariant,
@@ -882,7 +882,7 @@ class ImportListsSection extends ConsumerWidget {
                           ),
                           trailing: IconButton(
                             icon: const Icon(Icons.delete_outline, size: 20),
-                            tooltip: "Retirer l'exclusion",
+                            tooltip: S.t('removeExclusion'),
                             onPressed: () =>
                                 _deleteExclusion(context, ref, item),
                           ),

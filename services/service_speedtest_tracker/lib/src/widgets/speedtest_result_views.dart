@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -30,7 +31,7 @@ class SpeedtestLatestCard extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child:
-                      Text('Dernier résultat', style: theme.textTheme.titleMedium),
+                      Text(S.t('latestResult'), style: theme.textTheme.titleMedium),
                 ),
                 if (result.healthy != null)
                   Chip(
@@ -38,7 +39,7 @@ class SpeedtestLatestCard extends StatelessWidget {
                       result.healthy! ? Icons.check_circle : Icons.warning,
                       size: 17,
                     ),
-                    label: Text(result.healthy! ? 'Sain' : 'Défectueux'),
+                    label: Text(result.healthy! ? S.t('healthy') : S.t('unhealthy')),
                     visualDensity: VisualDensity.compact,
                   ),
               ],
@@ -49,7 +50,7 @@ class SpeedtestLatestCard extends StatelessWidget {
                 Expanded(
                   child: _Metric(
                     icon: Icons.download,
-                    label: 'Télécharger',
+                    label: S.t('download'),
                     value: formatSpeed(result.downloadBitsPerSecond),
                     color: theme.colorScheme.primary,
                   ),
@@ -58,7 +59,7 @@ class SpeedtestLatestCard extends StatelessWidget {
                 Expanded(
                   child: _Metric(
                     icon: Icons.upload,
-                    label: 'Téléverser',
+                    label: S.t('upload'),
                     value: formatSpeed(result.uploadBitsPerSecond),
                     color: theme.colorScheme.tertiary,
                   ),
@@ -67,7 +68,7 @@ class SpeedtestLatestCard extends StatelessWidget {
                 Expanded(
                   child: _Metric(
                     icon: Icons.network_ping,
-                    label: 'Ping',
+                    label: S.t('ping'),
                     value: formatMilliseconds(result.pingMilliseconds),
                     color: theme.colorScheme.secondary,
                   ),
@@ -215,40 +216,40 @@ void showSpeedtestResultDetails(
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: Insets.md),
-            _DetailRow(label: 'Statut', value: result.status.label),
+            _DetailRow(label: S.t('status'), value: result.status.label),
             _DetailRow(
-              label: 'Télécharger',
+              label: S.t('download'),
               value: formatSpeed(result.downloadBitsPerSecond),
             ),
             _DetailRow(
-              label: 'Téléverser',
+              label: S.t('upload'),
               value: formatSpeed(result.uploadBitsPerSecond),
             ),
             _DetailRow(
-              label: 'Ping',
+              label: S.t('ping'),
               value: formatMilliseconds(result.pingMilliseconds),
             ),
             if (result.jitterMilliseconds != null)
               _DetailRow(
-                label: 'Gigue',
+                label: S.t('jitter_2'),
                 value: formatMilliseconds(result.jitterMilliseconds),
               ),
             if (result.packetLossPercent != null)
               _DetailRow(
-                label: 'Perte de paquets',
+                label: S.t('packetLoss'),
                 value: formatPacketLoss(result.packetLossPercent),
               ),
             if (result.server?.displayName != null)
-              _DetailRow(label: 'Serveur', value: result.server!.displayName!),
+              _DetailRow(label: S.t('server'), value: result.server!.displayName!),
             if (result.server?.displayLocation != null)
               _DetailRow(
-                label: 'Emplacement',
+                label: S.t('location'),
                 value: result.server!.displayLocation!,
               ),
             if (result.isp != null)
-              _DetailRow(label: 'Fournisseur', value: result.isp!),
+              _DetailRow(label: S.t('provider'), value: result.isp!),
             _DetailRow(
-              label: 'Terminé',
+              label: S.t('done'),
               value: formatResultTime(result.completedAt),
             ),
           ],

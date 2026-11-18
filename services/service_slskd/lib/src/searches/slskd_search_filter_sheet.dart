@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -70,12 +71,12 @@ class _SlskdSearchFilterSheetState extends State<SlskdSearchFilterSheet> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  'Sort & Filter Results',
+                  S.t('sortFilterResults'),
                   style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 TextButton(
                   onPressed: _reset,
-                  child: const Text('Tout réinitialiser'),
+                  child: Text(S.t('resetAll')),
                 ),
               ],
             ),
@@ -123,7 +124,7 @@ class _SlskdSearchFilterSheetState extends State<SlskdSearchFilterSheet> {
                     size: 16,
                     color: _freeSlotOnly ? colorScheme.onSecondaryContainer : colorScheme.outline,
                   ),
-                  label: const Text('Emplacement libre uniquement (instantané)'),
+                  label: Text(S.t('freeSlotOnlyInstant')),
                   selected: _freeSlotOnly,
                   onSelected: (val) => setState(() => _freeSlotOnly = val),
                 ),
@@ -133,7 +134,7 @@ class _SlskdSearchFilterSheetState extends State<SlskdSearchFilterSheet> {
                     size: 16,
                     color: _hideLocked ? colorScheme.onSecondaryContainer : colorScheme.outline,
                   ),
-                  label: const Text('Masquer les fichiers verrouillés'),
+                  label: Text(S.t('hideLockedFiles')),
                   selected: _hideLocked,
                   onSelected: (val) => setState(() => _hideLocked = val),
                 ),
@@ -143,7 +144,7 @@ class _SlskdSearchFilterSheetState extends State<SlskdSearchFilterSheet> {
 
             // 3. Sort By
             Text(
-              'Sort By',
+              S.t('sortBy'),
               style: textTheme.labelLarge?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: colorScheme.primary,
@@ -179,7 +180,7 @@ class _SlskdSearchFilterSheetState extends State<SlskdSearchFilterSheet> {
                   );
                   Navigator.of(context).pop();
                 },
-                child: const Text('Terminé'),
+                child: Text(S.t('done')),
               ),
             ),
           ],

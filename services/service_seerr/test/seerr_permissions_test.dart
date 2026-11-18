@@ -104,16 +104,16 @@ void main() {
         'only their own pending request', (WidgetTester tester) async {
       await _pumpHome(tester, _user(_plain));
 
-      expect(find.text('Approuver'), findsNothing);
-      expect(find.text('Refuser'), findsNothing);
+      expect(find.text('Approve'), findsNothing);
+      expect(find.text('Decline'), findsNothing);
       // Theirs has a menu with only Delete; the other user's has none.
       expect(find.byIcon(Icons.more_vert), findsOneWidget);
       await tester.tap(find.byIcon(Icons.more_vert));
       await tester.pumpAndSettle();
-      expect(find.text('Supprimer'), findsOneWidget);
-      expect(find.text('Réessayer'), findsNothing);
+      expect(find.text('Delete'), findsOneWidget);
+      expect(find.text('Retry'), findsNothing);
       // The Issues tab stays, since this user may report issues.
-      expect(find.text('Problèmes'), findsOneWidget);
+      expect(find.text('Issues'), findsOneWidget);
 
       await _unmount(tester);
     });
@@ -122,8 +122,8 @@ void main() {
         (WidgetTester tester) async {
       await _pumpHome(tester, _user(SeerrPermission.manageRequests));
 
-      expect(find.text('Approuver'), findsNWidgets(2));
-      expect(find.text('Refuser'), findsNWidgets(2));
+      expect(find.text('Approve'), findsNWidgets(2));
+      expect(find.text('Decline'), findsNWidgets(2));
       expect(find.byIcon(Icons.more_vert), findsNWidgets(2));
 
       await _unmount(tester);
@@ -133,8 +133,8 @@ void main() {
         (WidgetTester tester) async {
       await _pumpHome(tester, _user(SeerrPermission.request));
 
-      expect(find.text('Demandes'), findsOneWidget);
-      expect(find.text('Problèmes'), findsNothing);
+      expect(find.text('Requests'), findsOneWidget);
+      expect(find.text('Issues'), findsNothing);
 
       await _unmount(tester);
     });
@@ -146,14 +146,14 @@ void main() {
       final _FakeApi api = _FakeApi(_user(SeerrPermission.request4kMovie));
       await _pumpDetail(tester, api);
 
-      await tester.tap(find.text('Demande'));
+      await tester.tap(find.text('Request'));
       await tester.pumpAndSettle();
       // The servers failed to load, so the sheet offers Seerr's defaults.
       expect(
         find.textContaining('Advanced options are unavailable'),
         findsOneWidget,
       );
-      await tester.tap(find.text('Demande').last);
+      await tester.tap(find.text('Request').last);
       await tester.pumpAndSettle();
 
       expect(api.requested, <bool>[true]);
@@ -166,7 +166,7 @@ void main() {
       final _FakeApi api = _FakeApi(_user(0), meFuture: me.future);
       await _pumpDetail(tester, api);
 
-      await tester.tap(find.text('Demande'));
+      await tester.tap(find.text('Request'));
       await tester.pumpAndSettle();
       // The screen's button and the sheet's, while nobody knows better.
       final Finder buttons = find.byWidgetPredicate(
@@ -175,7 +175,7 @@ void main() {
             find
                 .descendant(
                   of: find.byWidget(w),
-                  matching: find.text('Demande'),
+                  matching: find.text('Request'),
                 )
                 .evaluate()
                 .isNotEmpty,

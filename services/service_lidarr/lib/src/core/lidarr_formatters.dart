@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 /// Shared formatting utilities for Lidarr UI (file sizes, dates, durations).
 class LidarrFormatters {
   LidarrFormatters._();
@@ -37,7 +38,7 @@ class LidarrFormatters {
     final DateTime? dt = DateTime.tryParse(isoString);
     if (dt == null) return isoString;
     final Duration diff = DateTime.now().toUtc().difference(dt.toUtc());
-    if (diff.inSeconds < 60) return 'Just now';
+    if (diff.inSeconds < 60) return S.t('justNow');
     if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
     if (diff.inHours < 24) return '${diff.inHours}h ago';
     if (diff.inDays < 30) return '${diff.inDays}d ago';

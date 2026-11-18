@@ -1,4 +1,5 @@
 import 'models/ombi_models.dart';
+import 'package:core_models/core_models.dart';
 
 /// Which seasons a request asks for, or null when it lists none.
 ///
@@ -10,7 +11,7 @@ String? ombiSeasonsLabel(List<int> seasons) {
     return null;
   }
   if (seasons.length == 1) {
-    return seasons.single == 0 ? 'Specials' : 'Season ${seasons.single}';
+    return seasons.single == 0 ? S.t('specials') : 'Season ${seasons.single}';
   }
   final bool run = seasons.first >= 1 &&
       seasons.last - seasons.first == seasons.length - 1;
@@ -58,9 +59,9 @@ List<String> ombiTitleFacts({
 }) =>
     <String>[
       switch (kind) {
-        OmbiMediaKind.movie => 'Film',
-        OmbiMediaKind.tv => 'Série',
-        OmbiMediaKind.music => 'Album',
+        OmbiMediaKind.movie => S.t('movie'),
+        OmbiMediaKind.tv => S.t('tvShow'),
+        OmbiMediaKind.music => S.t('album'),
       },
       if (year != null) '$year',
       if (runtimeMinutes != null) ombiRuntime(runtimeMinutes),

@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -19,9 +20,9 @@ class SpeedtestHistoryChart extends StatelessWidget {
           result,
     ];
     if (points.length < 2) {
-      return const Padding(
+      return Padding(
         padding: EdgeInsets.symmetric(vertical: 24),
-        child: Center(child: Text('Lancez au moins deux tests pour tracer un historique.')),
+        child: Center(child: Text(S.t('runAtLeastTwoTestsToDrawAHistory'))),
       );
     }
 
@@ -54,15 +55,15 @@ class SpeedtestHistoryChart extends StatelessWidget {
   }
 
   String _dateLabel(DateTime? date, DateFormat format) =>
-      date == null ? 'Unknown' : format.format(date);
+      date == null ? S.t('unknown') : format.format(date);
 }
 
 enum _HistoryMetric { download, upload }
 
 extension on _HistoryMetric {
   String get title => switch (this) {
-        _HistoryMetric.download => 'Historique des téléchargements',
-        _HistoryMetric.upload => 'Historique des envois',
+        _HistoryMetric.download => S.t('downloadHistory'),
+        _HistoryMetric.upload => S.t('uploadHistory'),
       };
 
   double? valueOf(SpeedtestResult result) => switch (this) {
@@ -99,10 +100,8 @@ class _SeriesChart extends StatelessWidget {
       container: true,
       excludeSemantics: true,
       label: scale.hasValues
-          ? 'Graphique ${metric.title} de $startDate à $endDate, échelle zéro, '
-              'midpoint ${scale.midpointLabel}, maximum '
-              '${scale.maximumLabel} ${scale.unit}'
-          : 'Aucune donnée utilisable pour ${metric.title.toLowerCase()}',
+          ? S.t('k0ChartFrom1To2ScaleZeroMidpointScaleMidpointLabelMaximumScaleMaximumLabelScaleUnit3', [metric.title, startDate, endDate, scale.midpointLabel, scale.maximumLabel, scale.unit])
+          : S.t('noUsableMetricTitleToLowerCaseData1', [metric.title.toLowerCase()]),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -181,7 +180,7 @@ class _SeriesChart extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 28),
               child:
-                  Center(child: Text('Aucune donnée de ${metric.title.toLowerCase()}')),
+                  Center(child: Text(S.t('noMetricTitleToLowerCaseData1', [metric.title.toLowerCase()]))),
             ),
         ],
       ),
@@ -298,7 +297,7 @@ class _SeriesScale {
     final double roundedMaximum = _roundedUpperBound(maximum / divisor);
     return _SeriesScale(
       hasValues: hasValues,
-      unit: useGbps ? 'Gbps' : 'Mbps',
+      unit: useGbps ? S.t('gbps') : S.t('mbps'),
       maximumDisplayValue: roundedMaximum,
       maximumBitsPerSecond: roundedMaximum * divisor,
     );

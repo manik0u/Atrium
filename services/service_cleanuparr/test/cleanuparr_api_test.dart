@@ -40,7 +40,7 @@ void main() {
 
     test('handles empty or fallback payloads safely', () {
       final status = CleanuparrStatus.fromJson(<String, dynamic>{});
-      expect(status.version, 'Inconnu');
+      expect(status.version, 'Unknown');
       expect(status.appName, 'Cleanuparr');
       expect(status.mediaManagers, isEmpty);
       expect(status.downloadClients, isEmpty);
@@ -134,7 +134,7 @@ void main() {
         'id': 'ev-1',
         'timestamp': '2026-10-23T10:14:00Z',
         'eventType': 'QueueItemDeleted',
-        'severity': 'Avertissement',
+        'severity': 'Warning',
         'message': 'Deleted queue item due to malware rule match',
         'itemTitle': 'Bad.File.exe',
         'itemHash': 'abcdef0123456789',
@@ -143,7 +143,7 @@ void main() {
 
       expect(event.id, 'ev-1');
       expect(event.eventType, 'QueueItemDeleted');
-      expect(event.severity, 'Avertissement');
+      expect(event.severity, 'Warning');
       expect(event.downloadItemTitle, 'Bad.File.exe');
       expect(event.hash, 'abcdef0123456789');
       expect(event.deleteReason, 'AllFilesBlocked');
@@ -175,7 +175,7 @@ void main() {
         'id': 'ev-3',
         'timestamp': '2026-10-23T10:40:00Z',
         'eventType': 'StalledStrike',
-        'severity': 'Avertissement',
+        'severity': 'Warning',
         'message': 'Stalled download',
       });
       expect(strike.isStrike, isTrue);
@@ -189,7 +189,7 @@ void main() {
       final job = CleanuparrJob.fromJson(<String, dynamic>{
         'jobType': 'MalwareBlocker',
         'name': 'MalwareBlocker',
-        'status': 'Inactif',
+        'status': 'Idle',
         'schedule': '0 */5 * * * ?',
         'previousRunTime': '2026-10-23T10:00:00Z',
         'nextRunTime': '2026-10-23T10:05:00Z',
@@ -197,7 +197,7 @@ void main() {
 
       expect(job.jobType, 'MalwareBlocker');
       expect(job.displayName, 'Malware Blocker');
-      expect(job.status, 'Inactif');
+      expect(job.status, 'Idle');
       expect(job.isRunning, isFalse);
       expect(job.lastRunTime, isNotNull);
       expect(job.nextRunTime, isNotNull);

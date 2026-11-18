@@ -112,7 +112,7 @@ class DashboardRequestsWidget extends ConsumerWidget {
         },
       );
     } else if (entries.isEmpty) {
-      body = const DashboardIdleRow(text: 'Aucune demande pour le moment');
+      body = DashboardIdleRow(text: S.t('noRequestsYet'));
     } else {
       body = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,7 +128,7 @@ class DashboardRequestsWidget extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.only(top: Insets.sm),
               child: DashboardIdleRow(
-                text: '+${entries.length - top.length} de plus',
+                text: S.t('entriesLengthTopLengthMore1', [entries.length - top.length]),
               ),
             ),
         ],
@@ -149,7 +149,7 @@ class DashboardRequestsWidget extends ConsumerWidget {
       trailing: totalRequested > 0
           ? DashboardPill(
               icon: Icons.bookmark_added_outlined,
-              label: '$totalRequested demandé(s)',
+              label: S.t('totalrequestedRequested1', [totalRequested]),
               color: cs.secondary,
             )
           : null,
@@ -173,7 +173,7 @@ class _SeerrRequestRow extends ConsumerWidget {
     // Fall back to the request type while it loads or when there is no
     // TMDB id.
     final int? tmdbId = r.media?.tmdbId;
-    String title = r.type == 'movie' ? 'Demande de film' : 'Demande de série';
+    String title = r.type == 'movie' ? S.t('movieRequest') : S.t('seriesRequest');
     String? posterPath;
     if (tmdbId != null) {
       final String mediaType =
@@ -209,16 +209,16 @@ class _SeerrRequestRow extends ConsumerWidget {
   /// 2 pending, 3 processing, 4 partial, 5 available).
   (String, Color) _status(SeerrRequest r, ColorScheme cs) {
     if (r.status == 3) {
-      return ('Declined', cs.onSurfaceVariant);
+      return (S.t('declined'), cs.onSurfaceVariant);
     }
     if (r.status == 1) {
       return ('Needs approval', cs.primary);
     }
     return switch (r.media?.status ?? 1) {
-      5 => ('Disponible', cs.tertiary),
-      4 => ('Partiel', cs.tertiary),
-      3 => ('En cours de traitement', cs.secondary),
-      _ => ('Demandé', cs.onSurfaceVariant),
+      5 => (S.t('available'), cs.tertiary),
+      4 => (S.t('partial'), cs.tertiary),
+      3 => (S.t('processing'), cs.secondary),
+      _ => (S.t('requested'), cs.onSurfaceVariant),
     };
   }
 }

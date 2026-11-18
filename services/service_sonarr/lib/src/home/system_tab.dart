@@ -70,7 +70,7 @@ class _SystemTabState extends ConsumerState<SystemTab> {
                   icon: const Icon(Icons.menu),
                   onPressed: () => Scaffold.of(context).openDrawer(),
                 ),
-                title: const Text('Système'),
+                title: Text(S.t('system')),
                 actions: <Widget>[
                   PopupMenuButton<String>(
                     icon: const Icon(Icons.more_vert),
@@ -83,20 +83,20 @@ class _SystemTabState extends ConsumerState<SystemTab> {
                     },
                     itemBuilder: (BuildContext context) =>
                         <PopupMenuEntry<String>>[
-                      const PopupMenuItem<String>(
+                      PopupMenuItem<String>(
                         value: 'restart',
                         child: ListTile(
                           leading: Icon(Icons.restart_alt),
-                          title: Text('Redémarrer'),
+                          title: Text(S.t('restart')),
                           dense: true,
                           contentPadding: EdgeInsets.zero,
                         ),
                       ),
-                      const PopupMenuItem<String>(
+                      PopupMenuItem<String>(
                         value: 'shutdown',
                         child: ListTile(
                           leading: Icon(Icons.power_settings_new),
-                          title: Text('Arrêter'),
+                          title: Text(S.t('shutdown')),
                           dense: true,
                           contentPadding: EdgeInsets.zero,
                         ),
@@ -117,12 +117,12 @@ class _SystemTabState extends ConsumerState<SystemTab> {
                     fontWeight: FontWeight.bold,
                   ),
                   unselectedLabelStyle: theme.textTheme.titleSmall,
-                  tabs: const <Widget>[
-                    Tab(text: 'Statut'),
-                    Tab(text: 'Tâches'),
-                    Tab(text: 'Mises à jour'),
-                    Tab(text: 'Journaux'),
-                    Tab(text: 'Sauvegardes'),
+                  tabs: <Widget>[
+                    Tab(text: S.t('status')),
+                    Tab(text: S.t('tasks')),
+                    Tab(text: S.t('updates')),
+                    Tab(text: S.t('logs')),
+                    Tab(text: S.t('backups')),
                   ],
                 ),
               ),
@@ -146,18 +146,18 @@ class _SystemTabState extends ConsumerState<SystemTab> {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Redémarrer Sonarr ?'),
+        title: Text(S.t('restartSonarr')),
         content: const Text(
           'This will restart the Sonarr service. It will be temporarily unavailable.',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Redémarrer'),
+            child: Text(S.t('restart')),
           ),
         ],
       ),
@@ -169,13 +169,13 @@ class _SystemTabState extends ConsumerState<SystemTab> {
         await api.restartSonarr();
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Signal de redémarrage envoyé !')),
+            SnackBar(content: Text(S.t('restartSignalSent'))),
           );
         }
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Échec du redémarrage : $e')),
+            SnackBar(content: Text(S.t('failedToRestartE1', [e]))),
           );
         }
       }
@@ -186,21 +186,21 @@ class _SystemTabState extends ConsumerState<SystemTab> {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Arrêter Sonarr ?'),
+        title: Text(S.t('shutdownSonarr')),
         content: const Text(
           'This will shut down the Sonarr service. You will need to restart it manually.',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
               backgroundColor: Theme.of(ctx).colorScheme.error,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Arrêter'),
+            child: Text(S.t('shutdown')),
           ),
         ],
       ),
@@ -212,13 +212,13 @@ class _SystemTabState extends ConsumerState<SystemTab> {
         await api.shutdownSonarr();
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Signal d'arrêt envoyé !")),
+            SnackBar(content: Text(S.t('shutdownSignalSent'))),
           );
         }
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Échec de l'arrêt : $e")),
+            SnackBar(content: Text(S.t('failedToShutdownE1', [e]))),
           );
         }
       }
@@ -242,14 +242,14 @@ class _StatusTab extends ConsumerWidget {
     final diskAsync = ref.watch(sonarrDiskSpaceProvider(instance));
 
     return EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
       onRefresh: () async {
         ref.invalidate(sonarrSystemStatusProvider(instance));
@@ -267,13 +267,13 @@ class _StatusTab extends ConsumerWidget {
           // ── Health Checks ──
           healthAsync.when(
             loading: () => const SizedBox.shrink(),
-            error: (Object err, _) => _sectionError('Santé', err),
+            error: (Object err, _) => _sectionError(S.t('health'), err),
             data: (List<Map<String, dynamic>> items) {
               if (items.isEmpty) return const SizedBox.shrink();
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  _sectionHeader(theme, 'Health'),
+                  _sectionHeader(theme, S.t('health')),
                   ...items.map(
                     (Map<String, dynamic> h) => _HealthCard(health: h),
                   ),
@@ -286,11 +286,11 @@ class _StatusTab extends ConsumerWidget {
           // ── About / Status ──
           statusAsync.when(
             loading: () => const Center(child: ExpressiveProgressIndicator()),
-            error: (Object err, _) => _sectionError('Statut', err),
+            error: (Object err, _) => _sectionError(S.t('status'), err),
             data: (Map<String, dynamic> s) {
-              final String version = s['version'] as String? ?? 'Unknown';
-              final String branch = s['branch'] as String? ?? 'Unknown';
-              final String osName = s['osName'] as String? ?? 'Unknown';
+              final String version = s['version'] as String? ?? S.t('unknown');
+              final String branch = s['branch'] as String? ?? S.t('unknown');
+              final String osName = s['osName'] as String? ?? S.t('unknown');
               final String osVersion = s['osVersion'] as String? ?? '';
               final String runtimeName = s['runtimeName'] as String? ?? '';
               final String runtimeVersion =
@@ -322,19 +322,19 @@ class _StatusTab extends ConsumerWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  _sectionHeader(theme, 'About'),
+                  _sectionHeader(theme, S.t('about')),
                   Wrap(
                     spacing: Insets.sm,
                     runSpacing: Insets.sm,
                     children: <Widget>[
                       _InfoChip(
                         icon: Icons.info_outline,
-                        label: 'Version',
+                        label: S.t('version'),
                         value: version,
                       ),
                       _InfoChip(
                         icon: Icons.account_tree_outlined,
-                        label: 'Branche',
+                        label: S.t('branch'),
                         value: branch,
                       ),
                       if (isDocker)
@@ -345,31 +345,31 @@ class _StatusTab extends ConsumerWidget {
                         ),
                       _InfoChip(
                         icon: Icons.computer_outlined,
-                        label: 'Système',
+                        label: S.t('system'),
                         value: '$osName $osVersion'.trim(),
                       ),
                       if (runtimeName.isNotEmpty)
                         _InfoChip(
                           icon: Icons.memory_outlined,
-                          label: 'Environnement',
+                          label: S.t('runtime'),
                           value: '$runtimeName $runtimeVersion'.trim(),
                         ),
                       if (dbType.isNotEmpty)
                         _InfoChip(
                           icon: Icons.storage_outlined,
-                          label: 'Base de données',
+                          label: S.t('database'),
                           value: '$dbType $dbVersion'.trim(),
                         ),
                       if (uptimeText.isNotEmpty)
                         _InfoChip(
                           icon: Icons.timer_outlined,
-                          label: 'Disponibilité',
+                          label: S.t('uptime'),
                           value: uptimeText,
                         ),
                       if (packageAuthor.isNotEmpty)
                         _InfoChip(
                           icon: Icons.person_outline,
-                          label: 'Paquet',
+                          label: S.t('package'),
                           value: packageAuthor.replaceAll(
                             RegExp(r'\[|\]\(.*?\)'),
                             '',
@@ -378,13 +378,13 @@ class _StatusTab extends ConsumerWidget {
                       if (appData.isNotEmpty)
                         _InfoChip(
                           icon: Icons.folder_outlined,
-                          label: "Données de l'app",
+                          label: S.t('appData'),
                           value: appData,
                         ),
                       if (startupPath.isNotEmpty)
                         _InfoChip(
                           icon: Icons.launch_outlined,
-                          label: 'Démarrage',
+                          label: S.t('startup'),
                           value: startupPath,
                         ),
                     ],
@@ -398,13 +398,13 @@ class _StatusTab extends ConsumerWidget {
           // ── Disk Space ──
           diskAsync.when(
             loading: () => const SizedBox.shrink(),
-            error: (Object err, _) => _sectionError('Espace disque', err),
+            error: (Object err, _) => _sectionError(S.t('diskSpace'), err),
             data: (List<Map<String, dynamic>> disks) {
               if (disks.isEmpty) return const SizedBox.shrink();
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  _sectionHeader(theme, 'Disk Space'),
+                  _sectionHeader(theme, S.t('diskSpace')),
                   ...disks.map(
                     (Map<String, dynamic> d) => _DiskSpaceCard(disk: d),
                   ),
@@ -434,7 +434,7 @@ class _StatusTab extends ConsumerWidget {
   Widget _sectionError(String section, Object err) {
     return Padding(
       padding: const EdgeInsets.only(bottom: Insets.md),
-      child: Text('Erreur de $section : $err'),
+      child: Text(S.t('sectionErrorErr2', [section, err])),
     );
   }
 }
@@ -494,7 +494,7 @@ class _HealthCard extends StatelessWidget {
                   }
                   await launchUrl(uri, mode: LaunchMode.externalApplication);
                 },
-                tooltip: 'Ouvrir le wiki',
+                tooltip: S.t('openWiki'),
               )
             : null,
       ),
@@ -665,7 +665,7 @@ class _TasksTab extends ConsumerWidget {
       await api.runCommand(<String, dynamic>{'name': taskName});
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('$taskName démarré !')),
+          SnackBar(content: Text(S.t('tasknameStarted1', [taskName]))),
         );
       }
       // Refresh tasks list after a short delay
@@ -674,7 +674,7 @@ class _TasksTab extends ConsumerWidget {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Échec de l'exécution de la tâche : $e")),
+          SnackBar(content: Text(S.t('failedToRunTaskE1', [e]))),
         );
       }
     }
@@ -686,14 +686,14 @@ class _TasksTab extends ConsumerWidget {
     final tasksAsync = ref.watch(sonarrTasksProvider(instance));
 
     return EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
       onRefresh: () async {
         ref.invalidate(sonarrTasksProvider(instance));
@@ -701,10 +701,10 @@ class _TasksTab extends ConsumerWidget {
       },
       child: tasksAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (Object err, _) => Center(child: Text('Erreur : $err')),
+        error: (Object err, _) => Center(child: Text(S.t('errorErr1', [err]))),
         data: (List<Map<String, dynamic>> tasks) {
           if (tasks.isEmpty) {
-            return const Center(child: Text('Aucune tâche planifiée.'));
+            return Center(child: Text(S.t('noScheduledTasks')));
           }
 
           return ListView.builder(
@@ -763,7 +763,7 @@ class _TasksTab extends ConsumerWidget {
                   ),
                   trailing: IconButton(
                     icon: const Icon(Icons.play_arrow_outlined),
-                    tooltip: 'Exécuter maintenant',
+                    tooltip: S.t('runNow'),
                     onPressed: () => _runTask(context, ref, taskName),
                   ),
                 ),
@@ -836,14 +836,14 @@ class _UpdatesTab extends ConsumerWidget {
     final updatesAsync = ref.watch(sonarrUpdatesProvider(instance));
 
     return EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
       onRefresh: () async {
         ref.invalidate(sonarrUpdatesProvider(instance));
@@ -851,11 +851,11 @@ class _UpdatesTab extends ConsumerWidget {
       },
       child: updatesAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (Object err, _) => Center(child: Text('Erreur : $err')),
+        error: (Object err, _) => Center(child: Text(S.t('errorErr1', [err]))),
         data: (List<Map<String, dynamic>> updates) {
           if (updates.isEmpty) {
-            return const Center(
-              child: Text('Aucune mise à jour disponible.'),
+            return Center(
+              child: Text(S.t('noUpdatesAvailable')),
             );
           }
 
@@ -937,7 +937,7 @@ class _UpdateCard extends StatelessWidget {
                 const SizedBox(width: Insets.sm),
                 if (installed)
                   Chip(
-                    label: const Text('Installée'),
+                    label: Text(S.t('installed')),
                     backgroundColor: theme.colorScheme.primaryContainer,
                     labelStyle: theme.textTheme.labelSmall?.copyWith(
                       color: theme.colorScheme.onPrimaryContainer,
@@ -949,7 +949,7 @@ class _UpdateCard extends StatelessWidget {
                   ),
                 if (latest && !installed)
                   Chip(
-                    label: const Text('Dernière'),
+                    label: Text(S.t('latest')),
                     backgroundColor: theme.colorScheme.tertiary.withAlpha(30),
                     labelStyle: theme.textTheme.labelSmall?.copyWith(
                       color: theme.colorScheme.tertiary,
@@ -969,7 +969,7 @@ class _UpdateCard extends StatelessWidget {
               ],
             ),
             Text(
-              'Branch: $branch',
+              S.t('branchBranch1', [branch]),
               style: theme.textTheme.bodySmall?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -978,7 +978,7 @@ class _UpdateCard extends StatelessWidget {
               const Divider(height: Insets.lg),
               if (newItems.isNotEmpty) ...<Widget>[
                 Text(
-                  'New',
+                  S.t('new'),
                   style: theme.textTheme.labelMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: theme.colorScheme.tertiary,
@@ -1014,7 +1014,7 @@ class _UpdateCard extends StatelessWidget {
               ],
               if (fixedItems.isNotEmpty) ...<Widget>[
                 Text(
-                  'Fixed',
+                  S.t('fixed'),
                   style: theme.textTheme.labelMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: theme.colorScheme.primary,
@@ -1163,7 +1163,7 @@ class _LogsTabState extends ConsumerState<_LogsTab> {
               Padding(
                 padding: const EdgeInsets.all(Insets.md),
                 child: Text(
-                  'Filter Logs',
+                  S.t('filterLogs'),
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -1171,7 +1171,7 @@ class _LogsTabState extends ConsumerState<_LogsTab> {
               ),
               ListTile(
                 leading: const Icon(Icons.clear_all),
-                title: const Text('Tous'),
+                title: Text(S.t('all')),
                 trailing: _levelFilter == null ? const Icon(Icons.check) : null,
                 onTap: () {
                   Navigator.pop(context);
@@ -1181,7 +1181,7 @@ class _LogsTabState extends ConsumerState<_LogsTab> {
               ),
               ListTile(
                 leading: const Icon(Icons.info_outline),
-                title: const Text('Infos'),
+                title: Text(S.t('info')),
                 trailing: _levelFilter == 'info' ? const Icon(Icons.check) : null,
                 onTap: () {
                   Navigator.pop(context);
@@ -1191,7 +1191,7 @@ class _LogsTabState extends ConsumerState<_LogsTab> {
               ),
               ListTile(
                 leading: const Icon(Icons.warning_amber_outlined),
-                title: const Text('Avertissement'),
+                title: Text(S.t('warning')),
                 trailing: _levelFilter == 'warn' ? const Icon(Icons.check) : null,
                 onTap: () {
                   Navigator.pop(context);
@@ -1201,7 +1201,7 @@ class _LogsTabState extends ConsumerState<_LogsTab> {
               ),
               ListTile(
                 leading: const Icon(Icons.error_outline),
-                title: const Text('Erreur'),
+                title: Text(S.t('error')),
                 trailing: _levelFilter == 'error' ? const Icon(Icons.check) : null,
                 onTap: () {
                   Navigator.pop(context);
@@ -1222,27 +1222,27 @@ class _LogsTabState extends ConsumerState<_LogsTab> {
     if (_loading && _logs.isEmpty) {
       body = const Center(child: ExpressiveProgressIndicator());
     } else if (_error != null && _logs.isEmpty) {
-      body = Center(child: Text('Erreur : $_error'));
+      body = Center(child: Text(S.t('errorError1', [_error])));
     } else if (_logs.isEmpty) {
-      body = const Center(child: Text('Aucune entrée de journal.'));
+      body = Center(child: Text(S.t('noLogEntries')));
     } else {
       body = EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
-        footer: const ClassicFooter(
-          dragText: 'Load more',
-          armedText: 'Release ready',
-          readyText: 'Loading...',
-          processingText: 'Loading...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
+        footer: ClassicFooter(
+          dragText: S.t('loadMore'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('loading'),
+          processingText: S.t('loading'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
         ),
         onRefresh: _loadInitial,
         onLoad: _loadMore,
@@ -1403,19 +1403,19 @@ class _BackupsTab extends ConsumerWidget {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Supprimer la sauvegarde ?'),
-        content: Text('Supprimer « $name » ? Cette action est irréversible.'),
+        title: Text(S.t('deleteBackup')),
+        content: Text(S.t('deleteNameThisCannotBeUndone1', [name])),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
               backgroundColor: Theme.of(ctx).colorScheme.error,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Supprimer'),
+            child: Text(S.t('delete')),
           ),
         ],
       ),
@@ -1429,13 +1429,13 @@ class _BackupsTab extends ConsumerWidget {
         ref.invalidate(sonarrBackupsProvider(instance));
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Sauvegarde supprimée !')),
+            SnackBar(content: Text(S.t('backupDeleted'))),
           );
         }
       } catch (e) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Échec de la suppression de la sauvegarde : $e')),
+            SnackBar(content: Text(S.t('failedToDeleteBackupE1', [e]))),
           );
         }
       }
@@ -1448,14 +1448,14 @@ class _BackupsTab extends ConsumerWidget {
     final backupsAsync = ref.watch(sonarrBackupsProvider(instance));
 
     return EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
       onRefresh: () async {
         ref.invalidate(sonarrBackupsProvider(instance));
@@ -1463,10 +1463,10 @@ class _BackupsTab extends ConsumerWidget {
       },
       child: backupsAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (Object err, _) => Center(child: Text('Erreur : $err')),
+        error: (Object err, _) => Center(child: Text(S.t('errorErr1', [err]))),
         data: (List<Map<String, dynamic>> backups) {
           if (backups.isEmpty) {
-            return const Center(child: Text('Aucune sauvegarde trouvée.'));
+            return Center(child: Text(S.t('noBackupsFound')));
           }
 
           return ListView.builder(
@@ -1474,7 +1474,7 @@ class _BackupsTab extends ConsumerWidget {
             itemCount: backups.length,
             itemBuilder: (BuildContext context, int index) {
               final Map<String, dynamic> backup = backups[index];
-              final String name = backup['name'] as String? ?? 'Backup';
+              final String name = backup['name'] as String? ?? S.t('backup');
               final String type = backup['type'] as String? ?? 'unknown';
               final int size = backup['size'] as int? ?? 0;
               final int id = backup['id'] as int? ?? 0;

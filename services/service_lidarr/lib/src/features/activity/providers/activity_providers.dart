@@ -87,7 +87,7 @@ final lidarrArtistHistoryProvider =
     );
     return unwrapLidarrApiResponse(
       resp,
-      "Échec du chargement de l'historique pour l'artiste $artistId",
+      S.t('failedToLoadHistoryForArtistArtistId1', [artistId]),
     );
   },
 );
@@ -102,7 +102,7 @@ final lidarrBlocklistProvider =
   final ApiResponse<BlocklistResourcePagingResource> resp =
       await api.blocklist.getBlocklist(pageSize: 50);
   final BlocklistResourcePagingResource page =
-      unwrapLidarrApiResponse(resp, 'Failed to load blocklist');
+      unwrapLidarrApiResponse(resp, S.t('failedToLoadBlocklist'));
   return page.records ?? <BlocklistResource>[];
 });
 

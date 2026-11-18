@@ -1,6 +1,7 @@
 import 'adguard_home_clients.dart';
 import 'adguard_home_json.dart';
 import 'adguard_home_query_log.dart';
+import 'package:core_models/core_models.dart';
 
 /// The weekdays of a pause schedule, as the server names them, Monday first.
 const List<String> adguardHomeWeekdays = <String>[
@@ -102,12 +103,12 @@ String? adguardHomeScheduleProblem(Duration start, Duration end) {
   const Duration day = Duration(hours: 24);
   if (start.inMicroseconds % Duration.microsecondsPerMinute != 0 ||
       end.inMicroseconds % Duration.microsecondsPerMinute != 0) {
-    return 'Les durées sont en minutes entières.';
+    return S.t('timesAreInWholeMinutes');
   }
   if (start.isNegative || end > day) {
-    return 'Une pause doit tenir dans une journée.';
+    return S.t('aPauseHasToFitInOneDay');
   }
-  if (end <= start) return 'La fin doit être après le début.';
+  if (end <= start) return S.t('theEndHasToBeAfterTheStart');
   return null;
 }
 

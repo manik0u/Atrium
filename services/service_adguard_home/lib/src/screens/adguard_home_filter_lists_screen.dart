@@ -76,9 +76,9 @@ class _AdguardHomeFilterListsScreenState
       final int updated = await _actions.refreshLists(allowlist: _allow);
       _say(
         switch (updated) {
-          0 => 'Toutes les listes sont à jour',
-          1 => '1 liste mise à jour',
-          _ => '$updated listes mises à jour',
+          0 => S.t('allListsAreUpToDate'),
+          1 => S.t('k1ListUpdated'),
+          _ => S.t('updatedListsUpdated1', [updated]),
         },
       );
     } on Object catch (error) {
@@ -92,7 +92,7 @@ class _AdguardHomeFilterListsScreenState
     final int? picked = await showDialog<int>(
       context: context,
       builder: (BuildContext context) => SimpleDialog(
-        title: const Text('Mettre à jour les listes'),
+        title: Text(S.t('updateTheLists')),
         children: <Widget>[
           for (final int hours in <int>[
             ...adguardHomeIntervalOptions,
@@ -124,7 +124,7 @@ class _AdguardHomeFilterListsScreenState
     setState(() => _savingInterval = null);
     _say(
       picked == 0
-          ? 'Les listes ne se mettront plus à jour automatiquement'
+          ? S.t('theListsWillNoLongerUpdateByThemselves')
           : 'The lists will update ${adguardHomeIntervalLabel(picked).toLowerCase()}',
     );
   }
@@ -151,23 +151,23 @@ class _AdguardHomeFilterListsScreenState
   Widget build(BuildContext context) {
     final AsyncValue<AdguardHomeFiltering> filtering =
         ref.watch(adguardHomeFilteringProvider(_instance));
-    final String title = _allow ? "Listes d'autorisation" : 'Listes de blocage';
+    final String title = _allow ? S.t('allowlists') : S.t('blocklists');
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.add),
-            tooltip: 'Add $_kind',
+            tooltip: S.t('addWidgetConfigResourceLabel1', [_kind]),
             onPressed: _open,
           ),
           PopupMenuButton<void>(
-            tooltip: 'Plus',
+            tooltip: S.t('more'),
             useRootNavigator: true,
             itemBuilder: (BuildContext _) => <PopupMenuEntry<void>>[
               PopupMenuItem<void>(
                 onTap: _checkForUpdates,
-                child: const Text('Rechercher des mises à jour'),
+                child: Text(S.t('checkForUpdates')),
               ),
             ],
           ),
@@ -217,7 +217,7 @@ class _AdguardHomeFilterListsScreenState
             ? null
             : ListTile(
                 leading: const Icon(Icons.update),
-                title: const Text('Mettre à jour les listes'),
+                title: Text(S.t('updateTheLists')),
                 subtitle: Text(
                   adguardHomeIntervalLabel(
                     _savingInterval ?? filtering.intervalHours,
@@ -235,15 +235,14 @@ class _AdguardHomeFilterListsScreenState
                 if (interval != null) interval,
                 EmptyView(
                   icon: Icons.playlist_add,
-                  title: 'Aucun ${_kind}',
+                  title: S.t('noKindS1', [_kind]),
                   message: _allow
-                      ? "Une liste d'autorisation laisse passer ce que les listes de blocage "
-                          'would block.'
-                      : 'Une liste de blocage nomme les domaines à bloquer.',
+                      ? S.t('anAllowlistLetsThroughWhatTheBlocklistsWouldBlock')
+                      : S.t('aBlocklistNamesTheDomainsToBlock'),
                   action: FilledButton.tonalIcon(
                     onPressed: _open,
                     icon: const Icon(Icons.add),
-                    label: Text('Add $_kind'),
+                    label: Text(S.t('addWidgetConfigResourceLabel1', [_kind])),
                   ),
                 ),
               ],
@@ -302,7 +301,7 @@ class AdguardHomeFilterListRow extends StatelessWidget {
       if (list.enabled)
         '${formatAdguardHomeCount(list.rulesCount)} rules'
       else
-        'Off',
+        S.t('off'),
       if (updated == null)
         'Never updated'
       else
@@ -446,7 +445,7 @@ class _AdguardHomeFilterListScreenState
       setState(() => _busy = false);
       final bool again = await showAdguardHomeFailure(
         context,
-        title: 'Non enregistré',
+        title: S.t('notSaved'),
         error: error,
       );
       if (again && mounted) {
@@ -466,21 +465,20 @@ class _AdguardHomeFilterListScreenState
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: Text('Supprimer « $name » ?'),
+        title: Text(S.t('deleteName1', [name])),
         content: Text(
           widget.allowlist
-              ? "Ce qu'elle laisse passer sera à nouveau bloqué là où un "
-                  'blocklist names it.'
-              : 'Ce que seule cette liste bloque sera laissé passer.',
+              ? S.t('whatItLetsThroughWillBeBlockedAgainWhereABlocklistNamesIt')
+              : S.t('whatOnlyThisListBlocksWillBeLetThrough'),
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Supprimer'),
+            child: Text(S.t('delete')),
           ),
         ],
       ),
@@ -497,7 +495,7 @@ class _AdguardHomeFilterListScreenState
       setState(() => _busy = false);
       final bool again = await showAdguardHomeFailure(
         context,
-        title: 'Non supprimé',
+        title: S.t('notDeleted'),
         error: error,
       );
       if (again && mounted) {
@@ -514,16 +512,16 @@ class _AdguardHomeFilterListScreenState
     final bool? discard = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Ignorer les modifications ?'),
-        content: const Text("Les modifications apportées ici n'ont pas été enregistrées."),
+        title: Text(S.t('discardChanges')),
+        content: Text(S.t('whatWasChangedHereHasNotBeenSaved')),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text("Continuer l'édition"),
+            child: Text(S.t('keepEditing')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Ignorer'),
+            child: Text(S.t('discard')),
           ),
         ],
       ),
@@ -545,17 +543,17 @@ class _AdguardHomeFilterListScreenState
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('${widget.list == null ? 'New' : 'Modifier'} $_kind'),
+          title: Text('${widget.list == null ? 'New' : S.t('edit')} $_kind'),
           actions: <Widget>[
             if (widget.list != null)
               IconButton(
                 icon: const Icon(Icons.delete_outline),
-                tooltip: 'Supprimer la liste',
+                tooltip: S.t('deleteList'),
                 onPressed: _busy ? null : _delete,
               ),
             FilledButton(
               onPressed: _busy ? null : _save,
-              child: const Text('Enregistrer'),
+              child: Text(S.t('save')),
             ),
             const SizedBox(width: Insets.md),
           ],
@@ -579,8 +577,8 @@ class _AdguardHomeFilterListScreenState
                 controller: _name,
                 onChanged: (String _) => setState(() {}),
                 textCapitalization: TextCapitalization.sentences,
-                decoration: const InputDecoration(
-                  labelText: 'Nom',
+                decoration: InputDecoration(
+                  labelText: S.t('name'),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -593,10 +591,9 @@ class _AdguardHomeFilterListScreenState
                 enableSuggestions: false,
                 keyboardType: TextInputType.url,
                 decoration: InputDecoration(
-                  labelText: 'Adresse',
+                  labelText: S.t('address'),
                   hintText: 'https://',
-                  helperText: "Une liste sur le web, ou le chemin complet d'un fichier "
-                      'on the server.',
+                  helperText: S.t('aListOnTheWebOrTheFullPathOfAFileOnTheServer'),
                   helperMaxLines: 3,
                   errorText: problem,
                   errorMaxLines: 3,
@@ -606,7 +603,7 @@ class _AdguardHomeFilterListScreenState
               if (fetching) ...<Widget>[
                 const SizedBox(height: Insets.lg),
                 Text(
-                  'Récupération de la liste. Une grosse peut prendre un moment.',
+                  S.t('fetchingTheListALargeOneCanTakeAWhile'),
                   style: theme.textTheme.bodyMedium
                       ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                 ),

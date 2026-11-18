@@ -114,24 +114,24 @@ class StreamDiagnosticsSheet extends StatelessWidget {
                   const SizedBox(height: Insets.md),
 
                   // Video Stream Diagnostics
-                  const _SectionHeader(
-                      title: 'TÉLÉMÉTRIE VIDÉO', icon: Icons.videocam_outlined,),
+                  _SectionHeader(
+                      title: S.t('videoTELEMETRY'), icon: Icons.videocam_outlined,),
                   const SizedBox(height: Insets.sm),
                   _TelemetryRow(
-                    label: 'Décision',
+                    label: S.t('decision'),
                     value: videoDecision,
                     highlight: stream.isTranscode,
                   ),
                   if (stream.videoCodec != null)
                     _TelemetryRow(
-                        label: 'Codec',
+                        label: S.t('codec'),
                         value: stream.videoCodec!.toUpperCase(),),
                   if (stream.resolution != null)
                     _TelemetryRow(
-                        label: 'Résolution', value: stream.resolution!,),
+                        label: S.t('resolution'), value: stream.resolution!,),
                   if (isHw) ...[
                     _TelemetryRow(
-                      label: 'Accélération matérielle',
+                      label: S.t('hardwareAcceleration'),
                       value:
                           'Active (${stream.hwDecoding ?? stream.hwEncoding ?? "Hardware"})',
                       badgeColor: const Color(0xFF2196F3),
@@ -139,13 +139,13 @@ class StreamDiagnosticsSheet extends StatelessWidget {
                   ],
                   if (stream.transcodeSpeed != null)
                     _TelemetryRow(
-                      label: 'Vitesse de transcodage',
+                      label: S.t('transcodeSpeed'),
                       value: '${stream.transcodeSpeed!.toStringAsFixed(1)}x',
                     ),
                   if (stream.isThrottled != null)
                     _TelemetryRow(
-                      label: 'Ralenti',
-                      value: stream.isThrottled! ? 'Yes (CPU Saved)' : 'No',
+                      label: S.t('throttled'),
+                      value: stream.isThrottled! ? S.t('yesCPUSaved') : S.t('no'),
                     ),
                   if (stream.transcodeReasons.isNotEmpty)
                     Padding(
@@ -162,7 +162,7 @@ class StreamDiagnosticsSheet extends StatelessWidget {
                           const SizedBox(height: 2),
                           ...stream.transcodeReasons.map(
                             (r) => Text(
-                              '• $r',
+                              S.t('r1', [r]),
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: colorScheme.error,
                               ),
@@ -177,21 +177,21 @@ class StreamDiagnosticsSheet extends StatelessWidget {
                   const SizedBox(height: Insets.md),
 
                   // Audio Stream Diagnostics
-                  const _SectionHeader(
-                      title: 'AUDIO ET SOUS-TITRES',
+                  _SectionHeader(
+                      title: S.t('audioSUBTITLES'),
                       icon: Icons.audiotrack_outlined,),
                   const SizedBox(height: Insets.sm),
-                  _TelemetryRow(label: 'Décision audio', value: audioDecision),
+                  _TelemetryRow(label: S.t('audioDecision'), value: audioDecision),
                   if (stream.audioCodec != null)
                     _TelemetryRow(
-                        label: 'Codec audio',
+                        label: S.t('audioCodec'),
                         value: stream.audioCodec!.toUpperCase(),),
                   if (stream.audioChannels != null)
                     _TelemetryRow(
-                        label: 'Canaux audio', value: stream.audioChannels!,),
+                        label: S.t('audioChannels'), value: stream.audioChannels!,),
                   if (stream.subtitleLanguage != null)
                     _TelemetryRow(
-                      label: 'Sous-titres',
+                      label: S.t('subtitles'),
                       value:
                           '${stream.subtitleLanguage} (${stream.subtitleCodec ?? "Standard"})',
                     ),
@@ -201,21 +201,21 @@ class StreamDiagnosticsSheet extends StatelessWidget {
                   const SizedBox(height: Insets.md),
 
                   // Client & Bandwidth Telemetry
-                  const _SectionHeader(
-                      title: 'CLIENT ET BANDE PASSANTE',
+                  _SectionHeader(
+                      title: S.t('clientBANDWIDTH'),
                       icon: Icons.devices_outlined,),
                   const SizedBox(height: Insets.sm),
                   if (stream.player != null)
-                    _TelemetryRow(label: 'Lecteur', value: stream.player!),
+                    _TelemetryRow(label: S.t('player'), value: stream.player!),
                   if (stream.product != null)
-                    _TelemetryRow(label: 'Produit', value: stream.product!),
+                    _TelemetryRow(label: S.t('product'), value: stream.product!),
                   if (stream.device != null)
-                    _TelemetryRow(label: 'Appareil', value: stream.device!),
+                    _TelemetryRow(label: S.t('device'), value: stream.device!),
                   if (stream.platform != null)
-                    _TelemetryRow(label: 'Plateforme', value: stream.platform!),
+                    _TelemetryRow(label: S.t('platform'), value: stream.platform!),
                   if (stream.bitrate != null)
                     _TelemetryRow(
-                      label: 'Débit du flux',
+                      label: S.t('streamBitrate'),
                       value: stream.bitrate! >= 1000
                           ? '${(stream.bitrate! / 1000).toStringAsFixed(1)} Mbps'
                           : '${stream.bitrate} kbps',
@@ -231,7 +231,7 @@ class StreamDiagnosticsSheet extends StatelessWidget {
                       padding: const EdgeInsets.all(Insets.md),
                     ),
                     icon: const Icon(Icons.stop_circle_outlined),
-                    label: const Text('Interrompre le flux'),
+                    label: Text(S.t('terminateStream')),
                     onPressed: () {
                       Navigator.of(context).pop();
                       TerminateStreamDialog.show(

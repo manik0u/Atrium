@@ -46,7 +46,7 @@ class _BulkDeleteDialogState extends ConsumerState<BulkDeleteDialog> {
       final ApiResponse<void> resp =
           await api.artistEditor.deleteArtistEditor(body: resource);
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec de la suppression des artistes');
+        throw Exception(resp.error?.message ?? S.t('failedToDeleteArtists'));
       }
 
       if (!mounted) return;
@@ -60,14 +60,14 @@ class _BulkDeleteDialogState extends ConsumerState<BulkDeleteDialog> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('${widget.selectedIds.length} artiste(s) supprimé(s).'),
+          content: Text(S.t('deletedWidgetSelectedIdsLengthArtists1', [widget.selectedIds.length])),
         ),
       );
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Échec de la suppression groupée : $e'),
+            content: Text(S.t('failedToBulkRemoveE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -85,7 +85,7 @@ class _BulkDeleteDialogState extends ConsumerState<BulkDeleteDialog> {
     final ColorScheme cs = theme.colorScheme;
 
     return AlertDialog(
-      title: Text('Supprimer ${widget.selectedIds.length} artistes ?'),
+      title: Text(S.t('deleteWidgetSelectedIdsLengthArtists1', [widget.selectedIds.length])),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,15 +96,15 @@ class _BulkDeleteDialogState extends ConsumerState<BulkDeleteDialog> {
           ),
           const SizedBox(height: 12),
           CheckboxListTile(
-            title: const Text('Supprimer les fichiers du disque'),
-            subtitle: const Text('Supprimer définitivement les fichiers audio'),
+            title: Text(S.t('deleteFilesFromDisk')),
+            subtitle: Text(S.t('permanentlyRemoveAudioFiles')),
             value: _deleteFiles,
             contentPadding: EdgeInsets.zero,
             onChanged: (val) => setState(() => _deleteFiles = val ?? false),
           ),
           CheckboxListTile(
-            title: const Text("Ajouter une exclusion de liste d'import"),
-            subtitle: const Text('Empêcher le rajout par les listes automatiques'),
+            title: Text(S.t('addImportListExclusion')),
+            subtitle: Text(S.t('preventReAddingByAutomatedLists')),
             value: _addImportListExclusion,
             contentPadding: EdgeInsets.zero,
             onChanged: (val) =>
@@ -115,7 +115,7 @@ class _BulkDeleteDialogState extends ConsumerState<BulkDeleteDialog> {
       actions: [
         TextButton(
           onPressed: _submitting ? null : () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           style: FilledButton.styleFrom(
@@ -129,7 +129,7 @@ class _BulkDeleteDialogState extends ConsumerState<BulkDeleteDialog> {
                   height: 16,
                   child: ExpressiveProgressIndicator(strokeWidth: 2),
                 )
-              : Text('Supprimer (${widget.selectedIds.length})'),
+              : Text(S.t('deleteWidgetSelectedIdsLength1', [widget.selectedIds.length])),
         ),
       ],
     );

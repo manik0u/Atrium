@@ -193,7 +193,7 @@ class _MissingViewState extends ConsumerState<MissingView> {
       });
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec du démarrage de la recherche');
+        throw Exception(resp.error?.message ?? S.t('failedToStartSearch'));
       }
 
       ref.invalidate(lidarrQueueProvider(widget.instance));
@@ -201,7 +201,7 @@ class _MissingViewState extends ConsumerState<MissingView> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Recherche lancée pour « ${album.title} ».'),
+            content: Text(S.t('searchStartedForAlbumTitle1', [album.title])),
             duration: const Duration(seconds: 2),
           ),
         );
@@ -210,7 +210,7 @@ class _MissingViewState extends ConsumerState<MissingView> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Échec de la recherche : $e'),
+            content: Text(S.t('searchFailedE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -236,7 +236,7 @@ class _MissingViewState extends ConsumerState<MissingView> {
 
       if (!resp.isSuccess) {
         throw Exception(
-          resp.error?.message ?? "Échec de la mise à jour de la surveillance de l'album",
+          resp.error?.message ?? S.t('failedToUpdateAlbumMonitoring'),
         );
       }
 
@@ -252,8 +252,8 @@ class _MissingViewState extends ConsumerState<MissingView> {
           SnackBar(
             content: Text(
               newMonitored
-                  ? 'Surveillance activée pour « ${album.title} »'
-                  : 'Surveillance désactivée pour « ${album.title} »',
+                  ? S.t('monitoringEnabledForAlbumTitle1', [album.title])
+                  : S.t('monitoringDisabledForAlbumTitle1', [album.title]),
             ),
             duration: const Duration(seconds: 2),
           ),
@@ -263,7 +263,7 @@ class _MissingViewState extends ConsumerState<MissingView> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Échec de la mise à jour de la surveillance : $e'),
+            content: Text(S.t('failedToUpdateMonitoringE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -314,7 +314,7 @@ class _MissingViewState extends ConsumerState<MissingView> {
             const SizedBox(height: 8),
             FilledButton.tonal(
               onPressed: _fetchInitial,
-              child: const Text('Réessayer'),
+              child: Text(S.t('retry')),
             ),
           ],
         ),
@@ -352,8 +352,8 @@ class _MissingViewState extends ConsumerState<MissingView> {
                   const SizedBox(height: 12),
                   Text(
                     searchQuery.trim().isNotEmpty
-                        ? 'Aucun album manquant ne correspond à « $searchQuery »'
-                        : 'Aucun album manquant trouvé',
+                        ? S.t('noMissingAlbumsMatchSearchQuery1', [searchQuery])
+                        : S.t('noMissingAlbumsFound'),
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: cs.onSurfaceVariant,
                     ),
@@ -405,7 +405,7 @@ class _MissingViewState extends ConsumerState<MissingView> {
                   builder: (_) => LidarrInteractiveSearchScreen(
                     instance: widget.instance,
                     albumId: album.id,
-                    title: album.title ?? 'Album',
+                    title: album.title ?? S.t('album'),
                   ),
                 ),
               );

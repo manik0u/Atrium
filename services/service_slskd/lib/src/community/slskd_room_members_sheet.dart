@@ -73,13 +73,13 @@ class _SlskdRoomMembersSheetState extends ConsumerState<SlskdRoomMembersSheet> {
         if (!mounted) return;
         ref.invalidate(slskdRoomUsersProvider((widget.instance, widget.roomName)));
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('$result invité dans #${widget.roomName}')),
+          SnackBar(content: Text(S.t('invitedResultToWidgetRoomName2', [result, widget.roomName]))),
         );
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text("Échec de l'invitation du membre : $e"),
+              content: Text(S.t('failedToInviteMemberE1', [e])),
               backgroundColor: Theme.of(context).colorScheme.error,
             ),
           );
@@ -124,12 +124,12 @@ class _SlskdRoomMembersSheetState extends ConsumerState<SlskdRoomMembersSheet> {
               ),
               if (isPrivate)
                 IconButton(
-                  tooltip: 'Inviter un membre dans le salon privé',
+                  tooltip: S.t('inviteMemberToPrivateRoom'),
                   icon: const Icon(Icons.person_add_alt_1_rounded, size: 20),
                   onPressed: _showInviteMemberDialog,
                 ),
               IconButton(
-                tooltip: 'Actualiser la liste des membres',
+                tooltip: S.t('refreshMemberList'),
                 icon: const Icon(Icons.refresh_rounded, size: 20),
                 onPressed: () {
                   ref.invalidate(slskdRoomUsersProvider((widget.instance, widget.roomName)));
@@ -144,7 +144,7 @@ class _SlskdRoomMembersSheetState extends ConsumerState<SlskdRoomMembersSheet> {
             controller: _searchController,
             onChanged: (val) => setState(() => _filterQuery = val.trim()),
             decoration: InputDecoration(
-              hintText: 'Rechercher des membres…',
+              hintText: S.t('searchMembers'),
               isDense: true,
               prefixIcon: const Icon(Icons.search_rounded, size: 20),
               suffixIcon: _filterQuery.isNotEmpty
@@ -196,8 +196,8 @@ class _SlskdRoomMembersSheetState extends ConsumerState<SlskdRoomMembersSheet> {
       return Center(
         child: Text(
           _filterQuery.isNotEmpty
-              ? 'Aucun membre ne correspond à « $_filterQuery »'
-              : 'Aucun membre trouvé',
+              ? S.t('noMembersMatchFilterQuery1', [_filterQuery])
+              : S.t('noMembersFound'),
           style: textTheme.bodyMedium?.copyWith(color: colorScheme.outline),
         ),
       );
@@ -225,7 +225,7 @@ class _SlskdRoomMembersSheetState extends ConsumerState<SlskdRoomMembersSheet> {
                 : 'Direct';
         final String subtitle = member.fileCount > 0
             ? '${member.fileCount} shares • $speedStr'
-            : (isOnline ? 'Online' : (isAway ? 'Away' : 'Offline'));
+            : (isOnline ? S.t('online') : (isAway ? 'Away' : S.t('offline')));
 
         return ListTile(
           dense: true,
@@ -359,19 +359,19 @@ class _InviteMemberDialogState extends State<_InviteMemberDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Inviter dans #${widget.roomName}'),
+      title: Text(S.t('inviteToWidgetRoomName1', [widget.roomName])),
       content: TextField(
         controller: _controller,
         autofocus: true,
-        decoration: const InputDecoration(
-          labelText: "Nom d'utilisateur Soulseek",
-          hintText: "Saisissez le nom d'utilisateur à autoriser",
+        decoration: InputDecoration(
+          labelText: S.t('soulseekUsername'),
+          hintText: S.t('enterUsernameToGrantAccess'),
         ),
       ),
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: () {
@@ -379,7 +379,7 @@ class _InviteMemberDialogState extends State<_InviteMemberDialog> {
             if (text.isEmpty) return;
             Navigator.of(context).pop(text);
           },
-          child: const Text('Inviter'),
+          child: Text(S.t('invite')),
         ),
       ],
     );

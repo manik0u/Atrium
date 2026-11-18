@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
@@ -66,7 +67,7 @@ class AdguardHomeTopList extends StatelessWidget {
             const SizedBox(height: Insets.sm),
             if (shown.isEmpty)
               Text(
-                'Nothing yet',
+                S.t('nothingYet'),
                 style: theme.textTheme.bodySmall
                     ?.copyWith(color: cs.onSurfaceVariant),
               ),
@@ -113,7 +114,7 @@ class AdguardHomeTopList extends StatelessWidget {
                   onPressed: onViewAll,
                   icon: const Icon(Icons.arrow_forward, size: 18),
                   iconAlignment: IconAlignment.end,
-                  label: const Text('Tout voir'),
+                  label: Text(S.t('viewAll')),
                 ),
               ),
           ],
@@ -206,7 +207,7 @@ class AdguardHomeTopRow extends StatelessWidget {
           if (blocks != null && onBlocking != null)
             IconButton(
               icon: Icon(blocks ? Icons.block : Icons.check_circle_outline),
-              tooltip: '${blocks ? 'Block' : 'Débloquer'} ${row.name}',
+              tooltip: '${blocks ? 'Block' : S.t('unblock')} ${row.name}',
               visualDensity: VisualDensity.compact,
               onPressed: () => onBlocking(row.name, block: blocks),
             ),

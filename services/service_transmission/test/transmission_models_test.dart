@@ -94,7 +94,7 @@ void main() {
       expect(t.percentDone, 0.0);
       expect(t.doneBytes, 0);
       expect(t.hasEta, isFalse);
-      expect(t.statusLabel, 'En pause');
+      expect(t.statusLabel, 'Paused');
     });
 
     test('parses the list fields the filters need', () {
@@ -172,7 +172,7 @@ void main() {
     test('statusLabel folds in error, verifying and stalled', () {
       expect(
         _t(error: 3, errorString: 'tracker gone').statusLabel,
-        'Erreur',
+        'Error',
       );
       expect(
         _t(statusCode: 2, recheckProgress: 0.42).statusLabel,
@@ -183,22 +183,22 @@ void main() {
         'Downloading (idle)',
       );
       // A stopped torrent is not "idle", it is paused, in the web UI's words.
-      expect(_t(statusCode: 0, isStalled: true).statusLabel, 'En pause');
+      expect(_t(statusCode: 0, isStalled: true).statusLabel, 'Paused');
     });
 
     test('state strings are the web UI words, with Seeding complete', () {
-      expect(_t(statusCode: 0).stateString, 'En pause');
+      expect(_t(statusCode: 0).stateString, 'Paused');
       expect(
         _t(statusCode: 0, isFinished: true).stateString,
         'Seeding complete',
       );
-      expect(_t(statusCode: 1).stateString, 'En file pour vérification');
+      expect(_t(statusCode: 1).stateString, 'Queued for verification');
       expect(_t(statusCode: 2).stateString, 'Verifying local data');
-      expect(_t(statusCode: 3).stateString, 'En file pour téléchargement');
-      expect(_t(statusCode: 5).stateString, 'En file pour seed');
+      expect(_t(statusCode: 3).stateString, 'Queued for download');
+      expect(_t(statusCode: 5).stateString, 'Queued for seeding');
       // Seeding is the helper's default status.
-      expect(_t().stateString, 'Seed en cours');
-      expect(_t(statusCode: 42).stateString, 'Inconnu');
+      expect(_t().stateString, 'Seeding');
+      expect(_t(statusCode: 42).stateString, 'Unknown');
     });
 
     test('hasError needs both a code and a message', () {
@@ -237,10 +237,10 @@ void main() {
       expect(d.files[0].displayName, 'a.mkv');
       expect(d.files[0].progress, 1.0);
       expect(d.files[0].wanted, isTrue);
-      expect(d.files[0].priorityLabel, 'Élevée');
+      expect(d.files[0].priorityLabel, 'High');
       expect(d.files[1].progress, 0.0);
       expect(d.files[1].wanted, isFalse);
-      expect(d.files[1].priorityLabel, 'Basse');
+      expect(d.files[1].priorityLabel, 'Low');
     });
 
     test('bounds-checks a short or missing fileStats', () {
@@ -637,10 +637,10 @@ void main() {
     test('a limit needs its enabled flag to mean anything', () {
       // The value stays put while the limit is off, so a value alone would
       // report a cap that is not actually in force.
-      expect(trFmtLimit(kbps: 100, enabled: false), 'Illimité');
+      expect(trFmtLimit(kbps: 100, enabled: false), 'Unlimited');
       expect(trFmtLimit(kbps: 100, enabled: true), '100 KB/s');
       expect(trFmtLimit(kbps: 2048, enabled: true), '2 MB/s');
-      expect(trFmtLimit(kbps: 0, enabled: true), 'Arrêté');
+      expect(trFmtLimit(kbps: 0, enabled: true), 'Stopped');
     });
 
     test('peer counts show -1 as unknown', () {

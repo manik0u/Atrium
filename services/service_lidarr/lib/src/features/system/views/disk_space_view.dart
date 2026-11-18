@@ -27,11 +27,11 @@ class DiskSpaceView extends ConsumerWidget {
         value: asyncDiskSpace,
         data: (diskSpaces) {
           if (diskSpaces.isEmpty) {
-            return const Center(
+            return Center(
               child: EmptyView(
                 icon: Icons.storage_outlined,
-                title: 'Aucun montage de disque',
-                message: 'Aucun disque de stockage détecté par Lidarr.',
+                title: S.t('noDiskMounts'),
+                message: S.t('noStorageDisksDetectedByLidarr'),
               ),
             );
           }

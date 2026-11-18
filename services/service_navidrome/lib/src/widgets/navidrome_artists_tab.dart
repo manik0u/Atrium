@@ -50,7 +50,7 @@ class _NavidromeArtistsTabState extends ConsumerState<NavidromeArtistsTab> {
               indexes.where((NavidromeArtistIndex g) => g.artists.isNotEmpty).toList();
 
           if (nonEmptyGroups.isEmpty) {
-            return const Center(child: Text('Aucun artiste trouvé'));
+            return Center(child: Text(S.t('noArtistsFound')));
           }
 
           return CustomScrollView(
@@ -91,7 +91,7 @@ class _NavidromeArtistsTabState extends ConsumerState<NavidromeArtistsTab> {
         },
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (Object err, _) => Center(
-          child: Text('Échec du chargement des artistes : $err'),
+          child: Text(S.t('failedToLoadArtistsErr1', [err])),
         ),
       ),
     );
@@ -294,7 +294,7 @@ class _NavidromeArtistsTabState extends ConsumerState<NavidromeArtistsTab> {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              '${artist.albumCount} ${artist.albumCount == 1 ? 'Album' : 'Albums'}',
+                              '${artist.albumCount} ${artist.albumCount == 1 ? S.t('album') : S.t('albums')}',
                               style: theme.textTheme.labelSmall?.copyWith(
                                 color: cs.onSecondaryContainer,
                                 fontWeight: FontWeight.w600,

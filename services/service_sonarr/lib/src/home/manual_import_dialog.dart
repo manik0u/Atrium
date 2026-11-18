@@ -79,7 +79,7 @@ class __ManualImportSetupDialogState
     final String folder = _pathController.text.trim();
     if (folder.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Veuillez sélectionner ou saisir un chemin de dossier.')),
+        SnackBar(content: Text(S.t('pleaseSelectOrEnterAFolderPath'))),
       );
       return;
     }
@@ -104,7 +104,7 @@ class __ManualImportSetupDialogState
                   children: <Widget>[
                     const ExpressiveProgressIndicator(),
                     const SizedBox(height: 16),
-                    const Text('Analyse du contenu du dossier…'),
+                    Text(S.t('scanningFolderContents')),
                     const SizedBox(height: 24),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -115,20 +115,20 @@ class __ManualImportSetupDialogState
                               context: dialogContext,
                               builder: (BuildContext confirmContext) =>
                                   AlertDialog(
-                                title: const Text("Annuler l'analyse ?"),
-                                content: const Text(
-                                  "Voulez-vous vraiment arrêter l'analyse de ce dossier ?",
+                                title: Text(S.t('cancelScan_2')),
+                                content: Text(
+                                  S.t('areYouSureYouWantToStopScanningThisFolder'),
                                 ),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () =>
                                         Navigator.pop(confirmContext, false),
-                                    child: const Text('Non'),
+                                    child: Text(S.t('no')),
                                   ),
                                   TextButton(
                                     onPressed: () =>
                                         Navigator.pop(confirmContext, true),
-                                    child: const Text('Oui, annuler'),
+                                    child: Text(S.t('yesCancel')),
                                   ),
                                 ],
                               ),
@@ -137,7 +137,7 @@ class __ManualImportSetupDialogState
                               cancelToken.cancel('user_cancelled');
                             }
                           },
-                          child: const Text('Annuler'),
+                          child: Text(S.t('cancel')),
                         ),
                       ],
                     ),
@@ -171,11 +171,11 @@ class __ManualImportSetupDialogState
     if (error != null) {
       if (error is NetworkCancelledException) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Analyse annulée.')),
+          SnackBar(content: Text(S.t('scanCancelled'))),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Échec de l'analyse : $error")),
+          SnackBar(content: Text(S.t('scanFailedError1', [error]))),
         );
       }
       return;
@@ -183,8 +183,8 @@ class __ManualImportSetupDialogState
 
     if (scanResults.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Aucun fichier importable trouvé dans le dossier.'),
+        SnackBar(
+          content: Text(S.t('noImportableFilesFoundInTheFolder')),
         ),
       );
       return;
@@ -214,11 +214,11 @@ class __ManualImportSetupDialogState
         ref.watch(sonarrManualImportFilterProvider(widget.instance));
 
     return AlertDialog(
-      title: const Row(
+      title: Row(
         children: <Widget>[
           Icon(Icons.folder_open, size: 28),
           SizedBox(width: 12),
-          Text('Import manuel'),
+          Text(S.t('manualImport')),
         ],
       ),
       content: SingleChildScrollView(
@@ -238,9 +238,9 @@ class __ManualImportSetupDialogState
                 Expanded(
                   child: TextField(
                     controller: _pathController,
-                    decoration: const InputDecoration(
-                      labelText: 'Chemin du dossier',
-                      hintText: 'ex. /data/torrents/name',
+                    decoration: InputDecoration(
+                      labelText: S.t('folderPath'),
+                      hintText: S.t('eGDataTorrentsName'),
                       border: OutlineInputBorder(),
                     ),
                     onChanged: (String val) {
@@ -257,25 +257,25 @@ class __ManualImportSetupDialogState
                 IconButton.filledTonal(
                   icon: const Icon(Icons.folder),
                   onPressed: _browseFolder,
-                  tooltip: 'Parcourir les dossiers',
+                  tooltip: S.t('browseFolder'),
                 ),
               ],
             ),
             const SizedBox(height: 16),
             DropdownButtonFormField<String>(
               initialValue: mode,
-              decoration: const InputDecoration(
-                labelText: "Mode d'import",
+              decoration: InputDecoration(
+                labelText: S.t('importMode'),
                 border: OutlineInputBorder(),
               ),
-              items: const <DropdownMenuItem<String>>[
+              items: <DropdownMenuItem<String>>[
                 DropdownMenuItem<String>(
                   value: 'Move',
-                  child: Text('Déplacer (recommandé)'),
+                  child: Text(S.t('moveRecommended')),
                 ),
                 DropdownMenuItem<String>(
                   value: 'Copy',
-                  child: Text('Copier'),
+                  child: Text(S.t('copy')),
                 ),
               ],
               onChanged: (String? val) {
@@ -292,8 +292,8 @@ class __ManualImportSetupDialogState
             const SizedBox(height: 12),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Filtrer les fichiers existants'),
-              subtitle: const Text('Ne pas afficher les fichiers déjà dans la bibliothèque'),
+              title: Text(S.t('filterExistingFiles')),
+              subtitle: Text(S.t('doNotShowFilesAlreadyInTheLibrary')),
               value: filterExisting,
               onChanged: (bool val) {
                 ref
@@ -310,11 +310,11 @@ class __ManualImportSetupDialogState
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: _startScan,
-          child: const Text('Import interactif'),
+          child: Text(S.t('interactiveImport')),
         ),
       ],
     );
@@ -421,7 +421,7 @@ class __DirectoryBrowserDialogState
         _currentPath.split(separator).where((s) => s.isNotEmpty).toList();
 
     return AlertDialog(
-      title: const Text('Parcourir les dossiers'),
+      title: Text(S.t('browseFolder')),
       content: SizedBox(
         width: double.maxFinite,
         height: 450,
@@ -444,7 +444,7 @@ class __DirectoryBrowserDialogState
                       onPressed: () {
                         _navigateTo('');
                       },
-                      tooltip: 'Racine / Disques',
+                      tooltip: S.t('rootDrives'),
                     ),
                     if (segments.isNotEmpty && !isWindows)
                       Text('/', style: theme.textTheme.bodyMedium),
@@ -478,8 +478,8 @@ class __DirectoryBrowserDialogState
             const SizedBox(height: 8),
             // Current path text input for manual overrides
             TextField(
-              decoration: const InputDecoration(
-                labelText: 'Chemin sélectionné',
+              decoration: InputDecoration(
+                labelText: S.t('selectedPath'),
                 isDense: true,
                 border: OutlineInputBorder(),
               ),
@@ -508,7 +508,7 @@ class __DirectoryBrowserDialogState
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                'Error: $_error',
+                                S.t('errorSnapshotError1', [_error]),
                                 textAlign: TextAlign.center,
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   color: theme.colorScheme.error,
@@ -517,13 +517,13 @@ class __DirectoryBrowserDialogState
                               const SizedBox(height: 12),
                               FilledButton.tonal(
                                 onPressed: _loadDirectoryContents,
-                                child: const Text('Réessayer'),
+                                child: Text(S.t('retry')),
                               ),
                             ],
                           ),
                         )
                       : _directories.isEmpty
-                          ? const Center(child: Text('Aucun répertoire trouvé.'))
+                          ? Center(child: Text(S.t('noDirectoriesFound')))
                           : ListView.builder(
                               itemCount: _directories.length +
                                   (segments.isNotEmpty ? 1 : 0),
@@ -531,7 +531,7 @@ class __DirectoryBrowserDialogState
                                 if (segments.isNotEmpty && index == 0) {
                                   return ListTile(
                                     leading: const Icon(Icons.arrow_upward),
-                                    title: const Text('.. (Dossier parent)'),
+                                    title: Text(S.t('parentFolder')),
                                     onTap: _navigateBack,
                                   );
                                 }
@@ -541,7 +541,7 @@ class __DirectoryBrowserDialogState
                                 final dir = _directories[dataIndex]
                                     as Map<String, dynamic>;
                                 final String name =
-                                    (dir['name'] as String?) ?? 'Unknown';
+                                    (dir['name'] as String?) ?? S.t('unknown');
                                 final String fullPath =
                                     (dir['path'] as String?) ?? '';
 
@@ -563,12 +563,12 @@ class __DirectoryBrowserDialogState
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed:
               _loading ? null : () => Navigator.pop(context, _currentPath),
-          child: const Text('Sélectionner le dossier'),
+          child: Text(S.t('selectFolder')),
         ),
       ],
     );
@@ -727,7 +727,7 @@ class __ManualImportMappingScreenState
     final series = f['series'] as Map<String, dynamic>?;
     if (series == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Veuillez d'abord sélectionner une série.")),
+        SnackBar(content: Text(S.t('pleaseSelectASeriesFirst'))),
       );
       return;
     }
@@ -763,7 +763,7 @@ class __ManualImportMappingScreenState
     if (!mounted) return;
     if (error != null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Échec du chargement des épisodes : $error')),
+        SnackBar(content: Text(S.t('failedToLoadEpisodesError1', [error]))),
       );
       return;
     }
@@ -773,7 +773,7 @@ class __ManualImportMappingScreenState
 
     if (seasonEpisodes.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Aucun épisode trouvé pour la saison $seasonNumber.')),
+        SnackBar(content: Text(S.t('noEpisodesFoundForSeasonSeasonNumber1', [seasonNumber]))),
       );
       return;
     }
@@ -821,8 +821,8 @@ class __ManualImportMappingScreenState
 
     if (importList.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Aucun fichier mappé valide sélectionné pour l'import."),
+        SnackBar(
+          content: Text(S.t('noValidMappedFilesSelectedForImport')),
         ),
       );
       return;
@@ -873,7 +873,7 @@ class __ManualImportMappingScreenState
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Échec de l'import : $e")),
+          SnackBar(content: Text(S.t('importFailedE1', [e]))),
         );
       }
     } finally {
@@ -887,14 +887,14 @@ class __ManualImportMappingScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Import interactif'),
+        title: Text(S.t('interactiveImport')),
         actions: <Widget>[
           TextButton.icon(
             style: TextButton.styleFrom(
               foregroundColor: theme.colorScheme.onPrimaryContainer,
             ),
             icon: const Icon(Icons.select_all),
-            label: const Text('Tout sélectionner'),
+            label: Text(S.t('selectAll')),
             onPressed: () {
               setState(() {
                 for (final f in _files.cast<Map<String, dynamic>>()) {
@@ -909,7 +909,7 @@ class __ManualImportMappingScreenState
               foregroundColor: theme.colorScheme.onPrimaryContainer,
             ),
             icon: const Icon(Icons.deselect),
-            label: const Text('Aucun'),
+            label: Text(S.t('none')),
             onPressed: () {
               setState(_selectedPaths.clear);
             },
@@ -945,13 +945,13 @@ class __ManualImportMappingScreenState
           ),
           Expanded(
             child: _importing
-                ? const Center(
+                ? Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         ExpressiveProgressIndicator(),
                         SizedBox(height: 16),
-                        Text("Envoi de l'instruction d'import manuel…"),
+                        Text(S.t('sendingManualImportInstruction')),
                       ],
                     ),
                   )
@@ -973,7 +973,7 @@ class __ManualImportMappingScreenState
                       final bool isSelected = _selectedPaths.contains(pathStr);
 
                       // Parse quality
-                      String qName = 'Unknown Quality';
+                      String qName = S.t('unknownQuality');
                       final qObj = f['quality'] as Map<String, dynamic>?;
                       if (qObj != null && qObj['quality'] != null) {
                         final innerQ = qObj['quality'] as Map<String, dynamic>;
@@ -1097,7 +1097,7 @@ class __ManualImportMappingScreenState
                                     label: Text(
                                       series != null
                                           ? (series['title'] as String)
-                                          : 'Select Series',
+                                          : S.t('selectSeries'),
                                     ),
                                     backgroundColor: series == null
                                         ? theme.colorScheme.errorContainer
@@ -1115,7 +1115,7 @@ class __ManualImportMappingScreenState
                                       ),
                                       label: Text(
                                         season != null
-                                            ? 'Season $season'
+                                            ? S.t('seasonSeasonNum1', [season])
                                             : 'Season ?',
                                       ),
                                       onPressed: () async {
@@ -1146,7 +1146,7 @@ class __ManualImportMappingScreenState
                                       label: Text(
                                         episodes != null && episodes.isNotEmpty
                                             ? 'Episode ${episodes.cast<Map<String, dynamic>>().map((e) => e['episodeNumber'].toString()).join(', ')}'
-                                            : 'Select Episode(s)',
+                                            : S.t('selectEpisodeS'),
                                       ),
                                       backgroundColor:
                                           episodes == null || episodes.isEmpty
@@ -1187,7 +1187,7 @@ class __ManualImportMappingScreenState
                 FilledButton.icon(
                   onPressed: _importing ? null : _executeImport,
                   icon: const Icon(Icons.download),
-                  label: const Text('Importer la sélection'),
+                  label: Text(S.t('importSelected')),
                 ),
               ],
             ),
@@ -1240,7 +1240,7 @@ class _SeriesPickerDialogState extends State<_SeriesPickerDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Sélectionner la série'),
+      title: Text(S.t('selectSeries')),
       content: SizedBox(
         width: double.maxFinite,
         height: 350,
@@ -1248,8 +1248,8 @@ class _SeriesPickerDialogState extends State<_SeriesPickerDialog> {
           children: <Widget>[
             TextField(
               controller: _filterController,
-              decoration: const InputDecoration(
-                hintText: 'Rechercher des séries…',
+              decoration: InputDecoration(
+                hintText: S.t('searchSeries'),
                 prefixIcon: Icon(Icons.search),
                 isDense: true,
                 border: OutlineInputBorder(),
@@ -1292,7 +1292,7 @@ class _SeasonPickerDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Sélectionner la saison'),
+      title: Text(S.t('selectSeason')),
       content: SizedBox(
         width: 150,
         height: 250,
@@ -1301,7 +1301,7 @@ class _SeasonPickerDialog extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             final int seasonNum = seasonNumbers[index];
             return ListTile(
-              title: Text(seasonNum == 0 ? 'Épisodes spéciaux' : 'Saison $seasonNum'),
+              title: Text(seasonNum == 0 ? S.t('specials') : S.t('seasonSeasonNum1', [seasonNum])),
               selected: seasonNum == initialSeason,
               onTap: () {
                 Navigator.pop(context, seasonNum);
@@ -1339,7 +1339,7 @@ class _EpisodePickerDialogState extends State<_EpisodePickerDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Sélectionner le(s) épisode(s)'),
+      title: Text(S.t('selectEpisodeS')),
       content: SizedBox(
         width: double.maxFinite,
         height: 350,
@@ -1350,7 +1350,7 @@ class _EpisodePickerDialogState extends State<_EpisodePickerDialog> {
             final bool isChecked = _selectedIds.contains(ep.id);
 
             return CheckboxListTile(
-              title: Text('Ép. ${ep.episodeNumber} : ${ep.title}'),
+              title: Text(S.t('epEpEpisodeNumberEpTitle2', [ep.episodeNumber, ep.title])),
               value: isChecked,
               onChanged: (bool? val) {
                 setState(() {
@@ -1368,7 +1368,7 @@ class _EpisodePickerDialogState extends State<_EpisodePickerDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: () {
@@ -1378,7 +1378,7 @@ class _EpisodePickerDialogState extends State<_EpisodePickerDialog> {
                 .toList();
             Navigator.pop(context, mapped);
           },
-          child: const Text('Terminé'),
+          child: Text(S.t('done')),
         ),
       ],
     );

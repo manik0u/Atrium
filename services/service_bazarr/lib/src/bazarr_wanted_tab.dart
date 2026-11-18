@@ -19,14 +19,14 @@ class BazarrWantedTab extends ConsumerWidget {
         ref.watch(bazarrWantedProvider(instance));
 
     return EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
       onRefresh: () async {
         ref.invalidate(bazarrBadgesProvider(instance));
@@ -41,10 +41,10 @@ class BazarrWantedTab extends ConsumerWidget {
               onRetry: () => ref.invalidate(bazarrWantedProvider(instance)),
               data: (List<BazarrWantedRow> rows) {
                 if (rows.isEmpty) {
-                  return const EmptyView(
+                  return EmptyView(
                     icon: Icons.subtitles_outlined,
-                    title: 'Tous sous-titrés',
-                    message: 'Aucun sous-titre en attente.',
+                    title: S.t('allSubtitled'),
+                    message: S.t('nothingIsWaitingOnSubtitles'),
                   );
                 }
                 return ListView.separated(
@@ -100,7 +100,7 @@ class _BadgesHeader extends ConsumerWidget {
               child: _StatTile(
                 icon: Icons.live_tv_outlined,
                 value: b.episodes,
-                label: 'Épisodes',
+                label: S.t('episodes'),
                 color: cs.secondary,
               ),
             ),
@@ -108,7 +108,7 @@ class _BadgesHeader extends ConsumerWidget {
               child: _StatTile(
                 icon: Icons.movie_outlined,
                 value: b.movies,
-                label: 'Films',
+                label: S.t('movies'),
                 color: cs.secondary,
               ),
             ),
@@ -116,7 +116,7 @@ class _BadgesHeader extends ConsumerWidget {
               child: _StatTile(
                 icon: Icons.cloud_outlined,
                 value: b.providers,
-                label: 'Fournisseurs',
+                label: S.t('providers'),
                 color: cs.primary,
               ),
             ),

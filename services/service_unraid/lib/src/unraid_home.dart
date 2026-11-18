@@ -53,7 +53,7 @@ class UnraidHome extends ConsumerWidget {
               : Builder(
                   builder: (BuildContext context) => IconButton(
                     icon: const Icon(Icons.menu),
-                    tooltip: 'Ouvrir le menu',
+                    tooltip: S.t('openMenu'),
                     onPressed: Scaffold.of(context).openDrawer,
                   ),
                 ),
@@ -71,16 +71,16 @@ class UnraidHome extends ConsumerWidget {
           selectedIndex: index,
           onDestinationSelected: (int next) =>
               ref.read(tabIndexProvider(instance).notifier).state = next,
-          destinations: const <NavigationDestination>[
+          destinations: <NavigationDestination>[
             NavigationDestination(
               icon: Icon(Icons.dns_outlined),
               selectedIcon: Icon(Icons.dns),
-              label: 'Tableau',
+              label: S.t('array'),
             ),
             NavigationDestination(
               icon: Icon(Icons.speed_outlined),
               selectedIcon: Icon(Icons.speed),
-              label: 'Système',
+              label: S.t('system'),
             ),
             NavigationDestination(
               icon: Icon(Icons.inventory_2_outlined),
@@ -90,7 +90,7 @@ class UnraidHome extends ConsumerWidget {
             NavigationDestination(
               icon: Icon(Icons.desktop_windows_outlined),
               selectedIcon: Icon(Icons.desktop_windows),
-              label: 'VM',
+              label: S.t('vms'),
             ),
           ],
         ),

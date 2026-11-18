@@ -31,7 +31,7 @@ class QualitySection extends ConsumerWidget {
       builder: (BuildContext dCtx) {
         return AlertDialog(
           title: Text(
-            'Modifier ${item.title ?? item.quality?.name ?? 'Quality Definition'}',
+            S.t('editItemTitleItemQualityName')Quality Definition'}',
           ),
           content: SizedBox(
             width: double.maxFinite,
@@ -45,8 +45,8 @@ class QualitySection extends ConsumerWidget {
                     keyboardType: const TextInputType.numberWithOptions(
                       decimal: true,
                     ),
-                    decoration: const InputDecoration(
-                      labelText: 'Taille min (Mo/min)',
+                    decoration: InputDecoration(
+                      labelText: S.t('minSizeMBMin'),
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -56,8 +56,8 @@ class QualitySection extends ConsumerWidget {
                     keyboardType: const TextInputType.numberWithOptions(
                       decimal: true,
                     ),
-                    decoration: const InputDecoration(
-                      labelText: 'Taille max (Mo/min - 0 pour illimité)',
+                    decoration: InputDecoration(
+                      labelText: S.t('maxSizeMBMin0ForUnlimited'),
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -67,8 +67,8 @@ class QualitySection extends ConsumerWidget {
                     keyboardType: const TextInputType.numberWithOptions(
                       decimal: true,
                     ),
-                    decoration: const InputDecoration(
-                      labelText: 'Taille préférée (Mo/min)',
+                    decoration: InputDecoration(
+                      labelText: S.t('preferredSizeMBMin'),
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -79,7 +79,7 @@ class QualitySection extends ConsumerWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(dCtx),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             FilledButton(
               onPressed: () async {
@@ -115,19 +115,19 @@ class QualitySection extends ConsumerWidget {
                   if (dCtx.mounted) {
                     Navigator.pop(dCtx);
                     messenger.showSnackBar(
-                      const SnackBar(
-                        content: Text('Définition de qualité mise à jour !'),
+                      SnackBar(
+                        content: Text(S.t('qualityDefinitionUpdated')),
                       ),
                     );
                   }
                 } catch (e) {
                   if (dCtx.mounted) {
                     messenger
-                        .showSnackBar(SnackBar(content: Text('Erreur : $e')));
+                        .showSnackBar(SnackBar(content: Text(S.t('errorE1', [e]))));
                   }
                 }
               },
-              child: const Text('Enregistrer'),
+              child: Text(S.t('save')),
             ),
           ],
         );
@@ -150,10 +150,10 @@ class QualitySection extends ConsumerWidget {
           value: asyncQualityDefs,
           data: (List<QualityDefinitionResource> definitions) {
             if (definitions.isEmpty) {
-              return const Center(
+              return Center(
                 child: EmptyView(
                   icon: Icons.tune,
-                  title: 'Aucune définition de qualité',
+                  title: S.t('noQualityDefinitions'),
                   message:
                       'Quality definitions control file size bitrate boundaries.',
                 ),
@@ -199,7 +199,7 @@ class QualitySection extends ConsumerWidget {
                       ),
                     ),
                     title: Text(
-                      item.title ?? item.quality?.name ?? 'Qualité',
+                      item.title ?? item.quality?.name ?? S.t('quality'),
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.w600,
                             fontSize: 15,

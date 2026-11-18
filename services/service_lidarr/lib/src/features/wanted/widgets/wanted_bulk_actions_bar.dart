@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -40,20 +41,20 @@ class WantedBulkActionsBar extends StatelessWidget {
             Expanded(
               child: FilledButton.icon(
                 icon: const Icon(Icons.search, size: 18),
-                label: Text('Rechercher ($selectedCount)'),
+                label: Text(S.t('searchSelectedCount1', [selectedCount])),
                 onPressed: onSearch,
               ),
             ),
             const SizedBox(width: Insets.sm),
             OutlinedButton.icon(
               icon: const Icon(Icons.bookmark_add_outlined, size: 18),
-              label: const Text('Surveiller'),
+              label: Text(S.t('monitor')),
               onPressed: onMonitor,
             ),
             const SizedBox(width: Insets.sm),
             OutlinedButton.icon(
               icon: const Icon(Icons.bookmark_remove_outlined, size: 18),
-              label: const Text('Ne plus surveiller'),
+              label: Text(S.t('unmonitor')),
               onPressed: onUnmonitor,
             ),
           ],

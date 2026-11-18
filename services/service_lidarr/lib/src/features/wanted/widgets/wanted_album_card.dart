@@ -41,7 +41,7 @@ class WantedAlbumCard extends StatelessWidget {
     final bool isMonitored = album.monitored ?? true;
     final String releaseYear =
         album.releaseDate != null ? album.releaseDate!.split('-').first : '';
-    final String albumType = album.albumType ?? 'Album';
+    final String albumType = album.albumType ?? S.t('album');
     final String artistName = album.artist?.artistName ?? '';
 
     return Card(
@@ -117,7 +117,7 @@ class WantedAlbumCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      album.title ?? 'Album inconnu',
+                      album.title ?? S.t('unknownAlbum'),
                       style: theme.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
@@ -159,7 +159,7 @@ class WantedAlbumCard extends StatelessWidget {
               if (!isSelectionMode) ...[
                 const SizedBox(width: 4),
                 IconButton(
-                  tooltip: isMonitored ? 'Surveillé' : 'Non surveillé',
+                  tooltip: isMonitored ? S.t('monitored') : S.t('unmonitored'),
                   visualDensity: VisualDensity.compact,
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(
@@ -176,7 +176,7 @@ class WantedAlbumCard extends StatelessWidget {
                   onPressed: onToggleMonitored,
                 ),
                 IconButton(
-                  tooltip: 'Recherche interactive',
+                  tooltip: S.t('interactiveSearch'),
                   visualDensity: VisualDensity.compact,
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(
@@ -191,7 +191,7 @@ class WantedAlbumCard extends StatelessWidget {
                   onPressed: onInteractiveSearch,
                 ),
                 IconButton(
-                  tooltip: 'Recherche automatique',
+                  tooltip: S.t('autoSearch'),
                   visualDensity: VisualDensity.compact,
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(

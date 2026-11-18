@@ -230,7 +230,7 @@ class ArtistGrid extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          artist.artistName ?? 'Unknown Artist',
+                          artist.artistName ?? S.t('unknownArtist'),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: theme.textTheme.labelMedium?.copyWith(

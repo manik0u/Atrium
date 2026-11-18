@@ -107,7 +107,7 @@ class _AdguardHomeFiltersTabState extends ConsumerState<AdguardHomeFiltersTab> {
               autocorrect: false,
               keyboardType: TextInputType.url,
               decoration: InputDecoration(
-                hintText: 'Vérifiez un hôte, par ex. example.org',
+                hintText: S.t('checkAHostSuchAsExampleOrg'),
                 prefixIcon: const Icon(Icons.travel_explore),
                 isDense: true,
                 filled: true,
@@ -121,7 +121,7 @@ class _AdguardHomeFiltersTabState extends ConsumerState<AdguardHomeFiltersTab> {
           ),
           _Section(
             icon: Icons.block,
-            title: 'Listes de blocage',
+            title: S.t('blocklists'),
             summary: _summary(
               filtering,
               (AdguardHomeFiltering f) => _lists(f.blocklists),
@@ -135,7 +135,7 @@ class _AdguardHomeFiltersTabState extends ConsumerState<AdguardHomeFiltersTab> {
           ),
           _Section(
             icon: Icons.verified_outlined,
-            title: "Listes d'autorisation",
+            title: S.t('allowlists'),
             summary: _summary(
               filtering,
               (AdguardHomeFiltering f) => _lists(f.allowlists),
@@ -149,7 +149,7 @@ class _AdguardHomeFiltersTabState extends ConsumerState<AdguardHomeFiltersTab> {
           ),
           _Section(
             icon: Icons.edit_note,
-            title: 'Règles personnalisées',
+            title: S.t('customRules'),
             summary: _summary(
               filtering,
               (AdguardHomeFiltering f) => _count(
@@ -162,7 +162,7 @@ class _AdguardHomeFiltersTabState extends ConsumerState<AdguardHomeFiltersTab> {
           ),
           _Section(
             icon: Icons.apps,
-            title: 'Services bloqués',
+            title: S.t('blockedServices'),
             summary: _summary(services, (AdguardHomeGlobalServices s) {
               final String blocked =
                   s.ids.isEmpty ? 'None' : _count(s.ids.length, 'service');
@@ -176,7 +176,7 @@ class _AdguardHomeFiltersTabState extends ConsumerState<AdguardHomeFiltersTab> {
           ),
           _Section(
             icon: Icons.alt_route,
-            title: 'Réécritures DNS',
+            title: S.t('dnsRewrites'),
             summary: _summary(rewrites, (List<AdguardHomeRewrite> r) {
               if (rewritesOn == false) {
                 return 'Off · ${_count(r.length, 'rewrite')}';
@@ -219,8 +219,8 @@ class _AdguardHomeFiltersTabState extends ConsumerState<AdguardHomeFiltersTab> {
   static String _summary<T>(AsyncValue<T> value, String Function(T) describe) {
     final T? read = value.value;
     if (read != null) return describe(read);
-    if (value.hasError) return 'Impossible à lire';
-    return 'Reading...';
+    if (value.hasError) return S.t('couldNotBeRead');
+    return S.t('reading');
   }
 }
 

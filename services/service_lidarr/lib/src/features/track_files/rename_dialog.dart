@@ -62,7 +62,7 @@ class _LidarrRenameDialogState extends ConsumerState<LidarrRenameDialog> {
   bool _renaming = false;
 
   String _extractFileName(String? path) {
-    if (path == null || path.isEmpty) return 'Unknown File';
+    if (path == null || path.isEmpty) return S.t('unknownFile');
     return path.split(RegExp(r'[\\/]')).last;
   }
 
@@ -94,7 +94,7 @@ class _LidarrRenameDialogState extends ConsumerState<LidarrRenameDialog> {
       );
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? "Échec de l'exécution du renommage");
+        throw Exception(resp.error?.message ?? S.t('failedToExecuteRename'));
       }
 
       if (!mounted) return;
@@ -139,7 +139,7 @@ class _LidarrRenameDialogState extends ConsumerState<LidarrRenameDialog> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Échec du renommage : $e'),
+            content: Text(S.t('renameFailedE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -218,7 +218,7 @@ class _LidarrRenameDialogState extends ConsumerState<LidarrRenameDialog> {
                     );
                   },
                   icon: const Icon(Icons.refresh),
-                  label: const Text('Réessayer'),
+                  label: Text(S.t('retry')),
                 ),
               ],
             ),
@@ -249,7 +249,7 @@ class _LidarrRenameDialogState extends ConsumerState<LidarrRenameDialog> {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        'Tous les fichiers sont correctement nommés',
+                        S.t('allFilesAreCorrectlyNamed_2'),
                         style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -257,7 +257,7 @@ class _LidarrRenameDialogState extends ConsumerState<LidarrRenameDialog> {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        "Aucun fichier audio n'a besoin d'être organisé ou renommé.",
+                        S.t('noAudioFilesNeedToBeOrganizedOrRenamed'),
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: cs.onSurfaceVariant,
                         ),
@@ -334,7 +334,7 @@ class _LidarrRenameDialogState extends ConsumerState<LidarrRenameDialog> {
                       final String trackNumbers = item.trackNumbers != null &&
                               item.trackNumbers!.isNotEmpty
                           ? 'Track ${item.trackNumbers!.join(', ')}'
-                          : 'Track';
+                          : S.t('track');
 
                       return CheckboxListTile(
                         value: isSelected,
@@ -421,7 +421,7 @@ class _LidarrRenameDialogState extends ConsumerState<LidarrRenameDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: _renaming ? null : () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         previewAsync.maybeWhen(
           data: (List<RenameTrackResource> files) {
@@ -439,7 +439,7 @@ class _LidarrRenameDialogState extends ConsumerState<LidarrRenameDialog> {
                   : const Icon(Icons.drive_file_rename_outline, size: 18),
               label: Text(
                 _selectedTrackFileIds.isEmpty
-                    ? 'Rename'
+                    ? S.t('rename')
                     : 'Rename (${_selectedTrackFileIds.length})',
               ),
             );

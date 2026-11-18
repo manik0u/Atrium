@@ -179,7 +179,7 @@ class _SeriesTabState extends ConsumerState<SeriesTab>
                     );
                   },
                   icon: const Icon(Icons.add),
-                  label: const Text('Ajouter une série'),
+                  label: Text(S.t('addSeries')),
                 ),
               ],
             )
@@ -192,15 +192,15 @@ class _SeriesTabState extends ConsumerState<SeriesTab>
           onRetry: () => ref.invalidate(sonarrSeriesProvider(widget.instance)),
           data: (List<SonarrSeries> list) {
             return EasyRefresh(
-          header: const ClassicHeader(
+          header: ClassicHeader(
             position: IndicatorPosition.locator,
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
               onRefresh: () async {
                 ref.invalidate(sonarrSeriesProvider(widget.instance));
@@ -249,7 +249,7 @@ class _SeriesTabState extends ConsumerState<SeriesTab>
                         : SearchBar(
                             focusNode: _searchFocusNode,
                             controller: _searchController,
-                            hintText: 'Rechercher des séries…',
+                            hintText: S.t('searchSeries'),
                             onTapOutside: (event) {
                               if (_searchFocusNode.hasFocus) {
                                 _searchFocusNode.unfocus();
@@ -295,7 +295,7 @@ class _SeriesTabState extends ConsumerState<SeriesTab>
                           if (selection.length < list.length)
                             IconButton(
                               icon: const Icon(Icons.select_all),
-                              tooltip: 'Tout sélectionner',
+                              tooltip: S.t('selectAll'),
                               onPressed: () {
                                 ref
                                     .read(
@@ -309,7 +309,7 @@ class _SeriesTabState extends ConsumerState<SeriesTab>
                           else
                             IconButton(
                               icon: const Icon(Icons.deselect),
-                              tooltip: 'Tout désélectionner',
+                              tooltip: S.t('deselectAll'),
                               onPressed: () {
                                 ref
                                     .read(
@@ -353,9 +353,9 @@ class _SeriesTabState extends ConsumerState<SeriesTab>
                       hasScrollBody: false,
                       child: EmptyView(
                         icon: Icons.live_tv_outlined,
-                        title: 'Aucune série trouvée',
+                        title: S.t('noSeriesFound'),
                         message:
-                            "Essayez d'ajuster votre requête de recherche ou vos filtres actifs.",
+                            S.t('tryAdjustingYourSearchQueryOrActiveFilters'),
                         action: query.isNotEmpty
                             ? FilledButton.tonalIcon(
                                 onPressed: () {
@@ -374,7 +374,7 @@ class _SeriesTabState extends ConsumerState<SeriesTab>
                                 },
                                 icon: const Icon(Icons.travel_explore),
                                 label: Text(
-                                  'Rechercher en ligne « $query »',
+                                  S.t('searchOnlineForQuery1', [query]),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -979,7 +979,7 @@ class _BulkActionsBar extends StatelessWidget {
               );
             },
             icon: const Icon(Icons.edit_outlined),
-            label: const Text('Modifier'),
+            label: Text(S.t('edit')),
           ),
           TextButton.icon(
             style: TextButton.styleFrom(
@@ -995,7 +995,7 @@ class _BulkActionsBar extends StatelessWidget {
               );
             },
             icon: const Icon(Icons.delete_outline),
-            label: const Text('Supprimer'),
+            label: Text(S.t('delete')),
           ),
         ],
       ),
@@ -1029,7 +1029,7 @@ class _BulkEditDialogState extends ConsumerState<_BulkEditDialog> {
     final foldersAsync = ref.watch(sonarrRootFoldersProvider(widget.instance));
 
     return AlertDialog(
-      title: const Text('Modification groupée des séries'),
+      title: Text(S.t('bulkEditSeries')),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -1037,29 +1037,29 @@ class _BulkEditDialogState extends ConsumerState<_BulkEditDialog> {
             const SizedBox(height: Insets.sm),
             DropdownButtonFormField<bool?>(
               initialValue: _monitored,
-              decoration: const InputDecoration(
-                labelText: 'Surveillé',
+              decoration: InputDecoration(
+                labelText: S.t('monitored'),
                 border: OutlineInputBorder(),
               ),
-              items: const [
-                DropdownMenuItem(child: Text("Conserver l'actuel")),
-                DropdownMenuItem(value: true, child: Text('Surveillé')),
-                DropdownMenuItem(value: false, child: Text('Non surveillé')),
+              items: [
+                DropdownMenuItem(child: Text(S.t('keepCurrent'))),
+                DropdownMenuItem(value: true, child: Text(S.t('monitored'))),
+                DropdownMenuItem(value: false, child: Text(S.t('unmonitored'))),
               ],
               onChanged: (val) => setState(() => _monitored = val),
             ),
             const SizedBox(height: Insets.md),
             DropdownButtonFormField<String?>(
               initialValue: _seriesType,
-              decoration: const InputDecoration(
-                labelText: 'Type de série',
+              decoration: InputDecoration(
+                labelText: S.t('seriesType'),
                 border: OutlineInputBorder(),
               ),
-              items: const [
-                DropdownMenuItem(child: Text("Conserver l'actuel")),
-                DropdownMenuItem(value: 'standard', child: Text('Standard')),
-                DropdownMenuItem(value: 'daily', child: Text('Quotidien')),
-                DropdownMenuItem(value: 'anime', child: Text('Anime')),
+              items: [
+                DropdownMenuItem(child: Text(S.t('keepCurrent'))),
+                DropdownMenuItem(value: 'standard', child: Text(S.t('standard'))),
+                DropdownMenuItem(value: 'daily', child: Text(S.t('daily'))),
+                DropdownMenuItem(value: 'anime', child: Text(S.t('anime'))),
               ],
               onChanged: (val) => setState(() => _seriesType = val),
             ),
@@ -1067,12 +1067,12 @@ class _BulkEditDialogState extends ConsumerState<_BulkEditDialog> {
             profilesAsync.when(
               data: (profiles) => DropdownButtonFormField<int?>(
                 initialValue: _qualityProfileId,
-                decoration: const InputDecoration(
-                  labelText: 'Profil de qualité',
+                decoration: InputDecoration(
+                  labelText: S.t('qualityProfile'),
                   border: OutlineInputBorder(),
                 ),
                 items: [
-                  const DropdownMenuItem(child: Text("Conserver l'actuel")),
+                  DropdownMenuItem(child: Text(S.t('keepCurrent'))),
                   ...profiles.map(
                     (p) => DropdownMenuItem(
                       value: p['id'] as int,
@@ -1086,18 +1086,18 @@ class _BulkEditDialogState extends ConsumerState<_BulkEditDialog> {
                 height: 50,
                 child: Center(child: ExpressiveProgressIndicator()),
               ),
-              error: (_, __) => const Text('Erreur lors du chargement des profils'),
+              error: (_, __) => Text(S.t('errorLoadingProfiles')),
             ),
             const SizedBox(height: Insets.md),
             foldersAsync.when(
               data: (folders) => DropdownButtonFormField<String?>(
                 initialValue: _rootFolderPath,
-                decoration: const InputDecoration(
-                  labelText: 'Dossier racine',
+                decoration: InputDecoration(
+                  labelText: S.t('rootFolder'),
                   border: OutlineInputBorder(),
                 ),
                 items: [
-                  const DropdownMenuItem(child: Text("Conserver l'actuel")),
+                  DropdownMenuItem(child: Text(S.t('keepCurrent'))),
                   ...folders.map(
                     (f) => DropdownMenuItem(
                       value: f['path'] as String,
@@ -1111,7 +1111,7 @@ class _BulkEditDialogState extends ConsumerState<_BulkEditDialog> {
                 height: 50,
                 child: Center(child: ExpressiveProgressIndicator()),
               ),
-              error: (_, __) => const Text('Erreur lors du chargement des dossiers'),
+              error: (_, __) => Text(S.t('errorLoadingFolders')),
             ),
           ],
         ),
@@ -1119,7 +1119,7 @@ class _BulkEditDialogState extends ConsumerState<_BulkEditDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         ElevatedButton(
           onPressed: () async {
@@ -1159,7 +1159,7 @@ class _BulkEditDialogState extends ConsumerState<_BulkEditDialog> {
             if (!context.mounted) return;
             if (error != null) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Erreur lors de la mise à jour des séries : $error')),
+                SnackBar(content: Text(S.t('errorUpdatingSeriesError1', [error]))),
               );
               return;
             }
@@ -1170,10 +1170,10 @@ class _BulkEditDialogState extends ConsumerState<_BulkEditDialog> {
             Navigator.pop(context); // pop dialog
 
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Séries mises à jour avec succès')),
+              SnackBar(content: Text(S.t('successfullyUpdatedSeries'))),
             );
           },
-          child: const Text('Enregistrer'),
+          child: Text(S.t('save')),
         ),
       ],
     );
@@ -1206,7 +1206,7 @@ class _BulkDeleteDialogState extends ConsumerState<_BulkDeleteDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Supprimer ${widget.selectedIds.length} séries ?'),
+      title: Text(S.t('deleteWidgetSelectedIdsLengthSeries1', [widget.selectedIds.length])),
       content: RadioGroup<_DeleteMode>(
         groupValue: _mode,
         onChanged: (_DeleteMode? val) => setState(() {
@@ -1216,9 +1216,9 @@ class _BulkDeleteDialogState extends ConsumerState<_BulkDeleteDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const RadioListTile<_DeleteMode>(
-              title: Text('Supprimer la fiche de la série'),
-              subtitle: Text('Retirer de la bibliothèque Sonarr'),
+            RadioListTile<_DeleteMode>(
+              title: Text(S.t('deleteSeriesEntry')),
+              subtitle: Text(S.t('removeFromSonarrLibrary')),
               value: _DeleteMode.deleteEntry,
               contentPadding: EdgeInsets.zero,
             ),
@@ -1226,16 +1226,16 @@ class _BulkDeleteDialogState extends ConsumerState<_BulkDeleteDialog> {
               Padding(
                 padding: const EdgeInsets.only(left: Insets.lg),
                 child: CheckboxListTile(
-                  title: const Text('Supprimer aussi les fichiers du disque'),
+                  title: Text(S.t('alsoDeleteFilesFromDisk')),
                   value: _deleteFiles,
                   contentPadding: EdgeInsets.zero,
                   onChanged: (val) => setState(() => _deleteFiles = val ?? false),
                 ),
               ),
-            const RadioListTile<_DeleteMode>(
-              title: Text('Supprimer uniquement les fichiers'),
+            RadioListTile<_DeleteMode>(
+              title: Text(S.t('deleteFilesOnly')),
               subtitle:
-                  Text("Conserver la fiche dans la bibliothèque Sonarr pour libérer de l'espace disque"),
+                  Text(S.t('keepEntryInSonarrLibraryToFreeDiskSpace')),
               value: _DeleteMode.deleteFilesOnly,
               contentPadding: EdgeInsets.zero,
             ),
@@ -1243,8 +1243,8 @@ class _BulkDeleteDialogState extends ConsumerState<_BulkDeleteDialog> {
               Padding(
                 padding: const EdgeInsets.only(left: Insets.lg),
                 child: CheckboxListTile(
-                  title: const Text('Ne plus surveiller la série'),
-                  subtitle: const Text('Empêcher les re-téléchargements automatiques'),
+                  title: Text(S.t('unmonitorSeries')),
+                  subtitle: Text(S.t('preventAutomaticReDownloads')),
                   value: _unmonitor,
                   contentPadding: EdgeInsets.zero,
                   onChanged: (val) => setState(() => _unmonitor = val ?? false),
@@ -1256,7 +1256,7 @@ class _BulkDeleteDialogState extends ConsumerState<_BulkDeleteDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -1320,7 +1320,7 @@ class _BulkDeleteDialogState extends ConsumerState<_BulkDeleteDialog> {
             if (!context.mounted) return;
             if (error != null) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Erreur : $error')),
+                SnackBar(content: Text(S.t('errorError1_2', [error]))),
               );
               return;
             }
@@ -1335,8 +1335,8 @@ class _BulkDeleteDialogState extends ConsumerState<_BulkDeleteDialog> {
               msg = 'Successfully deleted ${widget.selectedIds.length} series';
             } else if (failedCount == 0) {
               msg = _unmonitor
-                  ? 'Fichiers supprimés et $successCount série(s) non surveillée(s)'
-                  : 'Fichiers supprimés pour $successCount série(s)';
+                  ? S.t('successfullyDeletedFilesAndUnmonitoredSuccessCountSeries1', [successCount])
+                  : S.t('successfullyDeletedFilesForSuccessCountSeries1', [successCount]);
             } else {
               msg = 'Deleted files for $successCount series. Failed for $failedCount series';
             }
@@ -1345,7 +1345,7 @@ class _BulkDeleteDialogState extends ConsumerState<_BulkDeleteDialog> {
               SnackBar(content: Text(msg)),
             );
           },
-          child: const Text('Supprimer'),
+          child: Text(S.t('delete')),
         ),
       ],
     );
@@ -1379,7 +1379,7 @@ class _SortFilterBottomSheet extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Filter',
+                S.t('filter'),
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -1391,12 +1391,12 @@ class _SortFilterBottomSheet extends ConsumerWidget {
                 children: [
                   ...SonarrSeriesFilter.values.map((f) {
                     final label = switch (f) {
-                      SonarrSeriesFilter.all => 'Tous',
-                      SonarrSeriesFilter.monitoredOnly => 'Surveillés uniquement',
-                      SonarrSeriesFilter.unmonitoredOnly => 'Non surveillés uniquement',
-                      SonarrSeriesFilter.continuingOnly => 'En cours uniquement',
-                      SonarrSeriesFilter.endedOnly => 'Terminées uniquement',
-                      SonarrSeriesFilter.missingEpisodes => 'Épisodes manquants',
+                      SonarrSeriesFilter.all => S.t('all'),
+                      SonarrSeriesFilter.monitoredOnly => S.t('monitoredOnly'),
+                      SonarrSeriesFilter.unmonitoredOnly => S.t('unmonitoredOnly'),
+                      SonarrSeriesFilter.continuingOnly => S.t('continuingOnly'),
+                      SonarrSeriesFilter.endedOnly => S.t('endedOnly'),
+                      SonarrSeriesFilter.missingEpisodes => S.t('missingEpisodes'),
                     };
                     final selected = activeCustomFilter == null && filter == f;
                     return ChoiceChip(
@@ -1455,7 +1455,7 @@ class _SortFilterBottomSheet extends ConsumerWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                'Sort By',
+                S.t('sortBy'),
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -1466,16 +1466,16 @@ class _SortFilterBottomSheet extends ConsumerWidget {
                 runSpacing: 4,
                 children: SonarrSeriesSortField.values.map((field) {
                   final label = switch (field) {
-                    SonarrSeriesSortField.monitoredStatus => 'Surveillance/Statut',
-                    SonarrSeriesSortField.title => 'Titre',
-                    SonarrSeriesSortField.network => 'Réseau',
-                    SonarrSeriesSortField.nextAiring => 'Prochaine diffusion',
-                    SonarrSeriesSortField.previousAiring => 'Diffusion précédente',
-                    SonarrSeriesSortField.added => 'Ajouté',
-                    SonarrSeriesSortField.seasons => 'Saisons',
-                    SonarrSeriesSortField.episodes => 'Épisodes',
-                    SonarrSeriesSortField.episodeCount => "Nombre d'épisodes",
-                    SonarrSeriesSortField.sizeOnDisk => 'Taille sur le disque',
+                    SonarrSeriesSortField.monitoredStatus => S.t('monitoredStatus_2'),
+                    SonarrSeriesSortField.title => S.t('title'),
+                    SonarrSeriesSortField.network => S.t('network'),
+                    SonarrSeriesSortField.nextAiring => S.t('nextAiring'),
+                    SonarrSeriesSortField.previousAiring => S.t('previousAiring'),
+                    SonarrSeriesSortField.added => S.t('added'),
+                    SonarrSeriesSortField.seasons => S.t('seasons'),
+                    SonarrSeriesSortField.episodes => S.t('episodes'),
+                    SonarrSeriesSortField.episodeCount => S.t('episodeCount'),
+                    SonarrSeriesSortField.sizeOnDisk => S.t('sizeOnDisk'),
                   };
                   final selected = sortField == field;
                   return ChoiceChip(
@@ -1502,15 +1502,15 @@ class _SortFilterBottomSheet extends ConsumerWidget {
               ),
               const SizedBox(height: 8),
               SegmentedButton<bool>(
-                segments: const <ButtonSegment<bool>>[
+                segments: <ButtonSegment<bool>>[
                   ButtonSegment<bool>(
                     value: true,
-                    label: Text('Croissant'),
+                    label: Text(S.t('ascending')),
                     icon: Icon(Icons.arrow_upward),
                   ),
                   ButtonSegment<bool>(
                     value: false,
-                    label: Text('Décroissant'),
+                    label: Text(S.t('descending')),
                     icon: Icon(Icons.arrow_downward),
                   ),
                 ],

@@ -187,8 +187,8 @@ class SeerrSessionInterceptor extends Interceptor {
           : 'Seerr rejected the sign-in. Check the username and password, '
               'and that the account has been imported into Seerr or Seerr '
               'lets new Jellyfin and Emby users sign in.',
-      _ when reason != null => 'Seerr a refusé la connexion : $reason',
-      _ => "Seerr n'a pas pu se connecter (HTTP $status).",
+      _ when reason != null => S.t('seerrRefusedTheSignInReason1', [reason]),
+      _ => S.t('seerrCouldNotSignInHTTPStatus1', [status]),
     };
     return DioException(
       requestOptions: e.requestOptions,

@@ -15,10 +15,10 @@ class StatusChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final ColorScheme scheme = Theme.of(context).colorScheme;
     final (Color color, String label) = switch (health) {
-      Health.ok => (Colors.green, 'En ligne'),
-      Health.warning => (Colors.orange, 'Avertissement'),
-      Health.error => (scheme.error, 'Hors ligne'),
-      Health.unknown => (scheme.outline, 'Inconnu'),
+      Health.ok => (Colors.green, S.t('online')),
+      Health.warning => (Colors.orange, S.t('warning')),
+      Health.error => (scheme.error, S.t('offline')),
+      Health.unknown => (scheme.outline, S.t('unknown')),
     };
 
     final Widget dot = Container(

@@ -6,7 +6,7 @@ import 'support/adguard_home_test_instance.dart';
 import 'support/pump.dart';
 
 void main() {
-  final Finder save = find.widgetWithText(FilledButton, 'Enregistrer');
+  final Finder save = find.widgetWithText(FilledButton, 'Save');
   Finder box(String key) => find.byKey(Key('adguard-access-$key'));
 
   Future<Pumped> open(
@@ -57,15 +57,15 @@ void main() {
     await tester.tap(save);
     await tester.pumpAndSettle();
 
-    expect(find.text("Enregistrer les paramètres d'accès ?"), findsOneWidget);
+    expect(find.text('Save the access settings?'), findsOneWidget);
     expect(find.textContaining('A wrong entry'), findsOneWidget);
-    await tester.tap(find.text('Annuler'));
+    await tester.tap(find.text('Cancel'));
     await tester.pumpAndSettle();
     expect(pumped.actions.calls, isEmpty);
 
     await tester.tap(save);
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(FilledButton, 'Enregistrer').last);
+    await tester.tap(find.widgetWithText(FilledButton, 'Save').last);
     await tester.pumpAndSettle();
 
     expect(
@@ -84,7 +84,7 @@ void main() {
 
     expect(tester.widget<TextField>(box('disallowed')).enabled, isFalse);
     expect(
-      find.text("Sans effet tant qu'il y a des clients autorisés."),
+      find.text('Not in force while there are allowed clients.'),
       findsOneWidget,
     );
 
@@ -100,7 +100,7 @@ void main() {
     await tester.pump();
     await tester.tap(save);
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(FilledButton, 'Enregistrer').last);
+    await tester.tap(find.widgetWithText(FilledButton, 'Save').last);
     await tester.pumpAndSettle();
 
     expect(
@@ -118,12 +118,12 @@ void main() {
     await tester.pump();
     await tester.tap(save);
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(FilledButton, 'Enregistrer').last);
+    await tester.tap(find.widgetWithText(FilledButton, 'Save').last);
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(FilledButton, 'Réessayer'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Try again'));
     await tester.pumpAndSettle();
 
-    expect(find.text("Enregistrer les paramètres d'accès ?"), findsNothing);
+    expect(find.text('Save the access settings?'), findsNothing);
     expect(pumped.actions.calls, <String>['access', 'retry', 'access']);
   });
 

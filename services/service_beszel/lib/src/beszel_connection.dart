@@ -34,7 +34,7 @@ Future<void> verifyBeszelConnection(Dio dio, InstanceAuth auth) async {
     }
     if (status < 200 || status >= 300) {
       throw NetworkBadResponseException(
-        'Réponse inattendue de Beszel (HTTP $status).',
+        S.t('unexpectedResponseFromBeszelHTTPStatus1', [status]),
         status: status,
       );
     }
@@ -61,8 +61,8 @@ Future<void> verifyBeszelConnection(Dio dio, InstanceAuth auth) async {
     // PocketBase rejects a wrong identity/password with 400, and gates other
     // resources with 401/403 - all three mean the login did not succeed.
     if (status == 400 || status == 401 || status == 403) {
-      throw const NetworkAuthException(
-        "Beszel a rejeté l'e-mail ou le mot de passe.",
+      throw NetworkAuthException(
+        S.t('beszelRejectedTheEmailOrPassword'),
       );
     }
     throw NetworkException.fromDio(e);

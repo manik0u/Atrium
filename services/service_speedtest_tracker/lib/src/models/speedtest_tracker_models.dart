@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 enum SpeedtestResultStatus {
   waiting,
   started,
@@ -26,15 +27,15 @@ extension SpeedtestResultStatusX on SpeedtestResultStatus {
       this == SpeedtestResultStatus.skipped;
 
   String get label => switch (this) {
-        SpeedtestResultStatus.waiting => 'En attente',
-        SpeedtestResultStatus.started => 'Démarré',
-        SpeedtestResultStatus.checking => 'Vérification en cours',
-        SpeedtestResultStatus.running => 'En cours',
-        SpeedtestResultStatus.benchmarking => 'Benchmark en cours',
-        SpeedtestResultStatus.completed => 'Terminé',
-        SpeedtestResultStatus.failed => 'Échec',
-        SpeedtestResultStatus.skipped => 'Ignoré',
-        SpeedtestResultStatus.unknown => 'Inconnu',
+        SpeedtestResultStatus.waiting => S.t('pending'),
+        SpeedtestResultStatus.started => S.t('started'),
+        SpeedtestResultStatus.checking => S.t('checking'),
+        SpeedtestResultStatus.running => S.t('running'),
+        SpeedtestResultStatus.benchmarking => S.t('benchmarking'),
+        SpeedtestResultStatus.completed => S.t('done'),
+        SpeedtestResultStatus.failed => S.t('failed'),
+        SpeedtestResultStatus.skipped => S.t('skipped'),
+        SpeedtestResultStatus.unknown => S.t('unknown'),
       };
 }
 
@@ -186,8 +187,8 @@ class SpeedtestResultsPage {
     final Map<String, dynamic> json = _asStringMap(value);
     final Object? data = json['data'];
     if (data is! List<dynamic>) {
-      throw const SpeedtestProtocolException(
-        "La réponse de l'historique des résultats ne contient pas de liste de données.",
+      throw SpeedtestProtocolException(
+        S.t('theResultHistoryResponseDoesNotContainADataList'),
       );
     }
     final List<SpeedtestResult> results = <SpeedtestResult>[

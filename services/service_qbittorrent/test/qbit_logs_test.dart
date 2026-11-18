@@ -115,7 +115,7 @@ void main() {
       expect(find.text('UPnP port mapping failed'), findsOneWidget);
       expect(find.text('Fatal error: disk space exhausted'), findsOneWidget);
       expect(find.text('NORMAL'), findsOneWidget);
-      expect(find.text('AVERTISSEMENT'), findsOneWidget);
+      expect(find.text('WARNING'), findsOneWidget);
       expect(find.text('CRITICAL'), findsOneWidget);
     });
 
@@ -135,7 +135,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Tap 'Warning' chip
-      await tester.tap(find.widgetWithText(FilterChip, 'Avertissement'));
+      await tester.tap(find.widgetWithText(FilterChip, 'Warning'));
       await tester.pumpAndSettle();
 
       expect(find.text('UPnP port mapping failed'), findsOneWidget);
@@ -143,7 +143,7 @@ void main() {
       expect(find.text('Fatal error: disk space exhausted'), findsNothing);
 
       // Tap 'All' chip to reset
-      await tester.tap(find.widgetWithText(FilterChip, 'Tous'));
+      await tester.tap(find.widgetWithText(FilterChip, 'All'));
       await tester.pumpAndSettle();
 
       expect(find.text('System initialized successfully'), findsOneWidget);
@@ -167,7 +167,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Tap search icon
-      await tester.tap(find.byTooltip('Rechercher dans les journaux'));
+      await tester.tap(find.byTooltip('Search logs'));
       await tester.pumpAndSettle();
 
       // Type search query
@@ -196,14 +196,14 @@ void main() {
       await tester.pumpAndSettle();
 
       // Tap search icon
-      await tester.tap(find.byTooltip('Rechercher dans les journaux'));
+      await tester.tap(find.byTooltip('Search logs'));
       await tester.pumpAndSettle();
 
       // Type search query that matches nothing
       await tester.enterText(find.byType(TextField), 'nonexistent query');
       await tester.pumpAndSettle();
 
-      expect(find.text('Aucun journal correspondant'), findsOneWidget);
+      expect(find.text('No matching logs'), findsOneWidget);
     });
   });
 }

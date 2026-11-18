@@ -4,6 +4,7 @@ import '../generated/models/media_resource.dart';
 import '../generated/models/watcher.dart';
 import '../media/tracearr_media_url_resolver.dart';
 import '../models/tracearr_models.dart';
+import 'package:core_models/core_models.dart';
 
 /// Pure transformation for media details, availability, watchers, and children.
 class TracearrMediaMapper {
@@ -33,7 +34,7 @@ class TracearrMediaMapper {
   static TracearrMediaWatcher mapWatcher(Watcher item) {
     return TracearrMediaWatcher(
       userId: item.user?.userId ?? '',
-      username: item.user?.identityName ?? item.user?.username ?? 'Unknown',
+      username: item.user?.identityName ?? item.user?.username ?? S.t('unknown'),
       plays: item.plays ?? 0,
       watchTimeMs: item.watchTimeMs ?? 0,
       completionPct: item.completionPct,
@@ -108,7 +109,7 @@ class TracearrMediaMapper {
     return TracearrMediaDetail(
       id: item.id ?? mediaRef ?? '',
       mediaType: item.mediaType ?? 'movie',
-      title: item.title ?? 'Média inconnu',
+      title: item.title ?? S.t('unknownMedia'),
       year: item.year,
       showMediaId: item.showMediaId,
       imdbId: item.imdbId,

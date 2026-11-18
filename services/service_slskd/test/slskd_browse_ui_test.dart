@@ -204,7 +204,7 @@ void main() {
 
   const mockUserStatus = SlskdUserStatus(
     isPrivileged: true,
-    presence: 'En ligne',
+    presence: 'Online',
   );
 
   group('SlskdBrowseTab Widget & Screenshot Tests', () {
@@ -251,7 +251,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // 1. Initial Empty Peer Lookup View
-      expect(find.text('Explorateur de bibliothèque du pair'), findsOneWidget);
+      expect(find.text('Peer Library Explorer'), findsOneWidget);
       expect(find.text('Browse Peer Shares'), findsOneWidget);
       // No made-up peers to tap: those names belong to real strangers.
       expect(find.byType(ActionChip), findsNothing);
@@ -261,7 +261,7 @@ void main() {
       // 2. Look up "AudioPhile99" by name
       await tester.enterText(
         find.descendant(
-          of: find.widgetWithText(SearchBar, "Saisissez le nom d'utilisateur Soulseek…"),
+          of: find.widgetWithText(SearchBar, 'Enter Soulseek username...'),
           matching: find.byType(TextField),
         ),
         'AudioPhile99',
@@ -271,15 +271,15 @@ void main() {
 
       // Verify Peer Card & Root shares
       expect(find.text('AudioPhile99'), findsWidgets);
-      expect(find.text('Emplacement libre'), findsOneWidget);
+      expect(find.text('Free Slot'), findsOneWidget);
       expect(find.text('SUPPORTER'), findsOneWidget);
-      expect(find.text('Racine'), findsOneWidget);
-      expect(find.text('Musique'), findsOneWidget);
+      expect(find.text('Root'), findsOneWidget);
+      expect(find.text('Music'), findsOneWidget);
 
       await capture(tester, repaintKey, 'slskd_browse_root.png');
 
       // 3. Drill down: Music -> Electronic -> Daft Punk -> Discovery (2001) [FLAC]
-      await tester.tap(find.text('Musique'));
+      await tester.tap(find.text('Music'));
       await tester.pumpAndSettle();
 
       expect(find.text('Electronic'), findsOneWidget);
@@ -308,7 +308,7 @@ void main() {
       expect(find.text('02 - Aerodynamic.flac'), findsOneWidget);
       expect(find.text('03 - Digital Love.flac'), findsOneWidget);
       expect(find.text('04 - Harder Better Faster.flac'), findsOneWidget);
-      expect(find.text('Dossier de téléchargement'), findsOneWidget);
+      expect(find.text('Download Folder'), findsOneWidget);
 
       await capture(tester, repaintKey, 'slskd_browse_folder.png');
 
@@ -328,14 +328,14 @@ void main() {
       await capture(tester, repaintKey, 'slskd_browse_bio_sheet.png');
 
       // Close Bio Sheet
-      await tester.tap(find.text('Fermer'));
+      await tester.tap(find.text('Close'));
       await tester.pumpAndSettle();
 
       // 5. Navigate back using breadcrumb: tap "Root" in ribbon
-      await tester.tap(find.text('Racine'), warnIfMissed: false);
+      await tester.tap(find.text('Root'), warnIfMissed: false);
       await tester.pumpAndSettle();
 
-      expect(find.text('Musique'), findsOneWidget);
+      expect(find.text('Music'), findsOneWidget);
     });
 
     testWidgets('renders browse status progress bar when loading peer shares',
@@ -426,7 +426,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Tap into Music folder
-      await tester.tap(find.text('Musique'));
+      await tester.tap(find.text('Music'));
       await tester.pumpAndSettle();
 
       expect(find.text('Electronic'), findsOneWidget);
@@ -448,13 +448,13 @@ void main() {
       await WidgetsBinding.instance.handlePopRoute();
       await tester.pumpAndSettle();
 
-      expect(find.text('Musique'), findsOneWidget);
+      expect(find.text('Music'), findsOneWidget);
 
       // Simulate hardware back press 3: unwinds peer -> back at initial peer lookup
       await WidgetsBinding.instance.handlePopRoute();
       await tester.pumpAndSettle();
 
-      expect(find.text('Explorateur de bibliothèque du pair'), findsOneWidget);
+      expect(find.text('Peer Library Explorer'), findsOneWidget);
     });
 
     testWidgets('folder download leaves out locked subfolders', (WidgetTester tester) async {
@@ -523,7 +523,7 @@ void main() {
 
       await pumpCard(null);
       expect(find.textContaining('Queue:'), findsNothing);
-      expect(find.text('Emplacement libre'), findsNothing);
+      expect(find.text('Free Slot'), findsNothing);
 
       await pumpCard(const SlskdUserInfo(description: '', queueLength: 3));
       expect(find.text('Queue: #3'), findsOneWidget);

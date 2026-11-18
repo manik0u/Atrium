@@ -14,12 +14,12 @@ void main() {
       AdguardHomeFiltering.fromJson(filterStatusJson());
 
   test('the update interval is named as the web UI names it', () {
-    expect(adguardHomeIntervalLabel(0), 'Jamais');
-    expect(adguardHomeIntervalLabel(1), 'Toutes les heures');
+    expect(adguardHomeIntervalLabel(0), 'Never');
+    expect(adguardHomeIntervalLabel(1), 'Every hour');
     expect(adguardHomeIntervalLabel(12), 'Every 12 hours');
     expect(adguardHomeIntervalLabel(24), 'Every 24 hours');
-    expect(adguardHomeIntervalLabel(72), 'Tous les 3 jours');
-    expect(adguardHomeIntervalLabel(168), 'Tous les 7 jours');
+    expect(adguardHomeIntervalLabel(72), 'Every 3 days');
+    expect(adguardHomeIntervalLabel(168), 'Every 7 days');
     expect(adguardHomeIntervalLabel(7), 'Every 7 hours');
   });
 
@@ -66,7 +66,7 @@ void main() {
         (WidgetTester tester) async {
       await pumpLists(tester);
 
-      expect(find.text('Listes de blocage'), findsOneWidget);
+      expect(find.text('Blocklists'), findsOneWidget);
       expect(find.byType(AdguardHomeFilterListRow), findsNWidgets(2));
       expect(
         find.descendant(
@@ -86,7 +86,7 @@ void main() {
       expect(
         find.descendant(
           of: rowOf('AdAway Default Blocklist'),
-          matching: find.textContaining('Désactivé'),
+          matching: find.textContaining('Off'),
         ),
         findsOneWidget,
       );
@@ -110,7 +110,7 @@ void main() {
       expect(find.text('Every 24 hours'), findsOneWidget);
       await tester.tap(find.text('Every 24 hours'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Tous les 7 jours'));
+      await tester.tap(find.text('Every 7 days'));
       await tester.pumpAndSettle();
 
       expect(pumped.actions.calls, <String>['interval 168']);
@@ -125,15 +125,15 @@ void main() {
 
       await tester.tap(find.text('Every 24 hours'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Jamais'));
+      await tester.tap(find.text('Never'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 400));
 
-      expect(find.text('Jamais'), findsOneWidget);
+      expect(find.text('Never'), findsOneWidget);
       expect(find.byType(LinearProgressIndicatorM3E), findsOneWidget);
       expect(
         tester
-            .widget<ListTile>(find.widgetWithText(ListTile, 'Mettre à jour les listes'))
+            .widget<ListTile>(find.widgetWithText(ListTile, 'Update the lists'))
             .enabled,
         isFalse,
       );
@@ -153,11 +153,11 @@ void main() {
 
       await tester.tap(find.text('Every 24 hours'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Jamais'));
+      await tester.tap(find.text('Never'));
       await tester.pumpAndSettle();
 
       expect(
-        find.text('Les listes ne se mettront plus à jour automatiquement'),
+        find.text('The lists will no longer update by themselves'),
         findsOneWidget,
       );
     });
@@ -175,7 +175,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Every 7 hours'), findsNWidgets(2));
-      expect(find.text('Jamais'), findsOneWidget);
+      expect(find.text('Never'), findsOneWidget);
     });
 
     testWidgets('a switch turns its list on or off',
@@ -234,9 +234,9 @@ void main() {
       final Pumped pumped = await pumpLists(tester);
       pumped.actions.listsUpdated = 2;
 
-      await tester.tap(find.byTooltip('Plus'));
+      await tester.tap(find.byTooltip('More'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Rechercher des mises à jour'));
+      await tester.tap(find.text('Check for updates'));
       await tester.pumpAndSettle();
 
       expect(pumped.actions.calls, <String>['refresh blocklists']);
@@ -247,12 +247,12 @@ void main() {
         (WidgetTester tester) async {
       await pumpLists(tester);
 
-      await tester.tap(find.byTooltip('Plus'));
+      await tester.tap(find.byTooltip('More'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Rechercher des mises à jour'));
+      await tester.tap(find.text('Check for updates'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Toutes les listes sont à jour'), findsOneWidget);
+      expect(find.text('All lists are up to date'), findsOneWidget);
     });
   });
 
@@ -261,7 +261,7 @@ void main() {
         (WidgetTester tester) async {
       await pumpLists(tester, allowlist: true);
 
-      expect(find.text("Listes d'autorisation"), findsOneWidget);
+      expect(find.text('Allowlists'), findsOneWidget);
       expect(find.byType(AdguardHomeFilterListRow), findsOneWidget);
       expect(find.text('Allow common services'), findsOneWidget);
       expect(find.text('Every 24 hours'), findsNothing);
@@ -279,7 +279,7 @@ void main() {
   });
 
   group('a list in its form', () {
-    final Finder save = find.widgetWithText(FilledButton, 'Enregistrer');
+    final Finder save = find.widgetWithText(FilledButton, 'Save');
     const Key nameField = Key('adguard-list-name');
     const Key urlField = Key('adguard-list-url');
 
@@ -354,7 +354,7 @@ void main() {
       await tester.tap(save);
       await tester.pumpAndSettle();
 
-      expect(find.text('Non enregistré'), findsOneWidget);
+      expect(find.text('Not saved'), findsOneWidget);
       expect(find.textContaining('url already exists'), findsOneWidget);
       await tester.tap(find.text('OK'));
       await tester.pumpAndSettle();
@@ -387,10 +387,10 @@ void main() {
 
       await tester.tap(find.text('AdAway Default Blocklist'));
       await tester.pumpAndSettle();
-      await tester.tap(find.byTooltip('Supprimer la liste'));
+      await tester.tap(find.byTooltip('Delete list'));
       await tester.pumpAndSettle();
       expect(find.text('Delete "AdAway Default Blocklist"?'), findsOneWidget);
-      await tester.tap(find.widgetWithText(FilledButton, 'Supprimer'));
+      await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
       await tester.pumpAndSettle();
 
       expect(
@@ -406,9 +406,9 @@ void main() {
 
       await tester.tap(find.text('AdAway Default Blocklist'));
       await tester.pumpAndSettle();
-      await tester.tap(find.byTooltip('Supprimer la liste'));
+      await tester.tap(find.byTooltip('Delete list'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Annuler'));
+      await tester.tap(find.text('Cancel'));
       await tester.pumpAndSettle();
 
       expect(pumped.actions.calls, isEmpty);
@@ -425,7 +425,7 @@ void main() {
       await tester.pageBack();
       await tester.pumpAndSettle();
 
-      expect(find.text('Ignorer les modifications ?'), findsOneWidget);
+      expect(find.text('Discard changes?'), findsOneWidget);
     });
   });
 

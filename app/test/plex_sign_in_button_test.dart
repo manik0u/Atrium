@@ -32,9 +32,9 @@ void main() {
       (WidgetTester tester) async {
     await openForm(tester, kind: ServiceKind.plex);
 
-    expect(find.text('Se connecter avec Plex'), findsOneWidget);
+    expect(find.text('Sign in with Plex'), findsOneWidget);
     // Typing a token by hand still works for anyone who already has one.
-    expect(find.text('Jeton Plex (X-Plex-Token)'), findsOneWidget);
+    expect(find.text('Plex token (X-Plex-Token)'), findsOneWidget);
   });
 
   testWidgets('no other service pretends to have a Plex account',
@@ -42,7 +42,7 @@ void main() {
     // The form opens on Sonarr.
     await openForm(tester);
 
-    expect(find.text('Se connecter avec Plex'), findsNothing);
+    expect(find.text('Sign in with Plex'), findsNothing);
   });
 
   test('the client identifier is 32 hex characters', () {

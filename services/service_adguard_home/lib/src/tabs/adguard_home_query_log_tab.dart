@@ -143,13 +143,13 @@ class _AdguardHomeQueryLogTabState
             textInputAction: TextInputAction.search,
             autocorrect: false,
             decoration: InputDecoration(
-              hintText: 'Domaine ou client',
+              hintText: S.t('domainOrClient'),
               prefixIcon: const Icon(Icons.search),
               suffixIcon: _search.text.isEmpty
                   ? null
                   : IconButton(
                       icon: const Icon(Icons.close),
-                      tooltip: 'Effacer la recherche',
+                      tooltip: S.t('clearSearch'),
                       onPressed: _clearSearch,
                     ),
               isDense: true,
@@ -244,13 +244,13 @@ class _AdguardHomeQueryLogTabState
         onRefresh: _log.reload,
         child: MessageView(
           icon: Icons.manage_search,
-          title: 'Rien trouvé pour le moment',
+          title: S.t('nothingFoundYet'),
           message: _searchedBackTo(state, now),
           action: state.loadingMore
               ? const ExpressiveProgressIndicator()
               : FilledButton.tonal(
                   onPressed: _log.loadMore,
-                  child: const Text('Continuer la recherche'),
+                  child: Text(S.t('keepSearching')),
                 ),
         ),
       );
@@ -262,11 +262,11 @@ class _AdguardHomeQueryLogTabState
         onRefresh: _log.reload,
         child: EmptyView(
           icon: Icons.search_off,
-          title: 'Rien trouvé',
-          message: 'Aucune requête du journal ne correspond.',
+          title: S.t('nothingFound'),
+          message: S.t('noQueryInTheLogMatches'),
           action: TextButton(
             onPressed: _clearNarrowing,
-            child: const Text('Effacer la recherche et le filtre'),
+            child: Text(S.t('clearSearchAndFilter')),
           ),
         ),
       );
@@ -299,16 +299,15 @@ class _EmptyLog extends ConsumerWidget {
     final AdguardHomeQueryLogConfig? config =
         ref.watch(adguardHomeQueryLogConfigProvider(instance)).value;
     if (config != null && !config.enabled) {
-      return const EmptyView(
+      return EmptyView(
         icon: Icons.history_toggle_off,
-        title: 'Le journal des requêtes est désactivé',
-        message: "AdGuard Home n'en conserve pas. Il peut être activé dans "
-            'its settings.',
+        title: S.t('theQueryLogIsOff'),
+        message: S.t('adguardHomeIsNotKeepingOneItCanBeTurnedOnInItsSettings'),
       );
     }
-    return const EmptyView(
+    return EmptyView(
       icon: Icons.history,
-      title: 'Rien dans le journal des requêtes pour le moment',
+      title: S.t('nothingInTheQueryLogYet'),
     );
   }
 }
@@ -356,7 +355,7 @@ class _Footer extends StatelessWidget {
             style: muted,
             textAlign: TextAlign.center,
           ),
-          TextButton(onPressed: onMore, child: const Text('Réessayer')),
+          TextButton(onPressed: onMore, child: Text(S.t('retry'))),
         ],
       );
     } else if (state.stalled) {
@@ -366,11 +365,11 @@ class _Footer extends StatelessWidget {
         children: <Widget>[
           if (reached != null)
             Text(reached, style: muted, textAlign: TextAlign.center),
-          TextButton(onPressed: onMore, child: const Text('Continuer la recherche')),
+          TextButton(onPressed: onMore, child: Text(S.t('keepSearching'))),
         ],
       );
     } else {
-      child = Text('Fin du journal des requêtes', style: muted);
+      child = Text(S.t('endOfTheQueryLog'), style: muted);
     }
 
     return Padding(

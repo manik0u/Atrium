@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'seerr_request.dart';
@@ -43,13 +44,13 @@ abstract class SeerrIssue with _$SeerrIssue {
   String get typeLabel {
     switch (issueType) {
       case 1:
-        return 'Video';
+        return S.t('video');
       case 2:
-        return 'Audio';
+        return S.t('audio');
       case 3:
-        return 'Subtitles';
+        return S.t('subtitles');
       default:
-        return 'Other';
+        return S.t('other');
     }
   }
 }

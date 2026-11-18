@@ -167,7 +167,7 @@ void main() {
         .toList();
     expect(stats, hasLength(4));
 
-    expect(stats[0].title, 'Films les plus vus');
+    expect(stats[0].title, 'Top movies');
     expect(stats[0].rows[0].labelFor('top_movies'), 'The Matrix');
     expect(stats[0].rows[1].totalPlays, 8);
 

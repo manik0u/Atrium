@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:core_models/core_models.dart';
 import 'package:core_profile/core_profile.dart';
 import 'package:core_router/core_router.dart';
 import 'package:core_storage/core_storage.dart';
@@ -52,11 +53,11 @@ class SettingsScreen extends ConsumerWidget {
             );
           },
         ),
-        title: const Text('Paramètres'),
+        title: Text(S.t('settings')),
       ),
       body: ListView(
         children: <Widget>[
-          const _SectionHeader('Appearance'),
+          _SectionHeader(S.t('appearance')),
           RadioGroup<ThemeMode>(
             groupValue: prefs.themeMode,
             onChanged: (ThemeMode? m) {
@@ -64,31 +65,74 @@ class SettingsScreen extends ConsumerWidget {
                 controller.setThemeMode(m);
               }
             },
-            child: const Column(
+            child: Column(
               children: <Widget>[
                 RadioListTile<ThemeMode>(
                   value: ThemeMode.system,
-                  title: Text('Valeur par défaut du système'),
+                  title: Text(S.t('systemDefault')),
                 ),
                 RadioListTile<ThemeMode>(
                   value: ThemeMode.light,
-                  title: Text('Clair'),
+                  title: Text(S.t('light')),
                 ),
                 RadioListTile<ThemeMode>(
                   value: ThemeMode.dark,
-                  title: Text('Sombre'),
+                  title: Text(S.t('dark')),
                 ),
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: Insets.lg, vertical: Insets.xs),
+            child: DropdownMenu<String?>(
+              initialSelection: prefs.languageCode,
+              expandedInsets: EdgeInsets.zero,
+              inputDecorationTheme: InputDecorationTheme(
+                filled: true,
+                fillColor: Theme.of(context)
+                    .colorScheme
+                    .surfaceContainerHighest
+                    .withValues(alpha: 0.3),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.outlineVariant,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.outlineVariant,
+                  ),
+                ),
+              ),
+              leadingIcon: const Icon(Icons.language_outlined),
+              label: Text(S.t('language')),
+              dropdownMenuEntries: <DropdownMenuEntry<String?>>[
+                DropdownMenuEntry<String?>(
+                  value: null,
+                  label: S.t('systemDefault'),
+                ),
+                for (final String code in S.supportedLanguageCodes)
+                  DropdownMenuEntry<String?>(
+                    value: code,
+                    label: S.t('languageName_$code'),
+                  ),
+              ],
+              onSelected: (String? code) {
+                controller.setLanguageCode(code);
+              },
+            ),
+          ),
           const Divider(),
-          const _SectionHeader('Theme Styling'),
+          _SectionHeader(S.t('themeStyling')),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: Insets.lg),
             child: _ThemeSettingsSection(),
           ),
           const Divider(),
-          const _SectionHeader('Font'),
+          _SectionHeader(S.t('font')),
           Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: Insets.lg, vertical: Insets.xs),
@@ -114,10 +158,10 @@ class SettingsScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-              dropdownMenuEntries: const <DropdownMenuEntry<String?>>[
+              dropdownMenuEntries: <DropdownMenuEntry<String?>>[
                 DropdownMenuEntry<String?>(
                   value: null,
-                  label: 'Valeur par défaut du système',
+                  label: S.t('systemDefault'),
                 ),
                 DropdownMenuEntry<String?>(
                   value: 'JetBrainsMono Nerd Font',
@@ -131,34 +175,34 @@ class SettingsScreen extends ConsumerWidget {
           ),
           const SizedBox(height: Insets.sm),
           const Divider(),
-          const _SectionHeader('Security'),
+          _SectionHeader(S.t('security')),
           _BiometricTile(
             enabled: prefs.biometricEnabled,
             onChanged: controller.setBiometricEnabled,
           ),
           const Divider(),
-          const _SectionHeader('Network'),
+          _SectionHeader(S.t('network')),
           ListTile(
             leading: const Icon(Icons.bolt_outlined),
-            title: const Text('Wake-on-LAN'),
+            title: Text(S.t('wakeOnLAN')),
             subtitle: Text(
               wolCount == 0
-                  ? 'Aucun appareil configuré'
+                  ? S.t('noDevicesConfigured')
                   : '$wolCount device${wolCount == 1 ? '' : 's'} configured',
             ),
             onTap: () => pushScreen<void>(context, const WakeOnLanScreen()),
           ),
           ListTile(
             leading: const Icon(Icons.language_outlined),
-            title: const Text('En-têtes personnalisés'),
-            subtitle: const Text("Ajouter des en-têtes pour l'authentification du proxy inverse"),
+            title: Text(S.t('customHeaders')),
+            subtitle: Text(S.t('addHeadersForReverseProxyAuth')),
             onTap: () => pushScreen<void>(context, const CustomHeadersScreen()),
           ),
           const Divider(),
-          const _SectionHeader('Data'),
+          _SectionHeader(S.t('data')),
           ListTile(
             leading: const Icon(Icons.upload_file_outlined),
-            title: const Text('Exporter le profil actif'),
+            title: Text(S.t('exportActiveProfile')),
             subtitle: const Text(
               'Save the active profile to a JSON file. Optionally include '
               'secrets.',
@@ -167,7 +211,7 @@ class SettingsScreen extends ConsumerWidget {
           ),
           ListTile(
             leading: const Icon(Icons.file_download_outlined),
-            title: const Text('Importer un profil'),
+            title: Text(S.t('importProfile')),
             subtitle: const Text(
               'Add a profile from a JSON file. Your existing profiles are '
               'kept.',
@@ -175,21 +219,21 @@ class SettingsScreen extends ConsumerWidget {
             onTap: () => ProfileIo.importProfile(context, ref),
           ),
           const Divider(),
-          const _SectionHeader('Sidebar'),
+          _SectionHeader(S.t('sidebar')),
           ListTile(
             leading: const Icon(Icons.reorder_rounded),
-            title: const Text('Réorganiser les services de la barre latérale'),
+            title: Text(S.t('reorderSidebarServices')),
             subtitle:
-                const Text("Faites glisser pour changer l'ordre d'affichage des services."),
+                Text(S.t('dragToChangeTheOrderServicesAppearIn')),
             onTap: () =>
                 pushScreen<void>(context, const ReorderSidebarScreen()),
           ),
           const Divider(),
-          const _SectionHeader('About'),
-          const ListTile(
+          _SectionHeader(S.t('about')),
+          ListTile(
             leading: Icon(Icons.info_outline),
             title: Text('Atrium'),
-            subtitle: Text('Version $appVersion • GPL-3.0-or-later'),
+            subtitle: Text(S.t('versionAppVersionGPL30OrLater1', [appVersion])),
           ),
           const UpdateCheckTile(),
           ListTile(
@@ -202,8 +246,8 @@ class SettingsScreen extends ConsumerWidget {
           ),
           ListTile(
             leading: const Icon(Icons.bug_report_outlined),
-            title: const Text('Signaler un bug'),
-            subtitle: const Text('Ouvrir un ticket sur GitHub'),
+            title: Text(S.t('reportABug')),
+            subtitle: Text(S.t('openAnIssueOnGitHub')),
             trailing: const Icon(Icons.open_in_new, size: 18),
             onTap: () => openExternal(
               ScaffoldMessenger.of(context),
@@ -212,8 +256,8 @@ class SettingsScreen extends ConsumerWidget {
           ),
           ListTile(
             leading: const Icon(Icons.lightbulb_outline),
-            title: const Text('Demander une fonctionnalité'),
-            subtitle: const Text('Suggérer une idée sur GitHub'),
+            title: Text(S.t('requestAFeature')),
+            subtitle: Text(S.t('suggestAnIdeaOnGitHub')),
             trailing: const Icon(Icons.open_in_new, size: 18),
             onTap: () => openExternal(
               ScaffoldMessenger.of(context),
@@ -222,8 +266,8 @@ class SettingsScreen extends ConsumerWidget {
           ),
           ListTile(
             leading: const Icon(Icons.history),
-            title: const Text('Journal des modifications'),
-            subtitle: const Text('Les nouveautés de chaque version'),
+            title: Text(S.t('changeLog')),
+            subtitle: Text(S.t('whatSNewInEachVersion')),
             onTap: () => pushScreen<void>(context, const ChangelogScreen()),
           ),
         ],
@@ -242,8 +286,8 @@ class _BiometricTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return SwitchListTile(
       secondary: const Icon(Icons.fingerprint),
-      title: const Text('Exiger le déverrouillage au lancement'),
-      subtitle: const Text("Utilisez la biométrie ou le code de l'appareil pour ouvrir Atrium."),
+      title: Text(S.t('requireUnlockOnLaunch')),
+      subtitle: Text(S.t('useBiometricsOrDevicePINToOpenAtrium')),
       value: enabled,
       onChanged: (bool want) async {
         if (!want) {
@@ -255,8 +299,8 @@ class _BiometricTile extends StatelessWidget {
         if (!available) {
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text("Aucune donnée biométrique ou d'identification de l'appareil enregistrée."),
+              SnackBar(
+                content: Text(S.t('noBiometricOrDeviceCredentialEnrolled')),
               ),
             );
           }
@@ -396,7 +440,7 @@ class _ThemeSettingsSectionState extends ConsumerState<_ThemeSettingsSection> {
     } catch (_) {
       if (!mounted) return;
       messenger.showSnackBar(
-        const SnackBar(content: Text('Impossible de lire cette image')),
+        SnackBar(content: Text(S.t('couldNotReadThatImage'))),
       );
     } finally {
       if (mounted) {
@@ -462,7 +506,7 @@ class _ThemeSettingsSectionState extends ConsumerState<_ThemeSettingsSection> {
     } catch (_) {
       if (!mounted) return;
       messenger.showSnackBar(
-        const SnackBar(content: Text('Impossible de lire cette image')),
+        SnackBar(content: Text(S.t('couldNotReadThatImage'))),
       );
     }
   }
@@ -590,11 +634,11 @@ class _ThemeSettingsSectionState extends ConsumerState<_ThemeSettingsSection> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildTabButton(0, 'System', previewColorScheme),
+            _buildTabButton(0, S.t('system'), previewColorScheme),
             const SizedBox(width: 6),
-            _buildTabButton(1, 'Basic colours', previewColorScheme),
+            _buildTabButton(1, S.t('basicColours'), previewColorScheme),
             const SizedBox(width: 6),
-            _buildTabButton(2, 'Image', previewColorScheme),
+            _buildTabButton(2, S.t('image'), previewColorScheme),
           ],
         ),
         const SizedBox(height: Insets.md),
@@ -602,7 +646,7 @@ class _ThemeSettingsSectionState extends ConsumerState<_ThemeSettingsSection> {
           DropdownButtonFormField<PaletteStyle>(
             initialValue: _localPaletteStyle,
             decoration: InputDecoration(
-              labelText: 'Style de palette',
+              labelText: S.t('paletteStyle'),
               filled: true,
               fillColor: previewColorScheme.surfaceContainerHighest
                   .withValues(alpha: 0.3),
@@ -626,13 +670,13 @@ class _ThemeSettingsSectionState extends ConsumerState<_ThemeSettingsSection> {
             items: PaletteStyle.values.map((style) {
               final String label = switch (style) {
                 PaletteStyle.material => 'Material',
-                PaletteStyle.vivid => 'Vif',
-                PaletteStyle.highContrast => 'Contraste élevé',
+                PaletteStyle.vivid => S.t('vivid'),
+                PaletteStyle.highContrast => S.t('highContrast'),
                 PaletteStyle.candyPop => 'Candy Pop',
-                PaletteStyle.jolly => 'Joyeux',
-                PaletteStyle.oneHue => 'Une teinte',
+                PaletteStyle.jolly => S.t('jolly'),
+                PaletteStyle.oneHue => S.t('oneHue'),
                 PaletteStyle.chroma => 'Chroma',
-                PaletteStyle.ultraContrast => 'Contraste extrême',
+                PaletteStyle.ultraContrast => S.t('ultraContrast'),
               };
               return DropdownMenuItem<PaletteStyle>(
                 value: style,
@@ -672,7 +716,7 @@ class _ThemeSettingsSectionState extends ConsumerState<_ThemeSettingsSection> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'System Wallpaper Colors',
+                                S.t('systemWallpaperColors'),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: previewColorScheme.onSurface),
@@ -737,7 +781,7 @@ class _ThemeSettingsSectionState extends ConsumerState<_ThemeSettingsSection> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Active Wallpaper',
+                              S.t('activeWallpaper'),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12,
@@ -770,7 +814,7 @@ class _ThemeSettingsSectionState extends ConsumerState<_ThemeSettingsSection> {
                               ),
                               icon: const Icon(Icons.change_circle_outlined,
                                   size: 16),
-                              label: const Text('Modifier',
+                              label: Text(S.t('edit'),
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold)),
@@ -853,7 +897,7 @@ class _ThemeSettingsSectionState extends ConsumerState<_ThemeSettingsSection> {
                             color: previewColorScheme.onSurfaceVariant),
                         const SizedBox(height: Insets.sm),
                         Text(
-                          "Aucun fond d'écran personnalisé chargé",
+                          S.t('noCustomWallpaperLoaded'),
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
                               color: previewColorScheme.onSurface),
@@ -874,7 +918,7 @@ class _ThemeSettingsSectionState extends ConsumerState<_ThemeSettingsSection> {
                             foregroundColor: previewColorScheme.onPrimary,
                           ),
                           icon: const Icon(Icons.upload, size: 18),
-                          label: const Text('Choisir une image'),
+                          label: Text(S.t('pickImage')),
                         ),
                       ],
                     ),
@@ -1011,7 +1055,7 @@ class _ThemePalettePreviewGrid extends StatelessWidget {
         _SwatchData('onTertiary\nContainer', cs.onTertiaryContainer, cs.tertiaryContainer),
       ],
       [
-        _SwatchData('Error', cs.error, cs.onError),
+        _SwatchData(S.t('error'), cs.error, cs.onError),
         _SwatchData('onError', cs.onError, cs.error),
         _SwatchData('Error\nContainer', cs.errorContainer, cs.onErrorContainer),
         _SwatchData('onError\nContainer', cs.onErrorContainer, cs.errorContainer),
@@ -1260,7 +1304,7 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Couleur personnalisée'),
+      title: Text(S.t('customColor')),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -1281,9 +1325,9 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
               ),
             ),
             const SizedBox(height: Insets.lg),
-            const Align(
+            Align(
               alignment: Alignment.centerLeft,
-              child: Text('Teinte', style: TextStyle(fontWeight: FontWeight.w500)),
+              child: Text(S.t('hue'), style: TextStyle(fontWeight: FontWeight.w500)),
             ),
             SliderTheme(
               data: SliderThemeData(
@@ -1305,9 +1349,9 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
                 },
               ),
             ),
-            const Align(
+            Align(
               alignment: Alignment.centerLeft,
-              child: Text('Saturation',
+              child: Text(S.t('saturation'),
                   style: TextStyle(fontWeight: FontWeight.w500)),
             ),
             Slider(
@@ -1322,9 +1366,9 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
                 });
               },
             ),
-            const Align(
+            Align(
               alignment: Alignment.centerLeft,
-              child: Text('Luminosité',
+              child: Text(S.t('lightness'),
                   style: TextStyle(fontWeight: FontWeight.w500)),
             ),
             Slider(
@@ -1343,7 +1387,7 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
             TextField(
               controller: _hexController,
               decoration: InputDecoration(
-                labelText: 'Code hexadécimal',
+                labelText: S.t('hexCode'),
                 prefixText: '# ',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -1373,11 +1417,11 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(_currentColor),
-          child: const Text('Sélectionner'),
+          child: Text(S.t('select')),
         ),
       ],
     );

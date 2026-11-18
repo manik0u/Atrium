@@ -43,15 +43,15 @@ class JellyfinAlbumScreen extends ConsumerWidget {
         elevation: 0,
       ),
       body: EasyRefresh(
-          header: const ClassicHeader(
+          header: ClassicHeader(
             position: IndicatorPosition.locator,
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
         onRefresh: () async => ref.invalidate(
           jellyfinAlbumDataFutureProvider((instance, albumId, albumArtist)),
@@ -371,7 +371,7 @@ class JellyfinAlbumScreen extends ConsumerWidget {
                       }
                     },
                     icon: const Icon(Icons.play_circle_fill),
-                    label: const Text('Lire maintenant'),
+                    label: Text(S.t('playNow')),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       foregroundColor: Theme.of(context).colorScheme.onPrimary,

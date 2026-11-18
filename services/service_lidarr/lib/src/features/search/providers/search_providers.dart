@@ -15,7 +15,7 @@ final lidarrReleasesForAlbumProvider =
         await api.release.getRelease(albumId: albumId);
     return unwrapLidarrApiResponse(
       resp,
-      "Échec de la récupération des releases de l'album $albumId",
+      S.t('failedToFetchReleasesForAlbumAlbumId1', [albumId]),
     );
   },
 );
@@ -30,7 +30,7 @@ final lidarrReleasesForArtistProvider =
         await api.release.getRelease(artistId: artistId);
     return unwrapLidarrApiResponse(
       resp,
-      "Échec de la récupération des releases de l'artiste $artistId",
+      S.t('failedToFetchReleasesForArtistArtistId1', [artistId]),
     );
   },
 );

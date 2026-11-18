@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 
 /// A floating action button that fans its actions out above itself.
@@ -10,12 +11,12 @@ import 'package:flutter/material.dart';
 /// handed a `close` callback so an action can fold the stack away before it
 /// opens a sheet.
 class ExpandableFab extends StatefulWidget {
-  const ExpandableFab({
+  ExpandableFab({
     required this.builder,
-    this.tooltip = 'Ajouter',
+    String? tooltip,
     this.step = 68,
     super.key,
-  });
+  }) : tooltip = tooltip ?? S.t('add');
 
   /// The actions, nearest the main button first. That is also the order they
   /// are painted in, so the first one sits closest when the stack is open.
@@ -115,7 +116,7 @@ class _ExpandableFabState extends State<ExpandableFab>
             ),
           FloatingActionButton(
             heroTag: null,
-            tooltip: _open ? 'Fermer' : widget.tooltip,
+            tooltip: _open ? S.t('close') : widget.tooltip,
             onPressed: _toggle,
             child: AnimatedBuilder(
               animation: _expandAnimation,

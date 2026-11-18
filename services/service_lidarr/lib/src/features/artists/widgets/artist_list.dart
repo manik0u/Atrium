@@ -175,7 +175,7 @@ class ArtistList extends StatelessWidget {
                               children: [
                                 Flexible(
                                   child: Text(
-                                    artist.artistName ?? 'Unknown Artist',
+                                    artist.artistName ?? S.t('unknownArtist'),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: theme.textTheme.titleSmall?.copyWith(
@@ -241,7 +241,7 @@ class ArtistList extends StatelessWidget {
                                   ? artist.disambiguation!
                                   : (genres.isNotEmpty
                                       ? genres.take(2).join(', ')
-                                      : 'Aucune description'),
+                                      : S.t('noDescription')),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: theme.textTheme.bodySmall?.copyWith(

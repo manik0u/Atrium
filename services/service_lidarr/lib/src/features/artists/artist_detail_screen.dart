@@ -117,13 +117,13 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
         {'artistId': widget.artistId},
       );
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? "Échec du déclenchement de l'actualisation");
+        throw Exception(resp.error?.message ?? S.t('failedToTriggerRefresh'));
       }
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Actualisation de l'artiste et analyse du disque…"),
+          SnackBar(
+            content: Text(S.t('refreshingArtistAndScanningDisk')),
             duration: Duration(seconds: 2),
           ),
         );
@@ -139,7 +139,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Échec de l'actualisation : $e"),
+            content: Text(S.t('failedToRefreshE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -156,13 +156,13 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
         {'artistId': widget.artistId},
       );
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec du déclenchement de la recherche');
+        throw Exception(resp.error?.message ?? S.t('failedToTriggerSearch'));
       }
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Recherche des releases manquantes surveillées…'),
+          SnackBar(
+            content: Text(S.t('searchingForMonitoredMissingReleases')),
             duration: Duration(seconds: 2),
           ),
         );
@@ -171,7 +171,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Échec de la recherche des releases manquantes : $e'),
+            content: Text(S.t('failedToSearchMissingReleasesE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -189,7 +189,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
         body: artist.copyWith(monitored: newMonitored),
       );
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec du changement de surveillance');
+        throw Exception(resp.error?.message ?? S.t('failedToToggleMonitoring'));
       }
 
       ref.invalidate(
@@ -211,7 +211,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Échec de la mise à jour de la surveillance : $e'),
+            content: Text(S.t('failedToUpdateMonitoringE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -236,7 +236,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
         ),
       );
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec de la mise à jour des albums');
+        throw Exception(resp.error?.message ?? S.t('failedToUpdateAlbums'));
       }
 
       ref.invalidate(
@@ -263,7 +263,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Échec de la mise à jour de la surveillance de l'album : $e"),
+            content: Text(S.t('failedToUpdateAlbumMonitoringE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -281,7 +281,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
         return StatefulBuilder(
           builder: (context, setDialogState) {
             return AlertDialog(
-              title: Text('Supprimer ${artist.artistName ?? 'Artist'}?'),
+              title: Text(S.t('deleteArtistArtistName')Artist'}?'),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -290,9 +290,9 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
                   ),
                   const SizedBox(height: Insets.md),
                   CheckboxListTile(
-                    title: const Text('Supprimer les fichiers du disque'),
+                    title: Text(S.t('deleteFilesFromDisk')),
                     subtitle:
-                        const Text('Retirer le répertoire musical et les fichiers audio'),
+                        Text(S.t('removeMusicDirectoryAndAudioFiles')),
                     value: deleteFiles,
                     onChanged: (bool? val) {
                       setDialogState(() {
@@ -301,8 +301,8 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
                     },
                   ),
                   CheckboxListTile(
-                    title: const Text("Ajouter une exclusion de liste d'import"),
-                    subtitle: const Text('Empêcher le rajout depuis les listes automatiques'),
+                    title: Text(S.t('addImportListExclusion')),
+                    subtitle: Text(S.t('preventReAddingFromAutoLists')),
                     value: addImportListExclusion,
                     onChanged: (bool? val) {
                       setDialogState(() {
@@ -315,7 +315,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(ctx).pop(false),
-                  child: const Text('Annuler'),
+                  child: Text(S.t('cancel')),
                 ),
                 FilledButton(
                   style: FilledButton.styleFrom(
@@ -323,7 +323,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
                     foregroundColor: Theme.of(ctx).colorScheme.onError,
                   ),
                   onPressed: () => Navigator.of(ctx).pop(true),
-                  child: const Text('Supprimer'),
+                  child: Text(S.t('delete')),
                 ),
               ],
             );
@@ -343,7 +343,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
         addImportListExclusion: addImportListExclusion,
       );
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? "Échec de la suppression de l'artiste");
+        throw Exception(resp.error?.message ?? S.t('failedToDeleteArtist'));
       }
 
       ref.invalidate(lidarrArtistsProvider(widget.instance));
@@ -362,7 +362,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Échec de la suppression de l'artiste : $e"),
+            content: Text(S.t('failedToDeleteArtistE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -372,15 +372,15 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
 
   String _formatGroupTitle(String groupType) {
     return switch (groupType.toLowerCase()) {
-      'studio' => 'Albums studio',
-      'album' => 'Albums',
-      'ep' => 'EP',
+      'studio' => S.t('studioAlbums'),
+      'album' => S.t('albums'),
+      'ep' => S.t('eps'),
       'single' => 'Singles',
-      'live' => 'Albums live',
-      'broadcast' => 'Émissions',
+      'live' => S.t('liveAlbums'),
+      'broadcast' => S.t('broadcasts'),
       'compilation' => 'Compilations',
-      'soundtrack' => 'Bandes-son',
-      _ => 'Releases de type $groupType',
+      'soundtrack' => S.t('soundtracks'),
+      _ => S.t('grouptypeReleases1', [groupType]),
     };
   }
 
@@ -393,19 +393,19 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
 
     final Map<String, List<AlbumResource>> grouped = groupBy(
       albums,
-      (AlbumResource a) => a.albumType ?? 'Autre',
+      (AlbumResource a) => a.albumType ?? S.t('other'),
     );
 
-    const List<String> canonicalOrder = [
+    final List<String> canonicalOrder = [
       'Studio',
-      'Album',
-      'EP',
+      S.t('album'),
+      S.t('eps'),
       'Single',
       'Live',
       'Broadcast',
       'Compilation',
       'Soundtrack',
-      'Other',
+      S.t('other'),
     ];
 
     final List<MapEntry<String, List<AlbumResource>>> sortedEntries =
@@ -466,7 +466,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
                     color: allMonitored ? cs.primary : cs.onSurfaceVariant,
                   ),
                   label: Text(
-                    allMonitored ? 'Monitored' : 'Unmonitored',
+                    allMonitored ? S.t('monitored') : S.t('unmonitored'),
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -534,7 +534,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
 
     final Map<String, List<AlbumResource>> grouped = groupBy(
       albums,
-      (AlbumResource a) => a.albumType ?? 'Autre',
+      (AlbumResource a) => a.albumType ?? S.t('other'),
     );
 
     return PopScope(
@@ -592,7 +592,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
                   surfaceTintColor: Colors.transparent,
                   leading: IconButton(
                     icon: const Icon(Icons.close),
-                    tooltip: 'Effacer la sélection',
+                    tooltip: S.t('clearSelection'),
                     onPressed: _clearSelection,
                   ),
                   title: Text(
@@ -604,11 +604,11 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
                   actions: [
                     TextButton(
                       onPressed: () => _selectAllAlbums(albums),
-                      child: const Text('Tout sélectionner'),
+                      child: Text(S.t('selectAll')),
                     ),
                     TextButton(
                       onPressed: () => _invertAlbumSelection(albums),
-                      child: const Text('Inverser'),
+                      child: Text(S.t('invert')),
                     ),
                     const SizedBox(width: 4),
                   ],
@@ -629,13 +629,13 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
                     _AppBarBubbleButton(
                       controller: _scrollController,
                       icon: Icons.refresh,
-                      tooltip: 'Actualiser et analyser',
+                      tooltip: S.t('refreshScan'),
                       onPressed: _refreshArtist,
                     ),
                     _AppBarBubbleButton(
                       controller: _scrollController,
                       icon: Icons.info_outline,
-                      tooltip: "Infos et liens de l'artiste",
+                      tooltip: S.t('artistInfoLinks'),
                       onPressed: () => showLidarrArtistInfoSheet(
                         context,
                         instance: widget.instance,
@@ -646,9 +646,9 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
                     _AppBarBubbleButton(
                       controller: _scrollController,
                       icon: Icons.more_vert,
-                      tooltip: "Plus d'options",
+                      tooltip: S.t('moreOptions'),
                       child: PopupMenuButton<String>(
-                        tooltip: "Plus d'options",
+                        tooltip: S.t('moreOptions'),
                         padding: EdgeInsets.zero,
                         icon: _AppBarDynamicIcon(
                           controller: _scrollController,
@@ -663,7 +663,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
                                 builder: (context) => LidarrArtistHistoryScreen(
                                   instance: widget.instance,
                                   artistId: widget.artistId,
-                                  artistName: artist.artistName ?? 'Artist',
+                                  artistName: artist.artistName ?? S.t('artist'),
                                 ),
                               ),
                             );
@@ -671,7 +671,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
                             LidarrInteractiveSearchScreen.show(
                               context,
                               instance: widget.instance,
-                              title: artist.artistName ?? 'Artiste',
+                              title: artist.artistName ?? S.t('artist'),
                               artistId: widget.artistId,
                             );
                           } else if (value == 'manual_import' &&
@@ -723,77 +723,77 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
                         },
                         itemBuilder: (BuildContext context) => [
                           if (albums.isNotEmpty)
-                            const PopupMenuItem(
+                            PopupMenuItem(
                               value: 'select',
                               child: ListTile(
                                 leading: Icon(Icons.checklist_outlined),
-                                title: Text('Sélectionner des albums'),
+                                title: Text(S.t('selectAlbums')),
                                 contentPadding: EdgeInsets.zero,
                               ),
                             ),
-                          const PopupMenuItem(
+                          PopupMenuItem(
                             value: 'history',
                             child: ListTile(
                               leading: Icon(Icons.history_outlined),
-                              title: Text("Historique d'activité"),
+                              title: Text(S.t('activityHistory')),
                               contentPadding: EdgeInsets.zero,
                             ),
                           ),
-                          const PopupMenuItem(
+                          PopupMenuItem(
                             value: 'search',
                             child: ListTile(
                               leading: Icon(Icons.manage_search_outlined),
-                              title: Text('Recherche interactive'),
+                              title: Text(S.t('interactiveSearch')),
                               contentPadding: EdgeInsets.zero,
                             ),
                           ),
-                          const PopupMenuItem(
+                          PopupMenuItem(
                             value: 'manual_import',
                             child: ListTile(
                               leading: Icon(Icons.drive_folder_upload_outlined),
-                              title: Text('Import manuel'),
+                              title: Text(S.t('manualImport')),
                               contentPadding: EdgeInsets.zero,
                             ),
                           ),
-                          const PopupMenuItem(
+                          PopupMenuItem(
                             value: 'unmapped',
                             child: ListTile(
                               leading: Icon(Icons.folder_open_outlined),
-                              title: Text('Fichiers non mappés'),
+                              title: Text(S.t('unmappedFiles')),
                               contentPadding: EdgeInsets.zero,
                             ),
                           ),
                           const PopupMenuDivider(),
-                          const PopupMenuItem(
+                          PopupMenuItem(
                             value: 'track_files',
                             child: ListTile(
                               leading: Icon(Icons.audio_file_outlined),
-                              title: Text('Éditeur de fichiers de pistes'),
+                              title: Text(S.t('trackFilesEditor')),
                               contentPadding: EdgeInsets.zero,
                             ),
                           ),
-                          const PopupMenuItem(
+                          PopupMenuItem(
                             value: 'rename',
                             child: ListTile(
                               leading: Icon(Icons.drive_file_rename_outline),
-                              title: Text('Tout renommer'),
+                              title: Text(S.t('renameAllFiles')),
                               contentPadding: EdgeInsets.zero,
                             ),
                           ),
-                          const PopupMenuItem(
+                          PopupMenuItem(
                             value: 'retag',
                             child: ListTile(
                               leading: Icon(Icons.label_outlined),
-                              title: Text('Tout re-tagger'),
+                              title: Text(S.t('retagAllFiles')),
                               contentPadding: EdgeInsets.zero,
                             ),
                           ),
                           const PopupMenuDivider(),
-                          const PopupMenuItem(
+                          PopupMenuItem(
                             value: 'edit',
                             child: ListTile(
                               leading: Icon(Icons.edit_outlined),
-                              title: Text("Modifier l'artiste"),
+                              title: Text(S.t('editArtist')),
                               contentPadding: EdgeInsets.zero,
                             ),
                           ),
@@ -816,7 +816,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
                   ],
                   title: _CollapsedTitle(
                     controller: _scrollController,
-                    title: artist?.artistName ?? 'Artiste',
+                    title: artist?.artistName ?? S.t('artist'),
                   ),
                   flexibleSpace: FlexibleSpaceBar(
                     background: _Backdrop(
@@ -846,7 +846,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
                             LidarrInteractiveSearchScreen.show(
                               context,
                               instance: widget.instance,
-                              title: artist.artistName ?? 'Artiste',
+                              title: artist.artistName ?? S.t('artist'),
                               artistId: widget.artistId,
                             );
                           }
@@ -889,7 +889,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
                           child: Row(
                             children: [
                               ActionChip(
-                                label: const Text('Tous'),
+                                label: Text(S.t('all')),
                                 visualDensity: VisualDensity.compact,
                                 onPressed: () {
                                   if (_discographyHeaderKey.currentContext !=
@@ -950,7 +950,7 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
                     padding: const EdgeInsets.all(32.0),
                     child: Center(
                       child: ErrorView(
-                        title: 'Échec du chargement de la discographie',
+                        title: S.t('failedToLoadDiscography'),
                         message: '${asyncAlbums.error}',
                         onRetry: () => ref.invalidate(
                           lidarrAlbumsForArtistProvider(
@@ -962,14 +962,14 @@ class _ArtistDetailScreenState extends ConsumerState<ArtistDetailScreen> {
                   ),
                 )
               else if (albums.isEmpty)
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: Padding(
                     padding: EdgeInsets.all(32.0),
                     child: Center(
                       child: EmptyView(
                         icon: Icons.album_outlined,
-                        title: 'Aucun album trouvé',
-                        message: 'Aucun album disponible pour cet artiste.',
+                        title: S.t('noAlbumsFound'),
+                        message: S.t('noAlbumsAvailableForThisArtist'),
                       ),
                     ),
                   ),
@@ -1346,7 +1346,7 @@ class _ArtistHeroHeader extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    artist?.artistName ?? 'Artist',
+                    artist?.artistName ?? S.t('artist'),
                     style: theme.textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -1417,7 +1417,7 @@ class _ArtistHeroHeader extends StatelessWidget {
                   size: 18,
                 ),
                 label: Text(
-                  isMonitored ? 'Monitored' : 'Unmonitored',
+                  isMonitored ? S.t('monitored') : S.t('unmonitored'),
                   style: const TextStyle(fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -1454,7 +1454,7 @@ class _ArtistHeroHeader extends StatelessWidget {
             const SizedBox(width: 8),
             IconButton.filledTonal(
               icon: const Icon(Icons.manage_search, size: 20),
-              tooltip: 'Recherche interactive',
+              tooltip: S.t('interactiveSearch'),
               style: IconButton.styleFrom(
                 visualDensity: VisualDensity.compact,
               ),

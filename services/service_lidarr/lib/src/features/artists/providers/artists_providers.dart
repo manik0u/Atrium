@@ -40,7 +40,7 @@ final lidarrArtistDetailProvider = FutureProvider.autoDispose
       await api.artist.getArtistById(id: artistId);
   return unwrapLidarrApiResponse(
     resp,
-    "Échec du chargement des détails de l'artiste $artistId",
+    S.t('failedToLoadArtistDetailsForArtistId1', [artistId]),
   );
 });
 
@@ -56,7 +56,7 @@ final lidarrArtistAlbumsProvider = FutureProvider.autoDispose
   final ApiResponse<List<AlbumResource>> resp =
       await api.album.getAlbum(artistId: artistId);
   final List<AlbumResource> albums = List<AlbumResource>.from(
-    unwrapLidarrApiResponse(resp, "Échec du chargement des albums de l'artiste $artistId"),
+    unwrapLidarrApiResponse(resp, S.t('failedToLoadAlbumsForArtistArtistId1', [artistId])),
   );
   albums.sort((AlbumResource a, AlbumResource b) {
     final String dateA = a.releaseDate ?? '';
@@ -79,7 +79,7 @@ final lidarrArtistTrackFilesProvider = FutureProvider.autoDispose
       await api.trackFile.getTrackfile(artistId: artistId);
   return unwrapLidarrApiResponse(
     resp,
-    "Échec du chargement des fichiers de pistes pour l'artiste $artistId",
+    S.t('failedToLoadTrackFilesForArtistArtistId1', [artistId]),
   );
 });
 
@@ -93,7 +93,7 @@ final lidarrArtistUnmappedTrackFilesProvider = FutureProvider.autoDispose
       await api.trackFile.getTrackfile(artistId: artistId, unmapped: true);
   return unwrapLidarrApiResponse(
     resp,
-    "Échec du chargement des fichiers de pistes non mappés pour l'artiste $artistId",
+    S.t('failedToLoadUnmappedTrackFilesForArtistArtistId1', [artistId]),
   );
 });
 
@@ -153,7 +153,7 @@ final lidarrTracksForAlbumProvider = FutureProvider.autoDispose
     albumId: albumId,
   );
   final List<TrackResource> tracks = List<TrackResource>.from(
-    unwrapLidarrApiResponse(resp, "Échec du chargement des pistes de l'album $albumId"),
+    unwrapLidarrApiResponse(resp, S.t('failedToLoadTracksForAlbumAlbumId1', [albumId])),
   );
   // Sort tracks by track number
   tracks.sort((a, b) {
@@ -176,7 +176,7 @@ final lidarrTrackFilesForAlbumProvider =
         await api.trackFile.getTrackfile(albumId: <int>[albumId]);
     return unwrapLidarrApiResponse(
       resp,
-      "Échec du chargement des fichiers de pistes de l'album $albumId",
+      S.t('failedToLoadTrackFilesForAlbumAlbumId1', [albumId]),
     );
   },
 );
@@ -191,7 +191,7 @@ final lidarrTrackFilesForArtistProvider =
         await api.trackFile.getTrackfile(artistId: artistId);
     return unwrapLidarrApiResponse(
       resp,
-      "Échec du chargement des fichiers de pistes pour l'artiste $artistId",
+      S.t('failedToLoadTrackFilesForArtistArtistId1', [artistId]),
     );
   },
 );
@@ -206,7 +206,7 @@ final lidarrUnmappedTrackFilesForArtistProvider =
         await api.trackFile.getTrackfile(artistId: artistId, unmapped: true);
     return unwrapLidarrApiResponse(
       resp,
-      "Échec du chargement des fichiers de pistes non mappés pour l'artiste $artistId",
+      S.t('failedToLoadUnmappedTrackFilesForArtistArtistId1', [artistId]),
     );
   },
 );
@@ -248,6 +248,6 @@ final lidarrArtistLookupProvider = FutureProvider.autoDispose
       await api.artistLookup.getArtistLookup(term: term.trim());
   return unwrapLidarrApiResponse(
     resp,
-    "Échec de la recherche d'artistes pour « $term »",
+    S.t('failedToLookUpArtistsForTerm1', [term]),
   );
 });

@@ -30,7 +30,7 @@ class RecentlyAddedPosterTile extends StatelessWidget {
     } else if (diff.inMinutes > 0) {
       return '${diff.inMinutes}m ago';
     }
-    return 'just now';
+    return S.t('justNow_2');
   }
 
   @override
@@ -159,7 +159,7 @@ class RecentlyAddedPosterTile extends StatelessWidget {
           if (timeStr.isNotEmpty) ...[
             const SizedBox(height: 1),
             Text(
-              'Added $timeStr',
+              S.t('addedTimeStr1', [timeStr]),
               style: theme.textTheme.labelSmall?.copyWith(
                 color: colorScheme.onSurfaceVariant,
                 fontSize: 9,

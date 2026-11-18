@@ -21,19 +21,19 @@ enum DashboardWidgetKind {
 
 extension DashboardWidgetKindX on DashboardWidgetKind {
   String get label => switch (this) {
-        DashboardWidgetKind.downloads => 'Téléchargements actifs',
-        DashboardWidgetKind.streams => 'En cours de lecture',
-        DashboardWidgetKind.upcoming => 'Sorties à venir',
-        DashboardWidgetKind.recentlyAdded => 'Ajouts récents',
-        DashboardWidgetKind.recentlyDownloaded => 'Téléchargements récents',
-        DashboardWidgetKind.requests => 'Demandes',
+        DashboardWidgetKind.downloads => S.t('activeDownloads'),
+        DashboardWidgetKind.streams => S.t('nowStreaming'),
+        DashboardWidgetKind.upcoming => S.t('upcomingReleases'),
+        DashboardWidgetKind.recentlyAdded => S.t('recentlyAdded'),
+        DashboardWidgetKind.recentlyDownloaded => S.t('recentlyDownloaded'),
+        DashboardWidgetKind.requests => S.t('requests'),
         DashboardWidgetKind.serverInfo => 'Glances',
         DashboardWidgetKind.dashdot => 'Dashdot',
-        DashboardWidgetKind.speedtestResults => 'Résultats de speedtest',
-        DashboardWidgetKind.gluetunStatus => 'VPN Gluetun',
+        DashboardWidgetKind.speedtestResults => S.t('speedtestResults'),
+        DashboardWidgetKind.gluetunStatus => S.t('gluetunVPN'),
         DashboardWidgetKind.myspeed => 'MySpeed',
         DashboardWidgetKind.adguardHome => 'AdGuard Home',
-        DashboardWidgetKind.wakeOnLan => 'Wake-on-LAN',
+        DashboardWidgetKind.wakeOnLan => S.t('wakeOnLAN'),
         DashboardWidgetKind.cleanuparr => 'Cleanuparr',
       };
 

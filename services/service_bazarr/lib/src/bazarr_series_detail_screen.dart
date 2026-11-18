@@ -38,38 +38,38 @@ class BazarrSeriesDetailScreen extends ConsumerWidget {
             
             if (eps.isEmpty) {
               return EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: () async => ref.invalidate(bazarrEpisodesProvider(args)),
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          children: const <Widget>[
+          children: <Widget>[
             SizedBox(height: 100),
             EmptyView(
                 icon: Icons.subtitles_outlined,
-                title: 'Aucun épisode',
-                message: "Cette série n'a aucun fichier d'épisode dans Bazarr.",
+                title: S.t('noEpisodes'),
+                message: S.t('thisSeriesHasNoEpisodeFilesInBazarr'),
               ),
           ],
         ),
       );
             }
             return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async => ref.invalidate(bazarrEpisodesProvider(args)),
       child: ListView.builder(
@@ -156,18 +156,18 @@ class _HeaderCard extends StatelessWidget {
                       icon: series.monitored
                           ? Icons.bookmark
                           : Icons.bookmark_border,
-                      label: series.monitored ? 'Surveillé' : 'Non surveillé',
+                      label: series.monitored ? S.t('monitored') : S.t('unmonitored'),
                       color: series.monitored ? cs.primary : cs.outline,
                     ),
                     _MetaPill(
                       icon: Icons.video_library_outlined,
-                      label: '${series.episodeFileCount} fichiers',
+                      label: S.t('seriesEpisodeFileCountFiles1', [series.episodeFileCount]),
                       color: cs.tertiary,
                     ),
                     if (series.episodeMissingCount > 0)
                       _MetaPill(
                         icon: Icons.report_outlined,
-                        label: '${series.episodeMissingCount} manquants',
+                        label: S.t('seriesEpisodeMissingCountMissing1', [series.episodeMissingCount]),
                         color: cs.error,
                       ),
                   ],
@@ -216,7 +216,7 @@ class _EpisodeCard extends ConsumerWidget {
                 ),
               ),
               IconButton(
-                tooltip: 'Rechercher des sous-titres',
+                tooltip: S.t('searchSubtitles'),
                 visualDensity: VisualDensity.compact,
                 icon: const Icon(Icons.subtitles_outlined),
                 onPressed: () =>
@@ -254,9 +254,9 @@ class _EpisodeCard extends ConsumerWidget {
     final ScaffoldMessengerState messenger = ScaffoldMessenger.of(context);
     if (!(s.path?.isNotEmpty ?? false)) {
       messenger.showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text(
-            'Ce sous-titre est intégré à la vidéo et ne peut pas être supprimé ici.',
+            S.t('thisSubtitleIsEmbeddedInTheVideoAndCannotBeRemovedHere'),
           ),
         ),
       );
@@ -265,15 +265,15 @@ class _EpisodeCard extends ConsumerWidget {
     final bool? ok = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Supprimer le sous-titre ?'),
+        title: Text(S.t('deleteSubtitle')),
         content: Text(
-          'Remove the ${s.name.isNotEmpty ? s.name : s.code2.toUpperCase()} '
-          'sous-titre pour $_code ?',
+          'Remove the ${s.name.isNotEmpty ? s.name : s.code2.toUpperCase()} ' +
+          S.t('subtitleForCode1', [_code]),
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -281,7 +281,7 @@ class _EpisodeCard extends ConsumerWidget {
               foregroundColor: Theme.of(ctx).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Supprimer'),
+            child: Text(S.t('delete')),
           ),
         ],
       ),
@@ -303,10 +303,10 @@ class _EpisodeCard extends ConsumerWidget {
       );
       ref.invalidate(bazarrWantedProvider(instance));
       ref.invalidate(bazarrBadgesProvider(instance));
-      messenger.showSnackBar(const SnackBar(content: Text('Sous-titre supprimé')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('subtitleDeleted'))));
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la suppression : ${_err(e)}')),
+        SnackBar(content: Text(S.t('deleteFailedErrE1', [_err(e)]))),
       );
     }
   }

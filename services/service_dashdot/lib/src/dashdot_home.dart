@@ -18,7 +18,7 @@ class DashdotHome extends ConsumerWidget {
     return infoAsync.when(
       data: (info) {
         if (info == null) {
-          return const Center(child: Text('Échec du chargement des infos Dashdot.'));
+          return Center(child: Text(S.t('failedToLoadDashdotInfo')));
         }
 
         final cpu = info.cpu;
@@ -34,15 +34,15 @@ class DashdotHome extends ConsumerWidget {
           rawStorageList = rawStorageLoad;
         }
 
-        const refreshHeader = ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
+        final refreshHeader = ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
           noMoreText: 'No more',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         );
 
         Future<void> onRefresh() async {
@@ -55,9 +55,9 @@ class DashdotHome extends ConsumerWidget {
           child: Column(
             children: [
               TabBar(
-                tabs: const [
-                  Tab(text: 'Métriques en direct'),
-                  Tab(text: 'Informations système'),
+                tabs: [
+                  Tab(text: S.t('liveMetrics')),
+                  Tab(text: S.t('systemInformation')),
                 ],
                 labelColor: Theme.of(context).colorScheme.primary,
                 unselectedLabelColor: Theme.of(
@@ -105,7 +105,7 @@ class DashdotHome extends ConsumerWidget {
                           ),
                           _InfoBox(
                             title: 'CPU',
-                            subtitle: cpu?.cpuBrand ?? 'Inconnu',
+                            subtitle: cpu?.cpuBrand ?? S.t('unknown'),
                             details:
                                 '${cpu?.cores ?? '?'} Cores / ${cpu?.threads ?? '?'} Threads\n${cpu?.freq ?? '?'} GHz',
                             icon: Icons.memory,
@@ -130,7 +130,7 @@ class DashdotHome extends ConsumerWidget {
                             title: 'RAM',
                             subtitle: ram != null && ram.totalCapacity != null
                                 ? '${ram.totalCapacity} GB'
-                                : 'Unknown',
+                                : S.t('unknown'),
                             details: (ram?.sticks?.isNotEmpty ?? false)
                                 ? '${ram!.sticks!.first.type ?? ''} @ ${ram.sticks!.first.frequency ?? '?'} MHz'
                                 : '',
@@ -172,8 +172,8 @@ class DashdotHome extends ConsumerWidget {
                                 }
                               }
                               return _InfoBox(
-                                title: 'Réseau',
-                                subtitle: network?.type ?? 'Inconnu',
+                                title: S.t('network'),
+                                subtitle: network?.type ?? S.t('unknown'),
                                 details: 'Speed: $speedStr',
                                 icon: Icons.network_check,
                               );
@@ -214,7 +214,7 @@ class DashdotHome extends ConsumerWidget {
 
                               final displayType = disk.type == 'HD'
                                   ? 'HDD'
-                                  : (disk.type ?? 'Disk');
+                                  : (disk.type ?? S.t('disk'));
                               final brand = disk.storageBrand;
                               final subtitle =
                                   (brand != null && brand.isNotEmpty)
@@ -226,7 +226,7 @@ class DashdotHome extends ConsumerWidget {
                                   bottom: Insets.md,
                                 ),
                                 child: _InfoBox(
-                                  title: 'Stockage ${idx + 1}',
+                                  title: S.t('storageIdx11', [idx + 1]),
                                   subtitle: subtitle,
                                   details:
                                       'Total: $capacityGB GB${usedGB < 0 ? "" : "\nUsed: ${usedGB.toStringAsFixed(1)} GB (${usedPct.toStringAsFixed(1)}%)"}',
@@ -235,9 +235,9 @@ class DashdotHome extends ConsumerWidget {
                               );
                             }),
                           ] else
-                            const _InfoBox(
-                              title: 'Stockage',
-                              subtitle: 'Inconnu',
+                            _InfoBox(
+                              title: S.t('storage'),
+                              subtitle: S.t('unknown'),
                               details: '',
                               icon: Icons.storage,
                             ),
@@ -312,7 +312,7 @@ class DashdotHome extends ConsumerWidget {
         );
       },
       loading: () => const Center(child: CircularProgressIndicatorM3E()),
-      error: (e, st) => Center(child: Text('Erreur : $e')),
+      error: (e, st) => Center(child: Text(S.t('errorE1', [e]))),
     );
   }
 }
@@ -343,7 +343,7 @@ class DashdotRingMetricsCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Live Metrics',
+                  S.t('liveMetrics'),
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
@@ -434,7 +434,7 @@ class DashdotRingMetrics extends ConsumerWidget {
             const SizedBox(height: Insets.md),
             _LegendItem(
               color: diskColor,
-              label: 'Disque',
+              label: S.t('disk'),
               value: '${diskPct.toStringAsFixed(0)}%',
             ),
           ],
@@ -521,7 +521,7 @@ class DashdotOsCard extends ConsumerWidget {
     final release = os?.release ?? '';
     final title = release.isNotEmpty ? '$distro $release' : distro;
 
-    final cpuBrand = cpu?.cpuBrand ?? 'Unknown';
+    final cpuBrand = cpu?.cpuBrand ?? S.t('unknown');
     final cores = cpu?.cores != null ? '${cpu!.cores} core' : '';
     final archRaw = os?.arch;
     final arch = archRaw == null
@@ -838,7 +838,7 @@ class DashdotStatsRow extends ConsumerWidget {
       children: [
         Expanded(
           child: _StatBox(
-            label: 'DESCENTE',
+            label: S.t('down_2'),
             value: downStr[0],
             unit: downStr[1],
             valueColor: Theme.of(context).colorScheme.primary,
@@ -847,7 +847,7 @@ class DashdotStatsRow extends ConsumerWidget {
         const SizedBox(width: Insets.sm),
         Expanded(
           child: _StatBox(
-            label: 'MONTÉE',
+            label: S.t('up_2'),
             value: upStr[0],
             unit: upStr[1],
             valueColor: Theme.of(context).colorScheme.tertiary,
@@ -856,7 +856,7 @@ class DashdotStatsRow extends ConsumerWidget {
         const SizedBox(width: Insets.sm),
         Expanded(
           child: _StatBox(
-            label: 'TEMP.',
+            label: S.t('temp_2'),
             value: '${cpuTemp.toStringAsFixed(0)}°',
             unit: 'CPU',
             valueColor: Theme.of(context).colorScheme.onSurface,

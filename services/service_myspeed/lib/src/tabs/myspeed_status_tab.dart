@@ -94,16 +94,16 @@ class _MySpeedStatusTabState extends ConsumerState<MySpeedStatusTab> {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Lancer un speedtest'),
-        content: Text('Lancer un nouveau speedtest sur ${widget.instance.name} ?'),
+        title: Text(S.t('runSpeedtest')),
+        content: Text(S.t('startANewSpeedtestOnWidgetInstanceName1', [widget.instance.name])),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Démarrer'),
+            child: Text(S.t('start')),
           ),
         ],
       ),
@@ -119,14 +119,14 @@ class _MySpeedStatusTabState extends ConsumerState<MySpeedStatusTab> {
       await api.runSpeedtest();
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Speedtest lancé avec succès')),
+        SnackBar(content: Text(S.t('speedtestTriggeredSuccessfully'))),
       );
       await _poll();
     } catch (e) {
       if (!mounted) return;
       setState(() => _isLocallyRunning = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Échec du lancement du speedtest : $e')),
+        SnackBar(content: Text(S.t('failedToTriggerSpeedtestE1', [e]))),
       );
       ref.invalidate(myspeedStatusProvider(widget.instance));
     }
@@ -151,9 +151,9 @@ class _MySpeedStatusTabState extends ConsumerState<MySpeedStatusTab> {
       },
       data: (MySpeedStatus status) {
         final MySpeedStatus effectiveStatus = _isLocallyRunning
-            ? const MySpeedStatus(
+            ? MySpeedStatus(
                 isRunning: true,
-                message: 'Speedtest en cours…',
+                message: S.t('speedtestInProgress'),
               )
             : status;
 
@@ -234,7 +234,7 @@ class _MySpeedStatusTabState extends ConsumerState<MySpeedStatusTab> {
                         ),
                       ),
                       Text(
-                        isRunning ? 'Speedtest running' : 'Idle',
+                        isRunning ? 'Speedtest running' : S.t('idle'),
                         overflow: TextOverflow.ellipsis,
                         style: theme.textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
@@ -278,7 +278,7 @@ class _MySpeedStatusTabState extends ConsumerState<MySpeedStatusTab> {
               child: Text(
                 isRunning
                     ? 'A speedtest is currently executing on your MySpeed instance.'
-                    : 'Aucun speedtest en cours. Le serveur est prêt.',
+                    : S.t('noSpeedtestIsCurrentlyRunningServerIsReady'),
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: colors.onSurfaceVariant,
                 ),
@@ -289,7 +289,7 @@ class _MySpeedStatusTabState extends ConsumerState<MySpeedStatusTab> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Message : ${status.message}',
+                  S.t('messageStatusMessage1', [status.message]),
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: colors.outline,
                   ),
@@ -307,7 +307,7 @@ class _MySpeedStatusTabState extends ConsumerState<MySpeedStatusTab> {
                         height: 18,
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
-                    : const Text('Lancer le test'),
+                    : Text(S.t('runTest')),
               ),
             ),
           ],
@@ -399,9 +399,9 @@ class _MySpeedStatusTabState extends ConsumerState<MySpeedStatusTab> {
                   Expanded(
                     child: MySpeedMetricBox(
                       icon: Icons.arrow_downward_rounded,
-                      label: 'DESCENTE',
+                      label: S.t('down_2'),
                       value: latest.download.toStringAsFixed(1),
-                      unit: 'Mbps',
+                      unit: S.t('mbps'),
                       iconColor: colors.primary,
                       boxColor: colors.primaryContainer.withValues(alpha: 0.25),
                       borderColor: colors.primary.withValues(alpha: 0.25),
@@ -411,9 +411,9 @@ class _MySpeedStatusTabState extends ConsumerState<MySpeedStatusTab> {
                   Expanded(
                     child: MySpeedMetricBox(
                       icon: Icons.arrow_upward_rounded,
-                      label: 'MONTÉE',
+                      label: S.t('up_2'),
                       value: latest.upload.toStringAsFixed(1),
-                      unit: 'Mbps',
+                      unit: S.t('mbps'),
                       iconColor: colors.tertiary,
                       boxColor: colors.tertiaryContainer.withValues(alpha: 0.25),
                       borderColor: colors.tertiary.withValues(alpha: 0.25),
@@ -436,7 +436,7 @@ class _MySpeedStatusTabState extends ConsumerState<MySpeedStatusTab> {
                     Expanded(
                       child: MySpeedMetricBox(
                         icon: Icons.graphic_eq_rounded,
-                        label: 'GIGUE',
+                        label: S.t('jitter'),
                         value: latest.jitter!.toStringAsFixed(0),
                         unit: 'ms',
                         iconColor: colors.onSurfaceVariant,
@@ -466,10 +466,10 @@ class _MySpeedStatusTabState extends ConsumerState<MySpeedStatusTab> {
                 ),
               ),
             ] else ...<Widget>[
-              const Center(
+              Center(
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: Insets.lg),
-                  child: Text('Aucun speedtest terminé ces dernières 24 heures.'),
+                  child: Text(S.t('noCompletedSpeedtestsInTheLast24Hours')),
                 ),
               ),
             ],
@@ -561,7 +561,7 @@ class _MySpeedStatusTabState extends ConsumerState<MySpeedStatusTab> {
                   padding: const EdgeInsets.all(Insets.xl),
                   child: Center(
                     child: Text(
-                      'Aucun speedtest enregistré ces dernières 24 heures.',
+                      S.t('noSpeedtestsRecordedInThePast24Hours'),
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: colors.onSurfaceVariant,
                       ),

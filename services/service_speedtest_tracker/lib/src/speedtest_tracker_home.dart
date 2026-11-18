@@ -42,25 +42,25 @@ class _SpeedtestTrackerHomeState extends ConsumerState<SpeedtestTrackerHome> {
       data: (SpeedtestOverview data) {
         final _HistorySnapshot history = _watchHistory();
         return EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
           footer: history.hasMore
-              ? const ClassicFooter(
-                  dragText: 'Pull to load more',
-                  armedText: 'Release ready',
-                  readyText: 'Loading...',
-                  processingText: 'Loading...',
-                  processedText: 'Loaded',
-                  failedText: 'Failed',
-                  noMoreText: 'Plus de résultats',
-                  messageText: 'Last updated at %T',
+              ? ClassicFooter(
+                  dragText: S.t('pullToLoadMore'),
+                  armedText: S.t('releaseReady'),
+                  readyText: S.t('loading'),
+                  processingText: S.t('loading'),
+                  processedText: S.t('loaded'),
+                  failedText: S.t('failed'),
+                  noMoreText: S.t('noMoreResults'),
+                  messageText: S.t('lastUpdatedAtT'),
                 )
               : null,
           onRefresh: _refresh,
@@ -79,24 +79,24 @@ class _SpeedtestTrackerHomeState extends ConsumerState<SpeedtestTrackerHome> {
               if (data.latestCompleted case final SpeedtestResult result)
                 SpeedtestLatestCard(result: result)
               else
-                const _SectionCard(
-                  title: 'Dernier résultat',
+                _SectionCard(
+                  title: S.t('latestResult'),
                   child: EmptyView(
                     icon: Icons.speed_outlined,
-                    title: 'Aucun résultat terminé',
-                    message: 'Les speedtests terminés apparaîtront ici.',
+                    title: S.t('noCompletedResults'),
+                    message: S.t('completedSpeedTestsWillAppearHere'),
                   ),
                 ),
               const SizedBox(height: Insets.md),
               _SectionCard(
-                title: 'Historique des téléchargements et envois',
+                title: S.t('downloadAndUploadHistory'),
                 child: SpeedtestHistoryChart(
                   results: data.completedResults,
                 ),
               ),
               const SizedBox(height: Insets.md),
               _SectionCard(
-                title: 'Historique récent',
+                title: S.t('recentHistory'),
                 child: _HistoryBody(
                   snapshot: history,
                   onRetry: () => ref.invalidate(
@@ -159,13 +159,13 @@ class _SpeedtestTrackerHomeState extends ConsumerState<SpeedtestTrackerHome> {
           runState.result?.status.label ??
           switch (runState.phase) {
             SpeedtestRunPhase.checking =>
-              "Vérification d'un speedtest actif…",
-            SpeedtestRunPhase.submitting => "Speedtest en file d'attente…",
+              S.t('checkingForAnActiveSpeedTest'),
+            SpeedtestRunPhase.submitting => S.t('queuingSpeedTest'),
             SpeedtestRunPhase.reconciling =>
-              "Vérification de l'acceptation du speedtest…",
-            SpeedtestRunPhase.queued => "Speedtest en file d'attente…",
-            SpeedtestRunPhase.running => 'Speedtest en cours…',
-            _ => 'Statut du speedtest indisponible.',
+              S.t('checkingWhetherTheSpeedTestWasAccepted'),
+            SpeedtestRunPhase.queued => S.t('queuingSpeedTest'),
+            SpeedtestRunPhase.running => S.t('speedtestInProgress'),
+            _ => S.t('speedTestStatusUnavailable'),
           };
       return <Widget>[
         const SizedBox(height: Insets.md),
@@ -196,7 +196,7 @@ class _SpeedtestTrackerHomeState extends ConsumerState<SpeedtestTrackerHome> {
         SpeedtestRunBanner(
           icon: Icons.speed,
           message:
-              'Le dernier speedtest est : ${latest.status.label.toLowerCase()}.',
+              S.t('theLatestSpeedTestIsLatestStatusLabelToLowerCase1', [latest.status.label.toLowerCase()]),
           color: colors.tertiary,
           busy: true,
         ),
@@ -208,7 +208,7 @@ class _SpeedtestTrackerHomeState extends ConsumerState<SpeedtestTrackerHome> {
         icon: Icons.warning_amber,
         message: latest.status == SpeedtestResultStatus.unknown
             ? 'The latest test has a status this Atrium version does not understand.'
-            : 'Le dernier speedtest : ${latest.status.label.toLowerCase()}.',
+            : S.t('theLatestSpeedTestLatestStatusLabelToLowerCase1', [latest.status.label.toLowerCase()]),
         color: colors.error,
       ),
     ];
@@ -235,11 +235,11 @@ class _SpeedtestTrackerHomeState extends ConsumerState<SpeedtestTrackerHome> {
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: const Text('Lancer le test'),
+            child: Text(S.t('runTest')),
           ),
         ],
       ),
@@ -293,7 +293,7 @@ class _RunAction extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Internet performance',
+                  S.t('internetPerformance'),
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
@@ -313,7 +313,7 @@ class _RunAction extends StatelessWidget {
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
                 : const Icon(Icons.play_arrow),
-            label: Text(state.isBusy ? 'En cours' : 'Lancer le test'),
+            label: Text(state.isBusy ? S.t('running') : S.t('runTest')),
           ),
         ],
       );
@@ -366,9 +366,9 @@ class _HistoryBody extends StatelessWidget {
       );
     }
     if (snapshot.results.isEmpty) {
-      return const Padding(
+      return Padding(
         padding: EdgeInsets.symmetric(vertical: Insets.lg),
-        child: Center(child: Text('Aucun résultat terminé pour le moment.')),
+        child: Center(child: Text(S.t('noCompletedResultsYet'))),
       );
     }
     return Column(
@@ -387,7 +387,7 @@ class _HistoryBody extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: Insets.sm),
             child: ErrorView(
-              title: 'Impossible de charger plus de résultats',
+              title: S.t('couldNotLoadMoreResults'),
               message: _errorMessage(snapshot.error!),
               onRetry: onRetry,
             ),

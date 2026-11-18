@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 /// Represents a registered background job / scheduled task in Cleanuparr.
 class CleanuparrJob {
   const CleanuparrJob({
@@ -45,7 +46,7 @@ class CleanuparrJob {
     return CleanuparrJob(
       jobType: type,
       displayName: name,
-      status: json['status']?.toString() ?? 'Idle',
+      status: json['status']?.toString() ?? S.t('idle'),
       intervalDescription: json['interval']?.toString() ?? json['schedule']?.toString(),
       lastRunTime: last,
       nextRunTime: next,

@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -38,8 +39,8 @@ class AdguardHomeRefusedView extends StatelessWidget {
       'it does, it refuses the right password too.';
 
   /// What is said instead of [explanation] when nothing was entered.
-  static const String noCredentials =
-      "Cet AdGuard Home a un utilisateur, et cette instance n'a ni nom d'utilisateur ni "
+  static final String noCredentials =
+      S.t('thisAdGuardHomeHasAUserAndThisInstanceHasNoUsernameOr') +
       'password. Add them under Edit instance.';
 
   @override
@@ -56,8 +57,8 @@ class AdguardHomeRefusedView extends StatelessWidget {
             const SizedBox(height: Insets.lg),
             Text(
               hasCredentials
-                  ? 'AdGuard Home a refusé la connexion'
-                  : 'AdGuard Home demande une connexion',
+                  ? S.t('adguardHomeRefusedTheSignIn_2')
+                  : S.t('adguardHomeAsksForASignIn'),
               style: theme.textTheme.titleMedium,
               textAlign: TextAlign.center,
             ),
@@ -71,7 +72,7 @@ class AdguardHomeRefusedView extends StatelessWidget {
             if (hasCredentials && refusals > 1) ...<Widget>[
               const SizedBox(height: Insets.sm),
               Text(
-                'Refusé $refusals fois de suite depuis cette app.',
+                S.t('refusedRefusalsTimesInARowFromThisApp1', [refusals]),
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: cs.error,
                   fontWeight: FontWeight.w600,
@@ -83,12 +84,12 @@ class AdguardHomeRefusedView extends StatelessWidget {
             FilledButton.tonalIcon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh),
-              label: const Text('Réessayer'),
+              label: Text(S.t('retry')),
             ),
             if (onEdit != null)
               TextButton(
                 onPressed: onEdit,
-                child: const Text("Modifier l'instance"),
+                child: Text(S.t('editInstance')),
               ),
           ],
         ),

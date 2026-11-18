@@ -1,5 +1,6 @@
 import '../generated/generated.dart';
 import 'ombi_models.dart';
+import 'package:core_models/core_models.dart';
 
 const String _tmdbImages = 'https://image.tmdb.org/t/p/';
 
@@ -22,7 +23,7 @@ String? ombiBackdropUrl(String? path) => ombiPosterUrl(path, size: 'w780');
 OmbiRequest ombiRequestFromMovie(MovieRequests m) => OmbiRequest(
       id: m.id ?? 0,
       kind: OmbiMediaKind.movie,
-      title: _text(m.title) ?? 'Film sans titre',
+      title: _text(m.title) ?? S.t('untitledMovie'),
       status: _status(m.approved, m.available, m.denied),
       tmdbId: m.theMovieDbId,
       year: _year(m.releaseDate),
@@ -50,7 +51,7 @@ OmbiRequest ombiRequestFromChild(ChildRequests c) {
   return OmbiRequest(
     id: c.id ?? 0,
     kind: OmbiMediaKind.tv,
-    title: _text(show?.title) ?? _text(c.title) ?? 'Série sans titre',
+    title: _text(show?.title) ?? _text(c.title) ?? S.t('untitledShow'),
     status: _status(c.approved, c.available, c.denied),
     // The show's TMDB id. Its TVDB one is kept beside it and opens nothing.
     tmdbId: show?.externalProviderId,
@@ -74,7 +75,7 @@ OmbiRequest ombiRequestFromChild(ChildRequests c) {
 }
 
 OmbiRequest ombiRequestFromAlbum(AlbumRequest a) {
-  final String album = _text(a.title) ?? 'Album sans titre';
+  final String album = _text(a.title) ?? S.t('untitledAlbum');
   final String? artist = _text(a.artistName);
   return OmbiRequest(
     id: a.id ?? 0,

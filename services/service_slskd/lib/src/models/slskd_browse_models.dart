@@ -4,6 +4,7 @@ library;
 import 'dart:convert';
 
 import 'slskd_search_models.dart';
+import 'package:core_models/core_models.dart';
 
 class SlskdDirectory {
   const SlskdDirectory({
@@ -157,11 +158,11 @@ class SlskdUserPresence {
   String get statusLabel {
     switch (status) {
       case 2:
-        return 'Online';
+        return S.t('online');
       case 1:
         return 'Away';
       default:
-        return 'Offline';
+        return S.t('offline');
     }
   }
 
@@ -187,7 +188,7 @@ class SlskdUserStatus {
   factory SlskdUserStatus.fromJson(Map<String, dynamic> json) {
     return SlskdUserStatus(
       isPrivileged: (json['isPrivileged'] ?? json['IsPrivileged'] ?? false) as bool? ?? false,
-      presence: (json['presence'] ?? json['Presence'] ?? 'Offline').toString(),
+      presence: (json['presence'] ?? json['Presence'] ?? S.t('offline')).toString(),
     );
   }
 

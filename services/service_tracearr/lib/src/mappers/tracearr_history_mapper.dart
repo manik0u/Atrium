@@ -2,6 +2,7 @@ import '../generated/models/history_record.dart';
 import '../generated/models/history_response.dart';
 import '../media/tracearr_media_url_resolver.dart';
 import '../models/tracearr_models.dart';
+import 'package:core_models/core_models.dart';
 
 /// Pure transformation from raw [HistoryRecord] DTO to domain [TracearrHistoryItem].
 class TracearrHistoryMapper {
@@ -45,7 +46,7 @@ class TracearrHistoryMapper {
       seasonNumber: item.seasonNumber,
       episodeNumber: item.episodeNumber,
       year: item.year,
-      userUsername: item.user?.username ?? 'Unknown',
+      userUsername: item.user?.username ?? S.t('unknown'),
       userAvatarUrl: avatarUrl,
       thumbPath: item.thumbPath,
       posterUrl: posterUrl,

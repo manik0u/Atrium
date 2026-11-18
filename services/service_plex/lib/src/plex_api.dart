@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_networking/core_networking.dart';
 import 'package:dio/dio.dart';
 
@@ -210,7 +211,7 @@ class PlexApi {
   /// a NetworkException the UI turns into a "needs Plex Pass" message.
   Future<void> terminateSession(
     String sessionId, {
-    String reason = 'Arrêté depuis Atrium',
+    String reason = S.t('stoppedFromAtrium'),
   }) async {
     try {
       await _dio.get<dynamic>(

@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 
 Future<bool> confirmDelete(BuildContext context, String what) async {
@@ -5,19 +6,19 @@ Future<bool> confirmDelete(BuildContext context, String what) async {
     context: context,
     builder: (dialogContext) {
       return AlertDialog(
-        title: const Text('Confirmer la suppression'),
-        content: Text('Supprimer $what ? Cette action est irréversible.'),
+        title: Text(S.t('confirmDelete')),
+        content: Text(S.t('deleteWhatThisCannotBeUndone1', [what])),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           TextButton(
             style: TextButton.styleFrom(
               foregroundColor: Theme.of(dialogContext).colorScheme.error,
             ),
             onPressed: () => Navigator.pop(dialogContext, true),
-            child: const Text('Supprimer'),
+            child: Text(S.t('delete')),
           ),
         ],
       );

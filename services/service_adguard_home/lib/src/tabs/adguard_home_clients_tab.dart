@@ -135,7 +135,7 @@ class _AdguardHomeClientsTabState extends ConsumerState<AdguardHomeClientsTab> {
                   ),
                   ButtonSegment<_Kind>(
                     value: _Kind.runtime,
-                    label: _SegmentLabel('Exécution (${view.runtime.length})'),
+                    label: _SegmentLabel(S.t('runtimeViewRuntimeLength1', [view.runtime.length])),
                   ),
                 ],
                 selected: <_Kind>{_kind},
@@ -159,12 +159,10 @@ class _AdguardHomeClientsTabState extends ConsumerState<AdguardHomeClientsTab> {
     if (view.persistent.isEmpty) {
       return AdguardHomePullable(
         onRefresh: _refresh,
-        child: const EmptyView(
+        child: EmptyView(
           icon: Icons.devices_other,
-          title: 'Aucun client persistant',
-          message: "Un client persistant est un appareil avec un nom et, s'il "
-              'needs them, settings of its own. Add one below, or from the '
-              'runtime clients.',
+          title: S.t('noPersistentClients'),
+          message: S.t('aPersistentClientIsADeviceWithANameAndIfItNeedsThemSettingsOfItsOwnAddOneBelowOrFromTheRuntimeClients'),
         ),
       );
     }
@@ -194,10 +192,10 @@ class _AdguardHomeClientsTabState extends ConsumerState<AdguardHomeClientsTab> {
     if (view.runtime.isEmpty) {
       return AdguardHomePullable(
         onRefresh: _refresh,
-        child: const EmptyView(
+        child: EmptyView(
           icon: Icons.sensors_off,
-          title: 'Aucun client en exécution',
-          message: "AdGuard Home n'a encore vu aucun appareil.",
+          title: S.t('noRuntimeClients'),
+          message: S.t('adguardHomeHasNotSeenADeviceYet'),
         ),
       );
     }

@@ -94,19 +94,19 @@ extension QbitSortFieldExt on QbitSortField {
   String get displayName {
     switch (this) {
       case QbitSortField.addedOn:
-        return 'Added On';
+        return S.t('addedOn');
       case QbitSortField.name:
-        return 'Name';
+        return S.t('name');
       case QbitSortField.size:
-        return 'Size';
+        return S.t('size');
       case QbitSortField.progress:
-        return 'Progress';
+        return S.t('progress');
       case QbitSortField.status:
-        return 'Status';
+        return S.t('status');
       case QbitSortField.seeds:
-        return 'Seeds';
+        return S.t('seeds');
       case QbitSortField.peers:
-        return 'Peers';
+        return S.t('peers');
       case QbitSortField.dlSpeed:
         return 'Down Speed';
       case QbitSortField.upSpeed:
@@ -118,7 +118,7 @@ extension QbitSortFieldExt on QbitSortField {
       case QbitSortField.queue:
         return 'Queue Position';
       case QbitSortField.category:
-        return 'Category';
+        return S.t('category');
       case QbitSortField.completedOn:
         return 'Completed On';
       case QbitSortField.sessionDl:

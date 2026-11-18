@@ -51,7 +51,7 @@ void main() {
       200,
     );
 
-    expect(find.text('Mettre à jour les serveurs'), findsOneWidget);
+    expect(find.text('Update Servers'), findsOneWidget);
     expect(
       find.textContaining(
         'UPDATER_PROTONVPN_EMAIL and UPDATER_PROTONVPN_PASSWORD',

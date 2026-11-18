@@ -1,4 +1,5 @@
 import 'tautulli_json.dart';
+import 'package:core_models/core_models.dart';
 
 /// One page of watch history from `cmd=get_history`.
 ///
@@ -113,17 +114,17 @@ class TautulliHomeStat {
 
   /// Human section header for a stat_id.
   String get title => switch (statId) {
-        'top_movies' => 'Films les plus vus',
-        'popular_movies' => 'Films populaires',
-        'top_tv' => 'Séries les plus vues',
-        'popular_tv' => 'Séries populaires',
-        'top_music' => 'Musique la plus écoutée',
-        'popular_music' => 'Musique populaire',
-        'top_libraries' => 'Bibliothèques les plus vues',
-        'top_users' => 'Utilisateurs les plus actifs',
-        'top_platforms' => 'Plateformes les plus utilisées',
-        'last_watched' => 'Vus récemment',
-        'most_concurrent' => 'Plus de flux simultanés',
+        'top_movies' => S.t('topMovies'),
+        'popular_movies' => S.t('popularMovies'),
+        'top_tv' => S.t('topTVShows'),
+        'popular_tv' => S.t('popularTVShows'),
+        'top_music' => S.t('topMusic'),
+        'popular_music' => S.t('popularMusic'),
+        'top_libraries' => S.t('topLibraries'),
+        'top_users' => S.t('topUsers'),
+        'top_platforms' => S.t('topPlatforms'),
+        'last_watched' => S.t('recentlyWatched'),
+        'most_concurrent' => S.t('mostConcurrentStreams'),
         _ => statId,
       };
 }

@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +41,7 @@ class SelectionHeaderBar extends StatelessWidget {
         children: [
           IconButton(
             icon: const Icon(Icons.close),
-            tooltip: 'Annuler la sélection',
+            tooltip: S.t('cancelSelection'),
             onPressed: onClear,
           ),
           const SizedBox(width: Insets.xs),
@@ -54,11 +55,11 @@ class SelectionHeaderBar extends StatelessWidget {
           const Spacer(),
           TextButton(
             onPressed: onSelectAll,
-            child: const Text('Tout sélectionner'),
+            child: Text(S.t('selectAll')),
           ),
           TextButton(
             onPressed: onInvert,
-            child: const Text('Inverser'),
+            child: Text(S.t('invert')),
           ),
         ],
       ),

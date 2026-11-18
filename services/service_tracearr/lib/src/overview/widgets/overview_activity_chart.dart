@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -102,7 +103,7 @@ class OverviewActivityChart extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    'Aucune activité de lecture enregistrée ces 7 derniers jours.',
+                    S.t('noPlaybackActivityRecordedInThePast7Days'),
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),

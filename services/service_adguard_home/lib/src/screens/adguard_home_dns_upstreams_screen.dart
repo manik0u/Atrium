@@ -243,7 +243,7 @@ class _AdguardHomeDnsUpstreamsScreenState
     // Filled once. A later read must not replace what is being typed.
     if (_before == null && value != null) _fill(value);
     return AdguardHomeSettingsForm(
-      title: 'Serveurs amont',
+      title: S.t('upstreams'),
       busy: _busy,
       changed: _changed,
       onSave: _save,
@@ -268,7 +268,7 @@ class _AdguardHomeDnsUpstreamsScreenState
     return ListView(
       padding: const EdgeInsets.fromLTRB(Insets.lg, 0, Insets.lg, Insets.xl),
       children: <Widget>[
-        const AdguardHomeHeading('Upstream DNS servers'),
+        AdguardHomeHeading(S.t('upstreamDNSServers')),
         const SizedBox(height: Insets.sm),
         if (dns.upstreamsFile.isNotEmpty)
           Text(
@@ -294,10 +294,10 @@ class _AdguardHomeDnsUpstreamsScreenState
                     child: ExpressiveProgressIndicator(),
                   )
                 : const Icon(Icons.network_check),
-            label: const Text('Tester les serveurs amont'),
+            label: Text(S.t('testUpstreams')),
           ),
         ),
-        const AdguardHomeHeading('Mode'),
+        AdguardHomeHeading(S.t('mode')),
         RadioGroup<AdguardHomeUpstreamMode>(
           groupValue: _mode,
           onChanged: (AdguardHomeUpstreamMode? mode) {
@@ -321,16 +321,14 @@ class _AdguardHomeDnsUpstreamsScreenState
         _box(
           key: 'adguard-fallback',
           controller: _fallback,
-          helper: 'Asked when the upstream servers do not answer. One per '
-              'line.',
+          helper: S.t('askedWhenTheUpstreamServersDoNotAnswerOnePerLine'),
         ),
         const AdguardHomeHeading('Bootstrap DNS servers'),
         const SizedBox(height: Insets.sm),
         _box(
           key: 'adguard-bootstrap',
           controller: _bootstrap,
-          helper: 'IP addresses that find the encrypted upstreams by name. '
-              'One per line.',
+          helper: S.t('ipAddressesThatFindTheEncryptedUpstreamsByNameOnePerLine'),
         ),
         const AdguardHomeHeading('Private reverse DNS servers'),
         const SizedBox(height: Insets.sm),
@@ -340,23 +338,23 @@ class _AdguardHomeDnsUpstreamsScreenState
           helper: defaults.isEmpty
               ? 'For names of local addresses. The server found no default '
                   'to use.'
-              : 'Pour les noms des adresses locales. Vide, le serveur utilise '
+              : S.t('forNamesOfLocalAddressesEmptyTheServerUses') +
                   '${defaults.join(', ')}.',
         ),
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
-          title: const Text('Utiliser des résolveurs DNS inverses privés'),
-          subtitle: const Text(
-            "Désactivé, les recherches d'adresses locales reçoivent NXDOMAIN",
+          title: Text(S.t('usePrivateReverseDNSResolvers')),
+          subtitle: Text(
+            S.t('offLookupsOfLocalAddressesAreAnsweredWithNXDOMAIN'),
           ),
           value: _usePrivate,
           onChanged: (bool on) => setState(() => _usePrivate = on),
         ),
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
-          title: const Text('Résoudre les noms des clients'),
-          subtitle: const Text(
-            "Trouver le nom d'hôte de chaque client depuis son adresse IP",
+          title: Text(S.t('lookUpClientsNames')),
+          subtitle: Text(
+            S.t('findTheHostnameOfEachClientFromItsIPAddress'),
           ),
           value: _resolveClients,
           onChanged: (bool on) => setState(() => _resolveClients = on),
@@ -372,7 +370,7 @@ class _AdguardHomeDnsUpstreamsScreenState
           ],
           onChanged: (_) => setState(() {}),
           decoration: InputDecoration(
-            labelText: 'Secondes',
+            labelText: S.t('seconds'),
             border: const OutlineInputBorder(),
             errorText: (_checked || _timeout.text.isNotEmpty) &&
                     _timeoutSeconds == null
@@ -388,9 +386,9 @@ class _AdguardHomeDnsUpstreamsScreenState
 
   static String _modeHelp(AdguardHomeUpstreamMode mode) => switch (mode) {
         AdguardHomeUpstreamMode.loadBalance =>
-          'Un serveur à la fois, le plus rapide et fiable le plus souvent',
+          S.t('oneServerAtATimeTheFastestAndMostReliableMostOften'),
         AdguardHomeUpstreamMode.parallel =>
-          "Tous les serveurs en même temps, la première réponse l'emporte",
+          S.t('allServersAtOnceTheFirstAnswerWins'),
         AdguardHomeUpstreamMode.fastestAddress =>
           'All servers, then the address that connects fastest. Slow when '
               'a server does not answer',
@@ -455,7 +453,7 @@ class _UpstreamResults extends StatelessWidget {
         : all.isEmpty
             ? 'Nothing to test'
             : failed == 0
-                ? 'Tous les serveurs ont répondu'
+                ? S.t('everyServerAnswered')
                 : failed == 1
                     ? '1 server did not answer'
                     : '$failed servers did not answer';
@@ -471,7 +469,7 @@ class _UpstreamResults extends StatelessWidget {
         const SizedBox(height: Insets.sm),
         if (upstreamsFile.isNotEmpty)
           Text(
-            'Les serveurs amont de $upstreamsFile ne sont lus que par le serveur '
+            S.t('theUpstreamsInUpstreamsFileAreReadByTheServerAlone1', [upstreamsFile]) +
             'and cannot be tested from here.',
             style: theme.textTheme.bodyMedium
                 ?.copyWith(color: cs.onSurfaceVariant),
@@ -489,7 +487,7 @@ class _UpstreamResults extends StatelessWidget {
               child: FilledButton.tonalIcon(
                 onPressed: onTryAgain,
                 icon: const Icon(Icons.refresh),
-                label: const Text('Réessayer'),
+                label: Text(S.t('retry')),
               ),
             ),
           ),

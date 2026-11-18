@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import '../../../models/tracearr_models.dart';
@@ -108,7 +109,7 @@ class UserLinkedAccountsCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(Radii.sm),
                       ),
                       child: Text(
-                        isRemoved ? 'Removed' : 'Active',
+                        isRemoved ? S.t('removed') : S.t('active'),
                         style: TextStyle(
                           color: isRemoved
                               ? colorScheme.onErrorContainer

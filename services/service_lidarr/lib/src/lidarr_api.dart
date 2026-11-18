@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:dio/dio.dart';
 
 import 'generated/generated.dart';
@@ -115,8 +116,8 @@ class LidarrApi {
         statusCode: lastError.response?.statusCode,
       );
     }
-    return const ApiResponse.error(
-      LidarrError(message: 'Échec de la lecture du contenu du fichier journal'),
+    return ApiResponse.error(
+      LidarrError(message: S.t('failedToReadLogFileContents')),
       statusCode: 404,
     );
   }

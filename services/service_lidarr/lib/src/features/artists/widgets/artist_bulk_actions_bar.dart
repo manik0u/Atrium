@@ -39,7 +39,7 @@ class ArtistBulkActionsBar extends ConsumerWidget {
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(ctx).pop(true),
@@ -62,7 +62,7 @@ class ArtistBulkActionsBar extends ConsumerWidget {
 
       if (!resp.isSuccess) {
         throw Exception(
-          resp.error?.message ?? "Échec de l'exécution de $commandName",
+          resp.error?.message ?? S.t('failedToExecuteCommandName1', [commandName]),
         );
       }
 
@@ -72,7 +72,7 @@ class ArtistBulkActionsBar extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Commande $actionTitle mise en file d'attente pour les artistes sélectionnés."),
+            content: Text(S.t('actiontitleCommandQueuedForSelectedArtists1', [actionTitle])),
           ),
         );
       }
@@ -80,7 +80,7 @@ class ArtistBulkActionsBar extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Échec : $e'),
+            content: Text(S.t('failedE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -123,7 +123,7 @@ class ArtistBulkActionsBar extends ConsumerWidget {
                   );
                 },
                 icon: const Icon(Icons.edit_outlined, size: 20),
-                label: const Text('Modifier'),
+                label: Text(S.t('edit')),
               ),
               TextButton.icon(
                 style: TextButton.styleFrom(
@@ -143,10 +143,10 @@ class ArtistBulkActionsBar extends ConsumerWidget {
                   );
                 },
                 icon: const Icon(Icons.delete_outline, size: 20),
-                label: const Text('Supprimer'),
+                label: Text(S.t('delete')),
               ),
               Tooltip(
-                message: "Plus d'actions groupées",
+                message: S.t('moreBulkActions'),
                 child: TextButton.icon(
                   style: TextButton.styleFrom(
                     visualDensity: VisualDensity.compact,
@@ -155,7 +155,7 @@ class ArtistBulkActionsBar extends ConsumerWidget {
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                   ),
                   icon: const Icon(Icons.more_horiz, size: 20),
-                  label: const Text('Plus'),
+                  label: Text(S.t('more')),
                   onPressed: () {
                     showModalBottomSheet<void>(
                       context: context,
@@ -168,7 +168,7 @@ class ArtistBulkActionsBar extends ConsumerWidget {
                             children: [
                               ListTile(
                                 leading: const Icon(Icons.grid_on_outlined),
-                                title: const Text("Studio d'albums"),
+                                title: Text(S.t('albumStudio')),
                                 subtitle: Text(
                                   'Configure album monitoring for ${selectedIds.length} selected ${selectedIds.length == 1 ? 'artist' : 'artists'}',
                                 ),
@@ -186,8 +186,8 @@ class ArtistBulkActionsBar extends ConsumerWidget {
                               ),
                               ListTile(
                                 leading: const Icon(Icons.label_outlined),
-                                title: const Text('Modifier les balises'),
-                                subtitle: const Text('Appliquer ou modifier des balises'),
+                                title: Text(S.t('editTags')),
+                                subtitle: Text(S.t('applyOrModifyTags')),
                                 onTap: () {
                                   Navigator.pop(ctx);
                                   showDialog<void>(
@@ -204,15 +204,15 @@ class ArtistBulkActionsBar extends ConsumerWidget {
                               ListTile(
                                 leading:
                                     const Icon(Icons.drive_file_rename_outline),
-                                title: const Text('Renommer les fichiers'),
-                                subtitle: const Text('Renommer les pistes sur le disque'),
+                                title: Text(S.t('renameFiles')),
+                                subtitle: Text(S.t('renameTracksOnDisk')),
                                 onTap: () {
                                   Navigator.pop(ctx);
                                   _confirmAndExecuteCommand(
                                     context,
                                     ref,
                                     commandName: 'RenameArtist',
-                                    actionTitle: 'Rename Files',
+                                    actionTitle: S.t('renameFiles'),
                                     confirmMessage:
                                         'Rename audio files on disk for ${selectedIds.length} selected artists according to your naming format?',
                                   );
@@ -220,7 +220,7 @@ class ArtistBulkActionsBar extends ConsumerWidget {
                               ),
                               ListTile(
                                 leading: const Icon(Icons.sell_outlined),
-                                title: const Text('Écrire les balises audio'),
+                                title: Text(S.t('writeAudioTags')),
                                 subtitle: const Text(
                                   'Sync metadata to audio tags on disk',
                                 ),
@@ -230,7 +230,7 @@ class ArtistBulkActionsBar extends ConsumerWidget {
                                     context,
                                     ref,
                                     commandName: 'RetagArtist',
-                                    actionTitle: 'Write Audio Tags',
+                                    actionTitle: S.t('writeAudioTags'),
                                     confirmMessage:
                                         'Write metadata tags to audio files on disk for ${selectedIds.length} selected artists?',
                                   );

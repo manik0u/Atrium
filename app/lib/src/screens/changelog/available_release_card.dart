@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -65,7 +66,7 @@ class AvailableReleaseCard extends ConsumerWidget {
                 state.releaseUrl ?? AtriumLinks.releases,
               ),
               icon: const Icon(Icons.open_in_new, size: 18),
-              label: const Text('Voir la release complète'),
+              label: Text(S.t('seeFullRelease')),
             ),
           ),
         ],
@@ -89,7 +90,7 @@ class _AvailablePill extends StatelessWidget {
         borderRadius: BorderRadius.circular(999),
       ),
       child: Text(
-        'Available',
+        S.t('available'),
         style: textTheme.labelSmall?.copyWith(
           color: scheme.onTertiaryContainer,
           fontWeight: FontWeight.w600,

@@ -49,18 +49,18 @@ class _VmBody extends StatelessWidget {
     // Unraid ships with virtualisation off, so this is the ordinary case for
     // most servers rather than something to report as broken.
     if (!list.enabled) {
-      return const EmptyView(
+      return EmptyView(
         icon: Icons.desktop_access_disabled_outlined,
-        title: 'Les machines virtuelles sont éteintes',
-        message: "Ce serveur n'a aucun gestionnaire de VM actif. Activez-le dans "
-            'Paramètres, Gestionnaire de VM, pour voir les machines virtuelles ici.',
+        title: S.t('virtualMachinesAreOff'),
+        message: S.t('thisServerHasNoVMManagerRunningTurnItOnUnder')
+            S.t('settingsVMManagerToSeeVirtualMachinesHere'),
       );
     }
     if (list.vms.isEmpty) {
-      return const EmptyView(
+      return EmptyView(
         icon: Icons.desktop_windows_outlined,
-        title: 'Aucune machine virtuelle',
-        message: "Le gestionnaire de VM est actif, mais aucune machine n'est définie.",
+        title: S.t('noVirtualMachines'),
+        message: S.t('theVMManagerIsOnButNoMachinesAreDefinedYet'),
       );
     }
 
@@ -79,7 +79,7 @@ class _VmBody extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         UnraidSectionHeader(
-          title: 'Machines virtuelles',
+          title: S.t('virtualMachines'),
           trailing: '$running of ${list.vms.length} running',
         ),
         const SizedBox(height: Insets.sm),

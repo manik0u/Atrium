@@ -1,5 +1,6 @@
 import '../generated/api/raw_settings_api.dart';
 import '../generated/responses/ombi_exception.dart';
+import 'package:core_models/core_models.dart';
 
 /// High-level service wrapper for Ombi settings endpoints.
 class OmbiSettingsService {
@@ -15,11 +16,11 @@ class OmbiSettingsService {
     }
     if (response.error != null) {
       throw OmbiException(
-        response.error!.message ?? "Échec de la récupération des paramètres d'Ombi",
+        response.error!.message ?? S.t('failedToFetchOmbiSettings'),
         statusCode: response.statusCode,
         error: response.error,
       );
     }
-    throw OmbiException('Failed to fetch Ombi settings', statusCode: response.statusCode);
+    throw OmbiException(S.t('failedToFetchOmbiSettings'), statusCode: response.statusCode);
   }
 }

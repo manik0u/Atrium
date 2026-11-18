@@ -28,11 +28,11 @@ class UpdatesView extends ConsumerWidget {
         value: asyncUpdates,
         data: (List<UpdateResource> updates) {
           if (updates.isEmpty) {
-            return const Center(
+            return Center(
               child: EmptyView(
                 icon: Icons.system_update_outlined,
-                title: 'Aucune mise à jour trouvée',
-                message: 'Aucun historique de mises à jour disponible.',
+                title: S.t('noUpdatesFound'),
+                message: S.t('noUpdateHistoryAvailable'),
               ),
             );
           }
@@ -90,7 +90,7 @@ class UpdatesView extends ConsumerWidget {
                                     borderRadius: BorderRadius.circular(4),
                                   ),
                                   child: Text(
-                                    'Installed',
+                                    S.t('installed'),
                                     style: TextStyle(
                                       color: cs.onPrimaryContainer,
                                       fontSize: 11,
@@ -109,7 +109,7 @@ class UpdatesView extends ConsumerWidget {
                                     borderRadius: BorderRadius.circular(4),
                                   ),
                                   child: Text(
-                                    'Latest',
+                                    S.t('latest'),
                                     style: TextStyle(
                                       color: cs.onSecondaryContainer,
                                       fontSize: 11,

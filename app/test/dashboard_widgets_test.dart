@@ -74,7 +74,7 @@ void main() {
         ),
       ),
     );
-    expect(find.text('Téléchargements actifs'), findsOneWidget);
+    expect(find.text('Active downloads'), findsOneWidget);
     expect(find.text('9 active'), findsOneWidget);
     expect(find.text('card body'), findsOneWidget);
     expect(find.byIcon(Icons.download_rounded), findsOneWidget);
@@ -105,14 +105,14 @@ void main() {
         ),
         sabQueueProvider(sab).overrideWith(
           (Ref ref) async => const SabQueue(
-            status: 'Téléchargement en cours',
+            status: 'Downloading',
             speed: '2.0 M',
             slots: <SabSlot>[
               SabSlot(
                 nzoId: 'n1',
                 filename: 'Show.S01E01.mkv',
                 percentage: '80',
-                status: 'Téléchargement en cours',
+                status: 'Downloading',
               ),
             ],
           ),
@@ -147,7 +147,7 @@ void main() {
     expect(find.text('Ubuntu ISO'), findsOneWidget);
     expect(find.text('Show.S01E01.mkv'), findsOneWidget);
     expect(find.text('Distro.Refresh.nzb'), findsOneWidget);
-    expect(find.text('Téléchargements actifs'), findsOneWidget);
+    expect(find.text('Active downloads'), findsOneWidget);
   });
 
   test('parseSabSpeed handles K/M/G suffixes and bare bytes', () {
@@ -208,7 +208,7 @@ void main() {
         embyInstances: const <Instance>[],
       ),
     );
-    expect(find.text('En cours de lecture'), findsOneWidget);
+    expect(find.text('Now streaming'), findsOneWidget);
     expect(find.textContaining('The Matrix'), findsOneWidget);
     expect(find.textContaining('Breaking Bad'), findsOneWidget);
     // Enriched session info: device on the meta line, the resolution chip,
@@ -247,7 +247,7 @@ void main() {
       ],
       const DashboardUpcomingWidget(),
     );
-    expect(find.text('Sorties à venir'), findsOneWidget);
+    expect(find.text('Upcoming releases'), findsOneWidget);
     expect(find.textContaining('Test Show'), findsOneWidget);
   });
 
@@ -288,7 +288,7 @@ void main() {
       ),
       pumps: 3,
     );
-    expect(find.text('Ajouts récents'), findsOneWidget);
+    expect(find.text('Recently added'), findsOneWidget);
     expect(find.text('New Movie'), findsOneWidget);
     expect(find.text('New Show'), findsOneWidget);
     expect(find.text('Movie · 2025'), findsOneWidget);
@@ -325,7 +325,7 @@ void main() {
       DashboardRequestsWidget(instances: <Instance>[seerr]),
       pumps: 3,
     );
-    expect(find.text('Demandes'), findsOneWidget);
+    expect(find.text('Requests'), findsOneWidget);
     expect(find.text('3 requested'), findsOneWidget);
     expect(find.text('Needs approval'), findsOneWidget);
     expect(find.textContaining('The Matrix'), findsOneWidget);
@@ -384,7 +384,7 @@ void main() {
     // Each service keeps its own words for the same state: Seerr's row is as
     // it was, Ombi's reads like Ombi's Recently Requested cards.
     expect(find.text('Needs approval'), findsOneWidget);
-    expect(find.text('En attente'), findsOneWidget);
+    expect(find.text('Pending'), findsOneWidget);
     expect(find.textContaining('alice'), findsOneWidget);
     // Ombi's request is a month newer, so it comes first.
     expect(
@@ -435,10 +435,10 @@ void main() {
       pumps: 3,
     );
 
-    expect(find.text('Approuvé'), findsOneWidget);
-    expect(find.text('Partiellement disponible'), findsOneWidget);
-    expect(find.text('Refusée'), findsOneWidget);
-    expect(find.text('En cours de traitement'), findsNothing);
+    expect(find.text('Approved'), findsOneWidget);
+    expect(find.text('Partially Available'), findsOneWidget);
+    expect(find.text('Denied'), findsOneWidget);
+    expect(find.text('Processing'), findsNothing);
   });
 
   testWidgets('DashboardServerInfoWidget shows CPU, memory, GPU and disks',
@@ -489,7 +489,7 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
     expect(find.text('Glances'), findsOneWidget);
     expect(find.text('CPU'), findsOneWidget);
-    expect(find.text('Mémoire'), findsOneWidget);
+    expect(find.text('Memory'), findsOneWidget);
     expect(find.text('GPU'), findsOneWidget);
     expect(find.text('42%'), findsOneWidget);
     expect(find.text('/data'), findsOneWidget);
@@ -523,14 +523,14 @@ void main() {
       const DashboardBoard(),
       pumps: 3,
     );
-    expect(find.text('Téléchargements actifs'), findsOneWidget);
+    expect(find.text('Active downloads'), findsOneWidget);
     expect(find.text('Ubuntu ISO'), findsOneWidget);
     // Streams is activity-gated: tautulli is configured but nobody is
     // streaming (streamCount 0), so the widget stays hidden.
-    expect(find.text('En cours de lecture'), findsNothing);
+    expect(find.text('Now streaming'), findsNothing);
     // No sonarr/radarr, seerr or glances configured:
-    expect(find.text('Sorties à venir'), findsNothing);
-    expect(find.text('Demandes'), findsNothing);
+    expect(find.text('Upcoming releases'), findsNothing);
+    expect(find.text('Requests'), findsNothing);
     expect(find.text('Glances'), findsNothing);
   });
 
@@ -571,8 +571,8 @@ void main() {
       const DashboardBoard(),
       pumps: 3,
     );
-    expect(find.text('Téléchargements actifs'), findsNothing);
-    expect(find.text('En cours de lecture'), findsOneWidget);
+    expect(find.text('Active downloads'), findsNothing);
+    expect(find.text('Now streaming'), findsOneWidget);
     expect(find.textContaining('The Matrix'), findsOneWidget);
   });
 

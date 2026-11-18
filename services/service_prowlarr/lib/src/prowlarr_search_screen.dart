@@ -99,31 +99,31 @@ class _ProwlarrSearchScreenState extends ConsumerState<ProwlarrSearchScreen> {
           controller: _controller,
           autofocus: true,
           textInputAction: TextInputAction.search,
-          decoration: const InputDecoration(
-            hintText: 'Rechercher dans tous les indexeurs…',
+          decoration: InputDecoration(
+            hintText: S.t('searchAllIndexers'),
             border: InputBorder.none,
           ),
           onSubmitted: _search,
         ),
         actions: <Widget>[
           PopupMenuButton<_SortBy>(
-            tooltip: 'Trier',
+            tooltip: S.t('sort'),
             icon: const Icon(Icons.sort),
             initialValue: _sortBy,
             onSelected: (_SortBy v) => setState(() => _sortBy = v),
             itemBuilder: (BuildContext context) =>
-                const <PopupMenuEntry<_SortBy>>[
+                <PopupMenuEntry<_SortBy>>[
               PopupMenuItem<_SortBy>(
                 value: _SortBy.seeders,
-                child: Text('Seeders'),
+                child: Text(S.t('seeders')),
               ),
               PopupMenuItem<_SortBy>(
                 value: _SortBy.size,
-                child: Text('Taille'),
+                child: Text(S.t('size')),
               ),
               PopupMenuItem<_SortBy>(
                 value: _SortBy.age,
-                child: Text('Âge'),
+                child: Text(S.t('age')),
               ),
             ],
           ),
@@ -142,7 +142,7 @@ class _ProwlarrSearchScreenState extends ConsumerState<ProwlarrSearchScreen> {
             const ExpressiveProgressIndicator(),
             const SizedBox(height: Insets.lg),
             Text(
-              'Recherche dans vos indexeurs…\nLes trackers lents peuvent prendre un moment.',
+              S.t('searchingYourIndexersSlowTrackersCanTakeAWhile'),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodySmall,
             ),
@@ -152,25 +152,24 @@ class _ProwlarrSearchScreenState extends ConsumerState<ProwlarrSearchScreen> {
     }
     if (_error != null) {
       return ErrorView(
-        title: 'Échec de la recherche',
+        title: S.t('searchFailed'),
         message: _error!,
         onRetry: () => _search(_controller.text),
       );
     }
     final List<ProwlarrRelease>? results = _results;
     if (results == null) {
-      return const EmptyView(
+      return EmptyView(
         icon: Icons.travel_explore_outlined,
-        title: 'Recherchez dans vos indexeurs',
-        message: 'Une requête interroge tous les indexeurs actifs et vous permet de '
-            'grab a release straight to your download client.',
+        title: S.t('searchYourIndexers'),
+        message: S.t('oneQueryHitsEveryEnabledIndexerAndLetsYouGrabAReleaseStraightToYourDownloadClient'),
       );
     }
     if (results.isEmpty) {
-      return const EmptyView(
+      return EmptyView(
         icon: Icons.search_off_outlined,
-        title: 'Aucun résultat',
-        message: "Aucun indexeur n'a rien renvoyé pour cette requête.",
+        title: S.t('noResults'),
+        message: S.t('noIndexerReturnedAnythingForThatQuery'),
       );
     }
     final List<ProwlarrRelease> sorted = _sorted(results);
@@ -203,7 +202,7 @@ class _ProwlarrSearchScreenState extends ConsumerState<ProwlarrSearchScreen> {
   Future<void> _grab(BuildContext context, ProwlarrRelease release) async {
     final ScaffoldMessengerState messenger = ScaffoldMessenger.of(context);
     messenger.showSnackBar(
-      SnackBar(content: Text('Grab de « ${release.title} »…')),
+      SnackBar(content: Text(S.t('grabbingReleaseTitle1', [release.title]))),
     );
     try {
       final ProwlarrApi api =
@@ -211,14 +210,14 @@ class _ProwlarrSearchScreenState extends ConsumerState<ProwlarrSearchScreen> {
       await api.grabRelease(release);
       messenger.hideCurrentSnackBar();
       messenger.showSnackBar(
-        const SnackBar(content: Text('Envoyé au client de téléchargement')),
+        SnackBar(content: Text(S.t('sentToDownloadClient'))),
       );
     } on Object catch (e) {
       messenger.hideCurrentSnackBar();
       messenger.showSnackBar(
         SnackBar(
           content: Text(
-            e is NetworkException ? 'Échec du grab : ${e.message}' : 'Échec du grab',
+            e is NetworkException ? S.t('grabFailedEMessage1', [e.message]) : S.t('grabFailed'),
           ),
         ),
       );
@@ -322,7 +321,7 @@ class _ReleaseTile extends StatelessWidget {
                         if (torrent)
                           _MetaPill(
                             icon: Icons.arrow_upward,
-                            label: 'S : ${release.seeders ?? '?'} '
+                            label: S.t('sReleaseSeeders')?'} '
                                 'L:${release.leechers ?? '?'}',
                             color: cs.tertiary,
                           )
@@ -339,7 +338,7 @@ class _ReleaseTile extends StatelessWidget {
               ),
               const SizedBox(width: Insets.sm),
               IconButton(
-                tooltip: 'Grab',
+                tooltip: S.t('grab'),
                 icon: const Icon(Icons.download_outlined),
                 onPressed: onGrab,
               ),
@@ -415,25 +414,25 @@ class _ReleaseSheet extends StatelessWidget {
           children: <Widget>[
             Text(release.title, style: theme.textTheme.titleMedium),
             const SizedBox(height: Insets.md),
-            _DetailRow(label: 'Indexeur', value: release.indexer ?? '-'),
-            _DetailRow(label: 'Protocole', value: release.protocol ?? '-'),
-            _DetailRow(label: 'Taille', value: fmtReleaseBytes(release.size)),
-            _DetailRow(label: 'Âge', value: release.ageLabel),
+            _DetailRow(label: S.t('indexer'), value: release.indexer ?? '-'),
+            _DetailRow(label: S.t('protocol'), value: release.protocol ?? '-'),
+            _DetailRow(label: S.t('size'), value: fmtReleaseBytes(release.size)),
+            _DetailRow(label: S.t('age'), value: release.ageLabel),
             if (release.isTorrent)
               _DetailRow(
-                label: 'Pairs',
+                label: S.t('peers'),
                 value: '${release.seeders ?? '?'} seeders / '
                     '${release.leechers ?? '?'} leechers',
               ),
             if (release.grabs != null)
-              _DetailRow(label: 'Grabs', value: '${release.grabs}'),
+              _DetailRow(label: S.t('grabs'), value: '${release.grabs}'),
             if (categories.isNotEmpty)
-              _DetailRow(label: 'Catégories', value: categories),
+              _DetailRow(label: S.t('categories'), value: categories),
             const SizedBox(height: Insets.lg),
             FilledButton.icon(
               onPressed: onGrab,
               icon: const Icon(Icons.download_outlined),
-              label: const Text('Grab'),
+              label: Text(S.t('grab')),
             ),
           ],
         ),

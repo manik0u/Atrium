@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 
 import '../models/ombi_models.dart';
@@ -5,11 +6,11 @@ import 'ombi_visuals.dart';
 
 /// Ombi's Recently Requested cards' words, which the dashboard shows.
 String ombiRecentStatusLabel(OmbiRecentStatus status) => switch (status) {
-      OmbiRecentStatus.pending => 'En attente',
-      OmbiRecentStatus.approved => 'Approuvé',
-      OmbiRecentStatus.partlyAvailable => 'Partiellement disponible',
-      OmbiRecentStatus.available => 'Disponible',
-      OmbiRecentStatus.denied => 'Refusée',
+      OmbiRecentStatus.pending => S.t('pending'),
+      OmbiRecentStatus.approved => S.t('approved'),
+      OmbiRecentStatus.partlyAvailable => S.t('partiallyAvailable'),
+      OmbiRecentStatus.available => S.t('available'),
+      OmbiRecentStatus.denied => S.t('denied'),
     };
 
 /// Where a request stands, as a small filled pill, in the words of Ombi's
@@ -20,10 +21,10 @@ class OmbiStatusBadge extends StatelessWidget {
   final OmbiRequestStatus status;
 
   static String labelFor(OmbiRequestStatus status) => switch (status) {
-        OmbiRequestStatus.pending => "En attente d'approbation",
-        OmbiRequestStatus.processing => 'Demande en cours de traitement',
-        OmbiRequestStatus.available => 'Disponible',
-        OmbiRequestStatus.denied => 'Refusée',
+        OmbiRequestStatus.pending => S.t('pendingApproval'),
+        OmbiRequestStatus.processing => S.t('processingRequest'),
+        OmbiRequestStatus.available => S.t('available'),
+        OmbiRequestStatus.denied => S.t('denied'),
       };
 
   @override

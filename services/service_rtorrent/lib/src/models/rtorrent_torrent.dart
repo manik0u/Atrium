@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'rtorrent_torrent.freezed.dart';
@@ -155,9 +156,9 @@ abstract class RtorrentTorrent with _$RtorrentTorrent {
   }
 
   String get priorityLabel => switch (priority) {
-        0 => 'Désactivé',
-        1 => 'Basse',
-        3 => 'Élevée',
-        _ => 'Normal',
+        0 => S.t('disabled'),
+        1 => S.t('low'),
+        3 => S.t('high'),
+        _ => S.t('normal'),
       };
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:core_models/core_models.dart';
 import 'package:core_networking/core_networking.dart';
 import 'package:dio/dio.dart';
 
@@ -363,8 +364,8 @@ class TransmissionApi {
       final int status = resp.statusCode ?? 0;
       if (status == 401 || status == 403) {
         throw NetworkAuthException(
-          'Transmission rejected the credentials (HTTP $status). RPC auth is '
-          "facultatif : laissez les deux champs vides si le serveur l'a désactivé, "
+          'Transmission rejected the credentials (HTTP $status). RPC auth is ' +
+          S.t('optionalLeaveBothFieldsEmptyIfTheServerHasItTurnedOff') +
           'otherwise check the username and password.',
         );
       }
@@ -377,9 +378,9 @@ class TransmissionApi {
 
       final dynamic body = resp.data;
       if (body is! Map<String, dynamic>) {
-        throw const NetworkBadResponseException(
-          'Transmission returned a body Atrium could not parse. Check that the '
-          "L'URL pointe vers le point RPC.",
+        throw NetworkBadResponseException(
+          'Transmission returned a body Atrium could not parse. Check that the ' +
+          S.t('urlPointsAtTheRPCEndpoint'),
           status: 200,
         );
       }

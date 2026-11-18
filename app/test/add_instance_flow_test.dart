@@ -91,14 +91,14 @@ void main() {
     await tester.tap(aria2);
     await tester.pumpAndSettle();
     await tester.enterText(
-      find.widgetWithText(TextFormField, 'Nom'),
+      find.widgetWithText(TextFormField, 'Name'),
       'Home aria2',
     );
     await tester.enterText(
-      find.widgetWithText(TextFormField, 'URL locale'),
+      find.widgetWithText(TextFormField, 'Local URL'),
       'http://192.168.1.10:6800',
     );
-    final Finder save = find.widgetWithText(FilledButton, 'Ajouter un service');
+    final Finder save = find.widgetWithText(FilledButton, 'Add service');
     await tester.scrollUntilVisible(
       save,
       200,
@@ -119,18 +119,18 @@ void main() {
   ) async {
     await pumpApp(tester, '/add-instance/form/aria2');
     await tester.enterText(
-      find.widgetWithText(TextFormField, 'Nom'),
+      find.widgetWithText(TextFormField, 'Name'),
       'Home aria2',
     );
     await tester.enterText(
-      find.widgetWithText(TextFormField, 'URL locale'),
+      find.widgetWithText(TextFormField, 'Local URL'),
       'http://192.168.1.10:6800',
     );
     await tester.enterText(
-      find.widgetWithText(TextFormField, 'URL externe'),
+      find.widgetWithText(TextFormField, 'External URL'),
       'not a url',
     );
-    final Finder save = find.widgetWithText(FilledButton, 'Ajouter un service');
+    final Finder save = find.widgetWithText(FilledButton, 'Add service');
     await tester.scrollUntilVisible(
       save,
       200,
@@ -170,18 +170,18 @@ void main() {
   ) async {
     await pumpApp(tester, '/edit');
 
-    await tester.tap(find.byTooltip('Supprimer'));
+    await tester.tap(find.byTooltip('Delete'));
     await tester.pumpAndSettle();
     expect(find.text('Delete Home aria2?'), findsOneWidget);
 
-    await tester.tap(find.text('Annuler'));
+    await tester.tap(find.text('Cancel'));
     await tester.pumpAndSettle();
     expect(profiles.deleted, isEmpty);
     expect(find.byType(InstanceFormScreen), findsOneWidget);
 
-    await tester.tap(find.byTooltip('Supprimer'));
+    await tester.tap(find.byTooltip('Delete'));
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(FilledButton, 'Supprimer'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
     await tester.pumpAndSettle();
     expect(profiles.deleted, <String>[existing.id]);
     expect(find.text('home'), findsOneWidget);
@@ -192,13 +192,13 @@ void main() {
   ) async {
     await pumpApp(tester, '/add-instance/form/aria2');
     await tester.enterText(
-      find.widgetWithText(TextFormField, 'Nom'),
+      find.widgetWithText(TextFormField, 'Name'),
       'Home server',
     );
 
     await tester.tap(find.byKey(const Key('service_header')));
     await tester.pumpAndSettle();
-    expect(find.text('Changer de service'), findsOneWidget);
+    expect(find.text('Change service'), findsOneWidget);
 
     final Finder radarr =
         find.byKey(const ValueKey<String>('service_option_radarr'));
@@ -207,12 +207,12 @@ void main() {
     await tester.tap(radarr);
     await tester.pumpAndSettle();
 
-    expect(find.text('Changer de service'), findsNothing);
+    expect(find.text('Change service'), findsNothing);
     expect(find.byType(InstanceFormScreen), findsOneWidget);
     expect(find.text('Radarr'), findsOneWidget);
-    expect(find.widgetWithText(TextFormField, 'Clé API'), findsOneWidget);
+    expect(find.widgetWithText(TextFormField, 'API key'), findsOneWidget);
     expect(
-      find.widgetWithText(TextFormField, 'Secret RPC (facultatif)'),
+      find.widgetWithText(TextFormField, 'RPC secret (optional)'),
       findsNothing,
     );
     expect(find.text('Home server'), findsOneWidget);
@@ -225,13 +225,13 @@ void main() {
 
     await tester.tap(find.byKey(const Key('service_header')));
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(TextButton, 'Annuler'));
+    await tester.tap(find.widgetWithText(TextButton, 'Cancel'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Changer de service'), findsNothing);
+    expect(find.text('Change service'), findsNothing);
     expect(find.text('aria2'), findsOneWidget);
     expect(
-      find.widgetWithText(TextFormField, 'Secret RPC (facultatif)'),
+      find.widgetWithText(TextFormField, 'RPC secret (optional)'),
       findsOneWidget,
     );
   });
@@ -276,7 +276,7 @@ class _Profiles extends ProfileListController {
 
   @override
   Future<List<Profile>> build() async => <Profile>[
-        Profile(id: 'p', name: 'Par défaut', instances: <Instance>[instance]),
+        Profile(id: 'p', name: 'Default', instances: <Instance>[instance]),
       ];
 
   // Nothing on these screens watches the profile list, so the form can find

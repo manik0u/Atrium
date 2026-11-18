@@ -65,7 +65,7 @@ class _PlexItemDetailScreenState extends ConsumerState<PlexItemDetailScreen> {
       await api.setWatched(widget.ratingKey, watched: !watched);
     } catch (_) {
       messenger.showSnackBar(
-        const SnackBar(content: Text("Impossible de mettre à jour l'état de visionnage")),
+        SnackBar(content: Text(S.t('couldNotUpdateWatchedState'))),
       );
       return;
     }
@@ -133,7 +133,7 @@ class _PlexItemDetailScreenState extends ConsumerState<PlexItemDetailScreen> {
             if (current != null && api != null)
               IconButton(
                 tooltip:
-                    _watched(current) ? 'Mark as unwatched' : 'Mark as watched',
+                    _watched(current) ? S.t('markAsUnwatched') : S.t('markAsWatched'),
                 icon: Icon(
                   _watched(current)
                       ? Icons.check_circle
@@ -143,7 +143,7 @@ class _PlexItemDetailScreenState extends ConsumerState<PlexItemDetailScreen> {
                 onPressed: () => _toggleWatched(api, current),
               ),
             IconButton(
-              tooltip: 'Ouvrir dans Plex',
+              tooltip: S.t('openInPlex'),
               icon: const Icon(Icons.open_in_new),
               onPressed: () => launchPlexDeepLink(context),
             ),
@@ -156,10 +156,10 @@ class _PlexItemDetailScreenState extends ConsumerState<PlexItemDetailScreen> {
           ),
           data: (PlexMetadata? item) {
             if (item == null) {
-              return const EmptyView(
+              return EmptyView(
                 icon: Icons.error_outline,
-                title: 'Introuvable',
-                message: "Cet élément n'est plus sur le serveur.",
+                title: S.t('notFound'),
+                message: S.t('thisItemIsNoLongerOnTheServer'),
               );
             }
             return CustomScrollView(
@@ -456,7 +456,7 @@ class _ShowSeasons extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Seasons',
+            S.t('seasons'),
             style: theme.textTheme.titleMedium
                 ?.copyWith(fontWeight: FontWeight.bold),
           ),

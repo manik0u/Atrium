@@ -140,7 +140,7 @@ class RecentlyAddedCard extends StatelessWidget {
                   if (timeStr.isNotEmpty) ...[
                     const SizedBox(height: 2),
                     Text(
-                      'Added $timeStr',
+                      S.t('addedTimeStr1', [timeStr]),
                       style: theme.textTheme.labelSmall?.copyWith(
                         color: colorScheme.onSurfaceVariant,
                         fontSize: 10,

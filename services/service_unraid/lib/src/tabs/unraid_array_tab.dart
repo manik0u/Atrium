@@ -25,17 +25,17 @@ class _ArrayBody extends StatelessWidget {
           _ParityCheckTile(check: check),
         ],
         _DiskSection(
-          title: 'Parité',
+          title: S.t('parity'),
           disks: array.parities,
           icon: Icons.shield_outlined,
         ),
         _DiskSection(
-          title: 'Données',
+          title: S.t('data'),
           disks: array.disks,
           icon: Icons.storage_rounded,
         ),
         _DiskSection(
-          title: 'Cache',
+          title: S.t('cache'),
           disks: array.caches,
           icon: Icons.bolt_rounded,
         ),
@@ -70,7 +70,7 @@ class _DiskSection extends StatelessWidget {
         children: <Widget>[
           UnraidSectionHeader(
             title: title,
-            trailing: disks.length == 1 ? '1 disk' : '${disks.length} disks',
+            trailing: disks.length == 1 ? S.t('k1Disk') : '${disks.length} disks',
           ),
           const SizedBox(height: Insets.sm),
           _DiskGroup(disks: disks, icon: icon),
@@ -139,7 +139,7 @@ class _ArrayHero extends StatelessWidget {
                     const SizedBox(height: Insets.xxs),
                     Text(
                       parityCount == 0
-                          ? 'Aucune protection de parité'
+                          ? S.t('noParityProtection')
                           : parityCount == 1
                               ? 'Single parity'
                               : '$parityCount parity disks',
@@ -158,14 +158,14 @@ class _ArrayHero extends StatelessWidget {
           ],
           if (used != null && usage != null) ...<Widget>[
             const SizedBox(height: Insets.lg),
-            UnraidUsageBar(fraction: used, label: usage, caption: 'Tableau'),
+            UnraidUsageBar(fraction: used, label: usage, caption: S.t('array')),
           ],
           const SizedBox(height: Insets.lg),
           Row(
             children: <Widget>[
               Expanded(
                 child: UnraidStatBox(
-                  label: 'DISQUES',
+                  label: S.t('disks'),
                   value: '${array.disks.length}',
                   unit: array.caches.isEmpty
                       ? 'data'
@@ -176,9 +176,9 @@ class _ArrayHero extends StatelessWidget {
               const SizedBox(width: Insets.sm),
               Expanded(
                 child: UnraidStatBox(
-                  label: 'LE PLUS CHAUD',
+                  label: S.t('warmest'),
                   value: warmest?.temp == null ? '--' : '${warmest!.temp}',
-                  unit: warmest == null ? 'all idle' : warmest.name,
+                  unit: warmest == null ? S.t('allIdle') : warmest.name,
                   valueColor: warmest == null
                       ? cs.onSurfaceVariant
                       : unraidHeatColor(warmest.heat, cs),
@@ -187,9 +187,9 @@ class _ArrayHero extends StatelessWidget {
               const SizedBox(width: Insets.sm),
               Expanded(
                 child: UnraidStatBox(
-                  label: 'SANTÉ',
+                  label: S.t('health_2'),
                   value: faults.isEmpty ? 'OK' : '${faults.length}',
-                  unit: faults.isEmpty ? 'all disks' : 'need attention',
+                  unit: faults.isEmpty ? S.t('allDisks') : 'need attention',
                   valueColor: faults.isEmpty ? unraidOkGreen(cs) : cs.error,
                 ),
               ),
@@ -230,22 +230,22 @@ class _ParityCheckTile extends StatelessWidget {
           ? 'Parity check running'
           : 'Parity check running, $pct%';
     } else if (check.isPaused) {
-      text = 'Vérification de parité en pause';
+      text = S.t('parityCheckPaused');
     } else if (check.foundErrors) {
       final int n = check.errors ?? 0;
       text = n == 1
           ? 'Last parity check found 1 error'
           : 'Last parity check found $n errors';
     } else if (check.status == 'NEVER_RUN') {
-      text = "La parité n'a jamais été vérifiée";
+      text = S.t('parityHasNeverBeenChecked');
     } else {
       final String? label = check.statusLabel;
       final String when = unraidAgo(check.date);
       text = label == null
-          ? 'Vérification de parité $when'
+          ? S.t('parityCheckWhen1', [when])
           : when.isEmpty
-              ? 'Vérification de parité : $label'
-              : 'Vérification de parité : $label $when';
+              ? S.t('parityCheckLabel1', [label])
+              : S.t('parityCheckLabelWhen2', [label, when]);
     }
 
     return Container(

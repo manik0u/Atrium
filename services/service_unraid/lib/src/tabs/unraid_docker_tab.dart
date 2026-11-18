@@ -42,14 +42,14 @@ class _DockerBodyState extends State<_DockerBody> {
     final List<UnraidContainer> all = widget.containers;
 
     if (all.isEmpty) {
-      return const Column(
+      return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           UnraidSectionHeader(title: 'Docker'),
           SizedBox(height: Insets.sm),
           EmptyView(
-            title: 'Aucun conteneur',
-            message: "Ce serveur n'exécute aucun conteneur Docker.",
+            title: S.t('noContainers'),
+            message: S.t('thisServerIsNotRunningAnyDockerContainers'),
           ),
         ],
       );
@@ -99,10 +99,10 @@ class _DockerBodyState extends State<_DockerBody> {
 
   String _filterLabel(_DockerFilter f, int total, int running, int issues) =>
       switch (f) {
-        _DockerFilter.all => 'Tous : $total',
-        _DockerFilter.running => 'En cours : $running',
-        _DockerFilter.stopped => 'Arrêtés : ${total - running}',
-        _DockerFilter.issues => 'Problèmes : $issues',
+        _DockerFilter.all => S.t('allTotal1', [total]),
+        _DockerFilter.running => S.t('runningRunning1', [running]),
+        _DockerFilter.stopped => S.t('stoppedTotalRunning1', [total - running]),
+        _DockerFilter.issues => S.t('issuesIssues1', [issues]),
       };
 }
 
@@ -178,7 +178,7 @@ class _ContainerRowState extends ConsumerState<_ContainerRow> {
       if (!mounted) return;
       messenger.showSnackBar(
         SnackBar(
-          content: Text(e is NetworkException ? e.message : "Échec de l'action."),
+          content: Text(e is NetworkException ? e.message : S.t('actionFailed_2')),
         ),
       );
     } finally {
@@ -205,7 +205,7 @@ class _ContainerRowState extends ConsumerState<_ContainerRow> {
 
     final String? ports = c.publishedPortsLabel;
     final String subtitle =
-        c.status ?? (c.isRunning ? 'Running' : 'Stopped');
+        c.status ?? (c.isRunning ? S.t('running') : S.t('stopped'));
 
     final Widget row = Padding(
       padding: const EdgeInsets.symmetric(
@@ -235,7 +235,7 @@ class _ContainerRowState extends ConsumerState<_ContainerRow> {
                     if (c.isUpdateAvailable == true) ...<Widget>[
                       const SizedBox(width: Insets.xs),
                       Tooltip(
-                        message: 'Mise à jour disponible',
+                        message: S.t('updateAvailable'),
                         child: Icon(
                           Icons.arrow_circle_up_rounded,
                           size: 16,
@@ -270,7 +270,7 @@ class _ContainerRowState extends ConsumerState<_ContainerRow> {
           if (c.autoStart) ...<Widget>[
             const SizedBox(width: Insets.sm),
             Tooltip(
-              message: 'Démarre avec le tableau',
+              message: S.t('startsWithTheArray'),
               child: Icon(Icons.bolt, size: 18, color: cs.onSurfaceVariant),
             ),
           ],
@@ -297,10 +297,10 @@ class _ContainerRowState extends ConsumerState<_ContainerRow> {
                         : Icons.play_arrow_rounded,
                   ),
                   tooltip: c.isRunning
-                      ? 'Stop'
+                      ? S.t('stop')
                       : c.isPaused
-                          ? 'Resume'
-                          : 'Start',
+                          ? S.t('resume')
+                          : S.t('start'),
                   onPressed: () => _run(
                     (UnraidClient client) => switch (c.state) {
                       'RUNNING' => client.stopContainer(c.id),

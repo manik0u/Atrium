@@ -88,25 +88,25 @@ void main() {
     await tester.pump(const Duration(milliseconds: 500));
     await settle(tester);
 
-    expect(find.text('Espace libre inconnu'), findsOneWidget);
+    expect(find.text('Free space unknown'), findsOneWidget);
   });
 
   testWidgets('Start when added follows the daemon and maps to paused',
       (WidgetTester tester) async {
     await open(tester);
     final SwitchListTile tile = tester.widget<SwitchListTile>(
-      find.widgetWithText(SwitchListTile, "Démarrer à l'ajout"),
+      find.widgetWithText(SwitchListTile, 'Start when added'),
     );
     expect(tile.value, isTrue);
 
-    await tester.tap(find.text("Démarrer à l'ajout"));
+    await tester.tap(find.text('Start when added'));
     await settle(tester);
     await tester.enterText(
-      find.widgetWithText(TextField, 'lien magnet ou URL de .torrent'),
+      find.widgetWithText(TextField, 'magnet: link or .torrent URL'),
       'magnet:?xt=urn:btih:zzzz',
     );
     await settle(tester);
-    await tester.tap(find.widgetWithText(FilledButton, 'Ajouter'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Add'));
     await settle(tester);
 
     expect(fake.single('torrent-add').arguments['paused'], isTrue);
@@ -126,23 +126,23 @@ void main() {
     await open(tester);
 
     await tester.enterText(
-      find.widgetWithText(TextField, 'lien magnet ou URL de .torrent'),
+      find.widgetWithText(TextField, 'magnet: link or .torrent URL'),
       'magnet:?xt=urn:btih:zzzz',
     );
     await settle(tester);
-    await tester.tap(find.widgetWithText(FilledButton, 'Ajouter'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Add'));
     await tester.pump();
     // Tap the scrim above the sheet to dismiss it while the add is held.
     await tester.tapAt(const Offset(20, 20));
     await settle(tester);
-    expect(find.text('lien magnet ou URL de .torrent'), findsNothing);
+    expect(find.text('magnet: link or .torrent URL'), findsNothing);
 
     reply.complete();
     await settle(tester);
 
     expect(find.text('open'), findsOneWidget);
     expect(find.textContaining('Add failed'), findsNothing);
-    expect(find.text('Torrent ajouté'), findsOneWidget);
+    expect(find.text('Torrent added'), findsOneWidget);
   });
 
   testWidgets('the fields read as boxes, not floating labels',
@@ -153,8 +153,8 @@ void main() {
     await open(tester);
 
     for (final String label in <String>[
-      'lien magnet ou URL de .torrent',
-      'Dossier de téléchargement (facultatif)',
+      'magnet: link or .torrent URL',
+      'Download folder (optional)',
     ]) {
       final TextField field = tester.widget<TextField>(
         find.widgetWithText(TextField, label),

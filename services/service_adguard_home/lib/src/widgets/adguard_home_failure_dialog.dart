@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 
 import '../adguard_home_errors.dart';
@@ -22,12 +23,12 @@ Future<bool> showAdguardHomeFailure(
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: Text(refused ? 'Annuler' : 'OK'),
+          child: Text(refused ? S.t('cancel') : 'OK'),
         ),
         if (refused)
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Réessayer'),
+            child: Text(S.t('retry')),
           ),
       ],
     ),
@@ -48,7 +49,7 @@ SnackBar adguardHomeFailureSnackBar(
       content: Text(describeAdguardHomeError(error)),
       action: error is AdguardHomeSignInRefused
           ? SnackBarAction(
-              label: 'Réessayer',
+              label: S.t('retry'),
               onPressed: () {
                 retrySignIn();
                 again();

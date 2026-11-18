@@ -30,17 +30,17 @@ void main() {
     await _pump(tester, installed: false);
     expect(find.text('v1.2.0'), findsOneWidget);
     expect(find.text('2026-08-01'), findsOneWidget);
-    expect(find.text('Nouveau'), findsOneWidget);
-    expect(find.text('Corrigé'), findsOneWidget);
+    expect(find.text('New'), findsOneWidget);
+    expect(find.text('Fixed'), findsOneWidget);
     expect(find.text('A new thing'), findsOneWidget);
     expect(find.text('A fixed thing'), findsOneWidget);
-    expect(find.text('Installée'), findsNothing);
+    expect(find.text('Installed'), findsNothing);
   });
 
   testWidgets('shows the Installed pill only when installed',
       (WidgetTester tester) async {
     await _pump(tester, installed: true);
-    expect(find.text('Installée'), findsOneWidget);
+    expect(find.text('Installed'), findsOneWidget);
   });
 
   testWidgets('category label uses the dynamic scheme role, not a fixed color',
@@ -48,9 +48,9 @@ void main() {
     final ColorScheme scheme =
         ColorScheme.fromSeed(seedColor: const Color(0xFF6750A4));
     await _pump(tester, installed: false);
-    final Text newLabel = tester.widget<Text>(find.text('Nouveau'));
+    final Text newLabel = tester.widget<Text>(find.text('New'));
     expect(newLabel.style?.color, scheme.tertiary);
-    final Text fixedLabel = tester.widget<Text>(find.text('Corrigé'));
+    final Text fixedLabel = tester.widget<Text>(find.text('Fixed'));
     expect(fixedLabel.style?.color, scheme.primary);
   });
 
@@ -58,6 +58,6 @@ void main() {
     final ColorScheme scheme =
         ColorScheme.fromSeed(seedColor: const Color(0xFF6750A4));
     expect(categoryColor(ChangeCategory.improved, scheme), scheme.secondary);
-    expect(categoryLabel(ChangeCategory.improved), 'Amélioré');
+    expect(categoryLabel(ChangeCategory.improved), 'Improved');
   });
 }

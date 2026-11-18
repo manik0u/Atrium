@@ -123,7 +123,7 @@ void main() {
       expect(find.text('2010'), findsOneWidget);
       expect(find.text('@Bhavya'), findsOneWidget);
       expect(find.text('• Apple TV 4K'), findsOneWidget);
-      expect(find.text('Transcodage HW'), findsOneWidget);
+      expect(find.text('HW Transcode'), findsOneWidget);
       expect(find.text('12.5 Mbps'), findsOneWidget);
       expect(find.text('1:00:00 / 2:00:00 • 50%'), findsOneWidget);
     });
@@ -141,7 +141,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('LIVE STREAMS'), findsOneWidget);
-      expect(find.text('Aucun flux en lecture pour le moment.'), findsOneWidget);
+      expect(find.text('No active streams playing right now.'), findsOneWidget);
     });
 
     testWidgets('opens StreamDiagnosticsSheet on card tap and shows specs',
@@ -188,9 +188,9 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(StreamDiagnosticsSheet), findsOneWidget);
-      expect(find.text('TÉLÉMÉTRIE VIDÉO'), findsOneWidget);
-      expect(find.text('AUDIO ET SOUS-TITRES'), findsOneWidget);
-      expect(find.text('CLIENT ET BANDE PASSANTE'), findsOneWidget);
+      expect(find.text('VIDEO TELEMETRY'), findsOneWidget);
+      expect(find.text('AUDIO & SUBTITLES'), findsOneWidget);
+      expect(find.text('CLIENT & BANDWIDTH'), findsOneWidget);
       expect(find.text('Active (hevc_qsv)'), findsOneWidget);
       expect(find.text('2.8x'), findsOneWidget);
       expect(find.text('Yes (CPU Saved)'), findsOneWidget);
@@ -246,7 +246,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Click "Stop Stream"
-      await tester.tap(find.text('Arrêter le flux'));
+      await tester.tap(find.text('Stop Stream'));
       await tester.pumpAndSettle();
 
       expect(fakeRepo.terminateCallCount, equals(1));
@@ -273,9 +273,9 @@ void main() {
 
       expect(find.byType(WatchHistorySection), findsOneWidget);
       expect(find.text('WATCH HISTORY'), findsOneWidget);
-      expect(find.text('Tous'), findsOneWidget);
-      expect(find.text('Terminé'), findsOneWidget);
-      expect(find.text('Partiel'), findsOneWidget);
+      expect(find.text('All'), findsOneWidget);
+      expect(find.text('Completed'), findsOneWidget);
+      expect(find.text('Partial'), findsOneWidget);
     });
   });
 }

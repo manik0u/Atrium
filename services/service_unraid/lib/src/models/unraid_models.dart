@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 /// Models for the slice of Unraid's GraphQL schema Atrium reads.
 ///
 /// Shapes come from a live Unraid 7.3 server rather than the published docs.
@@ -191,16 +192,16 @@ class UnraidDisk {
   /// `DISK_DSBL` reads as noise on a phone screen.
   String get statusLabel {
     final String raw = status ?? '';
-    if (raw.isEmpty) return 'Unknown';
+    if (raw.isEmpty) return S.t('unknown');
     return switch (raw) {
-      'DISK_OK' => 'Sain',
-      'DISK_NP' => 'Non présent',
-      'DISK_NP_DSBL' || 'DISK_DSBL' => 'Désactivé',
-      'DISK_DSBL_NEW' => 'Désactivé, nouveau disque',
-      'DISK_INVALID' => 'Invalide',
-      'DISK_WRONG' => 'Mauvais disque',
-      'DISK_NP_MISSING' => 'Manquant',
-      'DISK_NEW' => 'Nouveau',
+      'DISK_OK' => S.t('healthy'),
+      'DISK_NP' => S.t('notPresent'),
+      'DISK_NP_DSBL' || 'DISK_DSBL' => S.t('disabled'),
+      'DISK_DSBL_NEW' => S.t('disabledNewDisk'),
+      'DISK_INVALID' => S.t('invalid'),
+      'DISK_WRONG' => S.t('wrongDisk'),
+      'DISK_NP_MISSING' => S.t('missing'),
+      'DISK_NEW' => S.t('new'),
       _ => raw,
     };
   }
@@ -270,12 +271,12 @@ class UnraidParityCheck {
   /// Plain words for the status, or null when the server has said nothing.
   String? get statusLabel => switch (status) {
         null || '' => null,
-        'NEVER_RUN' => 'Jamais exécuté',
-        'RUNNING' => 'En cours',
-        'PAUSED' => 'En pause',
-        'COMPLETED' => 'Terminé',
-        'CANCELLED' => 'Annulé',
-        'FAILED' => 'Échec',
+        'NEVER_RUN' => S.t('neverRun'),
+        'RUNNING' => S.t('running'),
+        'PAUSED' => S.t('paused'),
+        'COMPLETED' => S.t('done'),
+        'CANCELLED' => S.t('cancelled'),
+        'FAILED' => S.t('failed'),
         _ => status,
       };
 }
@@ -350,7 +351,7 @@ class UnraidArray {
   bool get isStarted => state == 'STARTED';
 
   String get stateLabel {
-    if (state.isEmpty) return 'Unknown';
+    if (state.isEmpty) return S.t('unknown');
     final String lower = state.toLowerCase().replaceAll('_', ' ');
     return lower[0].toUpperCase() + lower.substring(1);
   }
@@ -531,7 +532,7 @@ class UnraidContainer {
 
   /// The leading slash is Docker's, not part of the name anyone recognises.
   String get displayName {
-    if (names.isEmpty) return id.isEmpty ? 'Unknown' : id;
+    if (names.isEmpty) return id.isEmpty ? S.t('unknown') : id;
     final String first = names.first;
     return first.startsWith('/') ? first.substring(1) : first;
   }
@@ -870,15 +871,15 @@ class UnraidVm {
   bool get hasCrashed => state == 'CRASHED';
 
   String get stateLabel => switch (state) {
-        null || '' => 'Inconnu',
-        'RUNNING' => 'En cours',
-        'IDLE' => 'Inactif',
-        'PAUSED' => 'En pause',
-        'PMSUSPENDED' => 'En veille',
-        'SHUTDOWN' => 'Arrêt en cours',
-        'SHUTOFF' => 'Arrêté',
-        'CRASHED' => 'Planté',
-        'NOSTATE' => 'Inconnu',
+        null || '' => S.t('unknown'),
+        'RUNNING' => S.t('running'),
+        'IDLE' => S.t('idle'),
+        'PAUSED' => S.t('paused'),
+        'PMSUSPENDED' => S.t('suspended'),
+        'SHUTDOWN' => S.t('shuttingDown'),
+        'SHUTOFF' => S.t('stopped'),
+        'CRASHED' => S.t('crashed'),
+        'NOSTATE' => S.t('unknown'),
         _ => state!,
       };
 }
@@ -911,7 +912,7 @@ String unraidFmtUptime(Duration? d) {
   }
   if (hours > 0) return minutes == 0 ? '${hours}h' : '${hours}h ${minutes}m';
   if (minutes > 0) return minutes == 1 ? '1 minute' : '$minutes minutes';
-  return 'just now';
+  return S.t('justNow_2');
 }
 
 /// A value the server sent but left blank.

@@ -48,14 +48,14 @@ class _BazarrHomeState extends State<BazarrHome>
             controller: _tab,
             isScrollable: true,
             tabAlignment: TabAlignment.start,
-            tabs: const <Widget>[
-              Tab(text: 'Séries'),
-              Tab(text: 'Films'),
-              Tab(text: 'Recherchés'),
-              Tab(text: 'Historique'),
-              Tab(text: 'Liste noire'),
-              Tab(text: 'Système'),
-              Tab(text: 'Paramètres'),
+            tabs: <Widget>[
+              Tab(text: S.t('series')),
+              Tab(text: S.t('movies')),
+              Tab(text: S.t('wanted')),
+              Tab(text: S.t('history')),
+              Tab(text: S.t('blacklist')),
+              Tab(text: S.t('system')),
+              Tab(text: S.t('settings')),
             ],
           ),
           Expanded(

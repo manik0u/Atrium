@@ -100,7 +100,7 @@ class _LibraryChips extends StatelessWidget {
           if (index == 0) {
             return Center(
               child: ChoiceChip(
-                label: const Text('Accueil'),
+                label: Text(S.t('home')),
                 selected: selectedKey == 'home',
                 onSelected: (_) => onSelect('home'),
               ),
@@ -167,14 +167,14 @@ class _ItemsGridState extends ConsumerState<_ItemsGrid> {
             
           if (list.isEmpty) {
             return EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: () async {
         ref.invalidate(_provider);
@@ -184,26 +184,26 @@ class _ItemsGridState extends ConsumerState<_ItemsGrid> {
       },
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          children: const <Widget>[
+          children: <Widget>[
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.movie_outlined,
-              title: 'Vide',
-              message: 'Rien ici pour le moment.',
+              title: S.t('empty'),
+              message: S.t('nothingHereYet'),
             ),
           ],
         ),
       );
           }
           return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async {
         ref.invalidate(_provider);
@@ -265,7 +265,7 @@ class _ItemsGridState extends ConsumerState<_ItemsGrid> {
           if (index == 0) {
             return Center(
               child: FilterChip(
-                label: const Text('Tous'),
+                label: Text(S.t('all')),
                 selected: _genreKey == null,
                 onSelected: (_) => setState(() => _genreKey = null),
               ),
@@ -359,14 +359,14 @@ class _HomeSections extends ConsumerWidget {
         ref.watch(plexLibrariesProvider(instance)).value ??
             const <PlexLibrary>[];
     return EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
       onRefresh: () async {
         ref.invalidate(plexSessionsProvider(instance));
@@ -383,12 +383,12 @@ class _HomeSections extends ConsumerWidget {
           _NowStreamingSection(instance: instance),
           _PlexSection(
             instance: instance,
-            title: 'Continuer le visionnage',
+            title: S.t('continueWatching'),
             provider: plexOnDeckProvider(instance),
           ),
           _PlexSection(
             instance: instance,
-            title: 'Ajouts récents',
+            title: S.t('recentlyAdded'),
             provider: plexRecentlyAddedProvider(instance),
           ),
           for (final PlexLibrary lib in libraries)
@@ -499,7 +499,7 @@ class _FeaturedHero extends ConsumerWidget {
                       FilledButton.icon(
                         onPressed: () => openPlexItem(context, instance, item),
                         icon: const Icon(Icons.play_arrow),
-                        label: Text(resume ? 'Reprendre' : 'Détails'),
+                        label: Text(resume ? S.t('resume') : S.t('details')),
                       ),
                     ],
                   ),
@@ -556,7 +556,7 @@ class _NowStreamingSection extends ConsumerWidget {
             vertical: Insets.sm,
           ),
           child: Text(
-            'Now Streaming',
+            S.t('nowStreaming'),
             style: Theme.of(context)
                 .textTheme
                 .titleMedium
@@ -781,7 +781,7 @@ class _PlexSection extends ConsumerWidget {
                         visualDensity: VisualDensity.compact,
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
-                      child: const Text('Tout voir'),
+                      child: Text(S.t('viewAll')),
                     ),
                 ],
               ),
@@ -1018,7 +1018,7 @@ class PlexPosterCard extends ConsumerWidget {
             children: <Widget>[
               ListTile(
                 leading: Icon(watched ? Icons.remove_done : Icons.done_all),
-                title: Text(watched ? 'Marquer comme non vu' : 'Marquer comme vu'),
+                title: Text(watched ? S.t('markAsUnwatched') : S.t('markAsWatched')),
                 onTap: () async {
                   Navigator.of(sheetContext).pop();
                   final PlexApi? api =
@@ -1035,8 +1035,8 @@ class PlexPosterCard extends ConsumerWidget {
                     await api.setWatched(item.ratingKey, watched: !watched);
                   } catch (_) {
                     messenger.showSnackBar(
-                      const SnackBar(
-                        content: Text("Impossible de mettre à jour l'état de visionnage"),
+                      SnackBar(
+                        content: Text(S.t('couldNotUpdateWatchedState')),
                       ),
                     );
                     return;

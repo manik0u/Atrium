@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -56,8 +57,8 @@ Future<void> launchEmbyDeepLink(
 
 void _showNotInstalled(BuildContext context) {
   ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(
-      content: Text("L'application Emby n'est pas installée ou n'a pas pu être ouverte."),
+    SnackBar(
+      content: Text(S.t('embyAppIsNotInstalledOrCouldNotBeOpened')),
       behavior: SnackBarBehavior.floating,
       duration: Duration(seconds: 3),
     ),

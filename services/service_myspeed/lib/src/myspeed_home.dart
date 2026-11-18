@@ -97,21 +97,21 @@ class _MySpeedHomeState extends ConsumerState<MySpeedHome> {
           onDestinationSelected: (int index) {
             ref.read(myspeedActiveTabBarIndexProvider(widget.instance).notifier).state = index;
           },
-          destinations: const <NavigationDestination>[
+          destinations: <NavigationDestination>[
             NavigationDestination(
               icon: Icon(Icons.speed_outlined),
               selectedIcon: Icon(Icons.speed),
-              label: 'Statut',
+              label: S.t('status'),
             ),
             NavigationDestination(
               icon: Icon(Icons.history_outlined),
               selectedIcon: Icon(Icons.history),
-              label: 'Historique',
+              label: S.t('history'),
             ),
             NavigationDestination(
               icon: Icon(Icons.settings_outlined),
               selectedIcon: Icon(Icons.settings),
-              label: 'Config',
+              label: S.t('config'),
             ),
           ],
         ),

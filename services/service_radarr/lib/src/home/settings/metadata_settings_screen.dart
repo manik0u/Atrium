@@ -26,7 +26,7 @@ class MetadataSettingsScreen extends ConsumerWidget {
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
-          title: Text('Modifier ${metadata['name']}'),
+          title: Text(S.t('editMetadata')name']}'),
           content: SizedBox(
             width: double.maxFinite,
             child: SingleChildScrollView(
@@ -58,7 +58,7 @@ class MetadataSettingsScreen extends ConsumerWidget {
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Échec de l'enregistrement des paramètres de métadonnées : $e"),
+                          content: Text(S.t('failedToSaveMetadataSettingsE1', [e])),
                         ),
                       );
                     }
@@ -79,14 +79,14 @@ class MetadataSettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Consommateurs de métadonnées'),
+        title: Text(S.t('metadataConsumers')),
       ),
       body: configsAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, _) => Center(child: Text('Erreur : $err')),
+        error: (err, _) => Center(child: Text(S.t('errorErr1', [err]))),
         data: (configs) {
           if (configs.isEmpty) {
-            return const Center(child: Text('Aucun consommateur de métadonnées trouvé.'));
+            return Center(child: Text(S.t('noMetadataConsumersFound')));
           }
 
           return ListView.builder(
@@ -94,7 +94,7 @@ class MetadataSettingsScreen extends ConsumerWidget {
             itemCount: configs.length,
             itemBuilder: (context, index) {
               final c = configs[index];
-              final name = c['name'] as String? ?? 'Metadata';
+              final name = c['name'] as String? ?? S.t('metadata');
               final enable = c['enable'] as bool? ?? false;
 
               return Card(
@@ -105,7 +105,7 @@ class MetadataSettingsScreen extends ConsumerWidget {
                     name,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text('Statut : ${enable ? "Activé" : "Désactivé"}'),
+                  subtitle: Text(S.t('statusEnableEnabledDisabled1', [enable ? S.t('enabled') : S.t('off')])),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -127,7 +127,7 @@ class MetadataSettingsScreen extends ConsumerWidget {
                           } catch (e) {
                             if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Erreur : $e')),
+                                SnackBar(content: Text(S.t('errorE1', [e]))),
                               );
                             }
                           }

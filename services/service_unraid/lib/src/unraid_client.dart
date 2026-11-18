@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_networking/core_networking.dart';
 import 'package:dio/dio.dart';
 
@@ -78,10 +79,10 @@ class UnraidClient {
   /// rather than passed through.
   static String _describe(Object? error) {
     if (error is! Map<String, dynamic>) {
-      return error?.toString() ?? 'Unknown GraphQL error';
+      return error?.toString() ?? S.t('unknownGraphQLError');
     }
     final String message =
-        error['message']?.toString() ?? 'Erreur GraphQL inconnue';
+        error['message']?.toString() ?? S.t('unknownGraphQLError');
     final dynamic extensions = error['extensions'];
     final Object? code = extensions is Map<String, dynamic>
         ? extensions['code']
@@ -149,9 +150,9 @@ class UnraidClient {
       );
     } on NetworkException catch (e) {
       if (e.message.toLowerCase().contains('docker socket')) {
-        throw const NetworkUnknownException(
-          'Docker is not running on this server. Start it under Settings, '
-          'Docker, pour gérer les conteneurs depuis ici.',
+        throw NetworkUnknownException(
+          'Docker is not running on this server. Start it under Settings, ' +
+          S.t('dockerToManageContainersFromHere'),
         );
       }
       rethrow;

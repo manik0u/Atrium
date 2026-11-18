@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -148,12 +149,12 @@ class DashboardErrorRow extends StatelessWidget {
         const SizedBox(width: Insets.sm),
         Expanded(
           child: Text(
-            'Impossible de charger',
+            S.t('couldNotLoad'),
             style: theme.textTheme.bodySmall
                 ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
           ),
         ),
-        TextButton(onPressed: onRetry, child: const Text('Réessayer')),
+        TextButton(onPressed: onRetry, child: Text(S.t('retry'))),
       ],
     );
   }

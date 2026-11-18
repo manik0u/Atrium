@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -154,7 +155,7 @@ class _DynamicSchemaFormState extends State<DynamicSchemaForm> {
           if (hasAdvanced) ...[
             CheckboxListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Afficher les paramètres avancés'),
+              title: Text(S.t('showAdvancedSettings')),
               value: _showAdvanced,
               onChanged: (val) {
                 if (val != null) {
@@ -224,16 +225,16 @@ class _DynamicSchemaFormState extends State<DynamicSchemaForm> {
                   TextButton.icon(
                     onPressed: _testConnection,
                     icon: const Icon(Icons.playlist_add_check, size: 18),
-                    label: const Text('Tester'),
+                    label: Text(S.t('test')),
                   ),
               ],
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('Annuler'),
+                child: Text(S.t('cancel')),
               ),
               FilledButton(
                 onPressed: _submit,
-                child: const Text('Enregistrer'),
+                child: Text(S.t('save')),
               ),
             ],
           ),

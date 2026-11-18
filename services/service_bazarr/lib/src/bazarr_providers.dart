@@ -44,7 +44,7 @@ final bazarrWantedProvider =
     for (final BazarrWantedMovie m in movies)
       BazarrWantedRow(
         title: m.title,
-        subtitle: 'Film',
+        subtitle: S.t('movie'),
         missing: m.missingSubtitles,
         isMovie: true,
       ),

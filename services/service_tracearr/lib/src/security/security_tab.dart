@@ -59,7 +59,7 @@ class _SecurityTabState extends ConsumerState<SecurityTab> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.menu),
-          tooltip: 'Ouvrir le menu',
+          tooltip: S.t('openMenu'),
           onPressed: () => Scaffold.of(context).openDrawer(),
         ),
         title: Column(
@@ -74,7 +74,7 @@ class _SecurityTabState extends ConsumerState<SecurityTab> {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              'Security',
+              S.t('security'),
               style: theme.textTheme.bodySmall?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
@@ -83,14 +83,14 @@ class _SecurityTabState extends ConsumerState<SecurityTab> {
         ),
       ),
       body: EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing security audit ledger...',
-          processingText: 'Refreshing security audit ledger...',
-          processedText: 'Updated',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshingSecurityAuditLedger'),
+          processingText: S.t('refreshingSecurityAuditLedger'),
+          processedText: S.t('updated'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: _refreshAll,
         child: ListView(

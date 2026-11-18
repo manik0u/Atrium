@@ -104,7 +104,7 @@ class _JellyfinRemoteImagesScreenState
       Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('${widget.imageType} mis à jour'),
+          content: Text(S.t('widgetImageTypeUpdated1', [widget.imageType])),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
@@ -118,7 +118,7 @@ class _JellyfinRemoteImagesScreenState
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content:
-              Text('Échec de la mise à jour de ${widget.imageType.toLowerCase()} : $e'),
+              Text(S.t('failedToUpdateWidgetImageTypeToLowerCaseE2', [widget.imageType.toLowerCase(), e])),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
@@ -134,17 +134,17 @@ class _JellyfinRemoteImagesScreenState
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: Text('Remplacer $label ?'),
+        title: Text(S.t('replaceLabel1', [label])),
         content:
-            Text("Cela remplace l'illustration $label actuelle sur le serveur."),
+            Text(S.t('thisReplacesTheCurrentLabelArtworkOnTheServer1', [label])),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Remplacer'),
+            child: Text(S.t('replace')),
           ),
         ],
       ),
@@ -162,7 +162,7 @@ class _JellyfinRemoteImagesScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sélectionner : ${widget.imageType}'),
+        title: Text(S.t('selectWidgetImageType1', [widget.imageType])),
       ),
       body: Stack(
         children: <Widget>[
@@ -175,7 +175,7 @@ class _JellyfinRemoteImagesScreenState
             ),
             data: (List<JellyfinRemoteImage> images) {
               if (images.isEmpty) {
-                return const Center(child: Text('Aucune image alternative trouvée.'));
+                return Center(child: Text(S.t('noAlternateImagesFound')));
               }
               return GridView.builder(
                 padding: const EdgeInsets.all(Insets.lg),

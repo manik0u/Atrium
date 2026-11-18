@@ -163,21 +163,21 @@ class QbittorrentHome extends ConsumerWidget {
                       .state = index;
                 }
               },
-              destinations: const <NavigationDestination>[
+              destinations: <NavigationDestination>[
                 NavigationDestination(
                   icon: Icon(Icons.home_outlined),
                   selectedIcon: Icon(Icons.home),
-                  label: 'Accueil',
+                  label: S.t('home'),
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.settings_outlined),
                   selectedIcon: Icon(Icons.settings),
-                  label: 'Paramètres',
+                  label: S.t('settings'),
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.article_outlined),
                   selectedIcon: Icon(Icons.article),
-                  label: 'Journaux',
+                  label: S.t('logs'),
                 ),
               ],
             ),
@@ -249,11 +249,11 @@ class _TorrentsTabState extends ConsumerState<_TorrentsTab> {
 
   Widget _torrentFab(BuildContext context, WidgetRef ref) {
     return ExpandableFab(
-      tooltip: 'Ajouter un torrent',
+      tooltip: S.t('addTorrent'),
       builder: (BuildContext context, VoidCallback close) => <Widget>[
         FloatingActionButton(
           heroTag: null,
-          tooltip: 'Lien magnet',
+          tooltip: S.t('magnetLink'),
           onPressed: () async {
             close();
             final bool added = await AddTorrentSheet.show(
@@ -269,7 +269,7 @@ class _TorrentsTabState extends ConsumerState<_TorrentsTab> {
         ),
         FloatingActionButton(
           heroTag: null,
-          tooltip: 'Fichier torrent',
+          tooltip: S.t('torrentFile'),
           onPressed: () async {
             close();
             final bool added = await AddTorrentSheet.show(
@@ -329,14 +329,14 @@ class _TorrentsTabState extends ConsumerState<_TorrentsTab> {
         onRetry: () => ref.invalidate(qbitRawTorrentsProvider(instance)),
         data: (List<QbitTorrent> list) {
           return EasyRefresh(
-            header: const ClassicHeader(
-              dragText: 'Pull to refresh',
-              armedText: 'Release ready',
-              readyText: 'Refreshing...',
-              processingText: 'Refreshing...',
-              processedText: 'Succeeded',
-              failedText: 'Failed',
-              messageText: 'Last updated at %T',
+            header: ClassicHeader(
+              dragText: S.t('pullToRefresh'),
+              armedText: S.t('releaseReady'),
+              readyText: S.t('refreshing'),
+              processingText: S.t('refreshing'),
+              processedText: S.t('succeeded'),
+              failedText: S.t('failed'),
+              messageText: S.t('lastUpdatedAtT'),
             ),
             onRefresh: () async => _refresh(),
             child: CustomScrollView(
@@ -347,14 +347,14 @@ class _TorrentsTabState extends ConsumerState<_TorrentsTab> {
                   child: _TopControlBar(instance: instance),
                 ),
                 if (list.isEmpty)
-                  const SliverToBoxAdapter(
+                  SliverToBoxAdapter(
                     child: Padding(
                       padding: EdgeInsets.only(top: 60),
                       child: EmptyView(
                         icon: Icons.cloud_download_outlined,
-                        title: 'Aucun torrent',
+                        title: S.t('noTorrents'),
                         message:
-                            'Tap + to add a magnet, URL, or .torrent file.',
+                            S.t('tapToAddAMagnetURLOrTorrentFile'),
                       ),
                     ),
                   )
@@ -457,7 +457,7 @@ class _TopControlBarState extends ConsumerState<_TopControlBar> {
             children: <Widget>[
               Expanded(
                 child: _TransferStatBadge(
-                  label: 'Torrents',
+                  label: S.t('torrents'),
                   count: totalCount,
                   speed: 'Total',
                   color: cs.onSurface,
@@ -467,7 +467,7 @@ class _TopControlBarState extends ConsumerState<_TopControlBar> {
               const SizedBox(width: Insets.xs),
               Expanded(
                 child: _TransferStatBadge(
-                  label: 'Téléchargements',
+                  label: S.t('downloads'),
                   count: downloadingCount,
                   speed: dlActive ? '${fmtBytes(dlSpeed)}/s' : '0 B/s',
                   color: cs.primary,
@@ -477,7 +477,7 @@ class _TopControlBarState extends ConsumerState<_TopControlBar> {
               const SizedBox(width: Insets.xs),
               Expanded(
                 child: _TransferStatBadge(
-                  label: 'Seeds',
+                  label: S.t('seeds'),
                   count: seedingCount,
                   speed: upActive ? '${fmtBytes(upSpeed)}/s' : '0 B/s',
                   color: cs.tertiary,
@@ -516,8 +516,8 @@ class _TopControlBarState extends ConsumerState<_TopControlBar> {
                           controller: _searchController,
                           autofocus: true,
                           style: theme.textTheme.bodyMedium,
-                          decoration: const InputDecoration(
-                            hintText: 'Filtrer les torrents…',
+                          decoration: InputDecoration(
+                            hintText: S.t('filterTorrents_2'),
                             filled: false,
                             fillColor: Colors.transparent,
                             border: InputBorder.none,
@@ -590,7 +590,7 @@ class _TopControlBarState extends ConsumerState<_TopControlBar> {
                                       ? ref.watch(
                                           qbitSearchProvider(widget.instance),
                                         )
-                                      : 'Search torrents...',
+                                      : S.t('searchTorrents'),
                                   style: theme.textTheme.bodyMedium?.copyWith(
                                     color: cs.onSurfaceVariant,
                                   ),
@@ -630,7 +630,7 @@ class _TopControlBarState extends ConsumerState<_TopControlBar> {
                         minimumSize: const Size(48, 48),
                         padding: EdgeInsets.zero,
                       ),
-                      tooltip: 'Tout reprendre',
+                      tooltip: S.t('resumeAll'),
                       icon: const Icon(Icons.play_arrow_rounded, size: 26),
                       onPressed: () => _setAll(ref, paused: false),
                     ),
@@ -642,7 +642,7 @@ class _TopControlBarState extends ConsumerState<_TopControlBar> {
                         minimumSize: const Size(48, 48),
                         padding: EdgeInsets.zero,
                       ),
-                      tooltip: 'Tout mettre en pause',
+                      tooltip: S.t('pauseAll'),
                       icon: const Icon(Icons.pause_rounded, size: 26),
                       onPressed: () => _setAll(ref, paused: true),
                     ),
@@ -760,7 +760,7 @@ class QbittorrentAppBarActions extends ConsumerWidget {
                         ? Icons.arrow_upward
                         : Icons.arrow_downward,
                   ),
-                  title: Text(config.ascending ? 'Croissant' : 'Décroissant'),
+                  title: Text(config.ascending ? S.t('ascending') : S.t('descending')),
                   onTap: () {
                     ref
                         .read(qbitSortProvider(instance).notifier)
@@ -798,12 +798,12 @@ class QbittorrentAppBarActions extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           IconButton(
-            tooltip: 'Filtrer les torrents',
+            tooltip: S.t('filterTorrents'),
             icon: const Icon(Icons.filter_list),
             onPressed: onFilter ?? () => Scaffold.of(context).openEndDrawer(),
           ),
           IconButton(
-            tooltip: 'Trier les torrents',
+            tooltip: S.t('sortTorrents'),
             icon: const Icon(Icons.sort),
             onPressed: () => _showSortMenu(context, ref),
           ),
@@ -817,11 +817,11 @@ class QbittorrentAppBarActions extends ConsumerWidget {
         Center(
           child: Padding(
             padding: const EdgeInsets.only(right: 8.0),
-            child: Text('${selectedHashes.length} sélectionné(s)'),
+            child: Text(S.t('selectedhashesLengthSelected1', [selectedHashes.length])),
           ),
         ),
         IconButton(
-          tooltip: 'Tout sélectionner',
+          tooltip: S.t('selectAll'),
           icon: const Icon(Icons.select_all),
           onPressed: () {
             final List<QbitTorrent>? torrents =
@@ -833,12 +833,12 @@ class QbittorrentAppBarActions extends ConsumerWidget {
           },
         ),
         IconButton(
-          tooltip: 'Aucune sélection',
+          tooltip: S.t('selectNone_2'),
           icon: const Icon(Icons.deselect),
           onPressed: () => ref.invalidate(qbitSelectionProvider(instance)),
         ),
         IconButton(
-          tooltip: 'Supprimer la sélection',
+          tooltip: S.t('deleteSelected'),
           icon: const Icon(Icons.delete),
           onPressed: () => QbittorrentActionUtils.confirmDelete(
             context,
@@ -868,7 +868,7 @@ class QbittorrentAppBarActions extends ConsumerWidget {
                 await Clipboard.setData(ClipboardData(text: hashes.join('\n')));
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Hashs copiés')),
+                    SnackBar(content: Text(S.t('hashesCopied'))),
                   );
                 }
               case 'recheck':
@@ -948,72 +948,72 @@ class QbittorrentAppBarActions extends ConsumerWidget {
                   await client.exportTorrent(hashes.first);
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Torrent exporté avec succès'),
+                      SnackBar(
+                        content: Text(S.t('torrentExportedSuccessfully')),
                       ),
                     );
                   }
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Échec de l'export : $e")),
+                      SnackBar(content: Text(S.t('exportFailedE1', [e]))),
                     );
                   }
                 }
             }
           },
           itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-            const PopupMenuItem<String>(value: 'pause', child: Text('Pause')),
-            const PopupMenuItem<String>(value: 'resume', child: Text('Reprendre')),
-            const PopupMenuItem<String>(value: 'copy', child: Text('Copier')),
-            const PopupMenuItem<String>(
+            PopupMenuItem<String>(value: 'pause', child: Text(S.t('pause'))),
+            PopupMenuItem<String>(value: 'resume', child: Text(S.t('resume'))),
+            PopupMenuItem<String>(value: 'copy', child: Text(S.t('copy'))),
+            PopupMenuItem<String>(
               value: 'recheck',
-              child: Text('Forcer la revérification'),
+              child: Text(S.t('forceRecheck')),
             ),
-            const PopupMenuItem<String>(
+            PopupMenuItem<String>(
               value: 'reannounce',
-              child: Text('Forcer le ré-annonce'),
+              child: Text(S.t('forceReannounce')),
             ),
             const PopupMenuDivider(),
-            const PopupMenuItem<String>(
+            PopupMenuItem<String>(
               value: 'queue_top',
-              child: Text('En haut de la file'),
+              child: Text(S.t('queueToTop')),
             ),
-            const PopupMenuItem<String>(
+            PopupMenuItem<String>(
               value: 'queue_up',
-              child: Text('Monter dans la file'),
+              child: Text(S.t('queueUp')),
             ),
-            const PopupMenuItem<String>(
+            PopupMenuItem<String>(
               value: 'queue_down',
-              child: Text('Descendre dans la file'),
+              child: Text(S.t('queueDown')),
             ),
-            const PopupMenuItem<String>(
+            PopupMenuItem<String>(
               value: 'queue_bottom',
-              child: Text('En bas de la file'),
+              child: Text(S.t('queueToBottom')),
             ),
             const PopupMenuDivider(),
-            const PopupMenuItem<String>(
+            PopupMenuItem<String>(
               value: 'forcestart',
-              child: Text('Forcer le démarrage'),
+              child: Text(S.t('forceStart')),
             ),
             PopupMenuItem<String>(
               value: 'rename',
               enabled: selectedHashes.length == 1,
-              child: const Text('Renommer'),
+              child: Text(S.t('rename')),
             ),
-            const PopupMenuItem<String>(
+            PopupMenuItem<String>(
               value: 'savepath',
-              child: Text("Définir le chemin d'enregistrement"),
+              child: Text(S.t('setSavePath')),
             ),
-            const PopupMenuItem<String>(
+            PopupMenuItem<String>(
               value: 'category',
-              child: Text('Définir la catégorie'),
+              child: Text(S.t('setCategory')),
             ),
-            const PopupMenuItem<String>(value: 'tags', child: Text('Définir les balises')),
+            PopupMenuItem<String>(value: 'tags', child: Text(S.t('setTags'))),
             PopupMenuItem<String>(
               value: 'export',
               enabled: selectedHashes.length == 1,
-              child: const Text('Exporter le .torrent'),
+              child: Text(S.t('exportTorrent')),
             ),
           ],
         ),
@@ -1313,7 +1313,7 @@ class _TorrentTileState extends ConsumerState<_TorrentTile> {
     showGeneralDialog<void>(
       context: context,
       barrierDismissible: true,
-      barrierLabel: 'Ignorer',
+      barrierLabel: S.t('discard'),
       transitionDuration: const Duration(milliseconds: 250),
       pageBuilder: (
         BuildContext context,
@@ -1330,64 +1330,64 @@ class _TorrentTileState extends ConsumerState<_TorrentTile> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  buildItem(Icons.check_circle_outline, 'Select', () {
+                  buildItem(Icons.check_circle_outline, S.t('select'), () {
                     ref.read(qbitSelectionProvider(inst).notifier).update(
                           (Set<String> s) => <String>{...s, hash},
                         );
                   }),
-                  buildItem(Icons.pause, 'Pause', () {
+                  buildItem(Icons.pause, S.t('pause'), () {
                     QbittorrentActionUtils.run(
                       ref,
                       inst,
                       (QbittorrentClient c) => c.pause(<String>[hash]),
                     );
                   }),
-                  buildItem(Icons.play_arrow, 'Resume', () {
+                  buildItem(Icons.play_arrow, S.t('resume'), () {
                     QbittorrentActionUtils.run(
                       ref,
                       inst,
                       (QbittorrentClient c) => c.resume(<String>[hash]),
                     );
                   }),
-                  buildItem(Icons.copy, 'Copy Hash', () async {
+                  buildItem(Icons.copy, S.t('copyHash'), () async {
                     await Clipboard.setData(ClipboardData(text: hash));
                   }),
-                  buildItem(Icons.refresh, 'Force Recheck', () {
+                  buildItem(Icons.refresh, S.t('forceRecheck'), () {
                     QbittorrentActionUtils.run(
                       ref,
                       inst,
                       (QbittorrentClient c) => c.recheck(<String>[hash]),
                     );
                   }),
-                  buildItem(Icons.vertical_align_top, 'Queue to Top', () {
+                  buildItem(Icons.vertical_align_top, S.t('queueToTop'), () {
                     QbittorrentActionUtils.run(
                       ref,
                       inst,
                       (QbittorrentClient c) => c.queueTop(<String>[hash]),
                     );
                   }),
-                  buildItem(Icons.arrow_upward, 'Queue Up', () {
+                  buildItem(Icons.arrow_upward, S.t('queueUp'), () {
                     QbittorrentActionUtils.run(
                       ref,
                       inst,
                       (QbittorrentClient c) => c.queueUp(<String>[hash]),
                     );
                   }),
-                  buildItem(Icons.arrow_downward, 'Queue Down', () {
+                  buildItem(Icons.arrow_downward, S.t('queueDown'), () {
                     QbittorrentActionUtils.run(
                       ref,
                       inst,
                       (QbittorrentClient c) => c.queueDown(<String>[hash]),
                     );
                   }),
-                  buildItem(Icons.vertical_align_bottom, 'Queue to Bottom', () {
+                  buildItem(Icons.vertical_align_bottom, S.t('queueToBottom'), () {
                     QbittorrentActionUtils.run(
                       ref,
                       inst,
                       (QbittorrentClient c) => c.queueBottom(<String>[hash]),
                     );
                   }),
-                  buildItem(Icons.edit, 'Rename', () {
+                  buildItem(Icons.edit, S.t('rename'), () {
                     QbittorrentActionUtils.rename(
                       context,
                       ref,
@@ -1395,7 +1395,7 @@ class _TorrentTileState extends ConsumerState<_TorrentTile> {
                       <String>{hash},
                     );
                   }),
-                  buildItem(Icons.folder, 'Set SavePath', () {
+                  buildItem(Icons.folder, S.t('setSavePath_2'), () {
                     QbittorrentActionUtils.editSavePath(
                       context,
                       ref,
@@ -1403,7 +1403,7 @@ class _TorrentTileState extends ConsumerState<_TorrentTile> {
                       <String>{hash},
                     );
                   }),
-                  buildItem(Icons.label, 'Définir la catégorie', () {
+                  buildItem(Icons.label, S.t('setCategory'), () {
                     QbittorrentActionUtils.editCategory(
                       context,
                       ref,
@@ -1413,7 +1413,7 @@ class _TorrentTileState extends ConsumerState<_TorrentTile> {
                   }),
                   buildItem(
                     Icons.delete,
-                    'Delete',
+                    S.t('delete'),
                     () {
                       QbittorrentActionUtils.confirmDelete(
                         context,
@@ -1631,7 +1631,7 @@ class _PrivacyBadge extends StatelessWidget {
           ),
           const SizedBox(width: 3),
           Text(
-            isPrivate ? 'Private' : 'Public',
+            isPrivate ? S.t('private') : S.t('public'),
             style: theme.textTheme.labelSmall?.copyWith(
               color: isPrivate ? cs.onTertiaryContainer : cs.onSurfaceVariant,
               fontWeight: FontWeight.w600,
@@ -1649,32 +1649,32 @@ String friendlyState(String state) {
   switch (state) {
     case 'downloading':
     case 'forcedDL':
-      return 'Downloading';
+      return S.t('downloading');
     case 'uploading':
     case 'forcedUP':
-      return 'Seeding';
+      return S.t('seeding');
     case 'stalledDL':
       return 'Stalled';
     case 'stalledUP':
       return 'Seeding (idle)';
     case 'pausedDL':
     case 'stoppedDL':
-      return 'Paused';
+      return S.t('paused');
     case 'pausedUP':
     case 'stoppedUP':
-      return 'Completed';
+      return S.t('completed');
     case 'queuedDL':
     case 'queuedUP':
-      return 'Queued';
+      return S.t('queued');
     case 'checkingDL':
     case 'checkingUP':
     case 'checkingResumeData':
-      return 'Checking';
+      return S.t('checking');
     case 'metaDL':
       return 'Fetching metadata';
     case 'error':
     case 'missingFiles':
-      return 'Error';
+      return S.t('error');
     default:
       return state;
   }

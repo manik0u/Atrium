@@ -45,8 +45,8 @@ void main() {
     });
 
     test('failed and completed have their own labels', () {
-      expect(seerrRequestStatusStyle(4)?.label, 'Échec');
-      expect(seerrRequestStatusStyle(5)?.label, 'Terminé');
+      expect(seerrRequestStatusStyle(4)?.label, 'Failed');
+      expect(seerrRequestStatusStyle(5)?.label, 'Completed');
     });
   });
 
@@ -97,16 +97,16 @@ void main() {
       await pump(tester, _requests);
 
       for (final String label in <String>[
-        'Tous',
-        'En attente',
-        'Approuvé',
-        'Terminé',
-        'Refusée',
-        'Échec',
+        'All',
+        'Pending',
+        'Approved',
+        'Completed',
+        'Declined',
+        'Failed',
       ]) {
         expect(await chip(tester, label), findsOneWidget);
       }
-      final FilterChip all = tester.widget(await chip(tester, 'Tous'));
+      final FilterChip all = tester.widget(await chip(tester, 'All'));
       expect(all.selected, isTrue);
       expect(find.textContaining('Status: '), findsNWidgets(6));
       expect(find.text('Status: Failed'), findsOneWidget);
@@ -117,27 +117,27 @@ void main() {
       int reads = 0;
       await pump(tester, _requests, onRead: () => reads++);
 
-      await pick(tester, 'En attente');
+      await pick(tester, 'Pending');
       expect(find.text('Status: Pending'), findsNWidgets(2));
       expect(find.textContaining('Status: '), findsNWidgets(2));
 
-      await pick(tester, 'Approuvé');
+      await pick(tester, 'Approved');
       expect(find.text('Status: Approved'), findsOneWidget);
       expect(find.textContaining('Status: '), findsOneWidget);
 
-      await pick(tester, 'Terminé');
+      await pick(tester, 'Completed');
       expect(find.text('Status: Completed'), findsOneWidget);
       expect(find.textContaining('Status: '), findsOneWidget);
 
-      await pick(tester, 'Refusée');
+      await pick(tester, 'Declined');
       expect(find.text('Status: Declined'), findsOneWidget);
       expect(find.textContaining('Status: '), findsOneWidget);
 
-      await pick(tester, 'Échec');
+      await pick(tester, 'Failed');
       expect(find.text('Status: Failed'), findsOneWidget);
       expect(find.textContaining('Status: '), findsOneWidget);
 
-      await pick(tester, 'Tous');
+      await pick(tester, 'All');
       expect(find.textContaining('Status: '), findsNWidgets(6));
       expect(reads, 1);
     });
@@ -145,14 +145,14 @@ void main() {
     testWidgets('the chip picked stays across a trip to another tab',
         (WidgetTester tester) async {
       await pump(tester, _requests);
-      await pick(tester, 'Approuvé');
+      await pick(tester, 'Approved');
 
-      await tester.tap(find.widgetWithText(Tab, 'Problèmes'));
+      await tester.tap(find.widgetWithText(Tab, 'Issues'));
       await tester.pumpAndSettle();
-      await tester.tap(find.widgetWithText(Tab, 'Demandes'));
+      await tester.tap(find.widgetWithText(Tab, 'Requests'));
       await tester.pumpAndSettle();
 
-      final FilterChip approved = tester.widget(await chip(tester, 'Approuvé'));
+      final FilterChip approved = tester.widget(await chip(tester, 'Approved'));
       expect(approved.selected, isTrue);
       expect(find.textContaining('Status: '), findsOneWidget);
     });
@@ -160,13 +160,13 @@ void main() {
     testWidgets('the Issues chip picked stays across a trip as well',
         (WidgetTester tester) async {
       await pump(tester, _requests);
-      await tester.tap(find.widgetWithText(Tab, 'Problèmes'));
+      await tester.tap(find.widgetWithText(Tab, 'Issues'));
       await tester.pumpAndSettle();
       await pick(tester, 'Open');
 
-      await tester.tap(find.widgetWithText(Tab, 'Demandes'));
+      await tester.tap(find.widgetWithText(Tab, 'Requests'));
       await tester.pumpAndSettle();
-      await tester.tap(find.widgetWithText(Tab, 'Problèmes'));
+      await tester.tap(find.widgetWithText(Tab, 'Issues'));
       await tester.pumpAndSettle();
 
       final FilterChip open = tester.widget(await chip(tester, 'Open'));
@@ -177,11 +177,11 @@ void main() {
         (WidgetTester tester) async {
       await pump(tester, const <SeerrRequest>[SeerrRequest(id: 2, status: 2)]);
 
-      await pick(tester, 'En attente');
+      await pick(tester, 'Pending');
 
-      expect(find.text('Aucune demande en attente'), findsOneWidget);
-      expect(find.text("Rien n'attend une approbation."), findsOneWidget);
-      expect(await chip(tester, 'Tous'), findsOneWidget);
+      expect(find.text('No pending requests'), findsOneWidget);
+      expect(find.text('Nothing is waiting for approval.'), findsOneWidget);
+      expect(await chip(tester, 'All'), findsOneWidget);
     });
 
     testWidgets('no requests at all says so under All',

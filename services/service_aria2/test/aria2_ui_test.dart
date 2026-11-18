@@ -61,7 +61,7 @@ void main() {
     gid: 'gid-error-1',
     status: 'error',
     errorCode: 9,
-    errorMessage: 'Statut 404 : introuvable',
+    errorMessage: 'Status 404 Not Found',
     files: <Aria2File>[
       Aria2File(index: 1, path: '/downloads/broken.zip', length: 1000),
     ],
@@ -117,9 +117,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify Tab 0: Downloads
-      expect(find.text('Téléchargements'), findsWidgets);
-      expect(find.text('Paramètres'), findsOneWidget);
-      expect(find.text('Système'), findsOneWidget);
+      expect(find.text('Downloads'), findsWidgets);
+      expect(find.text('Settings'), findsOneWidget);
+      expect(find.text('System'), findsOneWidget);
       expect(find.byType(EasyRefresh), findsOneWidget);
 
       // Filter chips present
@@ -143,18 +143,18 @@ void main() {
       expect(find.text('debian.iso'), findsNothing);
 
       // Switch to Tab 1: Settings
-      await tester.tap(find.text('Paramètres'));
+      await tester.tap(find.text('Settings'));
       await tester.pumpAndSettle();
 
       expect(find.byType(EasyRefresh), findsOneWidget);
-      expect(find.text('Paramètres aria2'), findsOneWidget);
-      expect(find.text('Bande passante et limites'), findsOneWidget);
-      expect(find.text('Tâches et concurrence'), findsOneWidget);
-      expect(find.text('Stockage et répertoires'), findsOneWidget);
+      expect(find.text('Aria2 Settings'), findsOneWidget);
+      expect(find.text('Bandwidth & Limits'), findsOneWidget);
+      expect(find.text('Tasks & Concurrency'), findsOneWidget);
+      expect(find.text('Storage & Directories'), findsOneWidget);
       expect(find.text('/downloads/default'), findsOneWidget);
 
       // Switch to Tab 2: System
-      await tester.tap(find.text('Système'));
+      await tester.tap(find.text('System'));
       await tester.pumpAndSettle();
 
       expect(find.byType(EasyRefresh), findsOneWidget);
@@ -162,7 +162,7 @@ void main() {
       expect(find.text('1.37.0'), findsOneWidget);
       expect(find.text('Global Telemetry'), findsOneWidget);
       expect(find.text('Maintenance Operations'), findsOneWidget);
-      expect(find.text('Enregistrer la session maintenant'), findsOneWidget);
+      expect(find.text('Save session now'), findsOneWidget);
     },
   );
 
@@ -212,16 +212,16 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Linux ISOs Pack'), findsWidgets);
-      expect(find.text('Limite de vitesse'), findsOneWidget);
+      expect(find.text('Speed limit'), findsOneWidget);
       expect(find.text('ubuntu.iso'), findsOneWidget);
       expect(find.text('readme.txt'), findsOneWidget);
       expect(find.byType(Checkbox), findsNWidgets(2));
 
       // Tap Speed Limit button
-      await tester.tap(find.text('Limite de vitesse'));
+      await tester.tap(find.text('Speed limit'));
       await tester.pump();
       // The dialog should open
-      expect(find.text('Limites de vitesse des tâches'), findsOneWidget);
+      expect(find.text('Task speed limits'), findsOneWidget);
     },
   );
 
@@ -290,7 +290,7 @@ void main() {
       WidgetTester tester,
     ) async {
       await pumpShortHome(tester);
-      await tester.tap(find.text('Paramètres'));
+      await tester.tap(find.text('Settings'));
       await tester.pumpAndSettle();
       final int before = optionBuilds;
 
@@ -303,7 +303,7 @@ void main() {
       WidgetTester tester,
     ) async {
       await pumpShortHome(tester);
-      await tester.tap(find.text('Système'));
+      await tester.tap(find.text('System'));
       await tester.pumpAndSettle();
       final int before = snapshotBuilds;
 

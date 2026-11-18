@@ -22,11 +22,11 @@ class SabnzbdHome extends StatelessWidget {
       length: 3,
       child: Column(
         children: <Widget>[
-          const TabBar(
+          TabBar(
             tabs: <Widget>[
-              Tab(text: "File d'attente", icon: Icon(Icons.download_outlined)),
-              Tab(text: 'Historique', icon: Icon(Icons.history)),
-              Tab(text: 'Serveur', icon: Icon(Icons.dns_outlined)),
+              Tab(text: S.t('queue'), icon: Icon(Icons.download_outlined)),
+              Tab(text: S.t('history'), icon: Icon(Icons.history)),
+              Tab(text: S.t('server'), icon: Icon(Icons.dns_outlined)),
             ],
           ),
           Expanded(
@@ -61,14 +61,14 @@ class _QueueTab extends ConsumerWidget {
             
           if (q.slots.isEmpty) {
             return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async => ref.invalidate(sabQueueProvider(instance)),
       child: ListView(
@@ -76,24 +76,24 @@ class _QueueTab extends ConsumerWidget {
               children: <Widget>[
                 _QueueSummary(instance: instance, queue: q),
                 const SizedBox(height: Insets.xl),
-                const EmptyView(
+                EmptyView(
                   icon: Icons.download_done_outlined,
-                  title: "La file d'attente est vide",
-                  message: 'Aucun téléchargement en cours pour le moment.',
+                  title: S.t('queueIsEmpty'),
+                  message: S.t('nothingDownloadingRightNow'),
                 ),
               ],
             ),
     );
           }
           return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async => ref.invalidate(sabQueueProvider(instance)),
       child: ListView.builder(
@@ -175,8 +175,8 @@ class _QueueSummary extends ConsumerWidget {
                     ),
                     Text(
                       _isPaused
-                          ? 'Paused'
-                          : (hasEta ? 'ETA ${queue.timeleft}' : 'Idle'),
+                          ? S.t('paused')
+                          : (hasEta ? 'ETA ${queue.timeleft}' : S.t('idle')),
                       style: theme.textTheme.bodySmall
                           ?.copyWith(color: cs.onSurfaceVariant),
                     ),
@@ -189,7 +189,7 @@ class _QueueSummary extends ConsumerWidget {
                   foregroundColor: cs.onSecondaryContainer,
                 ),
                 icon: Icon(_isPaused ? Icons.play_arrow : Icons.pause),
-                label: Text(_isPaused ? 'Reprendre' : 'Pause'),
+                label: Text(_isPaused ? S.t('resume') : S.t('pause')),
                 onPressed: () async {
                   final SabnzbdApi api =
                       await ref.read(sabnzbdApiProvider(instance).future);
@@ -216,7 +216,7 @@ class _QueueSummary extends ConsumerWidget {
                 const SizedBox(width: Insets.sm),
                 _StatPill(
                   icon: Icons.sd_storage_outlined,
-                  label: '${queue.diskspace1} Go libres',
+                  label: S.t('queueDiskspace1GBFree1', [queue.diskspace1]),
                   color: cs.primary,
                 ),
               ],
@@ -353,38 +353,38 @@ class _HistoryTab extends ConsumerWidget {
             
           if (h.slots.isEmpty) {
             return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async => ref.invalidate(sabHistoryProvider(instance)),
       child: ListView(
               padding: Insets.page,
-              children: const <Widget>[
+              children: <Widget>[
                 SizedBox(height: 80),
                 EmptyView(
                   icon: Icons.history,
-                  title: 'Aucun historique',
-                  message: 'Les téléchargements terminés et échoués apparaîtront ici.',
+                  title: S.t('noHistory'),
+                  message: S.t('completedAndFailedDownloadsWillShowUpHere'),
                 ),
               ],
             ),
     );
           }
           return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async => ref.invalidate(sabHistoryProvider(instance)),
       child: ListView.separated(
@@ -466,7 +466,7 @@ class _HistoryCard extends ConsumerWidget {
                 if (failed)
                   IconButton(
                     visualDensity: VisualDensity.compact,
-                    tooltip: 'Réessayer',
+                    tooltip: S.t('retry'),
                     icon: const Icon(Icons.refresh),
                     onPressed: () async {
                       final SabnzbdApi api =
@@ -478,7 +478,7 @@ class _HistoryCard extends ConsumerWidget {
                   ),
                 IconButton(
                   visualDensity: VisualDensity.compact,
-                  tooltip: 'Retirer',
+                  tooltip: S.t('remove'),
                   icon: const Icon(Icons.delete_outline),
                   onPressed: () async {
                     final SabnzbdApi api =
@@ -519,14 +519,14 @@ class _ServerTab extends ConsumerWidget {
     final int currentLimit = int.tryParse(queue?.speedlimit ?? '') ?? 100;
 
     return EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
       onRefresh: () async {
         ref.invalidate(sabServerStatsProvider(instance));
@@ -537,18 +537,18 @@ class _ServerTab extends ConsumerWidget {
         padding: Insets.page,
         children: <Widget>[
           _SectionCard(
-            title: 'Utilisation',
+            title: S.t('usage'),
             child: stats.when(
               data: (SabServerStats s) => Row(
                 children: <Widget>[
                   Expanded(
-                    child: _StatTile(label: "Aujourd'hui", value: _fmtBytes(s.day)),
+                    child: _StatTile(label: S.t('today'), value: _fmtBytes(s.day)),
                   ),
                   Expanded(
-                    child: _StatTile(label: 'Semaine', value: _fmtBytes(s.week)),
+                    child: _StatTile(label: S.t('week'), value: _fmtBytes(s.week)),
                   ),
                   Expanded(
-                    child: _StatTile(label: 'Mois', value: _fmtBytes(s.month)),
+                    child: _StatTile(label: S.t('month'), value: _fmtBytes(s.month)),
                   ),
                   Expanded(
                     child: _StatTile(label: 'Total', value: _fmtBytes(s.total)),
@@ -560,14 +560,14 @@ class _ServerTab extends ConsumerWidget {
                 child: Center(child: ExpressiveProgressIndicator()),
               ),
               error: (Object e, _) => Text(
-                'Impossible de charger les statistiques',
+                S.t('couldNotLoadStats'),
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
             ),
           ),
           const SizedBox(height: Insets.md),
           _SectionCard(
-            title: 'Limite de vitesse',
+            title: S.t('speedLimit'),
             child: _SpeedLimitControl(
               instance: instance,
               initialPercent: currentLimit.clamp(0, 100),
@@ -575,10 +575,10 @@ class _ServerTab extends ConsumerWidget {
           ),
           const SizedBox(height: Insets.md),
           _SectionCard(
-            title: 'Serveur',
+            title: S.t('server'),
             child: Column(
               children: <Widget>[
-                _kv('Version', version.isEmpty ? '-' : version),
+                _kv(S.t('version'), version.isEmpty ? '-' : version),
                 if (queue != null && queue.diskspace1.isNotEmpty)
                   _kv(
                     'Disk free',
@@ -587,10 +587,10 @@ class _ServerTab extends ConsumerWidget {
                         : '${queue.diskspace1} GB',
                   ),
                 _kv(
-                  'Status',
+                  S.t('status'),
                   queue == null
                       ? '-'
-                      : (queue.status.isEmpty ? 'Idle' : queue.status),
+                      : (queue.status.isEmpty ? S.t('idle') : queue.status),
                 ),
               ],
             ),
@@ -625,7 +625,7 @@ class _SpeedLimitControlState extends ConsumerState<_SpeedLimitControl> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          _value <= 0 ? 'Unlimited' : '${_value.round()}%',
+          _value <= 0 ? S.t('unlimited') : '${_value.round()}%',
           style: theme.textTheme.titleMedium
               ?.copyWith(fontWeight: FontWeight.w700),
         ),
@@ -633,7 +633,7 @@ class _SpeedLimitControlState extends ConsumerState<_SpeedLimitControl> {
           value: _value.clamp(0, 100),
           max: 100,
           divisions: 20,
-          label: _value <= 0 ? 'Désactivé' : '${_value.round()} %',
+          label: _value <= 0 ? S.t('disabled') : S.t('valueRound1', [_value.round()]),
           onChanged: (double v) => setState(() => _value = v),
           onChangeEnd: (double v) async {
             final SabnzbdApi api =
@@ -836,7 +836,7 @@ String _relTime(int epochSeconds) {
   final DateTime then =
       DateTime.fromMillisecondsSinceEpoch(epochSeconds * 1000);
   final Duration diff = DateTime.now().difference(then);
-  if (diff.inMinutes < 1) return 'just now';
+  if (diff.inMinutes < 1) return S.t('justNow_2');
   if (diff.inHours < 1) return '${diff.inMinutes}m ago';
   if (diff.inDays < 1) return '${diff.inHours}h ago';
   if (diff.inDays < 7) return '${diff.inDays}d ago';

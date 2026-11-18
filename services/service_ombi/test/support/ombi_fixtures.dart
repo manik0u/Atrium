@@ -176,7 +176,7 @@ Map<String, dynamic> movieDetailJson({
       'releaseDate': '2016-11-10T00:00:00Z',
       'runtime': 116,
       'voteAverage': 7.6,
-      'status': 'Sortie',
+      'status': 'Released',
       'genres': <Object>[
         <String, dynamic>{'id': 18, 'name': 'Drama'},
         <String, dynamic>{'id': 878, 'name': 'Science Fiction'},

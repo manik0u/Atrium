@@ -1,5 +1,6 @@
 import '../models/slskd_models.dart';
 import '../slskd_format.dart';
+import 'package:core_models/core_models.dart';
 
 /// In-memory tree node representing a directory in a peer's file shares.
 class BrowseNode {
@@ -57,7 +58,7 @@ class BrowseNode {
 
   /// Builds a complete hierarchical tree from slskd's flat list of [SlskdDirectory].
   static BrowseNode buildTree(List<SlskdDirectory> directories) {
-    final root = BrowseNode(segment: 'Root', fullPath: '');
+    final root = BrowseNode(segment: S.t('root'), fullPath: '');
 
     for (final dir in directories) {
       final parts =

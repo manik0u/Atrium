@@ -65,7 +65,7 @@ class DelugeTorrentDetailScreen extends ConsumerWidget {
         ref.invalidate(delugeTorrentDetailProvider((instance, torrentId)));
       }
     } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text("Échec de l'action : $e")));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('actionFailedE1', [e]))));
     }
   }
 
@@ -79,7 +79,7 @@ class DelugeTorrentDetailScreen extends ConsumerWidget {
       context: context,
       builder: (BuildContext context) => StatefulBuilder(
         builder: (BuildContext context, StateSetter setLocal) => AlertDialog(
-          title: const Text('Retirer le torrent'),
+          title: Text(S.t('removeTorrent')),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,18 +91,18 @@ class DelugeTorrentDetailScreen extends ConsumerWidget {
                 value: withData,
                 onChanged: (bool? v) =>
                     setLocal(() => withData = v ?? false),
-                title: const Text('Supprimer aussi les fichiers téléchargés'),
+                title: Text(S.t('alsoDeleteDownloadedFiles')),
               ),
             ],
           ),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             FilledButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('Retirer'),
+              child: Text(S.t('remove')),
             ),
           ],
         ),
@@ -141,7 +141,7 @@ class DelugeTorrentDetailScreen extends ConsumerWidget {
           ),
           actions: <Widget>[
             PopupMenuButton<String>(
-              tooltip: 'Actions sur le torrent',
+              tooltip: S.t('torrentActions'),
               onSelected: (String value) async {
                 switch (value) {
                   case 'pause':
@@ -204,53 +204,53 @@ class DelugeTorrentDetailScreen extends ConsumerWidget {
                   <PopupMenuEntry<String>>[
                 PopupMenuItem<String>(
                   value: paused ? 'resume' : 'pause',
-                  child: Text(paused ? 'Reprendre' : 'Pause'),
+                  child: Text(paused ? S.t('resume') : S.t('pause')),
                 ),
                 const PopupMenuDivider(),
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'recheck',
-                  child: Text('Forcer la revérification'),
+                  child: Text(S.t('forceRecheck')),
                 ),
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'reannounce',
-                  child: Text('Ré-annoncer'),
+                  child: Text(S.t('reannounce')),
                 ),
                 const PopupMenuDivider(),
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'queue_top',
-                  child: Text('En haut de la file'),
+                  child: Text(S.t('queueToTop')),
                 ),
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'queue_up',
-                  child: Text('Monter dans la file'),
+                  child: Text(S.t('queueUp')),
                 ),
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'queue_down',
-                  child: Text('Descendre dans la file'),
+                  child: Text(S.t('queueDown')),
                 ),
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'queue_bottom',
-                  child: Text('En bas de la file'),
+                  child: Text(S.t('queueToBottom')),
                 ),
                 const PopupMenuDivider(),
                 PopupMenuItem<String>(
                   value: 'remove',
                   child: Text(
-                    'Remove',
+                    S.t('remove'),
                     style: TextStyle(color: scheme.error),
                   ),
                 ),
               ],
             ),
           ],
-          bottom: const TabBar(
+          bottom: TabBar(
             // Four short labels always fit, so a fixed-fill bar spaces them
             // evenly instead of packing a scrollable one to the left.
             tabs: <Widget>[
-              Tab(text: "Vue d'ensemble"),
-              Tab(text: 'Fichiers'),
-              Tab(text: 'Trackers'),
-              Tab(text: 'Pairs'),
+              Tab(text: S.t('overview')),
+              Tab(text: S.t('files')),
+              Tab(text: S.t('trackers')),
+              Tab(text: S.t('peers')),
             ],
           ),
         ),
@@ -286,7 +286,7 @@ class _OverviewTab extends StatelessWidget {
     final TextTheme text = theme.textTheme;
     final DelugeTorrent? t = torrent;
     final String state =
-        (t?.state ?? '').isEmpty ? 'Unknown' : t!.state;
+        (t?.state ?? '').isEmpty ? S.t('unknown') : t!.state;
     final Color accent = delugeStateColor(scheme, t?.state ?? '');
     final Color container = delugeStateContainerColor(scheme, t?.state ?? '');
     final Color onContainer =
@@ -406,18 +406,18 @@ class _OverviewTab extends StatelessWidget {
         const SizedBox(height: Insets.md),
         if (t != null) ...<Widget>[
           _SectionCard(
-            title: 'Transfert',
+            title: S.t('transfer'),
             rows: <(String, String)>[
               (
-                'Downloaded',
+                S.t('downloaded'),
                 '${delugeFmtBytes(t.totalDone)} of '
                     '${delugeFmtBytes(t.totalWanted)}',
               ),
-              ('Uploaded', delugeFmtBytes(t.totalUploaded)),
+              (S.t('uploaded'), delugeFmtBytes(t.totalUploaded)),
               ('Ratio', t.ratio.toStringAsFixed(3)),
-              ('Seeds', '${t.numSeeds} connected (${t.totalSeeds} total)'),
-              ('Peers', '${t.numPeers} connected (${t.totalPeers} total)'),
-              ('Queue', t.queue < 0 ? 'Not queued' : 'Position ${t.queue}'),
+              (S.t('seeds'), '${t.numSeeds} connected (${t.totalSeeds} total)'),
+              (S.t('peers'), '${t.numPeers} connected (${t.totalPeers} total)'),
+              (S.t('queue'), t.queue < 0 ? 'Not queued' : 'Position ${t.queue}'),
               if (t.liveEta > 0) ('ETA', delugeFmtEta(t.liveEta)),
               if (t.seedStopEta > 0)
                 ('Seed-stop ETA', delugeFmtEta(t.seedStopEta)),
@@ -426,18 +426,18 @@ class _OverviewTab extends StatelessWidget {
           const SizedBox(height: Insets.md),
         ],
         _SectionCard(
-          title: 'Détails',
+          title: S.t('details'),
           rows: <(String, String)>[
             ('Total size', delugeFmtBytes(detail.totalSize)),
-            ('Files', '${detail.numFiles}'),
-            ('Privacy', detail.private ? 'Private' : 'Public'),
-            ('Save path', t?.savePath ?? '-'),
+            (S.t('files'), '${detail.numFiles}'),
+            ('Privacy', detail.private ? S.t('private') : S.t('public')),
+            (S.t('savePath'), t?.savePath ?? '-'),
             if (t != null && t.trackerHost.isNotEmpty)
               ('Tracker', t.trackerHost),
-            if (t != null && t.label.isNotEmpty) ('Libellé', t.label),
-            if (t != null && t.timeAdded > 0) ('Added', added(t.timeAdded)),
-            ('Download limit', delugeFmtLimitKib(detail.maxDownloadKib)),
-            ('Upload limit', delugeFmtLimitKib(detail.maxUploadKib)),
+            if (t != null && t.label.isNotEmpty) (S.t('label'), t.label),
+            if (t != null && t.timeAdded > 0) (S.t('added'), added(t.timeAdded)),
+            (S.t('downloadLimit'), delugeFmtLimitKib(detail.maxDownloadKib)),
+            (S.t('uploadLimit'), delugeFmtLimitKib(detail.maxUploadKib)),
             if (detail.comment.isNotEmpty) ('Comment', detail.comment),
           ],
         ),
@@ -455,10 +455,10 @@ class _FilesTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (detail.files.isEmpty) {
-      return const EmptyView(
+      return EmptyView(
         icon: Icons.insert_drive_file_outlined,
-        title: 'Aucun fichier',
-        message: "Deluge n'a pas encore reçu les métadonnées de ce torrent.",
+        title: S.t('noFiles'),
+        message: S.t('delugeHasNotReceivedThisTorrentSMetadataYet'),
       );
     }
     final ThemeData theme = Theme.of(context);
@@ -533,10 +533,10 @@ class _TrackersTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (detail.trackers.isEmpty) {
-      return const EmptyView(
+      return EmptyView(
         icon: Icons.dns_outlined,
-        title: 'Aucun tracker',
-        message: "Ce torrent n'annonce aucun tracker.",
+        title: S.t('noTrackers'),
+        message: S.t('thisTorrentAnnouncesToNoTrackers'),
       );
     }
     final ThemeData theme = Theme.of(context);
@@ -583,7 +583,7 @@ class _TrackersTab extends StatelessWidget {
                     Text(
                       tracker.message.isEmpty
                           ? 'Tier ${tracker.tier}'
-                          : '${tracker.message} • niveau ${tracker.tier}',
+                          : S.t('trackerMessageTierTrackerTier2', [tracker.message, tracker.tier]),
                       style: text.bodySmall
                           ?.copyWith(color: scheme.onSurfaceVariant),
                     ),
@@ -606,10 +606,10 @@ class _PeersTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (detail.peers.isEmpty) {
-      return const EmptyView(
+      return EmptyView(
         icon: Icons.people_outline,
-        title: 'Aucun pair',
-        message: "Rien n'est connecté pour le moment.",
+        title: S.t('noPeers'),
+        message: S.t('nothingIsConnectedRightNow'),
       );
     }
     final ThemeData theme = Theme.of(context);

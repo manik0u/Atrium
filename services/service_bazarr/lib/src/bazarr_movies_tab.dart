@@ -25,38 +25,38 @@ class BazarrMoviesTab extends ConsumerWidget {
             
           if (list.isEmpty) {
             return EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: () async => ref.invalidate(bazarrMoviesProvider(instance)),
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          children: const <Widget>[
+          children: <Widget>[
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.movie_outlined,
-              title: 'Aucun film',
-              message: "Bazarr n'a pas encore de films de Radarr.",
+              title: S.t('noMovies'),
+              message: S.t('bazarrHasNoMoviesFromRadarrYet'),
             ),
           ],
         ),
       );
           }
           return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async => ref.invalidate(bazarrMoviesProvider(instance)),
       child: ListView.separated(
@@ -86,7 +86,7 @@ class _MovieCard extends StatelessWidget {
     final bool allDone = movie.missingSubtitles.isEmpty;
     final String status = allDone
         ? (movie.subtitles.isEmpty
-            ? 'Aucun sous-titre nécessaire'
+            ? S.t('noSubtitlesNeeded')
             : '${movie.subtitles.length} subtitles')
         : '${movie.missingSubtitles.length} missing subtitles';
     final String title =

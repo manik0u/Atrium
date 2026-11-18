@@ -57,7 +57,7 @@ void main() {
     await tester.pump();
     await tester.pump();
 
-    expect(find.text('Résultats de speedtest'), findsOneWidget);
+    expect(find.text('Speedtest results'), findsOneWidget);
     expect(find.text('Home tracker'), findsOneWidget);
     expect(find.text('Remote tracker'), findsOneWidget);
     expect(find.text('800 Mbps'), findsNWidgets(2));
@@ -85,7 +85,7 @@ void main() {
       pumps: 3,
     );
 
-    expect(find.text('Résultats de speedtest'), findsOneWidget);
+    expect(find.text('Speedtest results'), findsOneWidget);
     expect(find.text('800 Mbps'), findsOneWidget);
   });
 
@@ -188,7 +188,7 @@ void main() {
         speedtestOverviewProvider(offline).overrideWith(
           (Ref ref) async => throw const SpeedtestTrackerException(
             SpeedtestErrorKind.offline,
-            'Impossible de joindre Speedtest Tracker.',
+            'Could not reach Speedtest Tracker.',
           ),
         ),
       ],
@@ -199,9 +199,9 @@ void main() {
     );
 
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
-    expect(find.text('Aucun résultat terminé'), findsOneWidget);
-    expect(find.text('Le dernier speedtest est en cours'), findsOneWidget);
-    expect(find.text('Impossible de joindre Speedtest Tracker.'), findsOneWidget);
+    expect(find.text('No completed results'), findsOneWidget);
+    expect(find.text('Latest speed test is running'), findsOneWidget);
+    expect(find.text('Could not reach Speedtest Tracker.'), findsOneWidget);
   });
 
   testWidgets('full service page renders latest, chart, and history',
@@ -239,12 +239,12 @@ void main() {
       pumps: 3,
     );
 
-    expect(find.text('Dernier résultat'), findsOneWidget);
-    expect(find.text('Historique des téléchargements et envois'), findsOneWidget);
-    expect(find.text('Historique récent'), findsOneWidget);
-    expect(find.text('Télécharger'), findsWidgets);
-    expect(find.text('Téléverser'), findsWidgets);
-    expect(find.text('Lancer le test'), findsOneWidget);
+    expect(find.text('Latest result'), findsOneWidget);
+    expect(find.text('Download and upload history'), findsOneWidget);
+    expect(find.text('Recent history'), findsOneWidget);
+    expect(find.text('Download'), findsWidgets);
+    expect(find.text('Upload'), findsWidgets);
+    expect(find.text('Run test'), findsOneWidget);
   });
 }
 

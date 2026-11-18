@@ -1,5 +1,6 @@
 import '../models/slskd_models.dart';
 import '../slskd_format.dart';
+import 'package:core_models/core_models.dart';
 
 /// Available sorting criteria for search results.
 enum SlskdSearchSort {
@@ -9,10 +10,10 @@ enum SlskdSearchSort {
   fileCount;
 
   String get label => switch (this) {
-        SlskdSearchSort.fastestSpeed => 'Vitesse la plus rapide',
-        SlskdSearchSort.highestQuality => 'Meilleure qualité (FLAC/débit)',
-        SlskdSearchSort.shortestQueue => 'File la plus courte',
-        SlskdSearchSort.fileCount => 'Plus de pistes (albums complets)',
+        SlskdSearchSort.fastestSpeed => S.t('fastestSpeed'),
+        SlskdSearchSort.highestQuality => S.t('highestQualityFLACBitrate'),
+        SlskdSearchSort.shortestQueue => S.t('shortestQueue'),
+        SlskdSearchSort.fileCount => S.t('mostTracksFullAlbums'),
       };
 }
 
@@ -28,14 +29,14 @@ enum SlskdSearchFormatFilter {
   opusOnly;
 
   String get label => switch (this) {
-        SlskdSearchFormatFilter.all => 'Tous les formats',
-        SlskdSearchFormatFilter.flacOnly => 'FLAC uniquement',
-        SlskdSearchFormatFilter.mp3Only => 'MP3 uniquement',
-        SlskdSearchFormatFilter.oggOnly => 'OGG uniquement',
-        SlskdSearchFormatFilter.wavOnly => 'WAV uniquement',
-        SlskdSearchFormatFilter.aacOnly => 'AAC uniquement',
-        SlskdSearchFormatFilter.m4aOnly => 'M4A uniquement',
-        SlskdSearchFormatFilter.opusOnly => 'Opus uniquement',
+        SlskdSearchFormatFilter.all => S.t('allFormats'),
+        SlskdSearchFormatFilter.flacOnly => S.t('flacOnly'),
+        SlskdSearchFormatFilter.mp3Only => S.t('mp3Only'),
+        SlskdSearchFormatFilter.oggOnly => S.t('oggOnly'),
+        SlskdSearchFormatFilter.wavOnly => S.t('wavOnly'),
+        SlskdSearchFormatFilter.aacOnly => S.t('aacOnly'),
+        SlskdSearchFormatFilter.m4aOnly => S.t('m4aOnly'),
+        SlskdSearchFormatFilter.opusOnly => S.t('opusOnly'),
       };
 
   bool matchesExtension(String ext) {
@@ -90,7 +91,7 @@ class SlskdAlbumGroup {
   String get formattedTotalSize => slskdFormatBytes(totalSize);
 
   /// Formatted upload speed (e.g. '2.5 MB/s').
-  String get formattedSpeed => uploadSpeed > 0 ? slskdFormatRate(uploadSpeed) : 'Inconnu';
+  String get formattedSpeed => uploadSpeed > 0 ? slskdFormatRate(uploadSpeed) : S.t('unknown');
 
   /// Predominant quality in this folder.
   String get qualityBadge {

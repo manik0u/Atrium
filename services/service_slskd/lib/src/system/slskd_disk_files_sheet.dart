@@ -92,14 +92,14 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
     final bool confirmed = await showDialog<bool>(
           context: context,
           builder: (ctx) => AlertDialog(
-            title: const Text('Supprimer le fichier ?'),
+            title: Text(S.t('deleteFile_3')),
             content: Text(
               'Are you sure you want to delete "${file.name}" from host storage? This cannot be undone.',
             ),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.of(ctx).pop(false),
-                child: const Text('Annuler'),
+                child: Text(S.t('cancel')),
               ),
               FilledButton(
                 style: FilledButton.styleFrom(
@@ -107,7 +107,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                   foregroundColor: Theme.of(ctx).colorScheme.onError,
                 ),
                 onPressed: () => Navigator.of(ctx).pop(true),
-                child: const Text('Supprimer'),
+                child: Text(S.t('delete')),
               ),
             ],
           ),
@@ -133,7 +133,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
       if (!mounted) return;
       messenger.showSnackBar(
         SnackBar(
-          content: Text('« ${file.name} » supprimé'),
+          content: Text(S.t('deletedFileName1', [file.name])),
           duration: const Duration(seconds: 2),
         ),
       );
@@ -143,7 +143,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
         messenger.showSnackBar(
           SnackBar(
             content: Text(
-              'Failed to delete file: $e',
+              S.t('failedToDeleteFileE1', [e]),
               style: TextStyle(color: Theme.of(context).colorScheme.onError),
             ),
             backgroundColor: Theme.of(context).colorScheme.error,
@@ -160,14 +160,14 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
     final bool confirmed = await showDialog<bool>(
           context: context,
           builder: (ctx) => AlertDialog(
-            title: const Text('Supprimer le dossier ?'),
+            title: Text(S.t('deleteFolder')),
             content: Text(
               'Are you sure you want to permanently delete folder "${dir.name}" and all its contents?',
             ),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.of(ctx).pop(false),
-                child: const Text('Annuler'),
+                child: Text(S.t('cancel')),
               ),
               FilledButton(
                 style: FilledButton.styleFrom(
@@ -175,7 +175,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                   foregroundColor: Theme.of(ctx).colorScheme.onError,
                 ),
                 onPressed: () => Navigator.of(ctx).pop(true),
-                child: const Text('Supprimer le dossier'),
+                child: Text(S.t('deleteFolder_2')),
               ),
             ],
           ),
@@ -201,7 +201,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
       if (!mounted) return;
       messenger.showSnackBar(
         SnackBar(
-          content: Text('Dossier « ${dir.name} » supprimé'),
+          content: Text(S.t('deletedFolderDirName1', [dir.name])),
           duration: const Duration(seconds: 2),
         ),
       );
@@ -328,7 +328,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                     ),
                     IconButton(
                       icon: const Icon(Icons.refresh_rounded),
-                      tooltip: 'Actualiser',
+                      tooltip: S.t('refresh'),
                       onPressed: _isActionInProgress ? null : _refreshDirectory,
                     ),
                     IconButton(
@@ -353,9 +353,9 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                   fontWeight: FontWeight.bold,
                 ),
                 unselectedLabelStyle: textTheme.titleSmall,
-                tabs: const <Widget>[
-                  Tab(text: 'Téléchargements'),
-                  Tab(text: 'Incomplet'),
+                tabs: <Widget>[
+                  Tab(text: S.t('downloads')),
+                  Tab(text: S.t('incomplete')),
                 ],
               ),
 
@@ -372,7 +372,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                     children: <Widget>[
                       ActionChip(
                         avatar: const Icon(Icons.home_rounded, size: 16),
-                        label: Text(_selectedSegment == 0 ? 'Téléchargements' : 'Incomplet'),
+                        label: Text(_selectedSegment == 0 ? S.t('downloads') : S.t('incomplete')),
                         visualDensity: VisualDensity.compact,
                         onPressed: _pathSegments.isEmpty
                             ? null
@@ -413,7 +413,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                               size: 48, color: colorScheme.error),
                           const SizedBox(height: Insets.md),
                           Text(
-                            'Répertoire inaccessible',
+                            S.t('directoryNotAccessible'),
                             style: textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -443,7 +443,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                                   size: 48, color: colorScheme.outline),
                               const SizedBox(height: Insets.md),
                               Text(
-                                'Le dossier est vide',
+                                S.t('folderIsEmpty'),
                                 style: textTheme.titleSmall?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -451,8 +451,8 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                               const SizedBox(height: Insets.xs),
                               Text(
                                 _selectedSegment == 0
-                                    ? 'Aucun fichier terminé ni sous-répertoire dans ce chemin.'
-                                    : 'Aucun téléchargement partiel incomplet.',
+                                    ? S.t('noCompletedFilesOrSubdirectoriesInThisPath')
+                                    : S.t('noIncompletePartialDownloads'),
                                 textAlign: TextAlign.center,
                                 style: textTheme.bodySmall?.copyWith(
                                   color: colorScheme.onSurfaceVariant,
@@ -483,7 +483,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                             return ListTile(
                               leading: const Icon(Icons.arrow_upward_rounded),
                               title: const Text('..'),
-                              subtitle: const Text('Retour au dossier parent'),
+                              subtitle: Text(S.t('backToParentFolder')),
                               onTap: _navigateBack,
                             );
                           }
@@ -521,7 +521,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                                     size: 20,
                                     color: colorScheme.error,
                                   ),
-                                  tooltip: 'Supprimer le dossier',
+                                  tooltip: S.t('deleteFolder_2'),
                                   onPressed: _isActionInProgress
                                       ? null
                                       : () => _deleteDirectory(subdir),
@@ -558,7 +558,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                               size: 20,
                               color: colorScheme.error,
                             ),
-                            tooltip: 'Supprimer le fichier',
+                            tooltip: S.t('deleteFile'),
                             onPressed: _isActionInProgress
                                 ? null
                                 : () => _deleteFile(file),

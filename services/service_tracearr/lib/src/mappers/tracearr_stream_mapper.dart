@@ -1,6 +1,7 @@
 import '../generated/models/active_stream.dart';
 import '../media/tracearr_media_url_resolver.dart';
 import '../models/tracearr_models.dart';
+import 'package:core_models/core_models.dart';
 
 /// Pure transformation from raw [ActiveStream] DTO to domain [TracearrStream].
 class TracearrStreamMapper {
@@ -45,7 +46,7 @@ class TracearrStreamMapper {
       seasonNumber: item.seasonNumber,
       episodeNumber: item.episodeNumber,
       year: item.year,
-      userUsername: item.username ?? 'Unknown',
+      userUsername: item.username ?? S.t('unknown'),
       userAvatarUrl: avatarUrl,
       thumbPath: tPath,
       posterUrl: posterUrl,

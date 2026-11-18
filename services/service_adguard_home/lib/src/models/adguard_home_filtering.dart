@@ -1,4 +1,5 @@
 import 'adguard_home_json.dart';
+import 'package:core_models/core_models.dart';
 
 /// One blocklist or allowlist.
 class AdguardHomeFilterList {
@@ -92,13 +93,13 @@ String adguardHomeFilterListName(AdguardHomeFiltering? filtering, int id) {
     case -1:
       return 'System hosts files';
     case -2:
-      return 'Blocked services';
+      return S.t('blockedServices');
     case -3:
-      return 'Parental control';
+      return S.t('parentalControl');
     case -4:
       return 'Safe browsing';
     case -5:
-      return 'Safe search';
+      return S.t('safeSearch');
   }
   if (filtering != null) {
     for (final AdguardHomeFilterList list in <AdguardHomeFilterList>[

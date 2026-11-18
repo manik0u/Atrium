@@ -135,16 +135,16 @@ enum TransmissionSortField {
 
 extension TransmissionSortFieldX on TransmissionSortField {
   String get displayName => switch (this) {
-        TransmissionSortField.queue => 'Position dans la file',
-        TransmissionSortField.name => 'Nom',
-        TransmissionSortField.size => 'Taille',
-        TransmissionSortField.progress => 'Progression',
-        TransmissionSortField.status => 'Statut',
-        TransmissionSortField.downSpeed => 'Vitesse de réception',
-        TransmissionSortField.upSpeed => "Vitesse d'envoi",
+        TransmissionSortField.queue => S.t('queuePosition'),
+        TransmissionSortField.name => S.t('name'),
+        TransmissionSortField.size => S.t('size'),
+        TransmissionSortField.progress => S.t('progress'),
+        TransmissionSortField.status => S.t('status'),
+        TransmissionSortField.downSpeed => S.t('downSpeed'),
+        TransmissionSortField.upSpeed => S.t('upSpeed'),
         TransmissionSortField.ratio => 'Ratio',
-        TransmissionSortField.added => "Date d'ajout",
-        TransmissionSortField.activity => 'Dernière activité',
+        TransmissionSortField.added => S.t('dateAdded'),
+        TransmissionSortField.activity => S.t('lastActivity'),
       };
 }
 

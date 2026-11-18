@@ -110,9 +110,9 @@ class _AddDownloadFormState extends ConsumerState<_AddDownloadForm> {
   bool get _byFile => _files.isNotEmpty;
 
   String get _fileLabel => switch (_files.length) {
-    0 => 'Ou choisissez un fichier .torrent / .metalink',
+    0 => S.t('orPickATorrentMetalinkFile'),
     1 => _files.first.name,
-    final int n => '$n fichiers sélectionnés',
+    final int n => S.t('nFilesSelected1', [n]),
   };
 
   Future<void> _pickFile() async {
@@ -155,8 +155,8 @@ class _AddDownloadFormState extends ConsumerState<_AddDownloadForm> {
         speedBytes = parseAria2SpeedBytes(_speedLimit.text.trim());
         if (speedBytes == null) {
           messenger.showSnackBar(
-            const SnackBar(
-              content: Text('Format de limite de vitesse invalide (ex. 512, 10M, 1500 B)'),
+            SnackBar(
+              content: Text(S.t('invalidSpeedLimitFormatEG51210M1500B')),
             ),
           );
           return;
@@ -202,11 +202,11 @@ class _AddDownloadFormState extends ConsumerState<_AddDownloadForm> {
       if (!mounted) return;
       ref.invalidate(aria2SnapshotProvider(widget.instance));
       navigator.pop();
-      messenger.showSnackBar(const SnackBar(content: Text('Ajouté')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('added'))));
     } catch (e) {
       if (!mounted) return;
       setState(() => _busy = false);
-      messenger.showSnackBar(SnackBar(content: Text("Échec de l'ajout : $e")));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('addFailedE1', [e]))));
     }
   }
 
@@ -220,18 +220,18 @@ class _AddDownloadFormState extends ConsumerState<_AddDownloadForm> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Text('Ajouter un téléchargement', style: Theme.of(context).textTheme.titleLarge),
+            Text(S.t('addDownload'), style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: Insets.md),
             TextField(
               controller: _uris,
               minLines: 2,
               maxLines: 4,
               enabled: !byFile,
-              decoration: const InputDecoration(
-                labelText: 'URI ou lien magnet',
+              decoration: InputDecoration(
+                labelText: S.t('uriOrMagnetLink'),
                 hintText: 'magnet:?xt=urn:btih:... or https://host/file',
                 helperText:
-                    'Un par ligne. Chaque ligne est ajoutée comme son propre téléchargement.',
+                    S.t('onePerLineEachLineIsAddedAsItsOwnDownload'),
               ),
               autocorrect: false,
             ),
@@ -247,18 +247,18 @@ class _AddDownloadFormState extends ConsumerState<_AddDownloadForm> {
                 child: TextButton.icon(
                   onPressed: () => setState(_files.clear),
                   icon: const Icon(Icons.close, size: 16),
-                  label: const Text('Effacer les fichiers sélectionnés'),
+                  label: Text(S.t('clearSelectedFiles')),
                 ),
               ),
             const SizedBox(height: Insets.sm),
             ExpansionTile(
-              title: const Text('Options avancées'),
+              title: Text(S.t('advancedOptions')),
               tilePadding: EdgeInsets.zero,
               children: <Widget>[
                 TextField(
                   controller: _dir,
-                  decoration: const InputDecoration(
-                    labelText: 'Répertoire de téléchargement (facultatif)',
+                  decoration: InputDecoration(
+                    labelText: S.t('downloadDirectoryOptional'),
                     hintText: '/downloads/custom',
                   ),
                 ),
@@ -266,8 +266,8 @@ class _AddDownloadFormState extends ConsumerState<_AddDownloadForm> {
                   const SizedBox(height: Insets.sm),
                   TextField(
                     controller: _out,
-                    decoration: const InputDecoration(
-                      labelText: 'Nom de fichier de sortie personnalisé (URI unique uniquement)',
+                    decoration: InputDecoration(
+                      labelText: S.t('customOutputFilenameSingleURIOnly'),
                       hintText: 'my_file.zip',
                     ),
                   ),
@@ -279,9 +279,9 @@ class _AddDownloadFormState extends ConsumerState<_AddDownloadForm> {
                       child: TextField(
                         controller: _split,
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Morceaux',
-                          hintText: 'e.g. 8',
+                        decoration: InputDecoration(
+                          labelText: S.t('splitPieces'),
+                          hintText: S.t('eG8'),
                         ),
                       ),
                     ),
@@ -290,9 +290,9 @@ class _AddDownloadFormState extends ConsumerState<_AddDownloadForm> {
                       child: TextField(
                         controller: _maxConn,
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Connexions par serveur',
-                          hintText: 'e.g. 4',
+                        decoration: InputDecoration(
+                          labelText: S.t('connPerServer'),
+                          hintText: S.t('eG4'),
                         ),
                       ),
                     ),
@@ -302,18 +302,18 @@ class _AddDownloadFormState extends ConsumerState<_AddDownloadForm> {
                 TextField(
                   controller: _speedLimit,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: 'Limite de vitesse de téléchargement (Ko/s)',
-                    hintText: '0 pour illimité',
+                  decoration: InputDecoration(
+                    labelText: S.t('downloadSpeedLimitKBS'),
+                    hintText: S.t('k0ForUnlimited'),
                   ),
                 ),
                 const SizedBox(height: Insets.sm),
                 TextField(
                   controller: _headers,
                   maxLines: 2,
-                  decoration: const InputDecoration(
-                    labelText: 'En-têtes HTTP personnalisés',
-                    hintText: 'Cookie : … ou Authorization : …',
+                  decoration: InputDecoration(
+                    labelText: S.t('customHTTPHeaders'),
+                    hintText: S.t('cookieOrAuthorization'),
                   ),
                 ),
               ],
@@ -321,7 +321,7 @@ class _AddDownloadFormState extends ConsumerState<_AddDownloadForm> {
             const SizedBox(height: Insets.xs),
             CheckboxListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Démarrer en pause'),
+              title: Text(S.t('startPaused')),
               value: _pause,
               onChanged: (bool? value) =>
                   setState(() => _pause = value ?? false),
@@ -334,7 +334,7 @@ class _AddDownloadFormState extends ConsumerState<_AddDownloadForm> {
                       dimension: 20,
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
-                  : const Text('Ajouter'),
+                  : Text(S.t('add')),
             ),
           ],
         ),

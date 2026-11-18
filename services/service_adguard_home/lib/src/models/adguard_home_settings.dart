@@ -1,4 +1,5 @@
 import 'adguard_home_json.dart';
+import 'package:core_models/core_models.dart';
 
 /// How long the query log or the statistics keep what they keep, and what
 /// they leave out: `GET control/querylog/config` and `GET control/stats/config`.
@@ -88,7 +89,7 @@ const int adguardHomeRetentionMaxHours = 365 * 24;
 String? adguardHomeRetentionProblem(int? hours) {
   if (hours == null) return 'Enter a number of hours.';
   if (hours < 1 || hours > adguardHomeRetentionMaxHours) {
-    return 'De 1 à $adguardHomeRetentionMaxHours heures.';
+    return S.t('from1ToAdguardHomeRetentionMaxHoursHours1', [adguardHomeRetentionMaxHours]);
   }
   return null;
 }
@@ -114,7 +115,7 @@ enum AdguardHomeUpstreamMode {
 
 /// What a blocked name is answered with.
 enum AdguardHomeBlockingMode {
-  normal('default', 'Default'),
+  normal('default', S.t('default')),
   refused('refused', 'REFUSED'),
   nxdomain('nxdomain', 'NXDOMAIN'),
   nullIp('null_ip', 'Null IP'),
@@ -466,6 +467,6 @@ String? adguardHomeWholeNumberProblem(
 }) {
   final int? value = int.tryParse(text.trim());
   if (value == null) return 'Enter a number.';
-  if (value < min || value > max) return 'De $min à $max.';
+  if (value < min || value > max) return S.t('fromMinToMax2', [min, max]);
   return null;
 }

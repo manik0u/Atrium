@@ -99,7 +99,7 @@ class _AdguardHomeShellState extends ConsumerState<AdguardHomeShell> {
               ? null
               : IconButton(
                   icon: const Icon(Icons.menu),
-                  tooltip: 'Services',
+                  tooltip: S.t('services'),
                   onPressed: () => _scaffoldKey.currentState?.openDrawer(),
                 ),
           title: Row(
@@ -119,13 +119,13 @@ class _AdguardHomeShellState extends ConsumerState<AdguardHomeShell> {
           actions: <Widget>[
             if (tab == _queryLog)
               PopupMenuButton<void>(
-                tooltip: 'Plus',
+                tooltip: S.t('more'),
                 useRootNavigator: true,
                 itemBuilder: (BuildContext _) => <PopupMenuEntry<void>>[
                   PopupMenuItem<void>(
                     onTap: () =>
                         adguardHomeClearQueryLog(context, ref, _instance),
-                    child: const Text('Effacer le journal des requêtes'),
+                    child: Text(S.t('clearQueryLog')),
                   ),
                 ],
               ),
@@ -163,37 +163,37 @@ class _AdguardHomeShellState extends ConsumerState<AdguardHomeShell> {
                   supportedTags: addTo.supportedTags,
                 ),
                 icon: const Icon(Icons.add),
-                label: const Text('Ajouter un client'),
+                label: Text(S.t('addClient')),
               ),
         bottomNavigationBar: AtriumBottomNav(
           visible: true,
           selectedIndex: tab,
           onDestinationSelected: _show,
-          destinations: const <NavigationDestination>[
+          destinations: <NavigationDestination>[
             NavigationDestination(
               icon: Icon(Icons.shield_outlined),
               selectedIcon: Icon(Icons.shield),
-              label: 'Accueil',
+              label: S.t('home'),
             ),
             NavigationDestination(
               icon: Icon(Icons.receipt_long_outlined),
               selectedIcon: Icon(Icons.receipt_long),
-              label: 'Journal des requêtes',
+              label: S.t('queryLog'),
             ),
             NavigationDestination(
               icon: Icon(Icons.filter_alt_outlined),
               selectedIcon: Icon(Icons.filter_alt),
-              label: 'Filtres',
+              label: S.t('filters'),
             ),
             NavigationDestination(
               icon: Icon(Icons.devices_outlined),
               selectedIcon: Icon(Icons.devices),
-              label: 'Clients',
+              label: S.t('clients'),
             ),
             NavigationDestination(
               icon: Icon(Icons.settings_outlined),
               selectedIcon: Icon(Icons.settings),
-              label: 'Paramètres',
+              label: S.t('settings'),
             ),
           ],
         ),

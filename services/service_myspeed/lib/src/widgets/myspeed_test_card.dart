@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -113,9 +114,9 @@ class MySpeedTestCard extends StatelessWidget {
                 Expanded(
                   child: MySpeedMetricBox(
                     icon: Icons.arrow_downward_rounded,
-                    label: 'DESCENTE',
+                    label: S.t('down_2'),
                     value: test.download.toStringAsFixed(1),
-                    unit: 'Mbps',
+                    unit: S.t('mbps'),
                     iconColor: colors.primary,
                     boxColor: colors.primaryContainer.withValues(alpha: 0.25),
                     borderColor: colors.primary.withValues(alpha: 0.25),
@@ -125,9 +126,9 @@ class MySpeedTestCard extends StatelessWidget {
                 Expanded(
                   child: MySpeedMetricBox(
                     icon: Icons.arrow_upward_rounded,
-                    label: 'MONTÉE',
+                    label: S.t('up_2'),
                     value: test.upload.toStringAsFixed(1),
-                    unit: 'Mbps',
+                    unit: S.t('mbps'),
                     iconColor: colors.tertiary,
                     boxColor: colors.tertiaryContainer.withValues(alpha: 0.25),
                     borderColor: colors.tertiary.withValues(alpha: 0.25),
@@ -150,7 +151,7 @@ class MySpeedTestCard extends StatelessWidget {
                   Expanded(
                     child: MySpeedMetricBox(
                       icon: Icons.graphic_eq_rounded,
-                      label: 'GIGUE',
+                      label: S.t('jitter'),
                       value: test.jitter!.toStringAsFixed(0),
                       unit: 'ms',
                       iconColor: colors.onSurfaceVariant,

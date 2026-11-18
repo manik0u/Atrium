@@ -73,14 +73,14 @@ class StatusAndHealthView extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Tous les contrôles de santé passent',
+                                S.t('allHealthChecksPassing'),
                                 style: theme.textTheme.titleSmall?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               const SizedBox(height: 2),
                               Text(
-                                'Aucun problème ni avertissement système détecté.',
+                                S.t('noSystemIssuesOrWarningsDetected'),
                                 style: theme.textTheme.bodySmall?.copyWith(
                                   color: cs.onSurfaceVariant,
                                 ),
@@ -144,7 +144,7 @@ class StatusAndHealthView extends ConsumerWidget {
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
-                                  h.message ?? 'Aucun détail fourni',
+                                  h.message ?? S.t('noDetailsProvided'),
                                   style: theme.textTheme.bodySmall?.copyWith(
                                     color: cs.onSurfaceVariant,
                                   ),
@@ -164,7 +164,7 @@ class StatusAndHealthView extends ConsumerWidget {
 
           // System Info Section
           Text(
-            'System Information',
+            S.t('systemInformation'),
             style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -186,7 +186,7 @@ class StatusAndHealthView extends ConsumerWidget {
                   children: [
                     _infoTile(
                       context,
-                      'Version',
+                      S.t('version'),
                       status.version ?? '--',
                       Icons.info_outline,
                       theme,
@@ -204,7 +204,7 @@ class StatusAndHealthView extends ConsumerWidget {
                     ],
                     _infoTile(
                       context,
-                      'Branch',
+                      S.t('branch'),
                       status.branch ?? 'master',
                       Icons.alt_route,
                       theme,
@@ -266,7 +266,7 @@ class StatusAndHealthView extends ConsumerWidget {
         Clipboard.setData(ClipboardData(text: value));
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('$title copié dans le presse-papiers !'),
+            content: Text(S.t('titleCopiedToClipboard1', [title])),
             duration: const Duration(seconds: 1),
           ),
         );

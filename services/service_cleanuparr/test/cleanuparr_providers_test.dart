@@ -38,7 +38,7 @@ class _OnePageOfEvents implements HttpClientAdapter {
           'id': 'stalled',
           'timestamp': '2026-10-23T09:00:00Z',
           'eventType': 'StalledStrike',
-          'severity': 'Avertissement',
+          'severity': 'Warning',
           'message': 'Stalled',
         },
         <String, dynamic>{

@@ -1,14 +1,15 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
 /// Pinned bottom input bar for sending messages in a chat room or direct message thread.
 class SlskdChatComposer extends StatefulWidget {
-  const SlskdChatComposer({
+  SlskdChatComposer({
     required this.onSend,
-    this.hintText = 'Saisissez un message…',
+    String? hintText,
     this.autofocus = false,
     super.key,
-  });
+  }) : hintText = hintText ?? S.t('typeAMessage');
 
   /// Sends [text] and reports whether it went out. The field is cleared only
   /// on success, so a failed send keeps what was typed.

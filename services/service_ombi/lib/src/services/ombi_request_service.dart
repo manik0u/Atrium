@@ -2,6 +2,7 @@ import '../generated/generated.dart';
 import '../models/ombi_mapping.dart';
 import '../models/ombi_models.dart';
 import 'ombi_result.dart';
+import 'package:core_models/core_models.dart';
 
 /// Ombi's requests: listing, approving, denying, deleting and making them.
 class OmbiRequestService {
@@ -24,7 +25,7 @@ class OmbiRequestService {
       return response.data;
     }
     throw OmbiException(
-      response.error?.message ?? 'Échec des infos de la demande de film',
+      response.error?.message ?? S.t('movieRequestInfoFailed'),
       statusCode: response.statusCode,
       error: response.error,
     );
@@ -234,7 +235,7 @@ class OmbiRequestService {
         OmbiMediaKind.music =>
           _music.postRequestMusicApprove(body: <String, dynamic>{'id': id}),
       },
-      'Approving',
+      S.t('approving'),
     );
   }
 

@@ -42,10 +42,10 @@ void main() {
       ),
     );
     expect(find.text('v9.9.9'), findsOneWidget);
-    expect(find.text('Disponible'), findsOneWidget);
+    expect(find.text('Available'), findsOneWidget);
     expect(find.text('2026-08-01'), findsOneWidget);
     expect(find.textContaining('Nice thing.'), findsOneWidget);
-    expect(find.text('Voir la release complète'), findsOneWidget);
+    expect(find.text('See full release'), findsOneWidget);
   });
 
   testWidgets('is hidden when there is no newer version',
@@ -54,8 +54,8 @@ void main() {
       tester,
       const UpdateCheckState(status: UpdateStatus.upToDate, latestVersion: '1.3.3'),
     );
-    expect(find.text('Disponible'), findsNothing);
-    expect(find.text('Voir la release complète'), findsNothing);
+    expect(find.text('Available'), findsNothing);
+    expect(find.text('See full release'), findsNothing);
   });
 
   testWidgets('shows only the link when notes are absent',
@@ -69,7 +69,7 @@ void main() {
       ),
     );
     expect(find.text('v9.9.9'), findsOneWidget);
-    expect(find.text('Voir la release complète'), findsOneWidget);
+    expect(find.text('See full release'), findsOneWidget);
     expect(find.textContaining('Nice thing.'), findsNothing);
   });
 }

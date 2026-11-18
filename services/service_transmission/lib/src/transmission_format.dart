@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 
 import 'models/transmission_torrent.dart';
@@ -48,8 +49,8 @@ String trFmtEta(int seconds) {
 /// A global bandwidth cap for display. Transmission keeps the value and its
 /// enabled flag apart, so both are needed to say anything true.
 String trFmtLimit({required int kbps, required bool enabled}) {
-  if (!enabled) return 'Unlimited';
-  if (kbps <= 0) return 'Stopped';
+  if (!enabled) return S.t('unlimited');
+  if (kbps <= 0) return S.t('stopped');
   if (kbps >= 1024) {
     final double mb = kbps / 1024;
     return '${mb == mb.roundToDouble() ? mb.toInt() : mb.toStringAsFixed(1)} '
@@ -126,21 +127,21 @@ const int trWeekdays = 62;
 const int trWeekends = 65;
 
 /// Each day's bit and short name, Sunday first as Transmission counts them.
-const List<(int, String)> trDays = <(int, String)>[
-  (1, 'Sun'),
-  (2, 'Mon'),
-  (4, 'Tue'),
-  (8, 'Wed'),
-  (16, 'Thu'),
-  (32, 'Fri'),
-  (64, 'Sat'),
+final List<(int, String)> trDays = <(int, String)>[
+  (1, S.t('sun')),
+  (2, S.t('mon')),
+  (4, S.t('tue')),
+  (8, S.t('wed')),
+  (16, S.t('thu')),
+  (32, S.t('fri')),
+  (64, S.t('sat')),
 ];
 
 String trDaySummary(int mask) {
-  if (mask == trEveryDay) return 'Every day';
-  if (mask == trWeekdays) return 'Weekdays';
-  if (mask == trWeekends) return 'Weekends';
-  if (mask == 0) return 'Never';
+  if (mask == trEveryDay) return S.t('everyDay');
+  if (mask == trWeekdays) return S.t('weekdays');
+  if (mask == trWeekends) return S.t('weekends');
+  if (mask == 0) return S.t('never');
   return <String>[
     for (final (int bit, String name) in trDays)
       if (mask & bit != 0) name,

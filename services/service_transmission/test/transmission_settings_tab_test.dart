@@ -89,15 +89,15 @@ void main() {
 
   testWidgets('a switch writes its key alone', (WidgetTester tester) async {
     await open(tester);
-    await scrollTo(tester, find.text("Démarrer à l'ajout"));
+    await scrollTo(tester, find.text('Start when added'));
 
-    await tester.tap(find.text("Démarrer à l'ajout"));
+    await tester.tap(find.text('Start when added'));
     await settle(tester);
 
     expect(fake.single('session-set').arguments, <String, dynamic>{
       'start-added-torrents': false,
     });
-    expect(find.text('Paramètre enregistré'), findsOneWidget);
+    expect(find.text('Setting saved'), findsOneWidget);
   });
 
   testWidgets('a number opens a dialog and writes on Save',
@@ -108,7 +108,7 @@ void main() {
     await tester.tap(find.text('Max peers overall'));
     await settle(tester);
     await tester.enterText(find.byType(TextField), '250');
-    await tester.tap(find.text('Enregistrer'));
+    await tester.tap(find.text('Save'));
     await settle(tester);
 
     expect(fake.single('session-set').arguments, <String, dynamic>{
@@ -138,7 +138,7 @@ void main() {
       'alt-speed-time-day': trWeekdays,
     });
 
-    await tester.tap(find.text('Sam'));
+    await tester.tap(find.text('Sat'));
     await settle(tester);
     expect(fake.to('session-set').last.arguments, <String, dynamic>{
       'alt-speed-time-day': trWeekdays | 64,
@@ -148,9 +148,9 @@ void main() {
   testWidgets('encryption offers the three modes and writes allowed',
       (WidgetTester tester) async {
     await open(tester);
-    await scrollTo(tester, find.text('Chiffrement'));
+    await scrollTo(tester, find.text('Encryption'));
 
-    await tester.tap(find.text('Chiffrement'));
+    await tester.tap(find.text('Encryption'));
     await settle(tester);
     await tester.tap(find.text('Allow encryption'));
     await settle(tester);
@@ -164,9 +164,9 @@ void main() {
       (WidgetTester tester) async {
     fake.on('blocklist-update', <String, Object?>{'blocklist-size': 4242});
     await open(tester);
-    await scrollTo(tester, find.text('Mettre à jour la liste de blocage'));
+    await scrollTo(tester, find.text('Update blocklist'));
 
-    await tester.tap(find.text('Mettre à jour la liste de blocage'));
+    await tester.tap(find.text('Update blocklist'));
     await settle(tester);
 
     expect(fake.to('blocklist-update'), hasLength(1));
@@ -182,9 +182,9 @@ void main() {
       },
     );
     await open(tester);
-    await scrollTo(tester, find.text('Tester le port'));
+    await scrollTo(tester, find.text('Test port'));
 
-    await tester.tap(find.text('Tester le port'));
+    await tester.tap(find.text('Test port'));
     await settle(tester);
 
     expect(find.text('IPv4 port is Open'), findsOneWidget);
@@ -198,9 +198,9 @@ void main() {
       ..on('port-test', <String, Object?>{'port-is-open': false});
     await open(tester);
 
-    expect(find.text('Trackers publics par défaut'), findsNothing);
-    await scrollTo(tester, find.text('Tester le port'));
-    await tester.tap(find.text('Tester le port'));
+    expect(find.text('Default public trackers'), findsNothing);
+    await scrollTo(tester, find.text('Test port'));
+    await tester.tap(find.text('Test port'));
     await settle(tester);
 
     expect(find.text('Port is Closed'), findsOneWidget);

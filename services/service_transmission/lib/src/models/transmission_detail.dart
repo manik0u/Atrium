@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'transmission_detail.freezed.dart';
@@ -37,9 +38,9 @@ abstract class TransmissionFile with _$TransmissionFile {
       length <= 0 ? 0 : (bytesCompleted / length).clamp(0, 1).toDouble();
 
   String get priorityLabel => switch (priority) {
-        -1 => 'Basse',
-        1 => 'Élevée',
-        _ => 'Normal',
+        -1 => S.t('low'),
+        1 => S.t('high'),
+        _ => S.t('normal'),
       };
 }
 

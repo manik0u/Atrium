@@ -37,19 +37,19 @@ void main() {
 
     for (final String title in <String>[
       'Protection',
-      'Général',
-      'Journaux',
-      'Journal des requêtes',
-      'Statistiques',
+      'General',
+      'Logs',
+      'Query log',
+      'Statistics',
       'DNS',
-      'Serveurs amont',
-      'Serveur DNS',
-      'Cache DNS',
-      'Accès',
-      'Serveur',
-      'Chiffrement',
+      'Upstreams',
+      'DNS server',
+      'DNS cache',
+      'Access',
+      'Server',
+      'Encryption',
       'DHCP',
-      'À propos',
+      'About',
     ]) {
       expect(find.text(title), findsOneWidget, reason: title);
     }
@@ -60,7 +60,7 @@ void main() {
   testWidgets('says when filtering is off', (WidgetTester tester) async {
     await pumpTab(tester, filteringOn: false);
 
-    expect(find.text('Filtrage désactivé'), findsOneWidget);
+    expect(find.text('Filtering off'), findsOneWidget);
   });
 
   testWidgets('each section opens its screen', (WidgetTester tester) async {

@@ -2,6 +2,7 @@ import '../generated/generated.dart';
 import '../models/ombi_mapping.dart';
 import '../models/ombi_models.dart';
 import 'ombi_result.dart';
+import 'package:core_models/core_models.dart';
 
 /// Ombi's search, and whether a title found there can still be requested.
 class OmbiSearchService {
@@ -111,14 +112,14 @@ class OmbiSearchService {
         return ombiTitleStateFromMovie(
           requireData(
             await _rawSearchApi.getSearchMovieByMovieDbId(movieDbId: id),
-            'Chargement du film',
+            S.t('loadingTheMovie'),
           ),
         );
       case OmbiMediaKind.tv:
         return ombiTitleStateFromTv(
           requireData(
             await _rawSearchApi.getSearchTvMoviedbByMoviedbid(moviedbid: id),
-            'Chargement de la série',
+            S.t('loadingTheShow'),
           ),
         );
       case OmbiMediaKind.music:

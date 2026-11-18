@@ -26,18 +26,18 @@ class _BlocklistViewState extends ConsumerState<BlocklistView> {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Retirer de la liste de blocage ?'),
+        title: Text(S.t('deleteFromBlocklist')),
         content: Text(
           'Remove "${item.sourceTitle ?? 'Release'}" from blocklist so Lidarr may grab it again?',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Retirer'),
+            child: Text(S.t('remove')),
           ),
         ],
       ),
@@ -53,7 +53,7 @@ class _BlocklistViewState extends ConsumerState<BlocklistView> {
 
       if (!resp.isSuccess) {
         throw Exception(
-          resp.error?.message ?? 'Échec du retrait de la liste de blocage',
+          resp.error?.message ?? S.t('failedToRemoveFromBlocklist'),
         );
       }
 
@@ -61,14 +61,14 @@ class _BlocklistViewState extends ConsumerState<BlocklistView> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Release retirée de la liste de blocage')),
+          SnackBar(content: Text(S.t('removedReleaseFromBlocklist'))),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erreur : $e'),
+            content: Text(S.t('errorE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -82,14 +82,14 @@ class _BlocklistViewState extends ConsumerState<BlocklistView> {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Vider la liste de blocage ?'),
+        title: Text(S.t('clearBlocklist_2')),
         content: Text(
           'Remove all ${items.length} blocklisted releases? Lidarr will be able to grab these releases again.',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -97,7 +97,7 @@ class _BlocklistViewState extends ConsumerState<BlocklistView> {
               foregroundColor: Theme.of(ctx).colorScheme.onError,
             ),
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Vider la liste de blocage'),
+            child: Text(S.t('clearBlocklist')),
           ),
         ],
       ),
@@ -117,7 +117,7 @@ class _BlocklistViewState extends ConsumerState<BlocklistView> {
       );
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec du vidage de la liste de blocage');
+        throw Exception(resp.error?.message ?? S.t('failedToClearBlocklist'));
       }
 
       ref.invalidate(lidarrBlocklistProvider(widget.instance));
@@ -125,7 +125,7 @@ class _BlocklistViewState extends ConsumerState<BlocklistView> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('${ids.length} releases retirées de la liste de blocage'),
+            content: Text(S.t('removedIdsLengthReleasesFromBlocklist1', [ids.length])),
           ),
         );
       }
@@ -133,7 +133,7 @@ class _BlocklistViewState extends ConsumerState<BlocklistView> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erreur : $e'),
+            content: Text(S.t('errorE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -159,7 +159,7 @@ class _BlocklistViewState extends ConsumerState<BlocklistView> {
           return Scaffold(
             backgroundColor: cs.surface,
             appBar: AppBar(
-              title: const Text('Release en liste de blocage'),
+              title: Text(S.t('blocklistedRelease')),
               leading: IconButton(
                 icon: const Icon(Icons.close),
                 onPressed: () => Navigator.of(context).pop(),
@@ -167,7 +167,7 @@ class _BlocklistViewState extends ConsumerState<BlocklistView> {
               actions: <Widget>[
                 IconButton(
                   icon: Icon(Icons.delete_outline, color: cs.error),
-                  tooltip: 'Retirer de la liste de blocage',
+                  tooltip: S.t('removeFromBlocklist'),
                   onPressed: () {
                     Navigator.of(context).pop();
                     _removeBlocklistItem(item);
@@ -180,7 +180,7 @@ class _BlocklistViewState extends ConsumerState<BlocklistView> {
               padding: const EdgeInsets.all(16),
               children: <Widget>[
                 Text(
-                  item.sourceTitle ?? 'Blocklisted Release',
+                  item.sourceTitle ?? S.t('blocklistedRelease'),
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -211,19 +211,19 @@ class _BlocklistViewState extends ConsumerState<BlocklistView> {
                     child: Column(
                       children: <Widget>[
                         _buildDetailRow(
-                          'Indexer',
+                          S.t('indexer'),
                           item.indexer ?? '--',
                           context,
                         ),
                         const Divider(height: 12),
                         _buildDetailRow(
-                          'Protocol',
+                          S.t('protocol'),
                           item.protocol?.value.toUpperCase() ?? '--',
                           context,
                         ),
                         const Divider(height: 12),
                         _buildDetailRow(
-                          'Date Blocklisted',
+                          S.t('dateBlocklisted'),
                           item.date != null
                               ? LidarrFormatters.formatRelativeDate(item.date)
                               : '--',
@@ -232,7 +232,7 @@ class _BlocklistViewState extends ConsumerState<BlocklistView> {
                         if (item.quality?.quality?.name != null) ...[
                           const Divider(height: 12),
                           _buildDetailRow(
-                            'Quality',
+                            S.t('quality'),
                             item.quality!.quality!.name!,
                             context,
                           ),
@@ -244,7 +244,7 @@ class _BlocklistViewState extends ConsumerState<BlocklistView> {
                 if (item.message != null && item.message!.isNotEmpty) ...[
                   const SizedBox(height: 16),
                   Text(
-                    'Motif / Message',
+                    S.t('reasonMessage'),
                     style: theme.textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: cs.error,
@@ -344,11 +344,11 @@ class _BlocklistViewState extends ConsumerState<BlocklistView> {
               child: EmptyView(
                 icon: Icons.block,
                 title: rawBlocklist.isEmpty
-                    ? 'La liste de blocage est vide'
-                    : 'No matches found',
+                    ? S.t('blocklistIsEmpty')
+                    : S.t('noMatchesFound'),
                 message: rawBlocklist.isEmpty
-                    ? 'Aucune release en liste de blocage trouvée.'
-                    : 'Aucun élément en liste de blocage ne correspond à votre recherche.',
+                    ? S.t('noBlocklistedReleasesFound')
+                    : S.t('noBlocklistedItemsMatchingYourSearchQuery'),
               ),
             ),
           );
@@ -377,13 +377,13 @@ class _BlocklistViewState extends ConsumerState<BlocklistView> {
                         ),
                       ),
                       Tooltip(
-                        message: 'Vider la liste de blocage',
+                        message: S.t('clearBlocklist'),
                         child: TextButton.icon(
                           icon: const Icon(
                             Icons.delete_sweep_outlined,
                             size: 18,
                           ),
-                          label: const Text('Vider la liste de blocage'),
+                          label: Text(S.t('clearBlocklist')),
                           style: TextButton.styleFrom(
                             foregroundColor: cs.error,
                           ),
@@ -416,12 +416,12 @@ class _BlocklistViewState extends ConsumerState<BlocklistView> {
               color: Theme.of(context).colorScheme.error,
             ),
             const SizedBox(height: 12),
-            Text('Échec du chargement de la liste de blocage : $error'),
+            Text(S.t('failedToLoadBlocklistError1', [error])),
             const SizedBox(height: 12),
             FilledButton.tonal(
               onPressed: () =>
                   ref.invalidate(lidarrBlocklistProvider(widget.instance)),
-              child: const Text('Réessayer'),
+              child: Text(S.t('retry')),
             ),
           ],
         ),
@@ -499,7 +499,7 @@ class _BlocklistViewState extends ConsumerState<BlocklistView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      item.sourceTitle ?? 'Blocklisted Release',
+                      item.sourceTitle ?? S.t('blocklistedRelease'),
                       style: theme.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
@@ -573,7 +573,7 @@ class _BlocklistViewState extends ConsumerState<BlocklistView> {
               if (!isSelecting)
                 IconButton(
                   icon: const Icon(Icons.delete_outline, size: 18),
-                  tooltip: 'Retirer de la liste de blocage',
+                  tooltip: S.t('removeFromBlocklist'),
                   visualDensity: VisualDensity.compact,
                   onPressed: () => _removeBlocklistItem(item),
                 ),

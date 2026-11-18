@@ -36,8 +36,8 @@ class SlskdAnalyticsSheet extends ConsumerStatefulWidget {
 }
 
 class _SlskdAnalyticsSheetState extends ConsumerState<SlskdAnalyticsSheet> {
-  String _leaderboardDirection = 'Download';
-  String _paretoDirection = 'Download';
+  String _leaderboardDirection = S.t('download');
+  String _paretoDirection = S.t('download');
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +125,7 @@ class _SlskdAnalyticsSheetState extends ConsumerState<SlskdAnalyticsSheet> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.refresh_rounded),
-                      tooltip: 'Actualiser les analyses',
+                      tooltip: S.t('refreshAnalytics'),
                       onPressed: () {
                         ref.invalidate(
                           slskdTransferLeaderboardProvider((
@@ -171,7 +171,7 @@ class _SlskdAnalyticsSheetState extends ConsumerState<SlskdAnalyticsSheet> {
                     ),
                     const SizedBox(width: Insets.sm),
                     FilterChip(
-                      label: const Text('24 h'),
+                      label: Text(S.t('k24h')),
                       selected: selectedDays == 1,
                       onSelected: (val) {
                         if (val) {
@@ -187,7 +187,7 @@ class _SlskdAnalyticsSheetState extends ConsumerState<SlskdAnalyticsSheet> {
                     ),
                     const SizedBox(width: Insets.xs),
                     FilterChip(
-                      label: const Text('7 jours'),
+                      label: Text(S.t('k7Days')),
                       selected: selectedDays == 7,
                       onSelected: (val) {
                         if (val) {
@@ -203,7 +203,7 @@ class _SlskdAnalyticsSheetState extends ConsumerState<SlskdAnalyticsSheet> {
                     ),
                     const SizedBox(width: Insets.xs),
                     FilterChip(
-                      label: const Text('30 jours'),
+                      label: Text(S.t('k30Days')),
                       selected: selectedDays == 30,
                       onSelected: (val) {
                         if (val) {
@@ -295,7 +295,7 @@ class _SlskdAnalyticsSheetState extends ConsumerState<SlskdAnalyticsSheet> {
                                 Expanded(
                                   child: _buildMetricItem(
                                     context,
-                                    label: 'Mémoire résidente',
+                                    label: S.t('residentMemory'),
                                     value: memBytes > 0
                                         ? slskdFormatBytes(memBytes)
                                         : 'N/A',
@@ -312,7 +312,7 @@ class _SlskdAnalyticsSheetState extends ConsumerState<SlskdAnalyticsSheet> {
                                 Expanded(
                                   child: _buildMetricItem(
                                     context,
-                                    label: 'Tas managé',
+                                    label: S.t('managedHeap'),
                                     value: dotnetBytes > 0
                                         ? slskdFormatBytes(dotnetBytes)
                                         : 'N/A',
@@ -329,7 +329,7 @@ class _SlskdAnalyticsSheetState extends ConsumerState<SlskdAnalyticsSheet> {
                                 Expanded(
                                   child: _buildMetricItem(
                                     context,
-                                    label: 'Connexions TCP',
+                                    label: S.t('tcpConnections'),
                                     value: connCount.isFinite
                                         ? connCount.toInt().toString()
                                         : '0',
@@ -416,7 +416,7 @@ class _SlskdAnalyticsSheetState extends ConsumerState<SlskdAnalyticsSheet> {
                               padding: const EdgeInsets.all(Insets.lg),
                               child: Center(
                                 child: Text(
-                                  'Aucune activité de transfert enregistrée sur cette période.',
+                                  S.t('noTransferActivityRecordedInThisTimeframe'),
                                   style: textTheme.bodySmall?.copyWith(
                                     color: colorScheme.onSurfaceVariant,
                                   ),
@@ -679,7 +679,7 @@ class _SlskdAnalyticsSheetState extends ConsumerState<SlskdAnalyticsSheet> {
                               padding: const EdgeInsets.all(Insets.lg),
                               child: Center(
                                 child: Text(
-                                  'Aucune statistique de téléchargement par répertoire pour le moment.',
+                                  S.t('noDirectoryDownloadStatisticsYet'),
                                   style: textTheme.bodySmall?.copyWith(
                                     color: colorScheme.onSurfaceVariant,
                                   ),

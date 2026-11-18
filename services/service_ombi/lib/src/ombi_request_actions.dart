@@ -17,7 +17,7 @@ Future<void> approveOmbiRequest(
       context,
       ref,
       instance,
-      'Approved',
+      S.t('approved'),
       (OmbiClient c) => c.requestService.approve(request.kind, request.id),
     );
 
@@ -39,7 +39,7 @@ Future<void> denyOmbiRequest(
     context,
     ref,
     instance,
-    'Denied',
+    S.t('denied'),
     (OmbiClient c) =>
         c.requestService.deny(request.kind, request.id, reason: reason),
   );
@@ -55,19 +55,19 @@ Future<void> deleteOmbiRequest(
   final bool? confirmed = await showDialog<bool>(
     context: context,
     builder: (BuildContext dialogContext) => AlertDialog(
-      title: const Text('Supprimer cette demande ?'),
+      title: Text(S.t('deleteThisRequest')),
       content: Text(
-        "${request.title} quitte la liste des demandes d'Ombi. Tout ce qui est déjà "
+        S.t('requestTitleLeavesOmbiSRequestListAnythingAlready1', [request.title]) +
         'downloaded stays where it is.',
       ),
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(dialogContext).pop(false),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: () => Navigator.of(dialogContext).pop(true),
-          child: const Text('Supprimer'),
+          child: Text(S.t('delete')),
         ),
       ],
     ),
@@ -79,7 +79,7 @@ Future<void> deleteOmbiRequest(
     context,
     ref,
     instance,
-    'Deleted',
+    S.t('deleted'),
     (OmbiClient c) => c.requestService.delete(request.kind, request.id),
   );
 }
@@ -123,23 +123,23 @@ class _DenyDialogState extends State<_DenyDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Refuser ${widget.title} ?'),
+      title: Text(S.t('denyWidgetTitle1', [widget.title])),
       content: TextField(
         controller: _reason,
         autofocus: true,
-        decoration: const InputDecoration(
-          labelText: 'Motif (facultatif)',
+        decoration: InputDecoration(
+          labelText: S.t('reasonOptional'),
           border: OutlineInputBorder(),
         ),
       ),
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(_reason.text.trim()),
-          child: const Text('Refuser'),
+          child: Text(S.t('deny')),
         ),
       ],
     );

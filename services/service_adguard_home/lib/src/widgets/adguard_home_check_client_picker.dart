@@ -15,8 +15,8 @@ class AdguardHomeCheckClient {
   const AdguardHomeCheckClient({required this.label, this.address});
 
   /// The server's own settings, as for a device it knows nothing of.
-  static const AdguardHomeCheckClient any =
-      AdguardHomeCheckClient(label: "N'importe quel client");
+  static final AdguardHomeCheckClient any =
+      AdguardHomeCheckClient(label: S.t('anyClient'));
 
   /// What the client is called here: its name, or its address.
   final String label;
@@ -79,7 +79,7 @@ class _AdguardHomeCheckClientPickerState
 
   String? get _problem {
     final String text = _address.text.trim();
-    if (text.isEmpty) return 'Saisissez une adresse IP.';
+    if (text.isEmpty) return S.t('enterAnIPAddress');
     if (adguardHomeAddressBytes(text) == null) {
       return 'An IP address, such as 192.168.1.20.';
     }
@@ -115,7 +115,7 @@ class _AdguardHomeCheckClientPickerState
                 ?.copyWith(fontWeight: FontWeight.w700),
           ),
         ),
-        _option(AdguardHomeCheckClient.any, subtitle: 'Les paramètres du serveur'),
+        _option(AdguardHomeCheckClient.any, subtitle: S.t('theServerSSettings')),
         Padding(
           padding: const EdgeInsets.fromLTRB(
             Insets.lg,
@@ -134,11 +134,11 @@ class _AdguardHomeCheckClientPickerState
             },
             onSubmitted: (_) => _typed(),
             decoration: InputDecoration(
-              labelText: 'Une adresse IP',
+              labelText: S.t('anIPAddress'),
               border: const OutlineInputBorder(),
               errorText: _checked ? _problem : null,
               suffixIcon: IconButton(
-                tooltip: 'Vérifier cette adresse',
+                tooltip: S.t('checkForThisAddress'),
                 icon: const Icon(Icons.arrow_forward),
                 onPressed: _typed,
               ),
@@ -198,8 +198,8 @@ class _AdguardHomeCheckClientPickerState
       return ListTile(
         enabled: false,
         title: Text(client.name),
-        subtitle: const Text(
-          "Connu d'aucune adresse IP, ce qui est tout ce que le serveur vérifie",
+        subtitle: Text(
+          S.t('knownByNoIPAddressWhichIsAllTheServerChecksBy'),
         ),
       );
     }

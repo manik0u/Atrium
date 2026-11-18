@@ -55,7 +55,7 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
       final ApiResponse<void> resp =
           await api.artistEditor.putArtistEditor(body: resource);
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec de la mise à jour des artistes');
+        throw Exception(resp.error?.message ?? S.t('failedToUpdateArtists'));
       }
 
       if (!mounted) return;
@@ -79,7 +79,7 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Échec de la mise à jour groupée : $e'),
+            content: Text(S.t('bulkUpdateFailedE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -115,14 +115,14 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
             DropdownButtonFormField<bool?>(
               isExpanded: true,
               initialValue: _monitored,
-              decoration: const InputDecoration(
-                labelText: 'Surveillé',
+              decoration: InputDecoration(
+                labelText: S.t('monitored'),
                 border: OutlineInputBorder(),
               ),
-              items: const [
-                DropdownMenuItem(child: Text("Conserver l'actuel")),
-                DropdownMenuItem(value: true, child: Text('Surveillé')),
-                DropdownMenuItem(value: false, child: Text('Non surveillé')),
+              items: [
+                DropdownMenuItem(child: Text(S.t('keepCurrent'))),
+                DropdownMenuItem(value: true, child: Text(S.t('monitored'))),
+                DropdownMenuItem(value: false, child: Text(S.t('unmonitored'))),
               ],
               onChanged: (val) => setState(() => _monitored = val),
             ),
@@ -131,23 +131,23 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
             DropdownButtonFormField<NewItemMonitorTypes?>(
               isExpanded: true,
               initialValue: _monitorNewItems,
-              decoration: const InputDecoration(
-                labelText: 'Surveiller les nouveaux éléments',
+              decoration: InputDecoration(
+                labelText: S.t('monitorNewItems'),
                 border: OutlineInputBorder(),
               ),
-              items: const [
-                DropdownMenuItem(child: Text("Conserver l'actuel")),
+              items: [
+                DropdownMenuItem(child: Text(S.t('keepCurrent'))),
                 DropdownMenuItem(
                   value: NewItemMonitorTypes.all,
-                  child: Text('Tous les albums'),
+                  child: Text(S.t('allAlbums')),
                 ),
                 DropdownMenuItem(
                   value: NewItemMonitorTypes.newVal,
-                  child: Text('Nouveaux albums'),
+                  child: Text(S.t('newAlbums')),
                 ),
                 DropdownMenuItem(
                   value: NewItemMonitorTypes.none,
-                  child: Text('Aucun'),
+                  child: Text(S.t('none')),
                 ),
               ],
               onChanged: (val) => setState(() => _monitorNewItems = val),
@@ -158,16 +158,16 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
               data: (profiles) => DropdownButtonFormField<int?>(
                 isExpanded: true,
                 initialValue: _qualityProfileId,
-                decoration: const InputDecoration(
-                  labelText: 'Profil de qualité',
+                decoration: InputDecoration(
+                  labelText: S.t('qualityProfile'),
                   border: OutlineInputBorder(),
                 ),
                 items: [
-                  const DropdownMenuItem(child: Text("Conserver l'actuel")),
+                  DropdownMenuItem(child: Text(S.t('keepCurrent'))),
                   ...profiles.map(
                     (p) => DropdownMenuItem(
                       value: p.id,
-                      child: Text(p.name ?? 'Profil ${p.id}'),
+                      child: Text(p.name ?? S.t('profilePId1', [p.id])),
                     ),
                   ),
                 ],
@@ -177,7 +177,7 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
                 height: 50,
                 child: Center(child: ExpressiveProgressIndicator()),
               ),
-              error: (_, __) => const Text('Erreur lors du chargement des profils de qualité'),
+              error: (_, __) => Text(S.t('errorLoadingQualityProfiles')),
             ),
             const SizedBox(height: Insets.md),
             // Metadata Profile
@@ -185,16 +185,16 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
               data: (profiles) => DropdownButtonFormField<int?>(
                 isExpanded: true,
                 initialValue: _metadataProfileId,
-                decoration: const InputDecoration(
-                  labelText: 'Profil de métadonnées',
+                decoration: InputDecoration(
+                  labelText: S.t('metadataProfile'),
                   border: OutlineInputBorder(),
                 ),
                 items: [
-                  const DropdownMenuItem(child: Text("Conserver l'actuel")),
+                  DropdownMenuItem(child: Text(S.t('keepCurrent'))),
                   ...profiles.map(
                     (p) => DropdownMenuItem(
                       value: p.id,
-                      child: Text(p.name ?? 'Profil ${p.id}'),
+                      child: Text(p.name ?? S.t('profilePId1', [p.id])),
                     ),
                   ),
                 ],
@@ -204,7 +204,7 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
                 height: 50,
                 child: Center(child: ExpressiveProgressIndicator()),
               ),
-              error: (_, __) => const Text('Erreur lors du chargement des profils de métadonnées'),
+              error: (_, __) => Text(S.t('errorLoadingMetadataProfiles')),
             ),
             const SizedBox(height: Insets.md),
             // Root Folder
@@ -214,17 +214,17 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
                   DropdownButtonFormField<String?>(
                     isExpanded: true,
                     initialValue: _rootFolderPath,
-                    decoration: const InputDecoration(
-                      labelText: 'Dossier racine',
+                    decoration: InputDecoration(
+                      labelText: S.t('rootFolder'),
                       border: OutlineInputBorder(),
                     ),
                     items: [
-                      const DropdownMenuItem(child: Text("Conserver l'actuel")),
+                      DropdownMenuItem(child: Text(S.t('keepCurrent'))),
                       ...folders.map(
                         (f) => DropdownMenuItem(
                           value: f.path,
                           child: Text(
-                            f.path ?? 'Unknown',
+                            f.path ?? S.t('unknown'),
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
@@ -237,9 +237,9 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
                   ),
                   if (_rootFolderPath != null)
                     CheckboxListTile(
-                      title: const Text('Déplacer les fichiers existants'),
-                      subtitle: const Text(
-                        'Migrer automatiquement les fichiers audio vers le nouveau dossier racine.',
+                      title: Text(S.t('moveExistingFiles')),
+                      subtitle: Text(
+                        S.t('automaticallyMigrateAudioFilesToTheNewRootFolder'),
                       ),
                       value: _moveFiles,
                       contentPadding: EdgeInsets.zero,
@@ -252,14 +252,14 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
                 height: 50,
                 child: Center(child: ExpressiveProgressIndicator()),
               ),
-              error: (_, __) => const Text('Erreur lors du chargement des dossiers racine'),
+              error: (_, __) => Text(S.t('errorLoadingRootFolders')),
             ),
           ],
         ),
       actions: [
         TextButton(
           onPressed: _submitting ? null : () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: _submitting ? null : _submit,
@@ -269,7 +269,7 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
                   height: 16,
                   child: ExpressiveProgressIndicator(strokeWidth: 2),
                 )
-              : const Text('Appliquer les modifications'),
+              : Text(S.t('applyChanges')),
         ),
       ],
     );

@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -89,26 +90,26 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
             child: NavigationBar(
               selectedIndex: widget.navigationShell.currentIndex,
               onDestinationSelected: _onTap,
-              destinations: const <NavigationDestination>[
+              destinations: <NavigationDestination>[
                 NavigationDestination(
                   icon: Icon(Icons.dashboard_outlined),
                   selectedIcon: Icon(Icons.dashboard),
-                  label: 'Tableau de bord',
+                  label: S.t('dashboard'),
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.calendar_today_outlined),
                   selectedIcon: Icon(Icons.calendar_today),
-                  label: 'Calendrier',
+                  label: S.t('calendar'),
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.swap_vert_outlined),
                   selectedIcon: Icon(Icons.swap_vert),
-                  label: 'Activité',
+                  label: S.t('activity'),
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.settings_outlined),
                   selectedIcon: Icon(Icons.settings),
-                  label: 'Paramètres',
+                  label: S.t('settings'),
                 ),
               ],
             ),

@@ -77,10 +77,10 @@ void main() {
     await tester.tap(find.text('Stop VPN'));
     await settle(tester);
 
-    expect(find.text('Arrêter le VPN ?'), findsOneWidget);
+    expect(find.text('Stop the VPN?'), findsOneWidget);
     expect(adapter.puts, isEmpty, reason: 'nothing may be sent before a yes');
 
-    await tester.tap(inDialog('Annuler'));
+    await tester.tap(inDialog('Cancel'));
     await settle(tester);
 
     expect(find.byType(AlertDialog), findsNothing);
@@ -121,10 +121,10 @@ void main() {
     final _RecordingAdapter adapter =
         await pumpHome(tester, vpnRunning: true);
 
-    await tester.tap(find.text('Arrêter'));
+    await tester.tap(find.text('Stop'));
     await settle(tester);
 
-    expect(find.text('Arrêter le DNS ?'), findsOneWidget);
+    expect(find.text('Stop DNS?'), findsOneWidget);
     expect(adapter.puts, isEmpty);
 
     await tester.tap(inDialog('Stop DNS'));

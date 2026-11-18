@@ -18,13 +18,13 @@ class BackupsView extends ConsumerWidget {
     try {
       final LidarrApi api = await ref.read(lidarrApiProvider(instance).future);
       final ApiResponse<CommandResource> resp =
-          await api.executeCommand('Backup');
+          await api.executeCommand(S.t('backup'));
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec de la commande de sauvegarde');
+        throw Exception(resp.error?.message ?? S.t('backupCommandFailed'));
       }
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Sauvegarde de la base de données démarrée !')),
+          SnackBar(content: Text(S.t('databaseBackupStarted'))),
         );
       }
       await Future<void>.delayed(const Duration(seconds: 2));
@@ -32,7 +32,7 @@ class BackupsView extends ConsumerWidget {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec du déclenchement de la sauvegarde : $e')),
+          SnackBar(content: Text(S.t('failedToTriggerBackupE1', [e]))),
         );
       }
     }
@@ -48,7 +48,7 @@ class BackupsView extends ConsumerWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _triggerBackup(context, ref),
         icon: const Icon(Icons.backup_outlined),
-        label: const Text('Sauvegarder maintenant'),
+        label: Text(S.t('backupNow')),
       ),
       body: EasyRefresh(
         onRefresh: () async {
@@ -58,11 +58,11 @@ class BackupsView extends ConsumerWidget {
           value: asyncBackups,
           data: (backups) {
             if (backups.isEmpty) {
-              return const Center(
+              return Center(
                 child: EmptyView(
                   icon: Icons.backup_outlined,
-                  title: 'Aucune sauvegarde',
-                  message: 'Aucune sauvegarde système trouvée.',
+                  title: S.t('noBackups'),
+                  message: S.t('noSystemBackupsFound'),
                 ),
               );
             }

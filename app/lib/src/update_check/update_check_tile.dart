@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,7 +17,7 @@ class UpdateCheckTile extends ConsumerWidget {
 
     final (String subtitle, Widget? trailing, bool tappable) =
         switch (state.status) {
-      UpdateStatus.idle => ('Touchez pour vérifier', null, true),
+      UpdateStatus.idle => (S.t('tapToCheck'), null, true),
       UpdateStatus.checking => (
           'Checking...',
           const SizedBox(
@@ -26,18 +27,18 @@ class UpdateCheckTile extends ConsumerWidget {
           ),
           false,
         ),
-      UpdateStatus.upToDate => ('À jour', null, true),
+      UpdateStatus.upToDate => (S.t('upToDate'), null, true),
       UpdateStatus.updateAvailable => (
           'Version ${state.latestVersion} is available',
           const Icon(Icons.open_in_new, size: 18),
           true,
         ),
-      UpdateStatus.error => ('Vérification impossible, touchez pour réessayer', null, true),
+      UpdateStatus.error => (S.t('couldNotCheckTapToRetry'), null, true),
     };
 
     return ListTile(
       leading: const Icon(Icons.system_update_outlined),
-      title: const Text('Rechercher des mises à jour'),
+      title: Text(S.t('checkForUpdates')),
       subtitle: Text(subtitle),
       trailing: trailing,
       onTap: !tappable

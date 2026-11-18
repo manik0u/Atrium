@@ -35,13 +35,9 @@ class _GluetunHomeState extends ConsumerState<GluetunHome> {
     if (_togglingVpn) return;
     if (currentlyRunning &&
         !await _confirmStop(
-          title: 'Arrêter le VPN ?',
-          message: 'Tout ce qui partage le réseau de Gluetun perd sa '
-              'connection until the VPN is started again, because the '
-              'firewall blocks traffic while the tunnel is down. With port '
-              'forwarding on, the forwarded port can change when it '
-              'reconnects.',
-          action: 'Stop VPN',
+          title: S.t('stopTheVPN'),
+          message: S.t('anythingThatSharesTheGluetunNetworkLosesItsConnectionUntilTheVPNIsStartedAgainBecauseTheFirewallBlocksTrafficWhileTheTunnelIsDownWithPortForwardingOnTheForwardedPortCanChangeWhenItReconnects'),
+          action: S.t('stopVPN'),
         )) {
       return;
     }
@@ -84,12 +80,9 @@ class _GluetunHomeState extends ConsumerState<GluetunHome> {
   Future<void> _reconnectVpn() async {
     if (_togglingVpn) return;
     if (!await _confirmStop(
-      title: 'Reconnecter le VPN ?',
-      message: 'Gluetun arrête le tunnel puis le redémarre, ce qui peut changer '
-          'it to another server with a new public IP and forwarded port. '
-          'Anything that shares the Gluetun network loses its connection for '
-          'a few seconds.',
-      action: 'Reconnect',
+      title: S.t('reconnectTheVPN'),
+      message: S.t('gluetunStopsTheTunnelAndStartsItAgainWhichCanMoveItToAnotherServerWithANewPublicIPAndForwardedPortAnythingThatSharesTheGluetunNetworkLosesItsConnectionForAFewSeconds'),
+      action: S.t('reconnect'),
     )) {
       return;
     }
@@ -102,7 +95,7 @@ class _GluetunHomeState extends ConsumerState<GluetunHome> {
       await api.reconnectVpn();
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Reconnexion du VPN…')),
+          SnackBar(content: Text(S.t('reconnectingVPN'))),
         );
       }
     } on GluetunRestartFailed catch (e) {
@@ -143,11 +136,9 @@ class _GluetunHomeState extends ConsumerState<GluetunHome> {
     if (_togglingDns) return;
     if (currentlyRunning &&
         !await _confirmStop(
-          title: 'Arrêter le DNS ?',
-          message: 'Tout ce qui partage le réseau de Gluetun utilise ce DNS '
-              'server to look up names, so it may fail to connect until DNS '
-              'is started again.',
-          action: 'Stop DNS',
+          title: S.t('stopDNS'),
+          message: S.t('anythingThatSharesTheGluetunNetworkUsesThisDNSServerToLookUpNamesSoItMayFailToConnectUntilDNSIsStartedAgain'),
+          action: S.t('stopDNS_2'),
         )) {
       return;
     }
@@ -197,8 +188,8 @@ class _GluetunHomeState extends ConsumerState<GluetunHome> {
       await api.setUpdaterStatus(run: true);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Mise à jour de la base de données des serveurs déclenchée…'),
+          SnackBar(
+            content: Text(S.t('triggeredServerListDatabaseUpdate')),
           ),
         );
       }
@@ -241,7 +232,7 @@ class _GluetunHomeState extends ConsumerState<GluetunHome> {
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           TextButton(
             style: TextButton.styleFrom(
@@ -277,14 +268,14 @@ class _GluetunHomeState extends ConsumerState<GluetunHome> {
     final ColorScheme scheme = Theme.of(context).colorScheme;
 
     return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async => _refreshAll(),
       child: ListView(
@@ -376,7 +367,7 @@ class _GluetunHomeState extends ConsumerState<GluetunHome> {
                                       child: OutlinedButton.icon(
                                         onPressed: _reconnectVpn,
                                         icon: const Icon(Icons.restart_alt),
-                                        label: const Text('Se reconnecter'),
+                                        label: Text(S.t('reconnect')),
                                       ),
                                     ),
                                     const SizedBox(width: Insets.sm),
@@ -398,7 +389,7 @@ class _GluetunHomeState extends ConsumerState<GluetunHome> {
                                             : Icons.play_arrow,
                                       ),
                                       label: Text(
-                                        isRunning ? 'Stop VPN' : 'Start VPN',
+                                        isRunning ? S.t('stopVPN') : 'Start VPN',
                                       ),
                                     ),
                                   ),
@@ -457,9 +448,9 @@ class _GluetunHomeState extends ConsumerState<GluetunHome> {
               child: publicIp.when(
                 data: (GluetunPublicIp? ipInfo) {
                   if (ipInfo == null || ipInfo.publicIp.isEmpty) {
-                    return const ListTile(
+                    return ListTile(
                       leading: Icon(Icons.public_off),
-                      title: Text('IP publique indisponible'),
+                      title: Text(S.t('publicIPUnavailable')),
                       subtitle: Text(
                         'Unable to retrieve external IP or check disabled.',
                       ),
@@ -472,7 +463,7 @@ class _GluetunHomeState extends ConsumerState<GluetunHome> {
                       ListTile(
                         contentPadding: EdgeInsets.zero,
                         leading: const Icon(Icons.public),
-                        title: const Text('Adresse IP publique'),
+                        title: Text(S.t('publicIPAddress')),
                         subtitle: SelectableText(
                           ipInfo.publicIp,
                           style: Theme.of(context)
@@ -485,14 +476,14 @@ class _GluetunHomeState extends ConsumerState<GluetunHome> {
                         ),
                         trailing: IconButton(
                           icon: const Icon(Icons.copy, size: 20),
-                          tooltip: "Copier l'IP",
+                          tooltip: S.t('copyIP'),
                           onPressed: () {
                             Clipboard.setData(
                               ClipboardData(text: ipInfo.publicIp),
                             );
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('IP publique copiée dans le presse-papiers'),
+                              SnackBar(
+                                content: Text(S.t('publicIPCopiedToClipboard')),
                               ),
                             );
                           },
@@ -552,7 +543,7 @@ class _GluetunHomeState extends ConsumerState<GluetunHome> {
                 ),
                 error: (Object error, StackTrace stack) => ListTile(
                   leading: const Icon(Icons.public_off),
-                  title: const Text('Adresse IP publique'),
+                  title: Text(S.t('publicIPAddress')),
                   subtitle: Text(
                     describeGluetunFailure(error, 'GET /v1/publicip/ip'),
                   ),
@@ -585,14 +576,14 @@ class _GluetunHomeState extends ConsumerState<GluetunHome> {
                   ),
                   trailing: IconButton(
                     icon: const Icon(Icons.copy, size: 20),
-                    tooltip: 'Copier le port',
+                    tooltip: S.t('copyPort'),
                     onPressed: () {
                       Clipboard.setData(
                         ClipboardData(text: forwardedPorts.join(',')),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Port ouvert copié dans le presse-papiers'),
+                        SnackBar(
+                          content: Text(S.t('forwardedPortCopiedToClipboard')),
                         ),
                       );
                     },
@@ -619,7 +610,7 @@ class _GluetunHomeState extends ConsumerState<GluetunHome> {
                       Icons.dns,
                       color: isOk ? scheme.primary : scheme.onSurfaceVariant,
                     ),
-                    title: const Text('État du serveur DNS'),
+                    title: Text(S.t('dnsServerStatus')),
                     subtitle: Text(
                       dns?.status.toUpperCase() ?? 'UNKNOWN',
                       style: TextStyle(
@@ -639,7 +630,7 @@ class _GluetunHomeState extends ConsumerState<GluetunHome> {
                               isOk ? Icons.pause : Icons.play_arrow,
                               size: 18,
                             ),
-                            label: Text(isOk ? 'Arrêter' : 'Démarrer'),
+                            label: Text(isOk ? S.t('shutdown') : S.t('start')),
                           ),
                   );
                 },
@@ -649,7 +640,7 @@ class _GluetunHomeState extends ConsumerState<GluetunHome> {
                 ),
                 error: (Object error, StackTrace stack) => ListTile(
                   leading: const Icon(Icons.dns_outlined),
-                  title: const Text('État du serveur DNS'),
+                  title: Text(S.t('dnsServerStatus')),
                   subtitle: Text(
                     describeGluetunFailure(error, 'GET /v1/dns/status'),
                   ),
@@ -675,7 +666,7 @@ class _GluetunHomeState extends ConsumerState<GluetunHome> {
                       Icons.sync,
                       color: isRunning ? scheme.primary : scheme.onSurfaceVariant,
                     ),
-                    title: const Text('Mises à jour de la base de données du serveur'),
+                    title: Text(S.t('serverDatabaseUpdater')),
                     subtitle: Text(
                       updater?.status.toUpperCase() ?? 'IDLE',
                       style: TextStyle(
@@ -692,7 +683,7 @@ class _GluetunHomeState extends ConsumerState<GluetunHome> {
                         : OutlinedButton.icon(
                             onPressed: _triggerUpdater,
                             icon: const Icon(Icons.refresh, size: 18),
-                            label: const Text('Mettre à jour les serveurs'),
+                            label: Text(S.t('updateServers')),
                           ),
                   );
                 },
@@ -702,7 +693,7 @@ class _GluetunHomeState extends ConsumerState<GluetunHome> {
                 ),
                 error: (Object error, StackTrace stack) => ListTile(
                   leading: const Icon(Icons.sync_problem),
-                  title: const Text('Mises à jour de la base de données du serveur'),
+                  title: Text(S.t('serverDatabaseUpdater')),
                   subtitle: Text(
                     describeGluetunFailure(error, 'GET /v1/updater/status'),
                   ),

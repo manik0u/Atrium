@@ -77,7 +77,7 @@ class _ContainerSheetState extends ConsumerState<_ContainerSheet> {
       if (!mounted) return;
       messenger.showSnackBar(
         SnackBar(
-          content: Text(e is NetworkException ? e.message : "Échec de l'action."),
+          content: Text(e is NetworkException ? e.message : S.t('actionFailed_2')),
         ),
       );
     } finally {
@@ -93,12 +93,12 @@ class _ContainerSheetState extends ConsumerState<_ContainerSheet> {
         mode: LaunchMode.externalApplication,
       );
       if (!opened && mounted) {
-        messenger.showSnackBar(SnackBar(content: Text("Impossible d'ouvrir $url")));
+        messenger.showSnackBar(SnackBar(content: Text(S.t('couldNotOpenUrl1', [url]))));
       }
     } on Object {
       if (!mounted) return;
       messenger.showSnackBar(
-        const SnackBar(content: Text("Impossible d'ouvrir ce lien.")),
+        SnackBar(content: Text(S.t('couldNotOpenThatLink'))),
       );
     }
   }
@@ -127,7 +127,7 @@ class _ContainerSheetState extends ConsumerState<_ContainerSheet> {
                 : (Icons.stop_rounded, cs.outline);
 
     final List<_Row> facts = <_Row>[
-      if (c.status != null) _Row(Icons.schedule_rounded, 'Status', c.status!),
+      if (c.status != null) _Row(Icons.schedule_rounded, S.t('status'), c.status!),
       if (c.createdAt != null)
         _Row(
           Icons.event_outlined,
@@ -135,13 +135,13 @@ class _ContainerSheetState extends ConsumerState<_ContainerSheet> {
           unraidAgo(c.createdAt!.toLocal()),
         ),
       for (final String m in c.portMappings)
-        _Row(Icons.lan_outlined, 'Port', m),
+        _Row(Icons.lan_outlined, S.t('port'), m),
       if (c.sizeRootFsBytes != null && c.sizeRootFsBytes! > 0)
-        _Row(Icons.sd_storage_outlined, 'Size', c.sizeLabel),
+        _Row(Icons.sd_storage_outlined, S.t('size'), c.sizeLabel),
       _Row(
         Icons.bolt_rounded,
         'Autostart',
-        c.autoStart ? 'Starts with the array' : 'Off',
+        c.autoStart ? S.t('startsWithTheArray') : S.t('off'),
       ),
       if (c.command != null) _Row(Icons.terminal_rounded, 'Command', c.command!),
     ];
@@ -277,32 +277,32 @@ class _Actions extends StatelessWidget {
         FilledButton.tonalIcon(
           onPressed: () => run((UnraidClient c) => c.stopContainer(container.id)),
           icon: const Icon(Icons.stop_rounded),
-          label: const Text('Arrêter'),
+          label: Text(S.t('shutdown')),
         ),
         OutlinedButton.icon(
           onPressed: () =>
               run((UnraidClient c) => c.pauseContainer(container.id)),
           icon: const Icon(Icons.pause_rounded),
-          label: const Text('Pause'),
+          label: Text(S.t('pause')),
         ),
       ] else if (container.isPaused) ...<Widget>[
         FilledButton.icon(
           onPressed: () =>
               run((UnraidClient c) => c.unpauseContainer(container.id)),
           icon: const Icon(Icons.play_arrow_rounded),
-          label: const Text('Reprendre'),
+          label: Text(S.t('resume')),
         ),
         OutlinedButton.icon(
           onPressed: () => run((UnraidClient c) => c.stopContainer(container.id)),
           icon: const Icon(Icons.stop_rounded),
-          label: const Text('Arrêter'),
+          label: Text(S.t('shutdown')),
         ),
       ] else
         FilledButton.icon(
           onPressed: () =>
               run((UnraidClient c) => c.startContainer(container.id)),
           icon: const Icon(Icons.play_arrow_rounded),
-          label: const Text('Démarrer'),
+          label: Text(S.t('start')),
         ),
     ];
 

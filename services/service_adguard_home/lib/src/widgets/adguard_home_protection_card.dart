@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -41,9 +42,9 @@ class AdguardHomeProtectionCard extends StatelessWidget {
       AdguardHomeProtection.off => Icons.gpp_bad_outlined,
     };
     final String title = switch (state) {
-      AdguardHomeProtection.on => 'La protection est activée',
-      AdguardHomeProtection.paused => 'La protection est en pause',
-      AdguardHomeProtection.off => 'La protection est désactivée',
+      AdguardHomeProtection.on => S.t('protectionIsOn'),
+      AdguardHomeProtection.paused => S.t('protectionIsPaused'),
+      AdguardHomeProtection.off => S.t('protectionIsOff'),
     };
     final TextStyle? quiet =
         theme.textTheme.bodySmall?.copyWith(color: cs.onSurfaceVariant);
@@ -83,7 +84,7 @@ class AdguardHomeProtectionCard extends StatelessWidget {
                         Wrap(
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: <Widget>[
-                            Text('Réactivé dans ', style: quiet),
+                            Text(S.t('backOnIn'), style: quiet),
                             AdguardHomeCountdown(
                               until: pausedUntil,
                               onDone: onPauseEnded,
@@ -113,7 +114,7 @@ class AdguardHomeProtectionCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: Insets.md),
-            Text('Mettre en pause pour', style: theme.textTheme.labelMedium),
+            Text(S.t('pauseFor'), style: theme.textTheme.labelMedium),
             const SizedBox(height: Insets.xs),
             Wrap(
               spacing: Insets.sm,

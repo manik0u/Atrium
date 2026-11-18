@@ -20,8 +20,8 @@ class _ReorderSidebarScreenState extends ConsumerState<ReorderSidebarScreen> {
   Widget build(BuildContext context) {
     final Profile? profile = ref.watch(activeProfileProvider);
     if (profile == null) {
-      return const Scaffold(
-        body: Center(child: Text('Aucun profil actif')),
+      return Scaffold(
+        body: Center(child: Text(S.t('noActiveProfile'))),
       );
     }
 
@@ -37,14 +37,14 @@ class _ReorderSidebarScreenState extends ConsumerState<ReorderSidebarScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Réorganiser la barre latérale'),
+        title: Text(S.t('reorderSidebar')),
       ),
       body: _localInstances!.isEmpty
           ? Center(
               child: Padding(
                 padding: const EdgeInsets.all(Insets.lg),
                 child: Text(
-                  'Aucun service configuré.',
+                  S.t('noServicesConfigured'),
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: cs.onSurfaceVariant,
                   ),
@@ -60,7 +60,7 @@ class _ReorderSidebarScreenState extends ConsumerState<ReorderSidebarScreen> {
                     vertical: Insets.md,
                   ),
                   child: Text(
-                    'Glissez-déposez les cartes de services pour réorganiser leur ordre dans la barre latérale.',
+                    S.t('dragAndDropServiceCardsToRearrangeTheirOrderInTheSidebar'),
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: cs.onSurfaceVariant,
                     ),

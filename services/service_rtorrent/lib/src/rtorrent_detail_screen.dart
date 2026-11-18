@@ -45,13 +45,13 @@ class RtorrentDetailScreen extends ConsumerWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(torrent?.name ?? initialName, maxLines: 1),
-          bottom: const TabBar(
+          bottom: TabBar(
             isScrollable: true,
             tabs: <Widget>[
-              Tab(text: "Vue d'ensemble"),
-              Tab(text: 'Fichiers'),
-              Tab(text: 'Pairs'),
-              Tab(text: 'Trackers'),
+              Tab(text: S.t('overview')),
+              Tab(text: S.t('files')),
+              Tab(text: S.t('peers')),
+              Tab(text: S.t('trackers')),
             ],
           ),
         ),
@@ -95,36 +95,36 @@ class _OverviewTab extends StatelessWidget {
             trackColor: scheme.surfaceContainerHighest,
           ),
           const SizedBox(height: Insets.md),
-          if (t.hasError) _KeyValue('Message', t.message),
-          _KeyValue('Statut', t.status.label),
-          _KeyValue('Progress', '${(t.progress * 100).toStringAsFixed(1)}%'),
+          if (t.hasError) _KeyValue(S.t('message'), t.message),
+          _KeyValue(S.t('status'), t.status.label),
+          _KeyValue(S.t('progress'), '${(t.progress * 100).toStringAsFixed(1)}%'),
           _KeyValue(
-            'Done',
+            S.t('done'),
             '${rtFmtBytes(t.completedBytes)} of ${rtFmtBytes(t.sizeBytes)}',
           ),
-          _KeyValue('Remaining', rtFmtBytes(t.leftBytes)),
-          _KeyValue('Down', rtFmtRate(t.downRate)),
-          _KeyValue('Up', rtFmtRate(t.upRate)),
-          _KeyValue('Uploaded', rtFmtBytes(t.uploadedTotal)),
+          _KeyValue(S.t('remaining'), rtFmtBytes(t.leftBytes)),
+          _KeyValue(S.t('down'), rtFmtRate(t.downRate)),
+          _KeyValue(S.t('up'), rtFmtRate(t.upRate)),
+          _KeyValue(S.t('uploaded'), rtFmtBytes(t.uploadedTotal)),
           _KeyValue('Ratio', t.ratio.toStringAsFixed(3)),
           _KeyValue(
-            'Peers',
+            S.t('peers'),
             '${t.peersComplete} seeds, ${t.peersConnected} connected',
           ),
           if (rtFmtEta(t) != '-') _KeyValue('ETA', rtFmtEta(t)),
-          _KeyValue('Priority', t.priorityLabel),
+          _KeyValue(S.t('priority'), t.priorityLabel),
           // The three flags are shown as they are rather than folded away: on
           // rTorrent "stopped", "closed" and "inactive" are genuinely different
           // states, and the single status line above cannot say all three.
-          _KeyValue('Started', t.state == 1 ? 'Yes' : 'No'),
-          _KeyValue('Open', t.isOpen ? 'Yes' : 'No'),
-          _KeyValue('Active', t.isActive ? 'Yes' : 'No'),
-          if (t.label.isNotEmpty) _KeyValue('Libellé', t.label),
+          _KeyValue(S.t('started'), t.state == 1 ? S.t('yes') : S.t('no')),
+          _KeyValue(S.t('open'), t.isOpen ? S.t('yes') : S.t('no')),
+          _KeyValue(S.t('active'), t.isActive ? S.t('yes') : S.t('no')),
+          if (t.label.isNotEmpty) _KeyValue(S.t('label'), t.label),
           _KeyValue('Directory', t.directory),
-          _KeyValue('Hash', t.hash),
+          _KeyValue(S.t('hash'), t.hash),
         ],
-        _KeyValue('Files', '${detail.files.length}'),
-        _KeyValue('Trackers', '${detail.trackers.length}'),
+        _KeyValue(S.t('files'), '${detail.files.length}'),
+        _KeyValue(S.t('trackers'), '${detail.trackers.length}'),
       ],
     );
   }
@@ -161,7 +161,7 @@ class _FilesTabState extends ConsumerState<_FilesTab> {
         ),
       );
     } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text('Impossible de mettre à jour : $e')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('couldNotUpdateE1', [e]))));
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -171,10 +171,10 @@ class _FilesTabState extends ConsumerState<_FilesTab> {
   Widget build(BuildContext context) {
     final List<RtorrentFile> files = widget.detail.files;
     if (files.isEmpty) {
-      return const EmptyView(
+      return EmptyView(
         icon: Icons.insert_drive_file_outlined,
-        title: 'Aucun fichier',
-        message: "rTorrent n'a pas encore la liste des fichiers de ce torrent.",
+        title: S.t('noFiles'),
+        message: S.t('rtorrentHasNoFileListForThisTorrentYet'),
       );
     }
     return ListView.builder(
@@ -208,10 +208,10 @@ class _FilesTabState extends ConsumerState<_FilesTab> {
             enabled: !_busy,
             icon: const Icon(Icons.more_vert),
             initialValue: f.priority,
-            itemBuilder: (BuildContext context) => const <PopupMenuEntry<int>>[
-              PopupMenuItem<int>(value: 0, child: Text('Ignorer')),
-              PopupMenuItem<int>(value: 1, child: Text('Normal')),
-              PopupMenuItem<int>(value: 2, child: Text('Élevée')),
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
+              PopupMenuItem<int>(value: 0, child: Text(S.t('discard'))),
+              PopupMenuItem<int>(value: 1, child: Text(S.t('normal'))),
+              PopupMenuItem<int>(value: 2, child: Text(S.t('high'))),
             ],
             onSelected: (int p) => _setPriority(i, p),
           ),
@@ -229,10 +229,10 @@ class _PeersTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (detail.peers.isEmpty) {
-      return const EmptyView(
+      return EmptyView(
         icon: Icons.people_outline,
-        title: 'Aucun pair',
-        message: "Rien n'est connecté pour le moment.",
+        title: S.t('noPeers'),
+        message: S.t('nothingIsConnectedRightNow'),
       );
     }
     return ListView.builder(
@@ -269,10 +269,10 @@ class _TrackersTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (detail.trackers.isEmpty) {
-      return const EmptyView(
+      return EmptyView(
         icon: Icons.dns_outlined,
-        title: 'Aucun tracker',
-        message: "Ce torrent n'annonce aucun tracker.",
+        title: S.t('noTrackers'),
+        message: S.t('thisTorrentAnnouncesToNoTrackers'),
       );
     }
     return ListView.builder(

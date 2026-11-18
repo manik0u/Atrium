@@ -1,4 +1,5 @@
 import 'adguard_home_json.dart';
+import 'package:core_models/core_models.dart';
 
 /// The colour family the web UI gives a query's result.
 enum AdguardHomeResultTone {
@@ -22,15 +23,15 @@ enum AdguardHomeResultTone {
 enum AdguardHomeQueryResult {
   processed('Processed', AdguardHomeResultTone.plain),
   allowed('Allowed', AdguardHomeResultTone.allowed),
-  blocked('Blocked', AdguardHomeResultTone.blocked),
+  blocked(S.t('blocked'), AdguardHomeResultTone.blocked),
   blockedService('Blocked service', AdguardHomeResultTone.blocked),
   blockedThreat('Blocked threats', AdguardHomeResultTone.restricted),
   blockedParental(
     'Blocked by parental control',
     AdguardHomeResultTone.restricted,
-    short: 'Parental control',
+    short: S.t('parentalControl'),
   ),
-  safeSearch('Safe search', AdguardHomeResultTone.restricted),
+  safeSearch(S.t('safeSearch'), AdguardHomeResultTone.restricted),
   rewritten('Rewritten', AdguardHomeResultTone.rewritten),
 
   /// A reason this app has no name for. It is shown as the server wrote it.
@@ -65,16 +66,16 @@ enum AdguardHomeQueryResult {
 
 /// The ten ways the web UI narrows the query log, in its order.
 enum AdguardHomeLogFilter {
-  all('all', 'All queries'),
+  all('all', S.t('allQueries')),
   filtered('filtered', 'Filtered'),
   processed('processed', 'Processed'),
-  blocked('blocked', 'Blocked'),
-  blockedServices('blocked_services', 'Blocked services'),
+  blocked('blocked', S.t('blocked')),
+  blockedServices('blocked_services', S.t('blockedServices')),
   blockedThreats('blocked_safebrowsing', 'Blocked threats'),
   blockedParental('blocked_parental', 'Blocked by parental control'),
   allowed('whitelisted', 'Allowed'),
   rewritten('rewritten', 'Rewritten'),
-  safeSearch('safe_search', 'Safe search');
+  safeSearch('safe_search', S.t('safeSearch'));
 
   const AdguardHomeLogFilter(this.query, this.label);
 

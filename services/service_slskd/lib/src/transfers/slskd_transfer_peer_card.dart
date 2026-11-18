@@ -155,7 +155,7 @@ class _SlskdTransferPeerCardState extends ConsumerState<SlskdTransferPeerCard> {
                   ),
                 const SizedBox(width: Insets.xs),
                 IconButton(
-                  tooltip: 'Parcourir les partages de ${user.username}',
+                  tooltip: S.t('browseUserUsernameSShares1', [user.username]),
                   visualDensity: VisualDensity.compact,
                   icon: const Icon(Icons.folder_shared_outlined, size: 20),
                   onPressed: () {

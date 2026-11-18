@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 /// Formatting helpers shared by the aria2 screens.
 ///
 /// Kept apart from the widgets so the labels can be unit-tested without a
@@ -46,16 +47,16 @@ String aria2FormatEta(int seconds) {
 /// A human label for aria2's own status strings.
 String aria2StatusLabel(String status, {bool seeder = false}) {
   if (status == 'active' && seeder) {
-    return 'Seeding';
+    return S.t('seeding');
   }
   return switch (status) {
-    'active' => 'Téléchargement en cours',
-    'waiting' => "En file d'attente",
-    'paused' => 'En pause',
-    'complete' => 'Terminé',
-    'error' => 'Erreur',
-    'removed' => 'Retiré',
-    '' => 'Inconnu',
+    'active' => S.t('downloading'),
+    'waiting' => S.t('queued'),
+    'paused' => S.t('paused'),
+    'complete' => S.t('done'),
+    'error' => S.t('error'),
+    'removed' => S.t('removed'),
+    '' => S.t('unknown'),
     _ => status,
   };
 }

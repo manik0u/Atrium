@@ -16,7 +16,7 @@ Set<String> serviceAuthHeaderNames(ServiceKind kind, InstanceAuth auth) {
     case InstanceAuthApiKey(:final String apiKey):
       switch (kind) {
         case ServiceKind.speedtestTracker || ServiceKind.tracearr:
-          return const <String>{'Authorization', 'Accept'};
+          return <String>{'Authorization', S.t('accept')};
         case ServiceKind.sabnzbd || ServiceKind.tautulli:
           // Query parameter, not a header, so nothing collides.
           return const <String>{};
@@ -37,7 +37,7 @@ Set<String> serviceAuthHeaderNames(ServiceKind kind, InstanceAuth auth) {
           return const <String>{'X-Api-Key'};
       }
     case InstanceAuthPlex():
-      return const <String>{'X-Plex-Token', 'Accept'};
+      return <String>{'X-Plex-Token', S.t('accept')};
     case InstanceAuthUserPass(
           :final String username,
           :final String password,
@@ -118,7 +118,7 @@ String? headerConflictWarning(String headerName, List<Instance> instances) {
   if (overwritten.isNotEmpty) {
     final bool one = overwritten.length == 1;
     buffer.write('${overwritten.join(', ')} ${one ? 'uses' : 'use'} this '
-        'en-tête pour ${one ? 'its' : 'their'} own sign-in, so your value is '
+        S.t('headerForOne')its' : 'their'} own sign-in, so your value is '
         'replaced before the request is sent. ');
   }
   if (refused.isNotEmpty) {
@@ -126,8 +126,8 @@ String? headerConflictWarning(String headerName, List<Instance> instances) {
         '${refused.length == 1 ? 'refuses' : 'refuse'} a header of this name '
         'that it did not issue, and will answer 401. ');
   }
-  buffer.write("Utilisez $proxyAuthHeaderName à la place là où votre proxy l'accepte "
-      "tel qu'Authelia. nginx ne lit cet en-tête que pour l'authentification basic.");
+  buffer.write(S.t('useProxyAuthHeaderNameInsteadWhereYourProxyAccepts1', [proxyAuthHeaderName])
+      S.t('itSuchAsAutheliaNginxBasicAuthOnlyReadsThisHeader'));
   return buffer.toString();
 }
 

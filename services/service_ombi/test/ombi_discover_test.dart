@@ -52,7 +52,7 @@ void main() {
       ),
     );
     await settle(tester, frames: 10);
-    await tester.tap(find.text('Découvrir'));
+    await tester.tap(find.text('Discover'));
     await settle(tester, frames: 12);
   }
 
@@ -60,7 +60,7 @@ void main() {
       (WidgetTester tester) async {
     await openDiscover(tester);
 
-    expect(find.text('Films populaires'), findsOneWidget);
+    expect(find.text('Popular movies'), findsOneWidget);
     expect(find.text('Spider-Man: Brand New Day'), findsOneWidget);
     expect(find.text('Upcoming movies'), findsOneWidget);
     expect(find.text('Soon'), findsOneWidget);
@@ -109,8 +109,8 @@ void main() {
       ]);
     await openDiscover(tester);
 
-    expect(find.text('Demandé'), findsOneWidget);
-    expect(find.text('Disponible'), findsOneWidget);
+    expect(find.text('Requested'), findsOneWidget);
+    expect(find.text('Available'), findsOneWidget);
   });
 
   testWidgets('a poster opens the request sheet', (WidgetTester tester) async {
@@ -120,7 +120,7 @@ void main() {
     await tester.tap(find.text('Spider-Man: Brand New Day'));
     await settle(tester);
 
-    expect(find.widgetWithText(FilledButton, 'Demande'), findsOneWidget);
+    expect(find.widgetWithText(FilledButton, 'Request'), findsOneWidget);
   });
 
   testWidgets('a title Ombi cannot look up says why, with a retry',
@@ -146,8 +146,8 @@ void main() {
       ),
       findsOneWidget,
     );
-    expect(find.widgetWithText(TextButton, 'Réessayer'), findsOneWidget);
-    expect(find.widgetWithText(FilledButton, 'Demande'), findsNothing);
+    expect(find.widgetWithText(TextButton, 'Retry'), findsOneWidget);
+    expect(find.widgetWithText(FilledButton, 'Request'), findsNothing);
   });
 
   testWidgets('a list that fails keeps to its own row',

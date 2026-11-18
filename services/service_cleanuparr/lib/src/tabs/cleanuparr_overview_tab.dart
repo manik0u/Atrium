@@ -146,10 +146,10 @@ class CleanuparrOverviewTab extends ConsumerWidget {
             // Timeframe Segmented Control
             Center(
               child: SegmentedButton<int>(
-                segments: const <ButtonSegment<int>>[
-                  ButtonSegment<int>(value: 24, label: Text('24 h')),
-                  ButtonSegment<int>(value: 168, label: Text('7 j')),
-                  ButtonSegment<int>(value: 720, label: Text('30 j')),
+                segments: <ButtonSegment<int>>[
+                  ButtonSegment<int>(value: 24, label: Text(S.t('k24h'))),
+                  ButtonSegment<int>(value: 168, label: Text(S.t('k7d'))),
+                  ButtonSegment<int>(value: 720, label: Text(S.t('k30d'))),
                 ],
                 selected: <int>{selectedHours},
                 onSelectionChanged: (Set<int> newSelection) {
@@ -172,7 +172,7 @@ class CleanuparrOverviewTab extends ConsumerWidget {
               error: (err, _) => Center(
                 child: Padding(
                   padding: const EdgeInsets.all(Insets.md),
-                  child: Text('Impossible de charger les métriques : ${describeCleanuparrError(err)}'),
+                  child: Text(S.t('unableToLoadMetricsDescribeCleanuparrErrorErr1', [describeCleanuparrError(err)])),
                 ),
               ),
               data: (CleanuparrStats stats) {
@@ -185,7 +185,7 @@ class CleanuparrOverviewTab extends ConsumerWidget {
                       children: <Widget>[
                         Expanded(
                           child: CleanuparrMetricCard(
-                            title: 'Malwares bloqués',
+                            title: S.t('malwareBlocked'),
                             value: '${stats.malwareBlocked}',
                             icon: Icons.shield_outlined,
                             containerColor: colorScheme.errorContainer,
@@ -195,7 +195,7 @@ class CleanuparrOverviewTab extends ConsumerWidget {
                         const SizedBox(width: Insets.sm),
                         Expanded(
                           child: CleanuparrMetricCard(
-                            title: 'Strikes actifs',
+                            title: S.t('activeStrikes'),
                             value: '$activeCount',
                             icon: Icons.gavel_outlined,
                             containerColor: colorScheme.tertiaryContainer,
@@ -209,7 +209,7 @@ class CleanuparrOverviewTab extends ConsumerWidget {
                       children: <Widget>[
                         Expanded(
                           child: CleanuparrMetricCard(
-                            title: 'Torrents nettoyés',
+                            title: S.t('cleanedTorrents'),
                             value: '${stats.totalCleaned}',
                             icon: Icons.cleaning_services_outlined,
                             containerColor: colorScheme.primaryContainer,
@@ -219,7 +219,7 @@ class CleanuparrOverviewTab extends ConsumerWidget {
                         const SizedBox(width: Insets.sm),
                         Expanded(
                           child: CleanuparrMetricCard(
-                            title: 'Recherches des seekers',
+                            title: S.t('seekerSearches'),
                             value: '${stats.seekerTriggers}',
                             icon: Icons.search_rounded,
                             containerColor: colorScheme.secondaryContainer,
@@ -254,7 +254,7 @@ class CleanuparrOverviewTab extends ConsumerWidget {
               data: (List<CleanuparrJob> jobs) {
                 if (jobs.isEmpty) {
                   return Text(
-                    'Aucune tâche en arrière-plan trouvée',
+                    S.t('noBackgroundTasksFound'),
                     style: textTheme.bodySmall?.copyWith(
                       color: colorScheme.outline,
                     ),

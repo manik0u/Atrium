@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_networking/core_networking.dart';
 import 'package:dio/dio.dart';
 
@@ -56,7 +57,7 @@ class TautulliApi {
       if (tString(envelope['result']) != 'success') {
         final String message = tString(envelope['message']);
         throw NetworkUnknownException(
-          message.isEmpty ? 'Tautulli : échec de $cmd.' : message,
+          message.isEmpty ? S.t('tautulliCmdFailed1', [cmd]) : message,
         );
       }
       return envelope['data'];
@@ -124,7 +125,7 @@ class TautulliApi {
   /// surfaced by [_cmd].
   Future<void> terminateSession(
     TautulliSession session, {
-    String message = 'Flux arrêté par le propriétaire du serveur.',
+    String message = S.t('streamStoppedByTheServerOwner'),
   }) async {
     await _cmd('terminate_session', <String, dynamic>{
       if (session.sessionKey.isNotEmpty) 'session_key': session.sessionKey,

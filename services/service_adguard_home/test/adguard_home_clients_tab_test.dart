@@ -13,7 +13,7 @@ void main() {
   const Widget tab = AdguardHomeClientsTab(instance: adguardHomeTestInstance);
 
   Future<void> showRuntime(WidgetTester tester) async {
-    await tester.tap(find.textContaining('Environnement'));
+    await tester.tap(find.textContaining('Runtime'));
     await tester.pumpAndSettle();
   }
 
@@ -72,12 +72,12 @@ void main() {
       expect(inRow('Kids tablet', row, 'Own upstreams'), isFalse);
 
       expect(inRow('Work phone', row, 'Own upstreams'), isTrue);
-      expect(inRow('Work phone', row, 'Pas dans le journal des requêtes'), isTrue);
+      expect(inRow('Work phone', row, 'Not in the query log'), isTrue);
       expect(inRow('Work phone', row, 'Own settings'), isFalse);
 
       expect(inRow('Laptop', row, 'device_laptop'), isTrue);
       expect(inRow('Laptop', row, 'Own settings'), isFalse);
-      expect(inRow('Laptop', row, 'Aucun service bloqué'), isFalse);
+      expect(inRow('Laptop', row, 'No services blocked'), isFalse);
     });
 
     testWidgets('a client with its own, empty list of services says so',
@@ -102,8 +102,8 @@ void main() {
       );
 
       const Type row = AdguardHomePersistentClientRow;
-      expect(inRow('Exempt', row, 'Aucun service bloqué'), isTrue);
-      expect(inRow('Exempt', row, 'Pas dans les statistiques'), isTrue);
+      expect(inRow('Exempt', row, 'No services blocked'), isTrue);
+      expect(inRow('Exempt', row, 'Not in statistics'), isTrue);
     });
 
     testWidgets('a row opens the form for its client',
@@ -113,7 +113,7 @@ void main() {
       await tester.tap(find.text('Work phone'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Modifier le client'), findsOneWidget);
+      expect(find.text('Edit client'), findsOneWidget);
       expect(
         tester
             .widget<TextField>(find.byKey(const Key('adguard-client-name')))
@@ -132,7 +132,7 @@ void main() {
         clients: const AdguardHomeClientsView(),
       );
 
-      expect(find.text('Aucun client persistant'), findsOneWidget);
+      expect(find.text('No persistent clients'), findsOneWidget);
     });
   });
 
@@ -172,7 +172,7 @@ void main() {
       );
 
       await tester.drag(
-        find.text('Aucun client persistant'),
+        find.text('No persistent clients'),
         const Offset(0, 320),
       );
       await tester.pumpAndSettle();
@@ -215,10 +215,10 @@ void main() {
       // Two addresses are called localhost.
       expect(find.text('localhost'), findsNWidgets(2));
       expect(find.text('127.0.0.1'), findsOneWidget);
-      expect(inRow('127.0.0.1', row, 'Fichier hosts'), isTrue);
+      expect(inRow('127.0.0.1', row, 'Hosts file'), isTrue);
       expect(inRow('127.0.0.1', row, '122'), isTrue);
       // With no name, the address is what it is called.
-      expect(inRow('172.17.0.1', row, 'Table ARP'), isTrue);
+      expect(inRow('172.17.0.1', row, 'ARP table'), isTrue);
       expect(inRow('172.17.0.1', row, '150'), isTrue);
     });
 
@@ -250,7 +250,7 @@ void main() {
       );
       await showRuntime(tester);
 
-      expect(find.text('Aucun client en exécution'), findsOneWidget);
+      expect(find.text('No runtime clients'), findsOneWidget);
     });
 
     testWidgets('a row whose owner the list does not know asks the server '
@@ -289,8 +289,8 @@ void main() {
         ),
         findsOneWidget,
       );
-      expect(find.text('Modifier le client'), findsOneWidget);
-      expect(find.text('Ajouter comme client persistant'), findsNothing);
+      expect(find.text('Edit client'), findsOneWidget);
+      expect(find.text('Add as persistent client'), findsNothing);
     });
 
     testWidgets('a row of a persistent client\'s address offers to edit that '
@@ -303,8 +303,8 @@ void main() {
 
       // Whose it is was in the list already.
       expect(pumped.actions.calls, isEmpty);
-      expect(find.text('Ajouter comme client persistant'), findsNothing);
-      await tester.tap(find.text('Modifier le client'));
+      expect(find.text('Add as persistent client'), findsNothing);
+      await tester.tap(find.text('Edit client'));
       await tester.pumpAndSettle();
 
       expect(
@@ -329,7 +329,7 @@ void main() {
       expect(find.byType(AdguardHomeRefusedView), findsOneWidget);
       expect(find.textContaining('Persistent'), findsNothing);
 
-      await tester.tap(find.text('Réessayer'));
+      await tester.tap(find.text('Try again'));
       await tester.pump();
 
       expect(pumped.actions.calls, <String>['retry']);
@@ -359,12 +359,12 @@ void main() {
       );
 
       expect(
-        find.text('Cette adresse a répondu, mais pas comme AdGuard Home.'),
+        find.text('This address answered, but not as AdGuard Home.'),
         findsOneWidget,
       );
       expect(pumped.clientReads, 1);
 
-      await tester.tap(find.text('Réessayer'));
+      await tester.tap(find.text('Retry'));
       await tester.pump();
       await tester.pump();
 
@@ -473,9 +473,9 @@ void main() {
 
       expect(find.byType(ExpressiveProgressIndicator), findsNothing);
       expect(find.text('localhost'), findsWidgets);
-      expect(find.text('Fichier hosts'), findsOneWidget);
+      expect(find.text('Hosts file'), findsOneWidget);
       expect(find.text('122'), findsOneWidget);
-      expect(find.text('Ajouter comme client persistant'), findsOneWidget);
+      expect(find.text('Add as persistent client'), findsOneWidget);
     });
 
     testWidgets('says why when the lookup fails, and asks again on Retry',
@@ -488,19 +488,19 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.text('Cette adresse a répondu, mais pas comme AdGuard Home.'),
+        find.text('This address answered, but not as AdGuard Home.'),
         findsOneWidget,
       );
-      expect(find.text('Ajouter comme client persistant'), findsNothing);
+      expect(find.text('Add as persistent client'), findsNothing);
 
       pumped.actions
         ..lookupFailure = null
         ..lookup = lookupOf('127.0.0.1');
-      await tester.tap(find.text('Réessayer'));
+      await tester.tap(find.text('Retry'));
       await tester.pumpAndSettle();
 
       expect(pumped.actions.calls, <String>['find 127.0.0.1', 'find 127.0.0.1']);
-      expect(find.text('Ajouter comme client persistant'), findsOneWidget);
+      expect(find.text('Add as persistent client'), findsOneWidget);
     });
 
     testWidgets('refused for the sign-in, Retry asks for it to be tried again',
@@ -513,14 +513,14 @@ void main() {
       await tester.pumpAndSettle();
       pumped.actions.lookup = lookupOf('127.0.0.1');
 
-      await tester.tap(find.text('Réessayer'));
+      await tester.tap(find.text('Retry'));
       await tester.pumpAndSettle();
 
       expect(
         pumped.actions.calls,
         <String>['find 127.0.0.1', 'retry', 'find 127.0.0.1'],
       );
-      expect(find.text('Ajouter comme client persistant'), findsOneWidget);
+      expect(find.text('Add as persistent client'), findsOneWidget);
     });
 
     testWidgets('of a persistent client shows its settings in short',
@@ -543,7 +543,7 @@ void main() {
       expect(find.text('device_tablet, user_child'), findsOneWidget);
       expect(find.text('Its own'), findsOneWidget);
       expect(find.text('3 services blocked'), findsOneWidget);
-      expect(find.text('Modifier le client'), findsOneWidget);
+      expect(find.text('Edit client'), findsOneWidget);
     });
 
     testWidgets('does not say the server has no settings for an address it '
@@ -565,7 +565,7 @@ void main() {
         find.textContaining('No persistent client lists it'),
         findsOneWidget,
       );
-      expect(find.text('Ajouter comme client persistant'), findsOneWidget);
+      expect(find.text('Add as persistent client'), findsOneWidget);
     });
 
     testWidgets('of an address nobody knows says so and offers to add it',
@@ -578,10 +578,10 @@ void main() {
         findsOneWidget,
       );
 
-      await tester.tap(find.text('Ajouter comme client persistant'));
+      await tester.tap(find.text('Add as persistent client'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Nouveau client'), findsOneWidget);
+      expect(find.text('New client'), findsOneWidget);
       expect(
         tester
             .widget<TextField>(find.byKey(const Key('adguard-client-id-0')))
@@ -603,7 +603,7 @@ void main() {
       await openSheet(tester, '127.0.0.1', lookup: lookupOf('127.0.0.1'));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Ajouter comme client persistant'));
+      await tester.tap(find.text('Add as persistent client'));
       await tester.pumpAndSettle();
 
       expect(
@@ -628,9 +628,9 @@ void main() {
           await openSheet(tester, '127.0.0.1', lookup: lookupOf('127.0.0.1'));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Ajouter comme client persistant'));
+      await tester.tap(find.text('Add as persistent client'));
       await tester.pumpAndSettle();
-      await tester.tap(find.widgetWithText(FilledButton, 'Enregistrer'));
+      await tester.tap(find.widgetWithText(FilledButton, 'Save'));
       await tester.pumpAndSettle();
 
       expect(pumped.actions.saved, hasLength(1));
@@ -643,7 +643,7 @@ void main() {
       await openSheet(tester, '127.0.0.1', lookup: lookupOf('127.0.0.1'));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Ajouter comme client persistant'));
+      await tester.tap(find.text('Add as persistent client'));
       await tester.pumpAndSettle();
       await tester.pageBack();
       await tester.pumpAndSettle();
@@ -675,7 +675,7 @@ void main() {
           await tester.pumpAndSettle();
 
           expect(tester.takeException(), isNull);
-          expect(find.text('Modifier le client'), findsOneWidget);
+          expect(find.text('Edit client'), findsOneWidget);
         });
       }
     }

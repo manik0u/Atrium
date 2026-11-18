@@ -52,26 +52,26 @@ class SettingsTab extends ConsumerWidget {
 
   static final List<_SettingsGroup> _groups = [
     _SettingsGroup(
-      title: 'Profils et qualité',
+      title: S.t('profilesQuality'),
       items: [
         _SettingsItem(
           id: 'profiles',
-          title: 'Profils',
-          subtitle: 'Profils de qualité, métadonnées, délai et release',
+          title: S.t('profiles'),
+          subtitle: S.t('qualityMetadataDelayAndReleaseProfiles'),
           icon: Icons.tune,
           builder: (context, instance) => ProfilesSection(instance: instance),
         ),
         _SettingsItem(
           id: 'quality',
-          title: 'Définitions de qualité',
-          subtitle: 'Seuils de débit et limites de taille de fichier',
+          title: S.t('qualityDefinitions'),
+          subtitle: S.t('bitrateThresholdsAndFileSizeLimits'),
           icon: Icons.high_quality_outlined,
           builder: (context, instance) => QualitySection(instance: instance),
         ),
         _SettingsItem(
           id: 'custom_formats',
-          title: 'Formats personnalisés',
-          subtitle: 'Règles de correspondance des releases et scoring',
+          title: S.t('customFormats'),
+          subtitle: S.t('releaseMatchingRulesAndScoring'),
           icon: Icons.filter_list,
           builder: (context, instance) =>
               CustomFormatsSection(instance: instance),
@@ -79,55 +79,55 @@ class SettingsTab extends ConsumerWidget {
       ],
     ),
     _SettingsGroup(
-      title: 'Médias et organisation',
+      title: S.t('mediaOrganization'),
       items: [
         _SettingsItem(
           id: 'media_management',
-          title: 'Gestion des médias',
-          subtitle: 'Nommage des pistes, structures de dossiers et import',
+          title: S.t('mediaManagement'),
+          subtitle: S.t('trackNamingFolderStructuresAndImporting'),
           icon: Icons.folder_copy_outlined,
           builder: (context, instance) =>
               MediaManagementSection(instance: instance),
         ),
         _SettingsItem(
           id: 'root_folders',
-          title: 'Dossiers racine',
-          subtitle: 'Chemins de stockage de la bibliothèque et espace disque',
+          title: S.t('rootFolders'),
+          subtitle: S.t('libraryStoragePathsAndDiskSpace'),
           icon: Icons.folder_open_outlined,
           builder: (context, instance) =>
               RootFoldersSection(instance: instance),
         ),
         _SettingsItem(
           id: 'tags',
-          title: 'Balises',
-          subtitle: "Labels d'organisation des artistes et releases",
+          title: S.t('tags'),
+          subtitle: S.t('artistAndReleaseOrganizationLabels'),
           icon: Icons.label_outline,
           builder: (context, instance) => TagsSection(instance: instance),
         ),
       ],
     ),
     _SettingsGroup(
-      title: 'Indexeurs et téléchargements',
+      title: S.t('indexersDownloads'),
       items: [
         _SettingsItem(
           id: 'indexers',
-          title: 'Indexeurs',
-          subtitle: 'Flux de recherche et restrictions',
+          title: S.t('indexers'),
+          subtitle: S.t('searchFeedsAndRestrictions'),
           icon: Icons.travel_explore,
           builder: (context, instance) => IndexersSection(instance: instance),
         ),
         _SettingsItem(
           id: 'download_clients',
-          title: 'Clients de téléchargement',
-          subtitle: 'Connexions des clients torrent et Usenet',
+          title: S.t('downloadClients'),
+          subtitle: S.t('torrentAndUsenetClientConnections'),
           icon: Icons.download_outlined,
           builder: (context, instance) =>
               DownloadClientsSection(instance: instance),
         ),
         _SettingsItem(
           id: 'import_lists',
-          title: "Listes d'import",
-          subtitle: 'Spotify, Last.fm et synchro automatique',
+          title: S.t('importLists'),
+          subtitle: S.t('spotifyLastFmAndAutomatedSync'),
           icon: Icons.playlist_add,
           builder: (context, instance) =>
               ImportListsSection(instance: instance),
@@ -135,27 +135,27 @@ class SettingsTab extends ConsumerWidget {
       ],
     ),
     _SettingsGroup(
-      title: 'Intégrations et hôte',
+      title: S.t('integrationsHost'),
       items: [
         _SettingsItem(
           id: 'connect',
-          title: 'Se connecter',
-          subtitle: 'Discord, Telegram, webhooks et alertes',
+          title: S.t('connect'),
+          subtitle: S.t('discordTelegramWebhooksAndAlerts'),
           icon: Icons.notifications_active_outlined,
           builder: (context, instance) => ConnectSection(instance: instance),
         ),
         _SettingsItem(
           id: 'metadata',
-          title: 'Consommateurs de métadonnées',
-          subtitle: 'Métadonnées Kodi, Roon et lecteurs locaux',
+          title: S.t('metadataConsumers'),
+          subtitle: S.t('kodiRoonAndLocalMusicPlayerMetadata'),
           icon: Icons.perm_media_outlined,
           builder: (context, instance) =>
               MetadataConsumersSection(instance: instance),
         ),
         _SettingsItem(
           id: 'general',
-          title: 'Général',
-          subtitle: 'Hôte, port, SSL, authentification et sécurité',
+          title: S.t('general'),
+          subtitle: S.t('hostPortSSLAuthenticationAndSecurity'),
           icon: Icons.settings_outlined,
           builder: (context, instance) =>
               GeneralSettingsSection(instance: instance),
@@ -191,11 +191,11 @@ class SettingsTab extends ConsumerWidget {
             backgroundColor: theme.colorScheme.surface,
             leading: IconButton(
               icon: const Icon(Icons.menu),
-              tooltip: 'Ouvrir le menu latéral',
+              tooltip: S.t('openDrawer'),
               onPressed: () => Scaffold.of(context).openDrawer(),
             ),
             title: Text(
-              'Settings',
+              S.t('settings'),
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),

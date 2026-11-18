@@ -26,14 +26,14 @@ class TautulliHome extends StatelessWidget {
       length: 4,
       child: Column(
         children: <Widget>[
-          const TabBar(
+          TabBar(
             isScrollable: true,
             tabAlignment: TabAlignment.start,
             tabs: <Widget>[
-              Tab(icon: Icon(Icons.play_circle_outline), text: 'Activité'),
-              Tab(icon: Icon(Icons.history), text: 'Historique'),
-              Tab(icon: Icon(Icons.bar_chart_outlined), text: 'Statistiques'),
-              Tab(icon: Icon(Icons.people_alt_outlined), text: 'Utilisateurs'),
+              Tab(icon: Icon(Icons.play_circle_outline), text: S.t('activity')),
+              Tab(icon: Icon(Icons.history), text: S.t('history')),
+              Tab(icon: Icon(Icons.bar_chart_outlined), text: S.t('statistics')),
+              Tab(icon: Icon(Icons.people_alt_outlined), text: S.t('users')),
             ],
           ),
           Expanded(
@@ -73,38 +73,38 @@ class _ActivityTab extends ConsumerWidget {
             
           if (a.sessions.isEmpty) {
             return EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: () async => ref.invalidate(tautulliActivityProvider(instance)),
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          children: const <Widget>[
+          children: <Widget>[
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.podcasts_outlined,
-              title: 'Aucune lecture en cours',
-              message: 'Aucun flux actif pour le moment.',
+              title: S.t('nothingPlaying'),
+              message: S.t('noActiveStreamsRightNow'),
             ),
           ],
         ),
       );
           }
           return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async => ref.invalidate(tautulliActivityProvider(instance)),
       child: ListView.builder(
@@ -171,7 +171,7 @@ class _ActivitySummary extends StatelessWidget {
             child: _StatTile(
               icon: Icons.sensors,
               value: '${activity.streamCount}',
-              label: activity.streamCount == 1 ? 'Flux' : 'Flux',
+              label: activity.streamCount == 1 ? S.t('stream') : S.t('stream'),
               color: cs.primary,
             ),
           ),
@@ -180,7 +180,7 @@ class _ActivitySummary extends StatelessWidget {
             child: _StatTile(
               icon: Icons.speed,
               value: fmtTautulliKbps(activity.totalBandwidth),
-              label: 'Bande passante',
+              label: S.t('bandwidth'),
               color: cs.tertiary,
             ),
           ),
@@ -189,7 +189,7 @@ class _ActivitySummary extends StatelessWidget {
             child: _StatTile(
               icon: Icons.transform,
               value: '${activity.transcodeCount}',
-              label: 'Transcodage',
+              label: S.t('transcoding'),
               color: cs.secondary,
             ),
           ),
@@ -486,9 +486,9 @@ class _DecisionChip extends StatelessWidget {
   }
 
   String _label() => switch (decision.toLowerCase()) {
-        'direct play' => 'Lecture directe',
-        'copy' || 'direct stream' => 'Flux direct',
-        'transcode' => 'Transcodage',
+        'direct play' => S.t('directPlay'),
+        'copy' || 'direct stream' => S.t('directStream'),
+        'transcode' => S.t('transcoding'),
         _ => decision,
       };
 }
@@ -571,12 +571,12 @@ class _SessionSheetState extends ConsumerState<_SessionSheet> {
             ),
             const SizedBox(height: Insets.md),
             _DetailGroup(
-              label: 'Session',
+              label: S.t('session'),
               children: <Widget>[
-                _DetailRow(label: 'Utilisateur', value: s.friendlyName),
-                _DetailRow(label: 'État', value: _capitalize(s.state)),
+                _DetailRow(label: S.t('user'), value: s.friendlyName),
+                _DetailRow(label: S.t('state'), value: _capitalize(s.state)),
                 _DetailRow(
-                  label: 'Lecteur',
+                  label: S.t('player'),
                   value: <String>[
                     if (s.player.isNotEmpty) s.player,
                     if (s.product.isNotEmpty) s.product,
@@ -584,32 +584,32 @@ class _SessionSheetState extends ConsumerState<_SessionSheet> {
                   ].join(' • '),
                 ),
                 if (s.qualityProfile.isNotEmpty)
-                  _DetailRow(label: 'Qualité', value: s.qualityProfile),
+                  _DetailRow(label: S.t('quality'), value: s.qualityProfile),
                 if (s.location.isNotEmpty)
                   _DetailRow(
-                    label: 'Emplacement',
+                    label: S.t('location'),
                     value: s.location.toUpperCase(),
                   ),
-                _DetailRow(label: 'Progression', value: '${s.progressPercent} %'),
+                _DetailRow(label: S.t('progress'), value: S.t('sProgressPercent1', [s.progressPercent])),
               ],
             ),
             const SizedBox(height: Insets.md),
             _DetailGroup(
-              label: 'Flux',
+              label: S.t('stream'),
               children: <Widget>[
                 _ChipDetailRow(
-                  label: 'Décision',
+                  label: S.t('decision'),
                   value: _capitalize(s.transcodeDecision),
                 ),
                 if (video.isNotEmpty)
-                  _ChipDetailRow(label: 'Vidéo', value: video),
+                  _ChipDetailRow(label: S.t('video'), value: video),
                 if (audio.isNotEmpty)
-                  _ChipDetailRow(label: 'Audio', value: audio),
+                  _ChipDetailRow(label: S.t('audio'), value: audio),
                 if (s.container.isNotEmpty)
-                  _DetailRow(label: 'Conteneur', value: s.container),
+                  _DetailRow(label: S.t('container'), value: s.container),
                 if (s.bandwidth > 0)
                   _DetailRow(
-                    label: 'Bande passante',
+                    label: S.t('bandwidth'),
                     value: fmtTautulliKbps(s.bandwidth),
                   ),
               ],
@@ -628,7 +628,7 @@ class _SessionSheetState extends ConsumerState<_SessionSheet> {
                       child: ExpressiveProgressIndicator(strokeWidth: 2),
                     )
                   : const Icon(Icons.stop_circle_outlined),
-              label: const Text('Interrompre le flux'),
+              label: Text(S.t('terminateStream')),
             ),
             if (_error != null) ...<Widget>[
               const SizedBox(height: Insets.sm),
@@ -679,19 +679,19 @@ class _SessionSheetState extends ConsumerState<_SessionSheet> {
       // Root navigator is showDialog's default, satisfying the hard rule.
       context: context,
       builder: (BuildContext dialogContext) => AlertDialog(
-        title: const Text('Interrompre le flux ?'),
+        title: Text(S.t('terminateStream_3')),
         content: Text(
-          '${widget.session.friendlyName} sera arrêté avec un message. '
+          S.t('widgetSessionFriendlyNameWillBeStoppedWithAMessage1', [widget.session.friendlyName]) +
           'Requires Plex Pass.',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: const Text('Interrompre'),
+            child: Text(S.t('terminate')),
           ),
         ],
       ),
@@ -714,7 +714,7 @@ class _SessionSheetState extends ConsumerState<_SessionSheet> {
     } on Object catch (e) {
       if (mounted) {
         setState(() {
-          _error = e is NetworkException ? e.message : "Échec de l'interruption";
+          _error = e is NetworkException ? e.message : S.t('terminateFailed');
         });
       }
     } finally {
@@ -745,38 +745,38 @@ class _HistoryTab extends ConsumerWidget {
             
           if (page.records.isEmpty) {
             return EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: () async => ref.invalidate(tautulliHistoryProvider(instance)),
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          children: const <Widget>[
+          children: <Widget>[
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.history,
-              title: 'Aucun historique',
-              message: "Rien n'a encore été regardé.",
+              title: S.t('noHistory'),
+              message: S.t('nothingHasBeenWatchedYet'),
             ),
           ],
         ),
       );
           }
           return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async => ref.invalidate(tautulliHistoryProvider(instance)),
       child: ListView.builder(
@@ -927,39 +927,39 @@ class _StatsTab extends ConsumerWidget {
               all.where((TautulliHomeStat s) => s.rows.isNotEmpty).toList();
           if (sections.isEmpty) {
             return EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: () async =>
           ref.invalidate(tautulliHomeStatsProvider(instance)),
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          children: const <Widget>[
+          children: <Widget>[
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.bar_chart,
-              title: 'Aucune statistique',
-              message: 'Aucune lecture ces 30 derniers jours.',
+              title: S.t('noStatistics'),
+              message: S.t('noPlaysInTheLast30Days'),
             ),
           ],
         ),
       );
           }
           return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async =>
           ref.invalidate(tautulliHomeStatsProvider(instance)),
@@ -1164,38 +1164,38 @@ class _UsersTab extends ConsumerWidget {
             
           if (list.isEmpty) {
             return EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: () async => ref.invalidate(tautulliUsersProvider(instance)),
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          children: const <Widget>[
+          children: <Widget>[
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.people_outline,
-              title: 'Aucun utilisateur',
-              message: "Tautulli n'a encore vu aucun utilisateur.",
+              title: S.t('noUsers'),
+              message: S.t('tautulliHasNotSeenAnyUsersYet'),
             ),
           ],
         ),
       );
           }
           return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async => ref.invalidate(tautulliUsersProvider(instance)),
       child: ListView.builder(
@@ -1557,7 +1557,7 @@ String relativeEpoch(int epochSeconds) {
       DateTime.fromMillisecondsSinceEpoch(epochSeconds * 1000);
   final Duration diff = DateTime.now().difference(then);
   if (diff.inMinutes < 1) {
-    return 'just now';
+    return S.t('justNow_2');
   }
   if (diff.inHours < 1) {
     return '${diff.inMinutes}m ago';

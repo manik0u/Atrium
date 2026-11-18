@@ -24,7 +24,7 @@ class HistoryItemCard extends StatelessWidget {
     final difference = now.difference(dt);
 
     if (difference.inMinutes < 1) {
-      return 'Just now';
+      return S.t('justNow');
     } else if (difference.inMinutes < 60) {
       return '${difference.inMinutes}m ago';
     } else if (difference.inHours < 24) {
@@ -73,12 +73,12 @@ class HistoryItemCard extends StatelessWidget {
         !isDirectStream;
 
     final String qualityLabel = isDirectPlay
-        ? 'Direct Play'
+        ? S.t('directPlay')
         : isDirectStream
-            ? 'Direct Stream'
+            ? S.t('directStream')
             : isHw
-                ? 'HW Transcode'
-                : 'CPU Transcode';
+                ? S.t('hwTranscode')
+                : S.t('cpuTranscode');
 
     final Color qualityColor = isDirectPlay
         ? const Color(0xFF4CAF50)
@@ -346,7 +346,7 @@ class HistoryItemCard extends StatelessWidget {
                       ],
                       const Spacer(),
                       if (item.watched)
-                        const Row(
+                        Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Icon(
@@ -356,7 +356,7 @@ class HistoryItemCard extends StatelessWidget {
                             ),
                             SizedBox(width: 3),
                             Text(
-                              'Completed',
+                              S.t('completed'),
                               style: TextStyle(
                                 color: Color(0xFF4CAF50),
                                 fontSize: 9,

@@ -127,7 +127,7 @@ class ActiveStreamsSection extends StatelessWidget {
                     const SizedBox(width: Insets.md),
                     Expanded(
                       child: Text(
-                        'Aucun flux en lecture pour le moment.',
+                        S.t('noActiveStreamsPlayingRightNow'),
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),

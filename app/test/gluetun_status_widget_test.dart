@@ -67,7 +67,7 @@ void main() {
     );
     expect(badge.color, scheme.primary);
     expect(
-      tester.widget<Text>(find.text('EN COURS')).style?.color,
+      tester.widget<Text>(find.text('RUNNING')).style?.color,
       scheme.primary,
     );
   });

@@ -5,6 +5,7 @@
 library;
 
 export 'src/health.dart';
+export 'src/i18n/i18n.dart';
 export 'src/instance.dart';
 export 'src/instance_auth.dart';
 export 'src/profile.dart';

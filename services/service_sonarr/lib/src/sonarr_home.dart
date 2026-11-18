@@ -185,31 +185,31 @@ class SonarrHome extends ConsumerWidget {
                       .state = index;
                 }
               },
-              destinations: const [
+              destinations: [
                 NavigationDestination(
                   icon: Icon(Icons.tv_outlined),
                   selectedIcon: Icon(Icons.tv),
-                  label: 'Séries',
+                  label: S.t('series'),
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.swap_vert_outlined),
                   selectedIcon: Icon(Icons.swap_vert),
-                  label: 'Activité',
+                  label: S.t('activity'),
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.running_with_errors_outlined),
                   selectedIcon: Icon(Icons.running_with_errors),
-                  label: 'Recherchés',
+                  label: S.t('wanted'),
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.settings_outlined),
                   selectedIcon: Icon(Icons.settings),
-                  label: 'Paramètres',
+                  label: S.t('settings'),
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.computer_outlined),
                   selectedIcon: Icon(Icons.computer),
-                  label: 'Système',
+                  label: S.t('system'),
                 ),
               ],
             ),

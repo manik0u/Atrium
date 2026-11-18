@@ -161,7 +161,7 @@ class _AdguardHomeClientSheetState
                   FilledButton.tonalIcon(
                     onPressed: _retry,
                     icon: const Icon(Icons.refresh),
-                    label: const Text('Réessayer'),
+                    label: Text(S.t('retry')),
                   ),
                 ] else
                   const Padding(
@@ -187,12 +187,12 @@ class _AdguardHomeClientSheetState
                   ? FilledButton.icon(
                       onPressed: () => _open(lookup),
                       icon: const Icon(Icons.person_add_alt),
-                      label: const Text('Ajouter comme client persistant'),
+                      label: Text(S.t('addAsPersistentClient')),
                     )
                   : FilledButton.tonalIcon(
                       onPressed: () => _open(lookup),
                       icon: const Icon(Icons.edit_outlined),
-                      label: const Text('Modifier le client'),
+                      label: Text(S.t('editClient')),
                     ),
             ),
           ),
@@ -207,17 +207,17 @@ class _AdguardHomeClientSheetState
     final int? queries = lookup.queries;
     return <Widget>[
       if (queries != null)
-        AdguardHomeField('Queries', formatAdguardHomeCount(queries)),
+        AdguardHomeField(S.t('queries'), formatAdguardHomeCount(queries)),
       if (client != null) ...<Widget>[
         const AdguardHomeHeading('Persistent client'),
-        AdguardHomeField('Identifiers', client.ids.join('\n')),
-        AdguardHomeField('Tags', client.tags.join(', ')),
+        AdguardHomeField(S.t('identifiers'), client.ids.join('\n')),
+        AdguardHomeField(S.t('tags'), client.tags.join(', ')),
         AdguardHomeField(
-          'Settings',
+          S.t('settings'),
           client.useGlobalSettings ? 'Global' : 'Its own',
         ),
         AdguardHomeField(
-          'Blocked services',
+          S.t('blockedServices'),
           client.useGlobalBlockedServices
               ? 'Global'
               : adguardHomeServicesBlockedLabel(client.blockedServices.length),
@@ -228,9 +228,9 @@ class _AdguardHomeClientSheetState
           (seen.name.isNotEmpty ||
               seen.source.isNotEmpty ||
               seen.whois.isNotEmpty)) ...<Widget>[
-        const AdguardHomeHeading('Vu par le serveur'),
+        AdguardHomeHeading(S.t('seenByTheServer')),
         // The sheet is already called this unless it has a client's name.
-        if (seen.name != lookup.title) AdguardHomeField('Nom', seen.name),
+        if (seen.name != lookup.title) AdguardHomeField(S.t('name'), seen.name),
         AdguardHomeField(
           'Learned from',
           adguardHomeClientSourceLabel(seen.source),
@@ -248,8 +248,7 @@ class _AdguardHomeClientSheetState
                 ? 'No persistent client lists it. This server cannot say '
                     'whether one that goes by a MAC address is this device.'
                 : seen == null
-                    ? "AdGuard Home n'a aucun paramètre pour lui et ne l'a pas vu "
-                        'it under a name.'
+                    ? S.t('adguardHomeHasNoSettingsForItAndHasNotSeenItUnderAName')
                     : 'AdGuard Home has no settings for it. As a persistent '
                         'client it can have its own.',
             style: theme.textTheme.bodyMedium

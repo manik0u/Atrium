@@ -233,7 +233,7 @@ class SpeedtestRunController extends Notifier<SpeedtestRunState> {
           phase: SpeedtestRunPhase.running,
           result: active,
           message:
-              'Un speedtest est déjà ${active.status.label.toLowerCase()}.',
+              S.t('aSpeedTestIsAlreadyActiveStatusLabelToLowerCase1', [active.status.label.toLowerCase()]),
         );
         await _poll(api, active.id);
         return;
@@ -268,9 +268,9 @@ class SpeedtestRunController extends Notifier<SpeedtestRunState> {
       }
     } on Object {
       if (!_disposed) {
-        state = const SpeedtestRunState(
+        state = SpeedtestRunState(
           phase: SpeedtestRunPhase.failed,
-          message: "Le speedtest n'a pas pu être démarré.",
+          message: S.t('theSpeedTestCouldNotBeStarted'),
         );
       }
     }
@@ -281,10 +281,9 @@ class SpeedtestRunController extends Notifier<SpeedtestRunState> {
     required DateTime submittedAt,
     required Set<int> baselineIds,
   }) async {
-    state = const SpeedtestRunState(
+    state = SpeedtestRunState(
       phase: SpeedtestRunPhase.reconciling,
-      message: "La réponse de l'exécution a été interrompue. Vérification si le speedtest a été accepté…"
-          'test was accepted...',
+      message: S.t('theRunResponseWasInterruptedCheckingWhetherTheSpeedTestWasAccepted'),
     );
     final Duration interval = ref.read(speedtestRunPollIntervalProvider);
     final int maxPolls = ref.read(speedtestRunReconcileMaxPollsProvider);
@@ -320,10 +319,10 @@ class SpeedtestRunController extends Notifier<SpeedtestRunState> {
     if (_disposed) {
       return;
     }
-    state = const SpeedtestRunState(
+    state = SpeedtestRunState(
       phase: SpeedtestRunPhase.indeterminate,
-      message: "Atrium n'a pas pu confirmer si le speedtest a été accepté. "
-          'Relancer peut créer un doublon et demande une confirmation.',
+      message: S.t('atriumCouldNotConfirmWhetherTheSpeedTestWasAccepted')
+          S.t('runningAgainMayCreateADuplicateAndRequiresConfirmation'),
     );
     _refreshResults();
   }
@@ -354,7 +353,7 @@ class SpeedtestRunController extends Notifier<SpeedtestRunState> {
     state = SpeedtestRunState(
       phase: SpeedtestRunPhase.timedOut,
       result: state.result,
-      message: 'Le test est peut-être encore en cours. Actualisez les résultats pour vérifier.',
+      message: S.t('theTestMayStillBeRunningRefreshResultsToCheckIt'),
     );
     _refreshResults();
   }
@@ -391,7 +390,7 @@ class SpeedtestRunController extends Notifier<SpeedtestRunState> {
       state = SpeedtestRunState(
         phase: SpeedtestRunPhase.completed,
         result: result,
-        message: 'Speedtest terminé.',
+        message: S.t('speedTestCompleted'),
       );
       _refreshResults();
       return false;
@@ -404,7 +403,7 @@ class SpeedtestRunController extends Notifier<SpeedtestRunState> {
         message: result.message ??
             (result.status == SpeedtestResultStatus.unknown
                 ? 'Speedtest Tracker returned an unsupported test status.'
-                : 'Le speedtest : ${result.status.label.toLowerCase()}.'),
+                : S.t('theSpeedTestResultStatusLabelToLowerCase1', [result.status.label.toLowerCase()])),
       );
       _refreshResults();
       return false;

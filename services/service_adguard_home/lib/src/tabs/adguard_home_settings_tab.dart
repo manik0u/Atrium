@@ -34,24 +34,23 @@ class AdguardHomeSettingsTab extends ConsumerWidget {
     return ListView(
       padding: const EdgeInsets.only(bottom: Insets.xl),
       children: <Widget>[
-        const _Heading('Protection'),
+        _Heading(S.t('protection')),
         _Section(
           icon: Icons.tune,
-          title: 'Général',
+          title: S.t('general'),
           summary: switch (filtering) {
-            true => 'Filtrage activé, navigation sécurisée, contrôle parental, recherche sécurisée activés'
-                'search',
-            false => 'Filtrage désactivé',
-            null => 'Filtrage, navigation sécurisée, contrôle parental, recherche sécurisée',
+            true => S.t('filteringOnSafeBrowsingParentalControlSafeSearch'),
+            false => S.t('filteringOff'),
+            null => S.t('filteringSafeBrowsingParentalControlSafeSearch'),
           },
           onTap: () =>
               open(AdguardHomeGeneralSettingsScreen(instance: instance)),
         ),
-        const _Heading('Logs'),
+        _Heading(S.t('logs')),
         _Section(
           icon: Icons.receipt_long_outlined,
-          title: 'Journal des requêtes',
-          summary: 'Combien de temps les requêtes sont conservées, et lesquelles sont exclues',
+          title: S.t('queryLog'),
+          summary: S.t('howLongQueriesAreKeptAndWhichAreLeftOut'),
           onTap: () => open(
             AdguardHomeRetentionScreen(
               instance: instance,
@@ -61,8 +60,8 @@ class AdguardHomeSettingsTab extends ConsumerWidget {
         ),
         _Section(
           icon: Icons.insights_outlined,
-          title: 'Statistiques',
-          summary: 'Combien de temps elles sont conservées, et Réinitialiser les statistiques',
+          title: S.t('statistics'),
+          summary: S.t('howLongTheyAreKeptAndResetStatistics'),
           onTap: () => open(
             AdguardHomeRetentionScreen(
               instance: instance,
@@ -73,44 +72,44 @@ class AdguardHomeSettingsTab extends ConsumerWidget {
         const _Heading('DNS'),
         _Section(
           icon: Icons.dns_outlined,
-          title: 'Serveurs amont',
-          summary: "Serveurs amont, de secours et d'amorçage, Tester les amonts",
+          title: S.t('upstreams'),
+          summary: S.t('upstreamFallbackAndBootstrapServersTestUpstreams'),
           onTap: () => open(AdguardHomeDnsUpstreamsScreen(instance: instance)),
         ),
         _Section(
           icon: Icons.settings_ethernet,
-          title: 'Serveur DNS',
+          title: S.t('dnsServer'),
           summary: 'Rate limit, EDNS, DNSSEC, IPv6, blocking mode',
           onTap: () => open(AdguardHomeDnsServerScreen(instance: instance)),
         ),
         _Section(
           icon: Icons.cached,
-          title: 'Cache DNS',
+          title: S.t('dnsCache'),
           summary: 'Size, TTL overrides, optimistic caching, Clear cache',
           onTap: () => open(AdguardHomeDnsCacheScreen(instance: instance)),
         ),
         _Section(
           icon: Icons.admin_panel_settings_outlined,
-          title: 'Accès',
-          summary: 'Clients autorisés et interdits, domaines interdits',
+          title: S.t('access'),
+          summary: S.t('allowedAndDisallowedClientsDisallowedDomains'),
           onTap: () => open(AdguardHomeAccessScreen(instance: instance)),
         ),
-        const _Heading('Server'),
+        _Heading(S.t('server')),
         _Section(
           icon: Icons.lock_outline,
-          title: 'Chiffrement',
+          title: S.t('encryption'),
           summary: 'Whether DNS over HTTPS, TLS and QUIC are set up',
           onTap: () => open(AdguardHomeEncryptionScreen(instance: instance)),
         ),
         _Section(
           icon: Icons.router_outlined,
           title: 'DHCP',
-          summary: "S'il distribue des adresses, et à qui",
+          summary: S.t('whetherItHandsOutAddressesAndToWhom'),
           onTap: () => open(AdguardHomeDhcpScreen(instance: instance)),
         ),
         _Section(
           icon: Icons.info_outline,
-          title: 'À propos',
+          title: S.t('about'),
           summary: status == null || status.version.isEmpty
               ? 'Version, DNS addresses, updates'
               : 'Version ${status.version}',

@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:intl/intl.dart';
 
 /// An individual speedtest result record from MySpeed.
@@ -113,8 +114,8 @@ class MySpeedTest {
     return double.tryParse(val.toString()) ?? 0.0;
   }
 
-  String get formattedDownload => '${download.toStringAsFixed(1)} Mbit/s';
-  String get formattedUpload => '${upload.toStringAsFixed(1)} Mbit/s';
+  String get formattedDownload => S.t('downloadToStringAsFixed1Mbps1', [download.toStringAsFixed(1)]);
+  String get formattedUpload => S.t('uploadToStringAsFixed1Mbps1', [upload.toStringAsFixed(1)]);
   String get formattedPing => '${ping.toStringAsFixed(0)} ms';
   String? get formattedJitter => jitter != null ? '${jitter!.toStringAsFixed(0)} ms' : null;
 

@@ -451,7 +451,7 @@ void main() {
         'paths': {
           '/api/v1/queue': {
             'get': {
-              'tags': ["File d'attente"],
+              'tags': ['Queue'],
               'parameters': [
                 {
                   'name': 'sortDirection',
@@ -760,7 +760,7 @@ void main() {
         'paths': {
           '/api/v1/search': {
             'get': {
-              'tags': ['Rechercher'],
+              'tags': ['Search'],
               'parameters': [
                 {
                   'name': 'protocols',

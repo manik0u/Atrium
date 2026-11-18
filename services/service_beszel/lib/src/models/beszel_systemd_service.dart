@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'beszel_systemd_service.freezed.dart';
@@ -22,24 +23,24 @@ abstract class BeszelSystemdService with _$BeszelSystemdService {
 extension BeszelSystemdServiceX on BeszelSystemdService {
   String get stateStr {
     switch (state) {
-      case 0: return 'Active';
-      case 1: return 'Inactive';
-      case 2: return 'Failed';
-      case 3: return 'Activating';
+      case 0: return S.t('active');
+      case 1: return S.t('inactive');
+      case 2: return S.t('failed');
+      case 3: return S.t('activating');
       case 4: return 'Deactivating';
       case 5: return 'Reloading';
-      default: return 'Unknown';
+      default: return S.t('unknown');
     }
   }
 
   String get subStr {
     switch (sub) {
       case 0: return 'Dead';
-      case 1: return 'Running';
+      case 1: return S.t('running');
       case 2: return 'Exited';
-      case 3: return 'Failed';
-      case 4: return 'Unknown';
-      default: return 'Unknown';
+      case 3: return S.t('failed');
+      case 4: return S.t('unknown');
+      default: return S.t('unknown');
     }
   }
 }

@@ -40,13 +40,13 @@ class _DownloadClientsScreenState extends ConsumerState<DownloadClientsScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Clients de téléchargement et mappages'),
+        title: Text(S.t('downloadClientsMappings')),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Clients'),
-            Tab(text: 'Mappages de chemins'),
-            Tab(text: 'Options'),
+          tabs: [
+            Tab(text: S.t('clients')),
+            Tab(text: S.t('pathMappings')),
+            Tab(text: S.t('options')),
           ],
         ),
       ),
@@ -75,7 +75,7 @@ class _DownloadClientsTab extends ConsumerWidget {
     final presets = schemasAsync.value ?? [];
     if (presets.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Chargement des préréglages de clients de téléchargement…')),
+        SnackBar(content: Text(S.t('loadingDownloadClientPresets'))),
       );
       return;
     }
@@ -92,7 +92,7 @@ class _DownloadClientsTab extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Add Download Client',
+                S.t('addDownloadClient'),
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -103,7 +103,7 @@ class _DownloadClientsTab extends ConsumerWidget {
                   itemCount: presets.length,
                   itemBuilder: (context, index) {
                     final preset = presets[index];
-                    final name = preset['name'] as String? ?? 'Client';
+                    final name = preset['name'] as String? ?? S.t('client');
                     final implementation =
                         preset['implementationName'] as String? ?? '';
 
@@ -148,7 +148,7 @@ class _DownloadClientsTab extends ConsumerWidget {
       builder: (context) {
         return AlertDialog(
           title:
-              Text(isNew ? 'Ajouter ${client['name']}' : 'Edit ${client['name']}'),
+              Text(isNew ? S.t('addClient_2')name']}' : 'Edit ${client['name']}'),
           content: SizedBox(
             width: double.maxFinite,
             child: SingleChildScrollView(
@@ -192,7 +192,7 @@ class _DownloadClientsTab extends ConsumerWidget {
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Échec de l'enregistrement du client de téléchargement : $e"),
+                          content: Text(S.t('failedToSaveDownloadClientE1', [e])),
                         ),
                       );
                     }
@@ -221,13 +221,13 @@ class _DownloadClientsTab extends ConsumerWidget {
       ref.invalidate(radarrDownloadClientsProvider(instance));
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Client de téléchargement supprimé !')),
+          SnackBar(content: Text(S.t('downloadClientDeleted'))),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec de la suppression du client de téléchargement : $e')),
+          SnackBar(content: Text(S.t('failedToDeleteDownloadClientE1', [e]))),
         );
       }
     }
@@ -247,11 +247,11 @@ class _DownloadClientsTab extends ConsumerWidget {
       ),
       body: clientsAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, _) => Center(child: Text('Erreur : $err')),
+        error: (err, _) => Center(child: Text(S.t('errorErr1', [err]))),
         data: (clients) {
           if (clients.isEmpty) {
-            return const Center(
-              child: Text('Aucun client de téléchargement configuré. Touchez + pour en ajouter un.'),
+            return Center(
+              child: Text(S.t('noDownloadClientsConfiguredTapToAddOne')),
             );
           }
 
@@ -260,8 +260,8 @@ class _DownloadClientsTab extends ConsumerWidget {
             itemCount: clients.length,
             itemBuilder: (context, index) {
               final c = clients[index];
-              final name = c['name'] as String? ?? 'Client';
-              final proto = c['protocol'] as String? ?? 'Torrent';
+              final name = c['name'] as String? ?? S.t('client');
+              final proto = c['protocol'] as String? ?? S.t('torrent');
               final id = c['id'] as int;
 
               return Card(
@@ -272,7 +272,7 @@ class _DownloadClientsTab extends ConsumerWidget {
                     name,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text('Protocole : ${proto.toUpperCase()}'),
+                  subtitle: Text(S.t('protocolProtoToUpperCase1', [proto.toUpperCase()])),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -322,33 +322,33 @@ class _RemotePathMappingsTab extends ConsumerWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(isEdit ? 'Modifier le mappage de chemin' : 'Ajouter un mappage de chemin'),
+          title: Text(isEdit ? S.t('editPathMapping') : S.t('addPathMapping')),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: hostController,
-                decoration: const InputDecoration(
-                  labelText: 'Hôte',
-                  helperText: 'Hôte du client de téléchargement (exactement tel que configuré)',
+                decoration: InputDecoration(
+                  labelText: S.t('host'),
+                  helperText: S.t('downloadClientHostExactlyAsConfigured'),
                   border: OutlineInputBorder(),
                 ),
               ),
               const SizedBox(height: Insets.md),
               TextField(
                 controller: remoteController,
-                decoration: const InputDecoration(
-                  labelText: 'Chemin distant',
-                  helperText: 'Chemin indiqué par le client de téléchargement',
+                decoration: InputDecoration(
+                  labelText: S.t('remotePath'),
+                  helperText: S.t('pathReportedByDownloadClient'),
                   border: OutlineInputBorder(),
                 ),
               ),
               const SizedBox(height: Insets.md),
               TextField(
                 controller: localController,
-                decoration: const InputDecoration(
-                  labelText: 'Chemin local',
-                  helperText: 'Chemin accessible par le système local de Radarr',
+                decoration: InputDecoration(
+                  labelText: S.t('localPath'),
+                  helperText: S.t('pathAccessibleByRadarrLocalSystem'),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -357,7 +357,7 @@ class _RemotePathMappingsTab extends ConsumerWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             ElevatedButton(
               onPressed: () async {
@@ -385,18 +385,18 @@ class _RemotePathMappingsTab extends ConsumerWidget {
                   if (context.mounted) {
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Mappage de chemin enregistré !')),
+                      SnackBar(content: Text(S.t('pathMappingSaved'))),
                     );
                   }
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Erreur : $e')),
+                      SnackBar(content: Text(S.t('errorE1', [e]))),
                     );
                   }
                 }
               },
-              child: const Text('Enregistrer'),
+              child: Text(S.t('save')),
             ),
           ],
         );
@@ -410,7 +410,7 @@ class _RemotePathMappingsTab extends ConsumerWidget {
     int id,
     String host,
   ) async {
-    final confirmed = await confirmDelete(context, 'Mappage de chemin pour « $host »');
+    final confirmed = await confirmDelete(context, S.t('pathMappingForHost1', [host]));
     if (!confirmed) return;
 
     try {
@@ -419,13 +419,13 @@ class _RemotePathMappingsTab extends ConsumerWidget {
       ref.invalidate(radarrRemotePathMappingsProvider(instance));
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Mappage de chemin supprimé !')),
+          SnackBar(content: Text(S.t('pathMappingDeleted'))),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec de la suppression du mappage de chemin : $e')),
+          SnackBar(content: Text(S.t('failedToDeletePathMappingE1', [e]))),
         );
       }
     }
@@ -443,11 +443,11 @@ class _RemotePathMappingsTab extends ConsumerWidget {
       ),
       body: mappingsAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, _) => Center(child: Text('Erreur : $err')),
+        error: (err, _) => Center(child: Text(S.t('errorErr1', [err]))),
         data: (mappings) {
           if (mappings.isEmpty) {
-            return const Center(
-              child: Text('Aucun mappage de chemin configuré. Touchez + pour en ajouter un.'),
+            return Center(
+              child: Text(S.t('noPathMappingsConfiguredTapToAddOne')),
             );
           }
 
@@ -469,7 +469,7 @@ class _RemotePathMappingsTab extends ConsumerWidget {
                     'Host: $host',
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text('Distant : $remote\nLocal : $local'),
+                  subtitle: Text(S.t('remoteRemoteLocalLocal2', [remote, local])),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -542,13 +542,13 @@ class _DownloadClientOptionsTabState
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Configuration du client de téléchargement enregistrée !')),
+          SnackBar(content: Text(S.t('downloadClientConfigSaved'))),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erreur : $e')),
+          SnackBar(content: Text(S.t('errorE1', [e]))),
         );
       }
     } finally {
@@ -564,7 +564,7 @@ class _DownloadClientOptionsTabState
 
     return configAsync.when(
       loading: () => const Center(child: ExpressiveProgressIndicator()),
-      error: (err, stack) => Center(child: Text('Erreur : $err')),
+      error: (err, stack) => Center(child: Text(S.t('errorErr1', [err]))),
       data: (config) {
         _initialize(config);
 
@@ -585,7 +585,7 @@ class _DownloadClientOptionsTabState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Completed Download Handling',
+                        S.t('completedDownloadHandling'),
                         style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: theme.colorScheme.primary,
@@ -594,9 +594,9 @@ class _DownloadClientOptionsTabState
                       const SizedBox(height: Insets.md),
                       SwitchListTile(
                         contentPadding: EdgeInsets.zero,
-                        title: const Text('Activer la gestion des téléchargements terminés'),
-                        subtitle: const Text(
-                          'Importer automatiquement les téléchargements terminés depuis les clients',
+                        title: Text(S.t('enableCompletedDownloadHandling')),
+                        subtitle: Text(
+                          S.t('automaticallyImportFinishedDownloadsFromClients'),
                         ),
                         value: _enableCompletedDownloadHandling,
                         onChanged: (val) => setState(
@@ -605,9 +605,9 @@ class _DownloadClientOptionsTabState
                       ),
                       SwitchListTile(
                         contentPadding: EdgeInsets.zero,
-                        title: const Text("Re-télécharger en cas d'échec"),
-                        subtitle: const Text(
-                          'Rechercher une release alternative si le téléchargement signale un échec',
+                        title: Text(S.t('redownloadFailed')),
+                        subtitle: Text(
+                          S.t('searchForAReleaseAlternativeIfDownloadReportsFailure'),
                         ),
                         value: _autoRedownloadFailed,
                         onChanged: (val) =>
@@ -621,7 +621,7 @@ class _DownloadClientOptionsTabState
                           onPressed: _saving ? null : _save,
                           child: _saving
                               ? const ExpressiveProgressIndicator()
-                              : const Text('Enregistrer les options'),
+                              : Text(S.t('saveOptions')),
                         ),
                       ),
                     ],

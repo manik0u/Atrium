@@ -79,22 +79,22 @@ class DashboardBoard extends ConsumerWidget {
     ];
 
     if (visible.isEmpty) {
-      return const EmptyView(
+      return EmptyView(
         icon: Icons.dashboard_customize_outlined,
-        title: 'Aucun widget à afficher',
-        message: 'Utilisez le bouton de personnalisation (en haut à droite) pour ajouter des widgets.',
+        title: S.t('noWidgetsToShow'),
+        message: S.t('useTheCustomizeButtonTopRightToAddWidgets'),
       );
     }
 
     return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async => _refreshAll(ref, instances),
       child: ListView.separated(
@@ -370,7 +370,7 @@ class _EditBoard extends ConsumerWidget {
                             wolDeviceCount: wolCount,
                           )
                               ? 'Show widget'
-                              : 'A besoin de quelque chose pour le remplir',
+                              : S.t('needsSomethingThatCanFillIt'),
                           icon: const Icon(Icons.add_circle_outline),
                           onPressed:
                               DashboardBoard._configured(
@@ -400,7 +400,7 @@ class _EditBoard extends ConsumerWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   IconButton(
-                    tooltip: 'Masquer le widget',
+                    tooltip: S.t('hideWidget'),
                     icon: const Icon(Icons.visibility_off_outlined),
                     onPressed: () => ref
                         .read(dashboardLayoutProvider.notifier)

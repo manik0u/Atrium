@@ -61,8 +61,8 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen> {
 
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Actualisation de l'album et des pistes…"),
+        SnackBar(
+          content: Text(S.t('refreshingAlbumAndTracks')),
           duration: Duration(seconds: 1),
         ),
       );
@@ -81,12 +81,12 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen> {
         },
       );
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec du déclenchement de la recherche');
+        throw Exception(resp.error?.message ?? S.t('failedToTriggerSearch'));
       }
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Recherche de « ${album.title ?? 'Album'}"...'),
+            content: Text(S.t('searchingForAlbumTitle')Album'}"...'),
             duration: const Duration(seconds: 2),
           ),
         );
@@ -95,7 +95,7 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Échec de la recherche : $e'),
+            content: Text(S.t('searchFailedE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -116,14 +116,14 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen> {
         ),
       );
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec du changement de surveillance');
+        throw Exception(resp.error?.message ?? S.t('failedToToggleMonitoring'));
       }
       await _refreshAlbum();
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Échec du changement de surveillance : $e'),
+            content: Text(S.t('failedToToggleMonitoringE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -135,7 +135,7 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen> {
     LidarrInteractiveSearchScreen.show(
       context,
       instance: widget.instance,
-      title: album?.title ?? 'Album',
+      title: album?.title ?? S.t('album'),
       albumId: widget.albumId,
       artistId: widget.artistId,
     );
@@ -178,18 +178,18 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          album.title ?? 'Album',
+          album.title ?? S.t('album'),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
         actions: [
           IconButton(
-            tooltip: 'Actualiser et analyser',
+            tooltip: S.t('refreshScan'),
             icon: const Icon(Icons.refresh),
             onPressed: _refreshAlbum,
           ),
           PopupMenuButton<String>(
-            tooltip: "Plus d'options",
+            tooltip: S.t('moreOptions'),
             onSelected: (String value) {
               switch (value) {
                 case 'retag':
@@ -240,36 +240,36 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen> {
               }
             },
             itemBuilder: (BuildContext context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'track_files',
                 child: ListTile(
                   leading: Icon(Icons.audio_file_outlined),
-                  title: Text('Éditeur de fichiers de pistes'),
+                  title: Text(S.t('trackFilesEditor')),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'rename',
                 child: ListTile(
                   leading: Icon(Icons.drive_file_rename_outline),
-                  title: Text('Renommer les fichiers'),
+                  title: Text(S.t('renameFiles')),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'retag',
                 child: ListTile(
                   leading: Icon(Icons.label_outlined),
-                  title: Text('Re-tagger les fichiers'),
+                  title: Text(S.t('retagFiles')),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
               const PopupMenuDivider(),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'edit',
                 child: ListTile(
                   leading: Icon(Icons.edit_outlined),
-                  title: Text("Modifier l'album"),
+                  title: Text(S.t('editAlbum')),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
@@ -278,7 +278,7 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen> {
                 child: ListTile(
                   leading: Icon(Icons.delete_outline, color: cs.error),
                   title: Text(
-                    'Delete Album',
+                    S.t('deleteAlbum'),
                     style: TextStyle(color: cs.error),
                   ),
                   contentPadding: EdgeInsets.zero,
@@ -360,7 +360,7 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen> {
                         const SizedBox(height: 6),
                         TextButton.icon(
                           icon: const Icon(Icons.refresh, size: 16),
-                          label: const Text('Réessayer'),
+                          label: Text(S.t('retry')),
                           onPressed: _refreshAlbum,
                         ),
                       ],
@@ -374,7 +374,7 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen> {
                   padding: const EdgeInsets.all(32.0),
                   child: Center(
                     child: Text(
-                      'Aucune piste disponible pour cet album',
+                      S.t('noTracksAvailableForThisAlbum'),
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: cs.onSurfaceVariant,
                       ),
@@ -493,7 +493,7 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            track.title ?? 'Détails de la piste',
+                            track.title ?? S.t('trackDetails'),
                             style: theme.textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -524,7 +524,7 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Text(
-                      'Aucun fichier de piste téléchargé sur le disque pour cette piste.',
+                      S.t('noDownloadedTrackFileOnDiskForThisTrack'),
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: cs.onSurfaceVariant,
                       ),
@@ -543,41 +543,41 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen> {
                     ),
                   if (trackFile.path != null)
                     _InfoRow(
-                      label: 'Chemin',
+                      label: S.t('path'),
                       value: trackFile.path!,
                       isMonospace: true,
                     ),
                   if (trackFile.size != null)
                     _InfoRow(
-                      label: 'Taille',
+                      label: S.t('size'),
                       value: LidarrFormatters.formatBytes(trackFile.size),
                     ),
                   if (media?.audioCodec != null &&
                       media!.audioCodec!.isNotEmpty)
                     _InfoRow(
-                      label: 'Codec',
+                      label: S.t('codec'),
                       value: media.audioCodec!,
                     ),
                   if (media?.audioBitRate != null &&
                       media!.audioBitRate!.isNotEmpty)
                     _InfoRow(
-                      label: 'Débit',
+                      label: S.t('bitrate'),
                       value: media.audioBitRate!,
                     ),
                   if (media?.audioChannels != null)
                     _InfoRow(
-                      label: 'Canaux',
+                      label: S.t('channels'),
                       value: '${media!.audioChannels} ch',
                     ),
                   if (media?.audioBits != null && media!.audioBits!.isNotEmpty)
                     _InfoRow(
-                      label: 'Profondeur de bits',
+                      label: S.t('bitDepth'),
                       value: LidarrFormatters.formatBitDepth(media.audioBits),
                     ),
                   if (media?.audioSampleRate != null &&
                       media!.audioSampleRate!.isNotEmpty)
                     _InfoRow(
-                      label: "Fréquence d'échantillonnage",
+                      label: S.t('sampleRate'),
                       value: LidarrFormatters.formatSampleRate(
                         media.audioSampleRate,
                       ),
@@ -589,35 +589,35 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen> {
                     dense: true,
                     leading: Icon(Icons.delete_outline, color: cs.error),
                     title: Text(
-                      'Delete Audio File',
+                      S.t('deleteAudioFile_2'),
                       style: TextStyle(
                         color: cs.error,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    subtitle: const Text(
-                      'Supprimer définitivement le fichier audio du disque',
+                    subtitle: Text(
+                      S.t('permanentlyRemoveAudioFileFromDisk'),
                     ),
                     contentPadding: EdgeInsets.zero,
                     onTap: () async {
                       final bool? confirm = await showDialog<bool>(
                         context: context,
                         builder: (dCtx) => AlertDialog(
-                          title: const Text('Supprimer le fichier audio ?'),
+                          title: Text(S.t('deleteAudioFile')),
                           content: Text(
-                            'Voulez-vous vraiment supprimer « ${track.title ?? 'track'}" from disk?',
+                            S.t('areYouSureYouWantToDeleteTrackTitle')track'}" from disk?',
                           ),
                           actions: [
                             TextButton(
                               onPressed: () => Navigator.pop(dCtx, false),
-                              child: const Text('Annuler'),
+                              child: Text(S.t('cancel')),
                             ),
                             FilledButton(
                               style: FilledButton.styleFrom(
                                 backgroundColor: cs.error,
                               ),
                               onPressed: () => Navigator.pop(dCtx, true),
-                              child: const Text('Supprimer'),
+                              child: Text(S.t('delete')),
                             ),
                           ],
                         ),
@@ -633,8 +633,8 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen> {
                           if (ctx.mounted) Navigator.pop(ctx);
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Fichier de piste supprimé'),
+                              SnackBar(
+                                content: Text(S.t('trackFileDeleted')),
                               ),
                             );
                           }
@@ -642,7 +642,7 @@ class _AlbumDetailScreenState extends ConsumerState<AlbumDetailScreen> {
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text('Échec de la suppression du fichier : $e'),
+                                content: Text(S.t('failedToDeleteFileE1', [e])),
                                 backgroundColor: cs.error,
                               ),
                             );
@@ -689,7 +689,7 @@ class _AlbumHeroCard extends StatelessWidget {
         LidarrArtwork.albumCoverUrl(instance, album.images);
     final String releaseDate =
         album.releaseDate != null ? album.releaseDate!.split('T').first : '';
-    final String albumType = album.albumType ?? 'Album';
+    final String albumType = album.albumType ?? S.t('album');
     final bool isMonitored = album.monitored ?? false;
 
     final int trackFiles = album.statistics?.trackFileCount ?? 0;
@@ -732,7 +732,7 @@ class _AlbumHeroCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    album.title ?? 'Album',
+                    album.title ?? S.t('album'),
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -799,7 +799,7 @@ class _AlbumHeroCard extends StatelessWidget {
                   size: 18,
                 ),
                 label: Text(
-                  isMonitored ? 'Monitored' : 'Unmonitored',
+                  isMonitored ? S.t('monitored') : S.t('unmonitored'),
                   style: const TextStyle(fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -820,8 +820,8 @@ class _AlbumHeroCard extends StatelessWidget {
             Expanded(
               child: FilledButton.tonalIcon(
                 icon: const Icon(Icons.search, size: 18),
-                label: const Text(
-                  'Auto Search',
+                label: Text(
+                  S.t('autoSearch'),
                   style: TextStyle(fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -836,7 +836,7 @@ class _AlbumHeroCard extends StatelessWidget {
             const SizedBox(width: 8),
             IconButton.filledTonal(
               icon: const Icon(Icons.manage_search, size: 20),
-              tooltip: 'Recherche interactive',
+              tooltip: S.t('interactiveSearch'),
               style: IconButton.styleFrom(
                 visualDensity: VisualDensity.compact,
               ),
@@ -905,7 +905,7 @@ class _TrackListTile extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          track.title ?? 'Piste inconnue',
+                          track.title ?? S.t('unknownTrack'),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: theme.textTheme.bodyMedium?.copyWith(

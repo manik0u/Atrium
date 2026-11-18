@@ -1,14 +1,15 @@
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 
 import '../design_tokens.dart';
 
 /// A reusable expandable box for displaying an overview or synopsis.
 class OverviewBox extends StatefulWidget {
-  const OverviewBox({
+  OverviewBox({
     required this.overview,
-    this.title = "Vue d'ensemble",
+    String? title,
     super.key,
-  });
+  }) : title = title ?? S.t('overview');
 
   /// The text content to display.
   final String overview;

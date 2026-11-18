@@ -43,11 +43,11 @@ void main() {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
-      expect(find.text("Vue d'ensemble"), findsWidgets);
-      expect(find.text('Activité'), findsWidgets);
-      expect(find.text('Médias'), findsWidgets);
-      expect(find.text('Personnes'), findsWidgets);
-      expect(find.text('Sécurité'), findsWidgets);
+      expect(find.text('Overview'), findsWidgets);
+      expect(find.text('Activity'), findsWidgets);
+      expect(find.text('Media'), findsWidgets);
+      expect(find.text('People'), findsWidgets);
+      expect(find.text('Security'), findsWidgets);
 
       // Initially on Overview destination
       expect(
@@ -61,7 +61,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Tap Activity
-      await tester.tap(find.text('Activité'));
+      await tester.tap(find.text('Activity'));
       await tester.pumpAndSettle();
 
       expect(
@@ -70,7 +70,7 @@ void main() {
       );
 
       // Tap Media
-      await tester.tap(find.text('Médias'));
+      await tester.tap(find.text('Media'));
       await tester.pumpAndSettle();
 
       expect(
@@ -79,7 +79,7 @@ void main() {
       );
 
       // Tap People
-      await tester.tap(find.text('Personnes'));
+      await tester.tap(find.text('People'));
       await tester.pumpAndSettle();
 
       expect(
@@ -88,7 +88,7 @@ void main() {
       );
 
       // Tap Security
-      await tester.tap(find.text('Sécurité'));
+      await tester.tap(find.text('Security'));
       await tester.pumpAndSettle();
 
       expect(

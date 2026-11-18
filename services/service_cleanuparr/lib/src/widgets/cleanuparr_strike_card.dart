@@ -24,15 +24,15 @@ class CleanuparrStrikeCard extends ConsumerWidget {
       builder: (BuildContext ctx) {
         final ColorScheme cs = Theme.of(ctx).colorScheme;
         return AlertDialog(
-          title: const Text('Réinitialiser les strikes ?'),
+          title: Text(S.t('resetStrikes')),
           content: Text(
-            'Effacer tous les strikes accumulés pour « ${strikeItem.title} » ?\n\n'
-            "Cela retire l'élément de la liste des strikes et remet son compteur à zéro.",
+            S.t('clearAllAccumulatedStrikesForStrikeItemTitle1', [strikeItem.title])
+            S.t('thisRemovesTheItemFromTheStrikeListAndResetsItsCounter'),
           ),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(false),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             FilledButton.tonal(
               onPressed: () => Navigator.of(ctx).pop(true),
@@ -40,7 +40,7 @@ class CleanuparrStrikeCard extends ConsumerWidget {
                 backgroundColor: cs.errorContainer,
                 foregroundColor: cs.onErrorContainer,
               ),
-              child: const Text('Réinitialiser'),
+              child: Text(S.t('reset')),
             ),
           ],
         );
@@ -55,8 +55,8 @@ class CleanuparrStrikeCard extends ConsumerWidget {
 
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Strikes réinitialisés avec succès'),
+        SnackBar(
+          content: Text(S.t('strikesResetSuccessfully')),
           duration: Duration(seconds: 2),
         ),
       );
@@ -146,7 +146,7 @@ class CleanuparrStrikeCard extends ConsumerWidget {
               children: <Widget>[
                 if (strikeItem.hash != null && strikeItem.hash!.isNotEmpty) ...<Widget>[
                   Tooltip(
-                    message: 'Info-hash du torrent : ${strikeItem.hash}',
+                    message: S.t('torrentInfoHashStrikeItemHash1', [strikeItem.hash]),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: Insets.xs + 2,
@@ -185,7 +185,7 @@ class CleanuparrStrikeCard extends ConsumerWidget {
                 ],
                 const Spacer(),
                 IconButton(
-                  tooltip: 'Réinitialiser les strikes',
+                  tooltip: S.t('resetStrikes_2'),
                   icon: Icon(
                     Icons.delete_sweep_outlined,
                     color: colorScheme.onSurfaceVariant,

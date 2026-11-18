@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:dio/dio.dart';
 
 import 'models/speedtest_tracker_models.dart';
@@ -151,9 +152,9 @@ SpeedtestTrackerException _mapDio(
     );
   }
   if (error.type == DioExceptionType.connectionError) {
-    return const SpeedtestTrackerException(
+    return SpeedtestTrackerException(
       SpeedtestErrorKind.offline,
-      'Could not reach Speedtest Tracker.',
+      S.t('couldNotReachSpeedtestTracker'),
     );
   }
   final int? status = error.response?.statusCode;
@@ -198,14 +199,14 @@ SpeedtestTrackerException _mapDio(
           'Authenticated results require Speedtest Tracker 1.1 or newer.',
           statusCode: 404,
         ),
-      _Operation.result => const SpeedtestTrackerException(
+      _Operation.result => SpeedtestTrackerException(
           SpeedtestErrorKind.notFound,
-          "Le résultat du speedtest en file n'est plus disponible.",
+          S.t('theQueuedSpeedTestResultIsNoLongerAvailable'),
           statusCode: 404,
         ),
-      _Operation.health => const SpeedtestTrackerException(
+      _Operation.health => SpeedtestTrackerException(
           SpeedtestErrorKind.other,
-          'Le point de santé de Speedtest Tracker est introuvable.',
+          S.t('theSpeedtestTrackerHealthEndpointWasNotFound'),
           statusCode: 404,
         ),
     };

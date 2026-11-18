@@ -1,6 +1,7 @@
 import '../generated/api/raw_command_api.dart';
 import '../generated/models/command_resource.dart';
 import '../generated/responses/sonarr_exception.dart';
+import 'package:core_models/core_models.dart';
 
 /// High-level service for triggering Sonarr background commands (searches, refreshes, renames).
 class SonarrCommandService {
@@ -47,11 +48,11 @@ class SonarrCommandService {
     }
     if (response.error != null) {
       throw SonarrException(
-        response.error!.message ?? "Échec de l'exécution de la commande",
+        response.error!.message ?? S.t('commandExecutionFailed'),
         statusCode: response.statusCode,
         error: response.error,
       );
     }
-    throw SonarrException('Command execution failed', statusCode: response.statusCode);
+    throw SonarrException(S.t('commandExecutionFailed'), statusCode: response.statusCode);
   }
 }

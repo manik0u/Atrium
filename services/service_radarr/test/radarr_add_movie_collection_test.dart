@@ -111,11 +111,11 @@ void main() {
       await tester.pumpAndSettle();
       await openSheet(tester);
 
-      expect(find.text('Surveiller la collection'), findsOneWidget);
+      expect(find.text('Monitor collection'), findsOneWidget);
       expect(find.text('Gladiator Collection'), findsOneWidget);
 
       final monitorCollectionSwitchFinder = find.ancestor(
-        of: find.text('Surveiller la collection'),
+        of: find.text('Monitor collection'),
         matching: find.byType(SwitchListTile),
       );
       expect(monitorCollectionSwitchFinder, findsOneWidget);
@@ -138,7 +138,7 @@ void main() {
       await tester.pumpAndSettle();
       await openSheet(tester);
 
-      expect(find.text('Surveiller la collection'), findsNothing);
+      expect(find.text('Monitor collection'), findsNothing);
     });
 
     testWidgets(
@@ -185,7 +185,7 @@ void main() {
 
       // Toggle Monitor collection switch
       final monitorCollectionSwitchFinder = find.ancestor(
-        of: find.text('Surveiller la collection'),
+        of: find.text('Monitor collection'),
         matching: find.byType(SwitchListTile),
       );
       await tester.scrollUntilVisible(monitorCollectionSwitchFinder, 100);
@@ -194,7 +194,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Tap Add Movie button
-      final addMovieButton = find.widgetWithText(FilledButton, 'Ajouter un film');
+      final addMovieButton = find.widgetWithText(FilledButton, 'Add Movie');
       expect(addMovieButton, findsOneWidget);
       await tester.tap(addMovieButton);
       await tester.pumpAndSettle();
@@ -249,7 +249,7 @@ void main() {
       await openSheet(tester);
 
       // Leave Monitor collection unchecked
-      final addMovieButton = find.widgetWithText(FilledButton, 'Ajouter un film');
+      final addMovieButton = find.widgetWithText(FilledButton, 'Add Movie');
       await tester.tap(addMovieButton);
       await tester.pumpAndSettle();
 
@@ -317,7 +317,7 @@ void main() {
     await tester.tap(find.text('Open Sheet'));
     await tester.pumpAndSettle();
 
-    final addMovieButton = find.widgetWithText(FilledButton, 'Ajouter un film');
+    final addMovieButton = find.widgetWithText(FilledButton, 'Add Movie');
     await tester.scrollUntilVisible(addMovieButton, 100);
     await tester.pumpAndSettle();
     await tester.tap(addMovieButton);

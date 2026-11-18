@@ -64,7 +64,7 @@ class TransmissionDetailScreen extends ConsumerWidget {
           actions: <Widget>[
             if (torrent != null)
               PopupMenuButton<TransmissionTorrentAction>(
-                tooltip: 'Actions sur le torrent',
+                tooltip: S.t('torrentActions'),
                 itemBuilder: (BuildContext _) => transmissionActionMenuItems(
                   anyStopped: torrent.status.isStopped,
                   single: true,
@@ -93,12 +93,12 @@ class TransmissionDetailScreen extends ConsumerWidget {
                 },
               ),
           ],
-          bottom: const TabBar(
+          bottom: TabBar(
             tabs: <Widget>[
-              Tab(text: 'Infos'),
-              Tab(text: 'Fichiers'),
-              Tab(text: 'Pairs'),
-              Tab(text: 'Trackers'),
+              Tab(text: S.t('info')),
+              Tab(text: S.t('files')),
+              Tab(text: S.t('peers')),
+              Tab(text: S.t('trackers')),
             ],
           ),
         ),
@@ -144,10 +144,10 @@ class _InfoTab extends StatelessWidget {
     final TransmissionDetail d = detail;
     final int now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     if (t == null) {
-      return const EmptyView(
+      return EmptyView(
         icon: Icons.hourglass_empty_rounded,
-        title: 'Pas encore dans la liste',
-        message: "La liste des torrents n'a pas répondu pour celui-ci.",
+        title: S.t('notInTheListYet'),
+        message: S.t('theTorrentListHasNotAnsweredForThisOne'),
       );
     }
     final TransmissionVisual v = transmissionVisualFor(cs, t);
@@ -232,7 +232,7 @@ class _InfoTab extends StatelessWidget {
                   const SizedBox(width: Insets.sm),
                   TransmissionPill(
                     icon: Icons.people_outline,
-                    label: '${t.peersSendingToUs}/${t.peersConnected} pairs',
+                    label: S.t('tPeersSendingToUsTPeersConnectedPeers2', [t.peersSendingToUs, t.peersConnected]),
                     foreground: cs.onSurfaceVariant,
                     background: cs.surfaceContainerHighest,
                   ),
@@ -246,17 +246,17 @@ class _InfoTab extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const TransmissionPanelTitle('Activity'),
+              TransmissionPanelTitle(S.t('activity')),
               _KeyValue('Have', trHaveLine(t, d)),
               _KeyValue('Availability', trAvailability(t, d)),
-              _KeyValue('Uploaded', trUploadedLine(t, d)),
-              _KeyValue('Downloaded', trDownloadedLine(d)),
-              _KeyValue('State', t.stateString),
-              _KeyValue('Running time', trRunningTime(t, d, now: now)),
-              _KeyValue('Remaining', trRemaining(t)),
-              _KeyValue('Last activity', trLastActivity(t, now: now)),
+              _KeyValue(S.t('uploaded'), trUploadedLine(t, d)),
+              _KeyValue(S.t('downloaded'), trDownloadedLine(d)),
+              _KeyValue(S.t('state'), t.stateString),
+              _KeyValue(S.t('runningTime'), trRunningTime(t, d, now: now)),
+              _KeyValue(S.t('remaining'), trRemaining(t)),
+              _KeyValue(S.t('lastActivity'), trLastActivity(t, now: now)),
               if (t.errorString.isNotEmpty)
-                _KeyValue('Error', t.errorString, color: cs.error),
+                _KeyValue(S.t('error'), t.errorString, color: cs.error),
             ],
           ),
         ),
@@ -265,14 +265,14 @@ class _InfoTab extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const TransmissionPanelTitle('Details'),
-              _KeyValue('Size', trSizeLine(t, d)),
-              _KeyValue('Location', t.downloadDir),
-              _KeyValue('Hash', t.hashString, monospace: true),
+              TransmissionPanelTitle(S.t('details')),
+              _KeyValue(S.t('size'), trSizeLine(t, d)),
+              _KeyValue(S.t('location'), t.downloadDir),
+              _KeyValue(S.t('hash'), t.hashString, monospace: true),
               _KeyValue('Privacy', trPrivacy(d)),
               _KeyValue('Origin', trOrigin(d)),
               if (t.addedDate > 0)
-                _KeyValue('Date added', trTimestamp(t.addedDate)),
+                _KeyValue(S.t('dateAdded_2'), trTimestamp(t.addedDate)),
               _KeyValue(
                 'Comment',
                 d.comment.isEmpty ? 'None' : d.comment,
@@ -289,13 +289,13 @@ class _InfoTab extends StatelessWidget {
                   t.labels.isEmpty ? 'None' : t.labels.join(', '),
                 ),
               _KeyValue(
-                'Magnet link',
+                S.t('magnetLink'),
                 d.magnetLink.isEmpty ? 'None' : d.magnetLink,
                 monospace: true,
                 trailing: d.magnetLink.isEmpty
                     ? null
                     : IconButton.filledTonal(
-                        tooltip: 'Copier le lien magnet',
+                        tooltip: S.t('copyMagnetLink'),
                         icon: const Icon(Icons.copy, size: 18),
                         onPressed: () async {
                           await Clipboard.setData(
@@ -303,8 +303,8 @@ class _InfoTab extends StatelessWidget {
                           );
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Lien magnet copié'),
+                              SnackBar(
+                                content: Text(S.t('magnetLinkCopied')),
                               ),
                             );
                           }
@@ -350,10 +350,10 @@ class _FilesTabState extends ConsumerState<_FilesTab> {
   Widget build(BuildContext context) {
     final List<TransmissionFile> files = widget.detail.files;
     if (files.isEmpty) {
-      return const EmptyView(
+      return EmptyView(
         icon: Icons.insert_drive_file_outlined,
-        title: 'Aucun fichier',
-        message: "Transmission n'a pas encore la liste des fichiers de ce torrent.",
+        title: S.t('noFiles'),
+        message: S.t('transmissionHasNoFileListForThisTorrentYet'),
       );
     }
     final List<int> all = <int>[for (int i = 0; i < files.length; i++) i];
@@ -380,7 +380,7 @@ class _FilesTabState extends ConsumerState<_FilesTab> {
                             ),
                           ),
                   icon: const Icon(Icons.select_all),
-                  label: const Text('Tout sélectionner'),
+                  label: Text(S.t('selectAll')),
                 ),
               ),
               const SizedBox(width: Insets.sm),
@@ -396,7 +396,7 @@ class _FilesTabState extends ConsumerState<_FilesTab> {
                             ),
                           ),
                   icon: const Icon(Icons.deselect),
-                  label: const Text('Tout désélectionner'),
+                  label: Text(S.t('deselectAll')),
                 ),
               ),
             ],
@@ -453,7 +453,7 @@ class _PeersTab extends StatelessWidget {
                 visualDensity: VisualDensity.compact,
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                tooltip: 'Drapeaux de pairs',
+                tooltip: S.t('peerFlags'),
                 icon: Icon(
                   Icons.help_outline_rounded,
                   size: 20,
@@ -465,8 +465,8 @@ class _PeersTab extends StatelessWidget {
           ),
         ),
         if (detail.peers.isEmpty)
-          const TransmissionPanel(
-            child: Text("Rien n'est connecté pour le moment."),
+          TransmissionPanel(
+            child: Text(S.t('nothingIsConnectedRightNow')),
           ),
         for (final TransmissionPeer p in detail.peers)
           TransmissionPanel(
@@ -562,7 +562,7 @@ class _PeersTab extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const TransmissionPanelTitle('Web seeds'),
+                TransmissionPanelTitle(S.t('webSeeds')),
                 for (final String url in detail.webseeds)
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: Insets.xs),
@@ -599,10 +599,10 @@ class _TrackersTab extends StatelessWidget {
     final ColorScheme cs = theme.colorScheme;
     final TextTheme text = theme.textTheme;
     if (detail.trackers.isEmpty) {
-      return const EmptyView(
+      return EmptyView(
         icon: Icons.dns_outlined,
-        title: 'Aucun tracker',
-        message: "Ce torrent n'annonce aucun tracker.",
+        title: S.t('noTrackers'),
+        message: S.t('thisTorrentAnnouncesToNoTrackers'),
       );
     }
     final int now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
@@ -707,7 +707,7 @@ class _TrackersTab extends StatelessWidget {
                   ),
                   TransmissionPill(
                     icon: Icons.check_circle_outline,
-                    label: '${trFmtPeerCount(tr.downloadCount)} téléchargements',
+                    label: S.t('trfmtpeercountTrDownloadCountDownloads1', [trFmtPeerCount(tr.downloadCount)]),
                     foreground: cs.onSurfaceVariant,
                     background: cs.surfaceContainerHighest,
                   ),

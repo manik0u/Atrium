@@ -32,7 +32,7 @@ void main() {
           ),
         );
 
-    expect(field("Nom d'utilisateur (facultatif)").validator!(''), isNull);
-    expect(field('Mot de passe (facultatif)').validator!(''), isNull);
+    expect(field('Username (Optional)').validator!(''), isNull);
+    expect(field('Password (Optional)').validator!(''), isNull);
   });
 }

@@ -395,7 +395,7 @@ void main() {
       expect(s.runtimeMinutes, 116);
       expect(s.rating, 7.6);
       expect(s.genres, <String>['Drama', 'Science Fiction']);
-      expect(s.releaseStatus, 'Sortie');
+      expect(s.releaseStatus, 'Released');
       expect(
         s.backdropUrl,
         'https://image.tmdb.org/t/p/w780/yIZ1xendyqKvY3FGeeUYUd5X9Mm.jpg',

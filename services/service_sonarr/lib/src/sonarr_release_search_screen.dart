@@ -43,9 +43,9 @@ class _SonarrReleaseSearchScreenState
     extends ConsumerState<SonarrReleaseSearchScreen> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
-  String _selectedProtocol = 'All'; // 'All', 'Torrent', 'Usenet'
+  String _selectedProtocol = S.t('all'); // 'All', 'Torrent', 'Usenet'
   bool _approvedOnly = false;
-  String _sortBy = 'Score'; // 'Score', 'Age', 'Size', 'Seeders'
+  String _sortBy = S.t('score'); // 'Score', 'Age', 'Size', 'Seeders'
   bool _sortAscending = false;
   final Map<String, bool> _downloadingMap = {};
 
@@ -143,7 +143,7 @@ class _SonarrReleaseSearchScreenState
                 color: Theme.of(ctx).colorScheme.secondary,
               ),
               const SizedBox(width: Insets.sm),
-              const Text('Avertissements de rejet'),
+              Text(S.t('rejectionWarnings')),
             ],
           ),
           content: Column(
@@ -158,21 +158,21 @@ class _SonarrReleaseSearchScreenState
               ...rejections.map(
                 (r) => Padding(
                   padding: const EdgeInsets.only(bottom: 4.0),
-                  child: Text('• $r', style: const TextStyle(fontSize: 13)),
+                  child: Text(S.t('r1', [r]), style: const TextStyle(fontSize: 13)),
                 ),
               ),
               const SizedBox(height: Insets.md),
-              const Text('Voulez-vous vraiment le télécharger quand même ?'),
+              Text(S.t('areYouSureYouWantToDownloadItAnyway')),
             ],
           ),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(ctx, false),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(ctx, true),
-              child: const Text('Télécharger quand même'),
+              child: Text(S.t('proceedDownload')),
             ),
           ],
         ),
@@ -187,7 +187,7 @@ class _SonarrReleaseSearchScreenState
       await api.downloadRelease(release);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Release grabée avec succès !')),
+          SnackBar(content: Text(S.t('releaseGrabbedSuccessfully'))),
         );
         final int seriesId = widget.episode?.seriesId ?? widget.series!.id;
         ref.invalidate(sonarrEpisodesProvider((widget.instance, seriesId)));
@@ -196,7 +196,7 @@ class _SonarrReleaseSearchScreenState
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec du grab de la release : $e')),
+          SnackBar(content: Text(S.t('failedToGrabReleaseE1', [e]))),
         );
       }
     } finally {
@@ -265,7 +265,7 @@ class _SonarrReleaseSearchScreenState
                   TextField(
                     controller: _searchController,
                     decoration: InputDecoration(
-                      hintText: 'Filtrer par titre ou indexeur…',
+                      hintText: S.t('filterByTitleOrIndexer'),
                       prefixIcon: const Icon(Icons.search),
                       suffixIcon: _searchQuery.isNotEmpty
                           ? IconButton(
@@ -298,7 +298,7 @@ class _SonarrReleaseSearchScreenState
                         child: DropdownButtonFormField<String>(
                           initialValue: _selectedProtocol,
                           decoration: InputDecoration(
-                            labelText: 'Protocole',
+                            labelText: S.t('protocol'),
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: 12,
                               vertical: 8,
@@ -307,15 +307,15 @@ class _SonarrReleaseSearchScreenState
                               borderRadius: BorderRadius.circular(Radii.md),
                             ),
                           ),
-                          items: const [
-                            DropdownMenuItem(value: 'Tous', child: Text('Tous')),
+                          items: [
+                            DropdownMenuItem(value: 'All', child: Text(S.t('all'))),
                             DropdownMenuItem(
                               value: 'Torrent',
-                              child: Text('Torrent'),
+                              child: Text(S.t('torrent')),
                             ),
                             DropdownMenuItem(
                               value: 'Usenet',
-                              child: Text('Usenet'),
+                              child: Text(S.t('usenet')),
                             ),
                           ],
                           onChanged: (val) {
@@ -330,7 +330,7 @@ class _SonarrReleaseSearchScreenState
                         child: DropdownButtonFormField<String>(
                           initialValue: _sortBy,
                           decoration: InputDecoration(
-                            labelText: 'Trier par',
+                            labelText: S.t('sortBy'),
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: 12,
                               vertical: 8,
@@ -339,19 +339,19 @@ class _SonarrReleaseSearchScreenState
                               borderRadius: BorderRadius.circular(Radii.md),
                             ),
                           ),
-                          items: const [
+                          items: [
                             DropdownMenuItem(
                               value: 'Score',
-                              child: Text('Score'),
+                              child: Text(S.t('score')),
                             ),
-                            DropdownMenuItem(value: 'Âge', child: Text('Âge')),
+                            DropdownMenuItem(value: 'Age', child: Text(S.t('age'))),
                             DropdownMenuItem(
                               value: 'Size',
-                              child: Text('Taille'),
+                              child: Text(S.t('size')),
                             ),
                             DropdownMenuItem(
                               value: 'Seeders',
-                              child: Text('Seeders'),
+                              child: Text(S.t('seeders')),
                             ),
                           ],
                           onChanged: (val) {
@@ -374,7 +374,7 @@ class _SonarrReleaseSearchScreenState
                               ? Icons.arrow_upward
                               : Icons.arrow_downward,
                         ),
-                        tooltip: "Inverser l'ordre de tri",
+                        tooltip: S.t('toggleSortOrder'),
                         onPressed: () =>
                             setState(() => _sortAscending = !_sortAscending),
                       ),
@@ -382,8 +382,8 @@ class _SonarrReleaseSearchScreenState
                   ),
                   const SizedBox(height: Insets.xs),
                   CheckboxListTile(
-                    title: const Text(
-                      'Releases approuvées uniquement',
+                    title: Text(
+                      S.t('approvedReleasesOnly'),
                       style: TextStyle(fontSize: 14),
                     ),
                     dense: true,
@@ -484,11 +484,11 @@ class _SonarrReleaseSearchScreenState
                   });
 
                   if (filtered.isEmpty) {
-                    return const EmptyView(
+                    return EmptyView(
                       icon: Icons.search_off,
-                      title: 'Aucune release trouvée',
+                      title: S.t('noReleasesFound'),
                       message:
-                          'Essayez de modifier vos filtres ou votre requête de recherche.',
+                          S.t('tryModifyingYourFilterSettingsOrSearchQuery'),
                     );
                   }
 
@@ -498,7 +498,7 @@ class _SonarrReleaseSearchScreenState
                     itemBuilder: (context, index) {
                       final r = filtered[index];
                       final title =
-                          (r['title'] as String?) ?? 'Release inconnue';
+                          (r['title'] as String?) ?? S.t('unknownRelease');
                       final indexer =
                           (r['indexer'] as String?) ?? 'Unknown Indexer';
                       final sizeBytes = r['size'] as int? ?? 0;
@@ -801,7 +801,7 @@ class _SonarrReleaseSearchScreenState
                                           left: 20.0,
                                         ),
                                         child: Text(
-                                          '• $rej',
+                                          S.t('r1', [rej]),
                                           style: theme.textTheme.bodySmall
                                               ?.copyWith(color: colors.error),
                                         ),
@@ -818,7 +818,7 @@ class _SonarrReleaseSearchScreenState
                                         ),
                                         const SizedBox(width: Insets.xs),
                                         Text(
-                                          'Approuvée pour le téléchargement.',
+                                          S.t('approvedForDownload'),
                                           style: theme.textTheme.bodySmall
                                               ?.copyWith(
                                             color: colors.tertiary,
@@ -846,7 +846,7 @@ class _SonarrReleaseSearchScreenState
                                             label: Text(
                                               protocol == 'usenet'
                                                   ? 'Open Indexer Page'
-                                                  : 'Open Torrent Page',
+                                                  : S.t('openTorrentPage'),
                                             ),
                                             style: FilledButton.styleFrom(
                                               visualDensity:
@@ -870,8 +870,8 @@ class _SonarrReleaseSearchScreenState
                                                       SnackBar(
                                                         content: Text(
                                                           protocol == 'usenet'
-                                                              ? "Impossible d'ouvrir l'URL de la page de l'indexeur"
-                                                              : "Impossible d'ouvrir l'URL de la page du torrent",
+                                                              ? S.t('couldNotOpenIndexerPageURL')
+                                                              : S.t('couldNotOpenTorrentPageURL'),
                                                         ),
                                                         duration:
                                                             const Duration(
@@ -888,8 +888,8 @@ class _SonarrReleaseSearchScreenState
                                                       SnackBar(
                                                         content: Text(
                                                           protocol == 'usenet'
-                                                              ? "Impossible d'ouvrir l'URL de la page de l'indexeur"
-                                                              : "Impossible d'ouvrir l'URL de la page du torrent",
+                                                              ? S.t('couldNotOpenIndexerPageURL')
+                                                              : S.t('couldNotOpenTorrentPageURL'),
                                                         ),
                                                         duration:
                                                             const Duration(
@@ -909,8 +909,8 @@ class _SonarrReleaseSearchScreenState
                                               Icons.copy,
                                               size: 14,
                                             ),
-                                            label: const Text(
-                                              'Copy Download URL',
+                                            label: Text(
+                                              S.t('copyDownloadURL'),
                                             ),
                                             style: OutlinedButton.styleFrom(
                                               visualDensity:
@@ -924,9 +924,9 @@ class _SonarrReleaseSearchScreenState
                                               );
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
-                                                const SnackBar(
+                                                SnackBar(
                                                   content: Text(
-                                                    'Download URL copied to clipboard',
+                                                    S.t('downloadURLCopiedToClipboard'),
                                                   ),
                                                   duration:
                                                       Duration(seconds: 2),
@@ -941,8 +941,8 @@ class _SonarrReleaseSearchScreenState
                                               Icons.link,
                                               size: 14,
                                             ),
-                                            label: const Text(
-                                              'Copy Magnet Link',
+                                            label: Text(
+                                              S.t('copyMagnetLink_2'),
                                             ),
                                             style: OutlinedButton.styleFrom(
                                               visualDensity:

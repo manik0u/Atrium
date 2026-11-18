@@ -38,11 +38,11 @@ class SeerrHome extends ConsumerWidget {
         children: <Widget>[
           TabBar(
             tabs: <Widget>[
-              const Tab(text: 'Demandes', icon: Icon(Icons.playlist_play)),
-              const Tab(text: 'Découvrir', icon: Icon(Icons.explore_outlined)),
+              Tab(text: S.t('requests'), icon: Icon(Icons.playlist_play)),
+              Tab(text: S.t('discover'), icon: Icon(Icons.explore_outlined)),
               if (issues)
-                const Tab(
-                  text: 'Problèmes',
+                Tab(
+                  text: S.t('issues'),
                   icon: Icon(Icons.report_problem_outlined),
                 ),
             ],
@@ -107,14 +107,14 @@ class _SeerrRequestsTabState extends ConsumerState<_SeerrRequestsTab>
             data: (List<SeerrRequest> all) {
               final List<SeerrRequest> list = filter.apply(all);
               return EasyRefresh(
-                header: const ClassicHeader(
-                  dragText: 'Pull to refresh',
-                  armedText: 'Release ready',
-                  readyText: 'Refreshing...',
-                  processingText: 'Refreshing...',
-                  processedText: 'Succeeded',
-                  failedText: 'Failed',
-                  messageText: 'Last updated at %T',
+                header: ClassicHeader(
+                  dragText: S.t('pullToRefresh'),
+                  armedText: S.t('releaseReady'),
+                  readyText: S.t('refreshing'),
+                  processingText: S.t('refreshing'),
+                  processedText: S.t('succeeded'),
+                  failedText: S.t('failed'),
+                  messageText: S.t('lastUpdatedAtT'),
                 ),
                 onRefresh: () async => _refresh(),
                 child: list.isEmpty
@@ -194,13 +194,13 @@ class _RequestTileState extends ConsumerState<_RequestTile> {
         ref.invalidate(seerrRequestsProvider(widget.instance));
         ref.invalidate(seerrRequestCountsProvider(widget.instance));
         messenger.showSnackBar(
-          const SnackBar(content: Text('Action réussie')),
+          SnackBar(content: Text(S.t('actionSuccessful'))),
         );
       }
     } catch (e) {
       if (mounted) {
         messenger.showSnackBar(
-          SnackBar(content: Text("Échec de l'action : $e")),
+          SnackBar(content: Text(S.t('actionFailedE1', [e]))),
         );
       }
     } finally {
@@ -227,8 +227,8 @@ class _RequestTileState extends ConsumerState<_RequestTile> {
     if (mediaType.isEmpty || tmdbId == null) {
       return Card(
         child: ListTile(
-          title: Text('Demande inconnue n° ${request.id}'),
-          subtitle: Text('Statut : ${_statusString(request.status)}'),
+          title: Text(S.t('unknownRequestRequestId1', [request.id])),
+          subtitle: Text(S.t('statusStatusStringRequestStatus1', [_statusString(request.status)])),
         ),
       );
     }
@@ -267,8 +267,8 @@ class _RequestTileState extends ConsumerState<_RequestTile> {
         child: Center(child: ExpressiveProgressIndicator()),
       ),
       error: (_, __) => ListTile(
-        title: Text('Demande n° ${request.id}'),
-        subtitle: Text('Statut : ${_statusString(request.status)}'),
+        title: Text(S.t('requestRequestId1', [request.id])),
+        subtitle: Text(S.t('statusStatusStringRequestStatus1', [_statusString(request.status)])),
         trailing: Icon(Icons.error, color: Theme.of(context).colorScheme.error),
       ),
     );
@@ -297,18 +297,18 @@ class _RequestTileState extends ConsumerState<_RequestTile> {
       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
         if (_canManage) ...<PopupMenuEntry<String>>[
           if (widget.request.status == 1) ...<PopupMenuEntry<String>>[
-            const PopupMenuItem<String>(
+            PopupMenuItem<String>(
               value: 'approve',
-              child: Text('Approuver'),
+              child: Text(S.t('approve')),
             ),
-            const PopupMenuItem<String>(
+            PopupMenuItem<String>(
               value: 'decline',
-              child: Text('Refuser'),
+              child: Text(S.t('deny')),
             ),
           ],
-          const PopupMenuItem<String>(
+          PopupMenuItem<String>(
             value: 'retry',
-            child: Text('Réessayer'),
+            child: Text(S.t('retry')),
           ),
         ],
         if (_canManage && _canDelete) const PopupMenuDivider(),
@@ -316,7 +316,7 @@ class _RequestTileState extends ConsumerState<_RequestTile> {
           PopupMenuItem<String>(
             value: 'delete',
             child: Text(
-              'Delete',
+              S.t('delete'),
               style: TextStyle(color: Theme.of(context).colorScheme.error),
             ),
           ),
@@ -337,7 +337,7 @@ class _RequestTileState extends ConsumerState<_RequestTile> {
           child: FilledButton.tonalIcon(
             onPressed: _busy ? null : () => _handleAction('approve'),
             icon: const Icon(Icons.check, size: 18),
-            label: const Text('Approuver'),
+            label: Text(S.t('approve')),
           ),
         ),
         const SizedBox(width: Insets.sm),
@@ -345,7 +345,7 @@ class _RequestTileState extends ConsumerState<_RequestTile> {
           child: OutlinedButton.icon(
             onPressed: _busy ? null : () => _handleAction('decline'),
             icon: const Icon(Icons.close, size: 18),
-            label: const Text('Refuser'),
+            label: Text(S.t('deny')),
           ),
         ),
       ],
@@ -353,5 +353,5 @@ class _RequestTileState extends ConsumerState<_RequestTile> {
   }
 
   String _statusString(int status) =>
-      seerrRequestStatusStyle(status)?.label ?? 'Inconnu ($status)';
+      seerrRequestStatusStyle(status)?.label ?? S.t('unknownStatus1', [status]);
 }

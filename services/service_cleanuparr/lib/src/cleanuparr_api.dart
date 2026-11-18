@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_networking/core_networking.dart';
 import 'package:dio/dio.dart';
 
@@ -71,7 +72,7 @@ class CleanuparrApi {
       }
       return CleanuparrStatus.fromJson(merged);
     }
-    return const CleanuparrStatus(version: 'Unknown', appName: 'Cleanuparr');
+    return CleanuparrStatus(version: S.t('unknown'), appName: 'Cleanuparr');
   }
 
   /// Fetches operational statistics rolled up over the requested [hours] (e.g. 24, 168, 720).

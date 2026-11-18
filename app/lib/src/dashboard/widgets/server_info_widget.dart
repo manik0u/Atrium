@@ -78,7 +78,7 @@ class DashboardServerInfoWidget extends ConsumerWidget {
         },
       );
     } else if (servers.isEmpty) {
-      body = const DashboardIdleRow(text: 'Aucune statistique Glances disponible');
+      body = DashboardIdleRow(text: S.t('noGlancesStatsAvailable'));
     } else {
       final bool showName = servers.length > 1;
       body = Column(
@@ -154,7 +154,7 @@ class _ServerBlock extends StatelessWidget {
             const SizedBox(width: Insets.md),
             Expanded(
               child: _MetricTile(
-                label: 'Mémoire',
+                label: S.t('memory'),
                 percent: stats.memory.percentage,
                 detail:
                     '${_fmtBytes(stats.memory.used)} / ${_fmtBytes(stats.memory.total)}',
@@ -178,7 +178,7 @@ class _ServerBlock extends StatelessWidget {
           const SizedBox(height: Insets.md),
           for (final GlancesDisk d in disks.take(4)) _DiskBar(disk: d),
           if (disks.length > 4)
-            DashboardIdleRow(text: '+${disks.length - 4} de plus'),
+            DashboardIdleRow(text: S.t('disksLength4More1', [disks.length - 4])),
         ],
       ],
     );

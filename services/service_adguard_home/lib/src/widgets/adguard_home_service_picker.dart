@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -90,7 +91,7 @@ class _AdguardHomeServicePickerState extends State<AdguardHomeServicePicker> {
         service.id,
     };
     add(
-      "N'est plus proposé par le serveur",
+      S.t('noLongerOfferedByTheServer'),
       <AdguardHomeBlockedService>[
         for (final String id in widget.selected)
           if (!known.contains(id)) AdguardHomeBlockedService(id: id, name: id),
@@ -105,9 +106,9 @@ class _AdguardHomeServicePickerState extends State<AdguardHomeServicePicker> {
     final ColorScheme cs = theme.colorScheme;
     final AdguardHomeServiceCatalogue catalogue = widget.catalogue;
     if (catalogue.services.isEmpty && widget.selected.isEmpty) {
-      return const EmptyView(
+      return EmptyView(
         icon: Icons.block,
-        title: "Le serveur n'offre aucun service à bloquer",
+        title: S.t('theServerOffersNoServicesToBlock'),
       );
     }
 
@@ -130,13 +131,13 @@ class _AdguardHomeServicePickerState extends State<AdguardHomeServicePicker> {
             textInputAction: TextInputAction.search,
             autocorrect: false,
             decoration: InputDecoration(
-              hintText: 'Rechercher des services',
+              hintText: S.t('searchServices_2'),
               prefixIcon: const Icon(Icons.search),
               suffixIcon: _search.text.isEmpty
                   ? null
                   : IconButton(
                       icon: const Icon(Icons.close),
-                      tooltip: 'Effacer la recherche',
+                      tooltip: S.t('clearSearch'),
                       onPressed: _clearSearch,
                     ),
               isDense: true,
@@ -163,14 +164,14 @@ class _AdguardHomeServicePickerState extends State<AdguardHomeServicePicker> {
                           in catalogue.services)
                         service.id,
                     }),
-                    child: const Text('Tout bloquer'),
+                    child: Text(S.t('blockAll')),
                   ),
                 ),
                 const SizedBox(width: Insets.sm),
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () => widget.onChanged(const <String>{}),
-                    child: const Text('Tout débloquer'),
+                    child: Text(S.t('unblockAll')),
                   ),
                 ),
               ],
@@ -178,10 +179,10 @@ class _AdguardHomeServicePickerState extends State<AdguardHomeServicePicker> {
           ),
         Expanded(
           child: rows.isEmpty
-              ? const SingleChildScrollView(
+              ? SingleChildScrollView(
                   child: EmptyView(
                     icon: Icons.search_off,
-                    title: 'Aucun service ne correspond',
+                    title: S.t('noServiceMatches'),
                   ),
                 )
               : ListView.builder(

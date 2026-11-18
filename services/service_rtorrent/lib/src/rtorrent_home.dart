@@ -41,7 +41,7 @@ class _RtorrentHomeState extends ConsumerState<RtorrentHome> {
           await ref.read(rtorrentApiProvider(widget.instance).future);
       await action(api);
     } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text("Échec de l'action : $e")));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('actionFailedE1', [e]))));
     } finally {
       if (mounted) _refresh();
     }
@@ -51,7 +51,7 @@ class _RtorrentHomeState extends ConsumerState<RtorrentHome> {
     final bool? go = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Retirer le torrent'),
+        title: Text(S.t('removeTorrent')),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,11 +71,11 @@ class _RtorrentHomeState extends ConsumerState<RtorrentHome> {
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Retirer'),
+            child: Text(S.t('remove')),
           ),
         ],
       ),
@@ -88,13 +88,13 @@ class _RtorrentHomeState extends ConsumerState<RtorrentHome> {
     final int? priority = await showDialog<int>(
       context: context,
       builder: (BuildContext context) => SimpleDialog(
-        title: const Text('Priorité'),
+        title: Text(S.t('priority')),
         children: <Widget>[
-          for (final (int value, String label) in const <(int, String)>[
-            (0, 'Off'),
-            (1, 'Low'),
-            (2, 'Normal'),
-            (3, 'High'),
+          for (final (int value, String label) in <(int, String)>[
+            (0, S.t('off')),
+            (1, S.t('low')),
+            (2, S.t('normal')),
+            (3, S.t('high')),
           ])
             ListTile(
               selected: value == t.priority,
@@ -150,12 +150,12 @@ class _RtorrentHomeState extends ConsumerState<RtorrentHome> {
               _FilterBar(instance: widget.instance),
               const SizedBox(height: Insets.sm),
               if (list.isEmpty)
-                const Padding(
+                Padding(
                   padding: EdgeInsets.only(top: Insets.xl),
                   child: EmptyView(
                     icon: Icons.download_done_outlined,
-                    title: 'Aucun torrent',
-                    message: 'Rien ici pour le moment. Utilisez Ajouter pour en démarrer un.',
+                    title: S.t('noTorrents'),
+                    message: S.t('nothingHereYetUseAddToStartOne'),
                   ),
                 )
               else
@@ -260,7 +260,7 @@ class _GlobalSummary extends ConsumerWidget {
                     onPressed: () async {
                       final int? bytes = await showRtorrentSpeedDialog(
                         context,
-                        title: 'Limite de téléchargement',
+                        title: S.t('downloadLimit'),
                         currentBytesPerSec: g.downLimit,
                       );
                       if (bytes != null) onSetDown(bytes);
@@ -274,7 +274,7 @@ class _GlobalSummary extends ConsumerWidget {
                     onPressed: () async {
                       final int? bytes = await showRtorrentSpeedDialog(
                         context,
-                        title: "Limite d'envoi",
+                        title: S.t('uploadLimit'),
                         currentBytesPerSec: g.upLimit,
                       );
                       if (bytes != null) onSetUp(bytes);
@@ -285,7 +285,7 @@ class _GlobalSummary extends ConsumerWidget {
                 FilledButton.icon(
                   onPressed: onAdd,
                   icon: const Icon(Icons.add),
-                  label: const Text('Ajouter'),
+                  label: Text(S.t('add')),
                 ),
               ],
             ),
@@ -399,7 +399,7 @@ class _FilterBar extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.only(right: Insets.xs),
                 child: FilterChip(
-                  label: Text('Tous (${all.length})'),
+                  label: Text(S.t('allAllLength1', [all.length])),
                   selected: filter.status == null,
                   onSelected: (_) => ref
                       .read(rtorrentFilterProvider(instance).notifier)
@@ -502,7 +502,7 @@ class _SortMenu extends ConsumerWidget {
           ),
         ),
         IconButton(
-          tooltip: descending ? 'Décroissant' : 'Croissant',
+          tooltip: descending ? S.t('descending') : S.t('ascending'),
           icon: Icon(descending ? Icons.arrow_downward : Icons.arrow_upward),
           onPressed: () => ref
               .read(rtorrentSortDescendingProvider(instance).notifier)
@@ -718,17 +718,17 @@ class _RowMenu extends StatelessWidget {
         _item(
           'startStop',
           isStopped ? Icons.play_arrow : Icons.pause,
-          isStopped ? 'Start' : 'Stop',
+          isStopped ? S.t('start') : S.t('stop'),
         ),
         // Closing frees the file handles, which is rTorrent's own step between
         // stopped and removed. Only worth offering while the torrent is open.
-        if (isOpen) _item('close', Icons.eject_outlined, 'Close'),
+        if (isOpen) _item('close', Icons.eject_outlined, S.t('close')),
         _item('recheck', Icons.fact_check_outlined, 'Check hash'),
-        _item('reannounce', Icons.campaign_outlined, 'Demander des pairs au tracker'),
+        _item('reannounce', Icons.campaign_outlined, S.t('askTrackerForPeers')),
         const PopupMenuDivider(),
-        _item('priority', Icons.low_priority, 'Priority'),
+        _item('priority', Icons.low_priority, S.t('priority')),
         const PopupMenuDivider(),
-        _item('remove', Icons.delete_outline, 'Remove'),
+        _item('remove', Icons.delete_outline, S.t('remove')),
       ],
       onSelected: (String value) {
         switch (value) {

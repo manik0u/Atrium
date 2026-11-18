@@ -25,7 +25,7 @@ class IndexersSection extends ConsumerWidget {
     final List<IndexerResource> presets = schemasAsync.value ?? [];
     if (presets.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Chargement des préréglages d'indexeurs…")),
+        SnackBar(content: Text(S.t('loadingIndexerPresets'))),
       );
       return;
     }
@@ -33,14 +33,14 @@ class IndexersSection extends ConsumerWidget {
     final IndexerResource? selectedPreset =
         await showSchemaPresetPicker<IndexerResource>(
       context: context,
-      title: 'Ajouter un indexeur',
+      title: S.t('addIndexer'),
       presets: presets,
       titleBuilder: (preset) {
         final String impl = preset.implementationName?.trim() ?? '';
         final String name = preset.name?.trim() ?? '';
         if (impl.isNotEmpty) return impl;
         if (name.isNotEmpty && name != 'Indexer') return name;
-        return preset.implementation ?? 'Indexer';
+        return preset.implementation ?? S.t('indexer');
       },
       subtitleBuilder: (preset) {
         final String impl = preset.implementationName?.trim() ?? '';
@@ -101,7 +101,7 @@ class IndexersSection extends ConsumerWidget {
                       await api.indexer.postIndexerTest(body: payload);
                   if (!resp.isSuccess) {
                     throw Exception(
-                      resp.error?.message ?? 'Échec du test de connexion',
+                      resp.error?.message ?? S.t('connectionTestFailed'),
                     );
                   }
                 },
@@ -141,7 +141,7 @@ class IndexersSection extends ConsumerWidget {
                   } catch (e) {
                     if (ctx.mounted) {
                       messenger.showSnackBar(
-                        SnackBar(content: Text("Erreur lors de l'enregistrement de l'indexeur : $e")),
+                        SnackBar(content: Text(S.t('errorSavingIndexerE1', [e]))),
                       );
                     }
                   }
@@ -152,7 +152,7 @@ class IndexersSection extends ConsumerWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
           ],
         );
@@ -169,19 +169,19 @@ class IndexersSection extends ConsumerWidget {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: Text('Supprimer ${indexer.name ?? 'Indexer'}?'),
-        content: Text('Voulez-vous vraiment supprimer « ${indexer.name} » ?'),
+        title: Text(S.t('deleteIndexerName')Indexer'}?'),
+        content: Text(S.t('areYouSureYouWantToDeleteIndexerName1', [indexer.name])),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
               backgroundColor: Theme.of(ctx).colorScheme.error,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Supprimer'),
+            child: Text(S.t('delete')),
           ),
         ],
       ),
@@ -194,11 +194,11 @@ class IndexersSection extends ConsumerWidget {
       await api.indexer.deleteIndexerById(id: indexer.id!);
       ref.invalidate(lidarrIndexersProvider(instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Indexeur supprimé.')),
+        SnackBar(content: Text(S.t('indexerDeleted_3'))),
       );
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text("Erreur lors de la suppression de l'indexeur : $e")),
+        SnackBar(content: Text(S.t('errorDeletingIndexerE1', [e]))),
       );
     }
   }
@@ -227,7 +227,7 @@ class IndexersSection extends ConsumerWidget {
     await showDialog<void>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text("Options de l'indexeur"),
+        title: Text(S.t('indexerOptions')),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -235,8 +235,8 @@ class IndexersSection extends ConsumerWidget {
               TextField(
                 controller: minAgeController,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Âge minimal (minutes)',
+                decoration: InputDecoration(
+                  labelText: S.t('minimumAgeMinutes'),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -244,9 +244,9 @@ class IndexersSection extends ConsumerWidget {
               TextField(
                 controller: retentionController,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Conservation (jours)',
-                  helperText: '0 pour illimité',
+                decoration: InputDecoration(
+                  labelText: S.t('retentionDays'),
+                  helperText: S.t('k0ForUnlimited'),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -254,9 +254,9 @@ class IndexersSection extends ConsumerWidget {
               TextField(
                 controller: maxSizeController,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Taille maximale (Mo)',
-                  helperText: '0 pour illimité',
+                decoration: InputDecoration(
+                  labelText: S.t('maximumSizeMB'),
+                  helperText: S.t('k0ForUnlimited'),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -264,8 +264,8 @@ class IndexersSection extends ConsumerWidget {
               TextField(
                 controller: rssIntervalController,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Intervalle de synchro RSS (minutes)',
+                decoration: InputDecoration(
+                  labelText: S.t('rssSyncIntervalMinutes'),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -275,7 +275,7 @@ class IndexersSection extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () async {
@@ -304,16 +304,16 @@ class IndexersSection extends ConsumerWidget {
                 if (ctx.mounted) {
                   Navigator.pop(ctx);
                   messenger.showSnackBar(
-                    const SnackBar(content: Text("Options de l'indexeur enregistrées !")),
+                    SnackBar(content: Text(S.t('indexerOptionsSaved'))),
                   );
                 }
               } catch (e) {
                 if (ctx.mounted) {
-                  messenger.showSnackBar(SnackBar(content: Text('Erreur : $e')));
+                  messenger.showSnackBar(SnackBar(content: Text(S.t('errorE1', [e]))));
                 }
               }
             },
-            child: const Text('Enregistrer'),
+            child: Text(S.t('save')),
           ),
         ],
       ),
@@ -334,7 +334,7 @@ class IndexersSection extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         heroTag: 'indexer_add_fab',
         onPressed: () => _selectIndexerPresetAndAdd(context, ref),
-        tooltip: 'Ajouter un indexeur',
+        tooltip: S.t('addIndexer'),
         child: const Icon(Icons.add),
       ),
       body: EasyRefresh(
@@ -376,8 +376,8 @@ class IndexersSection extends ConsumerWidget {
                       'Indexer Options & Restrictions',
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
-                    subtitle: const Text(
-                      'Seeders minimum, taille maximale et délai',
+                    subtitle: Text(
+                      S.t('minimumSeedersMaximumSizeAndDelay'),
                       style: TextStyle(fontSize: 12),
                     ),
                     trailing: const Icon(Icons.chevron_right, size: 20),
@@ -391,13 +391,13 @@ class IndexersSection extends ConsumerWidget {
                       padding: const EdgeInsets.symmetric(vertical: 40),
                       child: EmptyView(
                         icon: Icons.rss_feed_outlined,
-                        title: 'Aucun indexeur',
-                        message: 'Aucun indexeur configuré dans Lidarr.',
+                        title: S.t('noIndexers'),
+                        message: S.t('noIndexersConfiguredInLidarr'),
                         action: FilledButton.icon(
                           onPressed: () =>
                               _selectIndexerPresetAndAdd(context, ref),
                           icon: const Icon(Icons.add),
-                          label: const Text('Ajouter un indexeur'),
+                          label: Text(S.t('addIndexer')),
                         ),
                       ),
                     ),
@@ -438,7 +438,7 @@ class IndexersSection extends ConsumerWidget {
                             ),
                           ),
                           title: Text(
-                            indexer.name ?? 'Indexer',
+                            indexer.name ?? S.t('indexer'),
                             style: theme.textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                               fontSize: 15,
@@ -498,7 +498,7 @@ class IndexersSection extends ConsumerWidget {
                           ),
                           trailing: IconButton(
                             icon: const Icon(Icons.delete_outline, size: 20),
-                            tooltip: "Supprimer l'indexeur",
+                            tooltip: S.t('deleteIndexer_2'),
                             onPressed: () =>
                                 _deleteIndexer(context, ref, indexer),
                           ),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:core_models/core_models.dart';
 import 'package:core_networking/core_networking.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
@@ -171,10 +172,10 @@ class EmbyClient {
         String? includeItemTypes;
         switch (collectionType) {
           case 'movies':
-            includeItemTypes = 'Movie';
+            includeItemTypes = S.t('movie');
             break;
           case 'tvshows':
-            includeItemTypes = 'Series';
+            includeItemTypes = S.t('series');
             break;
           case 'music':
             includeItemTypes = 'MusicAlbum';
@@ -191,7 +192,7 @@ class EmbyClient {
             'Recursive': true,
             'IncludeItemTypes': includeItemTypes,
             'SortBy': 'SortName',
-            'SortOrder': 'Ascending',
+            'SortOrder': S.t('ascending'),
             'Fields':
                 'PrimaryImageAspectRatio,ImageTags,Overview,CommunityRating,ParentId,ProductionYear',
             'ImageTypeLimit': 1,
@@ -209,7 +210,7 @@ class EmbyClient {
           queryParameters: <String, dynamic>{
             'ParentId': parentId,
             'SortBy': 'SortName',
-            'SortOrder': 'Ascending',
+            'SortOrder': S.t('ascending'),
             'Fields':
                 'PrimaryImageAspectRatio,ImageTags,ParentId,ProductionYear',
             'ImageTypeLimit': 1,
@@ -233,7 +234,7 @@ class EmbyClient {
             'IsPlayed': 'true',
             'IncludeItemTypes': 'Series,Movie',
             'SortBy': 'SortName',
-            'SortOrder': 'Ascending',
+            'SortOrder': S.t('ascending'),
             'Fields':
                 'PrimaryImageAspectRatio,ImageTags,ParentId,ProductionYear',
             'ImageTypeLimit': 1,
@@ -258,7 +259,7 @@ class EmbyClient {
             'IsPlayed': 'false',
             'IncludeItemTypes': 'Series,Movie',
             'SortBy': 'SortName',
-            'SortOrder': 'Ascending',
+            'SortOrder': S.t('ascending'),
             'Fields':
                 'PrimaryImageAspectRatio,ImageTags,ParentId,ProductionYear',
             'ImageTypeLimit': 1,
@@ -284,7 +285,7 @@ class EmbyClient {
           'Users/$_userId/Items/Resume',
           queryParameters: <String, dynamic>{
             'Limit': 24,
-            'MediaTypes': 'Video',
+            'MediaTypes': S.t('video'),
             'Fields':
                 'PrimaryImageAspectRatio,Overview,ImageTags,ParentId,ProductionYear',
             'ImageTypeLimit': 1,
@@ -540,10 +541,10 @@ class EmbyClient {
           active.add(
             ActiveSession(
               id: element['Id'] as String? ?? '',
-              user: element['UserName'] as String? ?? 'Unknown',
-              device: element['Client'] as String? ?? 'Unknown',
-              status: playState['IsPaused'] == true ? 'Paused' : 'Playing',
-              showTitle: nowPlaying['Name'] as String? ?? 'Unknown',
+              user: element['UserName'] as String? ?? S.t('unknown'),
+              device: element['Client'] as String? ?? S.t('unknown'),
+              status: playState['IsPaused'] == true ? S.t('paused') : 'Playing',
+              showTitle: nowPlaying['Name'] as String? ?? S.t('unknown'),
               episodeName: type == 'Audio'
                   ? artistName
                   : nowPlaying['SeriesName'] as String?,
@@ -682,7 +683,7 @@ class EmbyClient {
           'Users/$_userId/Items',
           queryParameters: <String, dynamic>{
             'ParentId': seasonId,
-            'IncludeItemTypes': 'Episode',
+            'IncludeItemTypes': S.t('episode'),
             'Fields':
                 'PrimaryImageAspectRatio,Overview,RunTimeTicks,CommunityRating,ImageTags,ProductionYear',
             'ImageTypeLimit': 1,
@@ -717,7 +718,7 @@ class EmbyClient {
             'Recursive': true,
             'IncludeItemTypes': 'MusicArtist',
             'SearchTerm': artistName,
-            'Fields': 'Overview',
+            'Fields': S.t('overview'),
           },
         );
         final items = EmbyItemsResult.fromJson(
@@ -961,7 +962,7 @@ class EmbyClient {
 
         // Explicitly check if the GET request returns an empty Images array before attempting the POST request
         if (result.images.isEmpty) {
-          throw Exception("Aucune image distante trouvée pour l'élément $itemId.");
+          throw Exception(S.t('noRemoteImagesFoundForItemItemId1', [itemId]));
         }
 
         final String? imageUrl =
@@ -1003,7 +1004,7 @@ class EmbyClient {
           final Map<String, dynamic> task = t as Map<String, dynamic>;
           if (task['Key'] == 'RefreshLibrary') {
             return (
-              state: (task['State'] as String?) ?? 'Idle',
+              state: (task['State'] as String?) ?? S.t('idle'),
               progress:
                   (task['CurrentProgressPercentage'] as num?)?.toDouble() ??
                       0.0,

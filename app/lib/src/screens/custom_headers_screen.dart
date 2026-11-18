@@ -25,27 +25,27 @@ class _CustomHeadersScreenState extends ConsumerState<CustomHeadersScreen> {
     final Profile? profile = ref.watch(activeProfileProvider);
     if (profile == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('En-têtes personnalisés')),
-        body: const EmptyView(
+        appBar: AppBar(title: Text(S.t('customHeaders'))),
+        body: EmptyView(
           icon: Icons.language_outlined,
-          title: 'Aucun profil',
-          message: "Créez un profil avant d'ajouter des en-têtes.",
+          title: S.t('noProfiles'),
+          message: S.t('createAProfileBeforeAddingHeaders'),
         ),
       );
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('En-têtes personnalisés')),
+      appBar: AppBar(title: Text(S.t('customHeaders'))),
       body: ListView(
         padding: const EdgeInsets.only(bottom: Insets.xl),
         children: <Widget>[
           _HeadersSectionHeader(
             'Global headers',
-            subtitle: 'Envoyés avec chaque requête, toutes les instances',
+            subtitle: S.t('sentWithEveryRequestAllInstances'),
             onAdd: _editGlobalHeader,
           ),
           if (profile.globalHeaders.isEmpty)
-            const _NoHeadersHint('Aucun en-tête global')
+            _NoHeadersHint(S.t('noGlobalHeaders'))
           else
             Padding(
               padding: Insets.pageH,
@@ -62,12 +62,12 @@ class _CustomHeadersScreenState extends ConsumerState<CustomHeadersScreen> {
                 ],
               ),
             ),
-          const _HeadersSectionHeader(
+          _HeadersSectionHeader(
             'Per instance',
-            subtitle: 'Remplacer ou étendre les en-têtes globaux pour une instance',
+            subtitle: S.t('overrideOrExtendGlobalHeadersForOneInstance'),
           ),
           if (profile.instances.isEmpty)
-            const _NoHeadersHint('Aucune instance dans ce profil')
+            _NoHeadersHint(S.t('noInstancesInThisProfile'))
           else
             Padding(
               padding: Insets.pageH,
@@ -148,11 +148,11 @@ class _InstanceHeadersScreenState
         ref.watch(instanceByIdProvider(widget.instanceId));
     if (instance == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text("En-têtes de l'instance")),
-        body: const EmptyView(
+        appBar: AppBar(title: Text(S.t('instanceHeaders'))),
+        body: EmptyView(
           icon: Icons.language_outlined,
-          title: 'Instance introuvable',
-          message: 'Elle a peut-être été retirée du profil.',
+          title: S.t('instanceNotFound'),
+          message: S.t('itMayHaveBeenRemovedFromTheProfile'),
         ),
       );
     }
@@ -164,11 +164,11 @@ class _InstanceHeadersScreenState
         children: <Widget>[
           _HeadersSectionHeader(
             'Headers',
-            subtitle: 'Envoyés avec chaque requête à cette instance',
+            subtitle: S.t('sentWithEveryRequestToThisInstance'),
             onAdd: _editHeader,
           ),
           if (instance.customHeaders.isEmpty)
-            const _NoHeadersHint('Aucun en-tête pour cette instance')
+            _NoHeadersHint(S.t('noHeadersForThisInstance'))
           else
             Padding(
               padding: Insets.pageH,
@@ -277,7 +277,7 @@ class _HeadersSectionHeader extends StatelessWidget {
           if (onAdd != null)
             IconButton(
               icon: const Icon(Icons.add),
-              tooltip: 'Ajouter un en-tête',
+              tooltip: S.t('addHeader'),
               onPressed: onAdd,
             ),
         ],
@@ -366,7 +366,7 @@ class _HeaderCard extends StatelessWidget {
               ),
               IconButton(
                 icon: const Icon(Icons.delete_outline),
-                tooltip: "Supprimer l'en-tête",
+                tooltip: S.t('deleteHeader'),
                 onPressed: onDelete,
               ),
             ],
@@ -516,7 +516,7 @@ class _HeaderDialogState extends State<_HeaderDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(widget.initial == null ? 'Ajouter un en-tête' : "Modifier l'en-tête"),
+      title: Text(widget.initial == null ? S.t('addHeader') : S.t('editHeader')),
       content: Form(
         key: _formKey,
         child: Column(
@@ -529,18 +529,18 @@ class _HeaderDialogState extends State<_HeaderDialog> {
               // Proxy-Authorization rather than X-Api-Key: this screen exists
               // for reverse-proxy auth, and it is the one name no service in
               // the stack overwrites or refuses.
-              decoration: const InputDecoration(
-                labelText: "Nom de l'en-tête",
+              decoration: InputDecoration(
+                labelText: S.t('headerName'),
                 hintText: proxyAuthHeaderName,
               ),
               onChanged: (String _) => setState(() {}),
               validator: (String? v) {
                 final String name = (v ?? '').trim();
                 if (name.isEmpty) {
-                  return "Saisissez un nom d'en-tête";
+                  return S.t('enterAHeaderName');
                 }
                 if (!_tokenPattern.hasMatch(name)) {
-                  return 'Espaces et deux-points interdits';
+                  return S.t('noSpacesOrColonsAllowed');
                 }
                 return null;
               },
@@ -571,7 +571,7 @@ class _HeaderDialogState extends State<_HeaderDialog> {
             TextFormField(
               controller: _value,
               textInputAction: TextInputAction.done,
-              decoration: const InputDecoration(labelText: 'Valeur'),
+              decoration: InputDecoration(labelText: S.t('value')),
               onFieldSubmitted: (String _) => _submit(),
               validator: (String? v) =>
                   (v ?? '').trim().isEmpty ? 'Enter a value' : null,
@@ -582,11 +582,11 @@ class _HeaderDialogState extends State<_HeaderDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: _submit,
-          child: const Text('Enregistrer'),
+          child: Text(S.t('save')),
         ),
       ],
     );

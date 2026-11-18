@@ -426,7 +426,7 @@ void main() {
       adguardHomeClientWrite(
         current: current,
         before: before,
-        after: before.copyWith(name: 'Renommée', tags: <String>[]),
+        after: before.copyWith(name: 'Renamed', tags: <String>[]),
       );
 
       expect(jsonEncode(current), was);
@@ -543,7 +543,7 @@ void main() {
         'All': <String>['0.0.0.0/0'],
       });
 
-      expect(adguardHomeClientOwning(all, '203.0.113.9')?.name, 'Tous');
+      expect(adguardHomeClientOwning(all, '203.0.113.9')?.name, 'All');
       expect(adguardHomeClientOwning(all, '2001:db8::1'), isNull);
     });
 

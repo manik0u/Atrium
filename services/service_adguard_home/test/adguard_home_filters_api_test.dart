@@ -34,7 +34,7 @@ void main() {
       await api.updateFilterList(
         url: 'https://lists.example/old.txt',
         allowlist: true,
-        name: 'Renommée',
+        name: 'Renamed',
         newUrl: 'https://lists.example/new.txt',
         enabled: false,
       );
@@ -43,7 +43,7 @@ void main() {
         'url': 'https://lists.example/old.txt',
         'whitelist': true,
         'data': <String, dynamic>{
-          'name': 'Renommée',
+          'name': 'Renamed',
           'url': 'https://lists.example/new.txt',
           'enabled': false,
         },

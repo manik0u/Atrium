@@ -58,7 +58,7 @@ class _AdguardHomeGlobalServicesScreenState
       context,
       AdguardHomeServicesScreen(
         instance: _instance,
-        title: 'Bloqué pour tout le monde',
+        title: S.t('blockedForEveryone'),
         selected: blocked.toSet(),
       ),
     );
@@ -93,7 +93,7 @@ class _AdguardHomeGlobalServicesScreenState
         ref.watch(adguardHomeGlobalServicesProvider(_instance));
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Services bloqués'),
+        title: Text(S.t('blockedServices')),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(4),
           child: _busy
@@ -142,9 +142,9 @@ class _AdguardHomeGlobalServicesScreenState
           child: ListView(
             padding: const EdgeInsets.only(bottom: Insets.xl),
             children: <Widget>[
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: Insets.lg),
-                child: AdguardHomeHeading('Blocked for everyone'),
+                child: AdguardHomeHeading(S.t('blockedForEveryone')),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(
@@ -154,14 +154,14 @@ class _AdguardHomeGlobalServicesScreenState
                   0,
                 ),
                 child: Text(
-                  'Les clients avec leur propre liste de services bloqués ne sont pas '
+                  S.t('clientsWithTheirOwnListOfBlockedServicesAreNot') +
                   'covered by this one.',
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                 ),
               ),
               ListTile(
-                title: const Text('Services'),
+                title: Text(S.t('services')),
                 subtitle: Text(
                   services.ids.isEmpty
                       ? 'None'
@@ -173,9 +173,9 @@ class _AdguardHomeGlobalServicesScreenState
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () => _pick(services.ids),
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: Insets.lg),
-                child: AdguardHomeHeading('Pause schedule'),
+                child: AdguardHomeHeading(S.t('pauseSchedule')),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(
@@ -187,8 +187,8 @@ class _AdguardHomeGlobalServicesScreenState
                 child: Text(
                   services.ids.isEmpty
                       ? 'Nothing is blocked now, so there is nothing to pause. '
-                          'Le planning est conservé pour quand quelque chose est.'
-                      : 'En pause, les services ci-dessus sont laissés passer.',
+                          S.t('theScheduleIsKeptForWhenSomethingIs')
+                      : S.t('whilePausedTheServicesAboveAreLetThrough'),
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                 ),

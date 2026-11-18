@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -11,11 +12,11 @@ Future<String?> showTransmissionLocationDialog(
 }) =>
     showDialog<String>(
       context: context,
-      builder: (BuildContext _) => const _TextDialog(
-        title: "Définir l'emplacement du torrent",
-        label: 'Emplacement',
-        verb: 'Apply',
-        helper: 'Un chemin tel que le serveur le voit. Les données y sont déplacées.',
+      builder: (BuildContext _) => _TextDialog(
+        title: S.t('setTorrentLocation'),
+        label: S.t('location'),
+        verb: S.t('apply'),
+        helper: S.t('aPathAsTheServerSeesItTheDataIsMovedThere'),
         initial: '',
       ).withInitial(initial),
     );
@@ -27,9 +28,9 @@ Future<String?> showTransmissionRenameDialog(
     showDialog<String>(
       context: context,
       builder: (BuildContext _) => _TextDialog(
-        title: 'Renommer',
-        label: 'Saisir un nouveau nom',
-        verb: 'Rename',
+        title: S.t('rename'),
+        label: S.t('enterNewName'),
+        verb: S.t('rename'),
         initial: initial,
       ),
     );
@@ -88,7 +89,7 @@ class _TextDialogState extends State<_TextDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(_controller.text.trim()),
@@ -140,7 +141,7 @@ class _LabelsDialogState extends State<_LabelsDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Modifier les labels'),
+      title: Text(S.t('editLabels')),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,10 +149,10 @@ class _LabelsDialogState extends State<_LabelsDialog> {
           TextField(
             controller: _controller,
             autofocus: true,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Labels',
-              helperText: 'Séparez les labels par des virgules',
+              helperText: S.t('separateLabelsWithCommas'),
             ),
           ),
           if (widget.suggestions.isNotEmpty) ...<Widget>[
@@ -177,11 +178,11 @@ class _LabelsDialogState extends State<_LabelsDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(_parse(_controller.text)),
-          child: const Text('Enregistrer'),
+          child: Text(S.t('save')),
         ),
       ],
     );
@@ -201,7 +202,7 @@ Future<bool?> showTransmissionRemoveDialog(
       builder: (BuildContext context, StateSetter setLocal) => AlertDialog(
         title: Text(
           names.length == 1
-              ? 'Remove torrent'
+              ? S.t('removeTorrent')
               : 'Remove ${names.length} torrents',
         ),
         content: Column(
@@ -218,18 +219,18 @@ Future<bool?> showTransmissionRemoveDialog(
               contentPadding: EdgeInsets.zero,
               value: withData,
               onChanged: (bool? v) => setLocal(() => withData = v ?? false),
-              title: const Text('Mettre aussi les données téléchargées à la corbeille'),
+              title: Text(S.t('alsoTrashTheDownloadedData')),
             ),
           ],
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(withData),
-            child: const Text('Retirer'),
+            child: Text(S.t('remove')),
           ),
         ],
       ),
@@ -238,19 +239,19 @@ Future<bool?> showTransmissionRemoveDialog(
 }
 
 /// The web UI's peer flag legend, letter for letter.
-const List<(String, String)> transmissionPeerFlags = <(String, String)>[
+final List<(String, String)> transmissionPeerFlags = <(String, String)>[
   ('O', 'Optimistic unchoke'),
-  ('D', 'Téléchargement depuis ce pair'),
-  ('d', "Nous téléchargerions depuis ce pair s'il nous le permettait"),
+  ('D', S.t('downloadingFromThisPeer')),
+  ('d', S.t('weWouldDownloadFromThisPeerIfTheyDLetUs')),
   ('U', 'Uploading to peer'),
-  ('u', "Nous enverrions à ce pair s'il le demandait"),
-  ('K', 'Le pair nous a désétouffé, mais nous ne sommes pas intéressés'),
-  ('?', "Nous avons désétouffé ce pair, mais il n'est pas intéressé"),
+  ('u', S.t('weWouldUploadToThisPeerIfTheyDAsk')),
+  ('K', S.t('peerHasUnchokedUsButWeReNotInterested')),
+  ('?', S.t('weUnchokedThisPeerButTheyReNotInterested')),
   ('E', 'Encrypted connection'),
-  ('H', 'Pair découvert via DHT'),
-  ('X', "Pair découvert via l'échange de pairs (PEX)"),
+  ('H', S.t('peerWasDiscoveredThroughDHT')),
+  ('X', S.t('peerWasDiscoveredThroughPeerExchangePEX')),
   ('I', 'Peer is an incoming connection'),
-  ('T', 'Peer is connected via uTP'),
+  ('T', S.t('peerIsConnectedViaUTP')),
 ];
 
 Future<void> showTransmissionPeerFlagsSheet(BuildContext context) =>
@@ -264,7 +265,7 @@ Future<void> showTransmissionPeerFlagsSheet(BuildContext context) =>
           padding:
               const EdgeInsets.fromLTRB(Insets.lg, 0, Insets.lg, Insets.lg),
           children: <Widget>[
-            Text('Drapeaux de pairs', style: Theme.of(context).textTheme.titleMedium),
+            Text(S.t('peerFlags'), style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: Insets.sm),
             for (final (String flag, String meaning) in transmissionPeerFlags)
               ListTile(

@@ -109,14 +109,14 @@ class _WantedTabState extends ConsumerState<WantedTab>
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content:
-                Text('Recherche lancée pour ${ids.length} épisodes sélectionnés.'),
+                Text(S.t('searchStartedForIdsLengthSelectedEpisodes1', [ids.length])),
           ),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec du démarrage de la recherche : $e')),
+          SnackBar(content: Text(S.t('failedToStartSearchE1', [e]))),
         );
       }
     }
@@ -139,12 +139,12 @@ class _WantedTabState extends ConsumerState<WantedTab>
       ref.invalidate(sonarrWantedCutoffProvider(widget.instance));
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('${ids.length} épisodes sélectionnés ne sont plus surveillés.')),
+        SnackBar(content: Text(S.t('unmonitoredIdsLengthSelectedEpisodes1', [ids.length]))),
       );
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec de la mise à jour de la surveillance : $e')),
+          SnackBar(content: Text(S.t('failedToUpdateMonitoringE1', [e]))),
         );
       }
     }
@@ -172,14 +172,14 @@ class _WantedTabState extends ConsumerState<WantedTab>
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec du démarrage de la recherche groupée : $e')),
+          SnackBar(content: Text(S.t('failedToStartBulkSearchE1', [e]))),
         );
       }
     }
   }
 
   String _formatAirDate(String? utcString) {
-    if (utcString == null || utcString.isEmpty) return 'Unknown';
+    if (utcString == null || utcString.isEmpty) return S.t('unknown');
     try {
       final DateTime dt = DateTime.parse(utcString).toLocal();
       return DateFormat.yMMMd().format(dt);
@@ -264,7 +264,7 @@ class _WantedTabState extends ConsumerState<WantedTab>
                     : SearchBar(
                         focusNode: _searchFocusNode,
                         controller: _searchController,
-                        hintText: 'Rechercher les recherchés…',
+                        hintText: S.t('searchWanted'),
                         onTapOutside: (event) {
                           if (_searchFocusNode.hasFocus) {
                             _searchFocusNode.unfocus();
@@ -308,12 +308,12 @@ class _WantedTabState extends ConsumerState<WantedTab>
                     ? <Widget>[
                         IconButton(
                           icon: const Icon(Icons.search),
-                          tooltip: 'Rechercher la sélection',
+                          tooltip: S.t('searchSelected'),
                           onPressed: _searchSelected,
                         ),
                         IconButton(
                           icon: const Icon(Icons.bookmark_border),
-                          tooltip: 'Ne plus surveiller la sélection',
+                          tooltip: S.t('unmonitorSelected'),
                           onPressed: _unmonitorSelected,
                         ),
                         const SizedBox(width: 8),
@@ -326,8 +326,8 @@ class _WantedTabState extends ConsumerState<WantedTab>
                                 : Icons.group_work_outlined,
                           ),
                           tooltip: isGrouped
-                              ? 'Switch to plain list'
-                              : 'Switch to grouped view',
+                              ? S.t('switchToPlainList')
+                              : S.t('switchToGroupedView'),
                           onPressed: () {
                             ref
                                 .read(
@@ -349,9 +349,9 @@ class _WantedTabState extends ConsumerState<WantedTab>
                     fontWeight: FontWeight.bold,
                   ),
                   unselectedLabelStyle: theme.textTheme.titleSmall,
-                  tabs: const <Widget>[
-                    Tab(text: 'Manquant'),
-                    Tab(text: 'Cutoff non atteint'),
+                  tabs: <Widget>[
+                    Tab(text: S.t('missing')),
+                    Tab(text: S.t('cutoffUnmet')),
                   ],
                 ),
               ),
@@ -474,13 +474,13 @@ class _EpisodeListLayout extends ConsumerWidget {
       await api.performEpisodeSearch([episodeId]);
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Recherche lancée pour l'épisode.")),
+          SnackBar(content: Text(S.t('searchStartedForEpisode'))),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec de la recherche : $e')),
+          SnackBar(content: Text(S.t('searchFailedE1', [e]))),
         );
       }
     }
@@ -546,7 +546,7 @@ class _EpisodeListLayout extends ConsumerWidget {
               const SizedBox(height: 16),
               FilledButton.tonal(
                 onPressed: onRefresh,
-                child: const Text('Réessayer'),
+                child: Text(S.t('retry')),
               ),
             ],
           ),
@@ -566,8 +566,8 @@ class _EpisodeListLayout extends ConsumerWidget {
                 const SizedBox(height: 16),
                 Text(
                   isCutoffTab
-                      ? 'Aucun épisode au cutoff non atteint'
-                      : 'Aucun épisode manquant',
+                      ? S.t('noCutoffUnmetEpisodes')
+                      : S.t('noMissingEpisodes'),
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                     fontWeight: FontWeight.bold,
@@ -728,7 +728,7 @@ class _EpisodeListLayout extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                episode.series?.title ?? 'Série inconnue',
+                                episode.series?.title ?? S.t('unknownSeries'),
                                 style: theme.textTheme.titleMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -822,7 +822,7 @@ class _EpisodeListLayout extends ConsumerWidget {
                           children: <Widget>[
                             IconButton(
                               icon: const Icon(Icons.search, size: 20),
-                              tooltip: 'Recherche automatique',
+                              tooltip: S.t('autoSearch'),
                               onPressed: () => _triggerSingleSearch(
                                 context,
                                 ref,
@@ -834,7 +834,7 @@ class _EpisodeListLayout extends ConsumerWidget {
                                 Icons.person_search_outlined,
                                 size: 20,
                               ),
-                              tooltip: 'Recherche interactive',
+                              tooltip: S.t('interactiveSearch'),
                               onPressed: () {
                                 pushScreen<void>(
                                   context,
@@ -857,14 +857,14 @@ class _EpisodeListLayout extends ConsumerWidget {
         }
 
         return EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
           onRefresh: () async {
             onRefresh();
@@ -884,8 +884,8 @@ class _EpisodeListLayout extends ConsumerWidget {
                           icon: const Icon(Icons.search, size: 18),
                           label: Text(
                             isCutoffTab
-                                ? 'Search Cutoff'
-                                : 'Search All',
+                                ? S.t('searchCutoff')
+                                : S.t('searchAll'),
                           ),
                         ),
                       ),
@@ -896,7 +896,7 @@ class _EpisodeListLayout extends ConsumerWidget {
                             showManualImportFlow(context, ref, instance);
                           },
                           icon: const Icon(Icons.folder_open, size: 18),
-                          label: const Text('Import manuel'),
+                          label: Text(S.t('manualImport')),
                         ),
                       ),
                     ],
@@ -1271,7 +1271,7 @@ class _GroupedEpisodeCardState extends ConsumerState<_GroupedEpisodeCard> {
                             const SizedBox(width: 8),
                             IconButton(
                               icon: const Icon(Icons.search, size: 18),
-                              tooltip: 'Recherche automatique',
+                              tooltip: S.t('autoSearch'),
                               onPressed: () =>
                                   widget.onSearchTriggered(episode.id),
                             ),
@@ -1408,10 +1408,10 @@ class _EpisodeDetailsSheetState extends ConsumerState<_EpisodeDetailsSheet> {
               dividerColor:
                   theme.colorScheme.outlineVariant.withValues(alpha: 0.3),
               indicatorSize: TabBarIndicatorSize.tab,
-              tabs: const <Widget>[
-                Tab(text: 'Détails'),
-                Tab(text: 'Historique'),
-                Tab(text: 'Rechercher'),
+              tabs: <Widget>[
+                Tab(text: S.t('details')),
+                Tab(text: S.t('history')),
+                Tab(text: S.t('search')),
               ],
             ),
             Expanded(
@@ -1438,7 +1438,7 @@ class _EpisodeDetailsSheetState extends ConsumerState<_EpisodeDetailsSheet> {
                           const SizedBox(height: 16),
                         ],
                         Text(
-                          'Monitored',
+                          S.t('monitored'),
                           style: theme.textTheme.labelMedium?.copyWith(
                             color: cs.outline,
                             fontWeight: FontWeight.bold,
@@ -1456,8 +1456,8 @@ class _EpisodeDetailsSheetState extends ConsumerState<_EpisodeDetailsSheet> {
                           ),
                           child: Text(
                             widget.episode.series?.monitored == true
-                                ? 'Yes'
-                                : 'No',
+                                ? S.t('yes')
+                                : S.t('no'),
                             style: theme.textTheme.labelMedium?.copyWith(
                               color: cs.onPrimaryContainer,
                               fontWeight: FontWeight.bold,
@@ -1466,7 +1466,7 @@ class _EpisodeDetailsSheetState extends ConsumerState<_EpisodeDetailsSheet> {
                         ),
                         const SizedBox(height: 20),
                         Text(
-                          'Overview',
+                          S.t('overview'),
                           style: theme.textTheme.labelMedium?.copyWith(
                             color: cs.outline,
                             fontWeight: FontWeight.bold,
@@ -1477,7 +1477,7 @@ class _EpisodeDetailsSheetState extends ConsumerState<_EpisodeDetailsSheet> {
                           widget.episode.overview != null &&
                                   widget.episode.overview!.isNotEmpty
                               ? widget.episode.overview!
-                              : 'Aucun détail de résumé disponible pour cet épisode.',
+                              : S.t('noOverviewDetailsAreAvailableForThisEpisode'),
                           style: theme.textTheme.bodyMedium?.copyWith(
                             height: 1.4,
                           ),
@@ -1496,7 +1496,7 @@ class _EpisodeDetailsSheetState extends ConsumerState<_EpisodeDetailsSheet> {
                               Navigator.of(context).pop();
                             },
                             icon: const Icon(Icons.launch, size: 18),
-                            label: const Text('Fermer'),
+                            label: Text(S.t('close')),
                           ),
                         ),
                       ],
@@ -1513,9 +1513,9 @@ class _EpisodeDetailsSheetState extends ConsumerState<_EpisodeDetailsSheet> {
                               ),
                             )
                           : _history.isEmpty
-                              ? const Center(
+                              ? Center(
                                   child: Text(
-                                    "Aucun élément d'historique pour cet épisode.",
+                                    S.t('noHistoryItemsForThisEpisode'),
                                   ),
                                 )
                               : ListView.builder(
@@ -1530,7 +1530,7 @@ class _EpisodeDetailsSheetState extends ConsumerState<_EpisodeDetailsSheet> {
                                         : null;
                                     final date = dt != null
                                         ? DateFormat.yMMMd().add_jm().format(dt)
-                                        : 'Unknown Date';
+                                        : S.t('unknownDate');
                                     final eventType =
                                         log.eventType?.toUpperCase() ??
                                             'UNKNOWN';
@@ -1593,8 +1593,8 @@ class _EpisodeDetailsSheetState extends ConsumerState<_EpisodeDetailsSheet> {
                             );
                           },
                           icon: const Icon(Icons.person_search_outlined),
-                          label: const Text(
-                            'Interactive Search',
+                          label: Text(
+                            S.t('interactiveSearch'),
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),

@@ -57,7 +57,7 @@ class _PeopleTabState extends ConsumerState<PeopleTab> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.menu),
-          tooltip: 'Ouvrir le menu',
+          tooltip: S.t('openMenu'),
           onPressed: () => Scaffold.of(context).openDrawer(),
         ),
         title: Column(
@@ -72,7 +72,7 @@ class _PeopleTabState extends ConsumerState<PeopleTab> {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              'People',
+              S.t('people'),
               style: theme.textTheme.bodySmall?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
@@ -81,14 +81,14 @@ class _PeopleTabState extends ConsumerState<PeopleTab> {
         ),
       ),
       body: EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing user directory...',
-          processingText: 'Refreshing user directory...',
-          processedText: 'Updated',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshingUserDirectory'),
+          processingText: S.t('refreshingUserDirectory'),
+          processedText: S.t('updated'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: _refreshAll,
         child: ListView(

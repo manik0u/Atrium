@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_networking/core_networking.dart';
 import 'package:dio/dio.dart';
 
@@ -99,10 +100,10 @@ class NzbgetApi {
     }
   }
 
-  Future<void> pauseItems(List<int> ids) => editQueue('Mettre le groupe en pause', '', ids);
-  Future<void> resumeItems(List<int> ids) => editQueue('Reprendre le groupe', '', ids);
-  Future<void> deleteItems(List<int> ids) => editQueue('Supprimer le groupe', '', ids);
-  Future<void> moveTop(List<int> ids) => editQueue('Groupe en haut', '', ids);
+  Future<void> pauseItems(List<int> ids) => editQueue(S.t('grouppause'), '', ids);
+  Future<void> resumeItems(List<int> ids) => editQueue(S.t('groupresume'), '', ids);
+  Future<void> deleteItems(List<int> ids) => editQueue(S.t('groupdelete'), '', ids);
+  Future<void> moveTop(List<int> ids) => editQueue(S.t('groupmovetop'), '', ids);
   Future<void> moveBottom(List<int> ids) =>
       editQueue('GroupMoveBottom', '', ids);
 

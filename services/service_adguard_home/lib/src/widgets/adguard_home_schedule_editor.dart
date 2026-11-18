@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -91,7 +92,7 @@ class AdguardHomeScheduleEditor extends StatelessWidget {
         ListTile(
           enabled: enabled,
           leading: const Icon(Icons.public),
-          title: const Text('Fuseau horaire'),
+          title: Text(S.t('timeZone')),
           subtitle: Text(adguardHomeTimeZoneLabel(schedule.timeZone)),
           trailing: const Icon(Icons.chevron_right),
           onTap: () => _pickTimeZone(context),
@@ -150,9 +151,9 @@ class _AdguardHomePauseSheetState extends State<AdguardHomePauseSheet> {
   /// switched on, so one tap adds it; the button says so, rather than a
   /// plain Save that would add a pause nobody asked for by name.
   String get _action {
-    if (_was == null && _paused) return 'Add pause';
-    if (_was != null && !_paused) return 'Remove pause';
-    return 'Save';
+    if (_was == null && _paused) return S.t('addPause');
+    if (_was != null && !_paused) return S.t('removePause');
+    return S.t('save');
   }
 
   String? get _problem =>
@@ -206,16 +207,16 @@ class _AdguardHomePauseSheetState extends State<AdguardHomePauseSheet> {
                   ),
                 ),
                 SwitchListTile(
-                  title: const Text('Mettre le blocage en pause'),
-                  subtitle: const Text(
-                    'Les services bloqués sont laissés passer pour cette durée',
+                  title: Text(S.t('pauseBlocking')),
+                  subtitle: Text(
+                    S.t('theBlockedServicesAreLetThroughForThisTime'),
                   ),
                   value: _paused,
                   onChanged: (bool on) => setState(() => _paused = on),
                 ),
                 ListTile(
                   enabled: _paused,
-                  title: const Text('De'),
+                  title: Text(S.t('from')),
                   trailing: Text(
                     formatAdguardHomeClock(_start),
                     style: theme.textTheme.titleMedium,
@@ -224,7 +225,7 @@ class _AdguardHomePauseSheetState extends State<AdguardHomePauseSheet> {
                 ),
                 ListTile(
                   enabled: _paused && !_toEndOfDay,
-                  title: const Text('À'),
+                  title: Text(S.t('to')),
                   trailing: Text(
                     formatAdguardHomeClock(_end),
                     style: theme.textTheme.titleMedium,
@@ -232,7 +233,7 @@ class _AdguardHomePauseSheetState extends State<AdguardHomePauseSheet> {
                   onTap: () => _pick(start: false),
                 ),
                 SwitchListTile(
-                  title: const Text("Jusqu'à la fin de la journée"),
+                  title: Text(S.t('untilTheEndOfTheDay')),
                   value: _toEndOfDay,
                   onChanged: _paused
                       ? (bool on) => setState(
@@ -310,7 +311,7 @@ class _AdguardHomePauseSheetState extends State<AdguardHomePauseSheet> {
               children: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Annuler'),
+                  child: Text(S.t('cancel')),
                 ),
                 FilledButton(
                   onPressed: problem == null ? _save : null,
@@ -358,7 +359,7 @@ class _AdguardHomeTimeZoneScreenState extends State<AdguardHomeTimeZoneScreen> {
         ? adguardHomeServerTimeZone
         : widget.selected;
     return Scaffold(
-      appBar: AppBar(title: const Text('Fuseau horaire')),
+      appBar: AppBar(title: Text(S.t('timeZone'))),
       body: Column(
         children: <Widget>[
           Padding(
@@ -373,7 +374,7 @@ class _AdguardHomeTimeZoneScreenState extends State<AdguardHomeTimeZoneScreen> {
               onChanged: (String _) => setState(() {}),
               autocorrect: false,
               decoration: InputDecoration(
-                hintText: 'Rechercher des fuseaux horaires',
+                hintText: S.t('searchTimeZones'),
                 prefixIcon: const Icon(Icons.search),
                 isDense: true,
                 filled: true,
@@ -387,10 +388,10 @@ class _AdguardHomeTimeZoneScreenState extends State<AdguardHomeTimeZoneScreen> {
           ),
           Expanded(
             child: zones.isEmpty
-                ? const SingleChildScrollView(
+                ? SingleChildScrollView(
                     child: EmptyView(
                       icon: Icons.search_off,
-                      title: 'Aucun fuseau horaire ne correspond',
+                      title: S.t('noTimeZoneMatches'),
                     ),
                   )
                 : ListView.builder(

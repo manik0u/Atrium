@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
@@ -120,7 +121,7 @@ class TransmissionTorrentRow extends StatelessWidget {
                       ),
                       if (!selectionMode)
                         PopupMenuButton<TransmissionTorrentAction>(
-                          tooltip: 'Actions sur le torrent',
+                          tooltip: S.t('torrentActions'),
                           padding: EdgeInsets.zero,
                           icon: Icon(
                             Icons.more_vert_rounded,
@@ -243,7 +244,7 @@ class TransmissionTorrentRow extends StatelessWidget {
                                 // that was merely paused.
                                 _StatePill(
                                   label: torrent.hasError
-                                      ? 'Error'
+                                      ? S.t('error')
                                       : torrent.stateString,
                                   visual: v,
                                 ),
@@ -278,7 +279,7 @@ class TransmissionTorrentRow extends StatelessWidget {
                   ),
                   if (!selectionMode)
                     PopupMenuButton<TransmissionTorrentAction>(
-                      tooltip: 'Actions sur le torrent',
+                      tooltip: S.t('torrentActions'),
                       padding: EdgeInsets.zero,
                       icon: Icon(
                         Icons.more_vert_rounded,
@@ -426,7 +427,7 @@ class _PrivacyBadge extends StatelessWidget {
           ),
           const SizedBox(width: 3),
           Text(
-            isPrivate ? 'Private' : 'Public',
+            isPrivate ? S.t('private') : S.t('public'),
             style: theme.textTheme.labelSmall?.copyWith(
               fontSize: 10,
               fontWeight: FontWeight.w600,

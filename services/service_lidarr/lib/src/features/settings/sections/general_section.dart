@@ -149,8 +149,8 @@ class _GeneralSettingsSectionState
                         const SizedBox(height: Insets.md),
                         TextField(
                           controller: _instanceNameController,
-                          decoration: const InputDecoration(
-                            labelText: "Nom de l'instance",
+                          decoration: InputDecoration(
+                            labelText: S.t('instanceName'),
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -158,8 +158,8 @@ class _GeneralSettingsSectionState
                         TextField(
                           controller: _portController,
                           keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Port',
+                          decoration: InputDecoration(
+                            labelText: S.t('port'),
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -167,14 +167,14 @@ class _GeneralSettingsSectionState
                         TextField(
                           controller: _sslPortController,
                           keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Port SSL',
+                          decoration: InputDecoration(
+                            labelText: S.t('sslPort'),
                             border: OutlineInputBorder(),
                           ),
                         ),
                         const SizedBox(height: Insets.xs),
                         SwitchListTile(
-                          title: const Text('Activer SSL'),
+                          title: Text(S.t('enableSSL')),
                           value: _enableSsl ?? false,
                           contentPadding: EdgeInsets.zero,
                           onChanged: (bool val) =>
@@ -183,23 +183,23 @@ class _GeneralSettingsSectionState
                         const SizedBox(height: Insets.xs),
                         TextField(
                           controller: _urlBaseController,
-                          decoration: const InputDecoration(
-                            labelText: "Base de l'URL",
-                            hintText: 'ex. /lidarr',
+                          decoration: InputDecoration(
+                            labelText: S.t('urlBase'),
+                            hintText: S.t('eGLidarr'),
                             border: OutlineInputBorder(),
                           ),
                         ),
                         const SizedBox(height: Insets.sm),
                         TextField(
                           controller: _branchController,
-                          decoration: const InputDecoration(
-                            labelText: 'Branche',
+                          decoration: InputDecoration(
+                            labelText: S.t('branch'),
                             border: OutlineInputBorder(),
                           ),
                         ),
                         const SizedBox(height: Insets.xs),
                         SwitchListTile(
-                          title: const Text('Mettre à jour automatiquement'),
+                          title: Text(S.t('updateAutomatically')),
                           value: _updateAutomatically ?? false,
                           contentPadding: EdgeInsets.zero,
                           onChanged: (bool val) =>
@@ -240,15 +240,15 @@ class _GeneralSettingsSectionState
                                 ),
                                 IconButton(
                                   icon: const Icon(Icons.copy, size: 18),
-                                  tooltip: 'Copier la clé API',
+                                  tooltip: S.t('copyAPIKey'),
                                   onPressed: () {
                                     Clipboard.setData(
                                       ClipboardData(text: host.apiKey!),
                                     );
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
+                                      SnackBar(
                                         content: Text(
-                                          'API Key copied to clipboard!',
+                                          S.t('apiKeyCopiedToClipboard'),
                                         ),
                                       ),
                                     );
@@ -261,7 +261,7 @@ class _GeneralSettingsSectionState
                         ],
                         FilledButton.icon(
                           icon: const Icon(Icons.save, size: 18),
-                          label: const Text("Enregistrer les paramètres de l'hôte"),
+                          label: Text(S.t('saveHostSettings')),
                           onPressed: () async {
                             final ScaffoldMessengerState messenger =
                                 ScaffoldMessenger.of(context);
@@ -297,13 +297,13 @@ class _GeneralSettingsSectionState
                                 lidarrHostConfigProvider(widget.instance),
                               );
                               messenger.showSnackBar(
-                                const SnackBar(
-                                  content: Text("Paramètres de l'hôte enregistrés !"),
+                                SnackBar(
+                                  content: Text(S.t('hostSettingsSaved')),
                                 ),
                               );
                             } catch (e) {
                               messenger.showSnackBar(
-                                SnackBar(content: Text('Erreur : $e')),
+                                SnackBar(content: Text(S.t('errorE1', [e]))),
                               );
                             }
                           },

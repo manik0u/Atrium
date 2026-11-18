@@ -30,24 +30,24 @@ class ProwlarrAppsTab extends ConsumerWidget {
             
           if (list.isEmpty) {
             return EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: () async =>
           ref.invalidate(prowlarrApplicationsProvider(instance)),
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          children: const <Widget>[
+          children: <Widget>[
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.apps_outlined,
-              title: 'Aucune application',
+              title: S.t('noApplications'),
               message:
                   'Tap "Add application" to connect Sonarr, Radarr, and more.',
             ),
@@ -56,14 +56,14 @@ class ProwlarrAppsTab extends ConsumerWidget {
       );
           }
           return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async =>
           ref.invalidate(prowlarrApplicationsProvider(instance)),
@@ -184,10 +184,10 @@ String _syncLabel(String level) {
     case 'fullSync':
       return 'Full sync';
     case 'addOnly':
-      return 'Ajouter et retirer uniquement';
+      return S.t('addAndRemoveOnly_2');
     case 'disabled':
-      return 'Disabled';
+      return S.t('disabled');
     default:
-      return level.isEmpty ? 'Unknown' : level;
+      return level.isEmpty ? S.t('unknown') : level;
   }
 }

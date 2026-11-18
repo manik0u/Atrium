@@ -10,21 +10,21 @@ import 'transmission_providers.dart';
 
 /// Everything the web UI's context menu offers, worded as it words it.
 enum TransmissionTorrentAction {
-  resume('Resume', Icons.play_arrow),
+  resume(S.t('resume'), Icons.play_arrow),
   resumeNow('Resume now', Icons.flash_on),
-  pause('Pause', Icons.pause),
+  pause(S.t('pause'), Icons.pause),
   verify('Verify local data', Icons.fact_check_outlined),
-  reannounce('Demander plus de pairs au tracker', Icons.campaign_outlined),
+  reannounce(S.t('askTrackerForMorePeers'), Icons.campaign_outlined),
   setLocation('Set location', Icons.drive_file_move_outline),
-  rename('Rename', Icons.drive_file_rename_outline),
-  editLabels('Edit labels', Icons.label_outline),
-  copyMagnet('Copy magnet link', Icons.link),
-  queueTop('Queue to top', Icons.vertical_align_top),
-  queueUp('Queue up', Icons.arrow_upward),
-  queueDown('Queue down', Icons.arrow_downward),
-  queueBottom('Queue to bottom', Icons.vertical_align_bottom),
-  remove('Retirer de la liste', Icons.delete_outline),
-  trash('Mettre les données à la corbeille et retirer de la liste', Icons.delete_forever_outlined);
+  rename(S.t('rename'), Icons.drive_file_rename_outline),
+  editLabels(S.t('editLabels'), Icons.label_outline),
+  copyMagnet(S.t('copyMagnetLink'), Icons.link),
+  queueTop(S.t('queueToTop_2'), Icons.vertical_align_top),
+  queueUp(S.t('queueUp_2'), Icons.arrow_upward),
+  queueDown(S.t('queueDown_2'), Icons.arrow_downward),
+  queueBottom(S.t('queueToBottom_2'), Icons.vertical_align_bottom),
+  remove(S.t('removeFromList'), Icons.delete_outline),
+  trash(S.t('trashDataAndRemoveFromList'), Icons.delete_forever_outlined);
 
   const TransmissionTorrentAction(this.label, this.icon);
 
@@ -94,7 +94,7 @@ Future<bool> runTransmissionAction(
       messenger.showSnackBar(SnackBar(content: Text(done)));
     }
   } catch (e) {
-    messenger.showSnackBar(SnackBar(content: Text("Échec de l'action : $e")));
+    messenger.showSnackBar(SnackBar(content: Text(S.t('actionFailedE1', [e]))));
   } finally {
     // The raw provider owns the fetch; invalidating only the derived filtered
     // one would re-filter stale data without going back to the server.
@@ -186,7 +186,7 @@ Future<void> performTransmissionAction(
           final String link = await api.getMagnetLink(first.hashString);
           await Clipboard.setData(ClipboardData(text: link));
         },
-        done: 'Magnet link copied',
+        done: S.t('magnetLinkCopied'),
       );
     case TransmissionTorrentAction.remove:
     case TransmissionTorrentAction.trash:

@@ -1,22 +1,23 @@
 import 'models/seerr_request.dart';
+import 'package:core_models/core_models.dart';
 
 /// The chips over the Requests tab. Each one keeps the requests of one
 /// request status (1 pending, 2 approved, 3 declined, 4 failed,
 /// 5 completed), as Seerr's own filters do: a request moves from approved
 /// to completed once its media is available. [all] keeps every one.
 enum SeerrRequestFilter {
-  all('All', 'No requests', 'Aucune demande de média pour le moment.'),
-  pending('Pending', 'Aucune demande en attente', "Rien n'attend une approbation."),
-  approved('Approved', 'Aucune demande approuvée', "Aucune demande n'a été approuvée."),
+  all(S.t('all'), 'No requests', S.t('noMediaRequestsYet')),
+  pending(S.t('pending'), S.t('noPendingRequests'), S.t('nothingIsWaitingForApproval')),
+  approved(S.t('approved'), S.t('noApprovedRequests'), S.t('noRequestHasBeenApproved')),
   completed(
-    'Completed',
-    'Aucune demande terminée',
-    'Les demandes apparaissent ici une fois leur média disponible.',
+    S.t('completed'),
+    S.t('noCompletedRequests'),
+    S.t('requestsShowHereOnceTheirMediaIsAvailable'),
   ),
-  declined('Declined', 'Aucune demande refusée', "Aucune demande n'a été refusée."),
+  declined(S.t('declined'), S.t('noDeclinedRequests'), S.t('noRequestHasBeenDeclined')),
   failed(
-    'Failed',
-    'Aucune demande échouée',
+    S.t('failed'),
+    S.t('noFailedRequests'),
     'Every approved request reached Sonarr or Radarr.',
   );
 

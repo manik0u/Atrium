@@ -68,7 +68,7 @@ class _QbittorrentSettingsTabState
   /// All four are a single tap on a phone and awkward to undo afterwards: once
   /// the address or port moves, this app can no longer reach the server to put
   /// it back.
-  static const Map<String, String> _riskyPrefs = <String, String>{
+  static final Map<String, String> _riskyPrefs = <String, String>{
     'web_ui_address':
         'Atrium reaches this server at its current address. Changing it will '
             'break this connection until you update the instance URL in '
@@ -81,7 +81,7 @@ class _QbittorrentSettingsTabState
         'CSRF protection stops another site acting on your qBittorrent '
             'session. Leaving it on is recommended.',
     'web_ui_clickjacking_protection_enabled':
-        "la protection anti-clickjacking empêche l'interface web d'être embarquée dans une autre "
+        S.t('clickjackingProtectionStopsTheWebUIBeingEmbeddedInAnother') +
             'page. Leaving it on is recommended.',
   };
 
@@ -97,16 +97,16 @@ class _QbittorrentSettingsTabState
     final bool? proceed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Modifier ce paramètre ?'),
+        title: Text(S.t('changeThisSetting')),
         content: Text(message),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Le modifier'),
+            child: Text(S.t('changeIt')),
           ),
         ],
       ),
@@ -129,8 +129,8 @@ class _QbittorrentSettingsTabState
       ref.invalidate(qbitPreferencesProvider(widget.instance));
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Paramètre enregistré'),
+          SnackBar(
+            content: Text(S.t('settingSaved')),
             duration: Duration(seconds: 1),
           ),
         );
@@ -138,7 +138,7 @@ class _QbittorrentSettingsTabState
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec de la mise à jour du paramètre : $e')),
+          SnackBar(content: Text(S.t('failedToUpdateSettingE1', [e]))),
         );
       }
     }
@@ -168,11 +168,11 @@ class _QbittorrentSettingsTabState
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(ctx, controller.text.trim()),
-            child: const Text('Enregistrer'),
+            child: Text(S.t('save')),
           ),
         ],
       ),
@@ -210,12 +210,12 @@ class _QbittorrentSettingsTabState
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () =>
                 Navigator.pop(ctx, int.tryParse(controller.text.trim())),
-            child: const Text('Enregistrer'),
+            child: Text(S.t('save')),
           ),
         ],
       ),
@@ -337,10 +337,10 @@ class _QbittorrentSettingsTabState
                   icon: const Icon(Icons.menu),
                   onPressed: () => Scaffold.of(context).openDrawer(),
                 ),
-                title: Text('Paramètres de ${instance.name}'),
+                title: Text(S.t('instanceNameSettings1', [instance.name])),
                 actions: <Widget>[
                   IconButton(
-                    tooltip: 'Actualiser',
+                    tooltip: S.t('refresh'),
                     icon: const Icon(Icons.refresh),
                     onPressed: _refreshAll,
                   ),
@@ -358,16 +358,16 @@ class _QbittorrentSettingsTabState
                     fontWeight: FontWeight.bold,
                   ),
                   unselectedLabelStyle: theme.textTheme.titleSmall,
-                  tabs: const <Widget>[
-                    Tab(text: 'Système'),
-                    Tab(text: 'Comportement'),
-                    Tab(text: 'Téléchargements'),
-                    Tab(text: 'Connexion'),
-                    Tab(text: 'Vitesse'),
+                  tabs: <Widget>[
+                    Tab(text: S.t('system')),
+                    Tab(text: S.t('behavior')),
+                    Tab(text: S.t('downloads')),
+                    Tab(text: S.t('connection')),
+                    Tab(text: S.t('speed')),
                     Tab(text: 'BitTorrent'),
                     Tab(text: 'RSS'),
-                    Tab(text: 'Interface web'),
-                    Tab(text: 'Avancé'),
+                    Tab(text: S.t('webui')),
+                    Tab(text: S.t('advanced')),
                   ],
                 ),
               ),
@@ -420,21 +420,21 @@ class _QbittorrentSettingsTabState
           children: <Widget>[
             _buildInfoTile(
               icon: Icons.dns_rounded,
-              title: 'Version de qBittorrent',
-              value: appVersion.value ?? 'Loading...',
+              title: S.t('qbittorrentVersion'),
+              value: appVersion.value ?? S.t('loading'),
               color: Theme.of(context).colorScheme.primary,
             ),
             const Divider(height: 1),
             _buildInfoTile(
               icon: Icons.api_rounded,
-              title: "Version de l'API web",
-              value: apiVersion.value ?? 'Loading...',
+              title: S.t('webAPIVersion'),
+              value: apiVersion.value ?? S.t('loading'),
               color: Theme.of(context).colorScheme.secondary,
             ),
             const Divider(height: 1),
             _buildInfoTile(
               icon: Icons.wifi_tethering_rounded,
-              title: 'État de la connexion',
+              title: S.t('connectionStatus'),
               value: transfer?.connectionStatus.toUpperCase() ?? 'CONNECTED',
               color: transfer?.connectionStatus == 'disconnected'
                   ? Theme.of(context).colorScheme.error
@@ -443,7 +443,7 @@ class _QbittorrentSettingsTabState
             if (reportsAddresses) ...<Widget>[
               const Divider(height: 1),
               _buildAddressTile(
-                title: 'IPv4 externe',
+                title: S.t('externalIPv4'),
                 address: addresses.v4 ?? '',
               ),
               // Most connections have no IPv6 address at all, so an empty
@@ -451,7 +451,7 @@ class _QbittorrentSettingsTabState
               if ((addresses.v6 ?? '').isNotEmpty) ...<Widget>[
                 const Divider(height: 1),
                 _buildAddressTile(
-                  title: 'IPv6 externe',
+                  title: S.t('externalIPv6'),
                   address: addresses.v6!,
                 ),
               ],
@@ -459,7 +459,7 @@ class _QbittorrentSettingsTabState
             const Divider(height: 1),
             _buildInfoTile(
               icon: Icons.link_rounded,
-              title: "Adresse de l'instance",
+              title: S.t('instanceAddress'),
               value: instance.localUrl.isNotEmpty
                   ? instance.localUrl
                   : instance.externalUrl,
@@ -473,35 +473,35 @@ class _QbittorrentSettingsTabState
           children: <Widget>[
             _buildInfoTile(
               icon: Icons.arrow_downward_rounded,
-              title: 'Vitesse de téléchargement actuelle',
+              title: S.t('currentDownloadSpeed'),
               value: '${fmtBytes(transfer?.dlSpeed ?? 0)}/s',
               color: Theme.of(context).colorScheme.primary,
             ),
             const Divider(height: 1),
             _buildInfoTile(
               icon: Icons.arrow_upward_rounded,
-              title: "Vitesse d'envoi actuelle",
+              title: S.t('currentUploadSpeed'),
               value: '${fmtBytes(transfer?.upSpeed ?? 0)}/s',
               color: Theme.of(context).colorScheme.secondary,
             ),
             const Divider(height: 1),
             _buildInfoTile(
               icon: Icons.file_download_done_rounded,
-              title: 'Téléchargé dans la session',
+              title: S.t('sessionDownloaded'),
               value: fmtBytes(transfer?.dlData ?? 0),
               color: Theme.of(context).colorScheme.primary,
             ),
             const Divider(height: 1),
             _buildInfoTile(
               icon: Icons.file_upload_outlined,
-              title: 'Envoyé dans la session',
+              title: S.t('sessionUploaded'),
               value: fmtBytes(transfer?.upData ?? 0),
               color: Theme.of(context).colorScheme.secondary,
             ),
             const Divider(height: 1),
             _buildInfoTile(
               icon: Icons.pie_chart_outline_rounded,
-              title: 'Ratio de partage de la session',
+              title: S.t('sessionShareRatio'),
               value: shareRatio,
               color: Theme.of(context).colorScheme.tertiary,
             ),
@@ -527,10 +527,10 @@ class _QbittorrentSettingsTabState
           children: <Widget>[
             _buildActionTile(
               icon: Icons.language_rounded,
-              title: "Langue de l'interface",
+              title: S.t('uiLocale'),
               value: prefs['locale']?.toString() ?? 'en',
               onTap: () => _showStringEditDialog(
-                title: "Langue de l'interface (ex. en, fr, de, es)",
+                title: S.t('uiLocaleEGEnFrDeEs'),
                 prefKey: 'locale',
                 initialValue: prefs['locale']?.toString() ?? 'en',
               ),
@@ -543,8 +543,8 @@ class _QbittorrentSettingsTabState
           children: <Widget>[
             _buildSwitchTile(
               icon: Icons.delete_outline_rounded,
-              title: 'Confirmer la suppression des torrents',
-              subtitle: 'Afficher une boîte de confirmation avant de supprimer les torrents',
+              title: S.t('confirmTorrentDeletion'),
+              subtitle: S.t('showConfirmationDialogBeforeDeletingTorrents'),
               value: _getBool(
                 prefs['confirm_torrent_deletion'],
                 defaultValue: true,
@@ -555,8 +555,8 @@ class _QbittorrentSettingsTabState
             const Divider(height: 1),
             _buildSwitchTile(
               icon: Icons.refresh_rounded,
-              title: 'Confirmer la revérification des torrents',
-              subtitle: 'Afficher une boîte de confirmation avant la revérification forcée',
+              title: S.t('confirmTorrentRecheck'),
+              subtitle: S.t('showConfirmationDialogBeforeForceRechecking'),
               value: _getBool(
                 prefs['confirm_torrent_recheck'],
                 defaultValue: true,
@@ -572,8 +572,8 @@ class _QbittorrentSettingsTabState
           children: <Widget>[
             _buildSwitchTile(
               icon: Icons.bedtime_outlined,
-              title: 'Inhiber la mise en veille du système',
-              subtitle: 'Empêcher la mise en veille du système tant que des torrents sont actifs',
+              title: S.t('inhibitSystemSleep'),
+              subtitle: S.t('preventSystemStandbyWhileTorrentsAreActive'),
               value: _getInt(prefs['auto_exit_mode']) != 0,
               onChanged: (bool val) =>
                   _updatePref('auto_exit_mode', val ? 1 : 0),
@@ -600,10 +600,10 @@ class _QbittorrentSettingsTabState
           children: <Widget>[
             _buildActionTile(
               icon: Icons.folder_outlined,
-              title: "Chemin d'enregistrement par défaut",
-              value: prefs['save_path']?.toString() ?? 'Default',
+              title: S.t('defaultSavePath'),
+              value: prefs['save_path']?.toString() ?? S.t('default'),
               onTap: () => _showStringEditDialog(
-                title: "Chemin d'enregistrement par défaut",
+                title: S.t('defaultSavePath'),
                 prefKey: 'save_path',
                 initialValue: prefs['save_path']?.toString() ?? '',
               ),
@@ -611,8 +611,8 @@ class _QbittorrentSettingsTabState
             const Divider(height: 1),
             _buildSwitchTile(
               icon: Icons.folder_copy_outlined,
-              title: 'Conserver les torrents incomplets dans le chemin temporaire',
-              subtitle: prefs['temp_path']?.toString() ?? 'Désactivé',
+              title: S.t('keepIncompleteTorrentsInTempPath'),
+              subtitle: prefs['temp_path']?.toString() ?? S.t('disabled'),
               value: _getBool(prefs['temp_path_enabled']),
               onChanged: (bool val) => _updatePref('temp_path_enabled', val),
             ),
@@ -620,10 +620,10 @@ class _QbittorrentSettingsTabState
               const Divider(height: 1),
               _buildActionTile(
                 icon: Icons.edit_location_alt_outlined,
-                title: 'Chemin des fichiers incomplets',
+                title: S.t('incompleteFilesPath'),
                 value: prefs['temp_path']?.toString() ?? '',
                 onTap: () => _showStringEditDialog(
-                  title: 'Chemin des fichiers incomplets',
+                  title: S.t('incompleteFilesPath'),
                   prefKey: 'temp_path',
                   initialValue: prefs['temp_path']?.toString() ?? '',
                 ),
@@ -632,12 +632,12 @@ class _QbittorrentSettingsTabState
             const Divider(height: 1),
             _buildActionTile(
               icon: Icons.file_download_outlined,
-              title: 'Copier les fichiers .torrent vers',
+              title: S.t('copyTorrentFilesTo'),
               value: prefs['export_dir']?.toString().isNotEmpty == true
                   ? prefs['export_dir'].toString()
                   : 'None',
               onTap: () => _showStringEditDialog(
-                title: 'Copier les fichiers .torrent vers',
+                title: S.t('copyTorrentFilesTo'),
                 prefKey: 'export_dir',
                 initialValue: prefs['export_dir']?.toString() ?? '',
               ),
@@ -650,24 +650,24 @@ class _QbittorrentSettingsTabState
           children: <Widget>[
             _buildSwitchTile(
               icon: Icons.extension_outlined,
-              title: "Ajouter l'extension .!qB",
-              subtitle: 'Ajouter une extension aux fichiers incomplets',
+              title: S.t('appendQBExtension'),
+              subtitle: S.t('appendExtensionToIncompleteFiles'),
               value: _getBool(prefs['incomplete_files_ext']),
               onChanged: (bool val) => _updatePref('incomplete_files_ext', val),
             ),
             const Divider(height: 1),
             _buildSwitchTile(
               icon: Icons.storage_rounded,
-              title: "Pré-allouer l'espace disque",
-              subtitle: "Pré-allouer le stockage de tous les fichiers à l'ajout",
+              title: S.t('preAllocateDiskSpace'),
+              subtitle: S.t('preAllocateStorageForAllFilesOnAdd'),
               value: _getBool(prefs['preallocate_all']),
               onChanged: (bool val) => _updatePref('preallocate_all', val),
             ),
             const Divider(height: 1),
             _buildSwitchTile(
               icon: Icons.auto_mode_rounded,
-              title: 'Gestion automatique des torrents',
-              subtitle: 'Déplacer les torrents quand les chemins des catégories changent',
+              title: S.t('automaticTorrentManagement'),
+              subtitle: S.t('relocateTorrentsWhenCategoryPathsChange'),
               value: _getBool(prefs['auto_tmm_enabled']),
               onChanged: (bool val) => _updatePref('auto_tmm_enabled', val),
             ),
@@ -693,10 +693,10 @@ class _QbittorrentSettingsTabState
           children: <Widget>[
             _buildActionTile(
               icon: Icons.numbers_rounded,
-              title: 'Port de connexion entrante',
-              value: prefs['listen_port']?.toString() ?? 'Default',
+              title: S.t('incomingConnectionPort'),
+              value: prefs['listen_port']?.toString() ?? S.t('default'),
               onTap: () => _showNumberEditDialog(
-                title: 'Port de connexion entrante',
+                title: S.t('incomingConnectionPort'),
                 prefKey: 'listen_port',
                 initialValue: _getInt(prefs['listen_port'], defaultValue: 6881),
               ),
@@ -704,8 +704,8 @@ class _QbittorrentSettingsTabState
             const Divider(height: 1),
             _buildSwitchTile(
               icon: Icons.router_outlined,
-              title: 'Utiliser UPnP / NAT-PMP',
-              subtitle: 'Ouvrir automatiquement le port via le routeur',
+              title: S.t('useUPnPNATPMP'),
+              subtitle: S.t('forwardPortAutomaticallyViaRouter'),
               value: _getBool(prefs['upnp'], defaultValue: true),
               onChanged: (bool val) => _updatePref('upnp', val),
             ),
@@ -717,10 +717,10 @@ class _QbittorrentSettingsTabState
           children: <Widget>[
             _buildActionTile(
               icon: Icons.hub_outlined,
-              title: 'Connexions maximales globales',
+              title: S.t('globalMaximumConnections'),
               value: prefs['max_connec']?.toString() ?? '500',
               onTap: () => _showNumberEditDialog(
-                title: 'Connexions maximales globales',
+                title: S.t('globalMaximumConnections'),
                 prefKey: 'max_connec',
                 initialValue: _getInt(prefs['max_connec'], defaultValue: 500),
               ),
@@ -728,10 +728,10 @@ class _QbittorrentSettingsTabState
             const Divider(height: 1),
             _buildActionTile(
               icon: Icons.cable_rounded,
-              title: 'Connexions maximales par torrent',
+              title: S.t('maximumConnectionsPerTorrent'),
               value: prefs['max_connec_per_torrent']?.toString() ?? '100',
               onTap: () => _showNumberEditDialog(
-                title: 'Connexions maximales par torrent',
+                title: S.t('maximumConnectionsPerTorrent'),
                 prefKey: 'max_connec_per_torrent',
                 initialValue:
                     _getInt(prefs['max_connec_per_torrent'], defaultValue: 100),
@@ -740,10 +740,10 @@ class _QbittorrentSettingsTabState
             const Divider(height: 1),
             _buildActionTile(
               icon: Icons.upload_file_outlined,
-              title: "Emplacements d'envoi maximaux globaux",
+              title: S.t('globalMaximumUploadSlots'),
               value: prefs['max_uploads']?.toString() ?? '4',
               onTap: () => _showNumberEditDialog(
-                title: "Emplacements d'envoi maximaux globaux",
+                title: S.t('globalMaximumUploadSlots'),
                 prefKey: 'max_uploads',
                 initialValue: _getInt(prefs['max_uploads'], defaultValue: 4),
               ),
@@ -751,10 +751,10 @@ class _QbittorrentSettingsTabState
             const Divider(height: 1),
             _buildActionTile(
               icon: Icons.file_upload_outlined,
-              title: "Emplacements d'envoi par torrent",
+              title: S.t('uploadSlotsPerTorrent'),
               value: prefs['max_uploads_per_torrent']?.toString() ?? '4',
               onTap: () => _showNumberEditDialog(
-                title: "Emplacements d'envoi par torrent",
+                title: S.t('uploadSlotsPerTorrent'),
                 prefKey: 'max_uploads_per_torrent',
                 initialValue:
                     _getInt(prefs['max_uploads_per_torrent'], defaultValue: 4),
@@ -784,25 +784,25 @@ class _QbittorrentSettingsTabState
           children: <Widget>[
             _buildActionTile(
               icon: Icons.arrow_downward_rounded,
-              title: 'Limite de téléchargement globale',
+              title: S.t('globalDownloadLimit'),
               value: _formatLimit(prefs['dl_limit']),
               onTap: () => _showNumberEditDialog(
-                title: 'Limite de téléchargement globale (octets/s)',
+                title: S.t('globalDownloadLimitBytesS'),
                 prefKey: 'dl_limit',
                 initialValue: _getInt(prefs['dl_limit']),
-                helperText: 'Entrez 0 pour illimité',
+                helperText: S.t('enter0ForUnlimited'),
               ),
             ),
             const Divider(height: 1),
             _buildActionTile(
               icon: Icons.arrow_upward_rounded,
-              title: "Limite d'envoi globale",
+              title: S.t('globalUploadLimit'),
               value: _formatLimit(prefs['up_limit']),
               onTap: () => _showNumberEditDialog(
-                title: "Limite d'envoi globale (octets/s)",
+                title: S.t('globalUploadLimitBytesS'),
                 prefKey: 'up_limit',
                 initialValue: _getInt(prefs['up_limit']),
-                helperText: 'Entrez 0 pour illimité',
+                helperText: S.t('enter0ForUnlimited'),
               ),
             ),
           ],
@@ -833,8 +833,8 @@ class _QbittorrentSettingsTabState
                   size: 20,
                 ),
               ),
-              title: const Text('Limites de débit alternatives actives'),
-              subtitle: const Text('Basculer le mode de limitation secondaire'),
+              title: Text(S.t('alternativeRateLimitsActive')),
+              subtitle: Text(S.t('toggleSecondaryThrottleMode')),
               value: altSpeedMode,
               onChanged: (bool val) async {
                 final QbittorrentClient client = await ref.read(
@@ -847,25 +847,25 @@ class _QbittorrentSettingsTabState
             const Divider(height: 1),
             _buildActionTile(
               icon: Icons.slow_motion_video_rounded,
-              title: 'Limite de téléchargement alternative',
+              title: S.t('altDownloadLimit'),
               value: _formatLimit(prefs['alt_dl_limit']),
               onTap: () => _showNumberEditDialog(
-                title: 'Limite de téléchargement alternative (octets/s)',
+                title: S.t('altDownloadLimitBytesS'),
                 prefKey: 'alt_dl_limit',
                 initialValue: _getInt(prefs['alt_dl_limit']),
-                helperText: 'Entrez 0 pour illimité',
+                helperText: S.t('enter0ForUnlimited'),
               ),
             ),
             const Divider(height: 1),
             _buildActionTile(
               icon: Icons.slow_motion_video_rounded,
-              title: "Limite d'envoi alternative",
+              title: S.t('altUploadLimit'),
               value: _formatLimit(prefs['alt_up_limit']),
               onTap: () => _showNumberEditDialog(
-                title: "Limite d'envoi alternative (octets/s)",
+                title: S.t('altUploadLimitBytesS'),
                 prefKey: 'alt_up_limit',
                 initialValue: _getInt(prefs['alt_up_limit']),
-                helperText: 'Entrez 0 pour illimité',
+                helperText: S.t('enter0ForUnlimited'),
               ),
             ),
           ],
@@ -876,24 +876,24 @@ class _QbittorrentSettingsTabState
           children: <Widget>[
             _buildSwitchTile(
               icon: Icons.compare_arrows_rounded,
-              title: 'Appliquer au protocole μTP',
-              subtitle: 'Appliquer les limites de débit aux connexions μTP',
+              title: S.t('applyToTPProtocol'),
+              subtitle: S.t('enforceRateLimitsOnTPConnections'),
               value: _getBool(prefs['limit_utp_rate'], defaultValue: true),
               onChanged: (bool val) => _updatePref('limit_utp_rate', val),
             ),
             const Divider(height: 1),
             _buildSwitchTile(
               icon: Icons.network_check_rounded,
-              title: 'Appliquer aux frais de transport',
-              subtitle: 'Compter les frais TCP/IP dans les limites de vitesse',
+              title: S.t('applyToTransportOverhead'),
+              subtitle: S.t('countTCPIPTransportOverheadInSpeedLimits'),
               value: _getBool(prefs['limit_tcp_overhead']),
               onChanged: (bool val) => _updatePref('limit_tcp_overhead', val),
             ),
             const Divider(height: 1),
             _buildSwitchTile(
               icon: Icons.lan_outlined,
-              title: 'Appliquer aux pairs du LAN',
-              subtitle: 'Appliquer les limites de débit aux pairs du réseau local',
+              title: S.t('applyToPeersOnLAN'),
+              subtitle: S.t('enforceRateLimitsOnLocalNetworkPeers'),
               value: _getBool(prefs['limit_lan_peers']),
               onChanged: (bool val) => _updatePref('limit_lan_peers', val),
             ),
@@ -919,32 +919,32 @@ class _QbittorrentSettingsTabState
           children: <Widget>[
             _buildSwitchTile(
               icon: Icons.share_location_rounded,
-              title: 'Activer DHT (table de hachage distribuée)',
-              subtitle: 'Trouver plus de pairs sans tracker',
+              title: S.t('enableDHTDistributedHashTable'),
+              subtitle: S.t('findMorePeersWithoutTrackers'),
               value: _getBool(prefs['dht'], defaultValue: true),
               onChanged: (bool val) => _updatePref('dht', val),
             ),
             const Divider(height: 1),
             _buildSwitchTile(
               icon: Icons.sync_alt_rounded,
-              title: 'Activer PeX (échange de pairs)',
-              subtitle: 'Échanger les listes de pairs entre essaims connectés',
+              title: S.t('enablePeXPeerExchange'),
+              subtitle: S.t('exchangePeerListsBetweenConnectedSwarms'),
               value: _getBool(prefs['pex'], defaultValue: true),
               onChanged: (bool val) => _updatePref('pex', val),
             ),
             const Divider(height: 1),
             _buildSwitchTile(
               icon: Icons.radar_rounded,
-              title: 'Activer la découverte locale de pairs (LSD)',
-              subtitle: 'Découvrir les pairs sur le réseau local',
+              title: S.t('enableLocalPeerDiscoveryLSD'),
+              subtitle: S.t('discoverPeersOnLocalLANNetwork'),
               value: _getBool(prefs['lsd'], defaultValue: true),
               onChanged: (bool val) => _updatePref('lsd', val),
             ),
             const Divider(height: 1),
             _buildSwitchTile(
               icon: Icons.security_rounded,
-              title: 'Mode anonyme',
-              subtitle: "Masquer l'user-agent et l'empreinte du client",
+              title: S.t('anonymousMode'),
+              subtitle: S.t('hideUserAgentAndClientFingerprint'),
               value: _getBool(prefs['anonymous_mode']),
               onChanged: (bool val) => _updatePref('anonymous_mode', val),
             ),
@@ -956,18 +956,18 @@ class _QbittorrentSettingsTabState
           children: <Widget>[
             _buildSwitchTile(
               icon: Icons.queue_play_next_rounded,
-              title: "File d'attente des torrents",
-              subtitle: 'Appliquer des limites aux téléchargements/envois actifs',
+              title: S.t('torrentQueueing'),
+              subtitle: S.t('enforceLimitsOnActiveDownloadsUploads'),
               value: _getBool(prefs['queueing_enabled'], defaultValue: true),
               onChanged: (bool val) => _updatePref('queueing_enabled', val),
             ),
             const Divider(height: 1),
             _buildActionTile(
               icon: Icons.downloading_rounded,
-              title: 'Téléchargements actifs maximaux',
-              value: prefs['max_active_downloads']?.toString() ?? 'Unlimited',
+              title: S.t('maximumActiveDownloads'),
+              value: prefs['max_active_downloads']?.toString() ?? S.t('unlimited'),
               onTap: () => _showNumberEditDialog(
-                title: 'Téléchargements actifs maximaux',
+                title: S.t('maximumActiveDownloads'),
                 prefKey: 'max_active_downloads',
                 initialValue:
                     _getInt(prefs['max_active_downloads'], defaultValue: 3),
@@ -976,10 +976,10 @@ class _QbittorrentSettingsTabState
             const Divider(height: 1),
             _buildActionTile(
               icon: Icons.cloud_upload_outlined,
-              title: 'Envois actifs maximaux',
-              value: prefs['max_active_uploads']?.toString() ?? 'Unlimited',
+              title: S.t('maximumActiveUploads'),
+              value: prefs['max_active_uploads']?.toString() ?? S.t('unlimited'),
               onTap: () => _showNumberEditDialog(
-                title: 'Envois actifs maximaux',
+                title: S.t('maximumActiveUploads'),
                 prefKey: 'max_active_uploads',
                 initialValue:
                     _getInt(prefs['max_active_uploads'], defaultValue: 3),
@@ -988,10 +988,10 @@ class _QbittorrentSettingsTabState
             const Divider(height: 1),
             _buildActionTile(
               icon: Icons.compare_arrows_rounded,
-              title: 'Torrents actifs maximaux',
-              value: prefs['max_active_torrents']?.toString() ?? 'Unlimited',
+              title: S.t('maximumActiveTorrents'),
+              value: prefs['max_active_torrents']?.toString() ?? S.t('unlimited'),
               onTap: () => _showNumberEditDialog(
-                title: 'Torrents actifs maximaux',
+                title: S.t('maximumActiveTorrents'),
                 prefKey: 'max_active_torrents',
                 initialValue:
                     _getInt(prefs['max_active_torrents'], defaultValue: 5),
@@ -1005,10 +1005,10 @@ class _QbittorrentSettingsTabState
           children: <Widget>[
             _buildSwitchTile(
               icon: Icons.pie_chart_outline_rounded,
-              title: 'Limite de ratio de partage',
+              title: S.t('shareRatioLimit'),
               subtitle: prefs['max_ratio'] != null
                   ? 'Limit: ${(prefs['max_ratio'] as num).toStringAsFixed(2)}'
-                  : 'Disabled',
+                  : S.t('disabled'),
               value: _getBool(prefs['max_ratio_enabled']),
               onChanged: (bool val) => _updatePref('max_ratio_enabled', val),
             ),
@@ -1034,8 +1034,8 @@ class _QbittorrentSettingsTabState
           children: <Widget>[
             _buildSwitchTile(
               icon: Icons.rss_feed_rounded,
-              title: 'Activer le traitement RSS',
-              subtitle: 'Récupérer et mettre à jour les flux RSS',
+              title: S.t('enableRSSProcessing'),
+              subtitle: S.t('fetchAndUpdateRSSFeeds'),
               value: _getBool(
                 prefs['rss_processing_enabled'],
                 defaultValue: true,
@@ -1046,10 +1046,10 @@ class _QbittorrentSettingsTabState
             const Divider(height: 1),
             _buildActionTile(
               icon: Icons.timer_outlined,
-              title: "Intervalle d'actualisation des flux",
+              title: S.t('feedsRefreshInterval'),
               value: '${prefs['rss_refresh_interval'] ?? 30} minutes',
               onTap: () => _showNumberEditDialog(
-                title: "Intervalle d'actualisation des flux (minutes)",
+                title: S.t('feedsRefreshIntervalMinutes'),
                 prefKey: 'rss_refresh_interval',
                 initialValue:
                     _getInt(prefs['rss_refresh_interval'], defaultValue: 30),
@@ -1058,10 +1058,10 @@ class _QbittorrentSettingsTabState
             const Divider(height: 1),
             _buildActionTile(
               icon: Icons.article_outlined,
-              title: 'Articles max. par flux',
+              title: S.t('maxArticlesPerFeed'),
               value: prefs['rss_max_articles_per_feed']?.toString() ?? '50',
               onTap: () => _showNumberEditDialog(
-                title: 'Articles max. par flux',
+                title: S.t('maxArticlesPerFeed'),
                 prefKey: 'rss_max_articles_per_feed',
                 initialValue: _getInt(
                   prefs['rss_max_articles_per_feed'],
@@ -1077,8 +1077,8 @@ class _QbittorrentSettingsTabState
           children: <Widget>[
             _buildSwitchTile(
               icon: Icons.auto_awesome_rounded,
-              title: 'Activer le téléchargement automatique RSS',
-              subtitle: 'Télécharger automatiquement les règles de torrents correspondantes',
+              title: S.t('enableRSSAutoDownloading'),
+              subtitle: S.t('automaticallyDownloadMatchedTorrentRules'),
               value: _getBool(prefs['rss_auto_downloading_enabled']),
               onChanged: (bool val) =>
                   _updatePref('rss_auto_downloading_enabled', val),
@@ -1105,10 +1105,10 @@ class _QbittorrentSettingsTabState
           children: <Widget>[
             _buildActionTile(
               icon: Icons.lan_rounded,
-              title: "Adresse IP de l'interface web",
+              title: S.t('webUIIPAddress'),
               value: prefs['web_ui_address']?.toString() ?? '*',
               onTap: () => _showStringEditDialog(
-                title: "Adresse IP de l'interface web (* pour toutes)",
+                title: S.t('webUIIPAddressForAll'),
                 prefKey: 'web_ui_address',
                 initialValue: prefs['web_ui_address']?.toString() ?? '*',
               ),
@@ -1116,10 +1116,10 @@ class _QbittorrentSettingsTabState
             const Divider(height: 1),
             _buildActionTile(
               icon: Icons.numbers_rounded,
-              title: "Port de l'interface web",
+              title: S.t('webUIPort'),
               value: prefs['web_ui_port']?.toString() ?? '8080',
               onTap: () => _showNumberEditDialog(
-                title: "Port de l'interface web",
+                title: S.t('webUIPort'),
                 prefKey: 'web_ui_port',
                 initialValue: _getInt(prefs['web_ui_port'], defaultValue: 8080),
               ),
@@ -1127,8 +1127,8 @@ class _QbittorrentSettingsTabState
             const Divider(height: 1),
             _buildSwitchTile(
               icon: Icons.router_rounded,
-              title: "Utiliser UPnP pour le port de l'interface web",
-              subtitle: "Mapper automatiquement le port de l'interface web sur le routeur",
+              title: S.t('useUPnPForWebUIPort'),
+              subtitle: S.t('automaticallyMapWebUIPortOnRouter'),
               value: _getBool(prefs['web_ui_upnp']),
               onChanged: (bool val) => _updatePref('web_ui_upnp', val),
             ),
@@ -1140,16 +1140,16 @@ class _QbittorrentSettingsTabState
           children: <Widget>[
             _buildSwitchTile(
               icon: Icons.lock_outline_rounded,
-              title: 'Utiliser HTTPS',
-              subtitle: "Chiffrer les connexions de l'interface web avec SSL/TLS",
+              title: S.t('useHTTPS'),
+              subtitle: S.t('encryptWebUIConnectionsWithSSLTLS'),
               value: _getBool(prefs['web_ui_use_https']),
               onChanged: (bool val) => _updatePref('web_ui_use_https', val),
             ),
             const Divider(height: 1),
             _buildSwitchTile(
               icon: Icons.security_rounded,
-              title: 'Protection CSRF',
-              subtitle: 'Prévenir les attaques de falsification de requête intersite',
+              title: S.t('csrfProtection'),
+              subtitle: S.t('preventCrossSiteRequestForgeryAttacks'),
               value: _getBool(
                 prefs['web_ui_csrf_protection_enabled'],
                 defaultValue: true,
@@ -1160,8 +1160,8 @@ class _QbittorrentSettingsTabState
             const Divider(height: 1),
             _buildSwitchTile(
               icon: Icons.shield_outlined,
-              title: 'Protection anti-clickjacking',
-              subtitle: "Empêcher l'encadrement dans des pages web externes",
+              title: S.t('clickjackingProtection'),
+              subtitle: S.t('preventFramingInExternalWebPages'),
               value: _getBool(
                 prefs['web_ui_clickjacking_protection_enabled'],
                 defaultValue: true,
@@ -1172,10 +1172,10 @@ class _QbittorrentSettingsTabState
             const Divider(height: 1),
             _buildActionTile(
               icon: Icons.timer_outlined,
-              title: "Délai d'expiration de session",
+              title: S.t('sessionTimeout'),
               value: '${prefs['web_ui_session_timeout'] ?? 3600} seconds',
               onTap: () => _showNumberEditDialog(
-                title: "Délai d'expiration de session (secondes)",
+                title: S.t('sessionTimeoutSeconds'),
                 prefKey: 'web_ui_session_timeout',
                 initialValue: _getInt(
                   prefs['web_ui_session_timeout'],
@@ -1208,15 +1208,15 @@ class _QbittorrentSettingsTabState
 
     final dynamic storageTypeVal = prefs['resume_data_storage_type'];
     final String storageTypeDisplay = switch (storageTypeVal?.toString()) {
-      '1' || 'SQLite' || 'sqlite' => 'Base de données SQLite',
-      _ => 'Fichiers fastresume',
+      '1' || 'SQLite' || 'sqlite' => S.t('sqliteDatabase'),
+      _ => S.t('fastresumeFiles'),
     };
 
     final dynamic removeModeVal = prefs['torrent_content_remove_mode'] ??
         prefs['torrent_content_removing_mode'];
     final String removeModeDisplay = switch (removeModeVal?.toString()) {
-      '1' || 'Trash' || 'trash' => 'Mettre à la corbeille (si possible)',
-      _ => 'Supprimer définitivement les fichiers',
+      '1' || 'Trash' || 'trash' => S.t('moveToTrashIfPossible'),
+      _ => S.t('deleteFilesPermanently'),
     };
 
     return _buildTabListView(
@@ -1228,22 +1228,22 @@ class _QbittorrentSettingsTabState
             // 1. Resume data storage type
             _buildActionTile(
               icon: Icons.storage_rounded,
-              title: 'Type de stockage des données de reprise (redémarrage requis)',
+              title: S.t('resumeDataStorageTypeRequiresRestart'),
               value: storageTypeDisplay,
               onTap: () => _showOptionsDialog<dynamic>(
-                title: 'Type de stockage des données de reprise',
+                title: S.t('resumeDataStorageType'),
                 prefKey: 'resume_data_storage_type',
                 currentValue: storageTypeVal ?? 0,
                 options: <({String label, dynamic value, String? subtitle})>[
                   (
-                    label: 'Fichiers fastresume',
+                    label: S.t('fastresumeFiles'),
                     value: storageTypeVal is String ? 'Legacy' : 0,
-                    subtitle: 'Anciens fichiers .fastresume dans le répertoire BT_backup',
+                    subtitle: S.t('legacyFastresumeFilesInBTBackupDirectory'),
                   ),
                   (
-                    label: 'Base de données SQLite',
+                    label: S.t('sqliteDatabase'),
                     value: storageTypeVal is String ? 'SQLite' : 1,
-                    subtitle: "Stocker tout l'état des torrents dans une seule base SQLite",
+                    subtitle: S.t('storeAllTorrentStateInASingleSQLiteDB'),
                   ),
                 ],
               ),
@@ -1253,20 +1253,20 @@ class _QbittorrentSettingsTabState
             // 2. Torrent content removing mode
             _buildActionTile(
               icon: Icons.delete_sweep_outlined,
-              title: 'Mode de suppression du contenu des torrents',
+              title: S.t('torrentContentRemovingMode'),
               value: removeModeDisplay,
               onTap: () => _showOptionsDialog<dynamic>(
-                title: 'Mode de suppression du contenu des torrents',
+                title: S.t('torrentContentRemovingMode'),
                 prefKey: 'torrent_content_remove_mode',
                 currentValue: removeModeVal ?? 0,
                 options: <({String label, dynamic value, String? subtitle})>[
                   (
-                    label: 'Supprimer définitivement les fichiers',
-                    value: removeModeVal is String ? 'Delete' : 0,
-                    subtitle: 'Effacer les données utiles directement du stockage',
+                    label: S.t('deleteFilesPermanently'),
+                    value: removeModeVal is String ? S.t('delete') : 0,
+                    subtitle: S.t('erasePayloadDataDirectlyFromStorage'),
                   ),
                   (
-                    label: 'Mettre à la corbeille (si possible)',
+                    label: S.t('moveToTrashIfPossible'),
                     value: removeModeVal is String ? 'Trash' : 1,
                     subtitle:
                         'Move removed files to the OS Recycle Bin / Trash',
@@ -1279,8 +1279,8 @@ class _QbittorrentSettingsTabState
             // 3. Network interface
             _buildActionTile(
               icon: Icons.lan_outlined,
-              title: 'Interface réseau',
-              value: currentIface.isNotEmpty ? currentIface : 'Any interface',
+              title: S.t('networkInterface'),
+              value: currentIface.isNotEmpty ? currentIface : S.t('anyInterface'),
               onTap: () {
                 final List<Map<String, String>> ifaces =
                     ifacesAsync.value ?? <Map<String, String>>[];
@@ -1288,9 +1288,9 @@ class _QbittorrentSettingsTabState
                     options =
                     <({String label, String value, String? subtitle})>[
                   (
-                    label: 'Toute interface',
+                    label: S.t('anyInterface'),
                     value: '',
-                    subtitle: 'Écouter et se lier sur toutes les interfaces réseau',
+                    subtitle: S.t('listenAndBindAcrossAllNetworkInterfaces'),
                   ),
                   ...ifaces.map((Map<String, String> iface) {
                     final String name = iface['name'] ?? '';
@@ -1298,12 +1298,12 @@ class _QbittorrentSettingsTabState
                     return (
                       label: name.isNotEmpty ? name : val,
                       value: val,
-                      subtitle: "Se lier strictement à l'interface $val",
+                      subtitle: S.t('bindStrictlyToInterfaceVal1', [val]),
                     );
                   }),
                 ];
                 _showOptionsDialog<String>(
-                  title: 'Interface réseau',
+                  title: S.t('networkInterface'),
                   prefKey: 'current_network_interface',
                   currentValue: currentIface,
                   options: options,
@@ -1315,12 +1315,12 @@ class _QbittorrentSettingsTabState
             // 4. Optional IP address to bind to
             _buildActionTile(
               icon: Icons.pin_drop_outlined,
-              title: 'Adresse IP facultative à laquelle se lier',
+              title: S.t('optionalIPAddressToBindTo'),
               value:
                   (prefs['current_interface_address']?.toString().isNotEmpty ==
                           true)
                       ? prefs['current_interface_address'].toString()
-                      : 'All addresses',
+                      : S.t('allAddresses'),
               onTap: () {
                 final List<String> addrs = addrsAsync.value ?? <String>[];
                 final String currentAddr =
@@ -1329,19 +1329,19 @@ class _QbittorrentSettingsTabState
                     options =
                     <({String label, String value, String? subtitle})>[
                   (
-                    label: 'Toutes les adresses',
+                    label: S.t('allAddresses'),
                     value: '',
-                    subtitle: 'Se lier à toutes les adresses IPv4 et IPv6',
+                    subtitle: S.t('bindToAllIPv4AndIPv6Addresses'),
                   ),
                   (
-                    label: 'Toutes les adresses IPv4 (0.0.0.0)',
+                    label: S.t('allIPv4Addresses0000'),
                     value: '0.0.0.0',
-                    subtitle: 'Écouter sur toutes les interfaces IPv4 disponibles',
+                    subtitle: S.t('listenOnAllAvailableIPv4Interfaces'),
                   ),
                   (
-                    label: 'Toutes les adresses IPv6 (::)',
+                    label: S.t('allIPv6Addresses'),
                     value: '::',
-                    subtitle: 'Écouter sur toutes les interfaces IPv6 disponibles',
+                    subtitle: S.t('listenOnAllAvailableIPv6Interfaces'),
                   ),
                   ...addrs.map(
                     (String addr) => (
@@ -1352,7 +1352,7 @@ class _QbittorrentSettingsTabState
                   ),
                 ];
                 _showOptionsDialog<String>(
-                  title: 'Adresse IP facultative à laquelle se lier',
+                  title: S.t('optionalIPAddressToBindTo'),
                   prefKey: 'current_interface_address',
                   currentValue: currentAddr,
                   options: options,
@@ -1364,16 +1364,16 @@ class _QbittorrentSettingsTabState
             // 5. Save resume data interval
             _buildActionTile(
               icon: Icons.timer_outlined,
-              title: "Intervalle d'enregistrement des données de reprise",
+              title: S.t('saveResumeDataInterval'),
               value: '${prefs['save_resume_data_interval'] ?? 60} min',
               onTap: () => _showNumberEditDialog(
-                title: "Intervalle d'enregistrement des données de reprise (min)",
+                title: S.t('saveResumeDataIntervalMin'),
                 prefKey: 'save_resume_data_interval',
                 initialValue: _getInt(
                   prefs['save_resume_data_interval'],
                   defaultValue: 60,
                 ),
-                helperText: "Intervalle en minutes entre les enregistrements périodiques de l'état",
+                helperText: S.t('intervalInMinutesBetweenPeriodicStateSaves'),
               ),
             ),
             const Divider(height: 1),
@@ -1381,16 +1381,16 @@ class _QbittorrentSettingsTabState
             // 6. Save statistics interval
             _buildActionTile(
               icon: Icons.query_stats_rounded,
-              title: "Intervalle d'enregistrement des statistiques",
+              title: S.t('saveStatisticsInterval'),
               value: '${prefs['save_statistics_interval'] ?? 15} min',
               onTap: () => _showNumberEditDialog(
-                title: "Intervalle d'enregistrement des statistiques (min)",
+                title: S.t('saveStatisticsIntervalMin'),
                 prefKey: 'save_statistics_interval',
                 initialValue: _getInt(
                   prefs['save_statistics_interval'],
                   defaultValue: 15,
                 ),
-                helperText: 'Intervalle en minutes entre les enregistrements des statistiques de session',
+                helperText: S.t('intervalInMinutesBetweenSavingSessionStats'),
               ),
             ),
             const Divider(height: 1),
@@ -1398,10 +1398,10 @@ class _QbittorrentSettingsTabState
             // 7. .torrent file size limit
             _buildActionTile(
               icon: Icons.file_present_outlined,
-              title: 'Limite de taille des fichiers .torrent',
+              title: S.t('torrentFileSizeLimit'),
               value: '${prefs['max_torrent_file_size'] ?? 100} MiB',
               onTap: () => _showNumberEditDialog(
-                title: 'Limite de taille des fichiers .torrent (Mio)',
+                title: S.t('torrentFileSizeLimitMiB'),
                 prefKey: 'max_torrent_file_size',
                 initialValue:
                     _getInt(prefs['max_torrent_file_size'], defaultValue: 100),
@@ -1414,8 +1414,8 @@ class _QbittorrentSettingsTabState
             // 8. Confirm torrent recheck
             _buildSwitchTile(
               icon: Icons.refresh_rounded,
-              title: 'Confirmer la revérification du torrent',
-              subtitle: 'Afficher une invite de confirmation avant la revérification forcée',
+              title: S.t('confirmTorrentRecheck_2'),
+              subtitle: S.t('showConfirmationPromptBeforeForceRechecking'),
               value: _getBool(
                 prefs['confirm_torrent_recheck'],
                 defaultValue: true,
@@ -1428,8 +1428,8 @@ class _QbittorrentSettingsTabState
             // 9. Recheck torrents on completion
             _buildSwitchTile(
               icon: Icons.check_circle_outline_rounded,
-              title: 'Revérifier les torrents à la fin',
-              subtitle: "Vérifier l'intégrité des morceaux quand le téléchargement atteint 100 %",
+              title: S.t('recheckTorrentsOnCompletion'),
+              subtitle: S.t('verifyPieceIntegrityAfterDownloadReaches100'),
               value: _getBool(prefs['recheck_completed_torrents']),
               onChanged: (bool val) =>
                   _updatePref('recheck_completed_torrents', val),
@@ -1439,15 +1439,15 @@ class _QbittorrentSettingsTabState
             // 10. Customize application instance name
             _buildActionTile(
               icon: Icons.badge_outlined,
-              title: "Personnaliser le nom de l'instance de l'application",
+              title: S.t('customizeApplicationInstanceName'),
               value: prefs['app_instance_name']?.toString().isNotEmpty == true
                   ? prefs['app_instance_name'].toString()
                   : '(Default)',
               onTap: () => _showStringEditDialog(
-                title: "Personnaliser le nom de l'instance de l'application",
+                title: S.t('customizeApplicationInstanceName'),
                 prefKey: 'app_instance_name',
                 initialValue: prefs['app_instance_name']?.toString() ?? '',
-                hintText: "Nom d'instance personnalisé",
+                hintText: S.t('customInstanceName'),
               ),
             ),
             const Divider(height: 1),
@@ -1455,14 +1455,14 @@ class _QbittorrentSettingsTabState
             // 11. Refresh interval
             _buildActionTile(
               icon: Icons.sync_rounded,
-              title: "Intervalle d'actualisation",
+              title: S.t('refreshInterval'),
               value: '${prefs['refresh_interval'] ?? 1500} ms',
               onTap: () => _showNumberEditDialog(
-                title: "Intervalle d'actualisation (ms)",
+                title: S.t('refreshIntervalMs'),
                 prefKey: 'refresh_interval',
                 initialValue:
                     _getInt(prefs['refresh_interval'], defaultValue: 1500),
-                helperText: "Intervalle d'actualisation par interrogation en millisecondes",
+                helperText: S.t('pollingRefreshIntervalInMilliseconds'),
               ),
             ),
             const Divider(height: 1),
@@ -1470,8 +1470,8 @@ class _QbittorrentSettingsTabState
             // 12. Resolve peer host names
             _buildSwitchTile(
               icon: Icons.dns_outlined,
-              title: "Résoudre les noms d'hôtes des pairs",
-              subtitle: 'Faire une recherche DNS inverse sur les IP des pairs connectés',
+              title: S.t('resolvePeerHostNames'),
+              subtitle: S.t('performReverseDNSLookupOnConnectedPeerIPs'),
               value: _getBool(prefs['resolve_peer_host_names']),
               onChanged: (bool val) =>
                   _updatePref('resolve_peer_host_names', val),
@@ -1481,8 +1481,8 @@ class _QbittorrentSettingsTabState
             // 13. Resolve peer countries
             _buildSwitchTile(
               icon: Icons.flag_outlined,
-              title: 'Résoudre les pays des pairs',
-              subtitle: 'Afficher les drapeaux des pays pour la géolocalisation des IP des pairs',
+              title: S.t('resolvePeerCountries'),
+              subtitle: S.t('showCountryFlagsForPeerIPGeolocation'),
               value: _getBool(
                 prefs['resolve_peer_countries'],
                 defaultValue: true,
@@ -1495,8 +1495,8 @@ class _QbittorrentSettingsTabState
             // 14. Reannounce to all trackers when IP or port changed
             _buildSwitchTile(
               icon: Icons.podcasts_rounded,
-              title: "Ré-annoncer à tous les trackers quand l'IP ou le port change",
-              subtitle: 'Déclencher une mise à jour immédiate du tracker en cas de changement réseau',
+              title: S.t('reannounceToAllTrackersWhenIPOrPortChanged'),
+              subtitle: S.t('triggerInstantTrackerUpdateOnNetworkChange'),
               value: _getBool(prefs['reannounce_when_address_changed']),
               onChanged: (bool val) =>
                   _updatePref('reannounce_when_address_changed', val),
@@ -1506,8 +1506,8 @@ class _QbittorrentSettingsTabState
             // 15. Enable embedded tracker
             _buildSwitchTile(
               icon: Icons.hub_rounded,
-              title: 'Activer le tracker intégré',
-              subtitle: 'Exécuter le tracker intégré sur ce nœud qBittorrent',
+              title: S.t('enableEmbeddedTracker'),
+              subtitle: S.t('runBuiltInTrackerOnThisQBittorrentNode'),
               value: _getBool(prefs['enable_embedded_tracker']),
               onChanged: (bool val) =>
                   _updatePref('enable_embedded_tracker', val),
@@ -1517,10 +1517,10 @@ class _QbittorrentSettingsTabState
               // 16. Embedded tracker port
               _buildActionTile(
                 icon: Icons.numbers_rounded,
-                title: 'Port du tracker intégré',
+                title: S.t('embeddedTrackerPort'),
                 value: '${prefs['embedded_tracker_port'] ?? 9000}',
                 onTap: () => _showNumberEditDialog(
-                  title: 'Port du tracker intégré',
+                  title: S.t('embeddedTrackerPort'),
                   prefKey: 'embedded_tracker_port',
                   initialValue: _getInt(
                     prefs['embedded_tracker_port'],
@@ -1532,8 +1532,8 @@ class _QbittorrentSettingsTabState
               // 17. Enable port forwarding for embedded tracker
               _buildSwitchTile(
                 icon: Icons.router_outlined,
-                title: "Activer l'ouverture de port pour le tracker intégré",
-                subtitle: 'Utiliser UPnP/NAT-PMP pour ouvrir le port du tracker',
+                title: S.t('enablePortForwardingForEmbeddedTracker'),
+                subtitle: S.t('useUPnPNATPMPToOpenTrackerPort'),
                 value: _getBool(prefs['embedded_tracker_port_forwarding']),
                 onChanged: (bool val) =>
                     _updatePref('embedded_tracker_port_forwarding', val),
@@ -1544,7 +1544,7 @@ class _QbittorrentSettingsTabState
             // 18. Ignore SSL errors
             _buildSwitchTile(
               icon: Icons.gpp_maybe_outlined,
-              title: 'Ignorer les erreurs SSL',
+              title: S.t('ignoreSSLErrors'),
               subtitle:
                   'Ignore HTTPS certification validation errors on trackers & RSS',
               value: _getBool(prefs['ignore_ssl_errors']),
@@ -1555,16 +1555,16 @@ class _QbittorrentSettingsTabState
             // 19. Python executable path (may require restart)
             _buildActionTile(
               icon: Icons.terminal_rounded,
-              title: "Chemin de l'exécutable Python (redémarrage peut être requis)",
+              title: S.t('pythonExecutablePathMayRequireRestart'),
               value:
                   prefs['python_executable_path']?.toString().isNotEmpty == true
                       ? prefs['python_executable_path'].toString()
-                      : '(Détection automatique si vide)',
+                      : S.t('autoDetectIfEmpty'),
               onTap: () => _showStringEditDialog(
-                title: "Chemin de l'exécutable Python",
+                title: S.t('pythonExecutablePath'),
                 prefKey: 'python_executable_path',
                 initialValue: prefs['python_executable_path']?.toString() ?? '',
-                hintText: '(Détection automatique si vide)',
+                hintText: S.t('autoDetectIfEmpty'),
               ),
             ),
           ],
@@ -1577,10 +1577,10 @@ class _QbittorrentSettingsTabState
           children: <Widget>[
             _buildActionTile(
               icon: Icons.memory_rounded,
-              title: "Cache d'écriture disque (Mio)",
+              title: S.t('diskWriteCacheMiB'),
               value: prefs['disk_cache']?.toString() ?? 'Auto',
               onTap: () => _showNumberEditDialog(
-                title: "Cache d'écriture disque (Mio, -1 pour auto)",
+                title: S.t('diskWriteCacheMiB1ForAuto'),
                 prefKey: 'disk_cache',
                 initialValue: _getInt(prefs['disk_cache'], defaultValue: -1),
               ),
@@ -1588,10 +1588,10 @@ class _QbittorrentSettingsTabState
             const Divider(height: 1),
             _buildActionTile(
               icon: Icons.timer_outlined,
-              title: 'Expiration du cache disque (TTL)',
+              title: S.t('diskCacheExpiryTTL'),
               value: '${prefs['disk_cache_ttl'] ?? 60} seconds',
               onTap: () => _showNumberEditDialog(
-                title: 'Expiration du cache disque (secondes)',
+                title: S.t('diskCacheExpirySeconds'),
                 prefKey: 'disk_cache_ttl',
                 initialValue:
                     _getInt(prefs['disk_cache_ttl'], defaultValue: 60),
@@ -1600,10 +1600,10 @@ class _QbittorrentSettingsTabState
             const Divider(height: 1),
             _buildActionTile(
               icon: Icons.alt_route_rounded,
-              title: "Threads d'E/S asynchrones",
+              title: S.t('asynchronousIOThreads'),
               value: prefs['async_io_threads']?.toString() ?? '4',
               onTap: () => _showNumberEditDialog(
-                title: "Threads d'E/S asynchrones",
+                title: S.t('asynchronousIOThreads'),
                 prefKey: 'async_io_threads',
                 initialValue:
                     _getInt(prefs['async_io_threads'], defaultValue: 4),
@@ -1612,11 +1612,11 @@ class _QbittorrentSettingsTabState
             const Divider(height: 1),
             _buildActionTile(
               icon: Icons.speed_rounded,
-              title: 'Limite de mémoire de travail (Mio)',
+              title: S.t('memoryWorkingSetLimitMiB'),
               value: prefs['memory_working_set_limit']?.toString() ??
                   '0 (Unlimited)',
               onTap: () => _showNumberEditDialog(
-                title: 'Limite de mémoire de travail (Mio, 0 pour illimité)',
+                title: S.t('memoryWorkingSetLimitMiB0ForUnlimited'),
                 prefKey: 'memory_working_set_limit',
                 initialValue: _getInt(prefs['memory_working_set_limit']),
               ),
@@ -1736,7 +1736,7 @@ class _QbittorrentSettingsTabState
       // qBittorrent learns the address from peers and trackers, so a server
       // that has only just started has none to report yet.
       subtitle: Text(
-        known ? address : 'Pas encore connu',
+        known ? address : S.t('notKnownYet'),
         style: theme.textTheme.bodyMedium?.copyWith(
           color: cs.onSurfaceVariant,
           fontWeight: FontWeight.w500,
@@ -1750,11 +1750,11 @@ class _QbittorrentSettingsTabState
   }
 
   Future<void> _copyAddress(String title, String address) async {
-    String message = '$title copié';
+    String message = S.t('titleCopied1', [title]);
     try {
       await Clipboard.setData(ClipboardData(text: address));
     } on PlatformException {
-      message = 'Impossible de copier dans le presse-papiers';
+      message = S.t('couldNotCopyToTheClipboard');
     }
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
@@ -1839,9 +1839,9 @@ class _QbittorrentSettingsTabState
   }
 
   String _formatLimit(dynamic limit) {
-    if (limit == null) return 'Unlimited';
+    if (limit == null) return S.t('unlimited');
     final int bytes = int.tryParse(limit.toString()) ?? 0;
-    if (bytes <= 0) return 'Unlimited';
+    if (bytes <= 0) return S.t('unlimited');
     return '${fmtBytes(bytes)}/s';
   }
 }

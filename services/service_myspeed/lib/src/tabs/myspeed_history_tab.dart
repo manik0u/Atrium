@@ -116,7 +116,7 @@ class _MySpeedHistoryTabState extends ConsumerState<MySpeedHistoryTab> {
       controller: _searchController,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        hintText: 'Filtrer ou rechercher par ID de test (ex. 10)…',
+        hintText: S.t('filterOrSearchByTestIDEG10'),
         prefixIcon: const Icon(Icons.search_rounded, size: 20),
         suffixIcon: _searchController.text.isNotEmpty
             ? IconButton(
@@ -229,7 +229,7 @@ class _MySpeedHistoryTabState extends ConsumerState<MySpeedHistoryTab> {
                       padding: const EdgeInsets.all(Insets.xl),
                       child: Center(
                         child: Text(
-                          "Aucun speedtest trouvé avec l'ID #$_searchQuery",
+                          S.t('noSpeedtestFoundWithIDSearchQuery1', [_searchQuery]),
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: colors.onSurfaceVariant,
                           ),
@@ -245,12 +245,12 @@ class _MySpeedHistoryTabState extends ConsumerState<MySpeedHistoryTab> {
               }
 
               if (tests.isEmpty) {
-                return const Padding(
+                return Padding(
                   padding: EdgeInsets.symmetric(vertical: Insets.xl),
                   child: EmptyView(
                     icon: Icons.history_rounded,
-                    title: 'Aucun speedtest',
-                    message: 'Aucun speedtest enregistré sur cette instance.',
+                    title: S.t('noSpeedtests'),
+                    message: S.t('noSpeedtestsRecordedOnThisInstance'),
                   ),
                 );
               }
@@ -329,9 +329,9 @@ class _MySpeedHistoryTabState extends ConsumerState<MySpeedHistoryTab> {
                 Expanded(
                   child: MySpeedMetricBox(
                     icon: Icons.arrow_downward_rounded,
-                    label: 'MOY. DESC.',
+                    label: S.t('avgDOWN'),
                     value: avgDown.toStringAsFixed(1),
-                    unit: 'Mbps',
+                    unit: S.t('mbps'),
                     iconColor: colors.primary,
                     boxColor: colors.primaryContainer.withValues(alpha: 0.25),
                     borderColor: colors.primary.withValues(alpha: 0.25),
@@ -341,9 +341,9 @@ class _MySpeedHistoryTabState extends ConsumerState<MySpeedHistoryTab> {
                 Expanded(
                   child: MySpeedMetricBox(
                     icon: Icons.arrow_upward_rounded,
-                    label: 'MOY. MONT.',
+                    label: S.t('avgUP'),
                     value: avgUp.toStringAsFixed(1),
-                    unit: 'Mbps',
+                    unit: S.t('mbps'),
                     iconColor: colors.tertiary,
                     boxColor: colors.tertiaryContainer.withValues(alpha: 0.25),
                     borderColor: colors.tertiary.withValues(alpha: 0.25),
@@ -353,7 +353,7 @@ class _MySpeedHistoryTabState extends ConsumerState<MySpeedHistoryTab> {
                 Expanded(
                   child: MySpeedMetricBox(
                     icon: Icons.timer_outlined,
-                    label: 'MOY. PING',
+                    label: S.t('avgPING'),
                     value: avgPing.toStringAsFixed(0),
                     unit: 'ms',
                     iconColor: colors.secondary,

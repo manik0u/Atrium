@@ -20,14 +20,14 @@ class ProwlarrAppsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Applications')),
+      appBar: AppBar(title: Text(S.t('apps'))),
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton.small(
             heroTag: 'prowlarr-sync',
-            tooltip: 'Synchroniser les indexeurs des applications',
+            tooltip: S.t('syncAppIndexers'),
             onPressed: () => _syncApps(context, ref),
             child: const Icon(Icons.sync),
           ),
@@ -36,7 +36,7 @@ class ProwlarrAppsScreen extends ConsumerWidget {
             heroTag: 'prowlarr-add-app',
             onPressed: () => _openForm(context),
             icon: const Icon(Icons.add),
-            label: const Text('Ajouter une application'),
+            label: Text(S.t('addApplication')),
           ),
         ],
       ),
@@ -64,13 +64,13 @@ class ProwlarrAppsScreen extends ConsumerWidget {
           await ref.read(prowlarrApiProvider(instance).future);
       await api.runCommand('ApplicationIndexerSync');
       messenger.showSnackBar(
-        const SnackBar(content: Text('Synchro des indexeurs des applications démarrée')),
+        SnackBar(content: Text(S.t('appIndexerSyncStarted'))),
       );
     } on Object catch (e) {
       final String msg = (e is NetworkException && e.message.isNotEmpty)
           ? e.message
           : 'request failed';
-      messenger.showSnackBar(SnackBar(content: Text('Échec de la synchro : $msg')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('syncFailedMsg1', [msg]))));
     }
   }
 }

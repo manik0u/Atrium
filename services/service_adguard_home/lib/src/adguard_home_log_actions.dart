@@ -61,7 +61,7 @@ Future<bool> adguardHomeToggleClientAccess(
     final AdguardHomeAccessList list = await actions.readAccessList();
     if (adguardHomeIsLastAllowedClient(list, address, disallowed: disallowed)) {
       await explain(
-        'Ce client reste autorisé',
+        S.t('thisClientStaysAllowed'),
         AdguardHomeLastAllowedClient.message,
       );
       return false;
@@ -74,7 +74,7 @@ Future<bool> adguardHomeToggleClientAccess(
       disallowed: disallowed,
     )) {
       await explain(
-        'Ce client reste autorisé',
+        S.t('thisClientStaysAllowed'),
         AdguardHomeAllowedByWiderEntry.message,
       );
       return false;
@@ -101,17 +101,17 @@ Future<bool> adguardHomeToggleClientAccess(
       context: context,
       builder: (BuildContext context) => AlertDialog(
         title: Text(
-          disallowed ? 'Autoriser ce client ?' : 'Interdire ce client ?',
+          disallowed ? S.t('allowThisClient') : S.t('disallowThisClient'),
         ),
         content: Text(what),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text(disallowed ? 'Autoriser' : 'Refuser'),
+            child: Text(disallowed ? S.t('allow') : S.t('deny')),
           ),
         ],
       ),
@@ -138,7 +138,7 @@ Future<bool> adguardHomeToggleClientAccess(
     }
     return true;
   } on Object catch (error) {
-    await explain('Aucune modification', describeAdguardHomeError(error));
+    await explain(S.t('nothingWasChanged'), describeAdguardHomeError(error));
     return false;
   }
 }
@@ -168,7 +168,7 @@ Future<void> adguardHomeClearQueryLog(
   final bool? confirmed = await showDialog<bool>(
     context: context,
     builder: (BuildContext context) => AlertDialog(
-      title: const Text('Effacer le journal des requêtes ?'),
+      title: Text(S.t('clearTheQueryLog')),
       content: const Text(
         'AdGuard Home deletes every entry of its query log. This cannot be '
         'undone.',
@@ -176,11 +176,11 @@ Future<void> adguardHomeClearQueryLog(
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(true),
-          child: const Text('Effacer'),
+          child: Text(S.t('clear')),
         ),
       ],
     ),

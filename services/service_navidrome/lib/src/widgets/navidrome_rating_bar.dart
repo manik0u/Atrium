@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 
 /// Returns a human-friendly descriptor for a 1-5 rating.
@@ -206,7 +207,7 @@ Future<void> showNavidromeRatingModal({
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text('Échec de la définition de la note : $e'),
+                              content: Text(S.t('failedToSetRatingE1', [e])),
                             ),
                           );
                         }
@@ -228,14 +229,14 @@ Future<void> showNavidromeRatingModal({
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text('Échec de la suppression de la note : $e'),
+                                content: Text(S.t('failedToClearRatingE1', [e])),
                               ),
                             );
                           }
                         }
                       },
                       icon: const Icon(Icons.clear_rounded, size: 18),
-                      label: const Text('Supprimer la note'),
+                      label: Text(S.t('removeRating')),
                     ),
                 ],
               ),

@@ -53,11 +53,11 @@ class SeerrReportIssueSheet extends ConsumerStatefulWidget {
 }
 
 class _SeerrReportIssueSheetState extends ConsumerState<SeerrReportIssueSheet> {
-  static const List<(int, String)> _types = <(int, String)>[
-    (1, 'Video'),
-    (2, 'Audio'),
-    (3, 'Subtitles'),
-    (4, 'Other'),
+  static final List<(int, String)> _types = <(int, String)>[
+    (1, S.t('video')),
+    (2, S.t('audio')),
+    (3, S.t('subtitles')),
+    (4, S.t('other')),
   ];
 
   final TextEditingController _messageController = TextEditingController();
@@ -90,13 +90,13 @@ class _SeerrReportIssueSheetState extends ConsumerState<SeerrReportIssueSheet> {
         return;
       }
       ref.invalidate(seerrIssuesProvider);
-      messenger.showSnackBar(const SnackBar(content: Text('Problème signalé')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('issueReported'))));
       navigator.pop();
     } catch (e) {
       if (mounted) {
         setState(() => _submitting = false);
         messenger.showSnackBar(
-          SnackBar(content: Text('Impossible de signaler le problème : $e')),
+          SnackBar(content: Text(S.t('couldNotReportIssueE1', [e]))),
         );
       }
     }
@@ -148,9 +148,9 @@ class _SeerrReportIssueSheetState extends ConsumerState<SeerrReportIssueSheet> {
               minLines: 3,
               maxLines: 6,
               onChanged: (_) => setState(() {}),
-              decoration: const InputDecoration(
-                labelText: 'Quel est le problème ?',
-                hintText: 'Décrivez le problème',
+              decoration: InputDecoration(
+                labelText: S.t('whatIsWrong'),
+                hintText: S.t('describeTheProblem'),
                 border: OutlineInputBorder(),
               ),
             ),
@@ -164,7 +164,7 @@ class _SeerrReportIssueSheetState extends ConsumerState<SeerrReportIssueSheet> {
                       child: ExpressiveProgressIndicator(strokeWidth: 2),
                     )
                   : const Icon(Icons.flag_outlined),
-              label: const Text('Envoyer'),
+              label: Text(S.t('send')),
             ),
           ],
         ),

@@ -14,10 +14,10 @@ import '../../lidarr_providers.dart';
 /// Sort options for interactive release search results.
 enum ReleaseSortOption {
   qualityScore('Score / Quality', Icons.star_outline),
-  seeders('Seeders', Icons.cloud_download_outlined),
-  size('Size', Icons.storage_outlined),
-  age('Age', Icons.schedule),
-  indexer('Indexer', Icons.storage);
+  seeders(S.t('seeders'), Icons.cloud_download_outlined),
+  size(S.t('size'), Icons.storage_outlined),
+  age(S.t('age'), Icons.schedule),
+  indexer(S.t('indexer'), Icons.storage);
 
   const ReleaseSortOption(this.label, this.icon);
   final String label;
@@ -181,7 +181,7 @@ class _LidarrInteractiveSearchScreenState
       final bool? confirm = await showDialog<bool>(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: const Text('Forcer le grab de la release ?'),
+          title: Text(S.t('forceGrabRelease')),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -208,22 +208,22 @@ class _LidarrInteractiveSearchScreenState
                   ),
                 ),
               const SizedBox(height: Insets.sm),
-              const Text(
-                'Voulez-vous quand même envoyer cette release au client de téléchargement ?',
+              Text(
+                S.t('doYouWantToSendThisReleaseToTheDownloadClientAnyway'),
               ),
             ],
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(false),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             FilledButton(
               style: FilledButton.styleFrom(
                 backgroundColor: Theme.of(ctx).colorScheme.primary,
               ),
               onPressed: () => Navigator.of(ctx).pop(true),
-              child: const Text('Grab quand même'),
+              child: Text(S.t('grabAnyway')),
             ),
           ],
         ),
@@ -253,7 +253,7 @@ class _LidarrInteractiveSearchScreenState
           await api.release.postRelease(body: payload);
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec du grab de la release');
+        throw Exception(resp.error?.message ?? S.t('failedToGrabRelease'));
       }
 
       setState(() {
@@ -266,7 +266,7 @@ class _LidarrInteractiveSearchScreenState
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Grabée « ${release.title ?? 'Release'}"'),
+            content: Text(S.t('grabbedReleaseTitle')Release'}"'),
             backgroundColor: Theme.of(context).colorScheme.primary,
           ),
         );
@@ -275,7 +275,7 @@ class _LidarrInteractiveSearchScreenState
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Échec du grab de la release : $e'),
+            content: Text(S.t('failedToGrabReleaseE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -317,7 +317,7 @@ class _LidarrInteractiveSearchScreenState
                         Icon(Icons.tune_rounded, size: 22, color: cs.primary),
                         const SizedBox(width: 10),
                         Text(
-                          'Filter & Sort Releases',
+                          S.t('filterSortReleases'),
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -335,7 +335,7 @@ class _LidarrInteractiveSearchScreenState
                               });
                               setSheetState(() {});
                             },
-                            child: const Text('Réinitialiser'),
+                            child: Text(S.t('reset')),
                           ),
                         IconButton(
                           icon: const Icon(Icons.close, size: 20),
@@ -347,7 +347,7 @@ class _LidarrInteractiveSearchScreenState
 
                     // Filter section
                     Text(
-                      'Filter',
+                      S.t('filter'),
                       style: theme.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -359,14 +359,14 @@ class _LidarrInteractiveSearchScreenState
                       children: [
                         _buildFilterChip(
                           'all',
-                          'All Releases',
+                          S.t('allReleases'),
                           Icons.all_inclusive,
                           setSheetState,
                           cs,
                         ),
                         _buildFilterChip(
                           'approved',
-                          'Approved Only',
+                          S.t('approvedOnly'),
                           Icons.check_circle_outline,
                           setSheetState,
                           cs,
@@ -401,7 +401,7 @@ class _LidarrInteractiveSearchScreenState
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Sort By',
+                          S.t('sortBy'),
                           style: theme.textTheme.titleSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -422,7 +422,7 @@ class _LidarrInteractiveSearchScreenState
                             size: 16,
                           ),
                           label: Text(
-                            _sortAscending ? 'Ascending' : 'Descending',
+                            _sortAscending ? S.t('ascending') : S.t('descending'),
                             style: const TextStyle(fontSize: 13),
                           ),
                           onPressed: () {
@@ -478,7 +478,7 @@ class _LidarrInteractiveSearchScreenState
                     // Apply Button
                     FilledButton(
                       onPressed: () => Navigator.of(sheetCtx).pop(),
-                      child: const Text('Appliquer et fermer'),
+                      child: Text(S.t('applyClose')),
                     ),
                   ],
                 ),
@@ -520,7 +520,7 @@ class _LidarrInteractiveSearchScreenState
   void _showReleaseDetailsSheet(BuildContext context, ReleaseResource release) {
     final ThemeData theme = Theme.of(context);
     final ColorScheme cs = theme.colorScheme;
-    final String qualityName = release.quality?.quality?.name ?? 'Unknown';
+    final String qualityName = release.quality?.quality?.name ?? S.t('unknown');
     final int seeders = release.seeders ?? 0;
     final int leechers = release.leechers ?? 0;
     final String sizeStr = LidarrFormatters.formatBytes(release.size);
@@ -583,7 +583,7 @@ class _LidarrInteractiveSearchScreenState
                           : Icons.download_outlined,
                       size: 16,
                     ),
-                    label: Text(isRejected ? 'Grab forcé' : 'Grab'),
+                    label: Text(isRejected ? S.t('forceGrab') : S.t('grab')),
                     onPressed: () {
                       Navigator.of(ctx).pop();
                       _grabRelease(release);
@@ -601,7 +601,7 @@ class _LidarrInteractiveSearchScreenState
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: SelectableText(
-                  release.title ?? 'Release inconnue',
+                  release.title ?? S.t('unknownRelease'),
                   style: theme.textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w600,
                     height: 1.35,
@@ -618,7 +618,7 @@ class _LidarrInteractiveSearchScreenState
                   if (webUrl != null)
                     FilledButton.tonalIcon(
                       icon: const Icon(Icons.open_in_browser, size: 18),
-                      label: const Text('Ouvrir la page du torrent'),
+                      label: Text(S.t('openTorrentPage')),
                       onPressed: () async {
                         final uri = Uri.tryParse(webUrl);
                         if (uri != null) {
@@ -633,14 +633,14 @@ class _LidarrInteractiveSearchScreenState
                       release.downloadUrl!.isNotEmpty)
                     OutlinedButton.icon(
                       icon: const Icon(Icons.copy, size: 16),
-                      label: const Text("Copier l'URL de téléchargement"),
+                      label: Text(S.t('copyDownloadURL')),
                       onPressed: () {
                         Clipboard.setData(
                           ClipboardData(text: release.downloadUrl!),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('URL de téléchargement copiée dans le presse-papiers'),
+                          SnackBar(
+                            content: Text(S.t('downloadURLCopiedToClipboard')),
                             duration: Duration(seconds: 2),
                           ),
                         );
@@ -650,14 +650,14 @@ class _LidarrInteractiveSearchScreenState
                       release.magnetUrl!.isNotEmpty)
                     OutlinedButton.icon(
                       icon: const Icon(Icons.link, size: 16),
-                      label: const Text("Copier l'URI magnet"),
+                      label: Text(S.t('copyMagnetURI')),
                       onPressed: () {
                         Clipboard.setData(
                           ClipboardData(text: release.magnetUrl!),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('URI magnet copiée dans le presse-papiers'),
+                          SnackBar(
+                            content: Text(S.t('magnetURICopiedToClipboard')),
                             duration: Duration(seconds: 2),
                           ),
                         );
@@ -668,16 +668,16 @@ class _LidarrInteractiveSearchScreenState
               const Divider(height: 24),
 
               // Attributes List
-              _buildDetailRow('Indexer', release.indexer ?? 'Unknown', cs),
-              _buildDetailRow('Protocol', protocolStr, cs),
-              _buildDetailRow('Quality', qualityName, cs),
-              _buildDetailRow('Size', sizeStr, cs),
+              _buildDetailRow(S.t('indexer'), release.indexer ?? S.t('unknown'), cs),
+              _buildDetailRow(S.t('protocol'), protocolStr, cs),
+              _buildDetailRow(S.t('quality'), qualityName, cs),
+              _buildDetailRow(S.t('size'), sizeStr, cs),
               _buildDetailRow(
-                'Peers',
+                S.t('peers'),
                 '↑ $seeders seeders  •  ↓ $leechers leechers',
                 cs,
               ),
-              if (ageStr.isNotEmpty) _buildDetailRow('Age', ageStr, cs),
+              if (ageStr.isNotEmpty) _buildDetailRow(S.t('age'), ageStr, cs),
               if (release.publishDate != null)
                 _buildDetailRow('Published', release.publishDate!, cs),
               if (score != 0)
@@ -688,12 +688,12 @@ class _LidarrInteractiveSearchScreenState
                 ),
               if (release.releaseGroup != null &&
                   release.releaseGroup!.isNotEmpty)
-                _buildDetailRow('Release Group', release.releaseGroup!, cs),
+                _buildDetailRow(S.t('releaseGroup'), release.releaseGroup!, cs),
               if (release.guid != null)
                 _buildDetailRow('GUID', release.guid!, cs),
               if (release.downloadUrl != null &&
                   release.downloadUrl!.isNotEmpty)
-                _buildDetailRow('Download URL', release.downloadUrl!, cs),
+                _buildDetailRow(S.t('downloadURL'), release.downloadUrl!, cs),
               if (release.infoUrl != null && release.infoUrl!.isNotEmpty)
                 _buildDetailRow('Info URL', release.infoUrl!, cs),
               if (release.commentUrl != null && release.commentUrl!.isNotEmpty)
@@ -704,7 +704,7 @@ class _LidarrInteractiveSearchScreenState
                   release.customFormats!.isNotEmpty) ...[
                 const SizedBox(height: 12),
                 Text(
-                  'Custom Formats',
+                  S.t('customFormats'),
                   style: theme.textTheme.labelMedium?.copyWith(
                     color: cs.primary,
                     fontWeight: FontWeight.bold,
@@ -831,7 +831,7 @@ class _LidarrInteractiveSearchScreenState
                     constraints:
                         const BoxConstraints(minWidth: 28, minHeight: 28),
                     icon: const Icon(Icons.open_in_new, size: 15),
-                    tooltip: 'Ouvrir dans le navigateur',
+                    tooltip: S.t('openInBrowser'),
                     onPressed: () async {
                       final uri = Uri.tryParse(value);
                       if (uri != null) {
@@ -980,7 +980,7 @@ class _LidarrInteractiveSearchScreenState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Interactive Search',
+              S.t('interactiveSearch'),
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -998,7 +998,7 @@ class _LidarrInteractiveSearchScreenState
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Actualiser les releases',
+            tooltip: S.t('refreshReleases'),
             onPressed: () {
               if (widget.albumId != null) {
                 ref.invalidate(
@@ -1029,7 +1029,7 @@ class _LidarrInteractiveSearchScreenState
         label: Text(
           _activeFilterCount > 0
               ? 'Filtered ($_activeFilterCount)'
-              : 'Filter & Sort',
+              : S.t('filterSort'),
         ),
       ),
       body: GestureDetector(
@@ -1044,7 +1044,7 @@ class _LidarrInteractiveSearchScreenState
                 controller: _searchController,
                 focusNode: _searchFocusNode,
                 decoration: InputDecoration(
-                  hintText: 'Filtrer les releases par titre, indexeur, groupe…',
+                  hintText: S.t('filterReleasesByTitleIndexerGroup'),
                   prefixIcon: const Icon(Icons.search, size: 20),
                   suffixIcon: _filterQuery.isNotEmpty
                       ? IconButton(
@@ -1088,7 +1088,7 @@ class _LidarrInteractiveSearchScreenState
                     Icon(Icons.filter_list, size: 16, color: cs.primary),
                     const SizedBox(width: 8),
                     Text(
-                      'Sort: ${_sortOption.label} (${_sortAscending ? '↑ Asc' : '↓ Décr.'})',
+                      'Sort: ${_sortOption.label} (${_sortAscending ? '↑ Asc' : S.t('desc')})',
                       style: TextStyle(
                         fontSize: 11.5,
                         fontWeight: FontWeight.w600,
@@ -1123,7 +1123,7 @@ class _LidarrInteractiveSearchScreenState
                           vertical: 2,
                         ),
                         child: Text(
-                          'Clear',
+                          S.t('clear'),
                           style: TextStyle(
                             fontSize: 11.5,
                             fontWeight: FontWeight.bold,
@@ -1158,8 +1158,8 @@ class _LidarrInteractiveSearchScreenState
                             const SizedBox(height: 12),
                             Text(
                               rawReleases.isEmpty
-                                  ? 'Aucune release trouvée'
-                                  : 'Aucune release correspondante',
+                                  ? S.t('noReleasesFound')
+                                  : S.t('noMatchingReleases'),
                               style: theme.textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -1167,8 +1167,8 @@ class _LidarrInteractiveSearchScreenState
                             const SizedBox(height: 6),
                             Text(
                               rawReleases.isEmpty
-                                  ? "Aucune release n'a été renvoyée par les indexeurs pour « ${widget.title} »."
-                                  : 'Essayez de changer votre requête ou vos critères de filtre.',
+                                  ? S.t('noReleasesWereReturnedByIndexersForWidgetTitle1', [widget.title])
+                                  : S.t('tryChangingYourSearchQueryOrFilterCriteria'),
                               textAlign: TextAlign.center,
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: cs.onSurfaceVariant,
@@ -1178,7 +1178,7 @@ class _LidarrInteractiveSearchScreenState
                               const SizedBox(height: 16),
                               FilledButton.tonalIcon(
                                 icon: const Icon(Icons.clear_all),
-                                label: const Text('Réinitialiser les filtres'),
+                                label: Text(S.t('resetFilters')),
                                 onPressed: () {
                                   setState(() {
                                     _selectedFilter = 'all';
@@ -1236,13 +1236,13 @@ class _LidarrInteractiveSearchScreenState
                     ),
                   );
                 },
-                loading: () => const Center(
+                loading: () => Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ExpressiveProgressIndicator(),
                       SizedBox(height: Insets.md),
-                      Text('Interrogation des indexeurs pour les releases…'),
+                      Text(S.t('queryingIndexersForReleases')),
                     ],
                   ),
                 ),
@@ -1272,7 +1272,7 @@ class _LidarrInteractiveSearchScreenState
                         const SizedBox(height: 16),
                         FilledButton.icon(
                           icon: const Icon(Icons.refresh),
-                          label: const Text('Réessayer'),
+                          label: Text(S.t('retry')),
                           onPressed: () {
                             if (widget.albumId != null) {
                               ref.invalidate(
@@ -1334,7 +1334,7 @@ class _ReleaseCardState extends State<_ReleaseCard> {
 
     final bool isRejected = release.rejected == true ||
         (release.rejections != null && release.rejections!.isNotEmpty);
-    final String qualityName = release.quality?.quality?.name ?? 'Unknown';
+    final String qualityName = release.quality?.quality?.name ?? S.t('unknown');
     final int seeders = release.seeders ?? 0;
     final int leechers = release.leechers ?? 0;
     final String sizeStr = LidarrFormatters.formatBytes(release.size);
@@ -1451,7 +1451,7 @@ class _ReleaseCardState extends State<_ReleaseCard> {
 
               // Release Title
               Text(
-                release.title ?? 'Release inconnue',
+                release.title ?? S.t('unknownRelease'),
                 style: theme.textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
@@ -1545,7 +1545,7 @@ class _ReleaseCardState extends State<_ReleaseCard> {
                       ),
                       icon: const Icon(Icons.check, size: 18),
                       onPressed: null,
-                      tooltip: 'Grabée',
+                      tooltip: S.t('grabbed'),
                     )
                   else if (widget.isGrabbing)
                     const SizedBox(
@@ -1625,7 +1625,7 @@ class _ReleaseCardState extends State<_ReleaseCard> {
                       children: release.rejections!
                           .map(
                             (r) => Text(
-                              '• $r',
+                              S.t('r1', [r]),
                               style: TextStyle(fontSize: 11, color: cs.error),
                             ),
                           )

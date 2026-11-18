@@ -42,18 +42,18 @@ void main() {
   testWidgets('sums up each section', (WidgetTester tester) async {
     await pumpTab(tester);
 
-    expect(says('Listes de blocage', '2 lists, 1 on · 186,502 rules'), isTrue);
-    expect(says("Listes d'autorisation", '1 list, 1 on · 3,554 rules'), isTrue);
-    expect(says('Règles personnalisées', '3 rules'), isTrue);
-    expect(says('Services bloqués', '1 service · pauses on 2 days'), isTrue);
-    expect(says('Réécritures DNS', '2 rewrites, 1 on'), isTrue);
+    expect(says('Blocklists', '2 lists, 1 on · 186,502 rules'), isTrue);
+    expect(says('Allowlists', '1 list, 1 on · 3,554 rules'), isTrue);
+    expect(says('Custom rules', '3 rules'), isTrue);
+    expect(says('Blocked services', '1 service · pauses on 2 days'), isTrue);
+    expect(says('DNS rewrites', '2 rewrites, 1 on'), isTrue);
   });
 
   testWidgets('says when rewrites are off as a whole',
       (WidgetTester tester) async {
     await pumpTab(tester, rewritesEnabled: false);
 
-    expect(says('Réécritures DNS', 'Off · 2 rewrites'), isTrue);
+    expect(says('DNS rewrites', 'Off · 2 rewrites'), isTrue);
   });
 
   testWidgets('counts rewrites without switches as all on, saying nothing '
@@ -71,7 +71,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(says('Réécritures DNS', '2 rewrites'), isTrue);
+    expect(says('DNS rewrites', '2 rewrites'), isTrue);
   });
 
   testWidgets('each section opens its screen', (WidgetTester tester) async {
@@ -97,7 +97,7 @@ void main() {
       (WidgetTester tester) async {
     await pumpTab(tester);
 
-    await tester.tap(find.text("Listes d'autorisation"));
+    await tester.tap(find.text('Allowlists'));
     await tester.pumpAndSettle();
 
     expect(
@@ -138,7 +138,7 @@ void main() {
     await pumpTab(tester, filteringError: const AdguardHomeSignInRefused());
 
     expect(find.byType(AdguardHomeRefusedView), findsOneWidget);
-    expect(find.text('Listes de blocage'), findsNothing);
+    expect(find.text('Blocklists'), findsNothing);
   });
 
   for (final double width in <double>[320, 411]) {

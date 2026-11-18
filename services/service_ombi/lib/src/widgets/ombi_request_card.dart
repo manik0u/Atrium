@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -126,7 +127,7 @@ class OmbiRequestCard extends StatelessWidget {
                     ),
                   ),
                   PopupMenuButton<String>(
-                    tooltip: 'Plus',
+                    tooltip: S.t('more'),
                     onSelected: (String action) {
                       if (action == 'approve') {
                         onApprove();
@@ -138,19 +139,19 @@ class OmbiRequestCard extends StatelessWidget {
                     },
                     itemBuilder: (BuildContext context) =>
                         <PopupMenuEntry<String>>[
-                      if (_pending) ...const <PopupMenuEntry<String>>[
+                      if (_pending) ...<PopupMenuEntry<String>>[
                         PopupMenuItem<String>(
                           value: 'approve',
-                          child: Text('Approuver'),
+                          child: Text(S.t('approve')),
                         ),
                         PopupMenuItem<String>(
                           value: 'deny',
-                          child: Text('Refuser'),
+                          child: Text(S.t('deny')),
                         ),
                       ],
-                      const PopupMenuItem<String>(
+                      PopupMenuItem<String>(
                         value: 'delete',
-                        child: Text('Supprimer'),
+                        child: Text(S.t('delete')),
                       ),
                     ],
                   ),
@@ -164,7 +165,7 @@ class OmbiRequestCard extends StatelessWidget {
                       child: OutlinedButton.icon(
                         onPressed: onDeny,
                         icon: const Icon(Icons.close_rounded, size: 18),
-                        label: const Text('Refuser'),
+                        label: Text(S.t('deny')),
                       ),
                     ),
                     const SizedBox(width: Insets.sm),
@@ -172,7 +173,7 @@ class OmbiRequestCard extends StatelessWidget {
                       child: FilledButton.icon(
                         onPressed: onApprove,
                         icon: const Icon(Icons.check_rounded, size: 18),
-                        label: const Text('Approuver'),
+                        label: Text(S.t('approve')),
                       ),
                     ),
                   ],
@@ -198,7 +199,7 @@ class OmbiRequestCard extends StatelessWidget {
 String _ago(DateTime when, DateTime now) {
   final Duration d = now.difference(when);
   if (d.inMinutes < 1) {
-    return 'just now';
+    return S.t('justNow_2');
   }
   if (d.inHours < 1) {
     return '${d.inMinutes}m ago';

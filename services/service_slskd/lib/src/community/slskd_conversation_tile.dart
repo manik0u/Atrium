@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -29,9 +30,9 @@ class SlskdConversationTile extends StatelessWidget {
 
     final String timeStr = last != null ? slskdFormatTime(last.timestamp) : '';
     final String preview = last != null
-        ? (last.isOutbound ? 'Vous : ${last.message}' : last.message)
+        ? (last.isOutbound ? S.t('youLastMessage1', [last.message]) : last.message)
         : (hasUnread
-            ? '$unreadCount message(s) non lu(s)${unreadCount > 1 ? 's' : ''}'
+            ? S.t('unreadcountUnreadMessageUnreadCount11', [unreadCount])s' : ''}'
             : 'Tap to chat');
 
     return Card(
@@ -136,7 +137,7 @@ class SlskdConversationTile extends StatelessWidget {
 
               if (onClose != null)
                 IconButton(
-                  tooltip: 'Fermer la conversation',
+                  tooltip: S.t('closeConversation'),
                   visualDensity: VisualDensity.compact,
                   icon: Icon(Icons.close_rounded, size: 18, color: colorScheme.outline),
                   onPressed: onClose,

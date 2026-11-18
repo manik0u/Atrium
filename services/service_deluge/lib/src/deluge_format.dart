@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 
 /// Human-readable byte size.
@@ -43,8 +44,8 @@ String delugeFmtEta(int seconds) {
 /// A global bandwidth cap for display. Deluge stores these in KiB/s with -1
 /// meaning unlimited.
 String delugeFmtLimitKib(double kib) {
-  if (kib < 0) return 'Unlimited';
-  if (kib == 0) return 'Stopped';
+  if (kib < 0) return S.t('unlimited');
+  if (kib == 0) return S.t('stopped');
   if (kib >= 1024) {
     final double mb = kib / 1024;
     return '${mb == mb.roundToDouble() ? mb.toInt() : mb.toStringAsFixed(1)} '
@@ -81,43 +82,43 @@ String? delugeCountryFlag(String country) {
 /// Colour for a Deluge state, taken from the active scheme so the palette
 /// still follows the device's dynamic colour.
 Color delugeStateColor(ColorScheme scheme, String state) => switch (state) {
-      'Downloading' => scheme.primary,
-      'Seeding' => scheme.tertiary,
-      'Paused' => scheme.outline,
-      'Error' => scheme.error,
+      S.t('downloading') => scheme.primary,
+      S.t('seeding') => scheme.tertiary,
+      S.t('paused') => scheme.outline,
+      S.t('error') => scheme.error,
       _ => scheme.secondary,
     };
 
 /// Container colour for a state badge, paired with [delugeStateOnContainerColor].
 Color delugeStateContainerColor(ColorScheme scheme, String state) =>
     switch (state) {
-      'Downloading' => scheme.primaryContainer,
-      'Seeding' => scheme.tertiaryContainer,
-      'Paused' => scheme.surfaceContainerHighest,
-      'Error' => scheme.errorContainer,
+      S.t('downloading') => scheme.primaryContainer,
+      S.t('seeding') => scheme.tertiaryContainer,
+      S.t('paused') => scheme.surfaceContainerHighest,
+      S.t('error') => scheme.errorContainer,
       _ => scheme.secondaryContainer,
     };
 
 /// Foreground colour for a state badge drawn on [delugeStateContainerColor].
 Color delugeStateOnContainerColor(ColorScheme scheme, String state) =>
     switch (state) {
-      'Downloading' => scheme.onPrimaryContainer,
-      'Seeding' => scheme.onTertiaryContainer,
-      'Paused' => scheme.onSurfaceVariant,
-      'Error' => scheme.onErrorContainer,
+      S.t('downloading') => scheme.onPrimaryContainer,
+      S.t('seeding') => scheme.onTertiaryContainer,
+      S.t('paused') => scheme.onSurfaceVariant,
+      S.t('error') => scheme.onErrorContainer,
       _ => scheme.onSecondaryContainer,
     };
 
 /// Icon for a Deluge state.
 IconData delugeStateIcon(String state) => switch (state) {
-      'Downloading' => Icons.download_outlined,
-      'Seeding' => Icons.upload_outlined,
-      'Paused' => Icons.pause_circle_outline,
-      'Queued' => Icons.schedule_outlined,
-      'Checking' => Icons.fact_check_outlined,
+      S.t('downloading') => Icons.download_outlined,
+      S.t('seeding') => Icons.upload_outlined,
+      S.t('paused') => Icons.pause_circle_outline,
+      S.t('queued') => Icons.schedule_outlined,
+      S.t('checking') => Icons.fact_check_outlined,
       'Allocating' => Icons.storage_outlined,
       'Moving' => Icons.drive_file_move_outlined,
-      'Error' => Icons.error_outline,
+      S.t('error') => Icons.error_outline,
       _ => Icons.help_outline,
     };
 
@@ -133,7 +134,7 @@ IconData delugeStateIcon(String state) => switch (state) {
 /// libtorrent file priority as a word. Deluge writes 4 for "normal" on a fresh
 /// add, but any value from 1 to 6 is a middling priority in libtorrent's scale.
 String delugeFilePriorityLabel(int priority) => switch (priority) {
-      0 => 'Ignorer',
-      7 => 'Élevée',
-      _ => 'Normal',
+      0 => S.t('discard'),
+      7 => S.t('high'),
+      _ => S.t('normal'),
     };

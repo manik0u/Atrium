@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'rtorrent_detail.freezed.dart';
@@ -106,9 +107,9 @@ abstract class RtorrentFile with _$RtorrentFile {
   String get displayName => path.contains('/') ? path.split('/').last : path;
 
   String get priorityLabel => switch (priority) {
-        0 => 'Ignorer',
-        2 => 'Élevée',
-        _ => 'Normal',
+        0 => S.t('discard'),
+        2 => S.t('high'),
+        _ => S.t('normal'),
       };
 }
 

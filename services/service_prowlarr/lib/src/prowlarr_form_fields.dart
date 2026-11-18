@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -208,11 +209,11 @@ class _ProwlarrDynamicFieldState extends State<ProwlarrDynamicField> {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(ctx, sel.toList()),
-              child: const Text('Terminé'),
+              child: Text(S.t('done')),
             ),
           ],
         );

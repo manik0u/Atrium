@@ -80,7 +80,7 @@ void main() {
               (ref) async => [
                 const TaskResource(
                   id: 1,
-                  name: 'Re-analyser les dossiers',
+                  name: 'Rescan Folders',
                   interval: 360,
                   lastExecution: '2026-08-15T09:00:00Z',
                 ),
@@ -109,31 +109,31 @@ void main() {
       await tester.pumpAndSettle();
 
       // 1. Status Sub-tab
-      expect(find.text('Statut'), findsOneWidget);
+      expect(find.text('Status'), findsOneWidget);
       expect(find.text('3.1.0.4875'), findsOneWidget);
       expect(find.text('alpine'), findsOneWidget);
       expect(find.text('Indexers unavailable due to failure'), findsOneWidget);
 
       // 2. Disk Space Sub-tab
-      await tester.tap(find.text('Espace disque'));
+      await tester.tap(find.text('Disk Space'));
       await tester.pumpAndSettle();
 
       expect(find.text('/data/media/music'), findsOneWidget);
 
       // 3. Tasks Sub-tab & Maintenance Action
-      await tester.tap(find.text('Tâches'));
+      await tester.tap(find.text('Tasks'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Re-analyser les dossiers'), findsWidgets);
+      expect(find.text('Rescan Folders'), findsWidgets);
 
       // Trigger Maintenance command
-      await tester.tap(find.text('Vérifier la santé'));
+      await tester.tap(find.text('Check Health'));
       await tester.pumpAndSettle();
 
       expect(commandDispatched, equals('CheckHealth'));
 
       // 4. Backups Sub-tab
-      await tester.tap(find.text('Sauvegardes'));
+      await tester.tap(find.text('Backups'));
       await tester.pumpAndSettle();
 
       expect(find.text('lidarr_backup_2026.08.15.zip'), findsOneWidget);
@@ -302,7 +302,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // 1. Navigate to Logs Tab
-        await tester.tap(find.text('Journaux'));
+        await tester.tap(find.text('Logs'));
         await tester.pumpAndSettle();
 
         expect(find.text('MediaCoverService'), findsOneWidget);
@@ -312,22 +312,22 @@ void main() {
         await tester.tap(find.text('Artwork downloaded'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Copier'), findsOneWidget);
-        expect(find.text('Fermer'), findsOneWidget);
+        expect(find.text('Copy'), findsOneWidget);
+        expect(find.text('Close'), findsOneWidget);
 
-        await tester.tap(find.text('Copier'));
+        await tester.tap(find.text('Copy'));
         await tester.pumpAndSettle();
 
         // Clear snackbar and Filter logs by Error
         await tester.pump(const Duration(seconds: 4));
         await tester.pumpAndSettle();
-        await tester.tap(find.byTooltip('Filtrer les journaux'), warnIfMissed: false);
+        await tester.tap(find.byTooltip('Filter Logs'), warnIfMissed: false);
         await tester.pumpAndSettle();
 
-        expect(find.text('Filtrer les journaux'), findsOneWidget);
-        expect(find.text('Erreur'), findsOneWidget);
+        expect(find.text('Filter Logs'), findsOneWidget);
+        expect(find.text('Error'), findsOneWidget);
 
-        await tester.tap(find.text('Erreur'));
+        await tester.tap(find.text('Error'));
         await tester.pumpAndSettle();
 
         expect(lastQueryLevel, equals('error'));
@@ -338,23 +338,23 @@ void main() {
         );
 
         // 2. Navigate to Log Files Tab
-        await tester.tap(find.text('Fichiers journaux'));
+        await tester.tap(find.text('Log Files'));
         await tester.pumpAndSettle();
 
         expect(find.text('lidarr.txt'), findsOneWidget);
 
         // Tap Details icon to open details dialog
-        await tester.tap(find.byTooltip('Détails'));
+        await tester.tap(find.byTooltip('Details'));
         await tester.pumpAndSettle();
 
-        expect(find.text('URL du contenu'), findsOneWidget);
-        expect(find.text('URL de téléchargement'), findsOneWidget);
-        expect(find.text('Copier le nom'), findsOneWidget);
-        expect(find.text('Télécharger'), findsOneWidget);
-        expect(find.text('Lire le journal'), findsOneWidget);
+        expect(find.text('Contents URL'), findsOneWidget);
+        expect(find.text('Download URL'), findsOneWidget);
+        expect(find.text('Copy Name'), findsOneWidget);
+        expect(find.text('Download'), findsOneWidget);
+        expect(find.text('Read Log'), findsOneWidget);
 
         // Tap Read Log inside dialog to navigate to reader screen
-        await tester.tap(find.text('Lire le journal'));
+        await tester.tap(find.text('Read Log'));
         await tester.pumpAndSettle();
 
         // Verify reader screen rendered and read contents
@@ -366,7 +366,7 @@ void main() {
         expect(find.textContaining('Database: Lock error'), findsOneWidget);
 
         // Test search in reader
-        await tester.tap(find.byTooltip('Rechercher dans le journal'));
+        await tester.tap(find.byTooltip('Search in log'));
         await tester.pumpAndSettle();
 
         await tester.enterText(find.byType(TextField), 'started');
@@ -375,10 +375,10 @@ void main() {
         expect(find.text('1/1'), findsOneWidget);
 
         // Test copy in reader
-        await tester.tap(find.byTooltip('Fermer la recherche'));
+        await tester.tap(find.byTooltip('Close search'));
         await tester.pumpAndSettle();
 
-        await tester.tap(find.byTooltip('Tout copier dans le presse-papiers'));
+        await tester.tap(find.byTooltip('Copy all to clipboard'));
         await tester.pumpAndSettle();
 
         // Pop back to SystemTab
@@ -465,13 +465,13 @@ void main() {
         await tester.pumpAndSettle();
 
         // Switch to Updates sub-tab
-        await tester.ensureVisible(find.text('Mises à jour'));
+        await tester.ensureVisible(find.text('Updates'));
         await tester.pumpAndSettle();
-        await tester.tap(find.text('Mises à jour'));
+        await tester.tap(find.text('Updates'));
         await tester.pumpAndSettle();
 
         expect(find.text('v2.4.3.4248'), findsOneWidget);
-        expect(find.text('Installée'), findsOneWidget);
+        expect(find.text('Installed'), findsOneWidget);
         expect(find.text('Added album studio matrix mode'), findsOneWidget);
         expect(find.text('Fixed flac parsing logic'), findsOneWidget);
       },

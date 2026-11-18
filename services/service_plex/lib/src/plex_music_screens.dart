@@ -37,39 +37,39 @@ class PlexArtistScreen extends ConsumerWidget {
             
             if (list.isEmpty) {
               return EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: () async =>
             ref.invalidate(plexChildrenProvider((instance, artist.ratingKey))),
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          children: const <Widget>[
+          children: <Widget>[
             SizedBox(height: 100),
             EmptyView(
                 icon: Icons.album_outlined,
-                title: 'Aucun album',
-                message: "Cet artiste n'a pas encore d'albums.",
+                title: S.t('noAlbums'),
+                message: S.t('thisArtistHasNoAlbumsYet'),
               ),
           ],
         ),
       );
             }
             return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async =>
             ref.invalidate(plexChildrenProvider((instance, artist.ratingKey))),
@@ -202,22 +202,22 @@ class PlexAlbumScreen extends ConsumerWidget {
         elevation: 0,
         actions: <Widget>[
           IconButton(
-            tooltip: 'Ouvrir dans Plex',
+            tooltip: S.t('openInPlex'),
             icon: const Icon(Icons.open_in_new),
             onPressed: () => launchPlexDeepLink(context),
           ),
         ],
       ),
       body: EasyRefresh(
-          header: const ClassicHeader(
+          header: ClassicHeader(
             position: IndicatorPosition.locator,
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
         onRefresh: () async =>
             ref.invalidate(plexChildrenProvider((instance, album.ratingKey))),
@@ -296,10 +296,10 @@ class PlexAlbumScreen extends ConsumerWidget {
                 ),
                 data: (List<PlexMetadata> list) {
                   if (list.isEmpty) {
-                    return const EmptyView(
+                    return EmptyView(
                       icon: Icons.music_note_outlined,
-                      title: 'Aucune piste',
-                      message: 'Cet album ne contient pas encore de pistes.',
+                      title: S.t('noTracks'),
+                      message: S.t('thisAlbumHasNoTracksYet'),
                     );
                   }
                   return Column(

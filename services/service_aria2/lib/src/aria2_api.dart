@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:core_models/core_models.dart';
 import 'package:core_networking/core_networking.dart';
 import 'package:dio/dio.dart';
 
@@ -126,7 +127,7 @@ class Aria2Api {
       try {
         body = jsonDecode(body);
       } on FormatException {
-        throw const Aria2RpcException("La réponse n'était pas du JSON");
+        throw Aria2RpcException(S.t('responseWasNotJSON'));
       }
     }
     if (body is! Map) {

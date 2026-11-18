@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -158,7 +159,7 @@ class SlskdUserBioSheet extends StatelessWidget {
               ),
 
               IconButton(
-                tooltip: 'Fermer',
+                tooltip: S.t('close'),
                 icon: const Icon(Icons.close_rounded),
                 onPressed: () => Navigator.of(context).pop(),
               ),
@@ -254,7 +255,7 @@ class SlskdUserBioSheet extends StatelessWidget {
               child: SelectableText(
                 userInfo.description.isNotEmpty
                     ? userInfo.description
-                    : "Ce pair n'a pas défini de bio.",
+                    : S.t('thisPeerHasNotSetAUserBio'),
                 style: textTheme.bodySmall?.copyWith(
                   color: userInfo.description.isNotEmpty
                       ? colorScheme.onSurface
@@ -269,7 +270,7 @@ class SlskdUserBioSheet extends StatelessWidget {
           // Close button
           FilledButton.tonal(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Fermer'),
+            child: Text(S.t('close')),
           ),
         ],
       ),

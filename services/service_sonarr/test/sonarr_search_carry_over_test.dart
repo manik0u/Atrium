@@ -37,7 +37,7 @@ void main() {
       expect(searchBarFinder, findsOneWidget);
       final searchBar = tester.widget<SearchBar>(searchBarFinder);
       expect(searchBar.controller?.text, isEmpty);
-      expect(find.text('Rechercher une série à ajouter'), findsOneWidget);
+      expect(find.text('Search for a TV show to add'), findsOneWidget);
     });
 
     testWidgets(
@@ -99,7 +99,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Aucune série trouvée'), findsOneWidget);
+      expect(find.text('No series found'), findsOneWidget);
       expect(find.textContaining('Search online for'), findsNothing);
     });
 
@@ -131,7 +131,7 @@ void main() {
       await tester.pumpAndSettle();
 
       final actionButtonFinder =
-          find.text('Rechercher en ligne « $query »');
+          find.text('Search online for "$query"');
       expect(actionButtonFinder, findsOneWidget);
 
       await tester.tap(actionButtonFinder);
@@ -178,7 +178,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      final addSeriesFab = find.widgetWithText(FloatingActionButton, 'Ajouter une série');
+      final addSeriesFab = find.widgetWithText(FloatingActionButton, 'Add Series');
       expect(addSeriesFab, findsOneWidget);
 
       await tester.tap(addSeriesFab);

@@ -67,7 +67,7 @@ class BeszelSystemCard extends ConsumerWidget {
             statsAsync.when(
               data: (statsList) {
                 if (statsList.isEmpty) {
-                  return const Center(child: Text('Aucune donnée historique'));
+                  return Center(child: Text(S.t('noHistoricalData')));
                 }
                 final latest = statsList.first;
                 
@@ -80,20 +80,20 @@ class BeszelSystemCard extends ConsumerWidget {
                   crossAxisSpacing: Insets.sm,
                   children: [
                     _buildTextStat(context, 'CPU', '${latest.cpuUsage.toStringAsFixed(1)}%', Icons.memory),
-                    _buildTextStat(context, 'Memory', '${latest.memoryUsage.toStringAsFixed(1)}%', Icons.storage),
-                    _buildTextStat(context, 'Disk', '${latest.diskUsage.toStringAsFixed(1)}%', Icons.pie_chart),
+                    _buildTextStat(context, S.t('memory'), '${latest.memoryUsage.toStringAsFixed(1)}%', Icons.storage),
+                    _buildTextStat(context, S.t('disk'), '${latest.diskUsage.toStringAsFixed(1)}%', Icons.pie_chart),
                     if (system.info['g'] != null || latest.gpuUsage >= 0)
                       _buildTextStat(context, 'GPU', '${(latest.gpuUsage >= 0 ? latest.gpuUsage : (system.info['g'] is num ? (system.info['g'] as num).toDouble() : 0.0)).toStringAsFixed(1)}%', Icons.developer_board),
                     _buildTextStat(context, 'Load Avg', latest.loadAverage1m.toStringAsFixed(2), Icons.hourglass_empty),
                     _buildTextStat(context, 'Net', _formatNetworkTraffic(latest.networkSent + latest.networkRecv), Icons.network_check),
                     if (latest.temperature > 0)
-                      _buildTextStat(context, 'Temp', '${latest.temperature.toStringAsFixed(1)}°C', Icons.thermostat),
+                      _buildTextStat(context, S.t('temp'), '${latest.temperature.toStringAsFixed(1)}°C', Icons.thermostat),
                     if (system.info['bat'] != null && (system.info['bat'] as List).isNotEmpty)
                       _buildTextStat(context, 'Bat', '${((system.info['bat'] as List)[0] as num).toStringAsFixed(1)}%', Icons.battery_full),
                     if (system.info['sv'] != null && (system.info['sv'] as List).isNotEmpty)
-                      _buildTextStat(context, 'Services', '${(system.info['sv'] as List)[0]}', Icons.miscellaneous_services),
+                      _buildTextStat(context, S.t('services'), '${(system.info['sv'] as List)[0]}', Icons.miscellaneous_services),
                     if (system.info['u'] != null)
-                      _buildTextStat(context, 'Uptime', _formatUptime((system.info['u'] as num).toInt()), Icons.timer),
+                      _buildTextStat(context, S.t('uptime'), _formatUptime((system.info['u'] as num).toInt()), Icons.timer),
                   ],
                 );
               },
@@ -101,7 +101,7 @@ class BeszelSystemCard extends ConsumerWidget {
                 height: 100,
                 child: Center(child: CircularProgressIndicator()),
               ),
-              error: (e, st) => Text('Erreur : $e'),
+              error: (e, st) => Text(S.t('errorE1', [e])),
             ),
           ],
         ),

@@ -17,11 +17,11 @@ import 'widgets/navidrome_playlist_dialogs.dart';
 
 /// Filter categories for the Albums tab.
 enum NavidromeAlbumCategory {
-  all('All', 'alphabeticalByName'),
+  all(S.t('all'), 'alphabeticalByName'),
   random('Random', 'random'),
-  favorites('Favorites', 'starred'),
+  favorites(S.t('favorites'), 'starred'),
   topRated('Top Rated', 'highest'),
-  recentlyAdded('Recently Added', 'newest'),
+  recentlyAdded(S.t('recentlyAdded'), 'newest'),
   recentlyPlayed('Recently Played', 'recent'),
   mostPlayed('Most Played', 'frequent');
 
@@ -82,7 +82,7 @@ class _NavidromeHomeState extends ConsumerState<NavidromeHome> {
             content: Text(
               fullScan
                   ? 'Full library scan started'
-                  : 'Analyse rapide lancée (recherche de nouveaux éléments)',
+                  : S.t('quickScanStartedCheckingForNewItems'),
             ),
           ),
         );
@@ -90,7 +90,7 @@ class _NavidromeHomeState extends ConsumerState<NavidromeHome> {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Échec du démarrage de l'analyse : $e")),
+          SnackBar(content: Text(S.t('failedToStartScanE1', [e]))),
         );
       }
     }
@@ -127,7 +127,7 @@ class _NavidromeHomeState extends ConsumerState<NavidromeHome> {
                 builder: (BuildContext context) {
                   return IconButton(
                     icon: const Icon(Icons.menu),
-                    tooltip: 'Ouvrir le menu de navigation',
+                    tooltip: S.t('openNavigationMenu'),
                     onPressed: () => Scaffold.of(context).openDrawer(),
                   );
                 },
@@ -147,7 +147,7 @@ class _NavidromeHomeState extends ConsumerState<NavidromeHome> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.search_rounded),
-            tooltip: 'Rechercher dans la bibliothèque',
+            tooltip: S.t('searchLibrary'),
             onPressed: () {
               showSearch<void>(
                 context: context,
@@ -158,12 +158,12 @@ class _NavidromeHomeState extends ConsumerState<NavidromeHome> {
           ),
           IconButton(
             icon: const Icon(Icons.sync_rounded),
-            tooltip: 'Analyse rapide de la bibliothèque',
+            tooltip: S.t('quickScanLibrary'),
             onPressed: () => _triggerScan(context),
           ),
           IconButton(
             icon: const Icon(Icons.open_in_new_rounded),
-            tooltip: "Ouvrir l'interface web",
+            tooltip: S.t('openWebUI'),
             onPressed: () => _launchWeb(context),
           ),
         ],
@@ -268,16 +268,16 @@ class _NavidromeHomeState extends ConsumerState<NavidromeHome> {
                     )
                     .state = index;
               },
-              destinations: const <NavigationDestination>[
+              destinations: <NavigationDestination>[
                 NavigationDestination(
                   icon: Icon(Icons.album_outlined),
                   selectedIcon: Icon(Icons.album),
-                  label: 'Albums',
+                  label: S.t('albums'),
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.person_outlined),
                   selectedIcon: Icon(Icons.person),
-                  label: 'Artistes',
+                  label: S.t('artists'),
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.queue_music_outlined),
@@ -287,7 +287,7 @@ class _NavidromeHomeState extends ConsumerState<NavidromeHome> {
                 NavigationDestination(
                   icon: Icon(Icons.insights_outlined),
                   selectedIcon: Icon(Icons.insights_rounded),
-                  label: "Vue d'ensemble",
+                  label: S.t('overview'),
                 ),
               ],
             ),
@@ -296,7 +296,7 @@ class _NavidromeHomeState extends ConsumerState<NavidromeHome> {
       ),
       floatingActionButton: currentIndex == 2
           ? FloatingActionButton(
-              tooltip: 'Créer une playlist',
+              tooltip: S.t('createPlaylist'),
               onPressed: () => showNavidromeCreatePlaylistDialog(
                 context: context,
                 ref: ref,
@@ -385,7 +385,7 @@ class _NavidromeHomeState extends ConsumerState<NavidromeHome> {
             child: albumsAsync.when(
               data: (List<NavidromeAlbum> albums) {
                 if (albums.isEmpty) {
-                  return const Center(child: Text('Aucun album trouvé'));
+                  return Center(child: Text(S.t('noAlbumsFound')));
                 }
                 return GridView.builder(
                   padding: const EdgeInsets.all(Insets.md),
@@ -462,7 +462,7 @@ class _NavidromeHomeState extends ConsumerState<NavidromeHome> {
               },
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (Object err, _) => Center(
-                child: Text('Échec du chargement des albums : $err'),
+                child: Text(S.t('failedToLoadAlbumsErr1', [err])),
               ),
             ),
           ),
@@ -497,14 +497,14 @@ class _NavidromeHomeState extends ConsumerState<NavidromeHome> {
                   ),
                   const SizedBox(height: Insets.md),
                   Text(
-                    'Aucune playlist trouvée',
+                    S.t('noPlaylistsFound'),
                     style: theme.textTheme.titleMedium?.copyWith(
                       color: cs.onSurfaceVariant,
                     ),
                   ),
                   const SizedBox(height: Insets.sm),
                   Text(
-                    'Créez des playlists personnalisées pour organiser votre musique',
+                    S.t('createCustomPlaylistsToOrganizeYourMusic'),
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: cs.onSurfaceVariant.withValues(alpha: 0.7),
                     ),
@@ -517,7 +517,7 @@ class _NavidromeHomeState extends ConsumerState<NavidromeHome> {
                       instance: widget.instance,
                     ),
                     icon: const Icon(Icons.add),
-                    label: const Text('Nouvelle playlist'),
+                    label: Text(S.t('newPlaylist')),
                   ),
                 ],
               ),
@@ -605,7 +605,7 @@ class _NavidromeHomeState extends ConsumerState<NavidromeHome> {
         },
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (Object err, _) => Center(
-          child: Text('Échec du chargement des playlists : $err'),
+          child: Text(S.t('failedToLoadPlaylistsErr1', [err])),
         ),
       ),
     );

@@ -167,16 +167,16 @@ class TransmissionHome extends ConsumerWidget {
         visible: navbarVisible,
         selectedIndex: tab,
         onDestinationSelected: selectTab,
-        destinations: const <NavigationDestination>[
+        destinations: <NavigationDestination>[
           NavigationDestination(
             icon: Icon(Icons.download_outlined),
             selectedIcon: Icon(Icons.download),
-            label: 'Torrents',
+            label: S.t('torrents'),
           ),
           NavigationDestination(
             icon: Icon(Icons.settings_outlined),
             selectedIcon: Icon(Icons.settings),
-            label: 'Paramètres',
+            label: S.t('settings'),
           ),
         ],
       ),

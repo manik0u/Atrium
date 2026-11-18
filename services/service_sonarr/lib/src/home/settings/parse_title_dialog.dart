@@ -48,7 +48,7 @@ class _SonarrParseTitleDialogState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Analyser le titre de la release',
+                    S.t('parseReleaseTitle'),
                     style: theme.textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -61,7 +61,7 @@ class _SonarrParseTitleDialogState
               ),
               const SizedBox(height: Insets.sm),
               Text(
-                "Collez un nom de release ou un titre de torrent ci-dessous pour voir comment Sonarr analyse la saison, l'épisode, la qualité et les correspondances de bibliothèque.",
+                S.t('pasteAReleaseNameOrTorrentTitleBelowToSeeHowSonarrParsesSeasonEpisodeQualityAndMatchingLibraryDetails'),
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -71,7 +71,7 @@ class _SonarrParseTitleDialogState
                 controller: _controller,
                 maxLines: 3,
                 decoration: InputDecoration(
-                  hintText: 'ex. The.Wire.S01E01.1080p.BluRay.x264-GRP',
+                  hintText: S.t('eGTheWireS01E011080pBluRayX264GRP'),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -90,7 +90,7 @@ class _SonarrParseTitleDialogState
                         _query = '';
                       });
                     },
-                    child: const Text('Effacer'),
+                    child: Text(S.t('clear')),
                   ),
                   const SizedBox(width: Insets.sm),
                   ElevatedButton.icon(
@@ -100,7 +100,7 @@ class _SonarrParseTitleDialogState
                       });
                     },
                     icon: const Icon(Icons.search),
-                    label: const Text('Analyser'),
+                    label: Text(S.t('parse')),
                   ),
                 ],
               ),
@@ -110,15 +110,15 @@ class _SonarrParseTitleDialogState
                   child: parseAsync.when(
                     data: (data) {
                       if (data == null) {
-                        return const Center(
-                          child: Text("Échec de l'analyse du titre."),
+                        return Center(
+                          child: Text(S.t('failedToParseTitle')),
                         );
                       }
                       final parsedInfo =
                           data['parsedEpisodeInfo'] as Map<String, dynamic>?;
                       if (parsedInfo == null) {
-                        return const Center(
-                          child: Text("Impossible d'extraire les détails de l'épisode."),
+                        return Center(
+                          child: Text(S.t('couldNotExtractEpisodeDetails')),
                         );
                       }
 
@@ -158,7 +158,7 @@ class _SonarrParseTitleDialogState
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Extracted Metadata',
+                              S.t('extractedMetadata'),
                               style: theme.textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: theme.colorScheme.primary,
@@ -179,17 +179,17 @@ class _SonarrParseTitleDialogState
                             ),
                             _buildInfoRow(
                               theme,
-                              'Quality',
+                              S.t('quality'),
                               qualityName ?? 'N/A',
                             ),
                             _buildInfoRow(
                               theme,
-                              'Release Group',
+                              S.t('releaseGroup'),
                               releaseGroup ?? 'N/A',
                             ),
                             _buildInfoRow(
                               theme,
-                              'Language',
+                              S.t('language'),
                               languageNames.isNotEmpty
                                   ? languageNames.join(', ')
                                   : 'N/A',
@@ -206,7 +206,7 @@ class _SonarrParseTitleDialogState
                             _buildInfoRow(
                               theme,
                               'Matches Series',
-                              matchingSeriesTitle ?? 'Aucune correspondance dans la bibliothèque',
+                              matchingSeriesTitle ?? S.t('noMatchInLibrary'),
                               valueColor: matchingSeriesTitle != null
                                   ? theme.colorScheme.primary
                                   : theme.colorScheme.error,
@@ -223,7 +223,7 @@ class _SonarrParseTitleDialogState
                     ),
                     error: (e, _) => Center(
                       child: Text(
-                        "Erreur lors de l'analyse du titre : $e",
+                        S.t('errorParsingTitleE1', [e]),
                         style: TextStyle(color: theme.colorScheme.error),
                       ),
                     ),

@@ -25,7 +25,20 @@ class AtriumApp extends ConsumerWidget {
         ref.watch(preferencesProvider.select((Preferences p) => p.themeMode));
     final String? fontFamily =
         ref.watch(preferencesProvider.select((Preferences p) => p.fontFamily));
+    final String? languageCode =
+        ref.watch(preferencesProvider.select((Preferences p) => p.languageCode));
     final GoRouter router = ref.watch(routerProvider);
+
+    // Resolve the UI language once per build: the persisted preference wins,
+    // otherwise the system locale (itself falling back to English). The
+    // resolved code drives both the [S] string tables and the app [Locale],
+    // and the ValueKey below re-keys the whole tree on change so every
+    // [S.t] call re-evaluates in the new language.
+    final String language = S.resolveLanguageCode(
+      languageCode,
+      WidgetsBinding.instance.platformDispatcher.locale.languageCode,
+    );
+    S.setLanguageCode(language);
 
     // Mirror the active profile's global headers into the networking layer
     // so every instance request carries them. Writes are guarded by a map
@@ -88,8 +101,13 @@ class AtriumApp extends ConsumerWidget {
             AtriumTheme.dark(activeDark, fontFamily: fontFamily);
 
         return MaterialApp.router(
+          key: ValueKey<String>('l10n:$language'),
           title: 'Atrium',
           debugShowCheckedModeBanner: false,
+          locale: Locale(language),
+          supportedLocales: <Locale>[
+            for (final String code in S.supportedLanguageCodes) Locale(code),
+          ],
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: themeMode,
@@ -247,10 +265,10 @@ class _LockScreen extends StatelessWidget {
             Icon(Icons.lock_outline,
                 size: 64, color: theme.colorScheme.primary),
             const SizedBox(height: 16),
-            Text('Atrium est verrouillé', style: theme.textTheme.titleLarge),
+            Text(S.t('atriumIsLocked'), style: theme.textTheme.titleLarge),
             const SizedBox(height: 8),
             Text(
-              'Unlock to continue',
+              S.t('unlockToContinue'),
               style: theme.textTheme.bodyMedium
                   ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
             ),
@@ -261,7 +279,7 @@ class _LockScreen extends StatelessWidget {
               FilledButton.icon(
                 onPressed: onUnlock,
                 icon: const Icon(Icons.fingerprint),
-                label: const Text('Déverrouiller'),
+                label: Text(S.t('unlock')),
               ),
           ],
         ),

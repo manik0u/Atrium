@@ -115,7 +115,7 @@ void main() {
   });
 
   test('names the way a query arrived as the web UI does', () {
-    expect(adguardHomeProtocolLabel(''), 'DNS simple');
+    expect(adguardHomeProtocolLabel(''), 'Plain DNS');
     expect(adguardHomeProtocolLabel('doh'), 'DNS-over-HTTPS');
     expect(adguardHomeProtocolLabel('dot'), 'DNS-over-TLS');
     expect(adguardHomeProtocolLabel('doq'), 'DNS-over-QUIC');
@@ -164,11 +164,11 @@ void main() {
   });
 
   test('where a runtime client was learned of is said in words', () {
-    expect(adguardHomeClientSourceLabel('ARP'), 'Table ARP');
+    expect(adguardHomeClientSourceLabel('ARP'), 'ARP table');
     expect(adguardHomeClientSourceLabel('DHCP'), 'DHCP');
-    expect(adguardHomeClientSourceLabel('rDNS'), 'DNS inverse');
+    expect(adguardHomeClientSourceLabel('rDNS'), 'Reverse DNS');
     expect(adguardHomeClientSourceLabel('WHOIS'), 'WHOIS');
-    expect(adguardHomeClientSourceLabel('etc/hosts'), 'Fichier hosts');
+    expect(adguardHomeClientSourceLabel('etc/hosts'), 'Hosts file');
     // One this app does not know is shown as the server sent it.
     expect(adguardHomeClientSourceLabel('mDNS'), 'mDNS');
     expect(adguardHomeClientSourceLabel(''), '');
@@ -185,13 +185,13 @@ void main() {
   });
 
   test('a group of services goes by a name, not its id', () {
-    expect(adguardHomeServiceGroupLabel('ai'), 'IA');
+    expect(adguardHomeServiceGroupLabel('ai'), 'AI');
     expect(adguardHomeServiceGroupLabel('cdn'), 'CDN');
-    expect(adguardHomeServiceGroupLabel('social_network'), 'Réseaux sociaux');
-    expect(adguardHomeServiceGroupLabel('messenger'), 'Messageries');
+    expect(adguardHomeServiceGroupLabel('social_network'), 'Social networks');
+    expect(adguardHomeServiceGroupLabel('messenger'), 'Messengers');
     expect(adguardHomeServiceGroupLabel('streaming'), 'Streaming');
     expect(adguardHomeServiceGroupLabel('smart_home'), 'Smart home');
-    expect(adguardHomeServiceGroupLabel(''), 'Autre');
+    expect(adguardHomeServiceGroupLabel(''), 'Other');
   });
 
   test('a pause schedule is said in a line', () {
@@ -248,14 +248,14 @@ void main() {
   });
 
   test('how many services are blocked is said with the right word', () {
-    expect(adguardHomeServicesBlockedLabel(0), 'Aucun service bloqué');
-    expect(adguardHomeServicesBlockedLabel(1), '1 service bloqué');
+    expect(adguardHomeServicesBlockedLabel(0), 'No services blocked');
+    expect(adguardHomeServicesBlockedLabel(1), '1 service blocked');
     expect(adguardHomeServicesBlockedLabel(12), '12 services blocked');
   });
 
   test('a weekday goes by its whole name', () {
-    expect(adguardHomeWeekdayName('mon'), 'Lundi');
-    expect(adguardHomeWeekdayName('sun'), 'Dimanche');
+    expect(adguardHomeWeekdayName('mon'), 'Monday');
+    expect(adguardHomeWeekdayName('sun'), 'Sunday');
     expect(adguardHomeWeekdayName('xyz'), 'xyz');
   });
 
@@ -292,8 +292,8 @@ void main() {
   });
 
   test('the server\'s own time zone goes by a name, not its keyword', () {
-    expect(adguardHomeTimeZoneLabel('Local'), 'Le fuseau horaire du serveur');
-    expect(adguardHomeTimeZoneLabel(''), 'Le fuseau horaire du serveur');
+    expect(adguardHomeTimeZoneLabel('Local'), "The server's time zone");
+    expect(adguardHomeTimeZoneLabel(''), "The server's time zone");
     expect(adguardHomeTimeZoneLabel('Europe/Berlin'), 'Europe/Berlin');
   });
 }

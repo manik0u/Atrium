@@ -166,7 +166,7 @@ void main() {
       expect(find.text('Polyethylene (Parts 1 & 2)'), findsOneWidget);
 
       // 3. Trigger Auto Search
-      await tester.tap(find.text('Recherche automatique'));
+      await tester.tap(find.text('Auto Search'));
       await tester.pumpAndSettle();
 
       expect(dispatchedCommands, hasLength(1));
@@ -174,7 +174,7 @@ void main() {
       expect(dispatchedCommands.first['albumIds'], equals([10]));
 
       // 4. Toggle Monitored
-      await tester.tap(find.text('Surveillé').first);
+      await tester.tap(find.text('Monitored').first);
       await tester.pumpAndSettle();
 
       expect(putCalls, hasLength(1));
@@ -187,7 +187,7 @@ void main() {
 
       expect(find.text('Media & File Information'), findsOneWidget);
       expect(find.text('FLAC 16bit'), findsOneWidget);
-      expect(find.text('Supprimer le fichier audio'), findsOneWidget);
+      expect(find.text('Delete Audio File'), findsOneWidget);
     });
 
     testWidgets(
@@ -284,17 +284,17 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(find.text('Edit - A Moon Shaped Pool [Album]'), findsOneWidget);
-        expect(find.text('Surveillé'), findsOneWidget);
-        expect(find.text('Changer automatiquement de release'), findsOneWidget);
+        expect(find.text('Monitored'), findsOneWidget);
+        expect(find.text('Automatically Switch Release'), findsOneWidget);
         expect(find.text('Standard Digital Release'), findsOneWidget);
         expect(find.text('Special Edition Vinyl'), findsOneWidget);
 
         // Toggle monitored
-        await tester.tap(find.text('Surveillé'));
+        await tester.tap(find.text('Monitored'));
         await tester.pumpAndSettle();
 
         // Toggle automatically switch release
-        await tester.tap(find.text('Changer automatiquement de release'));
+        await tester.tap(find.text('Automatically Switch Release'));
         await tester.pumpAndSettle();
 
         // Select vinyl release
@@ -304,7 +304,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Save
-        await tester.tap(find.text('Enregistrer les modifications'));
+        await tester.tap(find.text('Save Changes'));
         await tester.pumpAndSettle();
 
         expect(lastPutPayload?['monitored'], equals(false));
@@ -389,15 +389,15 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(find.text('Delete A Moon Shaped Pool?'), findsOneWidget);
-        expect(find.text('Supprimer les fichiers du disque'), findsOneWidget);
-        expect(find.text("Ajouter une exclusion de liste d'import"), findsOneWidget);
+        expect(find.text('Delete files from disk'), findsOneWidget);
+        expect(find.text('Add import list exclusion'), findsOneWidget);
 
         // Toggle delete files
-        await tester.tap(find.text('Supprimer les fichiers du disque'));
+        await tester.tap(find.text('Delete files from disk'));
         await tester.pumpAndSettle();
 
         // Submit Delete
-        await tester.tap(find.widgetWithText(FilledButton, 'Supprimer'));
+        await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
         await tester.pumpAndSettle();
 
         expect(deletedAlbumId, equals(101));

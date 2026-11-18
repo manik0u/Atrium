@@ -186,14 +186,14 @@ class _MediaManagementSettingsScreenState
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Paramètres de gestion des médias enregistrés !')),
+          SnackBar(content: Text(S.t('mediaManagementSettingsSaved'))),
         );
         Navigator.pop(context);
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Échec de l'enregistrement des paramètres : $e")),
+          SnackBar(content: Text(S.t('failedToSaveSettingsE1', [e]))),
         );
       }
     } finally {
@@ -202,7 +202,7 @@ class _MediaManagementSettingsScreenState
   }
 
   String _formatFreeSpace(dynamic bytes) {
-    if (bytes == null) return 'Unknown';
+    if (bytes == null) return S.t('unknown');
     final int b = bytes is int ? bytes : int.tryParse(bytes.toString()) ?? 0;
     if (b <= 0) return '0 B';
     final double gib = b / (1024 * 1024 * 1024);
@@ -218,19 +218,19 @@ class _MediaManagementSettingsScreenState
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Ajouter un dossier racine'),
+          title: Text(S.t('addRootFolder')),
           content: TextField(
             controller: controller,
-            decoration: const InputDecoration(
-              labelText: 'Chemin',
-              hintText: 'ex. /data/media/movies',
+            decoration: InputDecoration(
+              labelText: S.t('path'),
+              hintText: S.t('eGDataMediaMovies'),
               border: OutlineInputBorder(),
             ),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             ElevatedButton(
               onPressed: () async {
@@ -244,18 +244,18 @@ class _MediaManagementSettingsScreenState
                   if (context.mounted) {
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Dossier racine ajouté !')),
+                      SnackBar(content: Text(S.t('rootFolderAdded'))),
                     );
                   }
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Échec de l'ajout du dossier racine : $e")),
+                      SnackBar(content: Text(S.t('failedToAddRootFolderE1', [e]))),
                     );
                   }
                 }
               },
-              child: const Text('Enregistrer'),
+              child: Text(S.t('save')),
             ),
           ],
         );
@@ -272,13 +272,13 @@ class _MediaManagementSettingsScreenState
       ref.invalidate(radarrRootFoldersProvider(widget.instance));
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Dossier racine supprimé !')),
+          SnackBar(content: Text(S.t('rootFolderDeleted'))),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec de la suppression du dossier racine : $e')),
+          SnackBar(content: Text(S.t('failedToDeleteRootFolderE1', [e]))),
         );
       }
     }
@@ -296,7 +296,7 @@ class _MediaManagementSettingsScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gestion des médias'),
+        title: Text(S.t('mediaManagement')),
         actions: [
           if (_saving)
             const Padding(
@@ -317,12 +317,12 @@ class _MediaManagementSettingsScreenState
       body: namingConfigAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
         error: (err, _) =>
-            Center(child: Text('Erreur lors du chargement des paramètres de nommage : $err')),
+            Center(child: Text(S.t('errorLoadingNamingSettingsErr1', [err]))),
         data: (naming) {
           return mediaMgmtConfigAsync.when(
             loading: () => const Center(child: ExpressiveProgressIndicator()),
             error: (err, _) =>
-                Center(child: Text('Erreur lors du chargement de la gestion des médias : $err')),
+                Center(child: Text(S.t('errorLoadingMediaManagementErr1', [err]))),
             data: (mediaMgmt) {
               _initializeValues(naming, mediaMgmt);
 
@@ -345,14 +345,14 @@ class _MediaManagementSettingsScreenState
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Movie Naming',
+                              S.t('movieNaming'),
                               style: theme.textTheme.titleMedium
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: Insets.md),
                             SwitchListTile(
                               contentPadding: EdgeInsets.zero,
-                              title: const Text('Renommer les films'),
+                              title: Text(S.t('renameMovies')),
                               value: _renameMovies,
                               onChanged: (val) =>
                                   setState(() => _renameMovies = val),
@@ -361,23 +361,23 @@ class _MediaManagementSettingsScreenState
                               const SizedBox(height: Insets.md),
                               TextFormField(
                                 controller: _standardMovieFormatController,
-                                decoration: const InputDecoration(
-                                  labelText: 'Format standard des films',
+                                decoration: InputDecoration(
+                                  labelText: S.t('standardMovieFormat'),
                                   border: OutlineInputBorder(),
                                 ),
                               ),
                               const SizedBox(height: Insets.md),
                               TextFormField(
                                 controller: _movieFolderFormatController,
-                                decoration: const InputDecoration(
-                                  labelText: 'Format des dossiers de films',
+                                decoration: InputDecoration(
+                                  labelText: S.t('movieFolderFormat'),
                                   border: OutlineInputBorder(),
                                 ),
                               ),
                               const SizedBox(height: Insets.md),
                               SwitchListTile(
                                 contentPadding: EdgeInsets.zero,
-                                title: const Text('Remplacer les caractères interdits'),
+                                title: Text(S.t('replaceIllegalCharacters')),
                                 value: _replaceIllegalCharacters,
                                 onChanged: (val) => setState(
                                   () => _replaceIllegalCharacters = val,
@@ -387,31 +387,31 @@ class _MediaManagementSettingsScreenState
                                 const SizedBox(height: Insets.md),
                                 DropdownButtonFormField<String>(
                                   initialValue: _colonReplacementFormat,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Format de remplacement des deux-points',
+                                  decoration: InputDecoration(
+                                    labelText: S.t('colonReplacementFormat'),
                                     border: OutlineInputBorder(),
                                   ),
-                                  items: const [
+                                  items: [
                                     DropdownMenuItem(
                                       value: 'delete',
-                                      child: Text('Supprimer'),
+                                      child: Text(S.t('delete')),
                                     ),
                                     DropdownMenuItem(
                                       value: 'dash',
-                                      child: Text('Tiret (-)'),
+                                      child: Text(S.t('dash')),
                                     ),
                                     DropdownMenuItem(
                                       value: 'spaceDash',
-                                      child: Text('Espace tiret ( -)'),
+                                      child: Text(S.t('spaceDash')),
                                     ),
                                     DropdownMenuItem(
                                       value: 'spaceDashSpace',
-                                      child: Text('Espace tiret espace ( - )'),
+                                      child: Text(S.t('spaceDashSpace')),
                                     ),
                                     DropdownMenuItem(
                                       value: 'smart',
                                       child: Text(
-                                        'Intelligent (remplacer par un tiret ou espace-tiret-espace)',
+                                        S.t('smartReplaceWithDashOrSpaceDash'),
                                       ),
                                     ),
                                   ],
@@ -444,14 +444,14 @@ class _MediaManagementSettingsScreenState
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'File Management',
+                              S.t('fileManagement'),
                               style: theme.textTheme.titleMedium
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: Insets.md),
                             SwitchListTile(
                               contentPadding: EdgeInsets.zero,
-                              title: const Text('Créer les dossiers de films vides'),
+                              title: Text(S.t('createEmptyMovieFolders')),
                               value: _createEmptyMovieFolders,
                               onChanged: (val) => setState(
                                 () => _createEmptyMovieFolders = val,
@@ -459,7 +459,7 @@ class _MediaManagementSettingsScreenState
                             ),
                             SwitchListTile(
                               contentPadding: EdgeInsets.zero,
-                              title: const Text('Supprimer les dossiers vides'),
+                              title: Text(S.t('deleteEmptyFolders')),
                               value: _deleteEmptyFolders,
                               onChanged: (val) =>
                                   setState(() => _deleteEmptyFolders = val),
@@ -467,14 +467,14 @@ class _MediaManagementSettingsScreenState
                             SwitchListTile(
                               contentPadding: EdgeInsets.zero,
                               title:
-                                  const Text('Utiliser des liens durs au lieu de copier'),
+                                  Text(S.t('useHardlinksInsteadOfCopy')),
                               value: _copyUsingHardlinks,
                               onChanged: (val) =>
                                   setState(() => _copyUsingHardlinks = val),
                             ),
                             SwitchListTile(
                               contentPadding: EdgeInsets.zero,
-                              title: const Text('Importer des fichiers supplémentaires'),
+                              title: Text(S.t('importExtraFiles')),
                               value: _importExtraFiles,
                               onChanged: (val) =>
                                   setState(() => _importExtraFiles = val),
@@ -483,9 +483,9 @@ class _MediaManagementSettingsScreenState
                               const SizedBox(height: Insets.md),
                               TextFormField(
                                 controller: _extraFileExtensionsController,
-                                decoration: const InputDecoration(
-                                  labelText: 'Extensions de fichiers supplémentaires',
-                                  helperText: 'Séparés par des virgules, ex. srt, nfo',
+                                decoration: InputDecoration(
+                                  labelText: S.t('extraFileExtensions'),
+                                  helperText: S.t('commaSeparatedEGSrtNfo'),
                                   border: OutlineInputBorder(),
                                 ),
                               ),
@@ -509,14 +509,14 @@ class _MediaManagementSettingsScreenState
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Permissions',
+                              S.t('permissions'),
                               style: theme.textTheme.titleMedium
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: Insets.md),
                             SwitchListTile(
                               contentPadding: EdgeInsets.zero,
-                              title: const Text('Définir les permissions Linux'),
+                              title: Text(S.t('setPermissionsLinux')),
                               value: _setPermissionsLinux,
                               onChanged: (val) =>
                                   setState(() => _setPermissionsLinux = val),
@@ -525,16 +525,16 @@ class _MediaManagementSettingsScreenState
                               const SizedBox(height: Insets.md),
                               TextFormField(
                                 controller: _chmodFolderController,
-                                decoration: const InputDecoration(
-                                  labelText: 'CHMOD du dossier',
+                                decoration: InputDecoration(
+                                  labelText: S.t('folderCHMOD'),
                                   border: OutlineInputBorder(),
                                 ),
                               ),
                               const SizedBox(height: Insets.md),
                               TextFormField(
                                 controller: _chownGroupController,
-                                decoration: const InputDecoration(
-                                  labelText: 'CHOWN du groupe',
+                                decoration: InputDecoration(
+                                  labelText: S.t('groupCHOWN'),
                                   border: OutlineInputBorder(),
                                 ),
                               ),
@@ -557,7 +557,7 @@ class _MediaManagementSettingsScreenState
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Root Folders',
+                              S.t('rootFolders'),
                               style: theme.textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -567,12 +567,12 @@ class _MediaManagementSettingsScreenState
                               loading: () => const Center(
                                 child: ExpressiveProgressIndicator(),
                               ),
-                              error: (err, stack) => Text('Erreur lors du chargement des dossiers racine : $err'),
+                              error: (err, stack) => Text(S.t('errorLoadingRootFoldersErr1', [err])),
                               data: (folders) {
                                 if (folders.isEmpty) {
-                                  return const Padding(
+                                  return Padding(
                                     padding: EdgeInsets.symmetric(vertical: Insets.md),
-                                    child: Text('Aucun dossier racine configuré.'),
+                                    child: Text(S.t('noRootFoldersConfigured')),
                                   );
                                 }
                                 return ListView.separated(
@@ -583,7 +583,7 @@ class _MediaManagementSettingsScreenState
                                   itemBuilder: (context, idx) {
                                     final folder = folders[idx];
                                     final id = folder['id'] as int;
-                                    final path = folder['path'] as String? ?? 'Unknown';
+                                    final path = folder['path'] as String? ?? S.t('unknown');
                                     final freeSpace = folder['freeSpace'];
                                     final unmapped = (folder['unmappedFolders'] as List?)?.length ?? 0;
 
@@ -614,7 +614,7 @@ class _MediaManagementSettingsScreenState
                               child: OutlinedButton.icon(
                                 onPressed: _showAddRootFolderDialog,
                                 icon: const Icon(Icons.add),
-                                label: const Text('Ajouter un dossier racine'),
+                                label: Text(S.t('addRootFolder')),
                               ),
                             ),
                           ],

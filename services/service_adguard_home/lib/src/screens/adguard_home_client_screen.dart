@@ -87,11 +87,11 @@ class AdguardHomeClientScreen extends ConsumerWidget {
       skipLoadingOnReload: true,
       skipLoadingOnRefresh: true,
       loading: () => Scaffold(
-        appBar: AppBar(title: const Text('Nouveau client')),
+        appBar: AppBar(title: Text(S.t('newClient'))),
         body: const Center(child: ExpressiveProgressIndicator()),
       ),
       error: (Object error, StackTrace _) => Scaffold(
-        appBar: AppBar(title: const Text('Nouveau client')),
+        appBar: AppBar(title: Text(S.t('newClient'))),
         body: SingleChildScrollView(
           child: ErrorView(
             message: describeAdguardHomeError(error),
@@ -224,7 +224,7 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
       context,
       AdguardHomeServicesScreen(
         instance: _instance,
-        title: name.isEmpty ? 'Services bloqués' : 'Bloqué pour $name',
+        title: name.isEmpty ? S.t('blockedServices') : S.t('blockedForName1', [name]),
         selected: _settings.blockedServices.toSet(),
       ),
     );
@@ -318,7 +318,7 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
       setState(() => _busy = false);
       final bool again = await showAdguardHomeFailure(
         context,
-        title: 'Non enregistré',
+        title: S.t('notSaved'),
         error: error,
       );
       if (again && mounted) {
@@ -334,10 +334,10 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
         final int rules = await ref
             .read(adguardHomeActionsProvider(_instance))
             .renameClientInRules(originalName, name);
-        if (rules == 1) message = '$message. 1 règle personnalisée le nomme désormais.';
-        if (rules > 1) message = '$message. $rules règles personnalisées le nomment désormais.';
+        if (rules == 1) message = S.t('message1CustomRuleNowNamesIt1', [message]);
+        if (rules > 1) message = S.t('messageRulesCustomRulesNowNameIt2', [message, rules]);
       } on Object catch (error) {
-        message = "$message, mais les règles personnalisées qui le nomment n'ont pas pu être "
+        message = S.t('messageButTheCustomRulesThatNameItCouldNotBe1', [message]) +
             'updated: ${describeAdguardHomeError(error)}';
       }
     }
@@ -368,7 +368,7 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
     return showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Mettre à jour les règles personnalisées ?'),
+        title: Text(S.t('updateTheCustomRules')),
         content: Text(
           '${rules == 1 ? '1 custom rule names' : '$rules custom rules name'} '
           'this client "$from". Renamed, it is no longer covered by '
@@ -378,15 +378,15 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Les laisser'),
+            child: Text(S.t('leaveThem')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Les mettre à jour'),
+            child: Text(S.t('updateThem')),
           ),
         ],
       ),
@@ -416,24 +416,24 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: Text('Supprimer « $name » ?'),
+        title: Text(S.t('deleteName1', [name])),
         content: Text(
-          'Its settings are removed. The device itself is not shut out: '
-          'AdGuard Home continue de lui répondre, avec les paramètres globaux.'
+          'Its settings are removed. The device itself is not shut out: ' +
+          S.t('adguardHomeGoesOnAnsweringItWithTheGlobalSettings')
           '${switch (rules) {
             0 => '',
-            1 => " 1 règle personnalisée le nomme et ne s'appliquera plus.",
-            _ => " $rules règles personnalisées le nomment et ne s'appliqueront plus.",
+            1 => S.t('k1CustomRuleNamesItAndWillNoLongerApply'),
+            _ => S.t('rulesCustomRulesNameItAndWillNoLongerApply1', [rules]),
           }}',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Supprimer'),
+            child: Text(S.t('delete')),
           ),
         ],
       ),
@@ -451,7 +451,7 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
       setState(() => _busy = false);
       final bool again = await showAdguardHomeFailure(
         context,
-        title: 'Non supprimé',
+        title: S.t('notDeleted'),
         error: error,
       );
       if (again && mounted) {
@@ -464,7 +464,7 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
     _close(form, AdguardHomeClientOutcome.deleted);
     messenger
       ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text('Client « $name » supprimé')));
+      ..showSnackBar(SnackBar(content: Text(S.t('clientNameDeleted1', [name]))));
   }
 
   /// Closes the form once its client was written, handing back [outcome].
@@ -486,16 +486,16 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
     final bool? discard = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Ignorer les modifications ?'),
-        content: const Text("Les modifications apportées ici n'ont pas été enregistrées."),
+        title: Text(S.t('discardChanges')),
+        content: Text(S.t('whatWasChangedHereHasNotBeenSaved')),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text("Continuer l'édition"),
+            child: Text(S.t('keepEditing')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Ignorer'),
+            child: Text(S.t('discard')),
           ),
         ],
       ),
@@ -538,17 +538,17 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(client == null ? 'Nouveau client' : 'Modifier le client'),
+          title: Text(client == null ? S.t('newClient') : S.t('editClient')),
           actions: <Widget>[
             if (client != null)
               IconButton(
                 icon: const Icon(Icons.delete_outline),
-                tooltip: 'Supprimer le client',
+                tooltip: S.t('deleteClient'),
                 onPressed: _busy ? null : _delete,
               ),
             FilledButton(
               onPressed: _busy ? null : _save,
-              child: const Text('Enregistrer'),
+              child: Text(S.t('save')),
             ),
             const SizedBox(width: Insets.md),
           ],
@@ -585,7 +585,7 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
                     textCapitalization: TextCapitalization.words,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                      labelText: 'Nom',
+                      labelText: S.t('name'),
                       border: const OutlineInputBorder(),
                       errorText: problems.name,
                       errorMaxLines: 3,
@@ -594,7 +594,7 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
                 ),
                 _Inset(
                   key: _idsKey,
-                  child: const AdguardHomeHeading('Identifiers'),
+                  child: AdguardHomeHeading(S.t('identifiers')),
                 ),
                 _Inset(
                   top: Insets.xs,
@@ -615,7 +615,7 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
                       enableSuggestions: false,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
-                        hintText: 'Identifiant',
+                        hintText: S.t('identifier'),
                         border: const OutlineInputBorder(),
                         isDense: true,
                         errorText: row == 0 ? problems.ids : null,
@@ -624,7 +624,7 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
                             ? null
                             : IconButton(
                                 icon: const Icon(Icons.remove_circle_outline),
-                                tooltip: "Retirer l'identifiant",
+                                tooltip: S.t('removeIdentifier'),
                                 onPressed: () => _removeId(row),
                               ),
                       ),
@@ -637,21 +637,21 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
                     child: TextButton.icon(
                       onPressed: _addId,
                       icon: const Icon(Icons.add),
-                      label: const Text('Ajouter un identifiant'),
+                      label: Text(S.t('addIdentifier')),
                     ),
                   ),
                 ),
-                const _Inset(child: AdguardHomeHeading('Protection')),
+                _Inset(child: AdguardHomeHeading(S.t('protection'))),
                 SwitchListTile(
-                  title: const Text('Utiliser les paramètres globaux'),
-                  subtitle: const Text("Les paramètres du serveur s'appliquent"),
+                  title: Text(S.t('useGlobalSettings')),
+                  subtitle: Text(S.t('theSettingsOfTheServerApply')),
                   value: settings.useGlobalSettings,
                   onChanged: (bool on) =>
                       _set(settings.copyWith(useGlobalSettings: on)),
                 ),
                 SwitchListTile(
-                  title: const Text(
-                    'Block domains using filters and hosts files',
+                  title: Text(
+                    S.t('blockDomainsUsingFiltersAndHostsFiles'),
                   ),
                   value: settings.filteringEnabled,
                   onChanged: ownSettings
@@ -660,8 +660,8 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
                       : null,
                 ),
                 SwitchListTile(
-                  title: const Text('Sécurité de navigation'),
-                  subtitle: const Text('Bloque les domaines malveillants et de phishing'),
+                  title: Text(S.t('browsingSecurity')),
+                  subtitle: Text(S.t('blocksMalwareAndPhishingDomains')),
                   value: settings.safeBrowsingEnabled,
                   onChanged: ownSettings
                       ? (bool on) =>
@@ -669,8 +669,8 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
                       : null,
                 ),
                 SwitchListTile(
-                  title: const Text('Contrôle parental'),
-                  subtitle: const Text('Bloque les sites pour adultes'),
+                  title: Text(S.t('parentalControl')),
+                  subtitle: Text(S.t('blocksAdultWebsites')),
                   value: settings.parentalEnabled,
                   onChanged: ownSettings
                       ? (bool on) =>
@@ -678,8 +678,8 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
                       : null,
                 ),
                 SwitchListTile(
-                  title: const Text('Recherche sécurisée'),
-                  subtitle: const Text('Masque les résultats explicites dans la recherche '
+                  title: Text(S.t('safeSearch')),
+                  subtitle: Text(S.t('hidesExplicitResultsOnTheSearch') +
                       'engines below'),
                   value: settings.safeSearch.enabled,
                   onChanged: ownSettings
@@ -710,17 +710,17 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
                             )
                         : null,
                   ),
-                const _Inset(child: AdguardHomeHeading('Blocked services')),
+                _Inset(child: AdguardHomeHeading(S.t('blockedServices'))),
                 SwitchListTile(
-                  title: const Text('Utiliser les services bloqués globaux'),
-                  subtitle: const Text("La liste du serveur s'applique"),
+                  title: Text(S.t('useGlobalBlockedServices')),
+                  subtitle: Text(S.t('theListOfTheServerApplies')),
                   value: settings.useGlobalBlockedServices,
                   onChanged: (bool on) =>
                       _set(settings.copyWith(useGlobalBlockedServices: on)),
                 ),
                 ListTile(
                   enabled: ownServices,
-                  title: const Text('Bloqué pour ce client'),
+                  title: Text(S.t('blockedForThisClient')),
                   subtitle: Text(
                     settings.blockedServices.isEmpty
                         ? 'None'
@@ -738,7 +738,7 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
                   _Inset(
                     top: Insets.sm,
                     child: Text(
-                      'Planning de pause : en pause, les services bloqués pour '
+                      S.t('pauseScheduleWhilePausedTheServicesBlockedFor') +
                       'this client are let through.',
                       style: note,
                     ),
@@ -750,7 +750,7 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
                         _set(settings.copyWith(schedule: next)),
                   ),
                 ],
-                const _Inset(child: AdguardHomeHeading('Upstream DNS servers')),
+                _Inset(child: AdguardHomeHeading(S.t('upstreamDNSServers'))),
                 _Inset(
                   top: Insets.sm,
                   child: TextField(
@@ -764,17 +764,16 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
                     maxLines: 8,
                     style: theme.textTheme.bodyMedium
                         ?.copyWith(fontFamily: 'monospace'),
-                    decoration: const InputDecoration(
-                      hintText: 'Un serveur par ligne',
-                      helperText: 'Laissez vide pour utiliser les serveurs du DNS '
-                          'settings.',
+                    decoration: InputDecoration(
+                      hintText: S.t('oneServerPerLine'),
+                      helperText: S.t('leaveEmptyToUseTheServersOfTheDNSSettings'),
                       helperMaxLines: 3,
                       border: OutlineInputBorder(),
                     ),
                   ),
                 ),
                 SwitchListTile(
-                  title: const Text('Mettre en cache les réponses de ces serveurs'),
+                  title: Text(S.t('cacheTheAnswersOfTheseServers')),
                   value: settings.upstreamsCacheEnabled,
                   onChanged: (bool on) =>
                       _set(settings.copyWith(upstreamsCacheEnabled: on)),
@@ -791,7 +790,7 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
                       FilteringTextInputFormatter.digitsOnly,
                     ],
                     decoration: InputDecoration(
-                      labelText: 'Taille du cache, en octets',
+                      labelText: S.t('cacheSizeInBytes'),
                       border: const OutlineInputBorder(),
                       errorText: problems.cacheSize,
                       // The longest complaint, with the bound in it, is wider
@@ -800,21 +799,21 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
                     ),
                   ),
                 ),
-                const _Inset(
-                  child: AdguardHomeHeading('Journal des requêtes et statistiques'),
+                _Inset(
+                  child: AdguardHomeHeading(S.t('queryLogAndStatistics')),
                 ),
                 SwitchListTile(
-                  title: const Text('Ignorer dans le journal des requêtes'),
-                  subtitle: const Text(
-                    'Ses requêtes ne sont pas écrites dans le journal',
+                  title: Text(S.t('ignoreInTheQueryLog')),
+                  subtitle: Text(
+                    S.t('itsQueriesAreNotWrittenToTheLog'),
                   ),
                   value: settings.ignoreQueryLog,
                   onChanged: (bool on) =>
                       _set(settings.copyWith(ignoreQueryLog: on)),
                 ),
                 SwitchListTile(
-                  title: const Text('Ignorer dans les statistiques'),
-                  subtitle: const Text('Ses requêtes ne sont pas comptées'),
+                  title: Text(S.t('ignoreInStatistics')),
+                  subtitle: Text(S.t('itsQueriesAreNotCounted')),
                   value: settings.ignoreStatistics,
                   onChanged: (bool on) =>
                       _set(settings.copyWith(ignoreStatistics: on)),
@@ -822,11 +821,11 @@ class _ClientFormState extends ConsumerState<_ClientForm> {
                 // Last: there are some twenty of them, they are the least used
                 // part of a client, and anywhere higher they would stand
                 // between the identifiers and the settings on every visit.
-                const _Inset(child: AdguardHomeHeading('Tags')),
+                _Inset(child: AdguardHomeHeading(S.t('tags'))),
                 _Inset(
                   top: Insets.xs,
                   child: Text(
-                    "Une règle de filtrage peut être écrite pour une balise au lieu d'un "
+                    S.t('aFilteringRuleCanBeWrittenForATagInsteadOfA') +
                     'client.',
                     style: note,
                   ),

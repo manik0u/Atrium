@@ -40,21 +40,21 @@ void main() {
     await tester.pumpAndSettle();
 
     // Verify Transfers tab is active initially
-    expect(find.text('Transferts'), findsWidgets);
-    expect(find.text('Aucun transfert dans la file'), findsOneWidget);
+    expect(find.text('Transfers'), findsWidgets);
+    expect(find.text('No transfers in queue'), findsOneWidget);
 
     // Switch to Search tab
-    await tester.tap(find.text('Rechercher'));
+    await tester.tap(find.text('Search'));
     await tester.pumpAndSettle();
     expect(find.text('P2P Music Search'), findsOneWidget);
 
     // Switch to Browse tab
-    await tester.tap(find.text('Parcourir'));
+    await tester.tap(find.text('Browse'));
     await tester.pumpAndSettle();
-    expect(find.text('Explorateur de bibliothèque du pair'), findsOneWidget);
+    expect(find.text('Peer Library Explorer'), findsOneWidget);
 
     // Switch to Community tab
-    await tester.tap(find.text('Communauté'));
+    await tester.tap(find.text('Community'));
     await tester.pumpAndSettle();
     expect(
       find.descendant(of: find.byType(AppBar), matching: find.byType(SearchBar)),
@@ -63,7 +63,7 @@ void main() {
     expect(find.text('Direct Messages (0)'), findsOneWidget);
 
     // Switch to System tab
-    await tester.tap(find.text('Système'));
+    await tester.tap(find.text('System'));
     await tester.pumpAndSettle();
     expect(find.text('Soulseek Network'), findsOneWidget);
   });

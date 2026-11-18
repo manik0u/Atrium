@@ -70,21 +70,21 @@ class QbittorrentFilterDrawer extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(28, 24, 28, 16),
                 child: Text(
-                  'Filters',
+                  S.t('filters'),
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
               ),
               ExpansionTile(
                 initiallyExpanded: true,
-                title: const Padding(
+                title: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Text('Statut'),
+                  child: Text(S.t('status')),
                 ),
                 shape: const Border(),
                 collapsedShape: const Border(),
                 children: [
                   _FilterTile(
-                    title: 'Tous',
+                    title: S.t('all'),
                     count: torrents.length,
                     icon: Icons.filter_alt,
                     isSelected: statusFilter == null || statusFilter == 'all',
@@ -95,7 +95,7 @@ class QbittorrentFilterDrawer extends ConsumerWidget {
                     },
                   ),
                   _FilterTile(
-                    title: 'Actif',
+                    title: S.t('active'),
                     count: getStatusCount('active', torrents),
                     icon: Icons.sync,
                     isSelected: statusFilter == 'active',
@@ -106,7 +106,7 @@ class QbittorrentFilterDrawer extends ConsumerWidget {
                     },
                   ),
                   _FilterTile(
-                    title: 'Téléchargement en cours',
+                    title: S.t('downloading'),
                     count: getStatusCount('downloading', torrents),
                     icon: Icons.download,
                     isSelected: statusFilter == 'downloading',
@@ -117,7 +117,7 @@ class QbittorrentFilterDrawer extends ConsumerWidget {
                     },
                   ),
                   _FilterTile(
-                    title: 'Seed en cours',
+                    title: S.t('seeding'),
                     count: getStatusCount('seeding', torrents),
                     icon: Icons.upload,
                     isSelected: statusFilter == 'seeding',
@@ -128,7 +128,7 @@ class QbittorrentFilterDrawer extends ConsumerWidget {
                     },
                   ),
                   _FilterTile(
-                    title: 'Arrêté',
+                    title: S.t('stopped'),
                     count: getStatusCount('stopped', torrents),
                     icon: Icons.stop,
                     isSelected: statusFilter == 'stopped',
@@ -139,7 +139,7 @@ class QbittorrentFilterDrawer extends ConsumerWidget {
                     },
                   ),
                   _FilterTile(
-                    title: 'Terminé',
+                    title: S.t('done'),
                     count: getStatusCount('completed', torrents),
                     icon: Icons.check,
                     isSelected: statusFilter == 'completed',
@@ -150,7 +150,7 @@ class QbittorrentFilterDrawer extends ConsumerWidget {
                     },
                   ),
                   _FilterTile(
-                    title: 'En erreur',
+                    title: S.t('errored'),
                     count: getStatusCount('errored', torrents),
                     icon: Icons.error_outline,
                     isSelected: statusFilter == 'errored',
@@ -164,15 +164,15 @@ class QbittorrentFilterDrawer extends ConsumerWidget {
               ),
               ExpansionTile(
                 initiallyExpanded: true,
-                title: const Padding(
+                title: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Text('Catégorie'),
+                  child: Text(S.t('category')),
                 ),
                 shape: const Border(),
                 collapsedShape: const Border(),
                 children: [
                   _FilterTile(
-                    title: 'Toutes les catégories',
+                    title: S.t('allCategories'),
                     count: torrents.length,
                     icon: Icons.folder_copy,
                     isSelected: categoryFilter == null,
@@ -183,7 +183,7 @@ class QbittorrentFilterDrawer extends ConsumerWidget {
                     },
                   ),
                   _FilterTile(
-                    title: 'Non catégorisé',
+                    title: S.t('uncategorized'),
                     count: getCategoryCount('uncategorized', torrents),
                     icon: Icons.folder_open,
                     isSelected: categoryFilter == 'uncategorized',
@@ -215,15 +215,15 @@ class QbittorrentFilterDrawer extends ConsumerWidget {
               ),
               ExpansionTile(
                 initiallyExpanded: true,
-                title: const Padding(
+                title: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Text('Balises'),
+                  child: Text(S.t('tags')),
                 ),
                 shape: const Border(),
                 collapsedShape: const Border(),
                 children: [
                   _FilterTile(
-                    title: 'Toutes les balises',
+                    title: S.t('allTags'),
                     count: torrents.length,
                     icon: Icons.sell,
                     isSelected: tagFilter == null,
@@ -233,7 +233,7 @@ class QbittorrentFilterDrawer extends ConsumerWidget {
                     },
                   ),
                   _FilterTile(
-                    title: 'Sans balise',
+                    title: S.t('untagged'),
                     count: getTagCount('untagged', torrents),
                     icon: Icons.label_off,
                     isSelected: tagFilter == 'untagged',
@@ -262,15 +262,15 @@ class QbittorrentFilterDrawer extends ConsumerWidget {
               ),
               ExpansionTile(
                 initiallyExpanded: true,
-                title: const Padding(
+                title: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Text('Trackers'),
+                  child: Text(S.t('trackers')),
                 ),
                 shape: const Border(),
                 collapsedShape: const Border(),
                 children: [
                   _FilterTile(
-                    title: 'Tous les trackers',
+                    title: S.t('allTrackers'),
                     count: torrents.length,
                     icon: Icons.dns,
                     isSelected: trackerFilter == null,
@@ -282,7 +282,7 @@ class QbittorrentFilterDrawer extends ConsumerWidget {
                   ),
                   if (getTrackerCount('none', torrents) > 0)
                     _FilterTile(
-                      title: 'Aucun tracker fonctionnel',
+                      title: S.t('noWorkingTracker'),
                       count: getTrackerCount('none', torrents),
                       icon: Icons.cloud_off,
                       isSelected: trackerFilter == 'none',
@@ -311,7 +311,7 @@ class QbittorrentFilterDrawer extends ConsumerWidget {
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, s) => Center(child: Text('Erreur : $e')),
+        error: (e, s) => Center(child: Text(S.t('errorE1', [e]))),
       ),
     );
   }

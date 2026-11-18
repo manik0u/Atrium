@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -97,7 +98,7 @@ String unraidAgo(DateTime? when) {
   if (when == null) return '';
   final Duration d = DateTime.now().difference(when);
   if (d.isNegative) return '';
-  if (d.inMinutes < 1) return 'just now';
+  if (d.inMinutes < 1) return S.t('justNow_2');
   if (d.inHours < 1) {
     final int m = d.inMinutes;
     return m == 1 ? '1 minute ago' : '$m minutes ago';
@@ -243,14 +244,14 @@ class UnraidTabScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Updated',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('updated'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: onRefresh,
       child: ListView(

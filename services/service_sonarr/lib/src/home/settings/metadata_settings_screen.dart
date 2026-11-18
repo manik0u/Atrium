@@ -35,7 +35,7 @@ class MetadataSettingsScreen extends ConsumerWidget {
           valueListenable: enableController,
           builder: (context, enable, _) {
             return AlertDialog(
-              title: Text('Modifier ${metadata['name']}'),
+              title: Text(S.t('editMetadata')name']}'),
               content: SizedBox(
                 width: double.maxFinite,
                 child: SingleChildScrollView(
@@ -44,7 +44,7 @@ class MetadataSettingsScreen extends ConsumerWidget {
                     children: [
                       SwitchListTile(
                         contentPadding: EdgeInsets.zero,
-                        title: const Text('Activer la création de métadonnées'),
+                        title: Text(S.t('enableMetadataCreation')),
                         value: enable,
                         onChanged: (val) => enableController.value = val,
                       ),
@@ -68,8 +68,8 @@ class MetadataSettingsScreen extends ConsumerWidget {
                             if (context.mounted) {
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Consommateur de métadonnées mis à jour !'),
+                                SnackBar(
+                                  content: Text(S.t('metadataConsumerUpdated')),
                                 ),
                               );
                             }
@@ -105,15 +105,15 @@ class MetadataSettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Consommateurs de métadonnées'),
+        title: Text(S.t('metadataConsumers')),
       ),
       body: metadataListAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Erreur : $err')),
+        error: (err, stack) => Center(child: Text(S.t('errorErr1', [err]))),
         data: (configs) {
           if (configs.isEmpty) {
-            return const Center(
-              child: Text('Aucun consommateur de métadonnées configuré.'),
+            return Center(
+              child: Text(S.t('noMetadataConsumersConfigured')),
             );
           }
 
@@ -122,7 +122,7 @@ class MetadataSettingsScreen extends ConsumerWidget {
             itemCount: configs.length,
             itemBuilder: (context, index) {
               final metadata = configs[index];
-              final name = (metadata['name'] as String?) ?? 'Metadata';
+              final name = (metadata['name'] as String?) ?? S.t('metadata');
               final isEnabled = metadata['enable'] as bool? ?? false;
               final implementation =
                   (metadata['implementationName'] as String?) ?? '';
@@ -153,7 +153,7 @@ class MetadataSettingsScreen extends ConsumerWidget {
                     ),
                   ),
                   subtitle: Text(
-                    '$implementation • Status: ${isEnabled ? 'Enabled' : 'Disabled'}',
+                    '$implementation • Status: ${isEnabled ? S.t('enabled') : S.t('disabled')}',
                   ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,

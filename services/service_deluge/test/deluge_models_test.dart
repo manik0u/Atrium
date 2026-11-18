@@ -6,7 +6,7 @@ import 'package:service_deluge/service_deluge.dart';
 /// default.
 DelugeTorrent _torrent({
   String id = 'unnamed',
-  String state = "En file d'attente",
+  String state = 'Queued',
   int queue = 9,
   String label = '',
   String trackerHost = 'tracker.example',
@@ -32,7 +32,7 @@ void main() {
     test('folds the infohash in and reads a 0-100 progress', () {
       final DelugeTorrent t = DelugeTorrent.fromStatus('abc123', <String, dynamic>{
         'name': 'Sunshine',
-        'state': 'Seed en cours',
+        'state': 'Seeding',
         'progress': 100.0,
         'total_wanted': 6395774138,
         'download_payload_rate': 0,
@@ -84,7 +84,7 @@ void main() {
       expect(d.files[0].priority, 4);
       expect(d.files[1].progress, 0.5);
       expect(d.files[1].priority, 0);
-      expect(delugeFilePriorityLabel(d.files[1].priority), 'Ignorer');
+      expect(delugeFilePriorityLabel(d.files[1].priority), 'Skip');
     });
 
     test('bounds-checks short or missing progress arrays', () {
@@ -153,17 +153,17 @@ void main() {
       final DelugeFilterTree tree =
           DelugeFilterTree.fromJson(const <String, dynamic>{
         'state': <dynamic>[
-          <dynamic>['Tous', 1],
-          <dynamic>['Seed en cours', 1],
-          <dynamic>['En pause', 0],
+          <dynamic>['All', 1],
+          <dynamic>['Seeding', 1],
+          <dynamic>['Paused', 0],
         ],
         'tracker_host': <dynamic>[
-          <dynamic>['Tous', 1],
+          <dynamic>['All', 1],
           <dynamic>['gbitt.info', 1],
         ],
       });
       expect(tree.states, hasLength(3));
-      expect(tree.states[1], const DelugeFilterBucket(name: 'Seed en cours', count: 1));
+      expect(tree.states[1], const DelugeFilterBucket(name: 'Seeding', count: 1));
       expect(tree.trackerHosts, hasLength(2));
       expect(tree.labels, isEmpty);
       expect(tree.hasLabels, isFalse);
@@ -186,9 +186,9 @@ void main() {
 
   group('filterDelugeTorrents', () {
     final List<DelugeTorrent> torrents = <DelugeTorrent>[
-      _torrent(id: 'a', state: 'Téléchargement en cours', trackerHost: 'x.example'),
-      _torrent(id: 'b', state: 'Seed en cours', trackerHost: 'y.example'),
-      _torrent(id: 'c', state: 'En pause', trackerHost: 'x.example'),
+      _torrent(id: 'a', state: 'Downloading', trackerHost: 'x.example'),
+      _torrent(id: 'b', state: 'Seeding', trackerHost: 'y.example'),
+      _torrent(id: 'c', state: 'Paused', trackerHost: 'x.example'),
     ];
 
     test('the default filter keeps everything', () {
@@ -208,7 +208,7 @@ void main() {
     test('narrows by state', () {
       final List<DelugeTorrent> out = filterDelugeTorrents(
         torrents,
-        const DelugeFilter(state: 'Seed en cours'),
+        const DelugeFilter(state: 'Seeding'),
       );
       expect(out.single.id, 'b');
     });
@@ -218,11 +218,11 @@ void main() {
       // torrent there while either payload rate is above zero.
       final List<DelugeTorrent> out = filterDelugeTorrents(
         const <DelugeTorrent>[
-          DelugeTorrent(id: 'down', state: 'Téléchargement en cours', downloadRate: 10),
-          DelugeTorrent(id: 'up', state: 'Seed en cours', uploadRate: 10),
-          DelugeTorrent(id: 'still', state: 'Seed en cours'),
+          DelugeTorrent(id: 'down', state: 'Downloading', downloadRate: 10),
+          DelugeTorrent(id: 'up', state: 'Seeding', uploadRate: 10),
+          DelugeTorrent(id: 'still', state: 'Seeding'),
         ],
-        const DelugeFilter(state: 'Actif'),
+        const DelugeFilter(state: 'Active'),
       );
       expect(out.map((DelugeTorrent t) => t.id), <String>['down', 'up']);
     });
@@ -232,7 +232,7 @@ void main() {
     test('a downloading torrent shows both rates and its ETA', () {
       const DelugeTorrent t = DelugeTorrent(
         id: 'a',
-        state: 'Téléchargement en cours',
+        state: 'Downloading',
         downloadRate: 100,
         uploadRate: 20,
         eta: 60,
@@ -245,7 +245,7 @@ void main() {
     test('a seeding torrent drops the fading download rate and the ETA', () {
       const DelugeTorrent t = DelugeTorrent(
         id: 'a',
-        state: 'Seed en cours',
+        state: 'Seeding',
         downloadRate: 2000000,
         uploadRate: 20,
         eta: 60,
@@ -261,7 +261,7 @@ void main() {
       // Seen live: 5.1 MB/s and an ETA of hours, seconds after pausing.
       const DelugeTorrent t = DelugeTorrent(
         id: 'a',
-        state: 'En pause',
+        state: 'Paused',
         downloadRate: 5300000,
         uploadRate: 3000,
         eta: 59100,
@@ -339,8 +339,8 @@ void main() {
     });
 
     test('limits treat -1 as unlimited and 0 as stopped', () {
-      expect(delugeFmtLimitKib(-1), 'Illimité');
-      expect(delugeFmtLimitKib(0), 'Arrêté');
+      expect(delugeFmtLimitKib(-1), 'Unlimited');
+      expect(delugeFmtLimitKib(0), 'Stopped');
       expect(delugeFmtLimitKib(512), '512 KB/s');
       expect(delugeFmtLimitKib(2048), '2 MB/s');
     });

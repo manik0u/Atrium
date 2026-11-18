@@ -25,7 +25,7 @@ class ConnectSection extends ConsumerWidget {
         schemasAsync.value ?? <NotificationResource>[];
     if (presets.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Chargement des préréglages de notifications…')),
+        SnackBar(content: Text(S.t('loadingNotificationPresets'))),
       );
       return;
     }
@@ -33,14 +33,14 @@ class ConnectSection extends ConsumerWidget {
     final NotificationResource? selected =
         await showSchemaPresetPicker<NotificationResource>(
       context: context,
-      title: 'Ajouter une intégration de notification',
+      title: S.t('addNotificationIntegration'),
       presets: presets,
       titleBuilder: (preset) {
         final String impl = preset.implementationName?.trim() ?? '';
         final String name = preset.name?.trim() ?? '';
         if (impl.isNotEmpty) return impl;
         if (name.isNotEmpty && name != 'Notification') return name;
-        return preset.implementation ?? 'Notification';
+        return preset.implementation ?? S.t('notification');
       },
       subtitleBuilder: (preset) {
         final String impl = preset.implementationName?.trim() ?? '';
@@ -120,8 +120,8 @@ class ConnectSection extends ConsumerWidget {
                     children: [
                       TextField(
                         controller: nameController,
-                        decoration: const InputDecoration(
-                          labelText: 'Nom',
+                        decoration: InputDecoration(
+                          labelText: S.t('name'),
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -141,15 +141,15 @@ class ConnectSection extends ConsumerWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                'Trigger Events',
+                              Text(
+                                S.t('triggerEvents'),
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(height: Insets.xs),
                               SwitchListTile(
-                                title: const Text('Lors du grab'),
+                                title: Text(S.t('onGrab')),
                                 subtitle:
-                                    const Text('Quand une release est grabée'),
+                                    Text(S.t('whenAReleaseIsGrabbed')),
                                 value: onGrab,
                                 contentPadding: EdgeInsets.zero,
                                 dense: true,
@@ -157,9 +157,9 @@ class ConnectSection extends ConsumerWidget {
                                     setDialogState(() => onGrab = val),
                               ),
                               SwitchListTile(
-                                title: const Text("À l'import d'une release"),
+                                title: Text(S.t('onReleaseImport')),
                                 subtitle:
-                                    const Text('Quand un album est importé'),
+                                    Text(S.t('whenAnAlbumIsImported')),
                                 value: onReleaseImport,
                                 contentPadding: EdgeInsets.zero,
                                 dense: true,
@@ -167,9 +167,9 @@ class ConnectSection extends ConsumerWidget {
                                     setDialogState(() => onReleaseImport = val),
                               ),
                               SwitchListTile(
-                                title: const Text('Lors de la mise à niveau'),
-                                subtitle: const Text(
-                                  'Quand une qualité supérieure remplace une piste existante',
+                                title: Text(S.t('onUpgrade')),
+                                subtitle: Text(
+                                  S.t('whenHigherQualityReplacesExistingTrack'),
                                 ),
                                 value: onUpgrade,
                                 contentPadding: EdgeInsets.zero,
@@ -178,9 +178,9 @@ class ConnectSection extends ConsumerWidget {
                                     setDialogState(() => onUpgrade = val),
                               ),
                               SwitchListTile(
-                                title: const Text('Lors du renommage'),
+                                title: Text(S.t('onRename')),
                                 subtitle:
-                                    const Text('Quand des fichiers audio sont renommés'),
+                                    Text(S.t('whenAudioFilesAreRenamed')),
                                 value: onRename,
                                 contentPadding: EdgeInsets.zero,
                                 dense: true,
@@ -188,9 +188,9 @@ class ConnectSection extends ConsumerWidget {
                                     setDialogState(() => onRename = val),
                               ),
                               SwitchListTile(
-                                title: const Text("Au re-tag d'une piste"),
-                                subtitle: const Text(
-                                  'Quand les balises de métadonnées sont mises à jour',
+                                title: Text(S.t('onTrackRetag')),
+                                subtitle: Text(
+                                  S.t('whenMetadataTagsAreUpdated'),
                                 ),
                                 value: onTrackRetag,
                                 contentPadding: EdgeInsets.zero,
@@ -199,9 +199,9 @@ class ConnectSection extends ConsumerWidget {
                                     setDialogState(() => onTrackRetag = val),
                               ),
                               SwitchListTile(
-                                title: const Text("Ajout / suppression d'artiste"),
-                                subtitle: const Text(
-                                  'Quand des artistes sont ajoutés ou retirés',
+                                title: Text(S.t('onArtistAddDelete')),
+                                subtitle: Text(
+                                  S.t('whenArtistsAreAddedOrRemoved'),
                                 ),
                                 value: onArtistAdd || onArtistDelete,
                                 contentPadding: EdgeInsets.zero,
@@ -212,9 +212,9 @@ class ConnectSection extends ConsumerWidget {
                                 }),
                               ),
                               SwitchListTile(
-                                title: const Text("À la suppression d'un album"),
+                                title: Text(S.t('onAlbumDelete')),
                                 subtitle:
-                                    const Text('Quand un album est supprimé'),
+                                    Text(S.t('whenAnAlbumIsDeleted')),
                                 value: onAlbumDelete,
                                 contentPadding: EdgeInsets.zero,
                                 dense: true,
@@ -222,9 +222,9 @@ class ConnectSection extends ConsumerWidget {
                                     setDialogState(() => onAlbumDelete = val),
                               ),
                               SwitchListTile(
-                                title: const Text('En cas de problème de santé'),
-                                subtitle: const Text(
-                                  'Quand des problèmes de contrôle de santé surviennent',
+                                title: Text(S.t('onHealthIssue')),
+                                subtitle: Text(
+                                  S.t('whenSystemHealthCheckIssuesOccur'),
                                 ),
                                 value: onHealthIssue,
                                 contentPadding: EdgeInsets.zero,
@@ -233,9 +233,9 @@ class ConnectSection extends ConsumerWidget {
                                     setDialogState(() => onHealthIssue = val),
                               ),
                               SwitchListTile(
-                                title: const Text("En cas d'échec de téléchargement"),
-                                subtitle: const Text(
-                                  'Quand un téléchargement échoue dans le client',
+                                title: Text(S.t('onDownloadFailure')),
+                                subtitle: Text(
+                                  S.t('whenADownloadFailsInClient'),
                                 ),
                                 value: onDownloadFailure,
                                 contentPadding: EdgeInsets.zero,
@@ -280,7 +280,7 @@ class ConnectSection extends ConsumerWidget {
                               .postNotificationTest(body: payload);
                           if (!resp.isSuccess) {
                             throw Exception(
-                              resp.error?.message ?? 'Échec du test de notification',
+                              resp.error?.message ?? S.t('notificationTestFailed'),
                             );
                           }
                         },
@@ -353,7 +353,7 @@ class ConnectSection extends ConsumerWidget {
                               messenger.showSnackBar(
                                 SnackBar(
                                   content:
-                                      Text("Échec de l'enregistrement de la notification : $e"),
+                                      Text(S.t('failedToSaveNotificationE1', [e])),
                                 ),
                               );
                             }
@@ -382,14 +382,14 @@ class ConnectSection extends ConsumerWidget {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: Text('Supprimer ${notification.name ?? 'Notification'}?'),
+        title: Text(S.t('deleteNotificationName')Notification'}?'),
         content: Text(
           'Are you sure you want to remove the "${notification.name}" notification integration?',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -397,7 +397,7 @@ class ConnectSection extends ConsumerWidget {
               foregroundColor: Theme.of(ctx).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Supprimer'),
+            child: Text(S.t('delete')),
           ),
         ],
       ),
@@ -412,17 +412,17 @@ class ConnectSection extends ConsumerWidget {
           await api.notification.deleteNotificationById(id: id);
       if (!resp.isSuccess) {
         throw Exception(
-          resp.error?.message ?? 'Échec de la suppression de la notification',
+          resp.error?.message ?? S.t('failedToDeleteNotification'),
         );
       }
 
       ref.invalidate(lidarrNotificationsProvider(instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Notification supprimée.')),
+        SnackBar(content: Text(S.t('notificationDeleted_2'))),
       );
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la suppression de la notification : $e')),
+        SnackBar(content: Text(S.t('failedToDeleteNotificationE1', [e]))),
       );
     }
   }
@@ -440,7 +440,7 @@ class ConnectSection extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         heroTag: 'add_notification_fab',
         onPressed: () => _selectNotificationPresetAndAdd(context, ref),
-        tooltip: 'Ajouter une notification',
+        tooltip: S.t('addNotification'),
         child: const Icon(Icons.add),
       ),
       body: EasyRefresh(
@@ -454,14 +454,14 @@ class ConnectSection extends ConsumerWidget {
               return Center(
                 child: EmptyView(
                   icon: Icons.notifications_off_outlined,
-                  title: 'Aucune notification configurée',
+                  title: S.t('noNotificationsConfigured'),
                   message:
                       'Add notification connections (Discord, Telegram, Webhooks, Pushover, etc.) to receive alerts.',
                   action: FilledButton.icon(
                     onPressed: () =>
                         _selectNotificationPresetAndAdd(context, ref),
                     icon: const Icon(Icons.add),
-                    label: const Text('Ajouter une connexion'),
+                    label: Text(S.t('addConnection')),
                   ),
                 ),
               );
@@ -479,12 +479,12 @@ class ConnectSection extends ConsumerWidget {
               itemBuilder: (BuildContext context, int index) {
                 final NotificationResource item = notifications[index];
                 final List<String> activeEvents = [
-                  if (item.onGrab == true) 'Grab',
-                  if (item.onReleaseImport == true) 'Import',
+                  if (item.onGrab == true) S.t('grab'),
+                  if (item.onReleaseImport == true) S.t('import'),
                   if (item.onUpgrade == true) 'Upgrade',
-                  if (item.onRename == true) 'Rename',
+                  if (item.onRename == true) S.t('rename'),
                   if (item.onTrackRetag == true) 'Retag',
-                  if (item.onHealthIssue == true) 'Health',
+                  if (item.onHealthIssue == true) S.t('health'),
                   if (item.onDownloadFailure == true) 'Fail',
                 ];
 
@@ -516,7 +516,7 @@ class ConnectSection extends ConsumerWidget {
                       ),
                     ),
                     title: Text(
-                      item.name ?? 'Notification',
+                      item.name ?? S.t('notification'),
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.w600,
                             fontSize: 15,
@@ -530,7 +530,7 @@ class ConnectSection extends ConsumerWidget {
                           if (activeEvents.isNotEmpty)
                             activeEvents.join(', ')
                           else
-                            'Aucun déclencheur actif',
+                            S.t('noActiveTriggers'),
                         ].join(' • '),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               color: cs.onSurfaceVariant,
@@ -539,7 +539,7 @@ class ConnectSection extends ConsumerWidget {
                     ),
                     trailing: IconButton(
                       icon: const Icon(Icons.delete_outline, size: 20),
-                      tooltip: 'Supprimer la notification',
+                      tooltip: S.t('deleteNotification'),
                       onPressed: () => _deleteNotification(context, ref, item),
                     ),
                     onTap: () => _showNotificationEditorDialog(

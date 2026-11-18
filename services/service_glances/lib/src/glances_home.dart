@@ -21,14 +21,14 @@ class GlancesHome extends ConsumerWidget {
 
     return statsAsync.when(
       data: (GlancesStats stats) => EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
         onRefresh: () async =>
             ref.refresh(glancesStatsProvider(instance).future),
@@ -167,7 +167,7 @@ class GlancesHome extends ConsumerWidget {
           ),
           const SizedBox(width: Insets.sm),
           Text(
-            'Network',
+            S.t('network'),
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.bold,
@@ -193,7 +193,7 @@ class GlancesHome extends ConsumerWidget {
           const Spacer(),
           IconButton(
             icon: const Icon(Icons.filter_list),
-            tooltip: 'Filtrer les interfaces',
+            tooltip: S.t('filterInterfaces'),
             onPressed: () {
               _showNetworkFilterDialog(context, ref, networks);
             },
@@ -216,7 +216,7 @@ class GlancesHome extends ConsumerWidget {
             final Set<String> pinnedNets =
                 ref.watch(glancesPinnedNetworkProvider(instance));
             return AlertDialog(
-              title: const Text('Filtrer les interfaces réseau'),
+              title: Text(S.t('filterNetworkInterfaces')),
               content: SizedBox(
                 width: double.maxFinite,
                 child: ListView(
@@ -263,11 +263,11 @@ class GlancesHome extends ConsumerWidget {
                         .read(glancesPinnedNetworkProvider(instance).notifier)
                         .set(<String>{});
                   },
-                  child: const Text('Réinitialiser'),
+                  child: Text(S.t('reset')),
                 ),
                 TextButton(
                   onPressed: () => Navigator.of(dialogContext).pop(),
-                  child: const Text('Terminé'),
+                  child: Text(S.t('done')),
                 ),
               ],
             );
@@ -295,7 +295,7 @@ class GlancesHome extends ConsumerWidget {
             const SizedBox(width: Insets.sm),
             Expanded(
               child: _GaugeCard(
-                title: 'Mémoire',
+                title: S.t('memory'),
                 percent: stats.memory.percentage / 100.0,
                 subtitle:
                     '${(stats.memory.used / 1024 / 1024 / 1024).toStringAsFixed(2)} / ${(stats.memory.total / 1024 / 1024 / 1024).toStringAsFixed(2)} GB',

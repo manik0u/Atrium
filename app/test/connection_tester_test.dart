@@ -238,7 +238,7 @@ void main() {
       expect(result.outcome, ConnectionOutcome.authFailed);
       expect(
         result.message,
-        "Joignable, mais AdGuard Home n'a pas répondu à cette adresse",
+        'Reachable, but AdGuard Home did not answer at this address',
       );
     });
 
@@ -257,7 +257,7 @@ void main() {
       expect(result.outcome, ConnectionOutcome.authFailed);
       expect(
         result.message,
-        "Joignable, mais AdGuard Home n'a pas répondu à cette adresse",
+        'Reachable, but AdGuard Home did not answer at this address',
       );
     });
   });
@@ -368,7 +368,7 @@ void main() {
       );
 
       expect(result.outcome, ConnectionOutcome.connected);
-      expect(result.message, 'Connecté (aucune authentification requise)');
+      expect(result.message, 'Connected (no auth required)');
     });
 
     test('a login page in front of slskd does not test as connected', () async {

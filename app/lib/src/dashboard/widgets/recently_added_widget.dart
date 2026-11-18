@@ -149,7 +149,7 @@ class _DashboardRecentlyAddedWidgetState
         },
       );
     } else if (items.isEmpty) {
-      body = const DashboardIdleRow(text: "Rien d'ajouté pour le moment");
+      body = DashboardIdleRow(text: S.t('nothingAddedYet'));
     } else {
       if (_needsReset) {
         _needsReset = false;
@@ -220,7 +220,7 @@ class _PosterTile extends StatelessWidget {
     final ColorScheme cs = theme.colorScheme;
     final String? poster = item.posterUrl;
     final String subtitle = <String>[
-      item.isMovie ? 'Movie' : 'Series',
+      item.isMovie ? S.t('movie') : S.t('series'),
       if (item.year != null) '${item.year}',
     ].join(' · ');
 

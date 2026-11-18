@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:dio/dio.dart';
 
 /// Why a request to Gluetun failed, in terms the user can act on.
@@ -22,7 +23,7 @@ String describeGluetunFailure(Object error, String route) {
     if (status != null) {
       return 'Gluetun answered HTTP $status.';
     }
-    return 'Gluetun est injoignable.';
+    return S.t('gluetunCouldNotBeReached');
   }
   return 'Something went wrong.';
 }

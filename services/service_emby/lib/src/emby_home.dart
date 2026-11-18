@@ -21,11 +21,11 @@ import 'models/emby_view.dart';
 /// Container types - tapping drills into children. Everything else plays.
 /// (See the note in JellyfinHome: we dispatch on "is it a container?" so an
 /// item with a missing/odd `Type` still plays rather than dead-ending.)
-const Set<String> embyContainerTypes = <String>{
-  'Series',
+final Set<String> embyContainerTypes = <String>{
+  S.t('series'),
   'Season',
   'BoxSet',
-  'Folder',
+  S.t('folder'),
   'CollectionFolder',
   'UserView',
   'MusicAlbum',
@@ -56,10 +56,10 @@ class _EmbyHomeState extends ConsumerState<EmbyHome> {
       onRetry: () => ref.invalidate(embyViewsProvider(widget.instance)),
       data: (List<EmbyView> libraries) {
         if (libraries.isEmpty) {
-          return const EmptyView(
+          return EmptyView(
             icon: Icons.theaters_outlined,
-            title: 'Aucune bibliothèque',
-            message: "Ce serveur Emby n'a aucune bibliothèque à afficher.",
+            title: S.t('noLibraries'),
+            message: S.t('thisEmbyServerHasNoLibrariesToShow'),
           );
         }
 
@@ -79,10 +79,10 @@ class _EmbyHomeState extends ConsumerState<EmbyHome> {
                   isScrollable: true,
                   tabAlignment: TabAlignment.start,
                   tabs: <Widget>[
-                    const Tab(text: 'Accueil'),
+                    Tab(text: S.t('home')),
                     for (final EmbyView lib in libraries) Tab(text: lib.name),
-                    const Tab(text: 'Vu'),
-                    const Tab(text: 'Non vu'),
+                    Tab(text: S.t('watched')),
+                    Tab(text: S.t('unwatched')),
                   ],
                 ),
                 Expanded(
@@ -184,19 +184,19 @@ class EmbyLibraryGrid extends ConsumerWidget {
             
           if (list.isEmpty) {
             return EasyRefresh(
-        header: const ClassicHeader(
+        header: ClassicHeader(
           position: IndicatorPosition.locator,
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: () async =>
           ref.invalidate(embyLibraryItemsProvider((instance, view))),
-        child: const CustomScrollView(
+        child: CustomScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           slivers: <Widget>[
             HeaderLocator.sliver(),
@@ -204,8 +204,8 @@ class EmbyLibraryGrid extends ConsumerWidget {
             SliverToBoxAdapter(
               child: EmptyView(
                 icon: Icons.movie_outlined,
-                title: 'Bibliothèque vide',
-                message: 'Rien dans cette bibliothèque pour le moment.',
+                title: S.t('emptyLibrary'),
+                message: S.t('nothingInThisLibraryYet'),
               ),
             ),
           ],
@@ -218,15 +218,15 @@ class EmbyLibraryGrid extends ConsumerWidget {
           // (Replaced with _buildEmbyGridOrList)
 
           return EasyRefresh(
-      header: const ClassicHeader(
+      header: ClassicHeader(
         position: IndicatorPosition.locator,
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async =>
           ref.invalidate(embyLibraryItemsProvider((instance, view))),
@@ -255,7 +255,7 @@ class EmbyLibraryGrid extends ConsumerWidget {
                                       albumName: item.name,
                                       albumArtist: item.artists.isNotEmpty
                                           ? item.artists.first
-                                          : 'Unknown Artist',
+                                          : S.t('unknownArtist'),
                                       albumOverview: item.overview,
                                       albumGenres: item.genres,
                                       albumImageUrl: client.imageUrl(item),
@@ -315,7 +315,7 @@ class EmbyLibraryGrid extends ConsumerWidget {
                                       albumName: item.name,
                                       albumArtist: item.artists.isNotEmpty
                                           ? item.artists.first
-                                          : 'Unknown Artist',
+                                          : S.t('unknownArtist'),
                                       albumOverview: item.overview,
                                       albumGenres: item.genres,
                                       albumImageUrl: client.imageUrl(item),
@@ -392,19 +392,19 @@ class EmbyItemsGrid extends ConsumerWidget {
             
           if (list.isEmpty) {
             return EasyRefresh(
-        header: const ClassicHeader(
+        header: ClassicHeader(
           position: IndicatorPosition.locator,
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: () async =>
           ref.invalidate(embyItemsProvider((instance, libraryId))),
-        child: const CustomScrollView(
+        child: CustomScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           slivers: <Widget>[
             HeaderLocator.sliver(),
@@ -412,8 +412,8 @@ class EmbyItemsGrid extends ConsumerWidget {
             SliverToBoxAdapter(
               child: EmptyView(
                 icon: Icons.movie_outlined,
-                title: 'Bibliothèque vide',
-                message: 'Rien dans cette bibliothèque pour le moment.',
+                title: S.t('emptyLibrary'),
+                message: S.t('nothingInThisLibraryYet'),
               ),
             ),
           ],
@@ -426,15 +426,15 @@ class EmbyItemsGrid extends ConsumerWidget {
           // (Replaced with _buildEmbyGridOrList)
 
           return EasyRefresh(
-      header: const ClassicHeader(
+      header: ClassicHeader(
         position: IndicatorPosition.locator,
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async =>
           ref.invalidate(embyItemsProvider((instance, libraryId))),
@@ -645,8 +645,8 @@ class EmbyPosterCard extends ConsumerWidget {
                     ),
                     title: Text(
                       item.userData?.isFavorite == true
-                          ? 'Retirer des favoris'
-                          : 'Add to Favorites',
+                          ? S.t('removeFromFavorites')
+                          : S.t('addToFavorites_2'),
                     ),
                     onTap: () async {
                       Navigator.of(sheetContext).pop();
@@ -676,7 +676,7 @@ class EmbyPosterCard extends ConsumerWidget {
                   if (item.type == 'Movie' || item.type == 'Series')
                     ListTile(
                       leading: const Icon(Icons.search),
-                      title: const Text('Identifier'),
+                      title: Text(S.t('identify')),
                       onTap: () async {
                         Navigator.of(sheetContext).pop();
                         final bool? changed = await pushScreen<bool>(
@@ -698,7 +698,7 @@ class EmbyPosterCard extends ConsumerWidget {
                     ),
                   ListTile(
                     leading: const Icon(Icons.refresh),
-                    title: const Text('Actualiser les métadonnées'),
+                    title: Text(S.t('refreshMetadata')),
                     onTap: () async {
                       final ScaffoldMessengerState messenger =
                           ScaffoldMessenger.of(context);
@@ -709,8 +709,8 @@ class EmbyPosterCard extends ConsumerWidget {
                         try {
                           await client.refreshMetadata(item.id);
                           messenger.showSnackBar(
-                            const SnackBar(
-                              content: Text("Actualisation des métadonnées en file d'attente"),
+                            SnackBar(
+                              content: Text(S.t('metadataRefreshQueued')),
                             ),
                           );
                           if (!context.mounted) return;
@@ -719,7 +719,7 @@ class EmbyPosterCard extends ConsumerWidget {
                           );
                         } catch (e) {
                           messenger.showSnackBar(
-                            SnackBar(content: Text("Échec de l'actualisation : $e")),
+                            SnackBar(content: Text(S.t('failedToRefreshE1', [e]))),
                           );
                         }
                       }
@@ -961,8 +961,8 @@ class EmbyBannerCard extends ConsumerWidget {
                       ),
                       title: Text(
                         item.userData?.isFavorite == true
-                            ? 'Retirer des favoris'
-                            : 'Add to Favorites',
+                            ? S.t('removeFromFavorites')
+                            : S.t('addToFavorites_2'),
                       ),
                       onTap: () async {
                         Navigator.of(sheetContext).pop();
@@ -992,7 +992,7 @@ class EmbyBannerCard extends ConsumerWidget {
                     if (item.type == 'Movie' || item.type == 'Series')
                       ListTile(
                         leading: const Icon(Icons.search),
-                        title: const Text('Identifier'),
+                        title: Text(S.t('identify')),
                         onTap: () async {
                           Navigator.of(sheetContext).pop();
                           final bool? changed = await pushScreen<bool>(
@@ -1213,15 +1213,15 @@ class _HomeSections extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return EasyRefresh(
-      header: const ClassicHeader(
+      header: ClassicHeader(
         position: IndicatorPosition.locator,
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async {
         ref.invalidate(embySessionsProvider(instance));
@@ -1242,22 +1242,22 @@ class _HomeSections extends ConsumerWidget {
                   _ActiveSessionsSection(instance: instance),
                   _HorizontalSection(
                     instance: instance,
-                    title: 'En cours de visionnage',
+                    title: S.t('currentlyWatching'),
                     provider: embyResumeItemsProvider(instance),
                   ),
                   _HorizontalSection(
                     instance: instance,
-                    title: 'À suivre',
+                    title: S.t('nextUp'),
                     provider: embyNextUpProvider(instance),
                   ),
                   _HorizontalSection(
                     instance: instance,
-                    title: 'Ajouts récents',
+                    title: S.t('recentlyAdded'),
                     provider: embyLatestItemsProvider(instance),
                   ),
                   _HorizontalSection(
                     instance: instance,
-                    title: 'Favoris',
+                    title: S.t('favorites'),
                     provider: embyFavoritesProvider(instance),
                   ),
                   const SizedBox(height: Insets.xl),
@@ -1354,7 +1354,7 @@ class _HorizontalSection extends ConsumerWidget {
                                       albumName: item.name,
                                       albumArtist: item.artists.isNotEmpty
                                           ? item.artists.first
-                                          : 'Unknown Artist',
+                                          : S.t('unknownArtist'),
                                       albumOverview: item.overview,
                                       albumGenres: item.genres,
                                       albumImageUrl: client.imageUrl(item),
@@ -1811,7 +1811,7 @@ Widget _buildEmbyGridOrList(
           ),
           sliver: SliverToBoxAdapter(
             child: Text(
-              'Albums',
+              S.t('albums'),
               style: theme.textTheme.titleLarge
                   ?.copyWith(fontWeight: FontWeight.bold),
             ),

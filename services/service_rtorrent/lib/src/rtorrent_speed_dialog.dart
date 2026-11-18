@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 
 import 'rtorrent_format.dart';
@@ -68,7 +69,7 @@ class _SpeedDialogContentState extends State<_SpeedDialogContent> {
             ListTile(
               contentPadding: EdgeInsets.zero,
               selected: unlimited,
-              title: const Text('Illimité'),
+              title: Text(S.t('unlimited')),
               trailing: unlimited ? const Icon(Icons.check) : null,
               onTap: () => Navigator.of(context).pop(0),
             ),
@@ -86,9 +87,9 @@ class _SpeedDialogContentState extends State<_SpeedDialogContent> {
               controller: _custom,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: 'Personnalisée (Ko/s)',
+                labelText: S.t('customKBS'),
                 helperText: unlimited
-                    ? 'Currently unlimited'
+                    ? S.t('currentlyUnlimited')
                     : 'Currently $currentKbps KB/s',
               ),
               onSubmitted: (_) => _submitCustom(),
@@ -99,11 +100,11 @@ class _SpeedDialogContentState extends State<_SpeedDialogContent> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: _submitCustom,
-          child: const Text('Définir'),
+          child: Text(S.t('set')),
         ),
       ],
     );

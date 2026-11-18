@@ -74,7 +74,7 @@ class _OverviewTabState extends ConsumerState<OverviewTab> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.menu),
-          tooltip: 'Ouvrir le menu',
+          tooltip: S.t('openMenu'),
           onPressed: () => Scaffold.of(context).openDrawer(),
         ),
         title: Column(
@@ -89,7 +89,7 @@ class _OverviewTabState extends ConsumerState<OverviewTab> {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              'Overview',
+              S.t('overview'),
               style: theme.textTheme.bodySmall?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
@@ -98,14 +98,14 @@ class _OverviewTabState extends ConsumerState<OverviewTab> {
         ),
       ),
       body: EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing telemetry...',
-          processingText: 'Refreshing telemetry...',
-          processedText: 'Updated',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshingTelemetry'),
+          processingText: S.t('refreshingTelemetry'),
+          processedText: S.t('updated'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: _refreshAll,
         child: ListView(

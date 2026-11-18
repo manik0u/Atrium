@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -113,7 +114,7 @@ class SlskdRoomCard extends StatelessWidget {
               if (isJoined) ...<Widget>[
                 if (onLeave != null)
                   IconButton(
-                    tooltip: 'Quitter le salon',
+                    tooltip: S.t('leaveRoom'),
                     visualDensity: VisualDensity.compact,
                     icon: Icon(Icons.logout_rounded, size: 18, color: colorScheme.outline),
                     onPressed: onLeave,
@@ -130,12 +131,12 @@ class SlskdRoomCard extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: Insets.sm, vertical: 4),
                   ),
                   onPressed: onJoin,
-                  child: const Row(
+                  child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Icon(Icons.login_rounded, size: 14),
                       SizedBox(width: 4),
-                      Text('Rejoindre'),
+                      Text(S.t('join')),
                     ],
                   ),
                 ),

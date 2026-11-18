@@ -84,18 +84,18 @@ class _WantedTabState extends ConsumerState<WantedTab>
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Tout rechercher (manquants) ?'),
-        content: const Text(
-          'Lancer des recherches automatiques de tous les albums manquants sur les indexeurs configurés ?',
+        title: Text(S.t('searchAllMissing')),
+        content: Text(
+          S.t('initiateAutomatedSearchesForAllMissingAlbumsAcrossConfiguredIndexers'),
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Tout rechercher'),
+            child: Text(S.t('searchAll')),
           ),
         ],
       ),
@@ -110,15 +110,15 @@ class _WantedTabState extends ConsumerState<WantedTab>
           await api.executeCommand('MissingAlbumSearch');
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec du déclenchement de la recherche');
+        throw Exception(resp.error?.message ?? S.t('failedToTriggerSearch'));
       }
 
       ref.invalidate(lidarrQueueProvider(widget.instance));
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Recherche des albums manquants lancée avec succès.'),
+          SnackBar(
+            content: Text(S.t('missingAlbumsSearchInitiatedSuccessfully')),
           ),
         );
       }
@@ -126,7 +126,7 @@ class _WantedTabState extends ConsumerState<WantedTab>
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erreur : $e'),
+            content: Text(S.t('errorE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -138,18 +138,18 @@ class _WantedTabState extends ConsumerState<WantedTab>
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Tout rechercher (cutoff non atteint) ?'),
-        content: const Text(
-          "Lancer des recherches automatiques de mise à niveau pour tous les albums dont le cutoff n'est pas atteint ?",
+        title: Text(S.t('searchAllCutoffUnmet')),
+        content: Text(
+          S.t('initiateAutomatedQualityUpgradeSearchesForAllCutoffUnmetAlbums'),
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Tout rechercher'),
+            child: Text(S.t('searchAll')),
           ),
         ],
       ),
@@ -164,15 +164,15 @@ class _WantedTabState extends ConsumerState<WantedTab>
           await api.executeCommand('CutoffUnmetAlbumSearch');
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec du déclenchement de la recherche');
+        throw Exception(resp.error?.message ?? S.t('failedToTriggerSearch'));
       }
 
       ref.invalidate(lidarrQueueProvider(widget.instance));
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Recherche des cutoff non atteints lancée avec succès.'),
+          SnackBar(
+            content: Text(S.t('cutoffUnmetSearchInitiatedSuccessfully')),
           ),
         );
       }
@@ -180,7 +180,7 @@ class _WantedTabState extends ConsumerState<WantedTab>
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erreur : $e'),
+            content: Text(S.t('errorE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -202,7 +202,7 @@ class _WantedTabState extends ConsumerState<WantedTab>
       });
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec du démarrage de la recherche groupée');
+        throw Exception(resp.error?.message ?? S.t('failedToStartBulkSearch'));
       }
 
       ref.invalidate(lidarrQueueProvider(widget.instance));
@@ -211,7 +211,7 @@ class _WantedTabState extends ConsumerState<WantedTab>
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content:
-                Text('Recherche lancée pour ${idList.length} albums sélectionnés.'),
+                Text(S.t('searchStartedForIdListLengthSelectedAlbums1', [idList.length])),
           ),
         );
       }
@@ -219,7 +219,7 @@ class _WantedTabState extends ConsumerState<WantedTab>
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Échec de la recherche groupée : $e'),
+            content: Text(S.t('bulkSearchFailedE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -243,7 +243,7 @@ class _WantedTabState extends ConsumerState<WantedTab>
       );
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec de la mise à jour de la surveillance');
+        throw Exception(resp.error?.message ?? S.t('failedToUpdateMonitoring'));
       }
 
       ref.invalidate(lidarrWantedMissingProvider);
@@ -265,7 +265,7 @@ class _WantedTabState extends ConsumerState<WantedTab>
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Échec de la mise à jour de la surveillance : $e'),
+            content: Text(S.t('failedToUpdateMonitoringE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -309,7 +309,7 @@ class _WantedTabState extends ConsumerState<WantedTab>
               leading: inSelectionMode
                   ? IconButton(
                       icon: const Icon(Icons.close),
-                      tooltip: 'Effacer la sélection',
+                      tooltip: S.t('clearSelection'),
                       onPressed: _clearSelection,
                     )
                   : Padding(
@@ -318,7 +318,7 @@ class _WantedTabState extends ConsumerState<WantedTab>
                               _searchFocusNode.hasFocus)
                           ? IconButton(
                               icon: const Icon(Icons.arrow_back),
-                              tooltip: 'Retour',
+                              tooltip: S.t('back'),
                               onPressed: () {
                                 _searchFocusNode.unfocus();
                                 _searchController.clear();
@@ -333,7 +333,7 @@ class _WantedTabState extends ConsumerState<WantedTab>
                             )
                           : IconButton(
                               icon: const Icon(Icons.menu),
-                              tooltip: 'Ouvrir le menu latéral',
+                              tooltip: S.t('openDrawer'),
                               onPressed: () =>
                                   Scaffold.of(context).openDrawer(),
                             ),
@@ -368,7 +368,7 @@ class _WantedTabState extends ConsumerState<WantedTab>
                                 focusNode: _searchFocusNode,
                                 style: theme.textTheme.bodyLarge,
                                 decoration: InputDecoration(
-                                  hintText: 'Rechercher les albums recherchés…',
+                                  hintText: S.t('searchWantedAlbums'),
                                   hintStyle:
                                       theme.textTheme.bodyLarge?.copyWith(
                                     color: theme.colorScheme.onSurfaceVariant,
@@ -394,7 +394,7 @@ class _WantedTabState extends ConsumerState<WantedTab>
                             if (_searchController.text.isNotEmpty)
                               IconButton(
                                 icon: const Icon(Icons.clear, size: 22),
-                                tooltip: 'Effacer la recherche',
+                                tooltip: S.t('clearSearch'),
                                 visualDensity: VisualDensity.compact,
                                 onPressed: () {
                                   _searchController.clear();
@@ -422,8 +422,8 @@ class _WantedTabState extends ConsumerState<WantedTab>
                           return IconButton(
                             icon: const Icon(Icons.travel_explore),
                             tooltip: isMissingTab
-                                ? 'Tout rechercher (manquants)'
-                                : 'Tout rechercher (cutoff)',
+                                ? S.t('searchAllMissing_2')
+                                : S.t('searchAllCutoff'),
                             onPressed: isMissingTab
                                 ? _searchAllMissing
                                 : _searchAllCutoff,
@@ -443,9 +443,9 @@ class _WantedTabState extends ConsumerState<WantedTab>
                   fontWeight: FontWeight.bold,
                 ),
                 unselectedLabelStyle: theme.textTheme.titleSmall,
-                tabs: const <Widget>[
-                  Tab(text: 'Manquant'),
-                  Tab(text: 'Cutoff non atteint'),
+                tabs: <Widget>[
+                  Tab(text: S.t('missing')),
+                  Tab(text: S.t('cutoffUnmet')),
                 ],
               ),
             ),
@@ -464,7 +464,7 @@ class _WantedTabState extends ConsumerState<WantedTab>
               heroTag: 'lidarr_wanted_filter_fab',
               backgroundColor: cs.primaryContainer,
               foregroundColor: cs.onPrimaryContainer,
-              tooltip: 'Trier et filtrer',
+              tooltip: S.t('sortFilter'),
               onPressed: () => WantedSortFilterBottomSheet.show(
                 context,
                 widget.instance,

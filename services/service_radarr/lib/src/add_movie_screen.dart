@@ -136,7 +136,7 @@ class _AddMovieScreenState extends ConsumerState<AddMovieScreen>
             child: SearchBar(
               focusNode: _searchFocusNode,
               controller: _searchController,
-              hintText: 'Rechercher dans le catalogue en ligne…',
+              hintText: S.t('searchOnlineCatalog'),
               onTapOutside: (event) {
                 if (_searchFocusNode.hasFocus) {
                   _searchFocusNode.unfocus();
@@ -178,7 +178,7 @@ class _AddMovieScreenState extends ConsumerState<AddMovieScreen>
                     ),
                     const SizedBox(height: Insets.md),
                     Text(
-                      'Rechercher un film à ajouter',
+                      S.t('searchForAMovieToAdd'),
                       style: theme.textTheme.bodyLarge?.copyWith(
                         color: cs.onSurfaceVariant,
                       ),
@@ -197,11 +197,11 @@ class _AddMovieScreenState extends ConsumerState<AddMovieScreen>
                 },
                 data: (List<RadarrMovie> results) {
                   if (results.isEmpty) {
-                    return const EmptyView(
+                    return EmptyView(
                       icon: Icons.search_off_outlined,
-                      title: 'Aucun film trouvé',
+                      title: S.t('noMoviesFound'),
                       message:
-                          "Nous n'avons trouvé aucun film correspondant à votre requête.",
+                          S.t('weCouldnTFindAnyMoviesMatchingYourQuery'),
                     );
                   }
 
@@ -337,7 +337,7 @@ class _AddMovieScreenState extends ConsumerState<AddMovieScreen>
                                                     ),
                                                     const SizedBox(width: 4),
                                                     Text(
-                                                      'Added',
+                                                      S.t('added'),
                                                       style: theme
                                                           .textTheme.labelSmall
                                                           ?.copyWith(
@@ -449,7 +449,7 @@ class _RadarrAddMovieSheetState extends ConsumerState<RadarrAddMovieSheet> {
             scrolledUnderElevation: 0.0,
             backgroundColor: cs.surface,
             automaticallyImplyLeading: false,
-            title: const Text("Options d'ajout du film"),
+            title: Text(S.t('addMovieOptions')),
             centerTitle: true,
             actions: [
               IconButton(
@@ -508,7 +508,7 @@ class _RadarrAddMovieSheetState extends ConsumerState<RadarrAddMovieSheet> {
                                   const SizedBox(height: 8),
                                   Text(
                                     widget.movie.overview ??
-                                        'Aucun résumé disponible.',
+                                        S.t('noOverviewAvailable'),
                                     style: theme.textTheme.bodyMedium?.copyWith(
                                       color: cs.onSurfaceVariant,
                                     ),
@@ -554,8 +554,8 @@ class _RadarrAddMovieSheetState extends ConsumerState<RadarrAddMovieSheet> {
                                 }
                                 return DropdownButtonFormField<String>(
                                   initialValue: _selectedRootFolder,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Dossier racine',
+                                  decoration: InputDecoration(
+                                    labelText: S.t('rootFolder'),
                                     border: OutlineInputBorder(),
                                   ),
                                   items: folders
@@ -578,7 +578,7 @@ class _RadarrAddMovieSheetState extends ConsumerState<RadarrAddMovieSheet> {
                                 ),
                               ),
                               error: (_, __) =>
-                                  const Text('Erreur lors du chargement des dossiers'),
+                                  Text(S.t('errorLoadingFolders')),
                             ),
                             const SizedBox(height: Insets.md),
                             qualityProfilesAsync.when(
@@ -594,8 +594,8 @@ class _RadarrAddMovieSheetState extends ConsumerState<RadarrAddMovieSheet> {
                                 }
                                 return DropdownButtonFormField<int>(
                                   initialValue: _selectedQualityProfileId,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Profil de qualité',
+                                  decoration: InputDecoration(
+                                    labelText: S.t('qualityProfile'),
                                     border: OutlineInputBorder(),
                                   ),
                                   items: profiles
@@ -618,27 +618,27 @@ class _RadarrAddMovieSheetState extends ConsumerState<RadarrAddMovieSheet> {
                                 ),
                               ),
                               error: (_, __) =>
-                                  const Text('Erreur lors du chargement des profils'),
+                                  Text(S.t('errorLoadingProfiles')),
                             ),
                             const SizedBox(height: Insets.md),
                             DropdownButtonFormField<String>(
                               initialValue: _minimumAvailability,
-                              decoration: const InputDecoration(
-                                labelText: 'Disponibilité minimale',
+                              decoration: InputDecoration(
+                                labelText: S.t('minimumAvailability'),
                                 border: OutlineInputBorder(),
                               ),
-                              items: const [
+                              items: [
                                 DropdownMenuItem(
                                   value: 'announced',
-                                  child: Text('Annoncée'),
+                                  child: Text(S.t('announced')),
                                 ),
                                 DropdownMenuItem(
                                   value: 'inCinemas',
-                                  child: Text('Au cinéma'),
+                                  child: Text(S.t('inCinemas')),
                                 ),
                                 DropdownMenuItem(
                                   value: 'released',
-                                  child: Text('Sortie'),
+                                  child: Text(S.t('released')),
                                 ),
                               ],
                               onChanged: (val) => setState(
@@ -647,7 +647,7 @@ class _RadarrAddMovieSheetState extends ConsumerState<RadarrAddMovieSheet> {
                             ),
                             const SizedBox(height: Insets.md),
                             SwitchListTile(
-                              title: const Text('Surveillé'),
+                              title: Text(S.t('monitored')),
                               value: _monitored,
                               contentPadding: EdgeInsets.zero,
                               onChanged: (val) => setState(() {
@@ -659,7 +659,7 @@ class _RadarrAddMovieSheetState extends ConsumerState<RadarrAddMovieSheet> {
                             ),
                             if (widget.movie.collection != null)
                               SwitchListTile(
-                                title: const Text('Surveiller la collection'),
+                                title: Text(S.t('monitorCollection')),
                                 subtitle: widget.movie.collection?.title != null
                                     ? Text(widget.movie.collection!.title!)
                                     : null,
@@ -672,7 +672,7 @@ class _RadarrAddMovieSheetState extends ConsumerState<RadarrAddMovieSheet> {
                                     : null,
                               ),
                             SwitchListTile(
-                              title: const Text('Lancer la recherche du film'),
+                              title: Text(S.t('startSearchForMovie')),
                               value: _searchForMovie,
                               contentPadding: EdgeInsets.zero,
                               onChanged: (val) =>
@@ -698,7 +698,7 @@ class _RadarrAddMovieSheetState extends ConsumerState<RadarrAddMovieSheet> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Tags',
+                                  S.t('tags'),
                                   style: theme.textTheme.titleMedium?.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -754,8 +754,8 @@ class _RadarrAddMovieSheetState extends ConsumerState<RadarrAddMovieSheet> {
                     onPressed: _submitting ? null : _submit,
                     child: _submitting
                         ? ExpressiveProgressIndicator(color: cs.onPrimary)
-                        : const Text(
-                            'Add Movie',
+                        : Text(
+                            S.t('addMovie'),
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -776,7 +776,7 @@ class _RadarrAddMovieSheetState extends ConsumerState<RadarrAddMovieSheet> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content:
-              const Text('Veuillez sélectionner un dossier racine et un profil de qualité.'),
+              Text(S.t('pleaseSelectARootFolderAndQualityProfile')),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
@@ -830,7 +830,7 @@ class _RadarrAddMovieSheetState extends ConsumerState<RadarrAddMovieSheet> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('« ${widget.movie.title} » ajouté avec succès !'),
+            content: Text(S.t('addedWidgetMovieTitleSuccessfully1', [widget.movie.title])),
             backgroundColor: Theme.of(context).colorScheme.primary,
           ),
         );
@@ -842,7 +842,7 @@ class _RadarrAddMovieSheetState extends ConsumerState<RadarrAddMovieSheet> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Échec de l'ajout du film : $e"),
+            content: Text(S.t('failedToAddMovieE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );

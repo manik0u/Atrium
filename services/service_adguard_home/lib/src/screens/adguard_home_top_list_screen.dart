@@ -42,7 +42,7 @@ class AdguardHomeTopListScreen extends ConsumerWidget {
         ),
         data: (AdguardHomeStats stats) {
           final List<AdguardHomeCount> rows = kind.rows(stats);
-          if (rows.isEmpty) return const EmptyView(title: 'Rien pour le moment');
+          if (rows.isEmpty) return EmptyView(title: S.t('nothingYet'));
           final num highest = adguardHomeHighest(rows);
           return ListView.builder(
             padding: Insets.page,

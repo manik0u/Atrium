@@ -66,7 +66,7 @@ class ProwlarrProviderScreen extends ConsumerWidget {
         heroTag: 'prowlarr-add-${config.endpoint}',
         onPressed: () => _openForm(context),
         icon: const Icon(Icons.add),
-        label: const Text('Ajouter'),
+        label: Text(S.t('add')),
       ),
       body: AsyncValueView<List<Map<String, dynamic>>>(
           value: list,
@@ -75,14 +75,14 @@ class ProwlarrProviderScreen extends ConsumerWidget {
             
             if (items.isEmpty) {
               return EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: () async => ref.invalidate(prowlarrProvidersProvider(_args)),
         child: ListView(
@@ -91,22 +91,22 @@ class ProwlarrProviderScreen extends ConsumerWidget {
             const SizedBox(height: 100),
             EmptyView(
                 icon: config.icon,
-                title: 'Aucun ${config.title.toLowerCase()}',
-                message: 'Touchez Ajouter pour configurer : ${config.resourceLabel}.',
+                title: S.t('noConfigTitleToLowerCase1', [config.title.toLowerCase()]),
+                message: S.t('tapAddToConfigureAConfigResourceLabel1', [config.resourceLabel]),
               ),
           ],
         ),
       );
             }
             return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async => ref.invalidate(prowlarrProvidersProvider(_args)),
       child: ListView.builder(
@@ -114,7 +114,7 @@ class ProwlarrProviderScreen extends ConsumerWidget {
               itemCount: items.length,
               itemBuilder: (BuildContext context, int i) {
                 final Map<String, dynamic> m = items[i];
-                final String name = (m['name'] as String?) ?? 'Unknown';
+                final String name = (m['name'] as String?) ?? S.t('unknown');
                 final String impl = (m['implementationName'] as String?) ?? '';
                 final bool hasEnable = m.containsKey('enable');
                 final bool enabled = m['enable'] == true;
@@ -257,10 +257,10 @@ class _ProviderFormScreenState extends ConsumerState<_ProviderFormScreen> {
       final ProwlarrApi api =
           await ref.read(prowlarrApiProvider(widget.instance).future);
       await api.testProvider(_cfg.endpoint, _buildPayload());
-      messenger.showSnackBar(const SnackBar(content: Text('Test réussi')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('testPassed'))));
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec du test : ${_errorMessage(e)}')),
+        SnackBar(content: Text(S.t('testFailedErrorMessageE1', [_errorMessage(e)]))),
       );
     } finally {
       if (mounted) {
@@ -298,7 +298,7 @@ class _ProviderFormScreenState extends ConsumerState<_ProviderFormScreen> {
       nav.pop();
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text("Échec de l'enregistrement : ${_errorMessage(e)}")),
+        SnackBar(content: Text(S.t('saveFailedErrorMessageE1', [_errorMessage(e)]))),
       );
       if (mounted) {
         setState(() => _saving = false);
@@ -310,12 +310,12 @@ class _ProviderFormScreenState extends ConsumerState<_ProviderFormScreen> {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: Text('Supprimer ${_cfg.resourceLabel} ?'),
-        content: Text('Retirer « ${_nameController.text} » de Prowlarr ?'),
+        title: Text(S.t('deleteCfgResourceLabel1', [_cfg.resourceLabel])),
+        content: Text(S.t('removeNameControllerTextFromProwlarr1', [_nameController.text])),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -323,7 +323,7 @@ class _ProviderFormScreenState extends ConsumerState<_ProviderFormScreen> {
               foregroundColor: Theme.of(context).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Supprimer'),
+            child: Text(S.t('delete')),
           ),
         ],
       ),
@@ -340,12 +340,12 @@ class _ProviderFormScreenState extends ConsumerState<_ProviderFormScreen> {
       await api.deleteProvider(_cfg.endpoint, widget.id!);
       ref.invalidate(prowlarrProvidersProvider(_args));
       messenger.showSnackBar(
-        SnackBar(content: Text('${_capitalize(_cfg.resourceLabel)} supprimé')),
+        SnackBar(content: Text(S.t('capitalizeCfgResourceLabelDeleted1', [_capitalize(_cfg.resourceLabel)]))),
       );
       nav.pop();
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la suppression : ${_errorMessage(e)}')),
+        SnackBar(content: Text(S.t('deleteFailedErrorMessageE1', [_errorMessage(e)]))),
       );
       if (mounted) {
         setState(() => _deleting = false);
@@ -357,10 +357,10 @@ class _ProviderFormScreenState extends ConsumerState<_ProviderFormScreen> {
   Widget build(BuildContext context) {
     if (_isEdit && _selected == null) {
       return Scaffold(
-        appBar: AppBar(title: Text('Modifier ${_cfg.resourceLabel}')),
+        appBar: AppBar(title: Text(S.t('editCfgResourceLabel1', [_cfg.resourceLabel]))),
         body: _loadError != null
             ? ErrorView(
-                title: 'Impossible de charger ${_cfg.resourceLabel}',
+                title: S.t('couldNotLoadCfgResourceLabel1', [_cfg.resourceLabel]),
                 message: _loadError!,
                 onRetry: _loadRaw,
               )
@@ -379,7 +379,7 @@ class _ProviderFormScreenState extends ConsumerState<_ProviderFormScreen> {
 
   Widget _buildForm(BuildContext context) {
     final String impl = (_selected!['implementationName'] as String?) ?? '';
-    final String title = _isEdit ? 'Edit ${_nameController.text}' : 'Ajouter $impl';
+    final String title = _isEdit ? 'Edit ${_nameController.text}' : S.t('addImpl1', [impl]);
 
     final List<Map<String, dynamic>> visibleFields =
         _fields.where((Map<String, dynamic> f) {
@@ -402,7 +402,7 @@ class _ProviderFormScreenState extends ConsumerState<_ProviderFormScreen> {
         actions: <Widget>[
           if (_isEdit)
             IconButton(
-              tooltip: 'Supprimer',
+              tooltip: S.t('delete'),
               icon: _deleting
                   ? const SizedBox(
                       width: 18,
@@ -415,7 +415,7 @@ class _ProviderFormScreenState extends ConsumerState<_ProviderFormScreen> {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const Text('Avancé', style: TextStyle(fontSize: 12)),
+              Text(S.t('advanced'), style: TextStyle(fontSize: 12)),
               Switch(
                 value: _showAdvanced,
                 onChanged: (bool v) => setState(() => _showAdvanced = v),
@@ -431,12 +431,12 @@ class _ProviderFormScreenState extends ConsumerState<_ProviderFormScreen> {
           children: <Widget>[
             TextFormField(
               controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'Nom',
+              decoration: InputDecoration(
+                labelText: S.t('name'),
                 border: OutlineInputBorder(),
               ),
               validator: (String? v) =>
-                  (v == null || v.trim().isEmpty) ? 'Required' : null,
+                  (v == null || v.trim().isEmpty) ? S.t('required') : null,
             ),
             const SizedBox(height: Insets.md),
             ...topLevel,
@@ -459,7 +459,7 @@ class _ProviderFormScreenState extends ConsumerState<_ProviderFormScreen> {
                             child: ExpressiveProgressIndicator(strokeWidth: 2),
                           )
                         : const Icon(Icons.science_outlined),
-                    label: const Text('Tester'),
+                    label: Text(S.t('test')),
                   ),
                 ),
                 const SizedBox(width: Insets.md),
@@ -473,7 +473,7 @@ class _ProviderFormScreenState extends ConsumerState<_ProviderFormScreen> {
                             child: ExpressiveProgressIndicator(strokeWidth: 2),
                           )
                         : const Icon(Icons.save_outlined),
-                    label: Text(_isEdit ? 'Enregistrer' : 'Ajouter'),
+                    label: Text(_isEdit ? S.t('save') : S.t('add')),
                   ),
                 ),
               ],
@@ -514,7 +514,7 @@ class _ProviderSchemaPickerState extends ConsumerState<_ProviderSchemaPicker> {
   String _name(Map<String, dynamic> s) =>
       (s['implementationName'] as String?) ??
       (s['name'] as String?) ??
-      'Unknown';
+      S.t('unknown');
 
   @override
   Widget build(BuildContext context) {
@@ -524,7 +524,7 @@ class _ProviderSchemaPickerState extends ConsumerState<_ProviderSchemaPicker> {
     final AsyncValue<List<Map<String, dynamic>>> schemas =
         ref.watch(prowlarrProviderSchemasProvider(args));
     return Scaffold(
-      appBar: AppBar(title: Text('Ajouter ${widget.config.resourceLabel}')),
+      appBar: AppBar(title: Text(S.t('addWidgetConfigResourceLabel1', [widget.config.resourceLabel]))),
       body: Column(
         children: <Widget>[
           Padding(
@@ -532,8 +532,8 @@ class _ProviderSchemaPickerState extends ConsumerState<_ProviderSchemaPicker> {
             child: TextField(
               controller: _query,
               autofocus: true,
-              decoration: const InputDecoration(
-                hintText: 'Rechercher…',
+              decoration: InputDecoration(
+                hintText: S.t('search_2'),
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
               ),
@@ -556,10 +556,10 @@ class _ProviderSchemaPickerState extends ConsumerState<_ProviderSchemaPicker> {
                         )
                         .toList();
                 if (filtered.isEmpty) {
-                  return const EmptyView(
+                  return EmptyView(
                     icon: Icons.search_off,
-                    title: 'Aucune correspondance',
-                    message: 'Aucune définition ne correspond à votre recherche.',
+                    title: S.t('noMatches'),
+                    message: S.t('noDefinitionMatchesYourSearch'),
                   );
                 }
                 return ListView.builder(

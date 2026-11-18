@@ -38,7 +38,7 @@ class DelugeFilterDrawer extends ConsumerWidget {
                 Insets.md,
               ),
               child: Text(
-                'Filters',
+                S.t('filters'),
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -50,9 +50,9 @@ class DelugeFilterDrawer extends ConsumerWidget {
                 child: Center(child: ExpressiveProgressIndicator()),
               )
             else if (tree.states.isEmpty)
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: Insets.xl),
-                child: Text('Aucun filtre disponible.'),
+                child: Text(S.t('noFiltersAvailable')),
               )
             else
               for (final DelugeFilterBucket bucket in tree.states)
@@ -107,7 +107,7 @@ class DelugeFilterAppBarAction extends ConsumerWidget {
     final bool filtered =
         ref.watch(delugeFilterProvider(instance)).state != 'All';
     return IconButton(
-      tooltip: 'Filtrer les torrents',
+      tooltip: S.t('filterTorrents'),
       icon: Badge(
         isLabelVisible: filtered,
         smallSize: 8,
@@ -119,7 +119,7 @@ class DelugeFilterAppBarAction extends ConsumerWidget {
 }
 
 IconData _stateIcon(String state) => switch (state) {
-      'All' => Icons.filter_alt_outlined,
-      'Active' => Icons.bolt_outlined,
+      S.t('all') => Icons.filter_alt_outlined,
+      S.t('active') => Icons.bolt_outlined,
       _ => delugeStateIcon(state),
     };

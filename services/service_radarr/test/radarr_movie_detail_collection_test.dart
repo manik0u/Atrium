@@ -128,7 +128,7 @@ void main() {
 
       expect(find.text('Collection'), findsOneWidget);
       expect(find.text('Gladiator Collection'), findsOneWidget);
-      expect(find.text('Collection non surveillée'), findsOneWidget);
+      expect(find.text('Collection unmonitored'), findsOneWidget);
     });
 
     testWidgets(
@@ -235,7 +235,7 @@ void main() {
       });
 
       final toggleButton =
-          find.widgetWithText(OutlinedButton, 'Collection non surveillée');
+          find.widgetWithText(OutlinedButton, 'Collection unmonitored');
       expect(toggleButton, findsOneWidget);
 
       await tester.scrollUntilVisible(toggleButton, 100);

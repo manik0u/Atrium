@@ -105,22 +105,22 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
 
   String _monitorLabel(MonitorTypes type) {
     return switch (type) {
-      MonitorTypes.all => 'Tous les albums',
-      MonitorTypes.future => 'Albums à venir',
-      MonitorTypes.missing => 'Albums manquants',
-      MonitorTypes.existing => 'Albums existants',
-      MonitorTypes.first => 'Premier album',
-      MonitorTypes.latest => 'Dernier album',
-      MonitorTypes.none => 'Aucun',
+      MonitorTypes.all => S.t('allAlbums'),
+      MonitorTypes.future => S.t('futureAlbums'),
+      MonitorTypes.missing => S.t('missingAlbums'),
+      MonitorTypes.existing => S.t('existingAlbums'),
+      MonitorTypes.first => S.t('firstAlbum'),
+      MonitorTypes.latest => S.t('latestAlbum'),
+      MonitorTypes.none => S.t('none'),
       _ => type.value,
     };
   }
 
   String _monitorNewItemsLabel(NewItemMonitorTypes type) {
     return switch (type) {
-      NewItemMonitorTypes.all => 'Tous',
-      NewItemMonitorTypes.none => 'Aucun',
-      NewItemMonitorTypes.newVal => 'Nouveau',
+      NewItemMonitorTypes.all => S.t('all'),
+      NewItemMonitorTypes.none => S.t('none'),
+      NewItemMonitorTypes.newVal => S.t('new'),
     };
   }
 
@@ -257,7 +257,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
             scrolledUnderElevation: 0.0,
             backgroundColor: cs.surface,
             automaticallyImplyLeading: false,
-            title: const Text("Options d'ajout de l'artiste"),
+            title: Text(S.t('addArtistOptions')),
             centerTitle: true,
             actions: [
               IconButton(
@@ -308,7 +308,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                                 children: [
                                   Text(
                                     widget.artist.artistName ??
-                                        'Unknown Artist',
+                                        S.t('unknownArtist'),
                                     style: theme.textTheme.titleMedium
                                         ?.copyWith(fontWeight: FontWeight.bold),
                                     maxLines: 2,
@@ -381,8 +381,8 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                             rootFoldersAsync.when(
                               data: (List<RootFolderResource> folders) {
                                 if (folders.isEmpty) {
-                                  return const Text(
-                                    'No root folders configured in Lidarr.',
+                                  return Text(
+                                    S.t('noRootFoldersConfiguredInLidarr'),
                                   );
                                 }
                                 final String selectedVal =
@@ -400,7 +400,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                                   initialValue: selectedVal,
                                   isExpanded: true,
                                   decoration: InputDecoration(
-                                    labelText: 'Dossier racine',
+                                    labelText: S.t('rootFolder'),
                                     contentPadding: const EdgeInsets.symmetric(
                                       horizontal: 12,
                                       vertical: 12,
@@ -465,15 +465,15 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                               loading: () =>
                                   const ExpressiveProgressIndicator(),
                               error: (e, _) =>
-                                  Text('Échec du chargement des dossiers racine : $e'),
+                                  Text(S.t('failedToLoadRootFoldersE1', [e])),
                             ),
                             const SizedBox(height: Insets.md),
                             // Quality profile selector
                             qualityProfilesAsync.when(
                               data: (List<QualityProfileResource> profiles) {
                                 if (profiles.isEmpty) {
-                                  return const Text(
-                                    'Aucun profil de qualité trouvé.',
+                                  return Text(
+                                    S.t('noQualityProfilesFound'),
                                   );
                                 }
                                 final int selectedVal =
@@ -492,7 +492,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                                   initialValue: selectedVal,
                                   isExpanded: true,
                                   decoration: InputDecoration(
-                                    labelText: 'Profil de qualité',
+                                    labelText: S.t('qualityProfile'),
                                     contentPadding: const EdgeInsets.symmetric(
                                       horizontal: 12,
                                       vertical: 12,
@@ -522,15 +522,15 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                               loading: () =>
                                   const ExpressiveProgressIndicator(),
                               error: (e, _) =>
-                                  Text('Échec du chargement des profils de qualité : $e'),
+                                  Text(S.t('failedToLoadQualityProfilesE1', [e])),
                             ),
                             const SizedBox(height: Insets.md),
                             // Metadata profile selector (Lidarr-specific)
                             metadataProfilesAsync.when(
                               data: (List<MetadataProfileResource> profiles) {
                                 if (profiles.isEmpty) {
-                                  return const Text(
-                                    'Aucun profil de métadonnées trouvé.',
+                                  return Text(
+                                    S.t('noMetadataProfilesFound'),
                                   );
                                 }
                                 final int selectedVal =
@@ -549,7 +549,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                                   initialValue: selectedVal,
                                   isExpanded: true,
                                   decoration: InputDecoration(
-                                    labelText: 'Profil de métadonnées',
+                                    labelText: S.t('metadataProfile'),
                                     contentPadding: const EdgeInsets.symmetric(
                                       horizontal: 12,
                                       vertical: 12,
@@ -579,7 +579,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                               loading: () =>
                                   const ExpressiveProgressIndicator(),
                               error: (e, _) =>
-                                  Text('Échec du chargement des profils de métadonnées : $e'),
+                                  Text(S.t('failedToLoadMetadataProfilesE1', [e])),
                             ),
                           ],
                         ),
@@ -604,7 +604,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Monitoring Options',
+                              S.t('monitoringOptions'),
                               style: theme.textTheme.titleSmall?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: cs.primary,
@@ -619,7 +619,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                               initialValue: _selectedMonitor,
                               isExpanded: true,
                               decoration: InputDecoration(
-                                labelText: 'Surveiller les albums',
+                                labelText: S.t('monitorAlbums'),
                                 contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 12,
                                   vertical: 12,
@@ -660,7 +660,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                               initialValue: _selectedMonitorNewItems,
                               isExpanded: true,
                               decoration: InputDecoration(
-                                labelText: 'Surveiller les nouveaux éléments',
+                                labelText: S.t('monitorNewItems'),
                                 contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 12,
                                   vertical: 12,
@@ -708,9 +708,9 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                       child: Column(
                         children: [
                           SwitchListTile(
-                            title: const Text('Surveillé'),
-                            subtitle: const Text(
-                              'Surveiller cet artiste pour les sorties nouvelles et manquantes',
+                            title: Text(S.t('monitored')),
+                            subtitle: Text(
+                              S.t('monitorThisArtistForNewAndMissingReleases'),
                             ),
                             value: _monitored,
                             onChanged: (bool val) {
@@ -722,9 +722,9 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                           ),
                           const Divider(height: 1),
                           SwitchListTile(
-                            title: const Text('Rechercher les albums manquants'),
-                            subtitle: const Text(
-                              "Lancer la recherche sur les indexeurs immédiatement après l'ajout",
+                            title: Text(S.t('searchForMissingAlbums')),
+                            subtitle: Text(
+                              S.t('startSearchingIndexersImmediatelyAfterAdding'),
                             ),
                             value: _searchForMissingAlbums,
                             onChanged: (bool val) {
@@ -759,7 +759,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Tags',
+                                    S.t('tags'),
                                     style: theme.textTheme.titleSmall?.copyWith(
                                       fontWeight: FontWeight.bold,
                                       color: cs.primary,
@@ -772,7 +772,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                                     children: tags.map((TagResource tag) {
                                       final int id = tag.id ?? 0;
                                       final String label =
-                                          tag.label ?? 'Balise $id';
+                                          tag.label ?? S.t('tagId1', [id]);
                                       final bool isSelected =
                                           _selectedTagIds.contains(id);
                                       return FilterChip(
@@ -850,8 +850,8 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                           onPressed: _submitting ? null : _submit,
                           child: _submitting
                               ? ExpressiveProgressIndicator(color: cs.onPrimary)
-                              : const Text(
-                                  'Add Artist',
+                              : Text(
+                                  S.t('addArtist'),
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -932,7 +932,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
     if (rootFolder == null || rootFolder.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Veuillez sélectionner un dossier racine.'),
+          content: Text(S.t('pleaseSelectARootFolder')),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
@@ -1009,7 +1009,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
         final String cleanMsg = e.toString().replaceFirst('Exception: ', '');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Échec de l'ajout de l'artiste : $cleanMsg"),
+            content: Text(S.t('failedToAddArtistCleanMsg1', [cleanMsg])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );

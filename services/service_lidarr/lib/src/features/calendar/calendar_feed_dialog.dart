@@ -126,11 +126,11 @@ class _CalendarFeedDialogState extends ConsumerState<_CalendarFeedDialog> {
     final String feedUrl = _buildFeedUrl(apiKey);
 
     return AlertDialog(
-      title: const Row(
+      title: Row(
         children: [
           Icon(Icons.calendar_month_outlined),
           SizedBox(width: Insets.xs),
-          Text('Flux calendrier iCal'),
+          Text(S.t('icalCalendarFeed')),
         ],
       ),
       content: SizedBox(
@@ -141,7 +141,7 @@ class _CalendarFeedDialogState extends ConsumerState<_CalendarFeedDialog> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Abonnez-vous à votre calendrier de sorties dans Apple Calendar, Google Calendar ou Outlook pour synchroniser automatiquement les prochaines sorties musicales.',
+                S.t('subscribeToYourReleaseCalendarInAppleCalendarGoogleCalendarOrOutlookToAutomaticallySyncUpcomingMusicReleases'),
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: cs.onSurfaceVariant,
                 ),
@@ -153,8 +153,8 @@ class _CalendarFeedDialogState extends ConsumerState<_CalendarFeedDialog> {
                     child: TextField(
                       controller: _pastDaysController,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Jours passés',
+                      decoration: InputDecoration(
+                        labelText: S.t('pastDays'),
                         border: OutlineInputBorder(),
                         isDense: true,
                       ),
@@ -166,8 +166,8 @@ class _CalendarFeedDialogState extends ConsumerState<_CalendarFeedDialog> {
                     child: TextField(
                       controller: _futureDaysController,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Jours à venir',
+                      decoration: InputDecoration(
+                        labelText: S.t('futureDays'),
                         border: OutlineInputBorder(),
                         isDense: true,
                       ),
@@ -178,9 +178,9 @@ class _CalendarFeedDialogState extends ConsumerState<_CalendarFeedDialog> {
               ),
               const SizedBox(height: Insets.xs),
               SwitchListTile(
-                title: const Text('Inclure les non surveillés'),
-                subtitle: const Text(
-                  'Inclure les sorties des albums non surveillés',
+                title: Text(S.t('includeUnmonitored')),
+                subtitle: Text(
+                  S.t('includeReleasesForUnmonitoredAlbums'),
                   style: TextStyle(fontSize: 11),
                 ),
                 value: _unmonitored,
@@ -212,13 +212,13 @@ class _CalendarFeedDialogState extends ConsumerState<_CalendarFeedDialog> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.copy, size: 18),
-                      tooltip: "Copier l'URL",
+                      tooltip: S.t('copyURL'),
                       onPressed: () async {
                         await Clipboard.setData(ClipboardData(text: feedUrl));
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('URL du flux calendrier copiée !'),
+                            SnackBar(
+                              content: Text(S.t('calendarFeedURLCopied')),
                             ),
                           );
                         }
@@ -234,7 +234,7 @@ class _CalendarFeedDialogState extends ConsumerState<_CalendarFeedDialog> {
                   minimumSize: const Size(double.infinity, 44),
                 ),
                 icon: const Icon(Icons.edit_calendar_outlined, size: 18),
-                label: const Text("S'abonner dans l'app Calendrier"),
+                label: Text(S.t('subscribeInCalendarApp')),
                 onPressed: () => _subscribeInCalendar(feedUrl),
               ),
               const SizedBox(height: Insets.xs),
@@ -243,7 +243,7 @@ class _CalendarFeedDialogState extends ConsumerState<_CalendarFeedDialog> {
                   minimumSize: const Size(double.infinity, 44),
                 ),
                 icon: const Icon(Icons.open_in_browser, size: 18),
-                label: const Text('Ajouter à Google Calendar Web'),
+                label: Text(S.t('addToGoogleCalendarWeb')),
                 onPressed: () => _openGoogleCalendar(feedUrl),
               ),
             ],
@@ -253,7 +253,7 @@ class _CalendarFeedDialogState extends ConsumerState<_CalendarFeedDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Fermer'),
+          child: Text(S.t('close')),
         ),
       ],
     );

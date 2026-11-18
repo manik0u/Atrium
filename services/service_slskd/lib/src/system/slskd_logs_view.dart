@@ -104,12 +104,12 @@ class _SlskdLogsViewState extends ConsumerState<SlskdLogsView> {
                       ),
                       IconButton(
                         icon: const Icon(Icons.copy_rounded, size: 20),
-                        tooltip: 'Copier le message',
+                        tooltip: S.t('copyMessage'),
                         onPressed: () {
                           Clipboard.setData(ClipboardData(text: log.message));
                           ScaffoldMessenger.of(ctx).showSnackBar(
-                            const SnackBar(
-                              content: Text('Journal copié dans le presse-papiers'),
+                            SnackBar(
+                              content: Text(S.t('logCopiedToClipboard')),
                               duration: Duration(seconds: 2),
                             ),
                           );
@@ -140,7 +140,7 @@ class _SlskdLogsViewState extends ConsumerState<SlskdLogsView> {
                   const Divider(),
                   const SizedBox(height: Insets.sm),
                   Text(
-                    'Message du journal',
+                    S.t('logMessage'),
                     style: tt.titleSmall?.copyWith(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: Insets.xs),
@@ -206,11 +206,11 @@ class _SlskdLogsViewState extends ConsumerState<SlskdLogsView> {
         ref.watch(slskdFilteredLogsProvider(widget.instance));
 
     final List<String> severities = <String>[
-      'All',
-      'Error',
-      'Warning',
+      S.t('all'),
+      S.t('error'),
+      S.t('warning'),
       'Information',
-      'Debug',
+      S.t('debug'),
     ];
 
     return Column(
@@ -249,12 +249,12 @@ class _SlskdLogsViewState extends ConsumerState<SlskdLogsView> {
                           isExpanded: true,
                           icon: const Icon(Icons.arrow_drop_down_rounded),
                           items: [
-                            const DropdownMenuItem<String?>(
+                            DropdownMenuItem<String?>(
                               child: Row(
                                 children: <Widget>[
                                   Icon(Icons.stream_rounded, size: 18),
                                   SizedBox(width: Insets.xs),
-                                  Text('Flux en direct (en mémoire)'),
+                                  Text(S.t('liveStreamInMemory')),
                                 ],
                               ),
                             ),
@@ -306,7 +306,7 @@ class _SlskdLogsViewState extends ConsumerState<SlskdLogsView> {
           TextField(
             controller: _searchController,
             decoration: InputDecoration(
-              hintText: 'Rechercher dans les journaux par message ou contexte…',
+              hintText: S.t('searchLogsByMessageOrContext'),
               prefixIcon: const Icon(Icons.search_rounded),
               suffixIcon: _searchController.text.isNotEmpty
                   ? IconButton(
@@ -364,7 +364,7 @@ class _SlskdLogsViewState extends ConsumerState<SlskdLogsView> {
                             .read(
                               slskdLogSeverityFilterProvider(widget.instance).notifier,
                             )
-                            .state = selected ? severity : 'All';
+                            .state = selected ? severity : S.t('all');
                       },
                     ),
                   );
@@ -426,7 +426,7 @@ class _SlskdLogsViewState extends ConsumerState<SlskdLogsView> {
                         FilledButton.tonalIcon(
                           onPressed: () => ref.invalidate(slskdLogsProvider(widget.instance)),
                           icon: const Icon(Icons.refresh),
-                          label: const Text('Réessayer'),
+                          label: Text(S.t('retry')),
                         ),
                       ],
                     ),
@@ -469,14 +469,14 @@ class _SlskdLogsViewState extends ConsumerState<SlskdLogsView> {
                         ),
                         const SizedBox(height: Insets.sm),
                         Text(
-                          'Aucun journal trouvé',
+                          S.t('noLogsFound'),
                           style: textTheme.titleSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: Insets.xs),
                         Text(
-                          'Aucun enregistrement ne correspond à la gravité ou à la recherche actuelles.',
+                          S.t('noLogRecordsMatchCurrentSeverityOrSearchQuery'),
                           textAlign: TextAlign.center,
                           style: textTheme.bodySmall?.copyWith(
                             color: colorScheme.onSurfaceVariant,
@@ -639,12 +639,12 @@ class _SlskdLogsViewState extends ConsumerState<SlskdLogsView> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.copy_rounded, size: 18),
-                  tooltip: 'Copier tout le contenu du journal',
+                  tooltip: S.t('copyAllLogContent'),
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: content));
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Journal historique copié dans le presse-papiers'),
+                      SnackBar(
+                        content: Text(S.t('historicalLogCopiedToClipboard')),
                         duration: Duration(seconds: 2),
                       ),
                     );
@@ -667,7 +667,7 @@ class _SlskdLogsViewState extends ConsumerState<SlskdLogsView> {
                 padding: const EdgeInsets.all(Insets.sm),
                 child: SingleChildScrollView(
                   child: SelectableText(
-                    content.isEmpty ? '(Fichier journal vide)' : content,
+                    content.isEmpty ? S.t('emptyLogFile_2') : content,
                     style: textTheme.bodySmall?.copyWith(
                       fontSize: 11,
                       letterSpacing: -0.2,

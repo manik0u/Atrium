@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -74,34 +75,34 @@ class CleanuparrEventDetailSheet extends StatelessWidget {
             const Divider(height: Insets.xl),
             if (event.downloadItemTitle != null) ...<Widget>[
               _DetailRow(
-                label: 'Titre de la release',
+                label: S.t('releaseTitle'),
                 value: event.downloadItemTitle!,
               ),
               const SizedBox(height: Insets.sm),
             ],
             if (event.downloadClientName != null) ...<Widget>[
               _DetailRow(
-                label: 'Client',
+                label: S.t('client'),
                 value: event.downloadClientName!,
               ),
               const SizedBox(height: Insets.sm),
             ],
             if (event.hash != null && event.hash!.isNotEmpty) ...<Widget>[
               _DetailRow(
-                label: 'Hash',
+                label: S.t('hash'),
                 value: event.hash!,
               ),
               const SizedBox(height: Insets.sm),
             ],
             if (event.deleteReason != null) ...<Widget>[
               _DetailRow(
-                label: 'Motif de suppression',
+                label: S.t('deleteReason'),
                 value: event.deleteReason!,
               ),
               const SizedBox(height: Insets.sm),
             ],
             _DetailRow(
-              label: 'Message',
+              label: S.t('message'),
               value: event.message,
             ),
           ],

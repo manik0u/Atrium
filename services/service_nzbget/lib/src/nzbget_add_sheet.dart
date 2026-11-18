@@ -102,13 +102,13 @@ class _AddNzbFormState extends ConsumerState<_AddNzbForm> {
       }
       ref.invalidate(nzbgetQueueProvider(widget.instance));
       navigator.pop();
-      messenger.showSnackBar(const SnackBar(content: Text('NZB ajouté')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('nzbAdded'))));
     } catch (e) {
       if (!mounted) {
         return;
       }
       setState(() => _busy = false);
-      messenger.showSnackBar(SnackBar(content: Text("Échec de l'ajout : $e")));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('addFailedE1', [e]))));
     }
   }
 
@@ -116,11 +116,11 @@ class _AddNzbFormState extends ConsumerState<_AddNzbForm> {
   Widget build(BuildContext context) {
     final AsyncValue<List<String>> categories =
         ref.watch(nzbgetCategoriesProvider(widget.instance));
-    const List<(String, int)> priorities = <(String, int)>[
+    final List<(String, int)> priorities = <(String, int)>[
       ('Very low', -100),
-      ('Low', -50),
-      ('Normal', 0),
-      ('High', 50),
+      (S.t('low'), -50),
+      (S.t('normal'), 0),
+      (S.t('high'), 50),
       ('Very high', 100),
       ('Force', 900),
     ];
@@ -131,12 +131,12 @@ class _AddNzbFormState extends ConsumerState<_AddNzbForm> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Text('Ajouter un NZB', style: Theme.of(context).textTheme.titleLarge),
+            Text(S.t('addNZB'), style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: Insets.md),
             TextField(
               controller: _url,
-              decoration: const InputDecoration(
-                labelText: 'URL du NZB',
+              decoration: InputDecoration(
+                labelText: S.t('nzbURL'),
                 hintText: 'https://indexer.example/get/...',
               ),
               onChanged: (String value) {
@@ -152,13 +152,13 @@ class _AddNzbFormState extends ConsumerState<_AddNzbForm> {
             OutlinedButton.icon(
               onPressed: _pickFile,
               icon: const Icon(Icons.attach_file),
-              label: Text(_fileName ?? 'Ou choisissez un fichier .nzb'),
+              label: Text(_fileName ?? S.t('orPickAnNzbFile')),
             ),
             const SizedBox(height: Insets.md),
             DropdownButtonFormField<String>(
               initialValue: _category.isEmpty ? null : _category,
               decoration:
-                  const InputDecoration(labelText: 'Catégorie (facultatif)'),
+                  InputDecoration(labelText: S.t('categoryOptional')),
               items: <DropdownMenuItem<String>>[
                 for (final String name
                     in categories.value ?? const <String>[])
@@ -170,7 +170,7 @@ class _AddNzbFormState extends ConsumerState<_AddNzbForm> {
             const SizedBox(height: Insets.sm),
             DropdownButtonFormField<int>(
               initialValue: _priority,
-              decoration: const InputDecoration(labelText: 'Priorité'),
+              decoration: InputDecoration(labelText: S.t('priority')),
               items: <DropdownMenuItem<int>>[
                 for (final (String label, int value) in priorities)
                   DropdownMenuItem<int>(value: value, child: Text(label)),
@@ -180,7 +180,7 @@ class _AddNzbFormState extends ConsumerState<_AddNzbForm> {
             ),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Ajouter en pause'),
+              title: Text(S.t('addPaused')),
               value: _addPaused,
               onChanged: (bool value) => setState(() => _addPaused = value),
             ),
@@ -193,7 +193,7 @@ class _AddNzbFormState extends ConsumerState<_AddNzbForm> {
                       height: 18,
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
-                  : const Text('Ajouter'),
+                  : Text(S.t('add')),
             ),
           ],
         ),

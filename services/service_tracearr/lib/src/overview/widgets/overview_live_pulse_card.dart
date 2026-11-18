@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -139,7 +140,7 @@ class OverviewLivePulseCard extends StatelessWidget {
                       ),
                       const SizedBox(width: Insets.sm),
                       Text(
-                        totalStreams == 1 ? 'Active Stream' : 'Active Streams',
+                        totalStreams == 1 ? S.t('activeStream') : S.t('activeStreams'),
                         style: theme.textTheme.titleMedium?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                           fontWeight: FontWeight.w500,
@@ -174,14 +175,14 @@ class OverviewLivePulseCard extends StatelessWidget {
                       runSpacing: Insets.xs,
                       children: [
                         _StatusPill(
-                          label: 'Lecture directe',
+                          label: S.t('directPlay'),
                           count: directPlays,
                           color: const Color(0xFF4CAF50),
                           backgroundColor:
                               const Color(0xFF4CAF50).withValues(alpha: 0.12),
                         ),
                         _StatusPill(
-                          label: 'Transcodage HW',
+                          label: S.t('hwTranscode'),
                           count: hwTranscodes,
                           color: const Color(0xFF2196F3),
                           backgroundColor:
@@ -189,7 +190,7 @@ class OverviewLivePulseCard extends StatelessWidget {
                         ),
                         if (swTranscodes > 0)
                           _StatusPill(
-                            label: 'Transcodage CPU',
+                            label: S.t('cpuTranscode'),
                             count: swTranscodes,
                             color: const Color(0xFFFF9800),
                             backgroundColor:
@@ -199,7 +200,7 @@ class OverviewLivePulseCard extends StatelessWidget {
                     )
                   else
                     Text(
-                      'Tous les serveurs multimédias connectés sont actuellement inactifs.',
+                      S.t('allConnectedMediaServersAreCurrentlyIdle'),
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: colorScheme.onSurfaceVariant,
                       ),
@@ -253,7 +254,7 @@ class _StatusPill extends StatelessWidget {
           ),
           const SizedBox(width: 6),
           Text(
-            '$label : $count',
+            S.t('labelCount2', [label, count]),
             style: theme.textTheme.labelSmall?.copyWith(
               color: color,
               fontWeight: FontWeight.w600,

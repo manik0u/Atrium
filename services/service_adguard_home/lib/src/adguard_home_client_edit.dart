@@ -1,6 +1,7 @@
 import 'models/adguard_home_clients.dart';
 import 'models/adguard_home_filters.dart';
 import 'models/adguard_home_json.dart';
+import 'package:core_models/core_models.dart';
 
 export 'models/adguard_home_json.dart' show adguardHomeJsonEquals;
 
@@ -184,10 +185,10 @@ class AdguardHomeClientDraft {
   /// hold with an error about its own code. An identifier it cannot read it
   /// names itself, in plain words.
   AdguardHomeClientProblems get problems => AdguardHomeClientProblems(
-        name: name.trim().isEmpty ? 'Donnez un nom au client.' : null,
+        name: name.trim().isEmpty ? S.t('giveTheClientAName') : null,
         ids: cleanIds.isEmpty ? 'Add at least one identifier.' : null,
         cacheSize: cacheSize == null
-            ? 'Un nombre entier de 0 à $adguardHomeMaxCacheSize.'
+            ? S.t('aWholeNumberFrom0ToAdguardHomeMaxCacheSize1', [adguardHomeMaxCacheSize])
             : null,
       );
 
@@ -366,8 +367,8 @@ String? adguardHomeIpProblem(String text, {int? version}) {
           (version == 6 && bytes.length == 16));
   if (fits) return null;
   return switch (version) {
-    4 => 'Une adresse IPv4, par ex. 0.0.0.0.',
-    6 => 'Une adresse IPv6, par ex. ::.',
-    _ => 'Une adresse IP.',
+    4 => S.t('anIPv4AddressSuchAs0000'),
+    6 => S.t('anIPv6AddressSuchAs'),
+    _ => S.t('anIPAddress_2'),
   };
 }

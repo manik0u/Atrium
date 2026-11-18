@@ -83,14 +83,14 @@ void main() {
       );
 
       // Check title and fields render
-      expect(find.text('Analyser le titre de la release'), findsOneWidget);
+      expect(find.text('Parse Release Title'), findsOneWidget);
       expect(
           find.text(
-              "Collez un nom de release ou un titre de torrent ci-dessous pour voir comment Sonarr analyse la saison, l'épisode, la qualité et les correspondances de bibliothèque."),
+              'Paste a release name or torrent title below to see how Sonarr parses season, episode, quality, and matching library details.'),
           findsOneWidget);
       expect(find.byType(TextField), findsOneWidget);
-      expect(find.text('Analyser'), findsOneWidget);
-      expect(find.text('Effacer'), findsOneWidget);
+      expect(find.text('Parse'), findsOneWidget);
+      expect(find.text('Clear'), findsOneWidget);
     });
   });
 }

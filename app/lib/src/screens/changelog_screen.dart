@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -16,10 +17,10 @@ class ChangelogScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Journal des modifications'),
+        title: Text(S.t('changeLog')),
         actions: <Widget>[
           IconButton(
-            tooltip: 'Voir les versions sur GitHub',
+            tooltip: S.t('viewReleasesOnGitHub'),
             icon: const Icon(Icons.open_in_new),
             onPressed: () => openExternal(
               ScaffoldMessenger.of(context),

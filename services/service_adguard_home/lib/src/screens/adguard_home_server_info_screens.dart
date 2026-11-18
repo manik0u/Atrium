@@ -25,7 +25,7 @@ class AdguardHomeEncryptionScreen extends ConsumerWidget {
         ref.watch(adguardHomeTlsStatusProvider(instance));
     final AdguardHomeTlsStatus? tls = read.value;
     return Scaffold(
-      appBar: AppBar(title: const Text('Chiffrement')),
+      appBar: AppBar(title: Text(S.t('encryption'))),
       body: tls == null
           ? adguardHomeSettingsWaiting<AdguardHomeTlsStatus>(
                 context,
@@ -47,14 +47,14 @@ class AdguardHomeEncryptionScreen extends ConsumerWidget {
     return <Widget>[
       _State(
         on: tls.enabled,
-        title: tls.enabled ? 'Le chiffrement est activé' : 'Le chiffrement est désactivé',
+        title: tls.enabled ? S.t('encryptionIsOn') : S.t('encryptionIsOff'),
         detail: tls.enabled
             ? null
             : 'DNS over HTTPS, TLS and QUIC are set up in AdGuard Home\'s web '
                 'interface.',
       ),
       if (tls.enabled) ...<Widget>[
-        const AdguardHomeHeading('Server'),
+        AdguardHomeHeading(S.t('server')),
         AdguardHomeField(
           'Server name',
           tls.serverName.isNotEmpty ? tls.serverName : tls.dnsNames.join(', '),
@@ -63,15 +63,15 @@ class AdguardHomeEncryptionScreen extends ConsumerWidget {
         AdguardHomeField('DNS-over-TLS port', _port(tls.portDnsOverTls)),
         AdguardHomeField('DNS-over-QUIC port', _port(tls.portDnsOverQuic)),
         AdguardHomeField('DNSCrypt port', _port(tls.portDnsCrypt)),
-        AdguardHomeField('Redirect to HTTPS', tls.forceHttps ? 'Yes' : 'No'),
-        AdguardHomeField('Plain DNS', tls.servePlainDns ? 'Answered' : 'Off'),
+        AdguardHomeField('Redirect to HTTPS', tls.forceHttps ? S.t('yes') : S.t('no')),
+        AdguardHomeField(S.t('plainDNS'), tls.servePlainDns ? 'Answered' : S.t('off')),
         const AdguardHomeHeading('Certificate'),
         AdguardHomeField(
           'Certificate chain',
           tls.validChain
               ? 'Valid'
               : tls.validCertificate
-                  ? 'Valide, mais non fiable pour le système'
+                  ? S.t('validButNotTrustedByTheSystem')
                   : 'Not valid',
         ),
         AdguardHomeField('Subject', tls.subject),
@@ -96,8 +96,8 @@ class AdguardHomeEncryptionScreen extends ConsumerWidget {
               : 'Not valid',
         ),
         AdguardHomeField(
-          'Correspond au certificat',
-          tls.validPair ? 'Yes' : 'No',
+          S.t('matchesTheCertificate'),
+          tls.validPair ? S.t('yes') : S.t('no'),
         ),
         if (tls.warning.isNotEmpty)
           Padding(
@@ -141,11 +141,11 @@ class AdguardHomeDhcpScreen extends ConsumerWidget {
     if (status != null && !status.dhcpAvailable) {
       return Scaffold(
         appBar: AppBar(title: const Text('DHCP')),
-        body: const _InfoList(
+        body: _InfoList(
           children: <Widget>[
             _State(
               on: false,
-              title: "DHCP n'est pas disponible sur ce serveur",
+              title: S.t('dhcpIsNotAvailableOnThisServer'),
               detail: 'AdGuard Home cannot hand out addresses where it '
                   'runs, for example in a container without the host\'s '
                   'network.',
@@ -181,7 +181,7 @@ class AdguardHomeDhcpScreen extends ConsumerWidget {
         on: dhcp.enabled,
         title: dhcp.enabled
             ? 'Handing out addresses'
-            : 'DHCP est désactivé sur ce serveur',
+            : S.t('dhcpIsOffOnThisServer'),
         detail: dhcp.enabled
             ? null
             : 'It is set up in AdGuard Home\'s web interface.',
@@ -290,7 +290,7 @@ class _AdguardHomeAboutScreenState
         ref.watch(adguardHomeStatusProvider(widget.instance));
     final AdguardHomeStatus? status = read.value;
     return Scaffold(
-      appBar: AppBar(title: const Text('À propos')),
+      appBar: AppBar(title: Text(S.t('about'))),
       body: status == null
           ? adguardHomeSettingsWaiting<AdguardHomeStatus>(
                 context,
@@ -311,7 +311,7 @@ class _AdguardHomeAboutScreenState
     final Object? error = _error;
     final String port = status.dnsPort == 53 ? '' : ':${status.dnsPort}';
     return <Widget>[
-      AdguardHomeField('Version', status.version),
+      AdguardHomeField(S.t('version'), status.version),
       AdguardHomeField(
         'DNS addresses',
         <String>[
@@ -323,7 +323,7 @@ class _AdguardHomeAboutScreenState
       ),
       AdguardHomeField('DNS port', '${status.dnsPort}'),
       AdguardHomeField('Web interface port', '${status.httpPort}'),
-      const AdguardHomeHeading('Updates'),
+      AdguardHomeHeading(S.t('updates')),
       const SizedBox(height: Insets.sm),
       if (error != null)
         Text(
@@ -346,8 +346,8 @@ class _AdguardHomeAboutScreenState
               : const Icon(Icons.system_update_alt),
           label: Text(
             error is AdguardHomeSignInRefused
-                ? 'Try again'
-                : 'Check for updates',
+                ? S.t('tryAgain')
+                : S.t('checkForUpdates'),
           ),
         ),
       ),
@@ -362,14 +362,14 @@ class _AdguardHomeAboutScreenState
     if (check.disabled) {
       return <Widget>[
         Text(
-          'Les vérifications de mises à jour sont désactivées sur ce serveur.',
+          S.t('updateChecksAreOffOnThisServer'),
           style: theme.textTheme.bodyMedium,
         ),
       ];
     }
     if (!check.isNewerThan(status.version)) {
       return <Widget>[
-        Text("C'est la dernière version.", style: theme.textTheme.bodyMedium),
+        Text(S.t('thisIsTheLatestVersion'), style: theme.textTheme.bodyMedium),
       ];
     }
     final Uri? notes = Uri.tryParse(check.announcementUrl);
@@ -379,7 +379,7 @@ class _AdguardHomeAboutScreenState
         style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
       ),
       Text(
-        'Il est installé depuis le serveur ou son interface web.',
+        S.t('itIsInstalledFromTheServerOrItsWebInterface'),
         style: theme.textTheme.bodyMedium
             ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
       ),
@@ -390,7 +390,7 @@ class _AdguardHomeAboutScreenState
             onPressed: () =>
                 launchUrl(notes, mode: LaunchMode.externalApplication),
             icon: const Icon(Icons.open_in_new),
-            label: const Text('Nouveautés'),
+            label: Text(S.t('whatSNew')),
           ),
         ),
     ];

@@ -161,8 +161,8 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                             color: isStarred ? Colors.redAccent : null,
                           ),
                           tooltip: isStarred
-                              ? 'Retirer des favoris'
-                              : 'Add to favorites',
+                              ? S.t('removeFromFavorites')
+                              : S.t('addToFavorites'),
                           onPressed: () async {
                             final bool willStar = !isStarred;
                             setModalState(() {
@@ -188,7 +188,7 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content:
-                                        Text('Échec de la mise à jour des favoris : $e'),
+                                        Text(S.t('failedToUpdateFavoriteE1', [e])),
                                   ),
                                 );
                               }
@@ -214,7 +214,7 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Text(
-                                'Rating',
+                                S.t('rating'),
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -256,7 +256,7 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content:
-                                            Text('Échec de la définition de la note : $e'),
+                                            Text(S.t('failedToSetRatingE1', [e])),
                                       ),
                                     );
                                   }
@@ -276,8 +276,8 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                       tileColor:
                           cs.surfaceContainerHighest.withValues(alpha: 0.45),
                       leading: const Icon(Icons.playlist_add_rounded),
-                      title: const Text(
-                        'Add to Playlist',
+                      title: Text(
+                        S.t('addToPlaylist'),
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
                       trailing: const Icon(Icons.chevron_right_rounded, size: 20),
@@ -294,39 +294,39 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                     const SizedBox(height: Insets.sm),
                     const Divider(),
                 _DetailTile(
-                  label: 'Durée',
+                  label: S.t('duration'),
                   value: _formatDuration(song.duration),
                   icon: Icons.schedule_rounded,
                 ),
                 if (song.track != null)
                   _DetailTile(
-                    label: 'Piste',
+                    label: S.t('track'),
                     value:
                         '${song.track}${song.discNumber != null ? ' (Disc ${song.discNumber})' : ''}',
                     icon: Icons.numbers_rounded,
                   ),
                 if (song.suffix != null && song.suffix!.isNotEmpty)
                   _DetailTile(
-                    label: 'Format',
+                    label: S.t('format'),
                     value:
                         '${song.suffix!.toUpperCase()}${song.bitRate != null ? ' • ${song.bitRate} kbps' : ''}',
                     icon: Icons.audio_file_rounded,
                   ),
                 if (song.size != null && song.size! > 0)
                   _DetailTile(
-                    label: 'Taille du fichier',
+                    label: S.t('fileSize'),
                     value: _formatFileSize(song.size),
                     icon: Icons.storage_rounded,
                   ),
                 if (song.genre != null && song.genre!.isNotEmpty)
                   _DetailTile(
-                    label: 'Genre',
+                    label: S.t('genre'),
                     value: song.genre!,
                     icon: Icons.category_rounded,
                   ),
                 if (song.playCount > 0)
                   _DetailTile(
-                    label: 'Nombre de lectures',
+                    label: S.t('playCount'),
                     value: '${song.playCount} plays',
                     icon: Icons.play_arrow_rounded,
                   ),
@@ -377,7 +377,7 @@ class NavidromeAlbumScreen extends ConsumerWidget {
               onPressed: () {
                 showNavidromeRatingModal(
                   context: context,
-                  title: "Noter l'album",
+                  title: S.t('rateAlbum'),
                   subtitle: album.name,
                   initialRating: album.userRating ?? 0,
                   onRatingChanged: (int newRating) async {
@@ -403,8 +403,8 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                 color: album.isStarred ? Colors.redAccent : null,
               ),
               tooltip: album.isStarred
-                  ? 'Retirer des favoris'
-                  : 'Add to favorites',
+                  ? S.t('removeFromFavorites')
+                  : S.t('addToFavorites'),
               onPressed: () async {
                 final bool willStar = !album.isStarred;
                 try {
@@ -420,7 +420,7 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Échec de la mise à jour des favoris : $e')),
+                      SnackBar(content: Text(S.t('failedToUpdateFavoriteE1', [e]))),
                     );
                   }
                 }
@@ -653,7 +653,7 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                       _AlbumBadge(
                         icon: Icons.queue_music_rounded,
                         label:
-                            '${detail.songs.length} ${detail.songs.length == 1 ? 'Track' : 'Tracks'}',
+                            '${detail.songs.length} ${detail.songs.length == 1 ? S.t('track') : S.t('tracks')}',
                       ),
                       if (album.duration > 0)
                         _AlbumBadge(
@@ -682,7 +682,7 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                 ),
                 sliver: SliverToBoxAdapter(
                   child: Text(
-                    'Tracks',
+                    S.t('tracks'),
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -690,10 +690,10 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                 ),
               ),
               if (detail.songs.isEmpty)
-                const SliverFillRemaining(
+                SliverFillRemaining(
                   hasScrollBody: false,
                   child: Center(
-                    child: Text('Aucune piste trouvée dans cet album'),
+                    child: Text(S.t('noTracksFoundInThisAlbum')),
                   ),
                 )
               else
@@ -885,13 +885,13 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                 color: Colors.red,
               ),
               const SizedBox(height: Insets.md),
-              Text("Échec du chargement de l'album : $err"),
+              Text(S.t('failedToLoadAlbumErr1', [err])),
               const SizedBox(height: Insets.md),
               FilledButton.tonal(
                 onPressed: () => ref.invalidate(
                   navidromeAlbumDetailProvider((instance, albumId)),
                 ),
-                child: const Text('Réessayer'),
+                child: Text(S.t('retry')),
               ),
             ],
           ),

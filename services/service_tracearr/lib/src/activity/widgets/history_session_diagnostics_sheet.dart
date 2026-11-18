@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -154,15 +155,15 @@ class HistorySessionDiagnosticsSheet extends StatelessWidget {
                   const SizedBox(height: Insets.md),
 
                   // 1. Session & Chain History
-                  const _SectionHeader(
-                    title: 'HISTORIQUE DES SESSIONS ET CHAÎNES',
+                  _SectionHeader(
+                    title: S.t('sessionCHAINHISTORY'),
                     icon: Icons.history_outlined,
                   ),
                   const SizedBox(height: Insets.sm),
                   _TelemetryRow(
-                    label: 'Statut',
+                    label: S.t('status'),
                     value: item.watched
-                        ? 'Completed'
+                        ? S.t('completed')
                         : item.percentComplete != null
                             ? '${item.percentComplete!.round()}% Watched'
                             : 'Recorded',
@@ -172,23 +173,23 @@ class HistorySessionDiagnosticsSheet extends StatelessWidget {
                   ),
                   if (item.durationMs != null && item.durationMs! > 0)
                     _TelemetryRow(
-                      label: 'Temps de visionnage',
+                      label: S.t('watchTime'),
                       value: _formatDuration(item.durationMs),
                     ),
                   if (item.segmentCount != null && item.segmentCount! > 1)
                     _TelemetryRow(
-                      label: 'Chaîne de reprise',
+                      label: S.t('resumeChain'),
                       value: '${item.segmentCount} sessions merged',
                       badgeColor: const Color(0xFF9C27B0),
                     ),
                   if (item.startedAt != null)
                     _TelemetryRow(
-                      label: 'Débuté à',
+                      label: S.t('startedAt'),
                       value: _formatDateTime(item.startedAt!),
                     ),
                   if (item.stoppedAt != null)
                     _TelemetryRow(
-                      label: 'Arrêté à',
+                      label: S.t('stoppedAt'),
                       value: _formatDateTime(item.stoppedAt!),
                     ),
 
@@ -197,34 +198,34 @@ class HistorySessionDiagnosticsSheet extends StatelessWidget {
                   const SizedBox(height: Insets.md),
 
                   // 2. Video Stream & Pipeline Diagnostics
-                  const _SectionHeader(
-                    title: 'TÉLÉMÉTRIE DU PIPELINE VIDÉO',
+                  _SectionHeader(
+                    title: S.t('videoPIPELINETELEMETRY'),
                     icon: Icons.videocam_outlined,
                   ),
                   const SizedBox(height: Insets.sm),
                   _TelemetryRow(
-                    label: 'Décision',
+                    label: S.t('decision'),
                     value: videoDecision,
                     highlight: isTranscode,
                   ),
                   if (item.videoCodec != null)
                     _TelemetryRow(
-                      label: 'Codec vidéo',
+                      label: S.t('videoCodec'),
                       value: item.videoCodec!.toUpperCase(),
                     ),
                   if (item.resolution != null)
                     _TelemetryRow(
-                      label: 'Résolution',
+                      label: S.t('resolution'),
                       value: item.resolution!,
                     ),
                   if (dimensions != null)
                     _TelemetryRow(
-                      label: 'Dimensions',
+                      label: S.t('dimensions'),
                       value: dimensions,
                     ),
                   if (hasDifferentDr) ...[
                     _TelemetryRow(
-                      label: 'Plage dynamique source',
+                      label: S.t('sourceDynamicRange'),
                       value: sourceDr.toUpperCase(),
                       badgeColor: sourceDr.toUpperCase().contains('HDR') ||
                               sourceDr.toUpperCase().contains('VISION')
@@ -232,13 +233,13 @@ class HistorySessionDiagnosticsSheet extends StatelessWidget {
                           : null,
                     ),
                     _TelemetryRow(
-                      label: 'Plage dynamique du flux',
+                      label: S.t('streamDynamicRange'),
                       value: '${streamDr.toUpperCase()} (Tone-Mapped)',
                       badgeColor: const Color(0xFF2196F3),
                     ),
                   ] else if (hasSourceDr || hasStreamDr) ...[
                     _TelemetryRow(
-                      label: 'Plage dynamique',
+                      label: S.t('dynamicRange'),
                       value: (sourceDr ?? streamDr)!.toUpperCase(),
                       badgeColor: (sourceDr ?? streamDr)!
                                   .toUpperCase()
@@ -252,25 +253,25 @@ class HistorySessionDiagnosticsSheet extends StatelessWidget {
                   ],
                   if (containerRemux != null)
                     _TelemetryRow(
-                      label: 'Conteneur',
+                      label: S.t('container'),
                       value: containerRemux,
                     ),
                   if (isHw)
                     _TelemetryRow(
-                      label: 'Accélération matérielle',
+                      label: S.t('hardwareAcceleration'),
                       value:
                           'Active (${item.hwDecoding ?? item.hwEncoding ?? "Hardware"})',
                       badgeColor: const Color(0xFF2196F3),
                     ),
                   if (item.transcodeSpeed != null)
                     _TelemetryRow(
-                      label: 'Vitesse de transcodage',
+                      label: S.t('transcodeSpeed'),
                       value: '${item.transcodeSpeed!.toStringAsFixed(1)}x',
                     ),
                   if (item.isThrottled != null)
                     _TelemetryRow(
-                      label: 'Ralenti',
-                      value: item.isThrottled! ? 'Yes (CPU Saved)' : 'No',
+                      label: S.t('throttled'),
+                      value: item.isThrottled! ? S.t('yesCPUSaved') : S.t('no'),
                     ),
                   if (item.transcodeReasons.isNotEmpty)
                     Padding(
@@ -287,7 +288,7 @@ class HistorySessionDiagnosticsSheet extends StatelessWidget {
                           const SizedBox(height: 2),
                           ...item.transcodeReasons.map(
                             (r) => Text(
-                              '• $r',
+                              S.t('r1', [r]),
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: colorScheme.error,
                               ),
@@ -302,33 +303,33 @@ class HistorySessionDiagnosticsSheet extends StatelessWidget {
                   const SizedBox(height: Insets.md),
 
                   // 3. Audio & Subtitles
-                  const _SectionHeader(
-                    title: 'AUDIO ET SOUS-TITRES',
+                  _SectionHeader(
+                    title: S.t('audioSUBTITLES'),
                     icon: Icons.audiotrack_outlined,
                   ),
                   const SizedBox(height: Insets.sm),
-                  _TelemetryRow(label: 'Décision audio', value: audioDecision),
+                  _TelemetryRow(label: S.t('audioDecision'), value: audioDecision),
                   if (item.audioCodec != null)
                     _TelemetryRow(
-                      label: 'Codec audio',
+                      label: S.t('audioCodec'),
                       value: item.audioCodec!.toUpperCase(),
                     ),
                   if (item.audioChannels != null)
                     _TelemetryRow(
-                      label: 'Canaux audio',
+                      label: S.t('audioChannels'),
                       value: item.audioChannels!,
                     ),
                   if (item.subtitleLanguage != null ||
                       item.subtitleCodec != null ||
                       item.subtitleDecision != null) ...[
                     _TelemetryRow(
-                      label: 'Sous-titres',
+                      label: S.t('subtitles'),
                       value:
                           '${item.subtitleLanguage ?? "Unknown"} (${item.subtitleCodec?.toUpperCase() ?? "Standard"})',
                     ),
                     if (item.subtitleDecision != null)
                       _TelemetryRow(
-                        label: 'Mode des sous-titres',
+                        label: S.t('subtitleMode'),
                         value: item.subtitleDecision!.toUpperCase(),
                         badgeColor:
                             item.subtitleDecision!.toLowerCase() == 'burn'
@@ -342,22 +343,22 @@ class HistorySessionDiagnosticsSheet extends StatelessWidget {
                   const SizedBox(height: Insets.md),
 
                   // 4. Client & Network Environment
-                  const _SectionHeader(
-                    title: 'ENVIRONNEMENT CLIENT ET LECTURE',
+                  _SectionHeader(
+                    title: S.t('clientPLAYBACKENVIRONMENT'),
                     icon: Icons.devices_outlined,
                   ),
                   const SizedBox(height: Insets.sm),
                   if (item.player != null)
-                    _TelemetryRow(label: 'Lecteur', value: item.player!),
+                    _TelemetryRow(label: S.t('player'), value: item.player!),
                   if (item.device != null)
-                    _TelemetryRow(label: 'Appareil', value: item.device!),
+                    _TelemetryRow(label: S.t('device'), value: item.device!),
                   if (item.product != null)
-                    _TelemetryRow(label: 'Produit', value: item.product!),
+                    _TelemetryRow(label: S.t('product'), value: item.product!),
                   if (item.platform != null)
-                    _TelemetryRow(label: 'Plateforme', value: item.platform!),
+                    _TelemetryRow(label: S.t('platform'), value: item.platform!),
                   if (item.bitrate != null && item.bitrate! > 0)
                     _TelemetryRow(
-                      label: 'Débit moyen',
+                      label: S.t('averageBitrate'),
                       value: item.bitrate! >= 1000
                           ? '${(item.bitrate! / 1000).toStringAsFixed(1)} Mbps'
                           : '${item.bitrate} kbps',

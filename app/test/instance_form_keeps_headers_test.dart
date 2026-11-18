@@ -88,7 +88,7 @@ void main() {
     await editProxied(tester);
     await tester.enterText(
       find.ancestor(
-        of: find.text('URL locale'),
+        of: find.text('Local URL'),
         matching: find.byType(TextFormField),
       ),
       'http://sonarr.lan.test',
@@ -118,7 +118,7 @@ class _Profiles extends ProfileListController {
 
   @override
   Future<List<Profile>> build() async => <Profile>[
-        Profile(id: 'p', name: 'Par défaut', instances: <Instance>[instance]),
+        Profile(id: 'p', name: 'Default', instances: <Instance>[instance]),
       ];
 
   @override

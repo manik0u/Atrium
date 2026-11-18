@@ -75,11 +75,11 @@ abstract final class ServiceVisuals {
 
   /// Human label for a [ServiceRole] section header.
   static String roleLabel(ServiceRole role) => switch (role) {
-        ServiceRole.automation => 'Automatisation',
-        ServiceRole.requests => 'Demandes',
-        ServiceRole.analytics => 'Statistiques',
-        ServiceRole.mediaServer => 'Serveurs multimédias',
-        ServiceRole.downloader => 'Clients de téléchargement',
-        ServiceRole.extra => 'Divers',
+        ServiceRole.automation => S.t('automation'),
+        ServiceRole.requests => S.t('requests'),
+        ServiceRole.analytics => S.t('statistics'),
+        ServiceRole.mediaServer => S.t('mediaServers'),
+        ServiceRole.downloader => S.t('downloadClients'),
+        ServiceRole.extra => S.t('extra'),
       };
 }

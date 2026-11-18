@@ -54,11 +54,11 @@ class _ProwlarrHomeState extends State<ProwlarrHome>
         children: <Widget>[
           TabBar(
             controller: _tab,
-            tabs: const <Widget>[
-              Tab(text: 'Indexeurs'),
-              Tab(text: 'Historique'),
-              Tab(text: 'Paramètres'),
-              Tab(text: 'Système'),
+            tabs: <Widget>[
+              Tab(text: S.t('indexers')),
+              Tab(text: S.t('history')),
+              Tab(text: S.t('settings')),
+              Tab(text: S.t('system')),
             ],
           ),
           Expanded(
@@ -88,7 +88,7 @@ class _ProwlarrHomeState extends State<ProwlarrHome>
       children: <Widget>[
         FloatingActionButton.small(
           heroTag: 'prowlarr-search',
-          tooltip: 'Rechercher',
+          tooltip: S.t('search'),
           onPressed: () => Navigator.of(context, rootNavigator: true).push(
             MaterialPageRoute<void>(
               builder: (_) => ProwlarrSearchScreen(instance: widget.instance),
@@ -101,7 +101,7 @@ class _ProwlarrHomeState extends State<ProwlarrHome>
           heroTag: 'prowlarr-add',
           onPressed: _openForm,
           icon: const Icon(Icons.add),
-          label: const Text('Ajouter un indexeur'),
+          label: Text(S.t('addIndexer')),
         ),
       ],
     );
@@ -144,14 +144,14 @@ class _IndexersTab extends ConsumerWidget {
             
           if (list.isEmpty) {
             return EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: () async {
         ref.invalidate(prowlarrIndexersProvider(instance));
@@ -159,26 +159,26 @@ class _IndexersTab extends ConsumerWidget {
       },
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          children: const <Widget>[
+          children: <Widget>[
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.travel_explore_outlined,
-              title: 'Aucun indexeur',
-              message: 'Touchez « Ajouter un indexeur » pour en configurer un.',
+              title: S.t('noIndexers'),
+              message: S.t('tapAddIndexerToConfigureOne'),
             ),
           ],
         ),
       );
           }
           return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async {
         ref.invalidate(prowlarrIndexersProvider(instance));
@@ -285,7 +285,7 @@ class _IndexerCard extends StatelessWidget {
                           if (stat != null)
                             _MetaPill(
                               icon: Icons.search,
-                              label: '${stat!.numberOfQueries} requêtes',
+                              label: S.t('statNumberOfQueriesQueries1', [stat!.numberOfQueries]),
                               color: cs.primary,
                             ),
                         ],

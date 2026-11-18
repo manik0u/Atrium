@@ -121,8 +121,8 @@ class _TransmissionAddSheetState
   }
 
   String get _fileLabel => switch (_files.length) {
-        0 => 'Choisir des fichiers .torrent',
-        1 => _files.first.name ?? 'Un torrent',
+        0 => S.t('chooseTorrentFiles'),
+        1 => _files.first.name ?? S.t('oneTorrent'),
         final int n => '$n torrents',
       };
 
@@ -131,12 +131,12 @@ class _TransmissionAddSheetState
     if (!_busy) {
       return _mode == _AddMode.file && _files.length > 1
           ? 'Add ${_files.length}'
-          : 'Add';
+          : S.t('add');
     }
     if (_mode == _AddMode.file && _files.length > 1) {
       return 'Adding $_done of ${_files.length}...';
     }
-    return 'Adding...';
+    return S.t('adding');
   }
 
   @override
@@ -244,13 +244,13 @@ class _TransmissionAddSheetState
       messenger.showSnackBar(
         SnackBar(
           content: Text(
-            added ? 'Torrent added' : 'Transmission a déjà ce torrent',
+            added ? S.t('torrentAdded') : S.t('transmissionAlreadyHasThatTorrent'),
           ),
         ),
       );
     } catch (e) {
       if (mounted) setState(() => _busy = false);
-      messenger.showSnackBar(SnackBar(content: Text("Échec de l'ajout : $e")));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('addFailedE1', [e]))));
     }
   }
 
@@ -259,7 +259,7 @@ class _TransmissionAddSheetState
   static String _batchResult(int total, int failed, int duplicates) {
     final int added = total - failed - duplicates;
     if (failed == 0 && duplicates == 0) {
-      return total == 1 ? 'Torrent added' : '$total torrents added';
+      return total == 1 ? S.t('torrentAdded') : '$total torrents added';
     }
     final List<String> parts = <String>[
       if (added > 0) '$added added',
@@ -299,7 +299,7 @@ class _TransmissionAddSheetState
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Text(
-              'Add torrent',
+              S.t('addTorrent'),
               style: Theme.of(context)
                   .textTheme
                   .titleLarge
@@ -307,15 +307,15 @@ class _TransmissionAddSheetState
             ),
             const SizedBox(height: Insets.md),
             SegmentedButton<_AddMode>(
-              segments: const <ButtonSegment<_AddMode>>[
+              segments: <ButtonSegment<_AddMode>>[
                 ButtonSegment<_AddMode>(
                   value: _AddMode.link,
-                  label: Text('Lien magnet ou URL'),
+                  label: Text(S.t('magnetOrURL')),
                   icon: Icon(Icons.link),
                 ),
                 ButtonSegment<_AddMode>(
                   value: _AddMode.file,
-                  label: Text('Fichier'),
+                  label: Text(S.t('file')),
                   icon: Icon(Icons.attach_file),
                 ),
               ],
@@ -333,7 +333,7 @@ class _TransmissionAddSheetState
                 maxLines: 3,
                 decoration: transmissionFieldDecoration(
                   context,
-                  label: 'lien magnet ou URL de .torrent',
+                  label: S.t('magnetLinkOrTorrentURL'),
                   prefixIcon: const Icon(Icons.link),
                 ),
                 onChanged: (_) => setState(() {}),
@@ -349,8 +349,8 @@ class _TransmissionAddSheetState
               controller: _downloadDir,
               decoration: transmissionFieldDecoration(
                 context,
-                label: 'Dossier de téléchargement (facultatif)',
-                helper: 'A path as the server sees it, not your phone',
+                label: S.t('downloadFolderOptional'),
+                helper: S.t('aPathAsTheServerSeesItNotYourPhone'),
                 prefixIcon: const Icon(Icons.folder_outlined),
               ),
               onChanged: _onFolderChanged,
@@ -366,7 +366,7 @@ class _TransmissionAddSheetState
                             ? Icons.help_outline
                             : Icons.storage_rounded,
                         label: value == null
-                            ? 'Free space unknown'
+                            ? S.t('freeSpaceUnknown')
                             : '${trFmtBytes(value)} free',
                         foreground: value == null
                             ? cs.onSurfaceVariant
@@ -377,13 +377,13 @@ class _TransmissionAddSheetState
                       ),
                     AsyncError<int?>() => TransmissionPill(
                         icon: Icons.help_outline,
-                        label: 'Espace libre inconnu',
+                        label: S.t('freeSpaceUnknown'),
                         foreground: cs.onSurfaceVariant,
                         background: cs.surfaceContainerHighest,
                       ),
                     _ => TransmissionPill(
                         icon: Icons.hourglass_empty_rounded,
-                        label: "Vérification de l'espace libre",
+                        label: S.t('checkingFreeSpace'),
                         foreground: cs.onSurfaceVariant,
                         background: cs.surfaceContainerHighest,
                       ),
@@ -397,7 +397,7 @@ class _TransmissionAddSheetState
               onChanged: _busy
                   ? null
                   : (bool v) => setState(() => _startWhenAdded = v),
-              title: const Text("Démarrer à l'ajout"),
+              title: Text(S.t('startWhenAdded')),
             ),
             const SizedBox(height: Insets.sm),
             FilledButton.icon(

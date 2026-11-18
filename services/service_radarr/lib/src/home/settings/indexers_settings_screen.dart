@@ -40,13 +40,13 @@ class _IndexersSettingsScreenState extends ConsumerState<IndexersSettingsScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Indexeurs et listes d'import"),
+        title: Text(S.t('indexersImportLists')),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Indexeurs'),
-            Tab(text: "Listes d'import"),
-            Tab(text: 'Options'),
+          tabs: [
+            Tab(text: S.t('indexers')),
+            Tab(text: S.t('importLists')),
+            Tab(text: S.t('options')),
           ],
         ),
       ),
@@ -76,7 +76,7 @@ class _IndexersTab extends ConsumerWidget {
     final presets = schemasAsync.value ?? [];
     if (presets.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Chargement des préréglages d'indexeurs…")),
+        SnackBar(content: Text(S.t('loadingIndexerPresets'))),
       );
       return;
     }
@@ -92,7 +92,7 @@ class _IndexersTab extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Add Indexer',
+                S.t('addIndexer'),
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -103,7 +103,7 @@ class _IndexersTab extends ConsumerWidget {
                   itemCount: presets.length,
                   itemBuilder: (context, index) {
                     final preset = presets[index];
-                    final name = preset['name'] as String? ?? 'Indexer';
+                    final name = preset['name'] as String? ?? S.t('indexer');
                     final implementation =
                         preset['implementationName'] as String? ?? '';
 
@@ -181,14 +181,14 @@ class _IndexersTab extends ConsumerWidget {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content:
-                              Text('Indexeur ${isNew ? 'added' : 'updated'}!'),
+                              Text(S.t('indexerIsNew')added' : 'updated'}!'),
                         ),
                       );
                     }
                   } catch (e) {
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Échec de l'enregistrement de l'indexeur : $e")),
+                        SnackBar(content: Text(S.t('failedToSaveIndexerE1', [e]))),
                       );
                     }
                   }
@@ -216,13 +216,13 @@ class _IndexersTab extends ConsumerWidget {
       ref.invalidate(radarrIndexersProvider(instance));
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Indexeur supprimé !')),
+          SnackBar(content: Text(S.t('indexerDeleted'))),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Échec de la suppression de l'indexeur : $e")),
+          SnackBar(content: Text(S.t('failedToDeleteIndexerE1', [e]))),
         );
       }
     }
@@ -243,11 +243,11 @@ class _IndexersTab extends ConsumerWidget {
       ),
       body: indexersAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, _) => Center(child: Text('Erreur : $err')),
+        error: (err, _) => Center(child: Text(S.t('errorErr1', [err]))),
         data: (indexers) {
           if (indexers.isEmpty) {
-            return const Center(
-              child: Text('Aucun indexeur configuré. Touchez + pour en ajouter un.'),
+            return Center(
+              child: Text(S.t('noIndexersConfiguredTapToAddOne')),
             );
           }
 
@@ -256,8 +256,8 @@ class _IndexersTab extends ConsumerWidget {
             itemCount: indexers.length,
             itemBuilder: (context, index) {
               final idx = indexers[index];
-              final name = idx['name'] as String? ?? 'Indexer';
-              final proto = idx['protocol'] as String? ?? 'Torrent';
+              final name = idx['name'] as String? ?? S.t('indexer');
+              final proto = idx['protocol'] as String? ?? S.t('torrent');
               final id = idx['id'] as int;
 
               return Card(
@@ -268,7 +268,7 @@ class _IndexersTab extends ConsumerWidget {
                     name,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text('Protocole : ${proto.toUpperCase()}'),
+                  subtitle: Text(S.t('protocolProtoToUpperCase1', [proto.toUpperCase()])),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -310,7 +310,7 @@ class _ImportListsTab extends ConsumerWidget {
     final presets = schemasAsync.value ?? [];
     if (presets.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Chargement des préréglages…')),
+        SnackBar(content: Text(S.t('loadingPresets'))),
       );
       return;
     }
@@ -326,7 +326,7 @@ class _ImportListsTab extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Add Import List',
+                S.t('addImportList'),
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -337,7 +337,7 @@ class _ImportListsTab extends ConsumerWidget {
                   itemCount: presets.length,
                   itemBuilder: (context, index) {
                     final preset = presets[index];
-                    final name = preset['name'] as String? ?? 'Import List';
+                    final name = preset['name'] as String? ?? S.t('importList');
 
                     return ListTile(
                       title: Text(name),
@@ -374,14 +374,14 @@ class _ImportListsTab extends ConsumerWidget {
         [];
     final String listName = list['name'] as String? ??
         list['implementationName'] as String? ??
-        'Import List';
+        S.t('importList');
 
     await showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
-          title: Text(isNew ? 'Ajouter $listName' : 'Modifier $listName'),
+          title: Text(isNew ? S.t('addListName1', [listName]) : S.t('editListName1', [listName])),
           content: SizedBox(
             width: double.maxFinite,
             child: SingleChildScrollView(
@@ -455,7 +455,7 @@ class _ImportListsTab extends ConsumerWidget {
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Échec de l'enregistrement de la liste d'import : $e"),
+                          content: Text(S.t('failedToSaveImportListE1', [e])),
                         ),
                       );
                     }
@@ -484,13 +484,13 @@ class _ImportListsTab extends ConsumerWidget {
       ref.invalidate(radarrImportListsProvider(instance));
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Liste d'import supprimée !")),
+          SnackBar(content: Text(S.t('importListDeleted'))),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Échec de la suppression de la liste d'import : $e")),
+          SnackBar(content: Text(S.t('failedToDeleteImportListE1', [e]))),
         );
       }
     }
@@ -510,11 +510,11 @@ class _ImportListsTab extends ConsumerWidget {
       ),
       body: listsAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, _) => Center(child: Text('Erreur : $err')),
+        error: (err, _) => Center(child: Text(S.t('errorErr1', [err]))),
         data: (lists) {
           if (lists.isEmpty) {
-            return const Center(
-              child: Text("Aucune liste d'import configurée. Touchez + pour en ajouter une."),
+            return Center(
+              child: Text(S.t('noImportListsConfiguredTapToAddOne')),
             );
           }
 
@@ -523,7 +523,7 @@ class _ImportListsTab extends ConsumerWidget {
             itemCount: lists.length,
             itemBuilder: (context, index) {
               final lst = lists[index];
-              final name = lst['name'] as String? ?? 'Import List';
+              final name = lst['name'] as String? ?? S.t('importList');
               final id = lst['id'] as int;
 
               return Card(
@@ -631,13 +631,13 @@ class _IndexerOptionsTabState extends ConsumerState<_IndexerOptionsTab> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Options de l'indexeur enregistrées !")),
+          SnackBar(content: Text(S.t('indexerOptionsSaved'))),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erreur : $e')),
+          SnackBar(content: Text(S.t('errorE1', [e]))),
         );
       }
     } finally {
@@ -652,7 +652,7 @@ class _IndexerOptionsTabState extends ConsumerState<_IndexerOptionsTab> {
 
     return configAsync.when(
       loading: () => const Center(child: ExpressiveProgressIndicator()),
-      error: (err, stack) => Center(child: Text('Erreur : $err')),
+      error: (err, stack) => Center(child: Text(S.t('errorErr1', [err]))),
       data: (config) {
         _initialize(config);
 
@@ -673,7 +673,7 @@ class _IndexerOptionsTabState extends ConsumerState<_IndexerOptionsTab> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Indexer Options',
+                        S.t('indexerOptions'),
                         style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: theme.colorScheme.primary,
@@ -683,9 +683,9 @@ class _IndexerOptionsTabState extends ConsumerState<_IndexerOptionsTab> {
                       TextFormField(
                         controller: _minAgeController,
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Âge minimal (minutes)',
-                          helperText: 'Usenet uniquement : retarder les correspondances de recherche',
+                        decoration: InputDecoration(
+                          labelText: S.t('minimumAgeMinutes'),
+                          helperText: S.t('usenetOnlyDelaySearchMatches'),
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -693,10 +693,10 @@ class _IndexerOptionsTabState extends ConsumerState<_IndexerOptionsTab> {
                       TextFormField(
                         controller: _retentionController,
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Conservation (jours)',
+                        decoration: InputDecoration(
+                          labelText: S.t('retentionDays'),
                           helperText:
-                              'Usenet uniquement : âge de rétention max (0 = illimité)',
+                              S.t('usenetOnlyMaxRetentionAge0Unlimited'),
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -704,9 +704,9 @@ class _IndexerOptionsTabState extends ConsumerState<_IndexerOptionsTab> {
                       TextFormField(
                         controller: _maxSizeController,
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Taille maximale',
-                          helperText: '0 = illimité',
+                        decoration: InputDecoration(
+                          labelText: S.t('maximumSize'),
+                          helperText: S.t('k0Unlimited'),
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -714,9 +714,9 @@ class _IndexerOptionsTabState extends ConsumerState<_IndexerOptionsTab> {
                       TextFormField(
                         controller: _rssIntervalController,
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Intervalle de synchro RSS (minutes)',
-                          helperText: 'Par défaut : 15 minutes',
+                        decoration: InputDecoration(
+                          labelText: S.t('rssSyncIntervalMinutes'),
+                          helperText: S.t('default15Minutes'),
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -728,7 +728,7 @@ class _IndexerOptionsTabState extends ConsumerState<_IndexerOptionsTab> {
                           onPressed: _saving ? null : _save,
                           child: _saving
                               ? const ExpressiveProgressIndicator()
-                              : const Text('Enregistrer les options'),
+                              : Text(S.t('saveOptions')),
                         ),
                       ),
                     ],

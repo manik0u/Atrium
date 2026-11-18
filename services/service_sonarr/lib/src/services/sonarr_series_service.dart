@@ -2,6 +2,7 @@ import '../generated/api/raw_series_api.dart';
 import '../generated/api/raw_series_lookup_api.dart';
 import '../generated/models/series_resource.dart';
 import '../generated/responses/sonarr_exception.dart';
+import 'package:core_models/core_models.dart';
 
 /// High-level service wrapper for Sonarr Series operations.
 class SonarrSeriesService {
@@ -18,12 +19,12 @@ class SonarrSeriesService {
     }
     if (response.error != null) {
       throw SonarrException(
-        response.error!.message ?? 'Échec de la récupération des séries',
+        response.error!.message ?? S.t('failedToFetchSeries'),
         statusCode: response.statusCode,
         error: response.error,
       );
     }
-    throw SonarrException('Failed to fetch series', statusCode: response.statusCode);
+    throw SonarrException(S.t('failedToFetchSeries'), statusCode: response.statusCode);
   }
 
   /// Retrieves a specific series by ID.
@@ -34,12 +35,12 @@ class SonarrSeriesService {
     }
     if (response.error != null) {
       throw SonarrException(
-        response.error!.message ?? 'Échec de la récupération des séries',
+        response.error!.message ?? S.t('failedToFetchSeries'),
         statusCode: response.statusCode,
         error: response.error,
       );
     }
-    throw SonarrException('Failed to fetch series', statusCode: response.statusCode);
+    throw SonarrException(S.t('failedToFetchSeries'), statusCode: response.statusCode);
   }
 
   /// Searches for series by term.
@@ -50,11 +51,11 @@ class SonarrSeriesService {
     }
     if (response.error != null) {
       throw SonarrException(
-        response.error!.message ?? 'Échec de la recherche de la série',
+        response.error!.message ?? S.t('seriesLookupFailed'),
         statusCode: response.statusCode,
         error: response.error,
       );
     }
-    throw SonarrException('Series lookup failed', statusCode: response.statusCode);
+    throw SonarrException(S.t('seriesLookupFailed'), statusCode: response.statusCode);
   }
 }

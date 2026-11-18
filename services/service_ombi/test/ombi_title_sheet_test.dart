@@ -117,6 +117,6 @@ void main() {
     expect(find.text('Movie · 2026'), findsOneWidget);
     expect(find.text('7.9'), findsOneWidget);
     expect(find.text('Peter Parker starts over.'), findsWidgets);
-    expect(find.widgetWithText(TextButton, 'Réessayer'), findsOneWidget);
+    expect(find.widgetWithText(TextButton, 'Retry'), findsOneWidget);
   });
 }

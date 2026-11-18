@@ -34,11 +34,11 @@ Future<NavidromePlaylist?> showNavidromeCreatePlaylistDialog({
           final ColorScheme cs = theme.colorScheme;
 
           return AlertDialog(
-            title: const Row(
+            title: Row(
               children: <Widget>[
                 Icon(Icons.playlist_add_rounded),
                 SizedBox(width: Insets.sm),
-                Text('Nouvelle playlist'),
+                Text(S.t('newPlaylist')),
               ],
             ),
             content: SingleChildScrollView(
@@ -50,8 +50,8 @@ Future<NavidromePlaylist?> showNavidromeCreatePlaylistDialog({
                     controller: nameController,
                     autofocus: true,
                     decoration: InputDecoration(
-                      labelText: 'Nom de la playlist *',
-                      hintText: 'ex. Chill Vibes',
+                      labelText: S.t('playlistName'),
+                      hintText: S.t('eGChillVibes'),
                       errorText: errorText,
                       border: const OutlineInputBorder(),
                     ),
@@ -65,20 +65,20 @@ Future<NavidromePlaylist?> showNavidromeCreatePlaylistDialog({
                   TextField(
                     controller: commentController,
                     maxLines: 2,
-                    decoration: const InputDecoration(
-                      labelText: 'Description (facultatif)',
-                      hintText: 'Ajoutez un commentaire ou une description…',
+                    decoration: InputDecoration(
+                      labelText: S.t('descriptionOptional'),
+                      hintText: S.t('addACommentOrDescription'),
                       border: OutlineInputBorder(),
                     ),
                   ),
                   const SizedBox(height: Insets.sm),
                   SwitchListTile.adaptive(
                     contentPadding: EdgeInsets.zero,
-                    title: const Text('Playlist publique'),
+                    title: Text(S.t('publicPlaylist')),
                     subtitle: Text(
                       isPublic
-                          ? 'Visible par tous les utilisateurs de ce serveur'
-                          : 'Visible uniquement par vous',
+                          ? S.t('visibleToAllUsersOnThisServer')
+                          : S.t('onlyVisibleToYou'),
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: cs.onSurfaceVariant,
                       ),
@@ -96,7 +96,7 @@ Future<NavidromePlaylist?> showNavidromeCreatePlaylistDialog({
                 onPressed: isSubmitting
                     ? null
                     : () => Navigator.of(dialogContext).pop(),
-                child: const Text('Annuler'),
+                child: Text(S.t('cancel')),
               ),
               FilledButton(
                 onPressed: isSubmitting
@@ -105,7 +105,7 @@ Future<NavidromePlaylist?> showNavidromeCreatePlaylistDialog({
                         final String name = nameController.text.trim();
                         if (name.isEmpty) {
                           setDialogState(() {
-                            errorText = 'Please enter a playlist name';
+                            errorText = S.t('pleaseEnterAPlaylistName');
                           });
                           return;
                         }
@@ -145,7 +145,7 @@ Future<NavidromePlaylist?> showNavidromeCreatePlaylistDialog({
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text('Playlist « $name » créée'),
+                                content: Text(S.t('playlistNameCreated1', [name])),
                                 behavior: SnackBarBehavior.floating,
                               ),
                             );
@@ -166,7 +166,7 @@ Future<NavidromePlaylist?> showNavidromeCreatePlaylistDialog({
                         } catch (e) {
                           setDialogState(() {
                             isSubmitting = false;
-                            errorText = 'Failed to create playlist: $e';
+                            errorText = S.t('failedToCreatePlaylistE1', [e]);
                           });
                         }
                       },
@@ -176,7 +176,7 @@ Future<NavidromePlaylist?> showNavidromeCreatePlaylistDialog({
                         height: 18,
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
-                    : const Text('Créer'),
+                    : Text(S.t('create')),
               ),
             ],
           );
@@ -247,7 +247,7 @@ Future<void> showNavidromePlaylistPicker({
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                'Add to Playlist',
+                                S.t('addToPlaylist'),
                                 style: theme.textTheme.titleMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -275,8 +275,8 @@ Future<void> showNavidromePlaylistPicker({
                         color: cs.onPrimaryContainer,
                       ),
                     ),
-                    title: const Text(
-                      'New Playlist',
+                    title: Text(
+                      S.t('newPlaylist'),
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                     onTap: () async {
@@ -298,7 +298,7 @@ Future<void> showNavidromePlaylistPicker({
                             child: Padding(
                               padding: const EdgeInsets.all(Insets.lg),
                               child: Text(
-                                'Aucune playlist personnalisée pour le moment.\nCréez-en une ci-dessus pour commencer.',
+                                S.t('noCustomPlaylistsYetCreateOneAboveToGetStarted'),
                                 textAlign: TextAlign.center,
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   color: cs.onSurfaceVariant,
@@ -374,7 +374,7 @@ Future<void> showNavidromePlaylistPicker({
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content: Text(
-                                          '« ${song.title} » ajouté à ${pl.name}',
+                                          S.t('addedSongTitleToPlName2', [song.title, pl.name]),
                                         ),
                                         behavior: SnackBarBehavior.floating,
                                       ),
@@ -385,7 +385,7 @@ Future<void> showNavidromePlaylistPicker({
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content: Text(
-                                          'Failed to add to playlist: $e',
+                                          S.t('failedToAddToPlaylistE1', [e]),
                                         ),
                                       ),
                                     );
@@ -400,7 +400,7 @@ Future<void> showNavidromePlaylistPicker({
                         child: CircularProgressIndicator(),
                       ),
                       error: (Object err, _) => Center(
-                        child: Text('Échec du chargement des playlists : $err'),
+                        child: Text(S.t('failedToLoadPlaylistsErr1', [err])),
                       ),
                     ),
                   ),

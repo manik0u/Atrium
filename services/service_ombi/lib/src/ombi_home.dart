@@ -54,13 +54,13 @@ class _OmbiHomeState extends ConsumerState<OmbiHome> {
 
   /// All comes first: it is what an instance with nothing waiting opens on,
   /// and a chosen chip scrolled off the edge tells nobody what they see.
-  static const List<(OmbiRequestFilter, String)> _filters =
+  static final List<(OmbiRequestFilter, String)> _filters =
       <(OmbiRequestFilter, String)>[
-    (OmbiRequestFilter.all, 'All'),
-    (OmbiRequestFilter.pending, 'Pending'),
-    (OmbiRequestFilter.processing, 'Processing'),
-    (OmbiRequestFilter.available, 'Available'),
-    (OmbiRequestFilter.denied, 'Denied'),
+    (OmbiRequestFilter.all, S.t('all')),
+    (OmbiRequestFilter.pending, S.t('pending')),
+    (OmbiRequestFilter.processing, S.t('processing')),
+    (OmbiRequestFilter.available, S.t('available')),
+    (OmbiRequestFilter.denied, S.t('denied')),
   ];
 
   void _openTab(int tab) => setState(() {
@@ -87,7 +87,7 @@ class _OmbiHomeState extends ConsumerState<OmbiHome> {
         ),
         actions: <Widget>[
           IconButton(
-            tooltip: 'Rechercher',
+            tooltip: S.t('search'),
             icon: const Icon(Icons.search),
             onPressed: () => showSearch<void>(
               context: context,
@@ -136,15 +136,15 @@ class _OmbiHomeState extends ConsumerState<OmbiHome> {
         visible: true,
         selectedIndex: _tab,
         onDestinationSelected: _openTab,
-        destinations: const <NavigationDestination>[
+        destinations: <NavigationDestination>[
           NavigationDestination(
             icon: Icon(Icons.playlist_play),
-            label: 'Demandes',
+            label: S.t('requests'),
           ),
           NavigationDestination(
             icon: Icon(Icons.explore_outlined),
             selectedIcon: Icon(Icons.explore),
-            label: 'Découvrir',
+            label: S.t('discover'),
           ),
         ],
       ),
@@ -201,9 +201,9 @@ class _OmbiHomeState extends ConsumerState<OmbiHome> {
           ),
           child: SegmentedButton<OmbiMediaKind>(
             segments: <ButtonSegment<OmbiMediaKind>>[
-              const ButtonSegment<OmbiMediaKind>(
+              ButtonSegment<OmbiMediaKind>(
                 value: OmbiMediaKind.movie,
-                label: Text('Films'),
+                label: Text(S.t('movies')),
                 icon: Icon(Icons.movie_outlined),
               ),
               const ButtonSegment<OmbiMediaKind>(
@@ -212,9 +212,9 @@ class _OmbiHomeState extends ConsumerState<OmbiHome> {
                 icon: Icon(Icons.live_tv_outlined),
               ),
               if (music)
-                const ButtonSegment<OmbiMediaKind>(
+                ButtonSegment<OmbiMediaKind>(
                   value: OmbiMediaKind.music,
-                  label: Text('Musique'),
+                  label: Text(S.t('music')),
                   icon: Icon(Icons.album_outlined),
                 ),
             ],
@@ -262,13 +262,13 @@ class _RequestList extends ConsumerWidget {
 
   final OmbiListKey listKey;
 
-  static const Map<OmbiRequestFilter, String> _emptyTitles =
+  static final Map<OmbiRequestFilter, String> _emptyTitles =
       <OmbiRequestFilter, String>{
-    OmbiRequestFilter.pending: "Rien n'attend une approbation",
+    OmbiRequestFilter.pending: S.t('nothingWaitingForApproval'),
     OmbiRequestFilter.processing: 'Nothing on its way',
     OmbiRequestFilter.available: 'Nothing available yet',
     OmbiRequestFilter.denied: 'Nothing denied',
-    OmbiRequestFilter.all: 'No requests yet',
+    OmbiRequestFilter.all: S.t('noRequestsYet'),
   };
 
   @override

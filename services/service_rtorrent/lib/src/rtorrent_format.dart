@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 
 import 'models/rtorrent_torrent.dart';
@@ -52,7 +53,7 @@ String rtFmtEta(RtorrentTorrent t) {
 /// rTorrent's limits are plain **bytes per second** with 0 meaning unlimited -
 /// there is no separate enabled flag the way Transmission has one.
 String rtFmtLimit(int bytesPerSec) =>
-    bytesPerSec <= 0 ? 'Unlimited' : rtFmtRate(bytesPerSec);
+    bytesPerSec <= 0 ? S.t('unlimited') : rtFmtRate(bytesPerSec);
 
 /// Splits a rate into number and unit so the two can be typeset at different
 /// sizes: `('1.2', 'MB/s')`.

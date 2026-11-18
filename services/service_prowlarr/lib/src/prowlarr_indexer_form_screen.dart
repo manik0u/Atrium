@@ -127,11 +127,11 @@ class _ProwlarrIndexerFormScreenState
           await ref.read(prowlarrApiProvider(widget.instance).future);
       await api.testIndexerRaw(_buildPayload());
       messenger.showSnackBar(
-        const SnackBar(content: Text('Test réussi')),
+        SnackBar(content: Text(S.t('testPassed'))),
       );
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec du test : ${_errorMessage(e)}')),
+        SnackBar(content: Text(S.t('testFailedErrorMessageE1', [_errorMessage(e)]))),
       );
     } finally {
       if (mounted) {
@@ -158,12 +158,12 @@ class _ProwlarrIndexerFormScreenState
       }
       ref.invalidate(prowlarrIndexersProvider(widget.instance));
       messenger.showSnackBar(
-        SnackBar(content: Text(_isEdit ? 'Indexeur enregistré' : 'Indexeur ajouté')),
+        SnackBar(content: Text(_isEdit ? S.t('indexerSaved') : S.t('indexerAdded'))),
       );
       nav.pop();
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text("Échec de l'enregistrement : ${_errorMessage(e)}")),
+        SnackBar(content: Text(S.t('saveFailedErrorMessageE1', [_errorMessage(e)]))),
       );
       if (mounted) {
         setState(() => _saving = false);
@@ -175,12 +175,12 @@ class _ProwlarrIndexerFormScreenState
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text("Supprimer l'indexeur ?"),
-        content: Text('Retirer « ${_nameController.text} » de Prowlarr ?'),
+        title: Text(S.t('deleteIndexer')),
+        content: Text(S.t('removeNameControllerTextFromProwlarr1', [_nameController.text])),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -188,7 +188,7 @@ class _ProwlarrIndexerFormScreenState
               foregroundColor: Theme.of(context).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Supprimer'),
+            child: Text(S.t('delete')),
           ),
         ],
       ),
@@ -204,11 +204,11 @@ class _ProwlarrIndexerFormScreenState
           await ref.read(prowlarrApiProvider(widget.instance).future);
       await api.deleteIndexer(widget.indexerId!);
       ref.invalidate(prowlarrIndexersProvider(widget.instance));
-      messenger.showSnackBar(const SnackBar(content: Text('Indexeur supprimé')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('indexerDeleted_2'))));
       nav.pop();
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la suppression : ${_errorMessage(e)}')),
+        SnackBar(content: Text(S.t('deleteFailedErrorMessageE1', [_errorMessage(e)]))),
       );
       if (mounted) {
         setState(() => _deleting = false);
@@ -220,10 +220,10 @@ class _ProwlarrIndexerFormScreenState
   Widget build(BuildContext context) {
     if (_isEdit && _selected == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text("Modifier l'indexeur")),
+        appBar: AppBar(title: Text(S.t('editIndexer'))),
         body: _loadError != null
             ? ErrorView(
-                title: "Impossible de charger l'indexeur",
+                title: S.t('couldNotLoadIndexer'),
                 message: _loadError!,
                 onRetry: _loadRaw,
               )
@@ -263,7 +263,7 @@ class _ProwlarrIndexerFormScreenState
         actions: <Widget>[
           if (_isEdit)
             IconButton(
-              tooltip: 'Supprimer',
+              tooltip: S.t('delete'),
               icon: _deleting
                   ? const SizedBox(
                       width: 18,
@@ -276,7 +276,7 @@ class _ProwlarrIndexerFormScreenState
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const Text('Avancé', style: TextStyle(fontSize: 12)),
+              Text(S.t('advanced'), style: TextStyle(fontSize: 12)),
               Switch(
                 value: _showAdvanced,
                 onChanged: (bool v) => setState(() => _showAdvanced = v),
@@ -292,12 +292,12 @@ class _ProwlarrIndexerFormScreenState
           children: <Widget>[
             TextFormField(
               controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'Nom',
+              decoration: InputDecoration(
+                labelText: S.t('name'),
                 border: OutlineInputBorder(),
               ),
               validator: (String? v) =>
-                  (v == null || v.trim().isEmpty) ? 'Required' : null,
+                  (v == null || v.trim().isEmpty) ? S.t('required') : null,
             ),
             const SizedBox(height: Insets.md),
             Container(
@@ -308,7 +308,7 @@ class _ProwlarrIndexerFormScreenState
               child: SwitchListTile(
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: Insets.md),
-                title: const Text('Activé'),
+                title: Text(S.t('enabled')),
                 value: _enabled,
                 onChanged: (bool v) => setState(() => _enabled = v),
               ),
@@ -317,9 +317,9 @@ class _ProwlarrIndexerFormScreenState
             TextFormField(
               initialValue: '$_priority',
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Priorité',
-                helperText: 'Plus la valeur est basse, plus la priorité est haute (1-50, 25 par défaut)',
+              decoration: InputDecoration(
+                labelText: S.t('priority'),
+                helperText: S.t('lowerIsHigherPriority150Default25'),
                 border: OutlineInputBorder(),
               ),
               onChanged: (String v) => _priority = int.tryParse(v) ?? _priority,
@@ -352,7 +352,7 @@ class _ProwlarrIndexerFormScreenState
                             child: ExpressiveProgressIndicator(strokeWidth: 2),
                           )
                         : const Icon(Icons.science_outlined),
-                    label: const Text('Tester'),
+                    label: Text(S.t('test')),
                   ),
                 ),
                 const SizedBox(width: Insets.md),
@@ -366,7 +366,7 @@ class _ProwlarrIndexerFormScreenState
                             child: ExpressiveProgressIndicator(strokeWidth: 2),
                           )
                         : const Icon(Icons.save_outlined),
-                    label: Text(_isEdit ? 'Enregistrer' : 'Ajouter'),
+                    label: Text(_isEdit ? S.t('save') : S.t('add')),
                   ),
                 ),
               ],
@@ -411,7 +411,7 @@ class _SchemaPickerState extends ConsumerState<_SchemaPicker> {
     final AsyncValue<List<Map<String, dynamic>>> schemas =
         ref.watch(prowlarrIndexerSchemasProvider(widget.instance));
     return Scaffold(
-      appBar: AppBar(title: const Text('Ajouter un indexeur')),
+      appBar: AppBar(title: Text(S.t('addIndexer'))),
       body: Column(
         children: <Widget>[
           Padding(
@@ -419,8 +419,8 @@ class _SchemaPickerState extends ConsumerState<_SchemaPicker> {
             child: TextField(
               controller: _query,
               autofocus: true,
-              decoration: const InputDecoration(
-                hintText: 'Rechercher des indexeurs…',
+              decoration: InputDecoration(
+                hintText: S.t('searchIndexers'),
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
               ),
@@ -445,10 +445,10 @@ class _SchemaPickerState extends ConsumerState<_SchemaPicker> {
                         )
                         .toList();
                 if (filtered.isEmpty) {
-                  return const EmptyView(
+                  return EmptyView(
                     icon: Icons.search_off,
-                    title: 'Aucune correspondance',
-                    message: "Aucune définition d'indexeur ne correspond à votre recherche.",
+                    title: S.t('noMatches'),
+                    message: S.t('noIndexerDefinitionMatchesYourSearch'),
                   );
                 }
                 return ListView.builder(
@@ -456,7 +456,7 @@ class _SchemaPickerState extends ConsumerState<_SchemaPicker> {
                   itemCount: filtered.length,
                   itemBuilder: (BuildContext context, int i) {
                     final Map<String, dynamic> s = filtered[i];
-                    final String name = (s['name'] as String?) ?? 'Unknown';
+                    final String name = (s['name'] as String?) ?? S.t('unknown');
                     final String proto = (s['protocol'] as String?) ?? '';
                     final String privacy = (s['privacy'] as String?) ?? '';
                     return ListTile(
@@ -500,12 +500,12 @@ class _SyncProfileDropdown extends ConsumerWidget {
     final AsyncValue<List<Map<String, dynamic>>> profiles =
         ref.watch(prowlarrAppProfilesProvider(instance));
     return profiles.when(
-      loading: () => const InputDecorator(
+      loading: () => InputDecorator(
         decoration: InputDecoration(
-          labelText: 'Profil de synchro',
+          labelText: S.t('syncProfile'),
           border: OutlineInputBorder(),
         ),
-        child: Text('Chargement…'),
+        child: Text(S.t('loading')),
       ),
       error: (_, __) => const SizedBox.shrink(),
       data: (List<Map<String, dynamic>> list) {
@@ -525,15 +525,15 @@ class _SyncProfileDropdown extends ConsumerWidget {
         }
         return DropdownButtonFormField<int>(
           initialValue: effective,
-          decoration: const InputDecoration(
-            labelText: 'Profil de synchro',
+          decoration: InputDecoration(
+            labelText: S.t('syncProfile'),
             border: OutlineInputBorder(),
           ),
           items: list
               .map(
                 (Map<String, dynamic> p) => DropdownMenuItem<int>(
                   value: (p['id'] as num).toInt(),
-                  child: Text((p['name'] ?? 'Profil') as String),
+                  child: Text((p['name'] ?? S.t('profile')) as String),
                 ),
               )
               .toList(),
@@ -562,13 +562,13 @@ class _IndexerStatsSection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text('Statistiques', style: theme.textTheme.titleMedium),
+        Text(S.t('statistics'), style: theme.textTheme.titleMedium),
         const SizedBox(height: Insets.sm),
-        _row(theme, 'Queries', '${stat.numberOfQueries}'),
-        _row(theme, 'Grabs', '${stat.numberOfGrabs}'),
+        _row(theme, S.t('queries'), '${stat.numberOfQueries}'),
+        _row(theme, S.t('grabs'), '${stat.numberOfGrabs}'),
         _row(theme, 'RSS queries', '${stat.numberOfRssQueries}'),
-        _row(theme, 'Failed queries', '${stat.numberOfFailedQueries}'),
-        _row(theme, 'Failed grabs', '${stat.numberOfFailedGrabs}'),
+        _row(theme, S.t('failedQueries'), '${stat.numberOfFailedQueries}'),
+        _row(theme, S.t('failedGrabs'), '${stat.numberOfFailedGrabs}'),
         _row(theme, 'Avg response', '${stat.averageResponseTime} ms'),
       ],
     );

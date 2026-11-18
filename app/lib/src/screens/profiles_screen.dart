@@ -18,21 +18,21 @@ class ProfilesScreen extends ConsumerWidget {
         ref.watch(activeProfileProvider)?.id;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Profils')),
+      appBar: AppBar(title: Text(S.t('profiles'))),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _create(context, ref),
         icon: const Icon(Icons.add),
-        label: const Text('Nouveau profil'),
+        label: Text(S.t('newProfile')),
       ),
       body: AsyncValueView<List<Profile>>(
         value: profiles,
         onRetry: () => ref.invalidate(profileListProvider),
         data: (List<Profile> list) {
           if (list.isEmpty) {
-            return const EmptyView(
+            return EmptyView(
               icon: Icons.switch_account_outlined,
-              title: 'Aucun profil',
-              message: 'Créez un profil pour commencer à ajouter des services.',
+              title: S.t('noProfiles'),
+              message: S.t('createAProfileToStartAddingServices'),
             );
           }
           return RadioGroup<String>(
@@ -52,7 +52,7 @@ class ProfilesScreen extends ConsumerWidget {
                         'service${p.instances.length == 1 ? '' : 's'}',
                       ),
                       secondary: PopupMenuButton<_ProfileAction>(
-                        tooltip: 'Actions sur le profil',
+                        tooltip: S.t('profileActions'),
                         onSelected: (_ProfileAction action) =>
                             switch (action) {
                           _ProfileAction.rename => _rename(context, ref, p),
@@ -62,16 +62,16 @@ class ProfilesScreen extends ConsumerWidget {
                         },
                         itemBuilder: (BuildContext _) =>
                             <PopupMenuEntry<_ProfileAction>>[
-                          const PopupMenuItem<_ProfileAction>(
+                          PopupMenuItem<_ProfileAction>(
                             value: _ProfileAction.rename,
-                            child: Text('Renommer'),
+                            child: Text(S.t('rename')),
                           ),
                           // The last profile stays: the app needs one to
                           // hold its instances.
                           PopupMenuItem<_ProfileAction>(
                             value: _ProfileAction.delete,
                             enabled: list.length > 1,
-                            child: const Text('Supprimer'),
+                            child: Text(S.t('delete')),
                           ),
                         ],
                       ),
@@ -88,9 +88,9 @@ class ProfilesScreen extends ConsumerWidget {
   Future<void> _create(BuildContext context, WidgetRef ref) async {
     final String? name = await showDialog<String>(
       context: context,
-      builder: (BuildContext _) => const _ProfileNameDialog(
-        title: 'Nouveau profil',
-        confirm: 'Create',
+      builder: (BuildContext _) => _ProfileNameDialog(
+        title: S.t('newProfile'),
+        confirm: S.t('create'),
       ),
     );
     final String trimmed = name?.trim() ?? '';
@@ -108,8 +108,8 @@ class ProfilesScreen extends ConsumerWidget {
     final String? name = await showDialog<String>(
       context: context,
       builder: (BuildContext _) => _ProfileNameDialog(
-        title: 'Renommer le profil',
-        confirm: 'Rename',
+        title: S.t('renameProfile'),
+        confirm: S.t('rename'),
         initial: profile.name,
       ),
     );
@@ -157,13 +157,13 @@ class _ProfileNameDialogState extends State<_ProfileNameDialog> {
       content: TextField(
         controller: _controller,
         autofocus: true,
-        decoration: const InputDecoration(hintText: 'Nom du profil'),
+        decoration: InputDecoration(hintText: S.t('profileName')),
         onSubmitted: (String v) => Navigator.of(context).pop(v),
       ),
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(_controller.text),

@@ -33,7 +33,7 @@ class DashboardMySpeedWidget extends ConsumerWidget {
           ? () => _open(context, instances.first)
           : null,
       child: instances.isEmpty
-          ? const DashboardIdleRow(text: 'Aucune instance MySpeed configurée')
+          ? DashboardIdleRow(text: S.t('noMySpeedInstancesConfigured'))
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -115,16 +115,16 @@ class _MySpeedInstanceBlockState extends ConsumerState<_MySpeedInstanceBlock> {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Lancer un speedtest'),
-        content: Text('Lancer un nouveau speedtest sur ${widget.instance.name} ?'),
+        title: Text(S.t('runSpeedtest')),
+        content: Text(S.t('startANewSpeedtestOnWidgetInstanceName1', [widget.instance.name])),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Démarrer'),
+            child: Text(S.t('start')),
           ),
         ],
       ),
@@ -140,14 +140,14 @@ class _MySpeedInstanceBlockState extends ConsumerState<_MySpeedInstanceBlock> {
       await api.runSpeedtest();
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Speedtest lancé avec succès')),
+        SnackBar(content: Text(S.t('speedtestTriggeredSuccessfully'))),
       );
       _startPolling();
     } catch (e) {
       if (!mounted) return;
       setState(() => _isLocallyRunning = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Échec du lancement du speedtest : $e')),
+        SnackBar(content: Text(S.t('failedToTriggerSpeedtestE1', [e]))),
       );
     }
   }
@@ -238,11 +238,11 @@ class _MySpeedInstanceBlockState extends ConsumerState<_MySpeedInstanceBlock> {
             Expanded(
               child: MySpeedMetricBox(
                 icon: Icons.arrow_downward_rounded,
-                label: 'DESCENTE',
+                label: S.t('down_2'),
                 value: latest != null
                     ? latest.download.toStringAsFixed(1)
                     : '--',
-                unit: 'Mbps',
+                unit: S.t('mbps'),
                 iconColor: colors.primary,
                 boxColor: colors.primaryContainer.withValues(alpha: 0.25),
                 borderColor: colors.primary.withValues(alpha: 0.25),
@@ -252,10 +252,10 @@ class _MySpeedInstanceBlockState extends ConsumerState<_MySpeedInstanceBlock> {
             Expanded(
               child: MySpeedMetricBox(
                 icon: Icons.arrow_upward_rounded,
-                label: 'MONTÉE',
+                label: S.t('up_2'),
                 value:
                     latest != null ? latest.upload.toStringAsFixed(1) : '--',
-                unit: 'Mbps',
+                unit: S.t('mbps'),
                 iconColor: colors.tertiary,
                 boxColor: colors.tertiaryContainer.withValues(alpha: 0.25),
                 borderColor: colors.tertiary.withValues(alpha: 0.25),
@@ -313,7 +313,7 @@ class _MySpeedInstanceBlockState extends ConsumerState<_MySpeedInstanceBlock> {
               child: Text(
                 latest?.server != null && latest!.server!.isNotEmpty
                     ? latest.server!
-                    : (latest?.createdAt == null ? 'Aucun résultat pour le moment' : ''),
+                    : (latest?.createdAt == null ? S.t('noResultsYet') : ''),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.bodySmall?.copyWith(
@@ -346,13 +346,13 @@ class _MySpeedInstanceBlockState extends ConsumerState<_MySpeedInstanceBlock> {
                           color: colors.onSecondaryContainer,
                         ),
                       )
-                    : const Row(
+                    : Row(
                         key: ValueKey<String>('run-button-content'),
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Icon(Icons.play_arrow_rounded, size: 16),
                           SizedBox(width: 4),
-                          Text('Lancer le test'),
+                          Text(S.t('runTest')),
                         ],
                       ),
               ),

@@ -20,11 +20,11 @@ import 'models/jellyfin_view.dart';
 /// Container types - tapping drills into children. Everything else plays.
 /// (See the note in JellyfinHome: we dispatch on "is it a container?" so an
 /// item with a missing/odd `Type` still plays rather than dead-ending.)
-const Set<String> jellyfinContainerTypes = <String>{
-  'Series',
+final Set<String> jellyfinContainerTypes = <String>{
+  S.t('series'),
   'Season',
   'BoxSet',
-  'Folder',
+  S.t('folder'),
   'CollectionFolder',
   'UserView',
   'MusicAlbum',
@@ -56,10 +56,10 @@ class _JellyfinHomeState extends ConsumerState<JellyfinHome> {
       onRetry: () => ref.invalidate(jellyfinViewsProvider(widget.instance)),
       data: (List<JellyfinView> libraries) {
         if (libraries.isEmpty) {
-          return const EmptyView(
+          return EmptyView(
             icon: Icons.theaters_outlined,
-            title: 'Aucune bibliothèque',
-            message: "Ce serveur Jellyfin n'a aucune bibliothèque à afficher.",
+            title: S.t('noLibraries'),
+            message: S.t('thisJellyfinServerHasNoLibrariesToShow'),
           );
         }
 
@@ -80,11 +80,11 @@ class _JellyfinHomeState extends ConsumerState<JellyfinHome> {
                   isScrollable: true,
                   tabAlignment: TabAlignment.start,
                   tabs: <Widget>[
-                    const Tab(text: 'Accueil'),
+                    Tab(text: S.t('home')),
                     for (final JellyfinView lib in libraries)
                       Tab(text: lib.name),
-                    const Tab(text: 'Vu'),
-                    const Tab(text: 'Non vu'),
+                    Tab(text: S.t('watched')),
+                    Tab(text: S.t('unwatched')),
                   ],
                 ),
                 Expanded(
@@ -188,19 +188,19 @@ class JellyfinLibraryGrid extends ConsumerWidget {
             
           if (list.isEmpty) {
             return EasyRefresh(
-        header: const ClassicHeader(
+        header: ClassicHeader(
           position: IndicatorPosition.locator,
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: () async =>
           ref.invalidate(jellyfinLibraryItemsProvider((instance, view))),
-        child: const CustomScrollView(
+        child: CustomScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           slivers: <Widget>[
             HeaderLocator.sliver(),
@@ -208,8 +208,8 @@ class JellyfinLibraryGrid extends ConsumerWidget {
             SliverToBoxAdapter(
               child: EmptyView(
                 icon: Icons.movie_outlined,
-                title: 'Bibliothèque vide',
-                message: 'Rien dans cette bibliothèque pour le moment.',
+                title: S.t('emptyLibrary'),
+                message: S.t('nothingInThisLibraryYet'),
               ),
             ),
           ],
@@ -220,15 +220,15 @@ class JellyfinLibraryGrid extends ConsumerWidget {
               ref.watch(jellyfinViewModeProvider(instance));
 
           return EasyRefresh(
-      header: const ClassicHeader(
+      header: ClassicHeader(
         position: IndicatorPosition.locator,
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async =>
           ref.invalidate(jellyfinLibraryItemsProvider((instance, view))),
@@ -257,7 +257,7 @@ class JellyfinLibraryGrid extends ConsumerWidget {
                                       albumName: item.name,
                                       albumArtist: item.artists.isNotEmpty
                                           ? item.artists.first
-                                          : 'Unknown Artist',
+                                          : S.t('unknownArtist'),
                                       albumOverview: item.overview,
                                       albumGenres: item.genres,
                                       albumImageUrl: client.imageUrl(item),
@@ -319,7 +319,7 @@ class JellyfinLibraryGrid extends ConsumerWidget {
                                       albumName: item.name,
                                       albumArtist: item.artists.isNotEmpty
                                           ? item.artists.first
-                                          : 'Unknown Artist',
+                                          : S.t('unknownArtist'),
                                       albumOverview: item.overview,
                                       albumGenres: item.genres,
                                       albumImageUrl: client.imageUrl(item),
@@ -400,19 +400,19 @@ class JellyfinItemsGrid extends ConsumerWidget {
             
           if (list.isEmpty) {
             return EasyRefresh(
-        header: const ClassicHeader(
+        header: ClassicHeader(
           position: IndicatorPosition.locator,
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: () async =>
           ref.invalidate(jellyfinItemsProvider((instance, libraryId))),
-        child: const CustomScrollView(
+        child: CustomScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           slivers: <Widget>[
             HeaderLocator.sliver(),
@@ -420,8 +420,8 @@ class JellyfinItemsGrid extends ConsumerWidget {
             SliverToBoxAdapter(
               child: EmptyView(
                 icon: Icons.movie_outlined,
-                title: 'Bibliothèque vide',
-                message: 'Rien dans cette bibliothèque pour le moment.',
+                title: S.t('emptyLibrary'),
+                message: S.t('nothingInThisLibraryYet'),
               ),
             ),
           ],
@@ -434,15 +434,15 @@ class JellyfinItemsGrid extends ConsumerWidget {
           // (Replaced with _buildJellyfinGridOrList)
 
           return EasyRefresh(
-      header: const ClassicHeader(
+      header: ClassicHeader(
         position: IndicatorPosition.locator,
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async =>
           ref.invalidate(jellyfinItemsProvider((instance, libraryId))),
@@ -647,8 +647,8 @@ class JellyfinPosterCard extends ConsumerWidget {
                     ),
                     title: Text(
                       item.userData?.isFavorite == true
-                          ? 'Retirer des favoris'
-                          : 'Add to Favorites',
+                          ? S.t('removeFromFavorites')
+                          : S.t('addToFavorites_2'),
                     ),
                     onTap: () async {
                       Navigator.of(sheetContext).pop();
@@ -674,7 +674,7 @@ class JellyfinPosterCard extends ConsumerWidget {
                   if (item.type == 'Movie' || item.type == 'Series')
                     ListTile(
                       leading: const Icon(Icons.search),
-                      title: const Text('Identifier'),
+                      title: Text(S.t('identify')),
                       onTap: () async {
                         Navigator.of(sheetContext).pop();
                         final bool? changed = await pushScreen<bool>(
@@ -923,8 +923,8 @@ class JellyfinBannerCard extends ConsumerWidget {
                       ),
                       title: Text(
                         item.userData?.isFavorite == true
-                            ? 'Retirer des favoris'
-                            : 'Add to Favorites',
+                            ? S.t('removeFromFavorites')
+                            : S.t('addToFavorites_2'),
                       ),
                       onTap: () async {
                         Navigator.of(sheetContext).pop();
@@ -956,7 +956,7 @@ class JellyfinBannerCard extends ConsumerWidget {
                     if (item.type == 'Movie' || item.type == 'Series')
                       ListTile(
                         leading: const Icon(Icons.search),
-                        title: const Text('Identifier'),
+                        title: Text(S.t('identify')),
                         onTap: () async {
                           Navigator.of(sheetContext).pop();
                           final bool? changed = await pushScreen<bool>(
@@ -1179,15 +1179,15 @@ class _HomeSections extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return EasyRefresh(
-      header: const ClassicHeader(
+      header: ClassicHeader(
         position: IndicatorPosition.locator,
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async {
         ref.invalidate(jellyfinSessionsProvider(instance));
@@ -1208,22 +1208,22 @@ class _HomeSections extends ConsumerWidget {
                   _ActiveSessionsSection(instance: instance),
                   _HorizontalSection(
                     instance: instance,
-                    title: 'En cours de visionnage',
+                    title: S.t('currentlyWatching'),
                     provider: jellyfinResumeItemsProvider(instance),
                   ),
                   _HorizontalSection(
                     instance: instance,
-                    title: 'À suivre',
+                    title: S.t('nextUp'),
                     provider: jellyfinNextUpProvider(instance),
                   ),
                   _HorizontalSection(
                     instance: instance,
-                    title: 'Ajouts récents',
+                    title: S.t('recentlyAdded'),
                     provider: jellyfinLatestItemsProvider(instance),
                   ),
                   _HorizontalSection(
                     instance: instance,
-                    title: 'Favoris',
+                    title: S.t('favorites'),
                     provider: jellyfinFavoritesProvider(instance),
                   ),
                   const SizedBox(height: Insets.xl),
@@ -1321,7 +1321,7 @@ class _HorizontalSection extends ConsumerWidget {
                                       albumName: item.name,
                                       albumArtist: item.artists.isNotEmpty
                                           ? item.artists.first
-                                          : 'Unknown Artist',
+                                          : S.t('unknownArtist'),
                                       albumOverview: item.overview,
                                       albumImageUrl: client.imageUrl(item),
                                     ),
@@ -1776,7 +1776,7 @@ Widget _buildJellyfinGridOrList(
           ),
           sliver: SliverToBoxAdapter(
             child: Text(
-              'Albums',
+              S.t('albums'),
               style: theme.textTheme.titleLarge
                   ?.copyWith(fontWeight: FontWeight.bold),
             ),

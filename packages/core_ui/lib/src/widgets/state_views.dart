@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 
 import '../design_tokens.dart';
@@ -80,12 +81,12 @@ class EmptyView extends StatelessWidget {
 
 /// Error-state view with an optional retry button.
 class ErrorView extends StatelessWidget {
-  const ErrorView({
+  ErrorView({
     required this.message,
-    this.title = 'Un problème est survenu',
+    String? title,
     this.onRetry,
     super.key,
-  });
+  }) : title = title ?? S.t('somethingWentWrong');
 
   final String message;
   final String title;
@@ -101,7 +102,7 @@ class ErrorView extends StatelessWidget {
             : FilledButton.tonalIcon(
                 onPressed: onRetry,
                 icon: const Icon(Icons.refresh),
-                label: const Text('Réessayer'),
+                label: Text(S.t('retry')),
               ),
       );
 }

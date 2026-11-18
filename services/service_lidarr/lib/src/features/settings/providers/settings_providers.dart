@@ -47,7 +47,7 @@ final lidarrQualityProfileSchemaProvider =
         await api.qualityProfileSchema.getQualityprofileSchema();
     return unwrapLidarrApiResponse(
       resp,
-      'Failed to load quality profile schema',
+      S.t('failedToLoadQualityProfileSchema'),
     );
   },
 );
@@ -72,7 +72,7 @@ final lidarrTagsProvider =
   (Ref ref, Instance instance) async {
     final LidarrApi api = await ref.watch(lidarrApiProvider(instance).future);
     final ApiResponse<List<TagResource>> resp = await api.tag.getTag();
-    return unwrapLidarrApiResponse(resp, 'Failed to load tags');
+    return unwrapLidarrApiResponse(resp, S.t('failedToLoadTags'));
   },
 );
 

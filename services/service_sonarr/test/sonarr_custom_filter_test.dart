@@ -58,7 +58,7 @@ Map<String, Object?> _filterJson(
 
 CustomFilterResource _filter(List<Map<String, Object?>> rules) =>
     CustomFilterResource.fromJson(
-      _filterJson('Tester', rules).cast<String, dynamic>(),
+      _filterJson('Test', rules).cast<String, dynamic>(),
     );
 
 /// The moment the relative date rules are measured from.
@@ -602,7 +602,7 @@ void main() {
         id: 3,
       ),
       _filterJson(
-        'Demandé',
+        'Requested',
         <Map<String, Object?>>[
           _rule('episodeRequested', <bool>[true], 'equal'),
         ],
@@ -677,10 +677,10 @@ void main() {
           .map((ChoiceChip chip) => (chip.label as Text).data!)
           .toList();
       expect(
-        chips.sublist(chips.indexOf('Épisodes manquants') + 1).take(2),
+        chips.sublist(chips.indexOf('Missing Episodes') + 1).take(2),
         <String>['Has downloads', 'No downloads'],
       );
-      expect(find.text('Demandé'), findsNothing);
+      expect(find.text('Requested'), findsNothing);
 
       bool selected(String label) => tester
           .widget<ChoiceChip>(find.widgetWithText(ChoiceChip, label))
@@ -689,14 +689,14 @@ void main() {
       await tester.tap(find.widgetWithText(ChoiceChip, 'No downloads'));
       await tester.pumpAndSettle();
       expect(selected('No downloads'), isTrue);
-      expect(selected('Tous'), isFalse);
+      expect(selected('All'), isFalse);
       expect(shown(container), <String>['Severance']);
 
       // A built-in filter takes over from the custom one.
-      await tester.tap(find.widgetWithText(ChoiceChip, 'Surveillés uniquement'));
+      await tester.tap(find.widgetWithText(ChoiceChip, 'Monitored Only'));
       await tester.pumpAndSettle();
       expect(selected('No downloads'), isFalse);
-      expect(selected('Surveillés uniquement'), isTrue);
+      expect(selected('Monitored Only'), isTrue);
       expect(shown(container), <String>['The Office']);
 
       // Tapping the active custom filter again goes back to everything.
@@ -705,7 +705,7 @@ void main() {
       expect(shown(container), <String>['The Office']);
       await tester.tap(find.widgetWithText(ChoiceChip, 'Has downloads'));
       await tester.pumpAndSettle();
-      expect(selected('Tous'), isTrue);
+      expect(selected('All'), isTrue);
       expect(shown(container), <String>['Severance', 'The Office']);
     });
   });

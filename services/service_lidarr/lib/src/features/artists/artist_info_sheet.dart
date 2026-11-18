@@ -41,7 +41,7 @@ void showLidarrArtistInfoSheet(
             orElse: () => const MetadataProfileResource(name: 'Standard'),
           )
           .name ??
-      'Standard';
+      S.t('standard');
 
   final String? posterUrl =
       LidarrArtwork.artistPosterUrl(instance, artist.images);
@@ -150,7 +150,7 @@ void showLidarrArtistInfoSheet(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          artist.artistName ?? 'Artist',
+                          artist.artistName ?? S.t('artist'),
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -199,12 +199,12 @@ void showLidarrArtistInfoSheet(
                 children: [
                   Chip(
                     avatar: const Icon(Icons.high_quality, size: 16),
-                    label: Text('Qualité : $qualityName'),
+                    label: Text(S.t('qualityQualityName1', [qualityName])),
                     visualDensity: VisualDensity.compact,
                   ),
                   Chip(
                     avatar: const Icon(Icons.library_music, size: 16),
-                    label: Text('Métadonnées : $metadataName'),
+                    label: Text(S.t('metadataMetadataName1', [metadataName])),
                     visualDensity: VisualDensity.compact,
                   ),
                   if (artist.status != null)
@@ -226,7 +226,7 @@ void showLidarrArtistInfoSheet(
                   contentPadding: EdgeInsets.zero,
                   dense: true,
                   leading: const Icon(Icons.folder_outlined),
-                  title: const Text('Chemin du disque'),
+                  title: Text(S.t('diskPath')),
                   subtitle: Text(
                     artist.path!,
                     style: theme.textTheme.bodySmall?.copyWith(
@@ -239,7 +239,7 @@ void showLidarrArtistInfoSheet(
                 alignment: Alignment.centerLeft,
                 child: TextButton.icon(
                   icon: const Icon(Icons.edit_outlined, size: 16),
-                  label: const Text("Modifier les paramètres de l'artiste"),
+                  label: Text(S.t('editArtistSettings')),
                   onPressed: () {
                     Navigator.pop(ctx);
                     LidarrEditArtistSheet.show(
@@ -409,7 +409,7 @@ String _getNormalizedServiceName(String rawName, String url) {
     return 'VGMdb';
   }
   if (lowerName.contains('imdb') || lowerUrl.contains('imdb.com')) {
-    return 'IMDb';
+    return S.t('imdb');
   }
   if (lowerName.contains('twitter') ||
       lowerUrl.contains('twitter.com') ||

@@ -182,7 +182,7 @@ class _AdguardHomeDnsServerScreenState
     // Filled once. A later read must not replace what is being typed.
     if (_before == null && value != null) _fill(value);
     return AdguardHomeSettingsForm(
-      title: 'Serveur DNS',
+      title: S.t('dnsServer'),
       busy: _busy,
       changed: _changed,
       onSave: _save,
@@ -213,21 +213,21 @@ class _AdguardHomeDnsServerScreenState
           'ratelimit',
           _ratelimit,
           'Requests a second',
-          'Autorisé depuis un seul client. 0 = aucune limite.',
+          S.t('allowedFromOneClient0IsNoLimit'),
           shown('ratelimit'),
         ),
         _number(
           'subnet4',
           _subnet4,
           'IPv4 subnet prefix length',
-          "Les clients d'un sous-réseau de cette taille partagent une limite. Par défaut : 24.",
+          S.t('clientsInOneSubnetThisWideShareALimitTheDefaultIs24'),
           shown('subnet4'),
         ),
         _number(
           'subnet6',
           _subnet6,
           'IPv6 subnet prefix length',
-          'Idem pour IPv6. Par défaut : 56.',
+          S.t('theSameForIPv6TheDefaultIs56'),
           shown('subnet6'),
         ),
         TextField(
@@ -244,20 +244,19 @@ class _AdguardHomeDnsServerScreenState
               .bodyMedium
               ?.copyWith(fontFamily: 'monospace'),
           decoration: InputDecoration(
-            labelText: 'Non limité',
-            helperText: 'Adresses IP exclues de la limite de débit, une par '
-                'line',
+            labelText: S.t('notLimited'),
+            helperText: S.t('ipAddressesLeftOutOfTheRateLimitOnePerLine'),
             helperMaxLines: 3,
             border: const OutlineInputBorder(),
             errorText: shown('allowlist'),
           ),
         ),
-        const AdguardHomeHeading('Requests'),
+        AdguardHomeHeading(S.t('requests')),
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
-          title: const Text('Sous-réseau client EDNS'),
-          subtitle: const Text(
-            "Envoyer une partie de l'adresse du client aux serveurs amont, et "
+          title: Text(S.t('ednsClientSubnet')),
+          subtitle: Text(
+            S.t('sendPartOfTheClientSAddressToTheUpstreamServersAnd') +
             'log what clients send',
           ),
           value: _edns,
@@ -265,7 +264,7 @@ class _AdguardHomeDnsServerScreenState
         ),
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
-          title: const Text('Utiliser une IP personnalisée pour EDNS'),
+          title: Text(S.t('useACustomIPForEDNS')),
           value: _ednsCustom,
           onChanged:
               _edns ? (bool on) => setState(() => _ednsCustom = on) : null,
@@ -284,8 +283,8 @@ class _AdguardHomeDnsServerScreenState
         ),
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
-          title: const Text('Désactiver la résolution des adresses IPv6'),
-          subtitle: const Text('Rejeter toute requête pour une adresse IPv6 (AAAA)'),
+          title: Text(S.t('disableResolvingOfIPv6Addresses')),
+          subtitle: Text(S.t('dropEveryQueryForAnIPv6AddressAAAA')),
           value: _noIpv6,
           onChanged: (bool on) => setState(() => _noIpv6 = on),
         ),
@@ -309,8 +308,8 @@ class _AdguardHomeDnsServerScreenState
           ),
         ),
         if (_mode == AdguardHomeBlockingMode.customIp) ...<Widget>[
-          _address('ipv4', _blockingIpv4, 'Pour IPv4 (A)', shown('ipv4')),
-          _address('ipv6', _blockingIpv6, 'Pour IPv6 (AAAA)', shown('ipv6')),
+          _address('ipv4', _blockingIpv4, S.t('forIPv4A'), shown('ipv4')),
+          _address('ipv6', _blockingIpv6, S.t('forIPv6AAAA'), shown('ipv6')),
         ],
         const SizedBox(height: Insets.sm),
         _number(
@@ -326,13 +325,13 @@ class _AdguardHomeDnsServerScreenState
 
   static String _modeHelp(AdguardHomeBlockingMode mode) => switch (mode) {
         AdguardHomeBlockingMode.normal =>
-          "Adresse zéro pour une règle de liste de blocage, l'adresse de la règle pour une "
+          S.t('zeroAddressForABlocklistRuleTheRuleSOwnAddressForA') +
               'hosts-style one',
-        AdguardHomeBlockingMode.refused => 'Répondre REFUSED',
-        AdguardHomeBlockingMode.nxdomain => 'Répondre NXDOMAIN',
+        AdguardHomeBlockingMode.refused => S.t('answerWithREFUSED'),
+        AdguardHomeBlockingMode.nxdomain => S.t('answerWithNXDOMAIN'),
         AdguardHomeBlockingMode.nullIp =>
           'Answer with the zero address, 0.0.0.0 or ::',
-        AdguardHomeBlockingMode.customIp => 'Répondre avec les adresses définies ici',
+        AdguardHomeBlockingMode.customIp => S.t('answerWithAddressesSetHere'),
       };
 
   Widget _number(

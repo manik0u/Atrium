@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,7 +49,7 @@ class OverviewFleetHealthCard extends StatelessWidget {
             const SizedBox(width: Insets.md),
             Expanded(
               child: Text(
-                "Impossible de récupérer l'état de santé du serveur",
+                S.t('couldNotFetchServerHealthStatus'),
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: colorScheme.onErrorContainer,
                 ),
@@ -57,7 +58,7 @@ class OverviewFleetHealthCard extends StatelessWidget {
             if (onRetry != null)
               IconButton(
                 icon: const Icon(Icons.refresh),
-                tooltip: 'Réessayer',
+                tooltip: S.t('retry'),
                 onPressed: onRetry,
               ),
           ],
@@ -76,12 +77,12 @@ class OverviewFleetHealthCard extends StatelessWidget {
                 : colorScheme.error;
 
         final String statusLabel = allOnline
-            ? 'Tous les systèmes sont opérationnels'
+            ? S.t('allSystemsOperational')
             : partialOnline
                 ? 'Degraded Performance'
                 : totalServers == 0
-                    ? 'Aucun serveur configuré'
-                    : 'Tous les serveurs sont hors ligne';
+                    ? S.t('noServersConfigured')
+                    : S.t('allServersOffline');
 
         return Container(
           padding: const EdgeInsets.all(Insets.md),

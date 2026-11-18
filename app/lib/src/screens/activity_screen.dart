@@ -43,10 +43,10 @@ class ActivityScreen extends ConsumerWidget {
     if (nothing && (streamsState.anyLoading || downloadsState.anyLoading)) {
       body = const Center(child: ExpressiveProgressIndicator());
     } else if (nothing) {
-      body = const EmptyView(
+      body = EmptyView(
         icon: Icons.swap_vert_outlined,
-        title: 'Rien en ce moment',
-        message: 'Les flux actifs et transferts apparaîtront ici.',
+        title: S.t('nothingHappeningRightNow'),
+        message: S.t('activeStreamsAndTransfersWillShowUpHere'),
       );
     } else {
       final bool showStreams =
@@ -54,14 +54,14 @@ class ActivityScreen extends ConsumerWidget {
       final bool showDownloads = downloadsState.downloads.isNotEmpty ||
           downloadsState.errors.isNotEmpty;
       body = EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
         onRefresh: () async => refreshActivity(ref),
         child: ListView(
@@ -70,7 +70,7 @@ class ActivityScreen extends ConsumerWidget {
             _SummaryBar(summary: summary),
             if (showStreams) ...<Widget>[
               _SectionHeader(
-                title: 'En cours de lecture',
+                title: S.t('nowStreaming'),
                 trailing: '${streamsState.streams.length}',
               ),
               if (streamsState.errors.isNotEmpty)
@@ -86,7 +86,7 @@ class ActivityScreen extends ConsumerWidget {
             if (showStreams && showDownloads) const SizedBox(height: Insets.sm),
             if (showDownloads) ...<Widget>[
               _SectionHeader(
-                title: 'Transferts',
+                title: S.t('transfers'),
                 trailing: <String>[
                   '${downloadsState.downloads.length}',
                   if (summary.totalDlBps > 0)
@@ -128,7 +128,7 @@ class ActivityScreen extends ConsumerWidget {
               );
             },
           ),
-          title: const Text('Activité'),
+          title: Text(S.t('activity')),
         ),
         body: body,
       ),
@@ -194,7 +194,7 @@ class _SummaryBar extends StatelessWidget {
             child: _StatTile(
               icon: Icons.sensors,
               value: '${summary.streamCount}',
-              label: summary.streamCount == 1 ? 'Flux' : 'Flux',
+              label: summary.streamCount == 1 ? S.t('stream') : S.t('stream'),
               color: cs.primary,
             ),
           ),
@@ -203,7 +203,7 @@ class _SummaryBar extends StatelessWidget {
             child: _StatTile(
               icon: Icons.swap_vert,
               value: '${summary.downloadCount}',
-              label: summary.downloadCount == 1 ? 'Transfert' : 'Transferts',
+              label: summary.downloadCount == 1 ? S.t('transfer') : S.t('transfers'),
               color: cs.secondary,
             ),
           ),
@@ -215,7 +215,7 @@ class _SummaryBar extends StatelessWidget {
                   ? '↓ ${fmtSpeedBps(summary.totalDlBps)}'
                       '  ↑ ${fmtSpeedBps(summary.totalUpBps)}'
                   : fmtSpeedBps(summary.totalDlBps),
-              label: 'Vitesse',
+              label: S.t('speed'),
               color: cs.tertiary,
             ),
           ),

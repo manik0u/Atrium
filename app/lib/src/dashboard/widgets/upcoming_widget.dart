@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_router/core_router.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +78,7 @@ class DashboardUpcomingWidget extends ConsumerWidget {
         },
       );
     } else if (upcoming.isEmpty) {
-      body = const DashboardIdleRow(text: "Rien à l'antenne dans les 7 prochains jours");
+      body = DashboardIdleRow(text: S.t('nothingAiringInTheNext7Days'));
     } else {
       final List<Widget> rows = <Widget>[];
       DateTime? lastDay;
@@ -124,7 +125,7 @@ class DashboardUpcomingWidget extends ConsumerWidget {
         rows.add(Padding(
           padding: const EdgeInsets.only(top: Insets.sm),
           child:
-              DashboardIdleRow(text: '+${upcoming.length - top.length} de plus'),
+              DashboardIdleRow(text: S.t('upcomingLengthTopLengthMore1', [upcoming.length - top.length])),
         ));
       }
       body = Column(
@@ -151,7 +152,7 @@ class DashboardUpcomingWidget extends ConsumerWidget {
 
   static String _dayLabel(DateTime day, DateTime today) {
     if (day == today) {
-      return 'Today';
+      return S.t('today');
     }
     if (day == today.add(const Duration(days: 1))) {
       return 'Tomorrow';

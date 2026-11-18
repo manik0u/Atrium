@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 
 /// Preset speed limits in KB/s; 0 means unlimited.
@@ -5,7 +6,7 @@ const List<int> _presetsKb = <int>[0, 1024, 2048, 5120, 10240, 25600];
 
 String speedLimitLabel(int kbPerSec) {
   if (kbPerSec <= 0) {
-    return 'Unlimited';
+    return S.t('unlimited');
   }
   if (kbPerSec >= 1024) {
     final double mb = kbPerSec / 1024;
@@ -42,7 +43,7 @@ class _SpeedDialogContentState extends State<_SpeedDialogContent> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Limite de vitesse'),
+      title: Text(S.t('speedLimit')),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -55,7 +56,7 @@ class _SpeedDialogContentState extends State<_SpeedDialogContent> {
           TextField(
             controller: _custom,
             keyboardType: TextInputType.number,
-            decoration: const InputDecoration(labelText: 'Personnalisée (Ko/s)'),
+            decoration: InputDecoration(labelText: S.t('customKBS')),
             onSubmitted: (String value) {
               final int? kb = int.tryParse(value.trim());
               if (kb != null && kb >= 0) {
@@ -68,7 +69,7 @@ class _SpeedDialogContentState extends State<_SpeedDialogContent> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: () {
@@ -77,7 +78,7 @@ class _SpeedDialogContentState extends State<_SpeedDialogContent> {
               Navigator.of(context).pop(kb);
             }
           },
-          child: const Text('Définir'),
+          child: Text(S.t('set')),
         ),
       ],
     );

@@ -97,14 +97,14 @@ class _SonarrSettingsFormScreenState
       ref.invalidate(sonarrSeriesProvider(widget.instance));
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Paramètres de la série enregistrés avec succès !')),
+          SnackBar(content: Text(S.t('seriesSettingsSavedSuccessfully'))),
         );
         Navigator.pop(context);
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Échec de l'enregistrement des paramètres : $e")),
+          SnackBar(content: Text(S.t('failedToSaveSettingsE1', [e]))),
         );
       }
     } finally {
@@ -129,7 +129,7 @@ class _SonarrSettingsFormScreenState
 
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Modifier les paramètres de la série'),
+            title: Text(S.t('editSeriesSettings')),
             actions: [
               if (_saving)
                 const Padding(
@@ -171,14 +171,14 @@ class _SonarrSettingsFormScreenState
                           // Path field
                           TextFormField(
                             controller: _pathController,
-                            decoration: const InputDecoration(
-                              labelText: 'Chemin',
+                            decoration: InputDecoration(
+                              labelText: S.t('path'),
                               border: OutlineInputBorder(),
                               prefixIcon: Icon(Icons.folder_open),
                             ),
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
-                                return 'Le chemin ne peut pas être vide';
+                                return S.t('pathCannotBeEmpty');
                               }
                               return null;
                             },
@@ -189,9 +189,9 @@ class _SonarrSettingsFormScreenState
                           // the series, plus `monitorNewItems` (all/none) on
                           // versions that support it.
                           SwitchListTile(
-                            title: const Text('Surveillé'),
-                            subtitle: const Text(
-                              'Télécharger les épisodes surveillés de cette série',
+                            title: Text(S.t('monitored')),
+                            subtitle: Text(
+                              S.t('downloadMonitoredEpisodesForThisSeries'),
                             ),
                             secondary: const Icon(Icons.bookmark_outline),
                             value: _monitored,
@@ -203,19 +203,19 @@ class _SonarrSettingsFormScreenState
                             const SizedBox(height: Insets.md),
                             DropdownButtonFormField<String>(
                               initialValue: _monitorNewItems,
-                              decoration: const InputDecoration(
-                                labelText: 'Surveiller les nouvelles saisons',
+                              decoration: InputDecoration(
+                                labelText: S.t('monitorNewSeasons'),
                                 border: OutlineInputBorder(),
                                 prefixIcon: Icon(Icons.bookmark_add_outlined),
                               ),
                               items: [
-                                const DropdownMenuItem(
+                                DropdownMenuItem(
                                   value: 'all',
-                                  child: Text('Tous'),
+                                  child: Text(S.t('all')),
                                 ),
-                                const DropdownMenuItem(
+                                DropdownMenuItem(
                                   value: 'none',
-                                  child: Text('Aucun'),
+                                  child: Text(S.t('none')),
                                 ),
                                 // Keep any unexpected server value selectable
                                 // so the dropdown never hits the
@@ -242,7 +242,7 @@ class _SonarrSettingsFormScreenState
                               child: ExpressiveProgressIndicator(),
                             ),
                             error: (err, stack) =>
-                                Text('Erreur lors du chargement des profils : $err'),
+                                Text(S.t('errorLoadingProfilesErr1', [err])),
                             data: (profiles) {
                               // Ensure the selected profile exists; a stale
                               // or missing id would trip the dropdown's
@@ -257,8 +257,8 @@ class _SonarrSettingsFormScreenState
                               }
                               return DropdownButtonFormField<int>(
                                 initialValue: _selectedQualityProfileId,
-                                decoration: const InputDecoration(
-                                  labelText: 'Profil de qualité',
+                                decoration: InputDecoration(
+                                  labelText: S.t('qualityProfile'),
                                   border: OutlineInputBorder(),
                                   prefixIcon: Icon(Icons.high_quality),
                                 ),
@@ -266,7 +266,7 @@ class _SonarrSettingsFormScreenState
                                   return DropdownMenuItem<int>(
                                     value: p['id'] as int,
                                     child: Text(
-                                      (p['name'] as String?) ?? 'Unknown',
+                                      (p['name'] as String?) ?? S.t('unknown'),
                                     ),
                                   );
                                 }).toList(),
@@ -283,23 +283,23 @@ class _SonarrSettingsFormScreenState
                           // Series Type dropdown
                           DropdownButtonFormField<String>(
                             initialValue: _seriesType,
-                            decoration: const InputDecoration(
-                              labelText: 'Type de série',
+                            decoration: InputDecoration(
+                              labelText: S.t('seriesType'),
                               border: OutlineInputBorder(),
                               prefixIcon: Icon(Icons.tv),
                             ),
                             items: [
-                              const DropdownMenuItem(
+                              DropdownMenuItem(
                                 value: 'standard',
-                                child: Text('Standard'),
+                                child: Text(S.t('standard')),
                               ),
-                              const DropdownMenuItem(
+                              DropdownMenuItem(
                                 value: 'daily',
-                                child: Text('Quotidien'),
+                                child: Text(S.t('daily')),
                               ),
-                              const DropdownMenuItem(
+                              DropdownMenuItem(
                                 value: 'anime',
-                                child: Text('Anime'),
+                                child: Text(S.t('anime')),
                               ),
                               if (_seriesType != 'standard' &&
                                   _seriesType != 'daily' &&
@@ -319,9 +319,9 @@ class _SonarrSettingsFormScreenState
 
                           // Season Folder switch
                           SwitchListTile(
-                            title: const Text('Utiliser un dossier de saison'),
-                            subtitle: const Text(
-                              'Stocker les fichiers dans des sous-dossiers par saison',
+                            title: Text(S.t('useSeasonFolder')),
+                            subtitle: Text(
+                              S.t('storeFilesInSubfoldersForEachSeason'),
                             ),
                             value: _seasonFolder,
                             onChanged: (val) {
@@ -336,7 +336,7 @@ class _SonarrSettingsFormScreenState
                               child: ExpressiveProgressIndicator(),
                             ),
                             error: (err, stack) =>
-                                Text('Erreur lors du chargement des balises : $err'),
+                                Text(S.t('errorLoadingTagsErr1', [err])),
                             data: (tags) {
                               if (tags.isEmpty) {
                                 return const SizedBox.shrink();
@@ -345,7 +345,7 @@ class _SonarrSettingsFormScreenState
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Tags',
+                                    S.t('tags'),
                                     style: theme.textTheme.titleSmall?.copyWith(
                                       fontWeight: FontWeight.bold,
                                     ),

@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_networking/core_networking.dart';
 import 'package:dio/dio.dart';
 
@@ -634,7 +635,7 @@ class RadarrApi {
 
   Future<void> executeManualImport({
     required List<dynamic> files,
-    String importMode = 'Move',
+    String importMode = S.t('move'),
   }) async {
     try {
       await _dio.post<dynamic>(

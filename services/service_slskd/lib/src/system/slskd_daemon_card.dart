@@ -36,10 +36,10 @@ class _SlskdDaemonCardState extends ConsumerState<SlskdDaemonCard> {
         SnackBar(
           content: Text(
             switch (version.isUpdateAvailable) {
-              true => 'Mise à jour disponible : ${version.latest}',
-              false => 'slskd est à jour (${version.current})',
+              true => S.t('updateAvailableVersionLatest1', [version.latest]),
+              false => S.t('slskdIsUpToDateVersionCurrent1', [version.current]),
               // slskd did not find out, for example with version checks off.
-              null => "slskd n'a pas pu dire si une mise à jour est disponible",
+              null => S.t('slskdCouldNotTellWhetherAnUpdateIsAvailable'),
             },
           ),
         ),
@@ -48,7 +48,7 @@ class _SlskdDaemonCardState extends ConsumerState<SlskdDaemonCard> {
       if (mounted) {
         final msg = (e is DioException && e.response?.statusCode == 403)
             ? 'Forcing an update check requires an API key with Administrator or ReadWrite role in slskd.yml'
-            : 'Échec de la vérification des mises à jour : $e';
+            : S.t('failedToCheckForUpdatesE1', [e]);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(msg),
@@ -118,7 +118,7 @@ class _SlskdDaemonCardState extends ConsumerState<SlskdDaemonCard> {
                   onTap: _isActionInProgress ? null : _handleCheckUpdate,
                   borderRadius: BorderRadius.circular(12),
                   child: Tooltip(
-                    message: 'Touchez pour rechercher des mises à jour',
+                    message: S.t('tapToCheckForUpdates'),
                     child: widget.version.isUpdateAvailable == true
                         ? Container(
                             padding: const EdgeInsets.symmetric(
@@ -159,8 +159,8 @@ class _SlskdDaemonCardState extends ConsumerState<SlskdDaemonCard> {
                                   // Unknown is not up to date: slskd reports
                                   // null until it has checked.
                                   widget.version.isUpdateAvailable == false
-                                      ? 'Up to date'
-                                      : 'Check for updates',
+                                      ? S.t('upToDate')
+                                      : S.t('checkForUpdates'),
                                   style: textTheme.labelSmall?.copyWith(
                                     color: colorScheme.onSurfaceVariant,
                                     fontWeight: FontWeight.bold,

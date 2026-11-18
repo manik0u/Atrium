@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,7 @@ class BazarrSubtitleChips extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     if (present.isEmpty && missing.isEmpty) {
       return Text(
-        'Aucun sous-titre suivi',
+        S.t('noSubtitlesTracked'),
         style: theme.textTheme.labelSmall
             ?.copyWith(color: theme.colorScheme.outline),
       );

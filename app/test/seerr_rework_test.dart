@@ -32,7 +32,7 @@ void main() {
       voteAverage: 8.2,
       releaseDate: '1999-03-30',
       runtime: 136,
-      status: 'Sortie',
+      status: 'Released',
       overview: 'A computer hacker learns the truth about reality.',
       genres: <SeerrGenre>[SeerrGenre(id: 28, name: 'Action')],
       credits: SeerrCredits(
@@ -162,11 +162,11 @@ void main() {
       await tester.pump();
     }
 
-    expect(find.text('Sous-titres'), findsOneWidget);
+    expect(find.text('Subtitles'), findsOneWidget);
     expect(find.text('Subtitles are out of sync.'), findsOneWidget);
     expect(find.text('morpheus'), findsOneWidget);
     // A resolved issue offers the Reopen action.
-    expect(find.text('Rouvrir'), findsOneWidget);
+    expect(find.text('Reopen'), findsOneWidget);
   });
 
   testWidgets('SeerrMediaCard shows the Available pill from mediaInfo.status',
@@ -199,7 +199,7 @@ void main() {
     expect(
       find.descendant(
         of: find.byType(SeerrStatusBadge),
-        matching: find.text('Disponible'),
+        matching: find.text('Available'),
       ),
       findsOneWidget,
     );
@@ -251,28 +251,28 @@ void main() {
     expect(
       find.descendant(
         of: find.byType(SeerrStatusPill),
-        matching: find.text('En cours de traitement'),
+        matching: find.text('Processing'),
       ),
       findsOneWidget,
     );
     expect(
       find.descendant(
         of: find.byType(SeerrStatusPill),
-        matching: find.text('En attente'),
+        matching: find.text('Pending'),
       ),
       findsOneWidget,
     );
     // Pending requests get inline approve / decline. Delete is deliberately
     // not inline (a mis-tap must not destroy a request); it stays in the
     // overflow menu only.
-    expect(find.text('Approuver'), findsOneWidget);
-    expect(find.text('Refuser'), findsOneWidget);
+    expect(find.text('Approve'), findsOneWidget);
+    expect(find.text('Decline'), findsOneWidget);
     expect(find.byTooltip('Delete request'), findsNothing);
     await tester.tap(find.byIcon(Icons.more_vert));
     for (int i = 0; i < 4; i++) {
       await tester.pump(const Duration(milliseconds: 100));
     }
-    expect(find.text('Supprimer'), findsOneWidget);
+    expect(find.text('Delete'), findsOneWidget);
   });
 
   testWidgets('SeerrDiscoverScreen renders the Watchlist row',
@@ -328,9 +328,9 @@ void main() {
       await tester.pump();
     }
 
-    expect(find.text('Liste de suivi'), findsOneWidget);
+    expect(find.text('Watchlist'), findsOneWidget);
     expect(find.text('The Matrix'), findsOneWidget);
     // The Popular rows are wired with the same bold-header sections.
-    expect(find.text('Films populaires'), findsOneWidget);
+    expect(find.text('Popular Movies'), findsOneWidget);
   });
 }

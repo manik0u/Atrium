@@ -79,7 +79,7 @@ class MediaTvHierarchyView extends StatelessWidget {
                 final String titleText = season.title.isNotEmpty &&
                         season.title != 'Season $seasonNum'
                     ? season.title
-                    : 'Season $seasonNum';
+                    : S.t('seasonSeasonNum1', [seasonNum]);
                 final bool isTargetSeason = initialSeasonNumber != null &&
                     seasonNum == initialSeasonNumber;
 
@@ -126,7 +126,7 @@ class MediaTvHierarchyView extends StatelessWidget {
                             ),
                           ),
                           subtitle: Text(
-                            '$epCount ${epCount == 1 ? 'Episode' : 'Episodes'}',
+                            '$epCount ${epCount == 1 ? S.t('episode') : S.t('episodes')}',
                             style: theme.textTheme.labelSmall?.copyWith(
                               color: colorScheme.onSurfaceVariant,
                               fontWeight: FontWeight.w500,
@@ -155,7 +155,7 @@ class MediaTvHierarchyView extends StatelessWidget {
                                   error: (err, _) => Padding(
                                     padding: const EdgeInsets.all(Insets.sm),
                                     child: Text(
-                                      'Échec du chargement des épisodes pour $titleText',
+                                      S.t('failedToLoadEpisodesForTitleText1', [titleText]),
                                       style:
                                           theme.textTheme.bodySmall?.copyWith(
                                         color: colorScheme.error,
@@ -168,7 +168,7 @@ class MediaTvHierarchyView extends StatelessWidget {
                                         padding:
                                             const EdgeInsets.all(Insets.sm),
                                         child: Text(
-                                          'Aucun épisode listé',
+                                          S.t('noEpisodesListed'),
                                           style: theme.textTheme.bodySmall
                                               ?.copyWith(
                                             color: colorScheme.onSurfaceVariant,
@@ -353,7 +353,7 @@ class MediaTvHierarchyView extends StatelessWidget {
                         ),
                       ),
                       trailing: Text(
-                        '$epCount ${epCount == 1 ? 'Episode' : 'Episodes'}',
+                        '$epCount ${epCount == 1 ? S.t('episode') : S.t('episodes')}',
                         style: theme.textTheme.labelSmall?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                           fontWeight: FontWeight.w500,
@@ -417,13 +417,13 @@ class MediaTvHierarchyView extends StatelessWidget {
                   tilePadding:
                       const EdgeInsets.symmetric(horizontal: Insets.sm),
                   title: Text(
-                    'Season $seasonNum',
+                    S.t('seasonSeasonNum1', [seasonNum]),
                     style: theme.textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   subtitle: Text(
-                    '${episodes.length} ${episodes.length == 1 ? 'Episode' : 'Episodes'}',
+                    '${episodes.length} ${episodes.length == 1 ? S.t('episode') : S.t('episodes')}',
                     style: theme.textTheme.labelSmall?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),

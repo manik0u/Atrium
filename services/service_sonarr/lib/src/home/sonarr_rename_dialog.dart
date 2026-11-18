@@ -38,13 +38,13 @@ class _SonarrRenameDialogState extends ConsumerState<SonarrRenameDialog> {
       );
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Fichiers renommés avec succès !')),
+        SnackBar(content: Text(S.t('filesRenamedSuccessfully'))),
       );
       Navigator.pop(context);
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Échec du renommage : $e')),
+          SnackBar(content: Text(S.t('renameFailedE1', [e]))),
         );
       }
     } finally {
@@ -60,14 +60,14 @@ class _SonarrRenameDialogState extends ConsumerState<SonarrRenameDialog> {
     final colors = theme.colorScheme;
 
     return AlertDialog(
-      title: const Text('Renommer les fichiers'),
+      title: Text(S.t('renameFiles')),
       content: SizedBox(
         width: double.maxFinite,
         height: 350,
         child: previewAsync.when(
           loading: () => const Center(child: ExpressiveProgressIndicator()),
           error: (err, stack) =>
-              Center(child: Text("Erreur lors du chargement de l'aperçu du renommage : $err")),
+              Center(child: Text(S.t('errorLoadingRenamePreviewErr1', [err]))),
           data: (files) {
             if (files.isEmpty) {
               return Center(
@@ -80,8 +80,8 @@ class _SonarrRenameDialogState extends ConsumerState<SonarrRenameDialog> {
                       size: 48,
                     ),
                     const SizedBox(height: Insets.sm),
-                    const Text(
-                      'Tous les fichiers sont correctement nommés.',
+                    Text(
+                      S.t('allFilesAreCorrectlyNamed'),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -95,9 +95,9 @@ class _SonarrRenameDialogState extends ConsumerState<SonarrRenameDialog> {
                 final f = files[index];
                 final current =
                     (f['existingPath'] as String?)?.split('/').last ??
-                        'Unknown Name';
+                        S.t('unknownName');
                 final proposed = (f['newPath'] as String?)?.split('/').last ??
-                    'Unknown Name';
+                    S.t('unknownName');
 
                 return Padding(
                   padding: const EdgeInsets.only(bottom: Insets.md),
@@ -138,7 +138,7 @@ class _SonarrRenameDialogState extends ConsumerState<SonarrRenameDialog> {
       actions: [
         TextButton(
           onPressed: _renaming ? null : () => Navigator.pop(context),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         previewAsync.maybeWhen(
           data: (files) => files.isEmpty
@@ -158,7 +158,7 @@ class _SonarrRenameDialogState extends ConsumerState<SonarrRenameDialog> {
                           height: 16,
                           child: ExpressiveProgressIndicator(strokeWidth: 2),
                         )
-                      : const Text('Renommer'),
+                      : Text(S.t('rename')),
                 ),
           orElse: () => const SizedBox.shrink(),
         ),

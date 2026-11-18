@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -29,7 +30,7 @@ Future<void> openExternal(ScaffoldMessengerState messenger, String url) async {
   }
   if (!opened) {
     messenger.showSnackBar(
-      const SnackBar(content: Text("Impossible d'ouvrir le navigateur")),
+      SnackBar(content: Text(S.t('couldNotOpenTheBrowser'))),
     );
   }
 }

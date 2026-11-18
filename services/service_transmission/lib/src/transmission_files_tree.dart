@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
@@ -241,7 +242,7 @@ class _TransmissionFilesTreeState extends State<TransmissionFilesTree> {
           // 48 px tall, which used to stretch that line and leave a gap
           // between the name and the bar under it.
           PopupMenuButton<TransmissionPriority>(
-            tooltip: 'Priorité',
+            tooltip: S.t('priority'),
             icon: Icon(
               Icons.more_vert_rounded,
               size: 20,
@@ -258,18 +259,18 @@ class _TransmissionFilesTreeState extends State<TransmissionFilesTree> {
             onSelected: (TransmissionPriority p) =>
                 widget.onPriority(node.indices, p),
             itemBuilder: (BuildContext _) =>
-                const <PopupMenuEntry<TransmissionPriority>>[
+                <PopupMenuEntry<TransmissionPriority>>[
               PopupMenuItem<TransmissionPriority>(
                 value: TransmissionPriority.low,
-                child: Text('Basse'),
+                child: Text(S.t('low')),
               ),
               PopupMenuItem<TransmissionPriority>(
                 value: TransmissionPriority.normal,
-                child: Text('Normal'),
+                child: Text(S.t('normal')),
               ),
               PopupMenuItem<TransmissionPriority>(
                 value: TransmissionPriority.high,
-                child: Text('Élevée'),
+                child: Text(S.t('high')),
               ),
             ],
           ),

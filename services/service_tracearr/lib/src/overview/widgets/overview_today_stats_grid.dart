@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -75,15 +76,15 @@ class OverviewTodayStatsGrid extends StatelessWidget {
                       _StatTile(
                         icon: Icons.play_arrow_outlined,
                         title: '${stats.todayPlays}',
-                        subtitle: "Lectures aujourd'hui",
-                        description: 'sessions ≥ 2 min',
+                        subtitle: S.t('playsToday'),
+                        description: S.t('k2MinSessions'),
                       ),
                       const SizedBox(height: Insets.sm),
                       _StatTile(
                         icon: Icons.people_outline,
                         title: '${stats.activeUsersToday}',
-                        subtitle: 'Utilisateurs actifs',
-                        description: "Uniques aujourd'hui",
+                        subtitle: S.t('activeUsers'),
+                        description: S.t('uniqueToday'),
                       ),
                     ],
                   ),
@@ -94,16 +95,16 @@ class OverviewTodayStatsGrid extends StatelessWidget {
                     children: [
                       _StatTile(
                         icon: Icons.schedule_outlined,
-                        title: '${stats.watchTimeHours.toStringAsFixed(1)} h',
-                        subtitle: 'Temps de visionnage',
-                        description: 'Total consommé',
+                        title: S.t('statsWatchTimeHoursToStringAsFixed1H1', [stats.watchTimeHours.toStringAsFixed(1)]),
+                        subtitle: S.t('watchTime'),
+                        description: S.t('totalConsumed'),
                       ),
                       const SizedBox(height: Insets.sm),
                       _StatTile(
                         icon: Icons.notification_important_outlined,
                         title: '${stats.alertsLast24h}',
-                        subtitle: 'Alertes 24 h',
-                        description: 'Déclencheurs de politique',
+                        subtitle: S.t('k24hAlerts'),
+                        description: S.t('policyTriggers'),
                         highlight: stats.alertsLast24h > 0,
                       ),
                     ],

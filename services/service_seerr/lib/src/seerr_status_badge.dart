@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 
 // The color-coded status vocabulary shared by the Seerr module: poster-card
@@ -23,14 +24,14 @@ class SeerrStatusStyle {
 /// 5 available (green). Returns null for unknown / not-yet-requested items
 /// (null or 1) so callers can simply render nothing.
 SeerrStatusStyle? seerrMediaStatusStyle(int? status) => switch (status) {
-      5 => const SeerrStatusStyle(_green, Icons.check_circle, 'Disponible'),
-      4 => const SeerrStatusStyle(
+      5 => SeerrStatusStyle(_green, Icons.check_circle, S.t('available')),
+      4 => SeerrStatusStyle(
           _teal,
           Icons.check_circle_outline,
-          'Partial',
+          S.t('partial'),
         ),
-      3 => const SeerrStatusStyle(_blue, Icons.downloading, 'En cours de traitement'),
-      2 => const SeerrStatusStyle(_amber, Icons.hourglass_top, 'Demandé'),
+      3 => SeerrStatusStyle(_blue, Icons.downloading, S.t('processing')),
+      2 => SeerrStatusStyle(_amber, Icons.hourglass_top, S.t('requested')),
       _ => null,
     };
 
@@ -38,11 +39,11 @@ SeerrStatusStyle? seerrMediaStatusStyle(int? status) => switch (status) {
 /// (green), 3 declined (red), 4 failed (red), 5 completed (green).
 /// Returns null otherwise.
 SeerrStatusStyle? seerrRequestStatusStyle(int? status) => switch (status) {
-      1 => const SeerrStatusStyle(_amber, Icons.pending, 'En attente'),
-      2 => const SeerrStatusStyle(_green, Icons.check_circle, 'Approuvé'),
-      3 => const SeerrStatusStyle(_red, Icons.cancel, 'Refusée'),
-      4 => const SeerrStatusStyle(_red, Icons.error_outline, 'Échec'),
-      5 => const SeerrStatusStyle(_green, Icons.task_alt, 'Terminé'),
+      1 => SeerrStatusStyle(_amber, Icons.pending, S.t('pending')),
+      2 => SeerrStatusStyle(_green, Icons.check_circle, S.t('approved')),
+      3 => SeerrStatusStyle(_red, Icons.cancel, S.t('denied')),
+      4 => SeerrStatusStyle(_red, Icons.error_outline, S.t('failed')),
+      5 => SeerrStatusStyle(_green, Icons.task_alt, S.t('done')),
       _ => null,
     };
 

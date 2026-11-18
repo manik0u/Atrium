@@ -99,9 +99,9 @@ void main() {
     await tester.pump(const Duration(milliseconds: 400));
     await tester.pumpAndSettle();
 
-    expect(find.text('Aucun strike trouvé'), findsOneWidget);
+    expect(find.text('No Strikes Found'), findsOneWidget);
     expect(find.text("No strikes matching 'matrix'"), findsOneWidget);
-    expect(find.text('Toutes les files sont propres'), findsNothing);
+    expect(find.text('All Queues Clean'), findsNothing);
   });
 
   testWidgets('erasing the search never flashes All Queues Clean', (
@@ -116,7 +116,7 @@ void main() {
     // the pause is over, and must say so.
     await tester.enterText(find.byType(TextField), '');
     await tester.pump(const Duration(milliseconds: 50));
-    expect(find.text('Toutes les files sont propres'), findsNothing);
+    expect(find.text('All Queues Clean'), findsNothing);
     expect(find.text("No strikes matching 'matrix'"), findsOneWidget);
 
     await tester.pump(const Duration(milliseconds: 400));

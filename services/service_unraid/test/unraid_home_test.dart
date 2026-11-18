@@ -32,7 +32,7 @@ UnraidArray _array({
   UnraidParityCheck? check,
 }) =>
     UnraidArray(
-      state: 'DÉMARRÉ',
+      state: 'STARTED',
       parities: parities,
       caches: caches,
       parityCheck: check,
@@ -120,10 +120,10 @@ void main() {
         ),
       );
 
-      expect(find.text('Parité'), findsOneWidget);
+      expect(find.text('Parity'), findsOneWidget);
       expect(find.text('parity'), findsOneWidget);
       expect(find.text('Single parity'), findsOneWidget);
-      expect(find.text('Aucune protection de parité'), findsNothing);
+      expect(find.text('No parity protection'), findsNothing);
     });
 
     testWidgets('an array with no parity says so', (
@@ -135,9 +135,9 @@ void main() {
         _overrides(),
       );
 
-      expect(find.text('Aucune protection de parité'), findsOneWidget);
+      expect(find.text('No parity protection'), findsOneWidget);
       // An empty heading reads as something having gone missing.
-      expect(find.text('Parité'), findsNothing);
+      expect(find.text('Parity'), findsNothing);
       expect(find.text('Cache'), findsNothing);
     });
 
@@ -207,7 +207,7 @@ void main() {
         const UnraidArrayTab(instance: _instance),
         _overrides(
           array: _array(
-            check: const UnraidParityCheck(status: 'EN COURS', progress: 63),
+            check: const UnraidParityCheck(status: 'RUNNING', progress: 63),
           ),
         ),
       );
@@ -242,7 +242,7 @@ void main() {
         ),
       );
 
-      expect(find.text("La parité n'a jamais été vérifiée"), findsOneWidget);
+      expect(find.text('Parity has never been checked'), findsOneWidget);
     });
   });
 
@@ -258,7 +258,7 @@ void main() {
             UnraidContainer(
               id: 'srv:c1',
               names: <String>['/sonarr'],
-              state: 'EN COURS',
+              state: 'RUNNING',
               status: 'Up 24 hours',
               ports: <UnraidPort>[
                 UnraidPort(privatePort: 80, publicPort: 8989, type: 'TCP'),
@@ -283,7 +283,7 @@ void main() {
             UnraidContainer(
               id: 'srv:c1',
               names: <String>['/sonarr'],
-              state: 'EN COURS',
+              state: 'RUNNING',
               status: 'Up 24 hours',
             ),
           ],
@@ -333,7 +333,7 @@ void main() {
             UnraidContainer(
               id: 'srv:c1',
               names: <String>['/bazarr'],
-              state: 'EN PAUSE',
+              state: 'PAUSED',
               status: 'Up 6 days (Paused)',
             ),
           ],
@@ -343,7 +343,7 @@ void main() {
       final Finder button =
           find.widgetWithIcon(IconButton, Icons.play_arrow_rounded);
       expect(button, findsOneWidget);
-      expect(tester.widget<IconButton>(button).tooltip, 'Reprendre');
+      expect(tester.widget<IconButton>(button).tooltip, 'Resume');
       expect(find.widgetWithIcon(IconButton, Icons.stop_rounded), findsNothing);
     });
 
@@ -358,7 +358,7 @@ void main() {
             UnraidContainer(
               id: 'srv:c1',
               names: <String>['/sonarr'],
-              state: 'EN COURS',
+              state: 'RUNNING',
               status: 'Up 24 hours',
               webUiUrl: 'http://10.0.2.15:8989/',
             ),
@@ -380,7 +380,7 @@ void main() {
             UnraidContainer(
               id: 'srv:c1',
               names: <String>['/orphan'],
-              state: 'EN COURS',
+              state: 'RUNNING',
               status: 'Up 24 hours',
               isOrphaned: true,
             ),
@@ -400,7 +400,7 @@ void main() {
         _overrides(),
       );
 
-      expect(find.text('Aucun conteneur'), findsOneWidget);
+      expect(find.text('No containers'), findsOneWidget);
     });
   });
 
@@ -430,7 +430,7 @@ void main() {
         ),
       );
 
-      expect(find.text('Système'), findsOneWidget);
+      expect(find.text('System'), findsOneWidget);
       expect(find.text('2 cores'), findsOneWidget);
       expect(find.text('37%'), findsOneWidget);
       expect(find.text('busiest core 38%'), findsOneWidget);
@@ -556,7 +556,7 @@ void main() {
       id: 'srv:c1',
       names: <String>['/sonarr'],
       image: 'lscr.io/linuxserver/sonarr:latest',
-      state: 'EN COURS',
+      state: 'RUNNING',
       status: 'Up 24 hours',
       autoStart: true,
       command: '/init',
@@ -592,7 +592,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // It has no template, so the old behaviour left it inert entirely.
-      expect(find.text('Démarrer'), findsOneWidget);
+      expect(find.text('Start'), findsOneWidget);
       expect(
         find.textContaining('No Unraid template matches'),
         findsOneWidget,
@@ -614,7 +614,7 @@ void main() {
       expect(find.text('lscr.io/linuxserver/sonarr:latest'), findsOneWidget);
       expect(find.text('8989 -> 80'), findsOneWidget);
       expect(find.text('1.2 GB'), findsOneWidget);
-      expect(find.text('Démarre avec le tableau'), findsOneWidget);
+      expect(find.text('Starts with the array'), findsOneWidget);
       expect(find.text('/init'), findsOneWidget);
       expect(find.text('Web interface'), findsOneWidget);
       expect(find.text('Project page'), findsOneWidget);
@@ -633,11 +633,11 @@ void main() {
       await tester.tap(find.text('sonarr'));
       await tester.pumpAndSettle();
 
-      expect(find.widgetWithText(FilledButton, 'Arrêter'), findsOneWidget);
+      expect(find.widgetWithText(FilledButton, 'Stop'), findsOneWidget);
       expect(find.widgetWithText(OutlinedButton, 'Pause'), findsOneWidget);
       // Resuming something already running would do nothing.
-      expect(find.text('Reprendre'), findsNothing);
-      expect(find.text('Démarrer'), findsNothing);
+      expect(find.text('Resume'), findsNothing);
+      expect(find.text('Start'), findsNothing);
     });
 
     testWidgets('a paused container is offered resume, never pause again', (
@@ -651,7 +651,7 @@ void main() {
             UnraidContainer(
               id: 'srv:c1',
               names: <String>['/bazarr'],
-              state: 'EN PAUSE',
+              state: 'PAUSED',
               status: 'Up 6 days (Paused)',
             ),
           ],
@@ -661,8 +661,8 @@ void main() {
       await tester.tap(find.text('bazarr'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Reprendre'), findsOneWidget);
-      expect(find.text('Arrêter'), findsOneWidget);
+      expect(find.text('Resume'), findsOneWidget);
+      expect(find.text('Stop'), findsOneWidget);
       expect(find.text('Pause'), findsNothing);
     });
 
@@ -687,10 +687,10 @@ void main() {
       await tester.tap(find.text('old'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Démarrer'), findsOneWidget);
+      expect(find.text('Start'), findsOneWidget);
       // Pausing a stopped container does nothing.
       expect(find.text('Pause'), findsNothing);
-      expect(find.text('Arrêter'), findsNothing);
+      expect(find.text('Stop'), findsNothing);
     });
   });
 
@@ -749,7 +749,7 @@ void main() {
       );
 
       expect(find.text('Board'), findsNothing);
-      expect(find.text('Mémoire'), findsNothing);
+      expect(find.text('Memory'), findsNothing);
       // Worth saying, since it explains a lot of odd readings elsewhere.
       expect(find.text('virtual machine'), findsOneWidget);
     });
@@ -784,7 +784,7 @@ void main() {
       expect(tester.takeException(), isNull);
       expect(find.text('ABOUT'), findsNothing);
       // The load graphs are the point of this tab and must survive.
-      expect(find.text('Système'), findsOneWidget);
+      expect(find.text('System'), findsOneWidget);
       expect(find.text('5%'), findsOneWidget);
     });
   });
@@ -801,8 +801,8 @@ void main() {
       );
 
       expect(tester.takeException(), isNull);
-      expect(find.text('Les machines virtuelles sont éteintes'), findsOneWidget);
-      expect(find.text('Aucune machine virtuelle'), findsNothing);
+      expect(find.text('Virtual machines are off'), findsOneWidget);
+      expect(find.text('No virtual machines'), findsNothing);
     });
 
     testWidgets('the manager being on with nothing defined is its own state', (
@@ -814,8 +814,8 @@ void main() {
         _overrides(vms: const UnraidVmList(enabled: true)),
       );
 
-      expect(find.text('Aucune machine virtuelle'), findsOneWidget);
-      expect(find.text('Les machines virtuelles sont éteintes'), findsNothing);
+      expect(find.text('No virtual machines'), findsOneWidget);
+      expect(find.text('Virtual machines are off'), findsNothing);
     });
 
     testWidgets('machines are listed with their state', (
@@ -828,19 +828,19 @@ void main() {
           vms: const UnraidVmList(
             enabled: true,
             vms: <UnraidVm>[
-              UnraidVm(id: 'srv:v1', name: 'Windows 11', state: 'EN COURS'),
+              UnraidVm(id: 'srv:v1', name: 'Windows 11', state: 'RUNNING'),
               UnraidVm(id: 'srv:v2', name: 'Home Assistant', state: 'SHUTOFF'),
-              UnraidVm(id: 'srv:v3', name: 'Broken', state: 'PLANTÉ'),
+              UnraidVm(id: 'srv:v3', name: 'Broken', state: 'CRASHED'),
             ],
           ),
         ),
       );
 
       expect(find.text('Windows 11'), findsOneWidget);
-      expect(find.text('En cours'), findsOneWidget);
+      expect(find.text('Running'), findsOneWidget);
       // SHUTOFF is libvirt's word, not one to put in front of anyone.
-      expect(find.text('Arrêté'), findsOneWidget);
-      expect(find.text('Planté'), findsOneWidget);
+      expect(find.text('Stopped'), findsOneWidget);
+      expect(find.text('Crashed'), findsOneWidget);
       expect(find.text('1 of 3 running'), findsOneWidget);
     });
 
@@ -867,15 +867,15 @@ void main() {
     testWidgets('a running machine is offered every action it can take', (
       WidgetTester tester,
     ) async {
-      await openSheet(tester, 'EN COURS');
+      await openSheet(tester, 'RUNNING');
 
-      expect(find.text('Arrêter'), findsOneWidget);
+      expect(find.text('Shut down'), findsOneWidget);
       expect(find.text('Pause'), findsOneWidget);
-      expect(find.text('Redémarrer'), findsOneWidget);
-      expect(find.text('Arrêt forcé'), findsOneWidget);
-      expect(find.text('Réinitialiser'), findsOneWidget);
+      expect(find.text('Reboot'), findsOneWidget);
+      expect(find.text('Force stop'), findsOneWidget);
+      expect(find.text('Reset'), findsOneWidget);
       // Starting something already up is the one thing it cannot do.
-      expect(find.text('Démarrer'), findsNothing);
+      expect(find.text('Start'), findsNothing);
     });
 
     testWidgets('a stopped machine is only offered a start', (
@@ -883,22 +883,22 @@ void main() {
     ) async {
       await openSheet(tester, 'SHUTOFF');
 
-      expect(find.text('Démarrer'), findsOneWidget);
-      expect(find.text('Arrêter'), findsNothing);
+      expect(find.text('Start'), findsOneWidget);
+      expect(find.text('Shut down'), findsNothing);
       expect(find.text('Pause'), findsNothing);
       // Nothing destructive belongs on a machine that is already off.
-      expect(find.text('Arrêt forcé'), findsNothing);
-      expect(find.text('Réinitialiser'), findsNothing);
+      expect(find.text('Force stop'), findsNothing);
+      expect(find.text('Reset'), findsNothing);
     });
 
     testWidgets('a paused machine resumes rather than starts', (
       WidgetTester tester,
     ) async {
-      await openSheet(tester, 'EN PAUSE');
+      await openSheet(tester, 'PAUSED');
 
-      expect(find.text('Reprendre'), findsOneWidget);
-      expect(find.text('Arrêter'), findsOneWidget);
-      expect(find.text('Démarrer'), findsNothing);
+      expect(find.text('Resume'), findsOneWidget);
+      expect(find.text('Shut down'), findsOneWidget);
+      expect(find.text('Start'), findsNothing);
       expect(find.text('Pause'), findsNothing);
     });
 
@@ -907,12 +907,12 @@ void main() {
     ) async {
       // SHUTDOWN is between states: start is refused and stop does nothing,
       // so offering either would only produce an error.
-      await openSheet(tester, 'ARRÊTÉ');
+      await openSheet(tester, 'SHUTDOWN');
 
       expect(find.textContaining('shutting down'), findsWidgets);
-      expect(find.text('Démarrer'), findsNothing);
-      expect(find.text('Arrêter'), findsNothing);
-      expect(find.text('Arrêt forcé'), findsNothing);
+      expect(find.text('Start'), findsNothing);
+      expect(find.text('Shut down'), findsNothing);
+      expect(find.text('Force stop'), findsNothing);
     });
   });
 
@@ -928,7 +928,7 @@ void main() {
 
       // Scoped to the bar: "Array" is also the caption on the usage meter.
       final Finder nav = find.byType(NavigationBar);
-      for (final String label in <String>['Tableau', 'Système', 'Docker', 'VM']) {
+      for (final String label in <String>['Array', 'System', 'Docker', 'VMs']) {
         expect(
           find.descendant(of: nav, matching: find.text(label)),
           findsOneWidget,
@@ -945,11 +945,11 @@ void main() {
         _overrides(),
       );
 
-      await tester.tap(find.text('VM'));
+      await tester.tap(find.text('VMs'));
       await tester.pump();
       await tester.pump();
 
-      expect(find.text('Les machines virtuelles sont éteintes'), findsOneWidget);
+      expect(find.text('Virtual machines are off'), findsOneWidget);
     });
   });
 }

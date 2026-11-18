@@ -12,7 +12,7 @@ import 'widgets/ombi_visuals.dart';
 /// Searches Ombi for movies and shows; tapping one opens its title sheet.
 class OmbiSearchDelegate extends SearchDelegate<void> {
   OmbiSearchDelegate({required this.instance})
-      : super(searchFieldLabel: 'Rechercher des films et séries');
+      : super(searchFieldLabel: S.t('searchMoviesAndShows'));
 
   final Instance instance;
 
@@ -24,7 +24,7 @@ class OmbiSearchDelegate extends SearchDelegate<void> {
       ? const <Widget>[]
       : <Widget>[
           IconButton(
-            tooltip: 'Effacer',
+            tooltip: S.t('clear'),
             icon: const Icon(Icons.clear),
             onPressed: () => query = '',
           ),
@@ -32,7 +32,7 @@ class OmbiSearchDelegate extends SearchDelegate<void> {
 
   @override
   Widget? buildLeading(BuildContext context) => IconButton(
-        tooltip: 'Retour',
+        tooltip: S.t('back'),
         icon: const Icon(Icons.arrow_back),
         onPressed: () => close(context, null),
       );
@@ -56,16 +56,16 @@ class _OmbiSearchResults extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final String q = query.trim();
     if (q.length < 2) {
-      return const EmptyView(
+      return EmptyView(
         icon: Icons.search,
-        title: 'Rechercher un film ou une série.',
+        title: S.t('searchForMoviesOrShows'),
       );
     }
     final OmbiSearchKey key = (instance: instance, query: q);
     return ref.watch(ombiSearchProvider(key)).when(
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (Object error, StackTrace _) => ErrorView(
-            title: 'Échec de la recherche',
+            title: S.t('searchFailed'),
             message: describeOmbiFailure(error, lookup: OmbiLookup.search),
             onRetry: () => ref.invalidate(ombiSearchProvider(key)),
           ),
@@ -73,8 +73,8 @@ class _OmbiSearchResults extends ConsumerWidget {
             if (hits.isEmpty) {
               return EmptyView(
                 icon: Icons.search_off,
-                title: 'Aucun résultat',
-                message: 'Rien sur Ombi ne correspond à « $q ».',
+                title: S.t('noResults'),
+                message: S.t('nothingOnOmbiMatchesQ1', [q]),
               );
             }
             return ListView.separated(
@@ -142,7 +142,7 @@ class _ResultCard extends StatelessWidget {
                     const SizedBox(height: Insets.xs),
                     OmbiPill(
                       label:
-                          hit.kind == OmbiMediaKind.movie ? 'Movie' : 'TV show',
+                          hit.kind == OmbiMediaKind.movie ? S.t('movie') : S.t('tvShow'),
                       icon: ombiKindIcon(hit.kind),
                       foreground: cs.onSurfaceVariant,
                       background: cs.surfaceContainerHighest,

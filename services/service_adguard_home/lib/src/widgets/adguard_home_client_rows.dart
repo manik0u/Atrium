@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -188,9 +189,9 @@ class AdguardHomePersistentClientRow extends StatelessWidget {
           const AdguardHomeClientMark('Own upstreams', strong: true),
         // Both explain a missing or a small count.
         if (client.ignoreQueryLog)
-          const AdguardHomeClientMark('Pas dans le journal des requêtes', strong: true),
+          AdguardHomeClientMark(S.t('notInTheQueryLog'), strong: true),
         if (client.ignoreStatistics)
-          const AdguardHomeClientMark('Pas dans les statistiques', strong: true),
+          AdguardHomeClientMark(S.t('notInStatistics'), strong: true),
       ],
       queries: row.queries,
       onTap: onTap,

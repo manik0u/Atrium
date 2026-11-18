@@ -129,7 +129,7 @@ class _LidarrAlbumStudioScreenState
       if (studioPayload.isEmpty) {
         if (mounted) {
           messenger.showSnackBar(
-            const SnackBar(content: Text('Aucune modification à enregistrer.')),
+            SnackBar(content: Text(S.t('noChangesToSave'))),
           );
         }
         return;
@@ -141,7 +141,7 @@ class _LidarrAlbumStudioScreenState
 
       if (!resp.isSuccess) {
         throw Exception(
-          resp.error?.message ?? "Échec de la mise à jour du studio d'albums",
+          resp.error?.message ?? S.t('failedToUpdateAlbumStudio'),
         );
       }
 
@@ -168,7 +168,7 @@ class _LidarrAlbumStudioScreenState
       if (mounted) {
         messenger.showSnackBar(
           SnackBar(
-            content: Text("Erreur d'enregistrement : $e"),
+            content: Text(S.t('saveErrorE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -242,8 +242,8 @@ class _LidarrAlbumStudioScreenState
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'Album Studio',
+            Text(
+              S.t('albumStudio'),
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             asyncArtists.when(
@@ -284,7 +284,7 @@ class _LidarrAlbumStudioScreenState
                       ),
                     )
                   : const Icon(Icons.save_outlined, size: 18),
-              label: const Text('Enregistrer'),
+              label: Text(S.t('save')),
             ),
           ),
         ],
@@ -316,7 +316,7 @@ class _LidarrAlbumStudioScreenState
                         controller: _searchController,
                         focusNode: _searchFocusNode,
                         decoration: InputDecoration(
-                          hintText: 'Filtrer les artistes par nom…',
+                          hintText: S.t('filterArtistsByName'),
                           hintStyle: TextStyle(
                             color: cs.onSurfaceVariant.withValues(alpha: 0.8),
                             fontSize: 14,
@@ -333,7 +333,7 @@ class _LidarrAlbumStudioScreenState
                     if (_searchQuery.isNotEmpty)
                       IconButton(
                         icon: const Icon(Icons.clear, size: 18),
-                        tooltip: 'Effacer la recherche',
+                        tooltip: S.t('clearSearch'),
                         visualDensity: VisualDensity.compact,
                         onPressed: () {
                           _searchController.clear();
@@ -386,12 +386,12 @@ class _LidarrAlbumStudioScreenState
                   }).toList();
 
                   if (filtered.isEmpty) {
-                    return const Center(
+                    return Center(
                       child: EmptyView(
                         icon: Icons.search_off_outlined,
-                        title: 'Aucun artiste trouvé',
+                        title: S.t('noArtistsFound'),
                         message:
-                            'Aucun artiste de votre bibliothèque ne correspond au filtre actuel.',
+                            S.t('noArtistsInYourLibraryMatchTheCurrentFilter'),
                       ),
                     );
                   }
@@ -537,7 +537,7 @@ class _ArtistMatrixCard extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          artist.artistName ?? 'Artist',
+                          artist.artistName ?? S.t('artist'),
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
@@ -561,7 +561,7 @@ class _ArtistMatrixCard extends ConsumerWidget {
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Text(
-                                isContinuing ? 'Continuing' : 'Ended',
+                                isContinuing ? S.t('continuing') : S.t('ended'),
                                 style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w600,
@@ -587,8 +587,8 @@ class _ArtistMatrixCard extends ConsumerWidget {
                               ),
                               child: Text(
                                 artist.monitored == true
-                                    ? 'Monitored'
-                                    : 'Unmonitored',
+                                    ? S.t('monitored')
+                                    : S.t('unmonitored'),
                                 style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w600,
@@ -700,11 +700,11 @@ class _DiscographyMatrix extends StatelessWidget {
     final ColorScheme cs = theme.colorScheme;
 
     if (albums.isEmpty) {
-      return const Padding(
+      return Padding(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         child: Center(
           child: Text(
-            'No albums found for this artist.',
+            S.t('noAlbumsFoundForThisArtist_2'),
             style: TextStyle(fontSize: 13),
           ),
         ),
@@ -732,7 +732,7 @@ class _DiscographyMatrix extends StatelessWidget {
             children: [
               // Summary Count
               Text(
-                '$monitoredCount of ${albums.length} ${albums.length == 1 ? 'Album' : 'Albums'}',
+                '$monitoredCount of ${albums.length} ${albums.length == 1 ? S.t('album') : S.t('albums')}',
                 style: theme.textTheme.bodySmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: cs.onSurfaceVariant,
@@ -843,7 +843,7 @@ class _DiscographyMatrix extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            album.title ?? 'Album',
+                            album.title ?? S.t('album'),
                             style: TextStyle(
                               fontWeight: isMonitored
                                   ? FontWeight.bold
@@ -870,7 +870,7 @@ class _DiscographyMatrix extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(3),
                                 ),
                                 child: Text(
-                                  album.albumType ?? 'Album',
+                                  album.albumType ?? S.t('album'),
                                   style: TextStyle(
                                     fontSize: 10,
                                     fontWeight: FontWeight.w600,

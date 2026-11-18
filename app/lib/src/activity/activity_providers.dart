@@ -496,9 +496,9 @@ String _tautulliSessionId(TautulliSession s, int index) {
 
 String? _decisionLabel(String decision) => switch (decision.toLowerCase()) {
       '' => null,
-      'direct play' => 'Lecture directe',
-      'copy' || 'direct stream' => 'Flux direct',
-      'transcode' => 'Transcodage',
+      'direct play' => S.t('directPlay'),
+      'copy' || 'direct stream' => S.t('directStream'),
+      'transcode' => S.t('transcoding'),
       _ => decision,
     };
 
@@ -538,25 +538,25 @@ List<ActivityDownload> _qbitDownloads(
 String _qbitStatusLabel(String state) {
   final String s = state.toLowerCase();
   if (s.contains('paused') || s.contains('stopped')) {
-    return 'Paused';
+    return S.t('paused');
   }
   if (s.contains('queued')) {
-    return 'Queued';
+    return S.t('queued');
   }
   if (s.contains('stalled')) {
     return 'Stalled';
   }
   if (s.contains('checking')) {
-    return 'Checking';
+    return S.t('checking');
   }
   if (s.contains('error') || s.contains('missing')) {
-    return 'Error';
+    return S.t('error');
   }
   if (s.contains('dl') || s == 'downloading') {
-    return 'Downloading';
+    return S.t('downloading');
   }
   if (s.contains('up') || s == 'uploading') {
-    return 'Seeding';
+    return S.t('seeding');
   }
   return _capitalized(state);
 }
@@ -587,7 +587,7 @@ List<ActivityDownload> _sabDownloads(Instance instance, SabQueue queue) {
         title: slot.filename,
         progress: ((int.tryParse(slot.percentage) ?? 0) / 100).clamp(0.0, 1.0),
         eta: slot.timeleft.isEmpty ? null : slot.timeleft,
-        status: slot.status.isEmpty ? 'Queued' : _capitalized(slot.status),
+        status: slot.status.isEmpty ? S.t('queued') : _capitalized(slot.status),
       ),
   ];
 }
@@ -743,7 +743,7 @@ List<ActivityDownload> _sonarrDownloads(
         sourceKind: instance.kind,
         title: (item.title ?? '').isNotEmpty
             ? item.title!
-            : (item.series?.title ?? 'Inconnu'),
+            : (item.series?.title ?? S.t('unknown')),
         progress: _sizeProgress(item.size ?? 0, item.sizeleft ?? 0),
         eta: (item.timeleft ?? '').isEmpty ? null : item.timeleft,
         status: _arrStatusLabel(item.status, item.trackedDownloadState),
@@ -770,7 +770,7 @@ List<ActivityDownload> _radarrDownloads(
         key: '${instance.id}:${item.id}',
         instance: instance,
         sourceKind: instance.kind,
-        title: (item.title ?? '').isEmpty ? 'Inconnu' : item.title!,
+        title: (item.title ?? '').isEmpty ? S.t('unknown') : item.title!,
         progress: _sizeProgress(item.size ?? 0, item.sizeleft ?? 0),
         eta: (item.timeleft ?? '').isEmpty ? null : item.timeleft,
         status: _arrStatusLabel(item.status, item.trackedDownloadState),
@@ -796,15 +796,15 @@ double _sizeProgress(double size, double sizeleft) {
 
 String _arrStatusLabel(String? status, String? trackedState) {
   if ((trackedState ?? '').toLowerCase().contains('import')) {
-    return 'Importing';
+    return S.t('importing');
   }
   return switch ((status ?? '').toLowerCase()) {
-    'downloading' => 'Téléchargement en cours',
-    'queued' || 'delay' => "En file d'attente",
-    'paused' => 'En pause',
+    'downloading' => S.t('downloading'),
+    'queued' || 'delay' => S.t('queued'),
+    'paused' => S.t('paused'),
     // Download client finished; the item is waiting on / being imported.
-    'completed' => 'Import en cours',
-    '' => "En file d'attente",
+    'completed' => S.t('importing'),
+    '' => S.t('queued'),
     _ => _capitalized(status!),
   };
 }
@@ -840,8 +840,8 @@ List<ActivityDownload> _slskdDownloads(
                   ? file.averageSpeed.round()
                   : null,
               status: file.category == TransferCategory.inProgress
-                  ? 'Downloading'
-                  : 'Queued',
+                  ? S.t('downloading')
+                  : S.t('queued'),
             ),
           );
         }

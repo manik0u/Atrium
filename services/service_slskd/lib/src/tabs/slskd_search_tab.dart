@@ -107,7 +107,7 @@ class _SlskdSearchTabState extends ConsumerState<SlskdSearchTab> {
       if (!mounted) return;
       ref.invalidate(slskdSearchesProvider(widget.instance));
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Recherche arrêtée')),
+        SnackBar(content: Text(S.t('searchStopped'))),
       );
     } catch (e) {
       if (mounted) {
@@ -153,7 +153,7 @@ class _SlskdSearchTabState extends ConsumerState<SlskdSearchTab> {
         final failureCount = response.failures.length;
 
         if (enqueuedCount == 0 && failureCount > 0) {
-          final firstFailure = response.failures.first.message ?? "déjà en téléchargement ou en file d'attente";
+          final firstFailure = response.failures.first.message ?? S.t('alreadyDownloadingOrQueued');
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
@@ -171,7 +171,7 @@ class _SlskdSearchTabState extends ConsumerState<SlskdSearchTab> {
             SnackBar(
               content: Text(summaryMsg),
               action: SnackBarAction(
-                label: 'Voir les transferts',
+                label: S.t('viewTransfers'),
                 onPressed: () {
                   ref.read(slskdActiveTabProvider(widget.instance).notifier).state = 0;
                 },
@@ -215,7 +215,7 @@ class _SlskdSearchTabState extends ConsumerState<SlskdSearchTab> {
       if (mounted) {
         ref.invalidate(slskdDownloadsProvider(widget.instance));
         if (response.failures.isNotEmpty) {
-          final failMsg = response.failures.first.message ?? "déjà en file d'attente ou en téléchargement";
+          final failMsg = response.failures.first.message ?? S.t('alreadyQueuedOrDownloading');
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
@@ -228,9 +228,9 @@ class _SlskdSearchTabState extends ConsumerState<SlskdSearchTab> {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Téléchargement de « ${file.trackTitle} »'),
+              content: Text(S.t('downloadingFileTrackTitle1', [file.trackTitle])),
               action: SnackBarAction(
-                label: 'Voir les transferts',
+                label: S.t('viewTransfers'),
                 onPressed: () {
                   ref.read(slskdActiveTabProvider(widget.instance).notifier).state = 0;
                 },
@@ -244,7 +244,7 @@ class _SlskdSearchTabState extends ConsumerState<SlskdSearchTab> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'Failed to enqueue track: $e',
+              S.t('failedToEnqueueTrackE1', [e]),
               style: TextStyle(color: Theme.of(context).colorScheme.onError),
             ),
             backgroundColor: Theme.of(context).colorScheme.error,
@@ -318,15 +318,15 @@ class _SlskdSearchTabState extends ConsumerState<SlskdSearchTab> {
       body: SafeArea(
         bottom: false,
         child: EasyRefresh(
-          header: const ClassicHeader(
+          header: ClassicHeader(
             position: IndicatorPosition.locator,
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
           onRefresh: () async {
             ref.invalidate(slskdSearchesProvider(widget.instance));
@@ -369,7 +369,7 @@ class _SlskdSearchTabState extends ConsumerState<SlskdSearchTab> {
               titleSpacing: Insets.xs,
               title: SearchBar(
                 controller: _searchController,
-                hintText: 'Rechercher un artiste, un album, une piste…',
+                hintText: S.t('searchArtistAlbumTrack'),
                 elevation: const WidgetStatePropertyAll<double>(0),
                 backgroundColor: WidgetStatePropertyAll<Color>(colorScheme.surfaceContainerHigh),
                 padding: const WidgetStatePropertyAll<EdgeInsets>(
@@ -389,12 +389,12 @@ class _SlskdSearchTabState extends ConsumerState<SlskdSearchTab> {
               actions: <Widget>[
                 if (activeSearch != null && !activeSearch.isComplete)
                   IconButton(
-                    tooltip: 'Arrêter la recherche',
+                    tooltip: S.t('stopSearch'),
                     icon: const Icon(Icons.stop_circle_outlined),
                     onPressed: () => _stopSearch(activeSearch!.id),
                   ),
                 IconButton(
-                  tooltip: _isGrouped ? 'Passer à la liste simple' : "Passer aux groupes d'albums",
+                  tooltip: _isGrouped ? S.t('switchToPlainList') : S.t('switchToAlbumGroups'),
                   icon: Icon(
                     _isGrouped ? Icons.format_list_bulleted_rounded : Icons.album_outlined,
                   ),
@@ -493,7 +493,7 @@ class _SlskdSearchTabState extends ConsumerState<SlskdSearchTab> {
                       ],
                       if (_freeSlotOnly) ...<Widget>[
                         InputChip(
-                          label: const Text('Emplacement libre'),
+                          label: Text(S.t('freeSlot')),
                           visualDensity: VisualDensity.compact,
                           onDeleted: () => setState(() => _freeSlotOnly = false),
                         ),
@@ -501,7 +501,7 @@ class _SlskdSearchTabState extends ConsumerState<SlskdSearchTab> {
                       ],
                       if (!_hideLocked) ...<Widget>[
                         InputChip(
-                          label: const Text('Inclure les verrouillés'),
+                          label: Text(S.t('includeLocked')),
                           visualDensity: VisualDensity.compact,
                           onDeleted: () => setState(() => _hideLocked = true),
                         ),
@@ -518,7 +518,7 @@ class _SlskdSearchTabState extends ConsumerState<SlskdSearchTab> {
                       TextButton(
                         style: TextButton.styleFrom(visualDensity: VisualDensity.compact),
                         onPressed: _resetFilters,
-                        child: const Text('Réinitialiser'),
+                        child: Text(S.t('reset')),
                       ),
                     ],
                   ),
@@ -550,7 +550,7 @@ class _SlskdSearchTabState extends ConsumerState<SlskdSearchTab> {
 
     return FloatingActionButton.small(
       heroTag: 'slskd_search_sort_filter_fab',
-      tooltip: 'Trier et filtrer les résultats',
+      tooltip: S.t('sortFilterResults'),
       elevation: 0,
       highlightElevation: 0,
       focusElevation: 0,
@@ -612,7 +612,7 @@ class _SlskdSearchTabState extends ConsumerState<SlskdSearchTab> {
                   const SizedBox(height: Insets.md),
                   FilledButton.tonalIcon(
                     icon: const Icon(Icons.stop_circle_outlined, size: 18),
-                    label: const Text('Arrêter la recherche'),
+                    label: Text(S.t('stopSearch')),
                     onPressed: () => _stopSearch(search.id),
                   ),
                 ],
@@ -747,7 +747,7 @@ class _SlskdSearchTabState extends ConsumerState<SlskdSearchTab> {
               failed
                   ? 'Search for "${search.searchText}" failed'
                   : (_hasActiveFilters
-                      ? 'Aucun résultat ne correspond aux filtres actifs'
+                      ? S.t('noResultsMatchActiveFilters')
                       : 'No results found for "${search.searchText}"'),
               textAlign: TextAlign.center,
               style: theme.textTheme.titleMedium?.copyWith(
@@ -773,7 +773,7 @@ class _SlskdSearchTabState extends ConsumerState<SlskdSearchTab> {
               const SizedBox(height: Insets.md),
               OutlinedButton.icon(
                 icon: const Icon(Icons.filter_alt_off_rounded, size: 18),
-                label: const Text('Réinitialiser tous les filtres'),
+                label: Text(S.t('resetAllFilters')),
                 onPressed: _resetFilters,
               ),
             ],

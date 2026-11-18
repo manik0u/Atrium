@@ -20,14 +20,14 @@ class SeerrDiscoverScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
       onRefresh: () async {
         ref.invalidate(seerrWatchlistProvider(instance));
@@ -43,7 +43,7 @@ class SeerrDiscoverScreen extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(vertical: Insets.lg),
         children: <Widget>[
           _DiscoverSection(
-            title: 'Liste de suivi',
+            title: S.t('watchlist'),
             provider: seerrWatchlistProvider(instance),
             instance: instance,
             // Optional row: most servers have an empty watchlist, and the
@@ -53,38 +53,38 @@ class SeerrDiscoverScreen extends ConsumerWidget {
             hideWhenEmpty: true,
           ),
           _DiscoverSection(
-            title: 'Tendances',
+            title: S.t('trending'),
             provider: seerrTrendingProvider(instance),
             instance: instance,
           ),
           _DiscoverSection(
-            title: 'Films populaires',
+            title: S.t('popularMovies'),
             provider: seerrDiscoverMoviesProvider(instance),
             instance: instance,
           ),
           _DiscoverSection(
-            title: 'Films à venir',
+            title: S.t('upcomingMovies'),
             provider: seerrUpcomingMoviesProvider(instance),
             instance: instance,
           ),
           _GenreSection(
-            title: 'Genres de films',
+            title: S.t('movieGenres'),
             isMovie: true,
             provider: seerrMovieGenresProvider(instance),
             instance: instance,
           ),
           _DiscoverSection(
-            title: 'Séries populaires',
+            title: S.t('popularTVShows'),
             provider: seerrDiscoverTvProvider(instance),
             instance: instance,
           ),
           _DiscoverSection(
-            title: 'Séries à venir',
+            title: S.t('upcomingTVShows'),
             provider: seerrUpcomingTvProvider(instance),
             instance: instance,
           ),
           _GenreSection(
-            title: 'Genres de séries',
+            title: S.t('tvGenres'),
             isMovie: false,
             provider: seerrTvGenresProvider(instance),
             instance: instance,
@@ -157,7 +157,7 @@ class _DiscoverSection extends ConsumerWidget {
             onRetry: () => ref.invalidate(provider),
             data: (List<SeerrDiscoverResult> list) {
               if (list.isEmpty) {
-                return const Center(child: Text('Aucun résultat.'));
+                return Center(child: Text(S.t('noResults_2')));
               }
               return ListView.builder(
                 scrollDirection: Axis.horizontal,

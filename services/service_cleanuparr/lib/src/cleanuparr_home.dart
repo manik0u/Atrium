@@ -107,10 +107,10 @@ class CleanuparrHome extends ConsumerWidget {
           ref.read(cleanuparrTabProvider(instance).notifier).state = index;
         },
         destinations: <NavigationDestination>[
-          const NavigationDestination(
+          NavigationDestination(
             icon: Icon(Icons.dashboard_outlined),
             selectedIcon: Icon(Icons.dashboard),
-            label: "Vue d'ensemble",
+            label: S.t('overview'),
           ),
           NavigationDestination(
             icon: Badge(
@@ -123,12 +123,12 @@ class CleanuparrHome extends ConsumerWidget {
               label: Text('$activeStrikesCount'),
               child: const Icon(Icons.gavel),
             ),
-            label: 'Strikes',
+            label: S.t('strikes'),
           ),
-          const NavigationDestination(
+          NavigationDestination(
             icon: Icon(Icons.receipt_long_outlined),
             selectedIcon: Icon(Icons.receipt_long),
-            label: 'Événements',
+            label: S.t('events'),
           ),
         ],
       ),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cookie_jar/cookie_jar.dart';
+import 'package:core_models/core_models.dart';
 import 'package:core_networking/core_networking.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
@@ -127,9 +128,9 @@ class QbittorrentClient {
         return;
       }
       if (status == 403) {
-        throw const NetworkAuthException(
-          'qBittorrent banned this IP after repeated failed logins. '
-          'Attendez ~5 minutes et réessayez, ou désactivez le bannissement dans '
+        throw NetworkAuthException(
+          'qBittorrent banned this IP after repeated failed logins. ' +
+          S.t('wait5MinutesAndRetryOrDisableTheBanInQBitS') +
           'Tools → Options → Web UI → Authentication.',
         );
       }
@@ -776,9 +777,9 @@ class QbittorrentClient {
     } on DioException catch (e) {
       if (e.response?.statusCode == 403) {
         if (_usesApiKey) {
-          throw const NetworkAuthException(
-            'qBittorrent rejected the API key. Check it in qBittorrent 5.2+ '
-            "les paramètres de l'interface web (envoyés comme Authorization: Bearer), ou renouvelez "
+          throw NetworkAuthException(
+            'qBittorrent rejected the API key. Check it in qBittorrent 5.2+ ' +
+            S.t('webUISettingsSentAsAuthorizationBearerOrRotateThe') +
             'key and re-enter it.',
           );
         }

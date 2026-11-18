@@ -266,10 +266,10 @@ void main() {
       test('is the web UI\'s for the sources the server has built in', () {
         expect(adguardHomeFilterListName(filtering, 0), 'Custom filtering rules');
         expect(adguardHomeFilterListName(filtering, -1), 'System hosts files');
-        expect(adguardHomeFilterListName(filtering, -2), 'Services bloqués');
-        expect(adguardHomeFilterListName(filtering, -3), 'Contrôle parental');
+        expect(adguardHomeFilterListName(filtering, -2), 'Blocked services');
+        expect(adguardHomeFilterListName(filtering, -3), 'Parental control');
         expect(adguardHomeFilterListName(filtering, -4), 'Safe browsing');
-        expect(adguardHomeFilterListName(filtering, -5), 'Recherche sécurisée');
+        expect(adguardHomeFilterListName(filtering, -5), 'Safe search');
         // These need no lists to have been read.
         expect(adguardHomeFilterListName(null, 0), 'Custom filtering rules');
       });

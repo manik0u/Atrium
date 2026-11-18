@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -145,7 +146,7 @@ class SlskdBrowsePeerCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
-                            hasFreeSlot ? 'Free Slot' : 'Queue: #$queueLen',
+                            hasFreeSlot ? S.t('freeSlot') : 'Queue: #$queueLen',
                             style: textTheme.labelSmall?.copyWith(
                               fontSize: 9,
                               fontWeight: FontWeight.bold,
@@ -176,7 +177,7 @@ class SlskdBrowsePeerCard extends StatelessWidget {
 
             // Bio / Info action button
             IconButton.filledTonal(
-              tooltip: 'Voir le profil et la bio du pair',
+              tooltip: S.t('viewPeerProfileBio'),
               visualDensity: VisualDensity.compact,
               icon: const Icon(Icons.info_outline_rounded, size: 18),
               onPressed: (userInfo == null && userStatus == null)

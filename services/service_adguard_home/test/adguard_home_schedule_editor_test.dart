@@ -89,13 +89,13 @@ void main() {
     expect(find.text('Europe/Berlin'), findsOneWidget);
     double last = -1;
     for (final String day in <String>[
-      'Lundi',
-      'Mardi',
-      'Mercredi',
-      'Jeudi',
-      'Vendredi',
-      'Samedi',
-      'Dimanche',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
     ]) {
       final double y = tester.getTopLeft(find.text(day)).dy;
       expect(y, greaterThan(last), reason: day);
@@ -103,11 +103,11 @@ void main() {
     }
     expect(find.text('Not paused'), findsNWidgets(5));
     expect(
-      find.descendant(of: dayTile('Samedi'), matching: find.text('09:00 to 17:00')),
+      find.descendant(of: dayTile('Saturday'), matching: find.text('09:00 to 17:00')),
       findsOneWidget,
     );
     expect(
-      find.descendant(of: dayTile('Dimanche'), matching: find.text('All day')),
+      find.descendant(of: dayTile('Sunday'), matching: find.text('All day')),
       findsOneWidget,
     );
   });
@@ -115,12 +115,12 @@ void main() {
   testWidgets('a day opens with its own times', (WidgetTester tester) async {
     await pumpEditor(tester);
 
-    await openDay(tester, 'Samedi');
+    await openDay(tester, 'Saturday');
 
     expect(inSheet(find.text('09:00')), findsOneWidget);
     expect(inSheet(find.text('17:00')), findsOneWidget);
     final SwitchListTile pause = tester.widget<SwitchListTile>(
-      inSheet(find.widgetWithText(SwitchListTile, 'Mettre le blocage en pause')),
+      inSheet(find.widgetWithText(SwitchListTile, 'Pause blocking')),
     );
     expect(pause.value, isTrue);
   });
@@ -128,7 +128,7 @@ void main() {
   testWidgets('new times for a day are saved, the other days kept',
       (WidgetTester tester) async {
     final AdguardHomeSchedule? Function() reported = await pumpEditor(tester);
-    await openDay(tester, 'Samedi');
+    await openDay(tester, 'Saturday');
     picks.addAll(const <Duration>[
       Duration(hours: 10, minutes: 30),
       Duration(hours: 12),
@@ -138,7 +138,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(inSheet(find.text('17:00')));
     await tester.pumpAndSettle();
-    await tester.tap(inSheet(find.text('Enregistrer')));
+    await tester.tap(inSheet(find.text('Save')));
     await tester.pumpAndSettle();
 
     final AdguardHomeSchedule schedule = reported()!;
@@ -152,9 +152,9 @@ void main() {
   testWidgets('a pause that is turned off leaves that day',
       (WidgetTester tester) async {
     final AdguardHomeSchedule? Function() reported = await pumpEditor(tester);
-    await openDay(tester, 'Dimanche');
+    await openDay(tester, 'Sunday');
 
-    await tester.tap(inSheet(find.text('Mettre le blocage en pause')));
+    await tester.tap(inSheet(find.text('Pause blocking')));
     await tester.pumpAndSettle();
     await tester.tap(inSheet(find.text('Remove pause')));
     await tester.pumpAndSettle();
@@ -166,17 +166,17 @@ void main() {
   testWidgets('a new pause starts as working hours, and can run to the end '
       'of the day', (WidgetTester tester) async {
     final AdguardHomeSchedule? Function() reported = await pumpEditor(tester);
-    await openDay(tester, 'Lundi');
+    await openDay(tester, 'Monday');
 
     expect(
       tester
           .widget<SwitchListTile>(
-            inSheet(find.widgetWithText(SwitchListTile, 'Mettre le blocage en pause')),
+            inSheet(find.widgetWithText(SwitchListTile, 'Pause blocking')),
           )
           .value,
       isTrue,
     );
-    await tester.tap(inSheet(find.text("Jusqu'à la fin de la journée")));
+    await tester.tap(inSheet(find.text('Until the end of the day')));
     await tester.pumpAndSettle();
     await tester.tap(inSheet(find.text('Add pause')));
     await tester.pumpAndSettle();
@@ -188,11 +188,11 @@ void main() {
   testWidgets('the same pause can go to other days at once',
       (WidgetTester tester) async {
     final AdguardHomeSchedule? Function() reported = await pumpEditor(tester);
-    await openDay(tester, 'Lundi');
+    await openDay(tester, 'Monday');
 
-    await tester.tap(inSheet(find.widgetWithText(FilterChip, 'Mar')));
+    await tester.tap(inSheet(find.widgetWithText(FilterChip, 'Tue')));
     await tester.pump();
-    await tester.tap(inSheet(find.widgetWithText(FilterChip, 'Ven')));
+    await tester.tap(inSheet(find.widgetWithText(FilterChip, 'Fri')));
     await tester.pump();
     await tester.tap(inSheet(find.text('Add pause')));
     await tester.pumpAndSettle();
@@ -207,19 +207,19 @@ void main() {
 
   testWidgets('the button says what it will do', (WidgetTester tester) async {
     await pumpEditor(tester);
-    await openDay(tester, 'Lundi');
+    await openDay(tester, 'Monday');
 
     // Opened to add a pause, so it is on, and the button says so.
     expect(inSheet(find.widgetWithText(FilledButton, 'Add pause')), findsOneWidget);
-    await tester.tap(inSheet(find.text('Mettre le blocage en pause')));
+    await tester.tap(inSheet(find.text('Pause blocking')));
     await tester.pumpAndSettle();
-    expect(inSheet(find.widgetWithText(FilledButton, 'Enregistrer')), findsOneWidget);
+    expect(inSheet(find.widgetWithText(FilledButton, 'Save')), findsOneWidget);
 
-    await tester.tap(inSheet(find.text('Annuler')));
+    await tester.tap(inSheet(find.text('Cancel')));
     await tester.pumpAndSettle();
-    await openDay(tester, 'Samedi');
-    expect(inSheet(find.widgetWithText(FilledButton, 'Enregistrer')), findsOneWidget);
-    await tester.tap(inSheet(find.text('Mettre le blocage en pause')));
+    await openDay(tester, 'Saturday');
+    expect(inSheet(find.widgetWithText(FilledButton, 'Save')), findsOneWidget);
+    await tester.tap(inSheet(find.text('Pause blocking')));
     await tester.pumpAndSettle();
     expect(
       inSheet(find.widgetWithText(FilledButton, 'Remove pause')),
@@ -230,19 +230,19 @@ void main() {
   testWidgets('an end before the start says so and cannot be saved',
       (WidgetTester tester) async {
     final AdguardHomeSchedule? Function() reported = await pumpEditor(tester);
-    await openDay(tester, 'Samedi');
+    await openDay(tester, 'Saturday');
     picks.add(const Duration(hours: 8));
 
     await tester.tap(inSheet(find.text('17:00')));
     await tester.pumpAndSettle();
 
     expect(
-      inSheet(find.text('La fin doit être après le début.')),
+      inSheet(find.text('The end has to be after the start.')),
       findsOneWidget,
     );
     expect(
       tester
-          .widget<FilledButton>(inSheet(find.widgetWithText(FilledButton, 'Enregistrer')))
+          .widget<FilledButton>(inSheet(find.widgetWithText(FilledButton, 'Save')))
           .onPressed,
       isNull,
     );
@@ -251,7 +251,7 @@ void main() {
 
   testWidgets('a time not picked changes nothing', (WidgetTester tester) async {
     await pumpEditor(tester);
-    await openDay(tester, 'Samedi');
+    await openDay(tester, 'Saturday');
 
     await tester.tap(inSheet(find.text('09:00')));
     await tester.pumpAndSettle();
@@ -261,11 +261,11 @@ void main() {
 
   testWidgets('Cancel changes nothing', (WidgetTester tester) async {
     final AdguardHomeSchedule? Function() reported = await pumpEditor(tester);
-    await openDay(tester, 'Samedi');
+    await openDay(tester, 'Saturday');
 
-    await tester.tap(inSheet(find.text('Mettre le blocage en pause')));
+    await tester.tap(inSheet(find.text('Pause blocking')));
     await tester.pump();
-    await tester.tap(inSheet(find.text('Annuler')));
+    await tester.tap(inSheet(find.text('Cancel')));
     await tester.pumpAndSettle();
 
     expect(reported(), isNull);
@@ -276,7 +276,7 @@ void main() {
       (WidgetTester tester) async {
     await pumpEditor(tester, enabled: false);
 
-    await tester.tap(find.text('Samedi'));
+    await tester.tap(find.text('Saturday'));
     await tester.pumpAndSettle();
     expect(find.byType(AdguardHomePauseSheet), findsNothing);
 
@@ -312,7 +312,7 @@ void main() {
 
       await tester.tap(find.text('Europe/Berlin'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Le fuseau horaire du serveur'));
+      await tester.tap(find.text("The server's time zone"));
       await tester.pumpAndSettle();
 
       expect(reported()!.timeZone, 'Local');
@@ -341,12 +341,12 @@ void main() {
         );
         expect(tester.takeException(), isNull);
 
-        await openDay(tester, 'Samedi');
+        await openDay(tester, 'Saturday');
         picks.add(const Duration(hours: 18));
         await tester.tap(inSheet(find.text('09:00')));
         await tester.pumpAndSettle();
         expect(
-          inSheet(find.text('La fin doit être après le début.')),
+          inSheet(find.text('The end has to be after the start.')),
           findsOneWidget,
         );
         expect(tester.takeException(), isNull);

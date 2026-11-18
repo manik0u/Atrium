@@ -66,7 +66,7 @@ Future<void> openAtriumLink(
 
   Future<Instance?> chosen() async => candidates.length == 1
       ? candidates.single
-      : pickInstance(presentContext(), candidates, title: 'Ouvrir dans');
+      : pickInstance(presentContext(), candidates, title: S.t('openIn'));
 
   if (link.item == LinkItem.none) {
     final Instance? on = await chosen();
@@ -103,7 +103,7 @@ Future<void> openAtriumLink(
     } on NetworkException catch (e) {
       // The server answered, so "could not reach" would be wrong. Its own
       // reason, a refused API key or a server error, says what to fix.
-      await tell('${on.name} : ${e.message}');
+      await tell(S.t('onNameEMessage2', [on.name, e.message]));
       return;
     } catch (_) {
       await tell('Could not reach ${on.name}.');

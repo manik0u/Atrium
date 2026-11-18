@@ -144,7 +144,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
               leading: inSelectionMode
                   ? IconButton(
                       icon: const Icon(Icons.close),
-                      tooltip: 'Effacer la sélection',
+                      tooltip: S.t('clearSelection'),
                       onPressed: _clearSelection,
                     )
                   : Padding(
@@ -153,7 +153,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
                               _searchFocusNode.hasFocus)
                           ? IconButton(
                               icon: const Icon(Icons.arrow_back),
-                              tooltip: 'Retour',
+                              tooltip: S.t('back'),
                               onPressed: () {
                                 _searchFocusNode.unfocus();
                                 _searchController.clear();
@@ -168,7 +168,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
                             )
                           : IconButton(
                               icon: const Icon(Icons.menu),
-                              tooltip: 'Ouvrir le menu latéral',
+                              tooltip: S.t('openDrawer'),
                               onPressed: () =>
                                   Scaffold.of(context).openDrawer(),
                             ),
@@ -200,7 +200,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
                                 focusNode: _searchFocusNode,
                                 style: theme.textTheme.bodyLarge,
                                 decoration: InputDecoration(
-                                  hintText: "Rechercher dans l'activité…",
+                                  hintText: S.t('searchActivity'),
                                   hintStyle:
                                       theme.textTheme.bodyLarge?.copyWith(
                                     color: theme.colorScheme.onSurfaceVariant,
@@ -226,7 +226,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
                             if (_searchController.text.isNotEmpty)
                               IconButton(
                                 icon: const Icon(Icons.clear, size: 22),
-                                tooltip: 'Effacer la recherche',
+                                tooltip: S.t('clearSearch'),
                                 visualDensity: VisualDensity.compact,
                                 onPressed: () {
                                   _searchController.clear();
@@ -288,7 +288,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
                                 .toSet();
                           }
                         },
-                        child: const Text('Tout sélectionner'),
+                        child: Text(S.t('selectAll')),
                       ),
                       TextButton(
                         onPressed: () {
@@ -336,7 +336,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
                                 .state = inverted;
                           }
                         },
-                        child: const Text('Inverser'),
+                        child: Text(S.t('invert')),
                       ),
                       const SizedBox(width: 4),
                     ]
@@ -348,8 +348,8 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
                               : Icons.group_work_outlined,
                         ),
                         tooltip: grouped
-                            ? 'Switch to plain list'
-                            : 'Switch to grouped view',
+                            ? S.t('switchToPlainList')
+                            : S.t('switchToGroupedView'),
                         onPressed: () {
                           ref
                               .read(
@@ -373,10 +373,10 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
                   fontWeight: FontWeight.bold,
                 ),
                 unselectedLabelStyle: theme.textTheme.titleSmall,
-                tabs: const <Widget>[
-                  Tab(text: "File d'attente"),
-                  Tab(text: 'Historique'),
-                  Tab(text: 'Liste de blocage'),
+                tabs: <Widget>[
+                  Tab(text: S.t('queue')),
+                  Tab(text: S.t('history')),
+                  Tab(text: S.t('blocklist')),
                 ],
               ),
             ),
@@ -418,7 +418,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
         heroTag: 'lidarr_activity_history_filter_fab',
         backgroundColor: cs.primaryContainer,
         foregroundColor: cs.onPrimaryContainer,
-        tooltip: "Filtrer et grouper l'historique",
+        tooltip: S.t('filterGroupHistory'),
         onPressed: () => HistoryFilterBottomSheet.show(
           context,
           widget.instance,
@@ -435,7 +435,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
         heroTag: 'lidarr_activity_manual_import_fab',
         backgroundColor: cs.primaryContainer,
         foregroundColor: cs.onPrimaryContainer,
-        tooltip: 'Import manuel',
+        tooltip: S.t('manualImport'),
         onPressed: () => showLidarrManualImportFlow(
           context,
           ref,

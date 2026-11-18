@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:dio/dio.dart';
 
 /// Typed error surfaced by service modules. Every API call should map raw
@@ -14,24 +15,24 @@ sealed class NetworkException implements Exception {
       DioExceptionType.receiveTimeout =>
         const NetworkTimeoutException('Server took too long to respond.'),
       DioExceptionType.connectionError =>
-        NetworkUnreachableException(e.message ?? 'Impossible de joindre le serveur.'),
+        NetworkUnreachableException(e.message ?? S.t('couldNotReachTheServer')),
       DioExceptionType.badCertificate => const NetworkTlsException(
           'TLS certificate not trusted. Enable "Allow self-signed certs" '
           'in this instance\'s settings if you trust the server.',
         ),
       DioExceptionType.cancel =>
-        const NetworkCancelledException('La requête a été annulée.'),
+        NetworkCancelledException(S.t('requestWasCancelled')),
       DioExceptionType.badResponse => _fromBadResponse(e),
       DioExceptionType.unknown ||
       _ =>
-        NetworkUnknownException(e.message ?? 'Erreur réseau inconnue.'),
+        NetworkUnknownException(e.message ?? S.t('unknownNetworkError')),
     };
   }
 
   static NetworkException _fromBadResponse(DioException e) {
     final int? status = e.response?.statusCode;
     if (status == null) {
-      return const NetworkUnknownException('Réponse vide du serveur.');
+      return NetworkUnknownException(S.t('emptyResponseFromServer'));
     }
     final String? detail = _bodyMessage(e.response?.data);
     if (status == 401 || status == 403) {
@@ -54,7 +55,7 @@ sealed class NetworkException implements Exception {
       );
     }
     if (status == 404) {
-      return const NetworkNotFoundException('Ressource introuvable.');
+      return NetworkNotFoundException(S.t('resourceNotFound_2'));
     }
     if (status >= 500) {
       return NetworkServerException(

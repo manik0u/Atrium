@@ -74,7 +74,7 @@ class _Aria2SystemTabState extends ConsumerState<Aria2SystemTab> {
         ),
       );
     } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text("Échec de l'action : $e")));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('actionFailedE1', [e]))));
     } finally {
       if (mounted) {
         ref.invalidate(aria2SnapshotProvider(widget.instance));
@@ -89,23 +89,23 @@ class _Aria2SystemTabState extends ConsumerState<Aria2SystemTab> {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: Text(force ? "Forcer l'arrêt d'aria2 ?" : 'Arrêter le démon aria2 ?'),
+        title: Text(force ? S.t('forceShutdownAria2') : S.t('shutdownAria2Daemon')),
         content: Text(
           force
-              ? 'Cela terminera immédiatement le processus aria2 sans attendre la fin des téléchargements.'
-              : 'Cela arrêtera proprement tous les téléchargements actifs, enregistrera la session et quittera le démon.',
+              ? S.t('thisWillImmediatelyTerminateTheAria2ProcessWithoutWaitingForDownloadsToFinish')
+              : S.t('thisWillGracefullyStopAllActiveDownloadsSaveTheSessionAndExitTheDaemon'),
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
               backgroundColor: Theme.of(ctx).colorScheme.error,
             ),
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Arrêter'),
+            child: Text(S.t('shutdown')),
           ),
         ],
       ),
@@ -148,7 +148,7 @@ class _Aria2SystemTabState extends ConsumerState<Aria2SystemTab> {
           onPressed: widget.onOpenDrawer ??
               () => Scaffold.of(context).openDrawer(),
         ),
-        title: const Text('Système'),
+        title: Text(S.t('system')),
         actions: <Widget>[
           PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert),
@@ -166,12 +166,12 @@ class _Aria2SystemTabState extends ConsumerState<Aria2SystemTab> {
               }
             },
             itemBuilder: (BuildContext context) =>
-                const <PopupMenuEntry<String>>[
+                <PopupMenuEntry<String>>[
                   PopupMenuItem<String>(
                     value: 'save_session',
                     child: ListTile(
                       leading: Icon(Icons.save_outlined),
-                      title: Text('Enregistrer la session'),
+                      title: Text(S.t('saveSession')),
                       dense: true,
                       contentPadding: EdgeInsets.zero,
                     ),
@@ -181,7 +181,7 @@ class _Aria2SystemTabState extends ConsumerState<Aria2SystemTab> {
                     value: 'shutdown',
                     child: ListTile(
                       leading: Icon(Icons.power_settings_new),
-                      title: Text('Arrêter le démon'),
+                      title: Text(S.t('shutdownDaemon')),
                       dense: true,
                       contentPadding: EdgeInsets.zero,
                     ),
@@ -190,7 +190,7 @@ class _Aria2SystemTabState extends ConsumerState<Aria2SystemTab> {
                     value: 'force_shutdown',
                     child: ListTile(
                       leading: Icon(Icons.flash_on),
-                      title: Text('Arrêt forcé'),
+                      title: Text(S.t('forceStop')),
                       dense: true,
                       contentPadding: EdgeInsets.zero,
                     ),
@@ -248,31 +248,31 @@ class _Aria2SystemTabState extends ConsumerState<Aria2SystemTab> {
                         ),
                         const SizedBox(height: Insets.md),
                         _Row(
-                          label: "Version d'aria2",
+                          label: S.t('aria2Version'),
                           value: data.version.version.isEmpty
-                              ? 'Unknown'
+                              ? S.t('unknown')
                               : data.version.version,
                         ),
                         _Row(
-                          label: 'ID de session',
+                          label: S.t('sessionID'),
                           value: _loadingSession
-                              ? 'Loading...'
+                              ? S.t('loading')
                               : _sessionId.isEmpty
                               ? 'Not available'
                               : _sessionId,
                         ),
-                        const _Row(
-                          label: 'Protocole RPC',
+                        _Row(
+                          label: S.t('rpcProtocol'),
                           value: 'JSON-RPC 2.0 (HTTP)',
                         ),
                         _Row(
-                          label: 'Secret protégé',
+                          label: S.t('secretProtected'),
                           value: (widget.instance.auth is InstanceAuthApiKey &&
                                   (widget.instance.auth as InstanceAuthApiKey)
                                       .apiKey
                                       .isNotEmpty)
                               ? 'Yes (token configured)'
-                              : 'Non (RPC ouvert)',
+                              : S.t('noOpenRPC'),
                         ),
                         const SizedBox(height: Insets.sm),
                         Text(
@@ -328,27 +328,27 @@ class _Aria2SystemTabState extends ConsumerState<Aria2SystemTab> {
                         ),
                         const SizedBox(height: Insets.md),
                         _Row(
-                          label: 'Téléchargements actifs',
+                          label: S.t('activeDownloads'),
                           value: '${data.stat.numActive}',
                         ),
                         _Row(
-                          label: 'En attente dans la file',
+                          label: S.t('waitingInQueue'),
                           value: '${data.stat.numWaiting}',
                         ),
                         _Row(
-                          label: 'Arrêtés en mémoire',
+                          label: S.t('stoppedInMemory'),
                           value: '${data.stat.numStopped}',
                         ),
                         _Row(
-                          label: 'Arrêtés au total (historique)',
+                          label: S.t('stoppedTotalHistorical'),
                           value: '${data.stat.numStoppedTotal}',
                         ),
                         _Row(
-                          label: 'Bande passante de téléchargement',
+                          label: S.t('downloadBandwidth'),
                           value: aria2FmtRate(data.stat.downloadSpeed),
                         ),
                         _Row(
-                          label: "Bande passante d'envoi",
+                          label: S.t('uploadBandwidth'),
                           value: aria2FmtRate(data.stat.uploadSpeed),
                         ),
                       ],
@@ -382,9 +382,9 @@ class _Aria2SystemTabState extends ConsumerState<Aria2SystemTab> {
                         ListTile(
                           contentPadding: EdgeInsets.zero,
                           leading: const Icon(Icons.save_outlined),
-                          title: const Text('Enregistrer la session maintenant'),
-                          subtitle: const Text(
-                            'Vider les téléchargements actifs et en file vers le fichier de session',
+                          title: Text(S.t('saveSessionNow')),
+                          subtitle: Text(
+                            S.t('flushActiveAndQueuedDownloadsToSessionFile'),
                           ),
                           trailing: OutlinedButton(
                             onPressed: () => _run(
@@ -392,24 +392,24 @@ class _Aria2SystemTabState extends ConsumerState<Aria2SystemTab> {
                               'Session saved to disk',
                               (Aria2Api api) => api.saveSession(),
                             ),
-                            child: const Text('Enregistrer'),
+                            child: Text(S.t('save')),
                           ),
                         ),
                         const Divider(),
                         ListTile(
                           contentPadding: EdgeInsets.zero,
                           leading: const Icon(Icons.cleaning_services_outlined),
-                          title: const Text('Purger les résultats arrêtés'),
-                          subtitle: const Text(
-                            'Effacer tous les résultats terminés, en erreur et retirés',
+                          title: Text(S.t('purgeStoppedResults')),
+                          subtitle: Text(
+                            S.t('clearAllCompletedErroredAndRemovedResults'),
                           ),
                           trailing: OutlinedButton(
                             onPressed: () => _run(
                               context,
-                              'Résultats arrêtés purgés du démon',
+                              S.t('purgedStoppedResultsFromDaemon'),
                               (Aria2Api api) => api.purgeDownloadResult(),
                             ),
-                            child: const Text('Purger'),
+                            child: Text(S.t('purge')),
                           ),
                         ),
                         const Divider(),
@@ -420,11 +420,11 @@ class _Aria2SystemTabState extends ConsumerState<Aria2SystemTab> {
                             color: cs.error,
                           ),
                           title: Text(
-                            'Shutdown daemon',
+                            S.t('shutdownDaemon'),
                             style: TextStyle(color: cs.error),
                           ),
-                          subtitle: const Text(
-                            'Arrêter toutes les tâches et terminer le processus aria2',
+                          subtitle: Text(
+                            S.t('stopAllTasksAndTerminateTheAria2Process'),
                           ),
                           trailing: FilledButton.tonal(
                             style: FilledButton.styleFrom(
@@ -432,7 +432,7 @@ class _Aria2SystemTabState extends ConsumerState<Aria2SystemTab> {
                               foregroundColor: cs.onErrorContainer,
                             ),
                             onPressed: () => _confirmShutdown(context),
-                            child: const Text('Arrêter'),
+                            child: Text(S.t('shutdown')),
                           ),
                         ),
                       ],

@@ -15,6 +15,7 @@ import '../generated/models/user_stats_response.dart';
 import '../generated/models/violation.dart';
 import '../generated/models/watcher.dart';
 import '../generated/responses/tracearr_exception.dart';
+import 'package:core_models/core_models.dart';
 
 /// Low-level remote data source encapsulating all HTTP and OpenAPI SDK operations
 /// for Tracearr v1 and v2 APIs.
@@ -35,7 +36,7 @@ class TracearrRemoteDataSource {
     final response = await _apiV2.getPublicStreams(serverId: serverId);
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Échec de la récupération des flux actifs',
+        response.error?.message ?? S.t('failedToFetchActiveStreams'),
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -59,7 +60,7 @@ class TracearrRemoteDataSource {
     );
     if (!response.isSuccess) {
       throw TracearrException(
-        response.error?.message ?? "Échec de l'interruption du flux",
+        response.error?.message ?? S.t('failedToTerminateStream'),
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -82,7 +83,7 @@ class TracearrRemoteDataSource {
     );
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? "Échec de la récupération de l'historique de visionnage",
+        response.error?.message ?? S.t('failedToFetchWatchHistory'),
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -105,7 +106,7 @@ class TracearrRemoteDataSource {
     );
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Échec de la récupération des ajouts récents',
+        response.error?.message ?? S.t('failedToFetchRecentlyAddedItems'),
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -118,7 +119,7 @@ class TracearrRemoteDataSource {
     final response = await _apiV2.getPublicUsers();
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Échec de la récupération de la liste des utilisateurs',
+        response.error?.message ?? S.t('failedToFetchUserList'),
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -133,7 +134,7 @@ class TracearrRemoteDataSource {
     final response = await _apiV2.getPublicUsersById(id: id);
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Échec de la récupération du profil utilisateur',
+        response.error?.message ?? S.t('failedToFetchUserProfile'),
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -178,7 +179,7 @@ class TracearrRemoteDataSource {
     final response = await _apiV2.getPublicMediaByRef(ref: ref);
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Échec de la récupération des détails du média',
+        response.error?.message ?? S.t('failedToFetchMediaDetails'),
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -234,7 +235,7 @@ class TracearrRemoteDataSource {
     final response = await _apiV1.getPublicViolations(severity: severity);
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Échec de la récupération des violations de règles',
+        response.error?.message ?? S.t('failedToFetchRuleViolations'),
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -247,7 +248,7 @@ class TracearrRemoteDataSource {
     final response = await _apiV2.getPublicLibraries();
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Échec de la récupération des statistiques de bibliothèque',
+        response.error?.message ?? S.t('failedToFetchLibraryStatistics'),
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -263,7 +264,7 @@ class TracearrRemoteDataSource {
     final response = await _apiV1.getPublicHealth();
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? "Échec de la récupération de l'état de santé",
+        response.error?.message ?? S.t('failedToFetchHealthStatus'),
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -285,7 +286,7 @@ class TracearrRemoteDataSource {
     );
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Échec de la récupération des stats du jour',
+        response.error?.message ?? S.t('failedToFetchTodayStats'),
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -309,7 +310,7 @@ class TracearrRemoteDataSource {
     );
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? "Échec de la récupération des tendances d'activité",
+        response.error?.message ?? S.t('failedToFetchActivityTrends'),
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -329,7 +330,7 @@ class TracearrRemoteDataSource {
     );
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Échec de la récupération des stats agrégées',
+        response.error?.message ?? S.t('failedToFetchAggregateStats'),
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -350,7 +351,7 @@ class TracearrRemoteDataSource {
     );
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? "Échec de la récupération de l'historique des médias",
+        response.error?.message ?? S.t('failedToFetchMediaHistory'),
         statusCode: response.statusCode,
         error: response.error,
       );

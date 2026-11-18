@@ -197,31 +197,31 @@ class SlskdHome extends ConsumerWidget {
                 index;
           }
         },
-        destinations: const <NavigationDestination>[
+        destinations: <NavigationDestination>[
           NavigationDestination(
             icon: Icon(Icons.swap_vert_rounded),
             selectedIcon: Icon(Icons.swap_vert_rounded),
-            label: 'Transferts',
+            label: S.t('transfers'),
           ),
           NavigationDestination(
             icon: Icon(Icons.search_rounded),
             selectedIcon: Icon(Icons.search_rounded),
-            label: 'Rechercher',
+            label: S.t('search'),
           ),
           NavigationDestination(
             icon: Icon(Icons.folder_outlined),
             selectedIcon: Icon(Icons.folder_rounded),
-            label: 'Parcourir',
+            label: S.t('browse'),
           ),
           NavigationDestination(
             icon: Icon(Icons.forum_outlined),
             selectedIcon: Icon(Icons.forum_rounded),
-            label: 'Communauté',
+            label: S.t('community'),
           ),
           NavigationDestination(
             icon: Icon(Icons.dns_outlined),
             selectedIcon: Icon(Icons.dns_rounded),
-            label: 'Système',
+            label: S.t('system'),
           ),
         ],
       ),

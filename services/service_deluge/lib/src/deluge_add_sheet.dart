@@ -90,8 +90,8 @@ class _DelugeAddSheetState extends ConsumerState<_DelugeAddSheet> {
   }
 
   String get _fileLabel => switch (_files.length) {
-        0 => 'Choisir des fichiers .torrent',
-        1 => _files.first.name ?? 'Un torrent',
+        0 => S.t('chooseTorrentFiles'),
+        1 => _files.first.name ?? S.t('oneTorrent'),
         final int n => '$n torrents',
       };
 
@@ -100,12 +100,12 @@ class _DelugeAddSheetState extends ConsumerState<_DelugeAddSheet> {
     if (!_busy) {
       return _mode == _AddMode.file && _files.length > 1
           ? 'Add ${_files.length}'
-          : 'Add';
+          : S.t('add');
     }
     if (_mode == _AddMode.file && _files.length > 1) {
       return 'Adding $_done of ${_files.length}...';
     }
-    return 'Adding...';
+    return S.t('adding');
   }
 
   @override
@@ -198,19 +198,19 @@ class _DelugeAddSheetState extends ConsumerState<_DelugeAddSheet> {
       }
       ref.invalidate(delugeRawTorrentsProvider(widget.instance));
       navigator.pop();
-      messenger.showSnackBar(const SnackBar(content: Text('Torrent ajouté')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('torrentAdded'))));
     } catch (e) {
       if (mounted) setState(() => _busy = false);
-      messenger.showSnackBar(SnackBar(content: Text("Échec de l'ajout : $e")));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('addFailedE1', [e]))));
     }
   }
 
   static String _batchResult(int total, int failed) {
     if (failed == 0) {
-      return total == 1 ? 'Torrent added' : '$total torrents added';
+      return total == 1 ? S.t('torrentAdded') : '$total torrents added';
     }
     if (failed == total) {
-      return total == 1 ? 'Add failed' : 'Les $total ajouts ont échoué';
+      return total == 1 ? S.t('addFailed') : S.t('allTotalFailed1', [total]);
     }
     return 'Added ${total - failed} of $total, $failed failed';
   }
@@ -231,20 +231,20 @@ class _DelugeAddSheetState extends ConsumerState<_DelugeAddSheet> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Text(
-              'Add torrent',
+              S.t('addTorrent'),
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: Insets.md),
             SegmentedButton<_AddMode>(
-              segments: const <ButtonSegment<_AddMode>>[
+              segments: <ButtonSegment<_AddMode>>[
                 ButtonSegment<_AddMode>(
                   value: _AddMode.link,
-                  label: Text('Lien magnet ou URL'),
+                  label: Text(S.t('magnetOrURL')),
                   icon: Icon(Icons.link),
                 ),
                 ButtonSegment<_AddMode>(
                   value: _AddMode.file,
-                  label: Text('Fichier'),
+                  label: Text(S.t('file')),
                   icon: Icon(Icons.attach_file),
                 ),
               ],
@@ -260,9 +260,9 @@ class _DelugeAddSheetState extends ConsumerState<_DelugeAddSheet> {
                 autofocus: true,
                 minLines: 1,
                 maxLines: 3,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'lien magnet ou URL de .torrent',
+                  labelText: S.t('magnetLinkOrTorrentURL'),
                 ),
                 onChanged: (_) => setState(() {}),
               )
@@ -275,10 +275,10 @@ class _DelugeAddSheetState extends ConsumerState<_DelugeAddSheet> {
             const SizedBox(height: Insets.md),
             TextField(
               controller: _savePath,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'Dossier de téléchargement (facultatif)',
-                helperText: 'Laissez vide pour utiliser la valeur par défaut de Deluge',
+                labelText: S.t('downloadFolderOptional'),
+                helperText: S.t('leaveEmptyToUseDelugeSDefault'),
               ),
             ),
             const SizedBox(height: Insets.sm),
@@ -287,7 +287,7 @@ class _DelugeAddSheetState extends ConsumerState<_DelugeAddSheet> {
               value: _startPaused,
               onChanged:
                   _busy ? null : (bool v) => setState(() => _startPaused = v),
-              title: const Text('Ajouter en pause'),
+              title: Text(S.t('addPaused')),
             ),
             const SizedBox(height: Insets.sm),
             FilledButton.icon(

@@ -44,7 +44,7 @@ class DashboardScreen extends ConsumerWidget {
               builder: (BuildContext context, WidgetRef ref, Widget? _) {
                 final bool editing = ref.watch(dashboardEditModeProvider);
                 return IconButton(
-                  tooltip: editing ? 'Terminé' : 'Personnaliser le tableau de bord',
+                  tooltip: editing ? S.t('done') : S.t('customizeDashboard'),
                   icon: Icon(editing ? Icons.check : Icons.tune),
                   onPressed: () => ref
                       .read(dashboardEditModeProvider.notifier)
@@ -57,14 +57,14 @@ class DashboardScreen extends ConsumerWidget {
       body: instances.isEmpty
           ? EmptyView(
               icon: Icons.dns_outlined,
-              title: 'Aucun service pour le moment',
+              title: S.t('noServicesYet'),
               message:
                   'Add your first service - a Sonarr, qBittorrent, Jellyfin, '
                   'anything in your stack.',
               action: FilledButton.icon(
                 onPressed: () => context.goNamed(AtriumRoutes.addInstanceName),
                 icon: const Icon(Icons.add),
-                label: const Text('Ajouter un service'),
+                label: Text(S.t('addService')),
               ),
             )
           : const DashboardBoard(),
@@ -216,7 +216,7 @@ class _ServicesDrawerState extends ConsumerState<ServicesDrawer>
                                 ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            'Dashboard',
+                            S.t('dashboard'),
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: cs.onSurfaceVariant,
                             ),
@@ -235,7 +235,7 @@ class _ServicesDrawerState extends ConsumerState<ServicesDrawer>
                       child: Padding(
                         padding: const EdgeInsets.all(Insets.lg),
                         child: Text(
-                          'Aucun service pour le moment.\nAjoutez-en un avec le + ci-dessous.',
+                          S.t('noServicesYetAddOneWithTheBelow'),
                           textAlign: TextAlign.center,
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: cs.onSurfaceVariant,
@@ -253,19 +253,19 @@ class _ServicesDrawerState extends ConsumerState<ServicesDrawer>
               child: Row(
                 children: <Widget>[
                   IconButton(
-                    tooltip: 'Paramètres',
+                    tooltip: S.t('settings'),
                     icon: Icon(Icons.settings, color: cs.onSurfaceVariant),
                     onPressed: () => _navTo(context, AtriumRoutes.settingsName),
                   ),
                   IconButton(
-                    tooltip: 'Ajouter un service',
+                    tooltip: S.t('addService'),
                     icon: Icon(Icons.add, color: cs.onSurfaceVariant),
                     onPressed: () =>
                         _navTo(context, AtriumRoutes.addInstanceName),
                   ),
                   if (widget.instances.isNotEmpty)
                     IconButton(
-                      tooltip: 'Réorganiser la barre latérale',
+                      tooltip: S.t('reorderSidebar'),
                       icon: Icon(Icons.reorder, color: cs.onSurfaceVariant),
                       onPressed: () {
                         // Capture the navigator before closing the drawer, then
@@ -283,7 +283,7 @@ class _ServicesDrawerState extends ConsumerState<ServicesDrawer>
                     child: Builder(
                       builder: (BuildContext pillContext) {
                         return _ProfilePill(
-                          label: widget.profile?.name ?? 'Par défaut',
+                          label: widget.profile?.name ?? S.t('default'),
                           onTap: () async {
                             final RenderBox button =
                                 pillContext.findRenderObject()! as RenderBox;
@@ -341,14 +341,14 @@ class _ServicesDrawerState extends ConsumerState<ServicesDrawer>
                                     ),
                                   ),
                                 const PopupMenuDivider(),
-                                const PopupMenuItem<String>(
+                                PopupMenuItem<String>(
                                   value: 'manage',
                                   child: Row(
                                     children: <Widget>[
                                       Icon(Icons.manage_accounts_outlined,
                                           size: 16),
                                       SizedBox(width: Insets.sm),
-                                      Text('Gérer les profils'),
+                                      Text(S.t('manageProfiles')),
                                     ],
                                   ),
                                 ),
@@ -433,13 +433,13 @@ class _ServicesList extends StatelessWidget {
     }
 
     return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
         // No "last updated at" line. EasyRefresh renders %T as a raw
         // DateTime.hour, so it reads 0:05 where the device clock says 12:05
         // AM and 13:05 where it says 1:05 PM, and the package offers no hook
@@ -519,7 +519,7 @@ class _HealthAwareTile extends ConsumerWidget {
                 children: <Widget>[
                   ListTile(
                     leading: const Icon(Icons.open_in_new),
-                    title: const Text('Ouvrir le service'),
+                    title: Text(S.t('openService')),
                     onTap: () {
                       Navigator.pop(sheetContext);
                       final GoRouter router = GoRouter.of(context);
@@ -534,7 +534,7 @@ class _HealthAwareTile extends ConsumerWidget {
                   ),
                   ListTile(
                     leading: const Icon(Icons.edit),
-                    title: const Text('Modifier les paramètres de connexion'),
+                    title: Text(S.t('editConnectionSettings')),
                     onTap: () {
                       Navigator.pop(sheetContext);
                       final GoRouter router = GoRouter.of(context);

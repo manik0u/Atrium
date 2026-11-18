@@ -222,8 +222,8 @@ class NavidromeClient {
       if (resp is Map<String, dynamic> && resp['status'] == 'failed') {
         final dynamic err = resp['error'];
         final String msg = (err is Map<String, dynamic>)
-            ? (err['message'] as String? ?? 'Échec de la définition de la note')
-            : 'Failed to set rating';
+            ? (err['message'] as String? ?? S.t('failedToSetRating'))
+            : S.t('failedToSetRating');
         throw Exception(msg);
       }
     }
@@ -248,8 +248,8 @@ class NavidromeClient {
       if (resp is Map<String, dynamic> && resp['status'] == 'failed') {
         final dynamic err = resp['error'];
         final String msg = (err is Map<String, dynamic>)
-            ? (err['message'] as String? ?? "Échec de l'ajout aux favoris")
-            : 'Failed to favorite';
+            ? (err['message'] as String? ?? S.t('failedToFavorite'))
+            : S.t('failedToFavorite');
         throw Exception(msg);
       }
     }
@@ -274,8 +274,8 @@ class NavidromeClient {
       if (resp is Map<String, dynamic> && resp['status'] == 'failed') {
         final dynamic err = resp['error'];
         final String msg = (err is Map<String, dynamic>)
-            ? (err['message'] as String? ?? 'Échec du retrait des favoris')
-            : 'Failed to unfavorite';
+            ? (err['message'] as String? ?? S.t('failedToUnfavorite'))
+            : S.t('failedToUnfavorite');
         throw Exception(msg);
       }
     }
@@ -472,8 +472,8 @@ class NavidromeClient {
                       !resultMap.containsKey(albumId)) {
                     resultMap[albumId] = NavidromeAlbum(
                       id: albumId,
-                      name: (item['album'] as String?) ?? 'Unknown Album',
-                      artist: (item['artist'] as String?) ?? 'Unknown Artist',
+                      name: (item['album'] as String?) ?? S.t('unknownAlbum'),
+                      artist: (item['artist'] as String?) ?? S.t('unknownArtist'),
                       artistId: item['artistId'] as String?,
                       coverArt: (item['coverArt'] as String?) ?? albumId,
                       year: (item['year'] as num?)?.toInt(),
@@ -577,7 +577,7 @@ class NavidromeClient {
         if (resp['status'] == 'failed') {
           final dynamic err = resp['error'];
           final String msg =
-              err is Map ? err['message']?.toString() ?? 'Erreur' : 'Erreur';
+              err is Map ? err['message']?.toString() ?? S.t('error') : S.t('error');
           throw Exception(msg);
         }
         final dynamic pl = resp['playlist'];
@@ -627,7 +627,7 @@ class NavidromeClient {
       if (resp is Map<String, dynamic> && resp['status'] == 'failed') {
         final dynamic err = resp['error'];
         final String msg =
-            err is Map ? err['message']?.toString() ?? 'Erreur' : 'Erreur';
+            err is Map ? err['message']?.toString() ?? S.t('error') : S.t('error');
         throw Exception(msg);
       }
     }
@@ -644,7 +644,7 @@ class NavidromeClient {
       if (resp is Map<String, dynamic> && resp['status'] == 'failed') {
         final dynamic err = resp['error'];
         final String msg =
-            err is Map ? err['message']?.toString() ?? 'Erreur' : 'Erreur';
+            err is Map ? err['message']?.toString() ?? S.t('error') : S.t('error');
         throw Exception(msg);
       }
     }

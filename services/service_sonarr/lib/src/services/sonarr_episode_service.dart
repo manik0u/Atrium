@@ -1,6 +1,7 @@
 import '../generated/api/raw_episode_api.dart';
 import '../generated/models/episode_resource.dart';
 import '../generated/responses/sonarr_exception.dart';
+import 'package:core_models/core_models.dart';
 
 /// High-level service wrapper for Sonarr Episode operations.
 class SonarrEpisodeService {
@@ -22,11 +23,11 @@ class SonarrEpisodeService {
     }
     if (response.error != null) {
       throw SonarrException(
-        response.error!.message ?? 'Échec de la récupération des épisodes',
+        response.error!.message ?? S.t('failedToFetchEpisodes'),
         statusCode: response.statusCode,
         error: response.error,
       );
     }
-    throw SonarrException('Failed to fetch episodes', statusCode: response.statusCode);
+    throw SonarrException(S.t('failedToFetchEpisodes'), statusCode: response.statusCode);
   }
 }

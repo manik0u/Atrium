@@ -114,10 +114,10 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
       final ProwlarrApi api =
           await ref.read(prowlarrApiProvider(widget.instance).future);
       await api.testApplicationRaw(_buildPayload());
-      messenger.showSnackBar(const SnackBar(content: Text('Test réussi')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('testPassed'))));
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec du test : ${_errorMessage(e)}')),
+        SnackBar(content: Text(S.t('testFailedErrorMessageE1', [_errorMessage(e)]))),
       );
     } finally {
       if (mounted) {
@@ -145,13 +145,13 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
       ref.invalidate(prowlarrApplicationsProvider(widget.instance));
       messenger.showSnackBar(
         SnackBar(
-          content: Text(_isEdit ? 'Application enregistrée' : 'Application ajoutée'),
+          content: Text(_isEdit ? S.t('applicationSaved') : S.t('applicationAdded')),
         ),
       );
       nav.pop();
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text("Échec de l'enregistrement : ${_errorMessage(e)}")),
+        SnackBar(content: Text(S.t('saveFailedErrorMessageE1', [_errorMessage(e)]))),
       );
       if (mounted) {
         setState(() => _saving = false);
@@ -163,12 +163,12 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text("Supprimer l'application ?"),
-        content: Text('Retirer « ${_nameController.text} » de Prowlarr ?'),
+        title: Text(S.t('deleteApplication')),
+        content: Text(S.t('removeNameControllerTextFromProwlarr1', [_nameController.text])),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -176,7 +176,7 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
               foregroundColor: Theme.of(context).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Supprimer'),
+            child: Text(S.t('delete')),
           ),
         ],
       ),
@@ -193,12 +193,12 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
       await api.deleteApplication(widget.appId!);
       ref.invalidate(prowlarrApplicationsProvider(widget.instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Application supprimée')),
+        SnackBar(content: Text(S.t('applicationDeleted'))),
       );
       nav.pop();
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la suppression : ${_errorMessage(e)}')),
+        SnackBar(content: Text(S.t('deleteFailedErrorMessageE1', [_errorMessage(e)]))),
       );
       if (mounted) {
         setState(() => _deleting = false);
@@ -210,10 +210,10 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
   Widget build(BuildContext context) {
     if (_isEdit && _selected == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text("Modifier l'application")),
+        appBar: AppBar(title: Text(S.t('editApplication'))),
         body: _loadError != null
             ? ErrorView(
-                title: "Impossible de charger l'application",
+                title: S.t('couldNotLoadApplication'),
                 message: _loadError!,
                 onRetry: _loadRaw,
               )
@@ -252,7 +252,7 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
         actions: <Widget>[
           if (_isEdit)
             IconButton(
-              tooltip: 'Supprimer',
+              tooltip: S.t('delete'),
               icon: _deleting
                   ? const SizedBox(
                       width: 18,
@@ -265,7 +265,7 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const Text('Avancé', style: TextStyle(fontSize: 12)),
+              Text(S.t('advanced'), style: TextStyle(fontSize: 12)),
               Switch(
                 value: _showAdvanced,
                 onChanged: (bool v) => setState(() => _showAdvanced = v),
@@ -281,34 +281,34 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
           children: <Widget>[
             TextFormField(
               controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'Nom',
+              decoration: InputDecoration(
+                labelText: S.t('name'),
                 border: OutlineInputBorder(),
               ),
               validator: (String? v) =>
-                  (v == null || v.trim().isEmpty) ? 'Required' : null,
+                  (v == null || v.trim().isEmpty) ? S.t('required') : null,
             ),
             const SizedBox(height: Insets.md),
             DropdownButtonFormField<String>(
               initialValue: _syncLevel,
               isExpanded: true,
-              decoration: const InputDecoration(
-                labelText: 'Niveau de synchro',
-                helperText: 'Comment Prowlarr maintient à jour les indexeurs de cette application',
+              decoration: InputDecoration(
+                labelText: S.t('syncLevel'),
+                helperText: S.t('howProwlarrKeepsThisAppIndexersInSync'),
                 border: OutlineInputBorder(),
               ),
-              items: const <DropdownMenuItem<String>>[
+              items: <DropdownMenuItem<String>>[
                 DropdownMenuItem<String>(
                   value: 'disabled',
-                  child: Text('Désactivé'),
+                  child: Text(S.t('disabled')),
                 ),
                 DropdownMenuItem<String>(
                   value: 'addOnly',
-                  child: Text('Ajout et suppression uniquement'),
+                  child: Text(S.t('addAndRemoveOnly')),
                 ),
                 DropdownMenuItem<String>(
                   value: 'fullSync',
-                  child: Text('Synchro complète'),
+                  child: Text(S.t('fullSync')),
                 ),
               ],
               onChanged: (String? v) =>
@@ -334,7 +334,7 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
                             child: ExpressiveProgressIndicator(strokeWidth: 2),
                           )
                         : const Icon(Icons.science_outlined),
-                    label: const Text('Tester'),
+                    label: Text(S.t('test')),
                   ),
                 ),
                 const SizedBox(width: Insets.md),
@@ -348,7 +348,7 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
                             child: ExpressiveProgressIndicator(strokeWidth: 2),
                           )
                         : const Icon(Icons.save_outlined),
-                    label: Text(_isEdit ? 'Enregistrer' : 'Ajouter'),
+                    label: Text(_isEdit ? S.t('save') : S.t('add')),
                   ),
                 ),
               ],
@@ -373,17 +373,17 @@ class _AppSchemaPicker extends ConsumerWidget {
     final AsyncValue<List<Map<String, dynamic>>> schemas =
         ref.watch(prowlarrApplicationSchemasProvider(instance));
     return Scaffold(
-      appBar: AppBar(title: const Text('Ajouter une application')),
+      appBar: AppBar(title: Text(S.t('addApplication'))),
       body: AsyncValueView<List<Map<String, dynamic>>>(
         value: schemas,
         onRetry: () =>
             ref.invalidate(prowlarrApplicationSchemasProvider(instance)),
         data: (List<Map<String, dynamic>> list) {
           if (list.isEmpty) {
-            return const EmptyView(
+            return EmptyView(
               icon: Icons.apps_outlined,
-              title: 'Aucune application',
-              message: "Prowlarr n'a renvoyé aucune définition d'application.",
+              title: S.t('noApplications'),
+              message: S.t('prowlarrReturnedNoApplicationDefinitions'),
             );
           }
           return ListView.builder(
@@ -393,7 +393,7 @@ class _AppSchemaPicker extends ConsumerWidget {
               final Map<String, dynamic> s = list[i];
               final String name = (s['implementationName'] as String?) ??
                   (s['name'] as String?) ??
-                  'Unknown';
+                  S.t('unknown');
               return ListTile(
                 leading: const Icon(Icons.apps),
                 title: Text(name),

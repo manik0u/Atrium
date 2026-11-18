@@ -216,10 +216,10 @@ void main() {
     });
 
     test('priority labels cover rTorrent\'s four levels', () {
-      expect(_t(priority: 0).priorityLabel, 'Désactivé');
-      expect(_t(priority: 1).priorityLabel, 'Basse');
+      expect(_t(priority: 0).priorityLabel, 'Off');
+      expect(_t(priority: 1).priorityLabel, 'Low');
       expect(_t().priorityLabel, 'Normal');
-      expect(_t(priority: 3).priorityLabel, 'Élevée');
+      expect(_t(priority: 3).priorityLabel, 'High');
     });
   });
 
@@ -267,7 +267,7 @@ void main() {
       expect(f.displayName, 'movie.mkv');
       expect(f.sizeBytes, 5000);
       expect(f.progress, 0.75);
-      expect(f.priorityLabel, 'Élevée');
+      expect(f.priorityLabel, 'High');
     });
 
     test('a zero-chunk file reports no progress rather than dividing by 0', () {
@@ -277,7 +277,7 @@ void main() {
     test('file priorities are skip / normal / high', () {
       expect(
         RtorrentFile.fromRow(<Object?>['a', 1, 0, 1, 0]).priorityLabel,
-        'Ignorer',
+        'Skip',
       );
       expect(
         RtorrentFile.fromRow(<Object?>['a', 1, 0, 1, 1]).priorityLabel,
@@ -399,7 +399,7 @@ void main() {
     });
 
     test('0 is unlimited, not a stopped transfer', () {
-      expect(rtFmtLimit(0), 'Illimité');
+      expect(rtFmtLimit(0), 'Unlimited');
       expect(rtFmtLimit(1024 * 1024), '1.0 MB/s');
     });
 

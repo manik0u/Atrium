@@ -91,7 +91,7 @@ class _TracearrMediaDetailScreenState
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text("Impossible d'ouvrir le lien : $url"),
+              content: Text(S.t('couldNotOpenLinkUrl1', [url])),
               behavior: SnackBarBehavior.floating,
             ),
           );
@@ -126,13 +126,13 @@ class _TracearrMediaDetailScreenState
       body: detailAsync.when(
         loading: () => Scaffold(
           appBar: AppBar(
-            title: Text(widget.initialTitle ?? 'Détail du média'),
+            title: Text(widget.initialTitle ?? S.t('mediaDetail')),
           ),
           body: const Center(child: ExpressiveProgressIndicator()),
         ),
         error: (err, stack) => Scaffold(
           appBar: AppBar(
-            title: Text(widget.initialTitle ?? 'Détail du média'),
+            title: Text(widget.initialTitle ?? S.t('mediaDetail')),
           ),
           body: Center(
             child: SingleChildScrollView(
@@ -167,7 +167,7 @@ class _TracearrMediaDetailScreenState
                       ),
                     ),
                     icon: const Icon(Icons.refresh),
-                    label: const Text('Réessayer'),
+                    label: Text(S.t('retry')),
                   ),
                 ],
               ),
@@ -386,7 +386,7 @@ class _TracearrMediaDetailScreenState
                             if (detail.imdbId != null)
                               ActionChip(
                                 avatar: const Icon(Icons.link, size: 14),
-                                label: const Text('IMDb'),
+                                label: Text(S.t('imdb')),
                                 onPressed: () {
                                   final id = detail.imdbId!;
                                   final imdbPath =
@@ -402,7 +402,7 @@ class _TracearrMediaDetailScreenState
                                     detail.mediaType.toLowerCase() == 'show'))
                               ActionChip(
                                 avatar: const Icon(Icons.link, size: 14),
-                                label: const Text('TMDb'),
+                                label: Text(S.t('tmdb')),
                                 onPressed: () {
                                   final mType = detail.mediaType.toLowerCase();
                                   final tmdbPath =
@@ -421,7 +421,7 @@ class _TracearrMediaDetailScreenState
                                   resolvedShowTitle != null &&
                                           resolvedShowTitle.isNotEmpty
                                       ? 'Series: $resolvedShowTitle'
-                                      : 'Series',
+                                      : S.t('series'),
                                 ),
                                 onPressed: () =>
                                     TracearrMediaDetailScreen.navigate(
@@ -495,23 +495,23 @@ class _TracearrMediaDetailScreenState
                         child: Row(
                           children: [
                             _StatTile(
-                              label: 'LECTURES TOTALES',
+                              label: S.t('totalPLAYS'),
                               value: '${detail.allTimePlays}',
                               color: colorScheme.primary,
                             ),
                             _StatTile(
-                              label: 'TEMPS DE VISIONNAGE',
+                              label: S.t('watchTIME'),
                               value:
                                   _formatWatchTime(detail.allTimeWatchTimeMs),
                               color: colorScheme.secondary,
                             ),
                             _StatTile(
-                              label: 'LECTURES 30 J',
+                              label: S.t('k30dPLAYS'),
                               value: '${detail.last30DaysPlays}',
                               color: const Color(0xFF4CAF50),
                             ),
                             _StatTile(
-                              label: 'LECTURES 7 J',
+                              label: S.t('k7dPLAYS'),
                               value: '${detail.last7DaysPlays}',
                               color: const Color(0xFFFF9800),
                             ),

@@ -19,14 +19,14 @@ class BazarrSystemTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return EasyRefresh(
-          header: const ClassicHeader(
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+          header: ClassicHeader(
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
       onRefresh: () async {
         ref.invalidate(bazarrSystemStatusProvider(instance));
@@ -190,12 +190,12 @@ class _StatusSection extends ConsumerWidget {
       return const SizedBox.shrink();
     }
     return _SectionCard(
-      title: 'Statut',
+      title: S.t('status'),
       child: Column(
         children: <Widget>[
           _kv(context, 'Bazarr', s.bazarrVersion),
           if (s.packageVersion.isNotEmpty)
-            _kv(context, 'Package', s.packageVersion),
+            _kv(context, S.t('package'), s.packageVersion),
           if (s.sonarrVersion.isNotEmpty)
             _kv(context, 'Sonarr', s.sonarrVersion),
           if (s.radarrVersion.isNotEmpty)
@@ -205,11 +205,11 @@ class _StatusSection extends ConsumerWidget {
           if (s.pythonVersion.isNotEmpty)
             _kv(context, 'Python', s.pythonVersion),
           if (s.databaseEngine.isNotEmpty)
-            _kv(context, 'Database', s.databaseEngine),
+            _kv(context, S.t('database'), s.databaseEngine),
           if (s.cpuCores != null) _kv(context, 'CPU cores', '${s.cpuCores}'),
           if (s.timezone.isNotEmpty) _kv(context, 'Timezone', s.timezone),
           if (_uptime(s.startTime).isNotEmpty)
-            _kv(context, 'Uptime', _uptime(s.startTime)),
+            _kv(context, S.t('uptime'), _uptime(s.startTime)),
         ],
       ),
     );
@@ -229,13 +229,13 @@ class _HealthSection extends ConsumerWidget {
         ref.watch(bazarrSystemHealthProvider(instance)).value ??
             const <BazarrHealthItem>[];
     return _SectionCard(
-      title: 'Santé',
+      title: S.t('health'),
       child: issues.isEmpty
           ? Align(
               alignment: Alignment.centerLeft,
               child: _StatusPill(
                 icon: Icons.check_circle,
-                label: 'Tout est sain',
+                label: S.t('allHealthy'),
                 color: cs.tertiary,
               ),
             )
@@ -292,15 +292,15 @@ class _ProvidersSection extends ConsumerWidget {
         ref.watch(bazarrProviderStatusesProvider(instance)).value ??
             const <BazarrProviderStatus>[];
     return _SectionCard(
-      title: 'Fournisseurs',
+      title: S.t('providers'),
       action: TextButton.icon(
         onPressed: () => _reset(context, ref),
         icon: const Icon(Icons.restart_alt, size: 18),
-        label: const Text('Réinitialiser'),
+        label: Text(S.t('reset')),
       ),
       child: providers.isEmpty
           ? Text(
-              'Aucun fournisseur activé',
+              S.t('noProvidersEnabled'),
               style: theme.textTheme.bodySmall
                   ?.copyWith(color: cs.onSurfaceVariant),
             )
@@ -322,11 +322,11 @@ class _ProvidersSection extends ConsumerWidget {
       await api.resetProviders();
       ref.invalidate(bazarrProviderStatusesProvider(instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Fournisseurs limités réinitialisés')),
+        SnackBar(content: Text(S.t('throttledProvidersReset'))),
       );
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la réinitialisation : ${_err(e)}')),
+        SnackBar(content: Text(S.t('resetFailedErrE1', [_err(e)]))),
       );
     }
   }
@@ -396,7 +396,7 @@ class _TasksSection extends ConsumerWidget {
       return const SizedBox.shrink();
     }
     return _SectionCard(
-      title: 'Tâches',
+      title: S.t('tasks'),
       child: Column(
         children: <Widget>[
           for (int i = 0; i < tasks.length; i++) ...<Widget>[
@@ -438,7 +438,7 @@ class _TasksSection extends ConsumerWidget {
                   ),
                 ),
                 IconButton(
-                  tooltip: 'Exécuter maintenant',
+                  tooltip: S.t('runNow'),
                   visualDensity: VisualDensity.compact,
                   icon: const Icon(Icons.play_arrow),
                   onPressed: () => _run(context, ref, tasks[i]),
@@ -461,10 +461,10 @@ class _TasksSection extends ConsumerWidget {
       final BazarrApi api = await ref.read(bazarrApiProvider(instance).future);
       await api.runTask(t.jobId);
       ref.invalidate(bazarrSystemTasksProvider(instance));
-      messenger.showSnackBar(SnackBar(content: Text('${t.name} démarré')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('tNameStarted1', [t.name]))));
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text("Échec de l'exécution : ${_err(e)}")),
+        SnackBar(content: Text(S.t('runFailedErrE1', [_err(e)]))),
       );
     }
   }
@@ -483,15 +483,15 @@ class _BackupsSection extends ConsumerWidget {
         ref.watch(bazarrBackupsProvider(instance)).value ??
             const <BazarrBackup>[];
     return _SectionCard(
-      title: 'Sauvegardes',
+      title: S.t('backups'),
       action: TextButton.icon(
         onPressed: () => _create(context, ref),
         icon: const Icon(Icons.add, size: 18),
-        label: const Text('Créer'),
+        label: Text(S.t('create')),
       ),
       child: backups.isEmpty
           ? Text(
-              'No backups',
+              S.t('noBackups_2'),
               style: theme.textTheme.bodySmall
                   ?.copyWith(color: cs.onSurfaceVariant),
             )
@@ -537,7 +537,7 @@ class _BackupsSection extends ConsumerWidget {
                         ),
                       ),
                       IconButton(
-                        tooltip: 'Supprimer',
+                        tooltip: S.t('delete'),
                         visualDensity: VisualDensity.compact,
                         icon: const Icon(Icons.delete_outline),
                         onPressed: () => _delete(context, ref, backups[i]),
@@ -557,11 +557,11 @@ class _BackupsSection extends ConsumerWidget {
       await api.createBackup();
       ref.invalidate(bazarrBackupsProvider(instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Sauvegarde démarrée')),
+        SnackBar(content: Text(S.t('backupStarted'))),
       );
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la sauvegarde : ${_err(e)}')),
+        SnackBar(content: Text(S.t('backupFailedErrE1', [_err(e)]))),
       );
     }
   }
@@ -575,12 +575,12 @@ class _BackupsSection extends ConsumerWidget {
     final bool? ok = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Supprimer la sauvegarde ?'),
-        content: Text('Supprimer « ${b.filename} » ?'),
+        title: Text(S.t('deleteBackup')),
+        content: Text(S.t('deleteBFilename1', [b.filename])),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -588,7 +588,7 @@ class _BackupsSection extends ConsumerWidget {
               foregroundColor: Theme.of(ctx).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Supprimer'),
+            child: Text(S.t('delete')),
           ),
         ],
       ),
@@ -600,10 +600,10 @@ class _BackupsSection extends ConsumerWidget {
       final BazarrApi api = await ref.read(bazarrApiProvider(instance).future);
       await api.deleteBackup(b.filename);
       ref.invalidate(bazarrBackupsProvider(instance));
-      messenger.showSnackBar(const SnackBar(content: Text('Sauvegarde supprimée')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('backupDeleted_2'))));
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la suppression : ${_err(e)}')),
+        SnackBar(content: Text(S.t('deleteFailedErrE1', [_err(e)]))),
       );
     }
   }
@@ -626,17 +626,17 @@ class _LogsSection extends ConsumerWidget {
     final List<BazarrLogEntry> shown =
         logs.length > _max ? logs.sublist(0, _max) : logs;
     return _SectionCard(
-      title: 'Journaux',
+      title: S.t('logs'),
       action: logs.isEmpty
           ? null
           : TextButton.icon(
               onPressed: () => _clear(context, ref),
               icon: const Icon(Icons.delete_sweep_outlined, size: 18),
-              label: const Text('Effacer'),
+              label: Text(S.t('clear')),
             ),
       child: logs.isEmpty
           ? Text(
-              'No logs',
+              S.t('noLogs'),
               style: theme.textTheme.bodySmall
                   ?.copyWith(color: cs.onSurfaceVariant),
             )
@@ -689,16 +689,16 @@ class _LogsSection extends ConsumerWidget {
     final bool? ok = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Effacer les journaux ?'),
-        content: const Text('Supprimer toutes les entrées du journal de Bazarr ?'),
+        title: Text(S.t('clearLogs')),
+        content: Text(S.t('deleteAllBazarrLogEntries')),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Effacer'),
+            child: Text(S.t('clear')),
           ),
         ],
       ),
@@ -710,10 +710,10 @@ class _LogsSection extends ConsumerWidget {
       final BazarrApi api = await ref.read(bazarrApiProvider(instance).future);
       await api.clearLogs();
       ref.invalidate(bazarrLogsProvider(instance));
-      messenger.showSnackBar(const SnackBar(content: Text('Journaux effacés')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('logsCleared'))));
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text("Échec de l'effacement : ${_err(e)}")),
+        SnackBar(content: Text(S.t('clearFailedErrE1', [_err(e)]))),
       );
     }
   }

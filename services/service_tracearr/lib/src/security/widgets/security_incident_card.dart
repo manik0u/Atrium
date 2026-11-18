@@ -193,7 +193,7 @@ class SecurityIncidentCard extends StatelessWidget {
               ),
               const Spacer(),
               if (incident.acknowledged)
-                const Row(
+                Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
@@ -203,7 +203,7 @@ class SecurityIncidentCard extends StatelessWidget {
                     ),
                     SizedBox(width: 3),
                     Text(
-                      'Acknowledged',
+                      S.t('acknowledged'),
                       style: TextStyle(
                         color: Color(0xFF4CAF50),
                         fontSize: 10,
@@ -220,7 +220,7 @@ class SecurityIncidentCard extends StatelessWidget {
                   ),
                   icon: const Icon(Icons.done, size: 14),
                   label:
-                      const Text('Accuser réception', style: TextStyle(fontSize: 11)),
+                      Text(S.t('acknowledge'), style: TextStyle(fontSize: 11)),
                   onPressed: onAcknowledge,
                 ),
             ],

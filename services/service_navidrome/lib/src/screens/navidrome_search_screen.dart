@@ -25,7 +25,7 @@ class NavidromeSearchDelegate extends SearchDelegate<void> {
   final Instance instance;
 
   @override
-  String? get searchFieldLabel => 'Rechercher des artistes, albums, morceaux…';
+  String? get searchFieldLabel => S.t('searchArtistsAlbumsSongs');
 
   @override
   ThemeData appBarTheme(BuildContext context) {
@@ -136,7 +136,7 @@ class NavidromeSearchResults extends ConsumerWidget {
                 ),
                 const SizedBox(height: Insets.md),
                 Text(
-                  'Aucune correspondance pour « $query »',
+                  S.t('noMatchesFoundForQuery1', [query]),
                   style: theme.textTheme.bodyLarge?.copyWith(
                     color: cs.onSurfaceVariant,
                   ),
@@ -153,7 +153,7 @@ class NavidromeSearchResults extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Insets.lg),
                 child: Text(
-                  'Artists',
+                  S.t('artists'),
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -258,7 +258,7 @@ class NavidromeSearchResults extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Insets.lg),
                 child: Text(
-                  'Albums',
+                  S.t('albums'),
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -362,7 +362,7 @@ class NavidromeSearchResults extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Insets.lg),
                 child: Text(
-                  'Tracks',
+                  S.t('tracks'),
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -427,7 +427,7 @@ class NavidromeSearchResults extends ConsumerWidget {
                       ),
                       IconButton(
                         icon: const Icon(Icons.playlist_add_rounded, size: 20),
-                        tooltip: 'Ajouter à la playlist',
+                        tooltip: S.t('addToPlaylist'),
                         onPressed: () {
                           showNavidromePlaylistPicker(
                             context: context,
@@ -458,7 +458,7 @@ class NavidromeSearchResults extends ConsumerWidget {
       },
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (Object err, _) => Center(
-        child: Text('Échec de la recherche : $err'),
+        child: Text(S.t('searchFailedErr1', [err])),
       ),
     );
   }
@@ -512,7 +512,7 @@ class _NavidromeSearchScreenState extends ConsumerState<NavidromeSearchScreen> {
           onChanged: _onQueryChanged,
           textInputAction: TextInputAction.search,
           decoration: InputDecoration(
-            hintText: 'Rechercher des artistes, albums, morceaux…',
+            hintText: S.t('searchArtistsAlbumsSongs'),
             border: InputBorder.none,
             enabledBorder: InputBorder.none,
             focusedBorder: InputBorder.none,

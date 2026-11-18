@@ -61,7 +61,7 @@ final delugeClientProvider = FutureProvider.family<DelugeClient, Instance>((
 class DelugeFilter {
   const DelugeFilter({
     this.state = 'All',
-    this.label = 'Tous',
+    this.label = 'All',
     this.trackerHost = 'All',
   });
 
@@ -111,15 +111,15 @@ enum DelugeSortField {
 
 extension DelugeSortFieldX on DelugeSortField {
   String get displayName => switch (this) {
-        DelugeSortField.queue => 'Position dans la file',
-        DelugeSortField.name => 'Nom',
-        DelugeSortField.size => 'Taille',
-        DelugeSortField.progress => 'Progression',
-        DelugeSortField.state => 'État',
-        DelugeSortField.downSpeed => 'Vitesse de réception',
-        DelugeSortField.upSpeed => "Vitesse d'envoi",
+        DelugeSortField.queue => S.t('queuePosition'),
+        DelugeSortField.name => S.t('name'),
+        DelugeSortField.size => S.t('size'),
+        DelugeSortField.progress => S.t('progress'),
+        DelugeSortField.state => S.t('state'),
+        DelugeSortField.downSpeed => S.t('downSpeed'),
+        DelugeSortField.upSpeed => S.t('upSpeed'),
         DelugeSortField.ratio => 'Ratio',
-        DelugeSortField.added => "Date d'ajout",
+        DelugeSortField.added => S.t('dateAdded'),
       };
 }
 

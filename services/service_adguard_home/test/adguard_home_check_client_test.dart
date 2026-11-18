@@ -71,7 +71,7 @@ void main() {
     }
 
     Future<void> pick(WidgetTester tester, String label) async {
-      await tester.tap(find.text('Vérifié pour'));
+      await tester.tap(find.text('Checked for'));
       await tester.pumpAndSettle();
       await tester.tap(find.text(label).last);
       await tester.pumpAndSettle();
@@ -80,7 +80,7 @@ void main() {
     testWidgets('checks for any client at first', (WidgetTester tester) async {
       final Pumped pumped = await open(tester);
 
-      expect(find.text("N'importe quel client"), findsOneWidget);
+      expect(find.text('Any client'), findsOneWidget);
       expect(pumped.actions.calls, <String>['check a.example']);
     });
 
@@ -96,7 +96,7 @@ void main() {
         'check a.example for 192.168.50.1',
       ]);
 
-      await pick(tester, "N'importe quel client");
+      await pick(tester, 'Any client');
       expect(pumped.actions.calls.last, 'check a.example');
     });
 
@@ -104,7 +104,7 @@ void main() {
         (WidgetTester tester) async {
       final Pumped pumped = await open(tester);
 
-      await tester.tap(find.text('Vérifié pour'));
+      await tester.tap(find.text('Checked for'));
       await tester.pumpAndSettle();
 
       final ListTile phone = tester.widget<ListTile>(
@@ -124,18 +124,18 @@ void main() {
     testWidgets('checks for a typed address, and not for something else',
         (WidgetTester tester) async {
       final Pumped pumped = await open(tester);
-      await tester.tap(find.text('Vérifié pour'));
+      await tester.tap(find.text('Checked for'));
       await tester.pumpAndSettle();
       final Finder field = find.byKey(const Key('adguard-check-address'));
 
       await tester.enterText(field, 'not an address');
-      await tester.tap(find.byTooltip('Vérifier cette adresse'));
+      await tester.tap(find.byTooltip('Check for this address'));
       await tester.pumpAndSettle();
       expect(find.text('An IP address, such as 192.168.1.20.'), findsOneWidget);
       expect(pumped.actions.calls, <String>['check a.example']);
 
       await tester.enterText(field, ' 10.0.0.42 ');
-      await tester.tap(find.byTooltip('Vérifier cette adresse'));
+      await tester.tap(find.byTooltip('Check for this address'));
       await tester.pumpAndSettle();
 
       expect(find.text('10.0.0.42'), findsOneWidget);

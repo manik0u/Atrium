@@ -257,9 +257,9 @@ void main() {
       await tester.tap(find.text('Show.S01E01.Torrent.Release'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Ouvrir la page du torrent'), findsOneWidget);
-      expect(find.text("Copier l'URL de téléchargement"), findsOneWidget);
-      expect(find.text('Copier le lien magnet'), findsOneWidget);
+      expect(find.text('Open Torrent Page'), findsOneWidget);
+      expect(find.text('Copy Download URL'), findsOneWidget);
+      expect(find.text('Copy Magnet Link'), findsOneWidget);
 
       // Collapse first release
       await tester.tap(find.text('Show.S01E01.Torrent.Release'));
@@ -281,8 +281,8 @@ void main() {
       await tester.tap(find.text('Show.S01E01.NoLinks.Release'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Approuvée pour le téléchargement.'), findsOneWidget);
-      expect(find.text('Ouvrir la page du torrent'), findsNothing);
+      expect(find.text('Approved for download.'), findsOneWidget);
+      expect(find.text('Open Torrent Page'), findsNothing);
       expect(find.text('Open Indexer Page'), findsNothing);
     },
   );

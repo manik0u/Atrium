@@ -153,7 +153,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                                   initialValue: selectedVal,
                                   isExpanded: true,
                                   decoration: InputDecoration(
-                                    labelText: 'Profil de qualité',
+                                    labelText: S.t('qualityProfile'),
                                     prefixIcon:
                                         const Icon(Icons.high_quality_outlined),
                                     border: OutlineInputBorder(
@@ -164,7 +164,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                                       profiles.map((QualityProfileResource p) {
                                     return DropdownMenuItem<int>(
                                       value: p.id,
-                                      child: Text(p.name ?? 'Profil ${p.id}'),
+                                      child: Text(p.name ?? S.t('profilePId1', [p.id])),
                                     );
                                   }).toList(),
                                   onChanged: (int? val) {
@@ -180,7 +180,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                                 child: ExpressiveProgressIndicator(),
                               ),
                               error: (e, _) =>
-                                  Text('Échec du chargement des profils de qualité : $e'),
+                                  Text(S.t('failedToLoadQualityProfilesE1', [e])),
                             ),
                             const SizedBox(height: Insets.md),
 
@@ -203,7 +203,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                                   initialValue: selectedVal,
                                   isExpanded: true,
                                   decoration: InputDecoration(
-                                    labelText: 'Profil de métadonnées',
+                                    labelText: S.t('metadataProfile'),
                                     prefixIcon: const Icon(
                                       Icons.library_music_outlined,
                                     ),
@@ -215,7 +215,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                                       profiles.map((MetadataProfileResource p) {
                                     return DropdownMenuItem<int>(
                                       value: p.id,
-                                      child: Text(p.name ?? 'Profil ${p.id}'),
+                                      child: Text(p.name ?? S.t('profilePId1', [p.id])),
                                     );
                                   }).toList(),
                                   onChanged: (int? val) {
@@ -231,7 +231,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                                 child: ExpressiveProgressIndicator(),
                               ),
                               error: (e, _) =>
-                                  Text('Échec du chargement des profils de métadonnées : $e'),
+                                  Text(S.t('failedToLoadMetadataProfilesE1', [e])),
                             ),
                             const SizedBox(height: Insets.md),
 
@@ -255,7 +255,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                                   initialValue: selectedVal,
                                   isExpanded: true,
                                   decoration: InputDecoration(
-                                    labelText: 'Dossier racine',
+                                    labelText: S.t('rootFolder'),
                                     prefixIcon:
                                         const Icon(Icons.folder_outlined),
                                     border: OutlineInputBorder(
@@ -281,7 +281,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                                 child: ExpressiveProgressIndicator(),
                               ),
                               error: (e, _) =>
-                                  Text('Échec du chargement des dossiers racine : $e'),
+                                  Text(S.t('failedToLoadRootFoldersE1', [e])),
                             ),
                           ],
                         ),
@@ -305,7 +305,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Monitoring',
+                              S.t('monitoring'),
                               style: theme.textTheme.titleSmall?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: cs.primary,
@@ -318,25 +318,25 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                               initialValue: _selectedMonitorNewItems,
                               isExpanded: true,
                               decoration: InputDecoration(
-                                labelText: 'Surveiller les nouvelles sorties',
+                                labelText: S.t('monitorNewReleases'),
                                 prefixIcon:
                                     const Icon(Icons.new_releases_outlined),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
-                              items: const [
+                              items: [
                                 DropdownMenuItem(
                                   value: NewItemMonitorTypes.all,
-                                  child: Text('Tous'),
+                                  child: Text(S.t('all')),
                                 ),
                                 DropdownMenuItem(
                                   value: NewItemMonitorTypes.newVal,
-                                  child: Text('Nouvelles uniquement'),
+                                  child: Text(S.t('newOnly')),
                                 ),
                                 DropdownMenuItem(
                                   value: NewItemMonitorTypes.none,
-                                  child: Text('Aucun'),
+                                  child: Text(S.t('none')),
                                 ),
                               ],
                               onChanged: (NewItemMonitorTypes? val) {
@@ -351,9 +351,9 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
 
                             SwitchListTile(
                               contentPadding: EdgeInsets.zero,
-                              title: const Text('Surveillé'),
-                              subtitle: const Text(
-                                'Surveiller cet artiste pour les nouvelles sorties et mises à niveau',
+                              title: Text(S.t('monitored')),
+                              subtitle: Text(
+                                S.t('monitorThisArtistForNewReleasesAndUpgrades'),
                               ),
                               value: _monitored,
                               onChanged: (bool val) {
@@ -387,7 +387,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Tags',
+                                  S.t('tags'),
                                   style: theme.textTheme.titleSmall?.copyWith(
                                     fontWeight: FontWeight.bold,
                                     color: cs.primary,
@@ -399,7 +399,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                                   runSpacing: 8,
                                   children: tags.map((TagResource tag) {
                                     final int id = tag.id ?? 0;
-                                    final String label = tag.label ?? 'Balise $id';
+                                    final String label = tag.label ?? S.t('tagId1', [id]);
                                     final bool isSelected =
                                         _selectedTagIds.contains(id);
                                     return FilterChip(
@@ -443,8 +443,8 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                     onPressed: _submitting ? null : _save,
                     child: _submitting
                         ? ExpressiveProgressIndicator(color: cs.onPrimary)
-                        : const Text(
-                            'Save Changes',
+                        : Text(
+                            S.t('saveChanges'),
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -484,7 +484,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                     .split(RegExp(r'[/\\]'))
                     .where((s) => s.isNotEmpty)
                     .last
-                : (widget.artist.artistName ?? 'Artist');
+                : (widget.artist.artistName ?? S.t('artist'));
 
         resolvedPath = '$cleanRoot/$artistFolder';
       }
@@ -505,7 +505,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
       );
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? "Échec de la mise à jour de l'artiste");
+        throw Exception(resp.error?.message ?? S.t('failedToUpdateArtist'));
       }
 
       if (mounted) {
@@ -529,7 +529,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Échec de la mise à jour de l'artiste : $e"),
+            content: Text(S.t('failedToUpdateArtistE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );

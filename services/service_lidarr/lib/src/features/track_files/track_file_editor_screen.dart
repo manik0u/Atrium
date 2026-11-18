@@ -182,7 +182,7 @@ class _LidarrTrackFileEditorScreenState
                   Icon(Icons.edit_note_outlined, color: cs.primary),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: Text('Modifier ${_selectedIds.length} fichiers de pistes'),
+                    child: Text(S.t('editSelectedIdsLengthTrackFiles1', [_selectedIds.length])),
                   ),
                 ],
               ),
@@ -192,7 +192,7 @@ class _LidarrTrackFileEditorScreenState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Mettre à jour les métadonnées de qualité ou les infos de release des pistes sélectionnées :',
+                      S.t('updateQualityMetadataOrReleaseInformationForSelectedTracks'),
                       style: TextStyle(
                         fontSize: 13,
                         color: cs.onSurfaceVariant,
@@ -201,15 +201,15 @@ class _LidarrTrackFileEditorScreenState
                     const SizedBox(height: Insets.md),
                     DropdownButtonFormField<QualityModel>(
                       isExpanded: true,
-                      decoration: const InputDecoration(
-                        labelText: 'Qualité cible',
+                      decoration: InputDecoration(
+                        labelText: S.t('targetQuality'),
                         border: OutlineInputBorder(),
                         isDense: true,
                       ),
                       initialValue: targetQuality,
                       items: [
-                        const DropdownMenuItem(
-                          child: Text('Conserver la qualité existante'),
+                        DropdownMenuItem(
+                          child: Text(S.t('keepExistingQuality')),
                         ),
                         ...profiles.where((p) => p.cutoff != null).map(
                               (p) => DropdownMenuItem(
@@ -219,7 +219,7 @@ class _LidarrTrackFileEditorScreenState
                                     name: p.name,
                                   ),
                                 ),
-                                child: Text(p.name ?? 'Qualité ${p.cutoff}'),
+                                child: Text(p.name ?? S.t('qualityPCutoff1', [p.cutoff])),
                               ),
                             ),
                       ],
@@ -232,8 +232,8 @@ class _LidarrTrackFileEditorScreenState
                     const SizedBox(height: Insets.md),
                     TextField(
                       controller: releaseGroupController,
-                      decoration: const InputDecoration(
-                        labelText: 'Groupe de release (facultatif)',
+                      decoration: InputDecoration(
+                        labelText: S.t('releaseGroupOptional'),
                         border: OutlineInputBorder(),
                         isDense: true,
                       ),
@@ -241,8 +241,8 @@ class _LidarrTrackFileEditorScreenState
                     const SizedBox(height: Insets.md),
                     TextField(
                       controller: sceneNameController,
-                      decoration: const InputDecoration(
-                        labelText: 'Nom de scène (facultatif)',
+                      decoration: InputDecoration(
+                        labelText: S.t('sceneNameOptional'),
                         border: OutlineInputBorder(),
                         isDense: true,
                       ),
@@ -253,11 +253,11 @@ class _LidarrTrackFileEditorScreenState
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(dCtx, false),
-                  child: const Text('Annuler'),
+                  child: Text(S.t('cancel')),
                 ),
                 FilledButton(
                   onPressed: () => Navigator.pop(dCtx, true),
-                  child: const Text('Appliquer les modifications'),
+                  child: Text(S.t('applyChanges')),
                 ),
               ],
             );
@@ -287,7 +287,7 @@ class _LidarrTrackFileEditorScreenState
       final ApiResponse<void> resp =
           await api.trackFile.putTrackfileEditor(body: payload);
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec de la mise à jour des fichiers de pistes');
+        throw Exception(resp.error?.message ?? S.t('failedToUpdateTrackFiles'));
       }
 
       _invalidateAll();
@@ -298,15 +298,15 @@ class _LidarrTrackFileEditorScreenState
 
       messenger.hideCurrentSnackBar();
       messenger.showSnackBar(
-        const SnackBar(
-          content: Text('Fichiers de pistes mis à jour avec succès !'),
+        SnackBar(
+          content: Text(S.t('trackFilesUpdatedSuccessfully')),
           duration: Duration(seconds: 2),
         ),
       );
     } catch (e) {
       setState(() => _isProcessing = false);
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la modification des fichiers de pistes : $e')),
+        SnackBar(content: Text(S.t('failedToEditTrackFilesE1', [e]))),
       );
     }
   }
@@ -323,14 +323,14 @@ class _LidarrTrackFileEditorScreenState
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          title: Text('Supprimer ${_selectedIds.length} fichiers audio ?'),
+          title: Text(S.t('deleteSelectedIdsLengthAudioFiles1', [_selectedIds.length])),
           content: Text(
             'Are you sure you want to permanently delete ${_selectedIds.length} audio file(s) from disk? This cannot be undone.',
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(dCtx, false),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             FilledButton(
               style: FilledButton.styleFrom(
@@ -338,7 +338,7 @@ class _LidarrTrackFileEditorScreenState
                 foregroundColor: cs.onError,
               ),
               onPressed: () => Navigator.pop(dCtx, true),
-              child: const Text('Supprimer définitivement'),
+              child: Text(S.t('deletePermanently')),
             ),
           ],
         );
@@ -359,7 +359,7 @@ class _LidarrTrackFileEditorScreenState
       final ApiResponse<void> resp =
           await api.trackFile.deleteTrackfileBulk(body: payload);
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec de la suppression des fichiers de pistes');
+        throw Exception(resp.error?.message ?? S.t('failedToDeleteTrackFiles'));
       }
 
       _invalidateAll();
@@ -369,12 +369,12 @@ class _LidarrTrackFileEditorScreenState
       });
 
       messenger.showSnackBar(
-        const SnackBar(content: Text('Fichiers de pistes supprimés avec succès !')),
+        SnackBar(content: Text(S.t('trackFilesDeletedSuccessfully'))),
       );
     } catch (e) {
       setState(() => _isProcessing = false);
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la suppression des fichiers de pistes : $e')),
+        SnackBar(content: Text(S.t('failedToDeleteTrackFilesE1', [e]))),
       );
     }
   }
@@ -391,14 +391,14 @@ class _LidarrTrackFileEditorScreenState
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          title: const Text('Supprimer le fichier audio ?'),
+          title: Text(S.t('deleteAudioFile')),
           content: Text(
             'Are you sure you want to delete "${file.path ?? 'this file'}" from disk?',
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(dCtx, false),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             FilledButton(
               style: FilledButton.styleFrom(
@@ -406,7 +406,7 @@ class _LidarrTrackFileEditorScreenState
                 foregroundColor: cs.onError,
               ),
               onPressed: () => Navigator.pop(dCtx, true),
-              child: const Text('Supprimer'),
+              child: Text(S.t('delete')),
             ),
           ],
         );
@@ -421,7 +421,7 @@ class _LidarrTrackFileEditorScreenState
       final ApiResponse<void> resp =
           await api.trackFile.deleteTrackfileById(id: file.id!);
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Échec de la suppression du fichier');
+        throw Exception(resp.error?.message ?? S.t('failedToDeleteFile'));
       }
 
       _invalidateAll();
@@ -430,11 +430,11 @@ class _LidarrTrackFileEditorScreenState
       });
 
       messenger.showSnackBar(
-        const SnackBar(content: Text('Fichier audio supprimé.')),
+        SnackBar(content: Text(S.t('audioFileDeleted'))),
       );
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la suppression du fichier : $e')),
+        SnackBar(content: Text(S.t('failedToDeleteFileE1', [e]))),
       );
     }
   }
@@ -475,7 +475,7 @@ class _LidarrTrackFileEditorScreenState
             Text(
               widget.albumTitle != null
                   ? 'Track Files — ${widget.albumTitle}'
-                  : 'Track Files Editor',
+                  : S.t('trackFilesEditor'),
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -500,7 +500,7 @@ class _LidarrTrackFileEditorScreenState
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Actualiser',
+            tooltip: S.t('refresh'),
             onPressed: _invalidateAll,
           ),
         ],
@@ -510,14 +510,14 @@ class _LidarrTrackFileEditorScreenState
         behavior: HitTestBehavior.translucent,
         child: asyncFiles.when(
           loading: () => const Center(child: ExpressiveProgressIndicator()),
-          error: (err, _) => Center(child: Text('Erreur : $err')),
+          error: (err, _) => Center(child: Text(S.t('errorErr1', [err]))),
           data: (List<TrackFileResource> files) {
             if (files.isEmpty) {
-              return const Center(
+              return Center(
                 child: EmptyView(
                   icon: Icons.audio_file_outlined,
-                  title: 'Aucun fichier de piste trouvé',
-                  message: 'Aucun fichier audio téléchargé trouvé sur le disque.',
+                  title: S.t('noTrackFilesFound'),
+                  message: S.t('noDownloadedAudioFilesFoundOnDisk'),
                 ),
               );
             }
@@ -564,7 +564,7 @@ class _LidarrTrackFileEditorScreenState
                           controller: _searchController,
                           focusNode: _searchFocusNode,
                           decoration: InputDecoration(
-                            hintText: 'Rechercher par titre, chemin, codec…',
+                            hintText: S.t('searchByTitlePathCodec'),
                             prefixIcon: const Icon(Icons.search, size: 20),
                             suffixIcon: _searchQuery.isNotEmpty
                                 ? IconButton(
@@ -609,7 +609,7 @@ class _LidarrTrackFileEditorScreenState
                             size: 18,
                           ),
                           label: Text(
-                            allSelected ? 'Deselect' : 'Select All',
+                            allSelected ? 'Deselect' : S.t('selectAll'),
                             style: const TextStyle(fontSize: 12),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -637,7 +637,7 @@ class _LidarrTrackFileEditorScreenState
                       children: [
                         FilterChip(
                           selected: _selectedQualityFilter == null,
-                          label: Text('Tous (${files.length})'),
+                          label: Text(S.t('allFilesLength1', [files.length])),
                           onSelected: (_) {
                             setState(() => _selectedQualityFilter = null);
                           },
@@ -703,7 +703,7 @@ class _LidarrTrackFileEditorScreenState
                             Icons.edit_outlined,
                             size: 20,
                           ),
-                          tooltip: 'Modifier la qualité',
+                          tooltip: S.t('editQuality'),
                           onPressed: _isProcessing
                               ? null
                               : () => _bulkEditQuality(files),
@@ -716,7 +716,7 @@ class _LidarrTrackFileEditorScreenState
                             Icons.delete_outline,
                             size: 20,
                           ),
-                          tooltip: 'Supprimer la sélection',
+                          tooltip: S.t('deleteSelected'),
                           onPressed: _isProcessing ? null : _bulkDeleteFiles,
                         ),
                       ],
@@ -729,7 +729,7 @@ class _LidarrTrackFileEditorScreenState
                   child: filteredFiles.isEmpty
                       ? Center(
                           child: Text(
-                            'Aucun fichier de piste ne correspond à « $_searchQuery »',
+                            S.t('noTrackFilesMatchSearchQuery1', [_searchQuery]),
                             style: TextStyle(color: cs.onSurfaceVariant),
                           ),
                         )
@@ -889,7 +889,7 @@ class _LidarrTrackFileEditorScreenState
                                               Icons.copy_outlined,
                                               size: 16,
                                             ),
-                                            tooltip: 'Copier le chemin',
+                                            tooltip: S.t('copyPath'),
                                             visualDensity:
                                                 VisualDensity.compact,
                                             onPressed: file.path != null
@@ -902,9 +902,9 @@ class _LidarrTrackFileEditorScreenState
                                                     ScaffoldMessenger.of(
                                                       context,
                                                     ).showSnackBar(
-                                                      const SnackBar(
+                                                      SnackBar(
                                                         content: Text(
-                                                          'File path copied to clipboard',
+                                                          S.t('filePathCopiedToClipboard'),
                                                         ),
                                                         duration: Duration(
                                                           seconds: 1,
@@ -920,7 +920,7 @@ class _LidarrTrackFileEditorScreenState
                                               size: 18,
                                             ),
                                             color: cs.error,
-                                            tooltip: 'Supprimer le fichier',
+                                            tooltip: S.t('deleteFile'),
                                             onPressed: () =>
                                                 _deleteSingleFile(file),
                                           ),

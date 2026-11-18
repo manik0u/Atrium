@@ -12,6 +12,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  core_models:
+    path: ../core_models
   go_router: ^17.3.0
 
 dev_dependencies:

@@ -42,15 +42,15 @@ class EmbyAlbumScreen extends ConsumerWidget {
         elevation: 0,
       ),
       body: EasyRefresh(
-          header: const ClassicHeader(
+          header: ClassicHeader(
             position: IndicatorPosition.locator,
-            dragText: 'Pull to refresh',
-            armedText: 'Release ready',
-            readyText: 'Refreshing...',
-            processingText: 'Refreshing...',
-            processedText: 'Succeeded',
-            failedText: 'Failed',
-            messageText: 'Last updated at %T',
+            dragText: S.t('pullToRefresh'),
+            armedText: S.t('releaseReady'),
+            readyText: S.t('refreshing'),
+            processingText: S.t('refreshing'),
+            processedText: S.t('succeeded'),
+            failedText: S.t('failed'),
+            messageText: S.t('lastUpdatedAtT'),
           ),
         onRefresh: () async => ref.invalidate(
           embyAlbumDataFutureProvider((instance, albumId, albumArtist)),
@@ -374,7 +374,7 @@ class EmbyAlbumScreen extends ConsumerWidget {
                         BlendMode.srcIn,
                       ),
                     ),
-                    label: const Text('Lire maintenant'),
+                    label: Text(S.t('playNow')),
                   ),
                 ),
                 const SizedBox(height: Insets.xs),

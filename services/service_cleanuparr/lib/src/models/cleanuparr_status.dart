@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 /// Represents the system and integration status of a Cleanuparr instance.
 class CleanuparrStatus {
   const CleanuparrStatus({
@@ -29,7 +30,7 @@ class CleanuparrStatus {
     final String version =
         app?['version']?.toString() ??
         json['version']?.toString() ??
-        'Unknown';
+        S.t('unknown');
 
     final String appName =
         app?['appName']?.toString() ??
@@ -132,7 +133,7 @@ class CleanuparrManagerStatus {
       type: json['type']?.toString() ?? 'Arr',
       enabled: json['enabled'] as bool? ?? true,
       health: json['health']?.toString() ??
-          (json['status']?.toString() ?? 'Healthy'),
+          (json['status']?.toString() ?? S.t('healthy')),
     );
   }
 }
@@ -152,11 +153,11 @@ class CleanuparrClientStatus {
 
   factory CleanuparrClientStatus.fromJson(Map<String, dynamic> json) {
     return CleanuparrClientStatus(
-      name: json['name']?.toString() ?? 'Download Client',
-      type: json['type']?.toString() ?? 'Client',
+      name: json['name']?.toString() ?? S.t('downloadClient'),
+      type: json['type']?.toString() ?? S.t('client'),
       enabled: json['enabled'] as bool? ?? true,
       health: json['health']?.toString() ??
-          (json['status']?.toString() ?? 'Healthy'),
+          (json['status']?.toString() ?? S.t('healthy')),
     );
   }
 }

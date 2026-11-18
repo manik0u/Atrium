@@ -32,8 +32,8 @@ class DashboardAdguardHomeWidget extends StatelessWidget {
       onTap:
           instances.length == 1 ? () => _open(context, instances.first) : null,
       child: instances.isEmpty
-          ? const DashboardIdleRow(
-              text: 'Aucune instance AdGuard Home configurée',
+          ? DashboardIdleRow(
+              text: S.t('noAdGuardHomeInstancesConfigured'),
             )
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -270,9 +270,9 @@ class _StateRow extends StatelessWidget {
           const SizedBox(width: Insets.xs),
           Text(
             switch (state) {
-              AdguardHomeProtection.on => 'PROTÉGÉ',
-              AdguardHomeProtection.paused => 'EN PAUSE',
-              AdguardHomeProtection.off => 'DÉSACTIVÉ',
+              AdguardHomeProtection.on => S.t('protected'),
+              AdguardHomeProtection.paused => S.t('paused_2'),
+              AdguardHomeProtection.off => S.t('off_2'),
             },
             style: pillText,
           ),
@@ -308,7 +308,7 @@ class _StateRow extends StatelessWidget {
             style: _actionStyle,
             onPressed: busy ? null : () => onSet(enabled: true),
             icon: const Icon(Icons.play_arrow_rounded, size: 16),
-            label: const Text('Reprendre'),
+            label: Text(S.t('resume')),
           ),
       ],
     );
@@ -353,9 +353,9 @@ class _PauseButton extends StatelessWidget {
           ),
         const PopupMenuDivider(),
         // Zero stands for no timer: off until turned back on.
-        const PopupMenuItem<Duration>(
+        PopupMenuItem<Duration>(
           value: Duration.zero,
-          child: Text("Jusqu'à réactivation"),
+          child: Text(S.t('untilTurnedBackOn')),
         ),
       ],
     );
@@ -369,7 +369,7 @@ class _PauseButton extends StatelessWidget {
       style: _actionStyle,
       onPressed: busy ? null : () => _choose(context),
       icon: const Icon(Icons.pause_rounded, size: 16),
-      label: const Text('Pause'),
+      label: Text(S.t('pause')),
     );
   }
 }
@@ -389,7 +389,7 @@ class _Summary extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: _Figure(
-            label: 'Requêtes',
+            label: S.t('queries'),
             value:
                 stats == null ? '-' : formatAdguardHomeCompact(stats.queries),
             color: cs.primary,
@@ -398,7 +398,7 @@ class _Summary extends StatelessWidget {
         const SizedBox(width: Insets.sm),
         Expanded(
           child: _Figure(
-            label: 'Bloquées',
+            label: S.t('blocked'),
             value: stats == null
                 ? '-'
                 : formatAdguardHomeCompact(stats.blockedByFilters),
@@ -610,8 +610,7 @@ class _Refused extends StatelessWidget {
                     ? 'AdGuard Home refused the sign-in. By default it '
                         'blocks an address for 15 minutes after five wrong '
                         'tries.'
-                    : 'AdGuard Home demande une connexion, et cette instance '
-                        'has no username or password.',
+                    : S.t('adguardHomeAsksForASignInAndThisInstanceHasNoUsernameOrPassword'),
                 style: theme.textTheme.bodySmall
                     ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
               ),
@@ -622,7 +621,7 @@ class _Refused extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: Insets.xs),
             child: Text(
-              'Refusé $refusals fois de suite depuis cette app.',
+              S.t('refusedRefusalsTimesInARowFromThisApp1', [refusals]),
               style: theme.textTheme.bodySmall?.copyWith(
                 color: theme.colorScheme.error,
                 fontWeight: FontWeight.w600,
@@ -631,7 +630,7 @@ class _Refused extends StatelessWidget {
           ),
         Align(
           alignment: Alignment.centerRight,
-          child: TextButton(onPressed: onRetry, child: const Text('Réessayer')),
+          child: TextButton(onPressed: onRetry, child: Text(S.t('retry'))),
         ),
       ],
     );

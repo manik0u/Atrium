@@ -58,13 +58,13 @@ void main() {
     await tester.pump();
 
     expect(find.text('MySpeed'), findsOneWidget);
-    expect(find.text('DESCENTE'), findsOneWidget);
+    expect(find.text('DOWN'), findsOneWidget);
     expect(find.text('350.5'), findsOneWidget);
-    expect(find.text('MONTÉE'), findsOneWidget);
+    expect(find.text('UP'), findsOneWidget);
     expect(find.text('85.2'), findsOneWidget);
     expect(find.text('PING'), findsOneWidget);
     expect(find.text('15'), findsOneWidget);
-    expect(find.text('Lancer le test'), findsOneWidget);
+    expect(find.text('Run test'), findsOneWidget);
     expect(find.textContaining('Cloudflare'), findsOneWidget);
     expect(find.byIcon(Icons.access_time_rounded), findsOneWidget);
     expect(find.text(sampleTest.formattedDate), findsOneWidget);
@@ -103,31 +103,31 @@ void main() {
     await tester.pump();
 
     // Tap Run test button
-    await tester.tap(find.text('Lancer le test'));
+    await tester.tap(find.text('Run test'));
     await tester.pumpAndSettle();
 
     // Dialog appears
-    expect(find.text('Lancer un speedtest'), findsOneWidget);
+    expect(find.text('Run speedtest'), findsOneWidget);
     expect(
       find.text('Start a new speedtest on Home MySpeed?'),
       findsOneWidget,
     );
 
     // Tap Cancel
-    await tester.tap(find.text('Annuler'));
+    await tester.tap(find.text('Cancel'));
     await tester.pumpAndSettle();
     expect(didRunSpeedtest, isFalse);
 
     // Tap Run test again
-    await tester.tap(find.text('Lancer le test'));
+    await tester.tap(find.text('Run test'));
     await tester.pumpAndSettle();
 
     // Tap Start
-    await tester.tap(find.text('Démarrer'));
+    await tester.tap(find.text('Start'));
     await tester.pump();
 
     expect(didRunSpeedtest, isTrue);
-    expect(find.text('Speedtest lancé avec succès'), findsOneWidget);
+    expect(find.text('Speedtest triggered successfully'), findsOneWidget);
   });
 
   testWidgets('displays running spinner when speedtest is active',
@@ -158,7 +158,7 @@ void main() {
     // Banner text is not displayed
     expect(find.text('Speedtest running...'), findsNothing);
     // Button shows loading spinner instead of 'Run test' text
-    expect(find.text('Lancer le test'), findsNothing);
+    expect(find.text('Run test'), findsNothing);
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
 

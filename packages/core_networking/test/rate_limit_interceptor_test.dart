@@ -148,7 +148,7 @@ class _CallbackAdapter implements HttpClientAdapter {
 }
 
 const List<String> _days = <String>[
-  'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim',
+  'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',
 ];
 const List<String> _months = <String>[
   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',

@@ -47,7 +47,7 @@ class WantedSortFilterBottomSheet extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    'Filter & Sort',
+                    S.t('filterSort'),
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -73,7 +73,7 @@ class WantedSortFilterBottomSheet extends ConsumerWidget {
                             )
                             .state = false;
                       },
-                      child: const Text('Réinitialiser'),
+                      child: Text(S.t('reset')),
                     ),
                 ],
               ),
@@ -87,16 +87,16 @@ class WantedSortFilterBottomSheet extends ConsumerWidget {
               ),
               const SizedBox(height: 8),
               SegmentedButton<bool>(
-                segments: const <ButtonSegment<bool>>[
+                segments: <ButtonSegment<bool>>[
                   ButtonSegment<bool>(
                     value: true,
                     icon: Icon(Icons.bookmark_outlined),
-                    label: Text('Surveillés uniquement'),
+                    label: Text(S.t('monitoredOnly')),
                   ),
                   ButtonSegment<bool>(
                     value: false,
                     icon: Icon(Icons.all_inclusive_outlined),
-                    label: Text('Tous les albums'),
+                    label: Text(S.t('allAlbums')),
                   ),
                 ],
                 selected: <bool>{monitoredOnly},
@@ -113,7 +113,7 @@ class WantedSortFilterBottomSheet extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    'Sort By',
+                    S.t('sortBy'),
                     style: theme.textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: cs.onSurfaceVariant,
@@ -125,7 +125,7 @@ class WantedSortFilterBottomSheet extends ConsumerWidget {
                       size: 18,
                     ),
                     label: Text(
-                      sortAscending ? 'Ascending' : 'Descending',
+                      sortAscending ? S.t('ascending') : S.t('descending'),
                       style: const TextStyle(fontWeight: FontWeight.w600),
                     ),
                     onPressed: () {

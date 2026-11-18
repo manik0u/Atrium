@@ -55,7 +55,7 @@ void main() {
                             {
                               'id': 'dl1',
                               'username': 'peerA',
-                              'direction': 'Télécharger',
+                              'direction': 'Download',
                               'filename': 'Rock/Album1/track1.mp3',
                               'size': 5000000,
                               'state': 'InProgress',
@@ -86,7 +86,7 @@ void main() {
                             {
                               'id': 'ul1',
                               'username': 'peerB',
-                              'direction': 'Téléverser',
+                              'direction': 'Upload',
                               'filename': 'Electronic/Album2/track2.flac',
                               'size': 25000000,
                               'state': 'Completed, Succeeded',
@@ -109,7 +109,7 @@ void main() {
                   data: {
                     'id': 'dl1',
                     'username': 'peerA',
-                    'direction': 'Télécharger',
+                    'direction': 'Download',
                     'filename': 'Rock/Album1/track1.mp3',
                     'size': 5000000,
                     'state': 'InProgress',
@@ -128,7 +128,7 @@ void main() {
                     'batch': {
                       'id': 'batch123',
                       'username': 'peerA',
-                      'direction': 'Télécharger',
+                      'direction': 'Download',
                       'createdAt': '2026-10-24T12:00:00Z',
                       'transfers': <Map<String, dynamic>>[],
                     },
@@ -146,7 +146,7 @@ void main() {
                   data: {
                     'id': 'search123',
                     'searchText': 'daft punk',
-                    'state': 'Demandé',
+                    'state': 'Requested',
                     'startedAt': '2026-10-24T12:00:00Z',
                   },
                 ),
@@ -162,7 +162,7 @@ void main() {
                     {
                       'id': 'search123',
                       'searchText': 'daft punk',
-                      'state': 'Terminé',
+                      'state': 'Completed',
                       'fileCount': 150,
                       'startedAt': '2026-10-24T12:00:00Z',
                     }
@@ -316,7 +316,7 @@ void main() {
                     'localhost': [
                       {
                         'id': 'sh1',
-                        'alias': 'Musique',
+                        'alias': 'Music',
                         'localPath': '/data/music',
                         'directories': 120,
                         'files': 3500,
@@ -408,7 +408,7 @@ void main() {
                   statusCode: 200,
                   data: {
                     'id': 'sh1',
-                    'alias': 'Musique',
+                    'alias': 'Music',
                     'localPath': '/data/music',
                     'directories': 120,
                     'files': 3500,
@@ -578,7 +578,7 @@ void main() {
                     {
                       'id': 'ex1',
                       'username': 'slowPeer',
-                      'direction': 'Télécharger',
+                      'direction': 'Download',
                       'filename': 'track.flac',
                       'exception': 'Connection timed out',
                     }
@@ -913,7 +913,7 @@ void main() {
 
       final shares = await api.getShares();
       expect(lastPath, 'api/v0/shares');
-      expect(shares['localhost']?.first.name, 'Musique');
+      expect(shares['localhost']?.first.name, 'Music');
 
       await api.scanShares();
       expect(lastPath, 'api/v0/shares');
@@ -984,16 +984,16 @@ void main() {
 
     test('Phase 4 endpoints: telemetry leaderboard, pareto, directories, kpis', () async {
       // 1. Leaderboard
-      final leaderboard = await api.getTransferLeaderboard(direction: 'Télécharger');
+      final leaderboard = await api.getTransferLeaderboard(direction: 'Download');
       expect(lastPath, 'api/v0/telemetry/reports/transfers/leaderboard');
-      expect(lastQueryParams?['direction'], 'Télécharger');
+      expect(lastQueryParams?['direction'], 'Download');
       expect(lastQueryParams?['sortBy'], 'Count');
       expect(lastQueryParams?['sortOrder'], 'DESC');
       expect(leaderboard.first.username, 'peerLeader');
       expect(leaderboard.first.totalBytes, 5000000000);
 
       // 2. Pareto
-      final pareto = await api.getTransferExceptionsPareto(direction: 'Télécharger');
+      final pareto = await api.getTransferExceptionsPareto(direction: 'Download');
       expect(lastPath, 'api/v0/telemetry/reports/transfers/exceptions/pareto');
       expect(pareto.first.exception, 'Cancelled by remote user');
       expect(pareto.first.count, 14);

@@ -95,7 +95,7 @@ class JellyfinItemDetailScreen extends ConsumerWidget {
                           ?.refreshMetadata(itemId);
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Actualisation en file d'attente")),
+                          SnackBar(content: Text(S.t('refreshQueued'))),
                         );
                         ref.invalidate(
                           jellyfinItemDetailsProvider((instance, itemId)),
@@ -104,7 +104,7 @@ class JellyfinItemDetailScreen extends ConsumerWidget {
                     } catch (e) {
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Échec de l'actualisation : $e")),
+                          SnackBar(content: Text(S.t('failedToRefreshE1', [e]))),
                         );
                       }
                     }
@@ -122,18 +122,18 @@ class JellyfinItemDetailScreen extends ConsumerWidget {
                   }
                 },
                 itemBuilder: (BuildContext context) {
-                  return const <PopupMenuEntry<String>>[
+                  return <PopupMenuEntry<String>>[
                     PopupMenuItem<String>(
                       value: 'identify',
-                      child: Text('Identifier'),
+                      child: Text(S.t('identify')),
                     ),
                     PopupMenuItem<String>(
                       value: 'refresh',
-                      child: Text('Actualiser les métadonnées'),
+                      child: Text(S.t('refreshMetadata')),
                     ),
                     PopupMenuItem<String>(
                       value: 'backdrop',
-                      child: Text('Changer le fond'),
+                      child: Text(S.t('changeBackdrop')),
                     ),
                   ];
                 },
@@ -471,7 +471,7 @@ class _Header extends StatelessWidget {
                         BlendMode.srcIn,
                       ),
                     ),
-                    label: const Text('Lire'),
+                    label: Text(S.t('play')),
                   ),
                 ),
               ],
@@ -686,7 +686,7 @@ class _InfoSection extends StatelessWidget {
           if (item.seriesName != null && item.seriesName!.isNotEmpty)
             _InfoRow(
               icon: Icons.tv,
-              label: 'Séries',
+              label: S.t('series'),
               value: item.seriesName!,
             ),
           if (item.parentIndexNumber != null &&
@@ -695,7 +695,7 @@ class _InfoSection extends StatelessWidget {
               const SizedBox(height: Insets.sm),
             _InfoRow(
               icon: Icons.tag,
-              label: 'Épisode',
+              label: S.t('episode'),
               value:
                   'Season ${item.parentIndexNumber} Episode ${item.indexNumber}',
             ),

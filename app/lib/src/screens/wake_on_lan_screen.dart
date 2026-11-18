@@ -23,17 +23,17 @@ class _WakeOnLanScreenState extends ConsumerState<WakeOnLanScreen> {
     final List<WolDevice> devices = profile?.wolDevices ?? const <WolDevice>[];
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Wake-on-LAN')),
+      appBar: AppBar(title: Text(S.t('wakeOnLAN'))),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: profile == null ? null : _addDevice,
         icon: const Icon(Icons.add),
-        label: const Text('Ajouter un appareil'),
+        label: Text(S.t('addDevice')),
       ),
       body: devices.isEmpty
-          ? const EmptyView(
+          ? EmptyView(
               icon: Icons.bolt_outlined,
-              title: 'Aucun appareil',
-              message: 'Ajoutez un appareil à réveiller sur le réseau.',
+              title: S.t('noDevices'),
+              message: S.t('addADeviceToWakeItOverTheNetwork'),
             )
           : ListView(
               padding: Insets.page,
@@ -59,11 +59,11 @@ class _WakeOnLanScreenState extends ConsumerState<WakeOnLanScreen> {
         port: device.port,
       );
       messenger.showSnackBar(
-        SnackBar(content: Text('Paquet magique envoyé à ${device.name}')),
+        SnackBar(content: Text(S.t('magicPacketSentToDeviceName1', [device.name]))),
       );
     } catch (_) {
       messenger.showSnackBar(
-        const SnackBar(content: Text("Échec de l'envoi du paquet magique")),
+        SnackBar(content: Text(S.t('failedToSendMagicPacket'))),
       );
     }
   }
@@ -101,16 +101,16 @@ class _WakeOnLanScreenState extends ConsumerState<WakeOnLanScreen> {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: Text('Supprimer ${device.name} ?'),
-        content: const Text("Cela retire l'appareil du Wake-on-LAN."),
+        title: Text(S.t('deleteDeviceName1', [device.name])),
+        content: Text(S.t('thisRemovesTheDeviceFromWakeOnLAN')),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Supprimer'),
+            child: Text(S.t('delete')),
           ),
         ],
       ),
@@ -202,7 +202,7 @@ class _WolDeviceCard extends StatelessWidget {
               FilledButton.tonalIcon(
                 onPressed: onWake,
                 icon: const Icon(Icons.bolt, size: 18),
-                label: const Text('Réveiller'),
+                label: Text(S.t('wake')),
               ),
             ],
           ),
@@ -262,7 +262,7 @@ class _WolDeviceDialogState extends State<_WolDeviceDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(widget.initial == null ? 'Ajouter un appareil' : "Modifier l'appareil"),
+      title: Text(widget.initial == null ? S.t('addDevice') : S.t('editDevice')),
       content: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -273,8 +273,8 @@ class _WolDeviceDialogState extends State<_WolDeviceDialog> {
                 controller: _name,
                 autofocus: widget.initial == null,
                 textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  labelText: 'Nom',
+                decoration: InputDecoration(
+                  labelText: S.t('name'),
                   hintText: 'NAS',
                 ),
                 validator: (String? v) =>
@@ -284,8 +284,8 @@ class _WolDeviceDialogState extends State<_WolDeviceDialog> {
               TextFormField(
                 controller: _mac,
                 textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  labelText: 'Adresse MAC',
+                decoration: InputDecoration(
+                  labelText: S.t('macAddress'),
                   hintText: 'AA:BB:CC:DD:EE:FF',
                 ),
                 validator: (String? v) {
@@ -301,8 +301,8 @@ class _WolDeviceDialogState extends State<_WolDeviceDialog> {
               TextFormField(
                 controller: _broadcast,
                 textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  labelText: 'Adresse de diffusion',
+                decoration: InputDecoration(
+                  labelText: S.t('broadcastAddress'),
                 ),
                 validator: (String? v) =>
                     (v ?? '').trim().isEmpty ? 'Enter an address' : null,
@@ -312,7 +312,7 @@ class _WolDeviceDialogState extends State<_WolDeviceDialog> {
                 controller: _port,
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.done,
-                decoration: const InputDecoration(labelText: 'Port'),
+                decoration: InputDecoration(labelText: S.t('port')),
                 onFieldSubmitted: (String _) => _submit(),
                 validator: (String? v) {
                   final int? port = int.tryParse((v ?? '').trim());
@@ -329,11 +329,11 @@ class _WolDeviceDialogState extends State<_WolDeviceDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: _submit,
-          child: const Text('Enregistrer'),
+          child: Text(S.t('save')),
         ),
       ],
     );

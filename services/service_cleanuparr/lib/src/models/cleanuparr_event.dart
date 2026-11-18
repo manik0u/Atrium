@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 /// An audit or operational event recorded by Cleanuparr.
 class CleanuparrEvent {
   const CleanuparrEvent({
@@ -61,11 +62,11 @@ class CleanuparrEvent {
       timestamp: ts,
       eventType: json['eventType']?.toString() ??
           json['type']?.toString() ??
-          'Event',
+          S.t('event'),
       severity: json['severity']?.toString() ??
-          (json['level']?.toString() ?? 'Info'),
+          (json['level']?.toString() ?? S.t('info')),
       message: json['message']?.toString() ??
-          (json['description']?.toString() ?? 'Opération terminée'),
+          (json['description']?.toString() ?? S.t('operationCompleted')),
       downloadItemTitle: json['itemTitle']?.toString() ??
           json['downloadItemTitle']?.toString() ??
           json['title']?.toString() ??

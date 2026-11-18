@@ -40,7 +40,7 @@ class Aria2DownloadDetailScreen extends ConsumerWidget {
       final Aria2Api api = await ref.read(aria2ApiProvider(instance).future);
       await action(api);
     } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text("Échec de l'action : $e")));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('actionFailedE1', [e]))));
     } finally {
       if (context.mounted) {
         ref.invalidate(aria2DownloadProvider((instance, gid)));
@@ -99,7 +99,7 @@ class Aria2DownloadDetailScreen extends ConsumerWidget {
       context: context,
       builder: (BuildContext ctx) => StatefulBuilder(
         builder: (BuildContext ctx, StateSetter setState) => AlertDialog(
-          title: const Text('Ajouter un URI miroir'),
+          title: Text(S.t('addMirrorURI')),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -107,8 +107,8 @@ class Aria2DownloadDetailScreen extends ConsumerWidget {
                 DropdownButtonFormField<int>(
                   isExpanded: true,
                   initialValue: selectedIndex,
-                  decoration: const InputDecoration(
-                    labelText: 'Fichier cible',
+                  decoration: InputDecoration(
+                    labelText: S.t('targetFile'),
                     border: OutlineInputBorder(),
                   ),
                   items: <DropdownMenuItem<int>>[
@@ -140,11 +140,11 @@ class Aria2DownloadDetailScreen extends ConsumerWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(),
-              child: const Text('Annuler'),
+              child: Text(S.t('cancel')),
             ),
             FilledButton(
               onPressed: () => Navigator.of(ctx).pop(urlController.text.trim()),
-              child: const Text('Ajouter'),
+              child: Text(S.t('add')),
             ),
           ],
         ),
@@ -170,16 +170,16 @@ class Aria2DownloadDetailScreen extends ConsumerWidget {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Retirer le miroir'),
-        content: Text("Retirer l'URI miroir ?\n\n$uri"),
+        title: Text(S.t('removeMirror')),
+        content: Text(S.t('removeMirrorURIUri1', [uri])),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Retirer'),
+            child: Text(S.t('remove')),
           ),
         ],
       ),
@@ -204,7 +204,7 @@ class Aria2DownloadDetailScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(
           download.value?.displayName ??
-              (initialName.isEmpty ? 'Download' : initialName),
+              (initialName.isEmpty ? S.t('download') : initialName),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
@@ -214,9 +214,9 @@ class Aria2DownloadDetailScreen extends ConsumerWidget {
         onRetry: () => ref.invalidate(aria2DownloadProvider((instance, gid))),
         data: (Aria2Download? data) {
           if (data == null) {
-            return const EmptyView(
+            return EmptyView(
               icon: Icons.help_outline,
-              title: 'Le téléchargement a disparu',
+              title: S.t('downloadIsGone'),
               message:
                   'The daemon no longer knows this download. It was '
                   'removed and its result purged.',
@@ -322,54 +322,54 @@ class _DetailBody extends ConsumerWidget {
                 ),
                 const SizedBox(height: Insets.md),
                 _Row(
-                  label: 'Statut',
+                  label: S.t('status'),
                   value: aria2StatusLabel(
                     download.status,
                     seeder: download.isSeeding,
                   ),
                 ),
                 _Row(
-                  label: 'Taille',
+                  label: S.t('size'),
                   value:
                       '${aria2FmtBytes(download.completedLength)} of '
                       '${aria2FmtBytes(download.totalLength)}',
                 ),
                 if (download.downloadSpeed > 0)
                   _Row(
-                    label: 'Télécharger',
+                    label: S.t('download'),
                     value: aria2FmtRate(download.downloadSpeed),
                   ),
                 if (download.uploadSpeed > 0)
                   _Row(
-                    label: 'Téléverser',
+                    label: S.t('upload'),
                     value: aria2FmtRate(download.uploadSpeed),
                   ),
                 if (download.uploadLength > 0)
                   _Row(
-                    label: 'Envoyé',
+                    label: S.t('uploaded'),
                     value: aria2FmtBytes(download.uploadLength),
                   ),
                 if (download.torrentName.isNotEmpty ||
                     download.infoHash.isNotEmpty)
                   _Row(
-                    label: 'Ratio de seed',
+                    label: S.t('seedRatio'),
                     value: '${seedRatio.toStringAsFixed(2)}x',
                   ),
                 if (eta != null && !download.isStopped)
-                  _Row(label: 'Restant', value: aria2FormatEta(eta)),
+                  _Row(label: S.t('remaining'), value: aria2FormatEta(eta)),
                 if (download.connections > 0)
-                  _Row(label: 'Connexions', value: '${download.connections}'),
+                  _Row(label: S.t('connections'), value: '${download.connections}'),
                 if (download.numSeeders > 0)
-                  _Row(label: 'Seeders', value: '${download.numSeeders}'),
+                  _Row(label: S.t('seeders'), value: '${download.numSeeders}'),
                 if (download.dir.isNotEmpty)
-                  _Row(label: 'Dossier', value: download.dir),
+                  _Row(label: S.t('folder'), value: download.dir),
                 if (download.infoHash.isNotEmpty)
-                  _Row(label: 'InfoHash', value: download.infoHash),
+                  _Row(label: S.t('infohash'), value: download.infoHash),
                 _Row(
                   label: 'GID',
                   value: download.gid,
                   trailing: IconButton(
-                    tooltip: 'Copier le GID',
+                    tooltip: S.t('copyGID'),
                     icon: const Icon(Icons.copy, size: 18),
                     onPressed: () async {
                       await Clipboard.setData(
@@ -377,7 +377,7 @@ class _DetailBody extends ConsumerWidget {
                       );
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('GID copié')),
+                          SnackBar(content: Text(S.t('gidCopied'))),
                         );
                       }
                     },
@@ -406,20 +406,20 @@ class _DetailBody extends ConsumerWidget {
                 onPressed: () =>
                     onAction((Aria2Api api) => api.pause(download.gid)),
                 icon: const Icon(Icons.pause),
-                label: const Text('Pause'),
+                label: Text(S.t('pause')),
               ),
             if (download.canResume)
               FilledButton.tonalIcon(
                 onPressed: () =>
                     onAction((Aria2Api api) => api.unpause(download.gid)),
                 icon: const Icon(Icons.play_arrow),
-                label: const Text('Reprendre'),
+                label: Text(S.t('resume')),
               ),
             if (download.isLive)
               OutlinedButton.icon(
                 onPressed: onSpeedLimit,
                 icon: const Icon(Icons.speed),
-                label: const Text('Limite de vitesse'),
+                label: Text(S.t('speedLimit')),
               ),
             if (download.isLive)
               OutlinedButton.icon(
@@ -427,18 +427,18 @@ class _DetailBody extends ConsumerWidget {
                   final bool? confirmed = await showDialog<bool>(
                     context: context,
                     builder: (BuildContext ctx) => AlertDialog(
-                      title: const Text('Supprimer le téléchargement ?'),
+                      title: Text(S.t('removeDownload')),
                       content: Text(
                         'Are you sure you want to stop and remove "${download.displayName}"?',
                       ),
                       actions: <Widget>[
                         TextButton(
                           onPressed: () => Navigator.of(ctx).pop(false),
-                          child: const Text('Annuler'),
+                          child: Text(S.t('cancel')),
                         ),
                         FilledButton(
                           onPressed: () => Navigator.of(ctx).pop(true),
-                          child: const Text('Retirer'),
+                          child: Text(S.t('remove')),
                         ),
                       ],
                     ),
@@ -451,7 +451,7 @@ class _DetailBody extends ConsumerWidget {
                   }
                 },
                 icon: const Icon(Icons.delete_outline),
-                label: const Text('Retirer'),
+                label: Text(S.t('remove')),
               ),
             if (download.isStopped)
               OutlinedButton.icon(
@@ -459,7 +459,7 @@ class _DetailBody extends ConsumerWidget {
                   (Aria2Api api) => api.removeDownloadResult(download.gid),
                 ),
                 icon: const Icon(Icons.cleaning_services_outlined),
-                label: const Text('Effacer le résultat'),
+                label: Text(S.t('clearResult')),
               ),
             if (download.isWaiting)
               OutlinedButton.icon(
@@ -468,7 +468,7 @@ class _DetailBody extends ConsumerWidget {
                       api.changePosition(download.gid, 0, 'POS_SET'),
                 ),
                 icon: const Icon(Icons.keyboard_arrow_up),
-                label: const Text('En haut'),
+                label: Text(S.t('moveToTop')),
               ),
           ],
         ),
@@ -672,12 +672,12 @@ class _DetailBody extends ConsumerWidget {
           const SizedBox(height: Insets.lg),
           Row(
             children: <Widget>[
-              Text('Sources et miroirs', style: theme.textTheme.titleSmall),
+              Text(S.t('sourcesMirrors'), style: theme.textTheme.titleSmall),
               const Spacer(),
               if (download.isLive)
                 TextButton.icon(
                   icon: const Icon(Icons.add, size: 16),
-                  label: const Text('Ajouter un miroir'),
+                  label: Text(S.t('addMirror')),
                   onPressed: () => onAddMirror(download.files),
                 ),
             ],
@@ -707,7 +707,7 @@ class _DetailBody extends ConsumerWidget {
                       trailing: download.isLive
                           ? IconButton(
                               icon: const Icon(Icons.delete_outline, size: 20),
-                              tooltip: 'Retirer le miroir',
+                              tooltip: S.t('removeMirror'),
                               onPressed: () =>
                                   onRemoveMirror(file.index, uri.uri),
                             )

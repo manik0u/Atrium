@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -148,7 +149,7 @@ class OverviewServersList extends StatelessWidget {
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              server.online ? 'Online' : 'Offline',
+                              server.online ? S.t('online') : S.t('offline'),
                               style: theme.textTheme.labelSmall?.copyWith(
                                 color: server.online
                                     ? const Color(0xFF4CAF50)

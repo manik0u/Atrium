@@ -112,7 +112,7 @@ void main() {
     SlskdSearch(
       id: 'search-1',
       searchText: 'Daft Punk',
-      state: 'Terminé',
+      state: 'Completed',
       isComplete: true,
       fileCount: 7,
       responseCount: 2,
@@ -121,7 +121,7 @@ void main() {
     SlskdSearch(
       id: 'search-2',
       searchText: 'Radiohead',
-      state: 'Terminé',
+      state: 'Completed',
       isComplete: true,
       fileCount: 3,
       responseCount: 1,
@@ -258,7 +258,7 @@ void main() {
       expect(find.text('Homework (1997) [320k]'), findsOneWidget);
       expect(find.text('AudioPhile99'), findsOneWidget);
       expect(find.text('GrooveMaster'), findsOneWidget);
-      expect(find.text("Télécharger l'album"), findsNWidgets(2));
+      expect(find.text('Download Album'), findsNWidgets(2));
       expect(find.text('01 - One More Time.flac'), findsOneWidget);
 
       // 1. Capture Screenshot: Album Grouped View (Default)
@@ -284,20 +284,20 @@ void main() {
       await tester.tap(find.byType(FloatingActionButton));
       await tester.pumpAndSettle();
 
-      expect(find.text('Trier et filtrer les résultats'), findsOneWidget);
+      expect(find.text('Sort & Filter Results'), findsOneWidget);
       expect(find.text('Audio Format'), findsOneWidget);
-      expect(find.text('FLAC uniquement'), findsOneWidget);
-      expect(find.text('MP3 uniquement'), findsOneWidget);
-      expect(find.text('Emplacement libre uniquement (instantané)'), findsOneWidget);
-      expect(find.text('Vitesse la plus rapide'), findsOneWidget);
+      expect(find.text('FLAC Only'), findsOneWidget);
+      expect(find.text('MP3 Only'), findsOneWidget);
+      expect(find.text('Free Slot Only (Instant)'), findsOneWidget);
+      expect(find.text('Fastest Speed'), findsOneWidget);
 
       // Capture Screenshot: Modal Bottom Sheet
       await capture(tester, repaintKey, 'slskd_search_filter_sheet.png');
 
       // 4. Select FLAC Only filter and tap Done
-      await tester.tap(find.text('FLAC uniquement'));
+      await tester.tap(find.text('FLAC Only'));
       await tester.pump();
-      await tester.tap(find.text('Terminé'));
+      await tester.tap(find.text('Done'));
       await tester.pumpAndSettle();
 
       // Verify filtered state: Discovery is present, Homework (MP3) is filtered out
@@ -309,7 +309,7 @@ void main() {
       await capture(tester, repaintKey, 'slskd_search_filtered.png');
 
       // 5. Reset filters via active filters pill
-      await tester.tap(find.text('Réinitialiser'));
+      await tester.tap(find.text('Reset'));
       await tester.pumpAndSettle();
       expect(find.text('Homework (1997) [320k]'), findsOneWidget);
     });
@@ -441,7 +441,7 @@ void main() {
           .invalidate(slskdSearchResponsesProvider((testInstance, 'search-failed')));
       await tester.pump();
       expect(find.text('Search for "Daft Punk" failed'), findsOneWidget);
-      expect(find.text('Arrêter la recherche'), findsNothing);
+      expect(find.text('Stop Search'), findsNothing);
       await tester.pumpAndSettle();
     });
 
@@ -509,15 +509,15 @@ void main() {
       await tester.pumpAndSettle();
 
       // Show locked files, so the album holds one of each.
-      await tester.tap(find.byTooltip('Trier et filtrer les résultats'));
+      await tester.tap(find.byTooltip('Sort & Filter Results'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Masquer les fichiers verrouillés'));
+      await tester.tap(find.text('Hide Locked Files'));
       await tester.pump();
-      await tester.tap(find.text('Terminé'));
+      await tester.tap(find.text('Done'));
       await tester.pumpAndSettle();
       expect(find.text('02 - Aerodynamic.flac'), findsOneWidget);
 
-      await tester.tap(find.text("Télécharger l'album"));
+      await tester.tap(find.text('Download Album'));
       await tester.pumpAndSettle();
 
       expect(requested, <String>[r'Music\Daft Punk\Discovery\01 - One More Time.flac']);

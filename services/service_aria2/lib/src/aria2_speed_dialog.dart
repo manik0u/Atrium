@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ const List<int> _presetBytes = <int>[
 /// A speed limit in bytes as a human string.
 String aria2SpeedLimitLabel(int bytesPerSec) {
   if (bytesPerSec <= 0) {
-    return 'Unlimited';
+    return S.t('unlimited');
   }
   if (bytesPerSec % 1024 != 0) {
     return '$bytesPerSec B/s';
@@ -132,7 +133,7 @@ class _GlobalSpeedDialogContentState extends State<_GlobalSpeedDialogContent> {
   void _submit() {
     final int? bytes = parseAria2SpeedBytes(_custom.text);
     if (bytes == null) {
-      setState(() => _errorText = 'Vitesse invalide (ex. 512, 10M, 1500 B)');
+      setState(() => _errorText = S.t('invalidSpeedEG51210M1500B'));
       return;
     }
     Navigator.of(context).pop(bytes);
@@ -141,7 +142,7 @@ class _GlobalSpeedDialogContentState extends State<_GlobalSpeedDialogContent> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Limite de téléchargement'),
+      title: Text(S.t('downloadLimit')),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -159,9 +160,9 @@ class _GlobalSpeedDialogContentState extends State<_GlobalSpeedDialogContent> {
             TextField(
               controller: _custom,
               decoration: InputDecoration(
-                labelText: 'Limite personnalisée',
-                hintText: 'e.g. 512, 10M, 1500 B',
-                helperText: 'Les nombres sont en Ko/s par défaut ; 0 pour illimité',
+                labelText: S.t('customLimit'),
+                hintText: S.t('eG51210M1500B'),
+                helperText: S.t('numbersDefaultToKBS0ForUnlimited'),
                 errorText: _errorText,
                 border: const OutlineInputBorder(),
               ),
@@ -178,11 +179,11 @@ class _GlobalSpeedDialogContentState extends State<_GlobalSpeedDialogContent> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: _submit,
-          child: const Text('Définir'),
+          child: Text(S.t('set')),
         ),
       ],
     );
@@ -240,8 +241,8 @@ class _TaskSpeedDialogContentState extends State<_TaskSpeedDialogContent> {
     final int? ul = parseAria2SpeedBytes(_ulController.text);
     if (dl == null || ul == null) {
       setState(() {
-        _dlErrorText = dl == null ? 'Invalid speed (e.g. 512, 5M, 1500 B)' : null;
-        _ulErrorText = ul == null ? 'Invalid speed (e.g. 256, 2M, 1500 B)' : null;
+        _dlErrorText = dl == null ? S.t('invalidSpeedEG5125M1500B') : null;
+        _ulErrorText = ul == null ? S.t('invalidSpeedEG2562M1500B') : null;
       });
       return;
     }
@@ -251,16 +252,16 @@ class _TaskSpeedDialogContentState extends State<_TaskSpeedDialogContent> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Limites de vitesse des tâches'),
+      title: Text(S.t('taskSpeedLimits')),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TextField(
             controller: _dlController,
             decoration: InputDecoration(
-              labelText: 'Limite de téléchargement',
-              hintText: 'e.g. 512, 5M, 1500 B',
-              helperText: '0 ou vide pour illimité (Ko/s par défaut)',
+              labelText: S.t('downloadLimit'),
+              hintText: S.t('eG5125M1500B'),
+              helperText: S.t('k0OrEmptyForUnlimitedDefaultKBS'),
               errorText: _dlErrorText,
               border: const OutlineInputBorder(),
             ),
@@ -274,9 +275,9 @@ class _TaskSpeedDialogContentState extends State<_TaskSpeedDialogContent> {
           TextField(
             controller: _ulController,
             decoration: InputDecoration(
-              labelText: "Limite d'envoi",
-              hintText: 'e.g. 256, 2M, 1500 B',
-              helperText: '0 ou vide pour illimité (Ko/s par défaut)',
+              labelText: S.t('uploadLimit'),
+              hintText: S.t('eG2562M1500B'),
+              helperText: S.t('k0OrEmptyForUnlimitedDefaultKBS'),
               errorText: _ulErrorText,
               border: const OutlineInputBorder(),
             ),
@@ -291,11 +292,11 @@ class _TaskSpeedDialogContentState extends State<_TaskSpeedDialogContent> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         FilledButton(
           onPressed: _submit,
-          child: const Text('Enregistrer'),
+          child: Text(S.t('save')),
         ),
       ],
     );

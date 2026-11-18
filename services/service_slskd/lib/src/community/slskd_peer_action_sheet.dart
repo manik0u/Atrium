@@ -55,12 +55,12 @@ class SlskdPeerActionSheet extends ConsumerWidget {
     final bool isSupporter = userStatusAsync.value?.isPrivileged ?? false;
     final String? endpointStr = endpointAsync.value?.formatted;
     final String statusText = !userStatusAsync.hasValue
-        ? 'Checking status...'
+        ? S.t('checkingStatus')
         : (isOnline
             ? (endpointStr != null && endpointStr.isNotEmpty
                 ? 'Online • $endpointStr'
                 : 'Online on Soulseek')
-            : (isAway ? 'Away' : 'Offline'));
+            : (isAway ? 'Away' : S.t('offline')));
 
     return Padding(
       padding: const EdgeInsets.only(left: Insets.lg, right: Insets.lg, bottom: Insets.xl),
@@ -158,8 +158,8 @@ class SlskdPeerActionSheet extends ConsumerWidget {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             child: ListTile(
               leading: Icon(Icons.folder_shared_rounded, color: colorScheme.primary),
-              title: const Text("Parcourir les partages de l'utilisateur", style: TextStyle(fontWeight: FontWeight.w600)),
-              subtitle: const Text('Explorez les fichiers, albums et discographies'),
+              title: Text(S.t('browseUserShares'), style: TextStyle(fontWeight: FontWeight.w600)),
+              subtitle: Text(S.t('exploreFilesAlbumsAndDiscographies')),
               trailing: const Icon(Icons.chevron_right_rounded),
               onTap: () {
                 Navigator.of(context).pop();
@@ -178,8 +178,8 @@ class SlskdPeerActionSheet extends ConsumerWidget {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             child: ListTile(
               leading: Icon(Icons.chat_bubble_outline_rounded, color: colorScheme.tertiary),
-              title: const Text('Envoyer un message privé', style: TextStyle(fontWeight: FontWeight.w600)),
-              subtitle: const Text('Ouvrir une conversation privée individuelle'),
+              title: Text(S.t('sendDirectMessage'), style: TextStyle(fontWeight: FontWeight.w600)),
+              subtitle: Text(S.t('openAPrivate1On1ChatConversation')),
               trailing: const Icon(Icons.chevron_right_rounded),
               onTap: () {
                 Navigator.of(context).pop();
@@ -199,8 +199,8 @@ class SlskdPeerActionSheet extends ConsumerWidget {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             child: ListTile(
               leading: Icon(Icons.account_circle_outlined, color: colorScheme.secondary),
-              title: const Text("Voir le profil de l'utilisateur", style: TextStyle(fontWeight: FontWeight.w600)),
-              subtitle: const Text("Consultez la bio, l'avatar et les métriques d'emplacement d'envoi"),
+              title: Text(S.t('viewUserProfile'), style: TextStyle(fontWeight: FontWeight.w600)),
+              subtitle: Text(S.t('checkBioAvatarAndUploadSlotMetrics')),
               trailing: const Icon(Icons.chevron_right_rounded),
               onTap: () {
                 final parentContext = Navigator.of(context).context;

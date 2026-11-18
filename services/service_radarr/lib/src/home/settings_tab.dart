@@ -65,42 +65,42 @@ class _SettingsTabState extends ConsumerState<SettingsTab> {
           icon: const Icon(Icons.menu),
           onPressed: () => Scaffold.of(context).openDrawer(),
         ),
-        title: const Text('Paramètres Radarr'),
+        title: Text(S.t('radarrSettings')),
       ),
       body: ListView(
         controller: _scrollController,
         padding: const EdgeInsets.all(Insets.md),
         children: [
-          _buildCategoryHeader(context, 'Media Handling'),
+          _buildCategoryHeader(context, S.t('mediaHandling')),
           _buildSettingsCard(
             context: context,
-            title: 'Gestion des médias',
+            title: S.t('mediaManagement'),
             subtitle:
-                'Renommez les films, configurez les dossiers vides, copiez les liens et les détails de permissions.',
+                S.t('renameMoviesConfigureEmptyFoldersCopyLinksPermissionDetails'),
             icon: Icons.folder_open_outlined,
             screen: MediaManagementSettingsScreen(instance: instance),
           ),
           _buildSettingsCard(
             context: context,
-            title: 'Profils',
+            title: S.t('profiles'),
             subtitle:
-                'Gérez les profils de qualité, de délai et les formats personnalisés.',
+                S.t('manageQualityProfilesDelayProfilesAndCustomFormats'),
             icon: Icons.high_quality_outlined,
             screen: ProfilesSettingsScreen(instance: instance),
           ),
           _buildSettingsCard(
             context: context,
-            title: 'Définitions de qualité',
+            title: S.t('qualityDefinitions'),
             subtitle:
-                'Configurez les limites de taille min, max et préférée par type de qualité.',
+                S.t('configureMinimumMaximumAndPreferredSizeLimitsPerQualityType'),
             icon: Icons.aspect_ratio_outlined,
             screen: QualityDefinitionsScreen(instance: instance),
           ),
           const SizedBox(height: Insets.md),
-          _buildCategoryHeader(context, 'Network & Integration'),
+          _buildCategoryHeader(context, S.t('networkIntegration')),
           _buildSettingsCard(
             context: context,
-            title: 'Indexeurs et trackers',
+            title: S.t('indexersTrackers'),
             subtitle:
                 'RSS feeds, automatic search, indexers list, and import lists configurations.',
             icon: Icons.rss_feed_outlined,
@@ -108,15 +108,15 @@ class _SettingsTabState extends ConsumerState<SettingsTab> {
           ),
           _buildSettingsCard(
             context: context,
-            title: 'Clients de téléchargement',
+            title: S.t('downloadClients'),
             subtitle:
-                'Liste des clients, connexions, suivi des téléchargements et mappages de chemins.',
+                S.t('clientsListConnectionsDownloadTrackingAndPathOverrideMappings'),
             icon: Icons.download_for_offline_outlined,
             screen: DownloadClientsScreen(instance: instance),
           ),
           _buildSettingsCard(
             context: context,
-            title: 'Se connecter',
+            title: S.t('connect'),
             subtitle:
                 'Discord, Telegram, Email, Plex notifications and trigger events.',
             icon: Icons.connect_without_contact,
@@ -124,17 +124,17 @@ class _SettingsTabState extends ConsumerState<SettingsTab> {
           ),
           _buildSettingsCard(
             context: context,
-            title: 'Consommateurs de métadonnées',
+            title: S.t('metadataConsumers'),
             subtitle:
                 'Configure metadata files creation for Kodi, Emby, Roksbox, and WDTV.',
             icon: Icons.settings_applications_outlined,
             screen: MetadataSettingsScreen(instance: instance),
           ),
           const SizedBox(height: Insets.md),
-          _buildCategoryHeader(context, 'Application System'),
+          _buildCategoryHeader(context, S.t('applicationSystem')),
           _buildSettingsCard(
             context: context,
-            title: 'Général',
+            title: S.t('general'),
             subtitle:
                 'Set server listening port, SSL certifications, API Keys, and logs.',
             icon: Icons.dns_outlined,
@@ -142,25 +142,25 @@ class _SettingsTabState extends ConsumerState<SettingsTab> {
           ),
           _buildSettingsCard(
             context: context,
-            title: "Paramètres d'interface",
+            title: S.t('uiSettings'),
             subtitle:
-                'Format des dates, premier jour de la semaine et options de couleur.',
+                S.t('dateFormattingFirstDayOfWeekSelectionAndColorOptions'),
             icon: Icons.palette_outlined,
             screen: UiSettingsScreen(instance: instance),
           ),
           _buildSettingsCard(
             context: context,
-            title: 'Balises',
+            title: S.t('tags'),
             subtitle:
-                'Gérez les identifiants de labels pour les catégories, films et profils.',
+                S.t('manageLabelIdentifiersForCategoriesMoviesAndProfiles'),
             icon: Icons.label_outline,
             screen: TagsSettingsScreen(instance: instance),
           ),
           _buildSettingsCard(
             context: context,
-            title: 'Paramètres de connexion',
+            title: S.t('connectionSettings'),
             subtitle:
-                "Modifiez l'URL de connexion, la clé API et le label de cette instance Radarr dans Atrium.",
+                S.t('editConnectionURLAPIKeyAndLabelForThisRadarrInstanceInAtrium'),
             icon: Icons.key_outlined,
             onTap: () {
               context.pushNamed(
@@ -172,12 +172,12 @@ class _SettingsTabState extends ConsumerState<SettingsTab> {
             },
           ),
           const SizedBox(height: Insets.md),
-          _buildCategoryHeader(context, 'Diagnostics & Troubleshooting'),
+          _buildCategoryHeader(context, S.t('diagnosticsTroubleshooting')),
           _buildSettingsCard(
             context: context,
-            title: 'Analyser le titre',
+            title: S.t('parseTitle'),
             subtitle:
-                'Extrayez les métadonnées et vérifiez les correspondances de la base de films pour tout nom de release.',
+                S.t('extractMetadataAndCheckMatchingMovieDatabaseResultsForAnyReleaseName'),
             icon: Icons.troubleshoot_outlined,
             onTap: () {
               showDialog<void>(

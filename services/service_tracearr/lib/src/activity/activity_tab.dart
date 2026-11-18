@@ -63,7 +63,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.menu),
-          tooltip: 'Ouvrir le menu',
+          tooltip: S.t('openMenu'),
           onPressed: () => Scaffold.of(context).openDrawer(),
         ),
         title: Column(
@@ -78,7 +78,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab> {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              'Activity',
+              S.t('activity'),
               style: theme.textTheme.bodySmall?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
@@ -87,24 +87,24 @@ class _ActivityTabState extends ConsumerState<ActivityTab> {
         ),
       ),
       body: EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing playback telemetry...',
-          processingText: 'Refreshing playback telemetry...',
-          processedText: 'Updated',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshingPlaybackTelemetry'),
+          processingText: S.t('refreshingPlaybackTelemetry'),
+          processedText: S.t('updated'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
-        footer: const ClassicFooter(
+        footer: ClassicFooter(
           infiniteOffset: 200.0,
-          dragText: 'Pull to load more',
-          armedText: 'Release to load more',
-          readyText: 'Loading more history...',
-          processingText: 'Loading more history...',
-          processedText: 'Loaded',
+          dragText: S.t('pullToLoadMore'),
+          armedText: S.t('releaseToLoadMore'),
+          readyText: S.t('loadingMoreHistory'),
+          processingText: S.t('loadingMoreHistory'),
+          processedText: S.t('loaded'),
           failedText: 'Failed to load',
-          noMoreText: "Tout l'historique est chargé",
+          noMoreText: S.t('allHistoryLoaded'),
         ),
         onRefresh: _refreshAll,
         onLoad: () async {

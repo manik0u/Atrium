@@ -42,18 +42,18 @@ class _SystemTabState extends ConsumerState<SystemTab>
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Redémarrer Lidarr ?'),
+        title: Text(S.t('restartLidarr')),
         content: const Text(
           'This will restart the Lidarr service. It will be temporarily unavailable.',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Redémarrer'),
+            child: Text(S.t('restart')),
           ),
         ],
       ),
@@ -65,13 +65,13 @@ class _SystemTabState extends ConsumerState<SystemTab>
         await api.system.postSystemRestart();
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Signal de redémarrage envoyé !')),
+            SnackBar(content: Text(S.t('restartSignalSent'))),
           );
         }
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Échec du redémarrage : $e')),
+            SnackBar(content: Text(S.t('failedToRestartE1', [e]))),
           );
         }
       }
@@ -82,21 +82,21 @@ class _SystemTabState extends ConsumerState<SystemTab>
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Arrêter Lidarr ?'),
+        title: Text(S.t('shutdownLidarr')),
         content: const Text(
           'This will shut down the Lidarr service. You will need to restart it manually.',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
               backgroundColor: Theme.of(ctx).colorScheme.error,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Arrêter'),
+            child: Text(S.t('shutdown')),
           ),
         ],
       ),
@@ -108,13 +108,13 @@ class _SystemTabState extends ConsumerState<SystemTab>
         await api.system.postSystemShutdown();
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Signal d'arrêt envoyé !")),
+            SnackBar(content: Text(S.t('shutdownSignalSent'))),
           );
         }
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Échec de l'arrêt : $e")),
+            SnackBar(content: Text(S.t('failedToShutdownE1', [e]))),
           );
         }
       }
@@ -129,7 +129,7 @@ class _SystemTabState extends ConsumerState<SystemTab>
           icon: const Icon(Icons.menu),
           onPressed: () => Scaffold.of(context).openDrawer(),
         ),
-        title: const Text('Système'),
+        title: Text(S.t('system')),
         actions: <Widget>[
           PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert),
@@ -141,20 +141,20 @@ class _SystemTabState extends ConsumerState<SystemTab>
               }
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-              const PopupMenuItem<String>(
+              PopupMenuItem<String>(
                 value: 'restart',
                 child: ListTile(
                   leading: Icon(Icons.restart_alt),
-                  title: Text('Redémarrer'),
+                  title: Text(S.t('restart')),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
-              const PopupMenuItem<String>(
+              PopupMenuItem<String>(
                 value: 'shutdown',
                 child: ListTile(
                   leading: Icon(Icons.power_settings_new),
-                  title: Text('Arrêter'),
+                  title: Text(S.t('shutdown')),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
@@ -166,14 +166,14 @@ class _SystemTabState extends ConsumerState<SystemTab>
           controller: _subTabController,
           isScrollable: true,
           tabAlignment: TabAlignment.start,
-          tabs: const [
-            Tab(text: 'Statut'),
-            Tab(text: 'Espace disque'),
-            Tab(text: 'Tâches'),
-            Tab(text: 'Sauvegardes'),
-            Tab(text: 'Mises à jour'),
-            Tab(text: 'Journaux'),
-            Tab(text: 'Fichiers journaux'),
+          tabs: [
+            Tab(text: S.t('status')),
+            Tab(text: S.t('diskSpace')),
+            Tab(text: S.t('tasks')),
+            Tab(text: S.t('backups')),
+            Tab(text: S.t('updates')),
+            Tab(text: S.t('logs')),
+            Tab(text: S.t('logFiles')),
           ],
         ),
       ),

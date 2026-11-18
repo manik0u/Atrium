@@ -36,8 +36,8 @@ class _SlskdSharesViewState extends ConsumerState<SlskdSharesView> {
           await ref.read(slskdApiProvider(widget.instance).future);
       await api.scanShares();
       messenger.showSnackBar(
-        const SnackBar(
-          content: Text('Analyse des partages locaux…'),
+        SnackBar(
+          content: Text(S.t('scanningLocalShares')),
           duration: Duration(seconds: 2),
         ),
       );
@@ -65,15 +65,15 @@ class _SlskdSharesViewState extends ConsumerState<SlskdSharesView> {
           await ref.read(slskdApiProvider(widget.instance).future);
       await api.cancelShareScan();
       messenger.showSnackBar(
-        const SnackBar(
-          content: Text('Analyse des partages annulée'),
+        SnackBar(
+          content: Text(S.t('shareScanCancelled')),
           duration: Duration(seconds: 2),
         ),
       );
     } catch (e) {
       final msg = (e is DioException && e.response?.statusCode == 403)
           ? 'Cancelling scan requires an API key with Administrator or ReadWrite role'
-          : 'Failed to cancel scan: $e';
+          : S.t('failedToCancelScanE1', [e]);
       messenger.showSnackBar(
         SnackBar(content: Text(msg)),
       );
@@ -197,7 +197,7 @@ class _SlskdSharesViewState extends ConsumerState<SlskdSharesView> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
-                          'Ready',
+                          S.t('ready'),
                           style: textTheme.labelSmall?.copyWith(
                             color: colorScheme.onSurfaceVariant,
                             fontWeight: FontWeight.bold,
@@ -255,7 +255,7 @@ class _SlskdSharesViewState extends ConsumerState<SlskdSharesView> {
                       ),
                       onPressed: _isActionInProgress ? null : _handleCancelScan,
                       icon: const Icon(Icons.close_rounded, size: 18),
-                      label: const Text("Annuler l'analyse"),
+                      label: Text(S.t('cancelScan')),
                     ),
                   ),
                 ] else ...<Widget>[
@@ -269,7 +269,7 @@ class _SlskdSharesViewState extends ConsumerState<SlskdSharesView> {
                           ),
                           onPressed: _isActionInProgress ? null : _handleScanShares,
                           icon: const Icon(Icons.refresh_rounded, size: 18),
-                          label: const Text("Relancer l'analyse des partages"),
+                          label: Text(S.t('rescanShares')),
                         ),
                       ),
                       const SizedBox(width: Insets.sm),
@@ -282,11 +282,11 @@ class _SlskdSharesViewState extends ConsumerState<SlskdSharesView> {
                             SlskdShareContentsSheet.show(
                               context,
                               instance: widget.instance,
-                              title: 'Toute la bibliothèque partagée',
+                              title: S.t('allSharedLibrary'),
                             );
                           },
                           icon: const Icon(Icons.folder_open_rounded, size: 18),
-                          label: const Text('Tout parcourir'),
+                          label: Text(S.t('browseAll')),
                         ),
                       ),
                     ],
@@ -345,7 +345,7 @@ class _SlskdSharesViewState extends ConsumerState<SlskdSharesView> {
                         ),
                         const SizedBox(height: Insets.sm),
                         Text(
-                          'Aucun dossier partagé configuré',
+                          S.t('noSharedFoldersConfigured'),
                           style: textTheme.titleSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),

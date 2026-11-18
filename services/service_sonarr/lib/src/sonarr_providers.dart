@@ -610,7 +610,7 @@ final sonarrManualImportPathProvider =
 
 /// Selected import mode for Sonarr Manual Import ('Move' or 'Copy').
 final sonarrManualImportModeProvider =
-    StateProvider.family<String, Instance>((ref, instance) => 'Déplacer');
+    StateProvider.family<String, Instance>((ref, instance) => S.t('move'));
 
 /// Filter existing files flag for Sonarr Manual Import.
 final sonarrManualImportFilterProvider =

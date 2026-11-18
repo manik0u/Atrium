@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:core_models/core_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -53,8 +54,8 @@ Future<void> launchPlexDeepLink(BuildContext context, {String? webUrl}) async {
   }
   if (context.mounted) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Impossible d'ouvrir l'application Plex."),
+      SnackBar(
+        content: Text(S.t('couldNotOpenThePlexApp')),
         behavior: SnackBarBehavior.floating,
       ),
     );

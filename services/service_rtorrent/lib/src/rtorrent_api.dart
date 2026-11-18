@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:core_models/core_models.dart';
 import 'package:core_networking/core_networking.dart';
 import 'package:dio/dio.dart';
 
@@ -178,13 +179,13 @@ class RtorrentApi {
       bytes = Uint8List.fromList(resp.data ?? const <int>[]);
     } on DioException catch (e) {
       throw NetworkBadResponseException(
-        'Impossible de télécharger ce .torrent (${e.message ?? e.type.name}).',
+        S.t('couldNotDownloadThatTorrentEMessageETypeName1', [e.message ?? e.type.name]),
         status: e.response?.statusCode ?? 0,
       );
     }
     if (bytes.isEmpty) {
-      throw const NetworkBadResponseException(
-        "Cette URL n'a rien renvoyé à ajouter.",
+      throw NetworkBadResponseException(
+        S.t('thatURLReturnedNothingToAdd'),
         status: 0,
       );
     }
@@ -237,8 +238,8 @@ class RtorrentApi {
       if (status == 401 || status == 403) {
         throw NetworkAuthException(
           'rTorrent rejected the credentials (HTTP $status). Its XML-RPC has '
-          'no login of its own, so this comes from the proxy in front of it: '
-          "vérifiez le nom d'utilisateur et le mot de passe, ou laissez les deux vides si ce n'est pas "
+          'no login of its own, so this comes from the proxy in front of it: ' +
+          S.t('checkTheUsernameAndPasswordOrLeaveBothEmptyIfItIsNot') +
           'protected.',
         );
       }
@@ -251,10 +252,10 @@ class RtorrentApi {
 
       return XmlRpc.parseResponse(resp.data ?? '');
     } on XmlRpcFault catch (e) {
-      throw NetworkServerException('rTorrent : ${e.message}', status: 200);
+      throw NetworkServerException(S.t('rtorrentEMessage1', [e.message]), status: 200);
     } on FormatException catch (e) {
       throw NetworkBadResponseException(
-        "rTorrent n'a pas renvoyé de XML-RPC (${e.message}). Pointez l'URL vers le "
+        S.t('rtorrentDidNotReturnXMLRPCEMessagePointTheURLAtThe1', [e.message]) +
         'SCGI/XML-RPC endpoint - often port 8000, or /RPC2 when ruTorrent is '
         'in front - rather than at the web UI.',
         status: 200,

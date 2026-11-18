@@ -62,7 +62,7 @@ class _LidarrRetagDialogState extends ConsumerState<LidarrRetagDialog> {
   bool _retagging = false;
 
   String _extractFileName(String? path) {
-    if (path == null || path.isEmpty) return 'Unknown File';
+    if (path == null || path.isEmpty) return S.t('unknownFile');
     return path.split(RegExp(r'[\\/]')).last;
   }
 
@@ -94,7 +94,7 @@ class _LidarrRetagDialogState extends ConsumerState<LidarrRetagDialog> {
       );
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? "Échec de l'exécution du re-tag");
+        throw Exception(resp.error?.message ?? S.t('failedToExecuteRetag'));
       }
 
       if (!mounted) return;
@@ -139,7 +139,7 @@ class _LidarrRetagDialogState extends ConsumerState<LidarrRetagDialog> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Échec du re-tag : $e'),
+            content: Text(S.t('retagFailedE1', [e])),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -218,7 +218,7 @@ class _LidarrRetagDialogState extends ConsumerState<LidarrRetagDialog> {
                     );
                   },
                   icon: const Icon(Icons.refresh),
-                  label: const Text('Réessayer'),
+                  label: Text(S.t('retry')),
                 ),
               ],
             ),
@@ -249,7 +249,7 @@ class _LidarrRetagDialogState extends ConsumerState<LidarrRetagDialog> {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        'Toutes les balises sont à jour',
+                        S.t('allTagsAreUpToDate'),
                         style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -257,7 +257,7 @@ class _LidarrRetagDialogState extends ConsumerState<LidarrRetagDialog> {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        "Aucun fichier audio n'a besoin de modification de balises.",
+                        S.t('noAudioFilesNeedTagModifications'),
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: cs.onSurfaceVariant,
                         ),
@@ -332,7 +332,7 @@ class _LidarrRetagDialogState extends ConsumerState<LidarrRetagDialog> {
                       final String trackNumbers = item.trackNumbers != null &&
                               item.trackNumbers!.isNotEmpty
                           ? 'Track ${item.trackNumbers!.join(', ')}'
-                          : 'Track';
+                          : S.t('track');
                       final List<TagDifference> changes =
                           item.changes ?? <TagDifference>[];
 
@@ -413,9 +413,9 @@ class _LidarrRetagDialogState extends ConsumerState<LidarrRetagDialog> {
                                             Flexible(
                                               child: Text(
                                                 change.oldValue?.isEmpty == true
-                                                    ? '<vide>'
+                                                    ? S.t('empty_2')
                                                     : change.oldValue ??
-                                                        '<vide>',
+                                                        S.t('empty_2'),
                                                 style: theme.textTheme.bodySmall
                                                     ?.copyWith(
                                                   color: cs.error,
@@ -439,9 +439,9 @@ class _LidarrRetagDialogState extends ConsumerState<LidarrRetagDialog> {
                                             Flexible(
                                               child: Text(
                                                 change.newValue?.isEmpty == true
-                                                    ? '<vide>'
+                                                    ? S.t('empty_2')
                                                     : change.newValue ??
-                                                        '<vide>',
+                                                        S.t('empty_2'),
                                                 style: theme.textTheme.bodySmall
                                                     ?.copyWith(
                                                   color: cs.tertiary,
@@ -471,7 +471,7 @@ class _LidarrRetagDialogState extends ConsumerState<LidarrRetagDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: _retagging ? null : () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(S.t('cancel')),
         ),
         previewAsync.maybeWhen(
           data: (List<RetagTrackResource> files) {

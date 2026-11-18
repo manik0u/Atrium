@@ -34,7 +34,7 @@ class BazarrMovieDetailScreen extends ConsumerWidget {
         title: Text(title, overflow: TextOverflow.ellipsis),
         actions: <Widget>[
           IconButton(
-            tooltip: 'Rechercher des sous-titres',
+            tooltip: S.t('searchSubtitles'),
             icon: const Icon(Icons.subtitles_outlined),
             onPressed: () => Navigator.of(context, rootNavigator: true).push(
               MaterialPageRoute<void>(
@@ -62,10 +62,10 @@ class BazarrMovieDetailScreen extends ConsumerWidget {
             }
           }
           if (movie == null) {
-            return const EmptyView(
+            return EmptyView(
               icon: Icons.movie_outlined,
-              title: 'Film introuvable',
-              message: 'Il a peut-être été retiré de Bazarr.',
+              title: S.t('movieNotFound'),
+              message: S.t('itMayHaveBeenRemovedFromBazarr'),
             );
           }
           final BazarrMovie m = movie;
@@ -75,7 +75,7 @@ class BazarrMovieDetailScreen extends ConsumerWidget {
               _HeaderCard(movie: m),
               const SizedBox(height: Insets.md),
               _SectionCard(
-                title: 'Sous-titres',
+                title: S.t('subtitles'),
                 child: m.subtitles.isEmpty
                     ? const _MutedLine('None downloaded')
                     : BazarrSubtitleChips(
@@ -86,7 +86,7 @@ class BazarrMovieDetailScreen extends ConsumerWidget {
               ),
               const SizedBox(height: Insets.md),
               _SectionCard(
-                title: 'Manquant',
+                title: S.t('missing'),
                 child: m.missingSubtitles.isEmpty
                     ? const _MutedLine('Nothing missing')
                     : BazarrSubtitleChips(missing: m.missingSubtitles),
@@ -107,9 +107,9 @@ class BazarrMovieDetailScreen extends ConsumerWidget {
     final ScaffoldMessengerState messenger = ScaffoldMessenger.of(context);
     if (!(s.path?.isNotEmpty ?? false)) {
       messenger.showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text(
-            'Ce sous-titre est intégré à la vidéo et ne peut pas être supprimé ici.',
+            S.t('thisSubtitleIsEmbeddedInTheVideoAndCannotBeRemovedHere'),
           ),
         ),
       );
@@ -118,15 +118,15 @@ class BazarrMovieDetailScreen extends ConsumerWidget {
     final bool? ok = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Supprimer le sous-titre ?'),
+        title: Text(S.t('deleteSubtitle')),
         content: Text(
-          'Remove the ${s.name.isNotEmpty ? s.name : s.code2.toUpperCase()} '
-          'sous-titre pour ce film ?',
+          'Remove the ${s.name.isNotEmpty ? s.name : s.code2.toUpperCase()} ' +
+          S.t('subtitleForThisMovie'),
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Annuler'),
+            child: Text(S.t('cancel')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -134,7 +134,7 @@ class BazarrMovieDetailScreen extends ConsumerWidget {
               foregroundColor: Theme.of(ctx).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Supprimer'),
+            child: Text(S.t('delete')),
           ),
         ],
       ),
@@ -148,10 +148,10 @@ class BazarrMovieDetailScreen extends ConsumerWidget {
       ref.invalidate(bazarrMoviesProvider(instance));
       ref.invalidate(bazarrWantedProvider(instance));
       ref.invalidate(bazarrBadgesProvider(instance));
-      messenger.showSnackBar(const SnackBar(content: Text('Sous-titre supprimé')));
+      messenger.showSnackBar(SnackBar(content: Text(S.t('subtitleDeleted'))));
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Échec de la suppression : ${_err(e)}')),
+        SnackBar(content: Text(S.t('deleteFailedErrE1', [_err(e)]))),
       );
     }
   }
@@ -216,18 +216,18 @@ class _HeaderCard extends StatelessWidget {
                       icon: movie.monitored
                           ? Icons.bookmark
                           : Icons.bookmark_border,
-                      label: movie.monitored ? 'Surveillé' : 'Non surveillé',
+                      label: movie.monitored ? S.t('monitored') : S.t('unmonitored'),
                       color: movie.monitored ? cs.primary : cs.outline,
                     ),
                     _MetaPill(
                       icon: Icons.subtitles_outlined,
-                      label: '$present sous-titres',
+                      label: S.t('presentSubs1', [present]),
                       color: cs.tertiary,
                     ),
                     if (missing > 0)
                       _MetaPill(
                         icon: Icons.report_outlined,
-                        label: '$missing manquants',
+                        label: S.t('missingMissing1', [missing]),
                         color: cs.error,
                       ),
                   ],

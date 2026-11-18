@@ -71,7 +71,7 @@ class EmbySearchDelegate extends SearchDelegate<void> {
   @override
   Widget buildSuggestions(BuildContext context) {
     if (query.trim().isEmpty) {
-      return const Center(child: Text('Rechercher un film ou une série.'));
+      return Center(child: Text(S.t('searchForMoviesOrShows')));
     }
     return _SearchResults(instance: instance, query: query);
   }
@@ -92,7 +92,7 @@ class _SearchResults extends ConsumerWidget {
     }
 
     if (query.trim().isEmpty) {
-      return const Center(child: Text('Rechercher un film ou une série.'));
+      return Center(child: Text(S.t('searchForMoviesOrShows')));
     }
 
     return FutureBuilder<List<EmbyItem>>(
@@ -102,15 +102,15 @@ class _SearchResults extends ConsumerWidget {
           return const Center(child: ExpressiveProgressIndicator());
         }
         if (snapshot.hasError) {
-          return Center(child: Text('Erreur : ${snapshot.error}'));
+          return Center(child: Text(S.t('errorSnapshotError1', [snapshot.error])));
         }
 
         final List<EmbyItem> list = snapshot.data ?? <EmbyItem>[];
         if (list.isEmpty) {
-          return const EmptyView(
+          return EmptyView(
             icon: Icons.search_off,
-            title: 'Aucun résultat',
-            message: 'Aucun élément ne correspond à votre recherche.',
+            title: S.t('noResults'),
+            message: S.t('noItemsFoundMatchingYourSearch'),
           );
         }
 
@@ -162,7 +162,7 @@ class _SearchResults extends ConsumerWidget {
           albumId: item.id,
           albumName: item.name,
           albumArtist:
-              item.artists.isNotEmpty ? item.artists.first : 'Unknown Artist',
+              item.artists.isNotEmpty ? item.artists.first : S.t('unknownArtist'),
           albumOverview: item.overview,
           albumGenres: item.genres,
           albumImageUrl: client.imageUrl(item),

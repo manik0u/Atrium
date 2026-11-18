@@ -49,7 +49,7 @@ void main() {
       tester.widget<NavigationBar>(find.byType(NavigationBar)).selectedIndex;
 
   Future<void> openLog(WidgetTester tester) async {
-    await tester.tap(destination('Journal des requêtes'));
+    await tester.tap(destination('Query log'));
     await tester.pump();
     await tester.pump();
   }
@@ -61,36 +61,36 @@ void main() {
   }
 
   final Finder addClient =
-      find.widgetWithText(FloatingActionButton, 'Ajouter un client');
+      find.widgetWithText(FloatingActionButton, 'Add client');
 
   testWidgets('opens on Home, with Home, Query log, Filters, Clients and '
       'Settings in the bar, in that order', (WidgetTester tester) async {
     await pumpShell(tester);
 
-    expect(destination('Accueil'), findsOneWidget);
-    expect(destination('Journal des requêtes'), findsOneWidget);
-    expect(destination('Filtres'), findsOneWidget);
+    expect(destination('Home'), findsOneWidget);
+    expect(destination('Query log'), findsOneWidget);
+    expect(destination('Filters'), findsOneWidget);
     expect(destination('Clients'), findsOneWidget);
-    expect(destination('Paramètres'), findsOneWidget);
+    expect(destination('Settings'), findsOneWidget);
     expect(
-      tester.getCenter(destination('Filtres')).dx,
+      tester.getCenter(destination('Filters')).dx,
       lessThan(tester.getCenter(destination('Clients')).dx),
     );
     expect(
       tester.getCenter(destination('Clients')).dx,
-      lessThan(tester.getCenter(destination('Paramètres')).dx),
+      lessThan(tester.getCenter(destination('Settings')).dx),
     );
     expect(
-      tester.getCenter(destination('Journal des requêtes')).dx,
-      lessThan(tester.getCenter(destination('Filtres')).dx),
+      tester.getCenter(destination('Query log')).dx,
+      lessThan(tester.getCenter(destination('Filters')).dx),
     );
     expect(selected(tester), 0);
-    expect(find.text('La protection est activée'), findsOneWidget);
+    expect(find.text('Protection is on'), findsOneWidget);
   });
 
   group('the filters', () {
     Future<void> openFilters(WidgetTester tester) async {
-      await tester.tap(destination('Filtres'));
+      await tester.tap(destination('Filters'));
       await tester.pump();
       await tester.pump();
     }
@@ -104,7 +104,7 @@ void main() {
       await openFilters(tester);
 
       expect(selected(tester), 2);
-      expect(find.text('Listes de blocage'), findsOneWidget);
+      expect(find.text('Blocklists'), findsOneWidget);
       expect(pumped.rewriteReads, 1);
       expect(pumped.globalServicesReads, 1);
     });
@@ -126,7 +126,7 @@ void main() {
       await openFilters(tester);
 
       expect(addClient, findsNothing);
-      expect(find.byTooltip('Plus'), findsNothing);
+      expect(find.byTooltip('More'), findsNothing);
     });
   });
 
@@ -135,16 +135,16 @@ void main() {
         (WidgetTester tester) async {
       final Pumped pumped = await pumpShell(tester);
 
-      await tester.tap(destination('Paramètres'));
+      await tester.tap(destination('Settings'));
       await tester.pump();
       await tester.pump();
 
       expect(selected(tester), 4);
-      expect(find.text('Général'), findsOneWidget);
-      expect(find.text('Statistiques'), findsOneWidget);
+      expect(find.text('General'), findsOneWidget);
+      expect(find.text('Statistics'), findsOneWidget);
       expect(pumped.settingsReads, 0);
       expect(addClient, findsNothing);
-      expect(find.byTooltip('Plus'), findsNothing);
+      expect(find.byTooltip('More'), findsNothing);
     });
   });
 
@@ -168,7 +168,7 @@ void main() {
       final Pumped pumped = await pumpShell(tester);
       await openClients(tester);
 
-      await tester.tap(destination('Accueil'));
+      await tester.tap(destination('Home'));
       await tester.pump();
       await openClients(tester);
 
@@ -201,7 +201,7 @@ void main() {
       await tester.tap(addClient);
       await tester.pumpAndSettle();
 
-      expect(find.text('Nouveau client'), findsOneWidget);
+      expect(find.text('New client'), findsOneWidget);
       expect(
         tester
             .widget<AdguardHomeClientScreen>(
@@ -232,7 +232,7 @@ void main() {
       await tester.pump();
 
       expect(selected(tester), 0);
-      expect(find.text('La protection est activée'), findsOneWidget);
+      expect(find.text('Protection is on'), findsOneWidget);
     });
 
     testWidgets('have no menu for the query log over them',
@@ -240,7 +240,7 @@ void main() {
       await pumpShell(tester);
       await openClients(tester);
 
-      expect(find.byTooltip('Plus'), findsNothing);
+      expect(find.byTooltip('More'), findsNothing);
     });
   });
 
@@ -262,7 +262,7 @@ void main() {
     await pumpShell(tester);
     await openLog(tester);
 
-    await tester.tap(destination('Accueil'));
+    await tester.tap(destination('Home'));
     await tester.pump();
 
     expect(selected(tester), 0);
@@ -281,18 +281,18 @@ void main() {
     await tester.pump();
 
     expect(selected(tester), 0);
-    expect(find.text('La protection est activée'), findsOneWidget);
+    expect(find.text('Protection is on'), findsOneWidget);
   });
 
   group('clearing the log', () {
     testWidgets('is offered on the Query log tab only',
         (WidgetTester tester) async {
       await pumpShell(tester);
-      expect(find.byTooltip('Plus'), findsNothing);
+      expect(find.byTooltip('More'), findsNothing);
 
       await openLog(tester);
 
-      expect(find.byTooltip('Plus'), findsOneWidget);
+      expect(find.byTooltip('More'), findsOneWidget);
     });
 
     testWidgets('asks first, and Cancel clears nothing',
@@ -300,13 +300,13 @@ void main() {
       final Pumped pumped = await pumpShell(tester);
       await openLog(tester);
 
-      await tester.tap(find.byTooltip('Plus'));
+      await tester.tap(find.byTooltip('More'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Effacer le journal des requêtes'));
+      await tester.tap(find.text('Clear query log'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Effacer le journal des requêtes ?'), findsOneWidget);
-      await tester.tap(find.text('Annuler'));
+      expect(find.text('Clear the query log?'), findsOneWidget);
+      await tester.tap(find.text('Cancel'));
       await tester.pumpAndSettle();
 
       expect(pumped.actions.calls, isEmpty);
@@ -318,11 +318,11 @@ void main() {
       final Pumped pumped = await pumpShell(tester);
       await openLog(tester);
 
-      await tester.tap(find.byTooltip('Plus'));
+      await tester.tap(find.byTooltip('More'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Effacer le journal des requêtes'));
+      await tester.tap(find.text('Clear query log'));
       await tester.pumpAndSettle();
-      await tester.tap(find.widgetWithText(FilledButton, 'Effacer'));
+      await tester.tap(find.widgetWithText(FilledButton, 'Clear'));
       await tester.pumpAndSettle();
 
       expect(pumped.actions.calls, <String>['clear log']);
@@ -336,11 +336,11 @@ void main() {
       await openLog(tester);
       pumped.actions.writeFailure = const AdguardHomeRequestRefused('not now');
 
-      await tester.tap(find.byTooltip('Plus'));
+      await tester.tap(find.byTooltip('More'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Effacer le journal des requêtes'));
+      await tester.tap(find.text('Clear query log'));
       await tester.pumpAndSettle();
-      await tester.tap(find.widgetWithText(FilledButton, 'Effacer'));
+      await tester.tap(find.widgetWithText(FilledButton, 'Clear'));
       await tester.pumpAndSettle();
 
       expect(find.text('not now'), findsOneWidget);

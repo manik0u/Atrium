@@ -1,3 +1,4 @@
+import 'package:core_models/core_models.dart';
 import 'package:intl/intl.dart';
 
 /// Helper utilities for formatting bytes, durations and dates in Tracearr.
@@ -48,7 +49,7 @@ abstract class TracearrFormatters {
     if (date == null) return '';
     final now = DateTime.now();
     final diff = now.difference(date.toLocal());
-    if (diff.inSeconds < 60) return 'Just now';
+    if (diff.inSeconds < 60) return S.t('justNow');
     if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
     if (diff.inHours < 24) return '${diff.inHours}h ago';
     if (diff.inDays == 1) return 'Yesterday';

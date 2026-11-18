@@ -94,7 +94,7 @@ class _AdguardHomeCustomRulesScreenState
       setState(() => _busy = false);
       final bool again = await showAdguardHomeFailure(
         context,
-        title: 'Non enregistré',
+        title: S.t('notSaved'),
         error: error,
       );
       if (again && mounted) {
@@ -116,7 +116,7 @@ class _AdguardHomeCustomRulesScreenState
     final bool? overwrite = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Règles modifiées ailleurs'),
+        title: Text(S.t('rulesChangedElsewhere')),
         content: const Text(
           '${AdguardHomeRulesChanged.message} Saving yours replaces those '
           'changes. Loading theirs replaces what you typed here.',
@@ -124,11 +124,11 @@ class _AdguardHomeCustomRulesScreenState
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Charger les leurs'),
+            child: Text(S.t('loadTheirs')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Écraser'),
+            child: Text(S.t('overwrite')),
           ),
         ],
       ),
@@ -145,16 +145,16 @@ class _AdguardHomeCustomRulesScreenState
     final bool? discard = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Ignorer les modifications ?'),
-        content: const Text("Les modifications apportées ici n'ont pas été enregistrées."),
+        title: Text(S.t('discardChanges')),
+        content: Text(S.t('whatWasChangedHereHasNotBeenSaved')),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text("Continuer l'édition"),
+            child: Text(S.t('keepEditing')),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Ignorer'),
+            child: Text(S.t('discard')),
           ),
         ],
       ),
@@ -179,17 +179,17 @@ class _AdguardHomeCustomRulesScreenState
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Règles personnalisées'),
+          title: Text(S.t('customRules')),
           actions: <Widget>[
             IconButton(
               isSelected: _wrap,
               icon: const Icon(Icons.wrap_text),
-              tooltip: _wrap ? 'Ne plus replier les lignes' : 'Replier les lignes',
+              tooltip: _wrap ? S.t('stopWrappingLines') : S.t('wrapLines'),
               onPressed: () => setState(() => _wrap = !_wrap),
             ),
             FilledButton(
               onPressed: _busy || !changed ? null : _save,
-              child: const Text('Enregistrer'),
+              child: Text(S.t('save')),
             ),
             const SizedBox(width: Insets.md),
           ],
@@ -248,7 +248,7 @@ class _AdguardHomeCustomRulesScreenState
             ),
             const SizedBox(height: Insets.xs),
             Text(
-              'Une règle par ligne. Une ligne commençant par ! ou # est un commentaire.',
+              S.t('oneRulePerLineALineThatStartsWithOrIsAComment'),
               style: theme.textTheme.bodySmall
                   ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
             ),

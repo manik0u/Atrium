@@ -29,7 +29,7 @@ void main() {
     });
 
     test('ratios: None below zero, fewer decimals as they grow', () {
-      expect(trRatioString(-1), 'Aucun');
+      expect(trRatioString(-1), 'None');
       expect(trRatioString(0.256), '0.26');
       expect(trRatioString(12.34), '12.3');
       expect(trRatioString(123.4), '123');
@@ -47,7 +47,7 @@ void main() {
       expect(trDaySummary(trWeekdays), 'Weekdays');
       expect(trDaySummary(trWeekends), 'Weekends');
       expect(trDaySummary(1 | 4), 'Sun, Tue');
-      expect(trDaySummary(0), 'Jamais');
+      expect(trDaySummary(0), 'Never');
       expect(trToggleDay(trEveryDay, 1), 126);
       expect(trToggleDay(0, 64), 64);
     });
@@ -85,7 +85,7 @@ void main() {
     test('compact lines', () {
       expect(
         trCompactLine(t(<String, dynamic>{'rateDownload': 0, 'rateUpload': 0})),
-        'Inactif',
+        'Idle',
       );
       expect(
         trCompactLine(t(<String, dynamic>{'status': 6})),
@@ -125,15 +125,15 @@ void main() {
           d,
           now: 1758303000 + 3600,
         ),
-        'En pause',
+        'Paused',
       );
       expect(trRemaining(tor), '15 minutes');
-      expect(trRemaining(t(<String, dynamic>{'eta': -2})), 'Inconnu');
+      expect(trRemaining(t(<String, dynamic>{'eta': -2})), 'Unknown');
       expect(trLastActivity(tor, now: 1758303602), 'Active now');
       expect(trLastActivity(tor, now: 1758303600 + 120), '2 minutes ago');
       expect(
         trLastActivity(t(<String, dynamic>{'activityDate': 0}), now: 1),
-        'Aucun',
+        'None',
       );
     });
 
@@ -152,7 +152,7 @@ void main() {
         'Created by mktorrent 1.1 on ${trTimestamp(1758200000)}',
       );
       expect(trOrigin(d.copyWith(dateCreated: 0)), 'Created by mktorrent 1.1');
-      expect(trOrigin(d.copyWith(creator: '', dateCreated: 0)), 'Inconnu');
+      expect(trOrigin(d.copyWith(creator: '', dateCreated: 0)), 'Unknown');
     });
 
     test('tracker state, last announce and last scrape', () {
@@ -163,15 +163,15 @@ void main() {
       );
       expect(
         trAnnounceState(tr.copyWith(announceState: 3), now: 0),
-        'Annonce en cours',
+        'Announce in progress',
       );
       expect(
         trAnnounceState(tr.copyWith(announceState: 2), now: 0),
-        "Annonce en file d'attente",
+        'Announce is queued',
       );
       expect(
         trAnnounceState(tr.copyWith(announceState: 0, isBackup: true), now: 0),
-        'Le tracker sera utilisé en secours',
+        'Tracker will be used as a backup',
       );
       expect(
         trLastAnnounce(tr),

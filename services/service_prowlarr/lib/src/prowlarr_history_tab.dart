@@ -23,10 +23,10 @@ class _ProwlarrHistoryTabState extends ConsumerState<ProwlarrHistoryTab> {
   // null = all; 1 grabbed, 2 query, 3 RSS (HistoryEventType).
   int? _eventType;
 
-  static const List<(String, int?)> _filters = <(String, int?)>[
-    ('All', null),
-    ('Grabbed', 1),
-    ('Queries', 2),
+  static final List<(String, int?)> _filters = <(String, int?)>[
+    (S.t('all'), null),
+    (S.t('grabbed'), 1),
+    (S.t('queries'), 2),
     ('RSS', 3),
   ];
 
@@ -74,39 +74,39 @@ class _ProwlarrHistoryTabState extends ConsumerState<ProwlarrHistoryTab> {
             
                 if (page.records.isEmpty) {
                   return EasyRefresh(
-        header: const ClassicHeader(
-          dragText: 'Pull to refresh',
-          armedText: 'Release ready',
-          readyText: 'Refreshing...',
-          processingText: 'Refreshing...',
-          processedText: 'Succeeded',
-          failedText: 'Failed',
-          messageText: 'Last updated at %T',
+        header: ClassicHeader(
+          dragText: S.t('pullToRefresh'),
+          armedText: S.t('releaseReady'),
+          readyText: S.t('refreshing'),
+          processingText: S.t('refreshing'),
+          processedText: S.t('succeeded'),
+          failedText: S.t('failed'),
+          messageText: S.t('lastUpdatedAtT'),
         ),
         onRefresh: () async =>
                 ref.invalidate(prowlarrHistoryProvider(args)),
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          children: const <Widget>[
+          children: <Widget>[
             SizedBox(height: 100),
             EmptyView(
                     icon: Icons.history,
-                    title: 'Aucun historique',
-                    message: 'Rien ne correspond à ce filtre pour le moment.',
+                    title: S.t('noHistory'),
+                    message: S.t('nothingMatchesThisFilterYet'),
                   ),
           ],
         ),
       );
                 }
                 return EasyRefresh(
-      header: const ClassicHeader(
-        dragText: 'Pull to refresh',
-        armedText: 'Release ready',
-        readyText: 'Refreshing...',
-        processingText: 'Refreshing...',
-        processedText: 'Succeeded',
-        failedText: 'Failed',
-        messageText: 'Last updated at %T',
+      header: ClassicHeader(
+        dragText: S.t('pullToRefresh'),
+        armedText: S.t('releaseReady'),
+        readyText: S.t('refreshing'),
+        processingText: S.t('refreshing'),
+        processedText: S.t('succeeded'),
+        failedText: S.t('failed'),
+        messageText: S.t('lastUpdatedAtT'),
       ),
       onRefresh: () async =>
                 ref.invalidate(prowlarrHistoryProvider(args)),
@@ -221,7 +221,7 @@ class _HistoryTile extends StatelessWidget {
   (IconData, String) _event(String type) {
     switch (type) {
       case 'releaseGrabbed':
-        return (Icons.download_outlined, 'Grabbed');
+        return (Icons.download_outlined, S.t('grabbed'));
       case 'indexerQuery':
         return (Icons.search, 'Query');
       case 'indexerRss':
@@ -231,7 +231,7 @@ class _HistoryTile extends StatelessWidget {
       case 'indexerStatusChanged':
         return (Icons.sync_problem, 'Status changed');
       default:
-        return (Icons.history, type.isEmpty ? 'Event' : type);
+        return (Icons.history, type.isEmpty ? S.t('event') : type);
     }
   }
 
@@ -270,7 +270,7 @@ class _HistoryTile extends StatelessWidget {
     final DateTime local = date.toLocal();
     final Duration diff = DateTime.now().difference(local);
     if (diff.inSeconds < 60) {
-      return 'just now';
+      return S.t('justNow_2');
     }
     if (diff.inMinutes < 60) {
       return '${diff.inMinutes}m ago';

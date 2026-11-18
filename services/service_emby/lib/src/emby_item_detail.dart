@@ -102,7 +102,7 @@ class EmbyItemDetailScreen extends ConsumerWidget {
                           ?.refreshMetadata(itemId);
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Actualisation en file d'attente")),
+                          SnackBar(content: Text(S.t('refreshQueued'))),
                         );
                         ref.invalidate(
                           embyItemDetailsProvider((instance, itemId)),
@@ -111,7 +111,7 @@ class EmbyItemDetailScreen extends ConsumerWidget {
                     } catch (e) {
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Échec de l'actualisation : $e")),
+                          SnackBar(content: Text(S.t('failedToRefreshE1', [e]))),
                         );
                       }
                     }
@@ -129,18 +129,18 @@ class EmbyItemDetailScreen extends ConsumerWidget {
                   }
                 },
                 itemBuilder: (BuildContext context) {
-                  return const <PopupMenuEntry<String>>[
+                  return <PopupMenuEntry<String>>[
                     PopupMenuItem<String>(
                       value: 'identify',
-                      child: Text('Identifier'),
+                      child: Text(S.t('identify')),
                     ),
                     PopupMenuItem<String>(
                       value: 'refresh',
-                      child: Text('Actualiser les métadonnées'),
+                      child: Text(S.t('refreshMetadata')),
                     ),
                     PopupMenuItem<String>(
                       value: 'backdrop',
-                      child: Text('Changer le fond'),
+                      child: Text(S.t('changeBackdrop')),
                     ),
                   ];
                 },
@@ -481,7 +481,7 @@ class _Header extends StatelessWidget {
                     label: Text(
                       item.type == 'Series' || item.type == 'Movie'
                           ? 'Watch Now'
-                          : 'Play Now',
+                          : S.t('playNow'),
                     ),
                   ),
                 ),
@@ -695,7 +695,7 @@ class _InfoSection extends StatelessWidget {
           if (item.seriesName != null && item.seriesName!.isNotEmpty)
             _InfoRow(
               icon: Icons.tv,
-              label: 'Séries',
+              label: S.t('series'),
               value: item.seriesName!,
             ),
           if (item.parentIndexNumber != null &&
@@ -704,7 +704,7 @@ class _InfoSection extends StatelessWidget {
               const SizedBox(height: Insets.sm),
             _InfoRow(
               icon: Icons.tag,
-              label: 'Épisode',
+              label: S.t('episode'),
               value:
                   'Season ${item.parentIndexNumber} Episode ${item.indexNumber}',
             ),
