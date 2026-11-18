@@ -7,7 +7,7 @@ import 'support/adguard_home_test_instance.dart';
 import 'support/pump.dart';
 
 void main() {
-  final Finder save = find.widgetWithText(FilledButton, 'Save');
+  final Finder save = find.widgetWithText(FilledButton, 'Enregistrer');
   final Finder upstreams = find.byKey(const Key('adguard-upstreams'));
   final Finder bootstrap = find.byKey(const Key('adguard-bootstrap'));
   final Finder timeout = find.byKey(const Key('adguard-upstream-timeout'));
@@ -162,7 +162,7 @@ void main() {
     ];
 
     await tester.enterText(upstreams, '1.1.1.1\n10.255.255.1');
-    await tester.tap(find.text('Test upstreams'));
+    await tester.tap(find.text('Tester les serveurs amont'));
     await tester.pumpAndSettle();
 
     expect(pumped.actions.calls, <String>['test 1.1.1.1 10.255.255.1']);
@@ -183,7 +183,7 @@ void main() {
     );
     pumped.actions.upstreamResults = const <AdguardHomeUpstreamResult>[];
 
-    await tester.tap(find.text('Test upstreams'));
+    await tester.tap(find.text('Tester les serveurs amont'));
     await tester.pumpAndSettle();
 
     expect(pumped.actions.calls, <String>['test ']);
@@ -227,12 +227,12 @@ void main() {
     final Pumped pumped = await open(tester);
     pumped.actions.lookupFailure = const AdguardHomeSignInRefused();
 
-    await tester.tap(find.text('Test upstreams'));
+    await tester.tap(find.text('Tester les serveurs amont'));
     await tester.pumpAndSettle();
     expect(find.text('Not tested'), findsOneWidget);
 
     pumped.actions.lookupFailure = null;
-    await tester.tap(find.text('Try again'));
+    await tester.tap(find.text('Réessayer'));
     await tester.pumpAndSettle();
 
     expect(pumped.actions.calls, <String>[
@@ -240,14 +240,14 @@ void main() {
       'retry',
       'test https://dns10.quad9.net/dns-query',
     ]);
-    expect(find.text('Every server answered'), findsOneWidget);
+    expect(find.text('Tous les serveurs ont répondu'), findsOneWidget);
   });
 
   testWidgets('a test that fails says why', (WidgetTester tester) async {
     final Pumped pumped = await open(tester);
     pumped.actions.lookupFailure = const AdguardHomeRequestRefused('nope');
 
-    await tester.tap(find.text('Test upstreams'));
+    await tester.tap(find.text('Tester les serveurs amont'));
     await tester.pumpAndSettle();
 
     expect(find.text('Not tested'), findsOneWidget);

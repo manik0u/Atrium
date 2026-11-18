@@ -16,7 +16,7 @@ class UpdateCheckTile extends ConsumerWidget {
 
     final (String subtitle, Widget? trailing, bool tappable) =
         switch (state.status) {
-      UpdateStatus.idle => ('Tap to check', null, true),
+      UpdateStatus.idle => ('Touchez pour vérifier', null, true),
       UpdateStatus.checking => (
           'Checking...',
           const SizedBox(
@@ -26,18 +26,18 @@ class UpdateCheckTile extends ConsumerWidget {
           ),
           false,
         ),
-      UpdateStatus.upToDate => ('Up to date', null, true),
+      UpdateStatus.upToDate => ('À jour', null, true),
       UpdateStatus.updateAvailable => (
           'Version ${state.latestVersion} is available',
           const Icon(Icons.open_in_new, size: 18),
           true,
         ),
-      UpdateStatus.error => ('Could not check, tap to retry', null, true),
+      UpdateStatus.error => ('Vérification impossible, touchez pour réessayer', null, true),
     };
 
     return ListTile(
       leading: const Icon(Icons.system_update_outlined),
-      title: const Text('Check for updates'),
+      title: const Text('Rechercher des mises à jour'),
       subtitle: Text(subtitle),
       trailing: trailing,
       onTap: !tappable

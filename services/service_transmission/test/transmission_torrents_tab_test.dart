@@ -57,13 +57,13 @@ void main() {
   /// The filters live in the end drawer now, so a test that wants one opens it
   /// the way the filter button does.
   Future<void> openFilters(WidgetTester tester) async {
-    await tester.tap(find.byTooltip('Filter torrents'));
+    await tester.tap(find.byTooltip('Filtrer les torrents'));
     await settle(tester);
   }
 
   /// Opens the search box, which is collapsed to a tap target until wanted.
   Future<void> openSearch(WidgetTester tester) async {
-    await tester.tap(find.text('Search torrents...'));
+    await tester.tap(find.text('Rechercher des torrents…'));
     await settle(tester);
   }
 
@@ -76,7 +76,7 @@ void main() {
     expect(find.text('Downloading (1)'), findsOneWidget);
     expect(find.text('Seeding (1)'), findsOneWidget);
     // Every torrent is public, so those two say nothing and stay hidden.
-    expect(find.textContaining('Private'), findsNothing);
+    expect(find.textContaining('Privé'), findsNothing);
 
     await tester.tap(find.text('Seeding (1)'));
     await settle(tester);
@@ -112,11 +112,11 @@ void main() {
       findsOneWidget,
     );
     expect(
-      find.descendant(of: bar, matching: find.text('Seeding')),
+      find.descendant(of: bar, matching: find.text('Seed en cours')),
       findsOneWidget,
     );
 
-    await tester.tap(find.descendant(of: bar, matching: find.text('Clear')));
+    await tester.tap(find.descendant(of: bar, matching: find.text('Effacer')));
     await settle(tester);
     expect(bar, findsNothing);
     expect(find.text('Alpha'), findsOneWidget);
@@ -132,14 +132,14 @@ void main() {
     await settle(tester, frames: 12);
 
     // "No torrents, add one" would be a lie while a filter hides both.
-    expect(find.text('No torrents match'), findsOneWidget);
+    expect(find.text('Aucun torrent ne correspond'), findsOneWidget);
     expect(find.text('Clear filters'), findsOneWidget);
 
     await tester.tap(find.text('Clear filters'));
     await settle(tester);
     expect(find.text('Alpha'), findsOneWidget);
     expect(find.text('Beta'), findsOneWidget);
-    expect(find.text('No torrents match'), findsNothing);
+    expect(find.text('Aucun torrent ne correspond'), findsNothing);
   });
 
   testWidgets('search narrows by name and label', (WidgetTester tester) async {
@@ -147,7 +147,7 @@ void main() {
     await openSearch(tester);
 
     await tester.enterText(
-      find.widgetWithText(TextField, 'Search torrents...'),
+      find.widgetWithText(TextField, 'Rechercher des torrents…'),
       'lin',
     );
     await settle(tester);
@@ -172,7 +172,7 @@ void main() {
 
     // Anywhere outside the field: a header figure's label will do. (Not
     // "Torrents", which the bottom bar also says.)
-    await tester.tap(find.text('Down'));
+    await tester.tap(find.text('Descendant'));
     await settle(tester);
 
     expect(
@@ -218,11 +218,11 @@ void main() {
     await settle(tester);
     expect(find.text('1 selected'), findsOneWidget);
 
-    await tester.tap(find.byTooltip('Select all'));
+    await tester.tap(find.byTooltip('Tout sélectionner'));
     await settle(tester);
     expect(find.text('2 selected'), findsOneWidget);
 
-    await tester.tap(find.byTooltip('Selection actions'));
+    await tester.tap(find.byTooltip('Actions de la sélection'));
     await settle(tester);
     await tester.tap(find.text('Pause'));
     await settle(tester);
@@ -236,9 +236,9 @@ void main() {
       (WidgetTester tester) async {
     await open(tester);
 
-    await tester.tap(find.byTooltip('Pause all'));
+    await tester.tap(find.byTooltip('Tout mettre en pause'));
     await settle(tester);
-    await tester.tap(find.byTooltip('Resume all'));
+    await tester.tap(find.byTooltip('Tout reprendre'));
     await settle(tester);
 
     expect(fake.single('torrent-stop').arguments.containsKey('ids'), isFalse);
@@ -254,7 +254,7 @@ void main() {
 
     // One pill, for the cap that is actually on. Addressed by key: the Down
     // figure happens to read the same rate as the upload cap.
-    expect(find.text('Unlimited'), findsNothing);
+    expect(find.text('Illimité'), findsNothing);
     expect(find.byKey(const ValueKey<String>('limit-down-pill')), findsNothing);
     expect(
       find.descendant(
@@ -266,14 +266,14 @@ void main() {
 
     // The menu still offers both caps, naming what each is set to, so the
     // unlimited one is not a dead end.
-    await tester.tap(find.byTooltip('More'));
+    await tester.tap(find.byTooltip('Plus'));
     await settle(tester);
     expect(find.textContaining('Download limit: Unlimited'), findsOneWidget);
     expect(find.textContaining('Upload limit: 1000 KB/s'), findsOneWidget);
 
     await tester.tap(find.textContaining('Download limit: Unlimited'));
     await settle(tester);
-    expect(find.text('Download limit'), findsOneWidget);
+    expect(find.text('Limite de téléchargement'), findsOneWidget);
   });
 
   testWidgets('compact rows drop the bottom badges row',
@@ -281,11 +281,11 @@ void main() {
     await open(tester);
     expect(find.byIcon(Icons.swap_vert), findsNWidgets(2));
 
-    await tester.tap(find.byTooltip('More'));
+    await tester.tap(find.byTooltip('Plus'));
     await settle(tester);
     // The checked item's tile ignores pointers; the item itself takes the tap.
     await tester.tap(
-      find.widgetWithText(CheckedPopupMenuItem<String>, 'Compact rows'),
+      find.widgetWithText(CheckedPopupMenuItem<String>, 'Lignes compactes'),
     );
     await settle(tester);
 
@@ -304,30 +304,30 @@ void main() {
 
     final Finder row = find.byType(TransmissionTorrentRow);
     final double full = tester.getSize(row).height;
-    expect(find.text('Paused'), findsOneWidget);
+    expect(find.text('En pause'), findsOneWidget);
 
-    await tester.tap(find.byTooltip('More'));
+    await tester.tap(find.byTooltip('Plus'));
     await settle(tester);
     await tester.tap(
-      find.widgetWithText(CheckedPopupMenuItem<String>, 'Compact rows'),
+      find.widgetWithText(CheckedPopupMenuItem<String>, 'Lignes compactes'),
     );
     await settle(tester);
 
     // The pill used to sit above a summary that repeated it, and dropping
     // only the pill row left the row nearly as tall as the full one.
     expect(tester.getSize(row).height, lessThan(full - 32));
-    expect(find.text('Paused'), findsOneWidget);
+    expect(find.text('En pause'), findsOneWidget);
   });
 
   testWidgets('the row menu opens Set location', (WidgetTester tester) async {
     await open(tester);
 
-    await tester.tap(find.byTooltip('Torrent actions').first);
+    await tester.tap(find.byTooltip('Actions sur le torrent').first);
     await settle(tester);
     await tester.tap(find.text('Set location'));
     await settle(tester);
 
-    expect(find.text('Set torrent location'), findsOneWidget);
+    expect(find.text("Définir l'emplacement du torrent"), findsOneWidget);
   });
 
   testWidgets('the top transfer panel elements are evenly spaced',
@@ -340,11 +340,11 @@ void main() {
       matching: find.byType(TransmissionStatBadge),
     );
     final Finder downBadge = find.ancestor(
-      of: find.text('Down'),
+      of: find.text('Descendant'),
       matching: find.byType(TransmissionStatBadge),
     );
     final Finder upBadge = find.ancestor(
-      of: find.text('Up'),
+      of: find.text('Montant'),
       matching: find.byType(TransmissionStatBadge),
     );
 
@@ -359,11 +359,11 @@ void main() {
 
     // Row 4 bulk buttons also have Insets.sm (8 px) spacing between them.
     final Finder resumeBtn = find.ancestor(
-      of: find.byTooltip('Resume all'),
+      of: find.byTooltip('Tout reprendre'),
       matching: find.byType(IconButton),
     );
     final Finder pauseBtn = find.ancestor(
-      of: find.byTooltip('Pause all'),
+      of: find.byTooltip('Tout mettre en pause'),
       matching: find.byType(IconButton),
     );
     expect(
@@ -377,7 +377,7 @@ void main() {
       matching: find.byType(Row),
     ).first;
     final Finder searchRow = find.ancestor(
-      of: find.text('Search torrents...'),
+      of: find.text('Rechercher des torrents…'),
       matching: find.byType(Row),
     ).first;
     final Finder limitWrap = find.ancestor(
@@ -426,11 +426,11 @@ void main() {
       matching: find.byType(Row),
     ).first;
     final Finder searchRow = find.ancestor(
-      of: find.text('Search torrents...'),
+      of: find.text('Rechercher des torrents…'),
       matching: find.byType(Row),
     ).first;
     final Finder buttonRow = find.ancestor(
-      of: find.byTooltip('Resume all'),
+      of: find.byTooltip('Tout reprendre'),
       matching: find.byType(Row),
     );
 
@@ -515,11 +515,11 @@ void main() {
       findsOneWidget,
     );
     expect(
-      find.descendant(of: row, matching: find.text('Error')),
+      find.descendant(of: row, matching: find.text('Erreur')),
       findsOneWidget,
     );
     expect(
-      find.descendant(of: row, matching: find.text('Paused')),
+      find.descendant(of: row, matching: find.text('En pause')),
       findsNothing,
     );
   });
@@ -529,7 +529,7 @@ void main() {
     await open(tester);
     await openSearch(tester);
     await tester.enterText(
-      find.widgetWithText(TextField, 'Search torrents...'),
+      find.widgetWithText(TextField, 'Rechercher des torrents…'),
       'lin',
     );
     await settle(tester);
@@ -542,7 +542,7 @@ void main() {
 
     expect(find.text('Beta'), findsOneWidget);
     expect(find.text('lin'), findsNothing);
-    expect(find.text('Search torrents...'), findsOneWidget);
+    expect(find.text('Rechercher des torrents…'), findsOneWidget);
   });
 
   testWidgets('the turtle button looks different on and off',

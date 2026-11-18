@@ -31,7 +31,7 @@ class SeerrGenreScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${genre.name} ${isMovie ? 'Movies' : 'TV Shows'}'),
+        title: Text('${genre.name} ${isMovie ? 'Movies' : 'Séries'}'),
       ),
       body: AsyncValueView<List<SeerrDiscoverResult>>(
         value: items,
@@ -44,8 +44,8 @@ class SeerrGenreScreen extends ConsumerWidget {
           if (list.isEmpty) {
             return const EmptyView(
               icon: Icons.movie_filter_outlined,
-              title: 'No results',
-              message: 'No items found for this genre.',
+              title: 'Aucun résultat',
+              message: 'Aucun élément trouvé pour ce genre.',
             );
           }
 

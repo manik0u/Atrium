@@ -161,7 +161,7 @@ class _AdguardHomeClientSheetState
                   FilledButton.tonalIcon(
                     onPressed: _retry,
                     icon: const Icon(Icons.refresh),
-                    label: const Text('Retry'),
+                    label: const Text('Réessayer'),
                   ),
                 ] else
                   const Padding(
@@ -187,12 +187,12 @@ class _AdguardHomeClientSheetState
                   ? FilledButton.icon(
                       onPressed: () => _open(lookup),
                       icon: const Icon(Icons.person_add_alt),
-                      label: const Text('Add as persistent client'),
+                      label: const Text('Ajouter comme client persistant'),
                     )
                   : FilledButton.tonalIcon(
                       onPressed: () => _open(lookup),
                       icon: const Icon(Icons.edit_outlined),
-                      label: const Text('Edit client'),
+                      label: const Text('Modifier le client'),
                     ),
             ),
           ),
@@ -228,9 +228,9 @@ class _AdguardHomeClientSheetState
           (seen.name.isNotEmpty ||
               seen.source.isNotEmpty ||
               seen.whois.isNotEmpty)) ...<Widget>[
-        const AdguardHomeHeading('Seen by the server'),
+        const AdguardHomeHeading('Vu par le serveur'),
         // The sheet is already called this unless it has a client's name.
-        if (seen.name != lookup.title) AdguardHomeField('Name', seen.name),
+        if (seen.name != lookup.title) AdguardHomeField('Nom', seen.name),
         AdguardHomeField(
           'Learned from',
           adguardHomeClientSourceLabel(seen.source),
@@ -248,7 +248,7 @@ class _AdguardHomeClientSheetState
                 ? 'No persistent client lists it. This server cannot say '
                     'whether one that goes by a MAC address is this device.'
                 : seen == null
-                    ? 'AdGuard Home has no settings for it and has not seen '
+                    ? "AdGuard Home n'a aucun paramètre pour lui et ne l'a pas vu "
                         'it under a name.'
                     : 'AdGuard Home has no settings for it. As a persistent '
                         'client it can have its own.',

@@ -31,7 +31,7 @@ class ActivityBulkActionsBar extends ConsumerWidget {
       builder: (BuildContext ctx) => StatefulBuilder(
         builder: (BuildContext context, StateSetter setDialogState) {
           return AlertDialog(
-            title: Text('Remove ${selectedIds.length} Downloads'),
+            title: Text('Supprimer ${selectedIds.length} téléchargements'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,8 +41,8 @@ class ActivityBulkActionsBar extends ConsumerWidget {
                 ),
                 const SizedBox(height: Insets.md),
                 CheckboxListTile(
-                  title: const Text('Remove from Download Client'),
-                  subtitle: const Text('Delete from client and discard files'),
+                  title: const Text('Retirer du client de téléchargement'),
+                  subtitle: const Text('Supprimer du client et ignorer les fichiers'),
                   value: removeFromClient,
                   contentPadding: EdgeInsets.zero,
                   dense: true,
@@ -53,7 +53,7 @@ class ActivityBulkActionsBar extends ConsumerWidget {
                   },
                 ),
                 CheckboxListTile(
-                  title: const Text('Blocklist Releases'),
+                  title: const Text('Mettre les releases en liste de blocage'),
                   subtitle: const Text(
                     'Prevent Lidarr from grabbing these releases again',
                   ),
@@ -71,7 +71,7 @@ class ActivityBulkActionsBar extends ConsumerWidget {
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.of(ctx).pop(false),
-                child: const Text('Cancel'),
+                child: const Text('Annuler'),
               ),
               FilledButton(
                 style: FilledButton.styleFrom(
@@ -79,7 +79,7 @@ class ActivityBulkActionsBar extends ConsumerWidget {
                   foregroundColor: Theme.of(ctx).colorScheme.onError,
                 ),
                 onPressed: () => Navigator.of(ctx).pop(true),
-                child: const Text('Remove'),
+                child: const Text('Retirer'),
               ),
             ],
           );
@@ -100,7 +100,7 @@ class ActivityBulkActionsBar extends ConsumerWidget {
       );
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Bulk remove failed');
+        throw Exception(resp.error?.message ?? 'Échec de la suppression groupée');
       }
 
       ref.invalidate(lidarrQueueProvider(instance));
@@ -110,7 +110,7 @@ class ActivityBulkActionsBar extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Removed ${selectedIds.length} items from queue'),
+            content: Text("${selectedIds.length} éléments retirés de la file d'attente"),
           ),
         );
       }
@@ -118,7 +118,7 @@ class ActivityBulkActionsBar extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to remove: $e'),
+            content: Text('Échec de la suppression : $e'),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -130,18 +130,18 @@ class ActivityBulkActionsBar extends ConsumerWidget {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: Text('Remove ${selectedIds.length} from Blocklist?'),
+        title: Text('Retirer ${selectedIds.length} éléments de la liste de blocage ?'),
         content: Text(
           'Remove ${selectedIds.length} releases from blocklist so Lidarr may grab them again?',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Remove'),
+            child: const Text('Retirer'),
           ),
         ],
       ),
@@ -158,7 +158,7 @@ class ActivityBulkActionsBar extends ConsumerWidget {
       );
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Bulk unblock failed');
+        throw Exception(resp.error?.message ?? 'Échec du déblocage groupé');
       }
 
       ref.invalidate(lidarrBlocklistProvider(instance));
@@ -177,7 +177,7 @@ class ActivityBulkActionsBar extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to remove: $e'),
+            content: Text('Échec de la suppression : $e'),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -215,7 +215,7 @@ class ActivityBulkActionsBar extends ConsumerWidget {
             const Spacer(),
             TextButton(
               onPressed: onClear,
-              child: const Text('Cancel'),
+              child: const Text('Annuler'),
             ),
             const SizedBox(width: 8),
             FilledButton.icon(
@@ -224,7 +224,7 @@ class ActivityBulkActionsBar extends ConsumerWidget {
                 foregroundColor: cs.onError,
               ),
               icon: const Icon(Icons.delete_outline, size: 18),
-              label: Text(isQueue ? 'Remove' : 'Unblock'),
+              label: Text(isQueue ? 'Retirer' : 'Débloquer'),
               onPressed: () {
                 if (isQueue) {
                   _bulkRemoveQueue(context, ref);

@@ -40,8 +40,8 @@ class BazarrHistoryTab extends ConsumerWidget {
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.history,
-              title: 'No history',
-              message: 'Subtitle downloads and changes will appear here.',
+              title: 'Aucun historique',
+              message: 'Les téléchargements et modifications de sous-titres apparaîtront ici.',
             ),
           ],
         ),
@@ -118,7 +118,7 @@ class _HistoryTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    title.isEmpty ? 'Unknown' : title,
+                    title.isEmpty ? 'Inconnu' : title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.bodyMedium

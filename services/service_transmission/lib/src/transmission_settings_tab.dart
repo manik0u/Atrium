@@ -54,12 +54,12 @@ class _TransmissionSettingsTabState
       await api.setSession(<String, Object?>{key: value});
       messenger.showSnackBar(
         const SnackBar(
-          content: Text('Setting saved'),
+          content: Text('Paramètre enregistré'),
           duration: Duration(seconds: 1),
         ),
       );
     } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text('Could not save: $e')));
+      messenger.showSnackBar(SnackBar(content: Text("Impossible d'enregistrer : $e")));
     } finally {
       // Whether it took or not, show what the daemon has now.
       ref.invalidate(transmissionSessionProvider(widget.instance));
@@ -123,12 +123,12 @@ class _TransmissionSettingsTabState
           await ref.read(transmissionApiProvider(widget.instance).future);
       final int rules = await api.updateBlocklist();
       messenger.showSnackBar(
-        SnackBar(content: Text('Blocklist updated: $rules rules')),
+        SnackBar(content: Text('Liste de blocage mise à jour : $rules règles')),
       );
       ref.invalidate(transmissionSessionProvider(widget.instance));
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Blocklist update failed: $e')),
+        SnackBar(content: Text('Échec de la mise à jour de la liste de blocage : $e')),
       );
     } finally {
       if (mounted) setState(() => _updatingBlocklist = false);
@@ -154,7 +154,7 @@ class _TransmissionSettingsTabState
       }
       if (mounted) setState(() => _portResults = results);
     } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text('Port test failed: $e')));
+      messenger.showSnackBar(SnackBar(content: Text('Échec du test de port : $e')));
     } finally {
       if (mounted) setState(() => _testingPort = false);
     }
@@ -186,10 +186,10 @@ class _TransmissionSettingsTabState
           onPressed:
               widget.onOpenDrawer ?? () => Scaffold.of(context).openDrawer(),
         ),
-        title: Text('${widget.instance.name} Settings'),
+        title: Text('Paramètres de ${widget.instance.name}'),
         actions: <Widget>[
           IconButton(
-            tooltip: 'Refresh',
+            tooltip: 'Actualiser',
             icon: const Icon(Icons.refresh),
             onPressed: () {
               ref
@@ -263,7 +263,7 @@ class _TransmissionSettingsTabState
                   'rename-partial-files',
                 ),
                 _switchTile(
-                  'Limit the download queue',
+                  'Limiter la file de téléchargement',
                   s.downloadQueueEnabled,
                   'download-queue-enabled',
                 ),
@@ -275,10 +275,10 @@ class _TransmissionSettingsTabState
                 if (s.supportsDefaultTrackers)
                   ListTile(
                     contentPadding: EdgeInsets.zero,
-                    title: const Text('Default public trackers'),
+                    title: const Text('Trackers publics par défaut'),
                     subtitle: Text(_trackerCount(s.defaultTrackers)),
                     onTap: () => _editText(
-                      title: 'Default public trackers',
+                      title: 'Trackers publics par défaut',
                       key: 'default-trackers',
                       initial: s.defaultTrackers,
                       multiline: true,
@@ -289,7 +289,7 @@ class _TransmissionSettingsTabState
             ),
             const SizedBox(height: Insets.sm),
             _Group(
-              title: 'Speed',
+              title: 'Vitesse',
               children: <Widget>[
                 _switchTile(
                   'Limit upload',
@@ -328,7 +328,7 @@ class _TransmissionSettingsTabState
                 ),
                 ListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('From'),
+                  title: const Text('De'),
                   subtitle: Text(_clock(s.altSpeedTimeBegin)),
                   onTap: () => _pickTime(
                     key: 'alt-speed-time-begin',
@@ -337,7 +337,7 @@ class _TransmissionSettingsTabState
                 ),
                 ListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('To'),
+                  title: const Text('À'),
                   subtitle: Text(_clock(s.altSpeedTimeEnd)),
                   onTap: () => _pickTime(
                     key: 'alt-speed-time-end',
@@ -346,7 +346,7 @@ class _TransmissionSettingsTabState
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: Insets.xs),
-                  child: Text('On days: ${trDaySummary(s.altSpeedTimeDay)}'),
+                  child: Text('Jours : ${trDaySummary(s.altSpeedTimeDay)}'),
                 ),
                 Wrap(
                   spacing: Insets.xs,
@@ -377,7 +377,7 @@ class _TransmissionSettingsTabState
             ),
             const SizedBox(height: Insets.sm),
             _Group(
-              title: 'Peers',
+              title: 'Pairs',
               children: <Widget>[
                 _numberTile(
                   'Max peers per torrent',
@@ -391,13 +391,13 @@ class _TransmissionSettingsTabState
                 ),
                 ListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('Encryption'),
+                  title: const Text('Chiffrement'),
                   subtitle: Text(_encryptionLabel(s.encryption)),
                   onTap: () async {
                     final String? mode = await showDialog<String>(
                       context: context,
                       builder: (BuildContext context) => SimpleDialog(
-                        title: const Text('Encryption'),
+                        title: const Text('Chiffrement'),
                         children: <Widget>[
                           RadioGroup<String>(
                             groupValue: _encryptionValue(s.encryption),
@@ -449,7 +449,7 @@ class _TransmissionSettingsTabState
                       Expanded(
                         child: TransmissionPill(
                           icon: Icons.block,
-                          label: 'Blocklist has ${s.blocklistSize} rules',
+                          label: 'La liste de blocage contient ${s.blocklistSize} règles',
                           foreground: cs.onSurfaceVariant,
                           background: cs.surfaceContainerHighest,
                         ),
@@ -457,7 +457,7 @@ class _TransmissionSettingsTabState
                       const SizedBox(width: Insets.sm),
                       FilledButton.tonal(
                         onPressed: _updatingBlocklist ? null : _updateBlocklist,
-                        child: const Text('Update blocklist'),
+                        child: const Text('Mettre à jour la liste de blocage'),
                       ),
                     ],
                   ),
@@ -466,7 +466,7 @@ class _TransmissionSettingsTabState
             ),
             const SizedBox(height: Insets.sm),
             _Group(
-              title: 'Network',
+              title: 'Réseau',
               children: <Widget>[
                 _numberTile('Peer listening port', s.peerPort, 'peer-port'),
                 _switchTile(
@@ -495,7 +495,7 @@ class _TransmissionSettingsTabState
                                 icon: r.value
                                     ? Icons.check_circle_outline
                                     : Icons.error_outline,
-                                label: '${_protocolLabel(r.key)} is '
+                                label: '${_protocolLabel(r.key)} est '
                                     '${r.value ? 'Open' : 'Closed'}',
                                 foreground: r.value
                                     ? cs.onTertiaryContainer
@@ -510,7 +510,7 @@ class _TransmissionSettingsTabState
                       const SizedBox(width: Insets.sm),
                       FilledButton.tonal(
                         onPressed: _testingPort ? null : () => _testPort(s),
-                        child: const Text('Test port'),
+                        child: const Text('Tester le port'),
                       ),
                     ],
                   ),
@@ -561,7 +561,7 @@ class _TransmissionSettingsTabState
   Widget _pathTile(String title, String value, String key) => ListTile(
         contentPadding: EdgeInsets.zero,
         title: Text(title),
-        subtitle: Text(value.isEmpty ? 'Not set' : value),
+        subtitle: Text(value.isEmpty ? 'Non défini' : value),
         onTap: () => _editText(
           title: title,
           key: key,
@@ -583,8 +583,8 @@ class _TransmissionSettingsTabState
   }
 
   static String _protocolLabel(String protocol) => switch (protocol) {
-        'ipv4' => 'IPv4 port',
-        'ipv6' => 'IPv6 port',
+        'ipv4' => 'Port IPv4',
+        'ipv6' => 'Port IPv6',
         _ => 'Port',
       };
 
@@ -689,11 +689,11 @@ class _EditDialogState extends State<_EditDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(_controller.text.trim()),
-          child: const Text('Save'),
+          child: const Text('Enregistrer'),
         ),
       ],
     );

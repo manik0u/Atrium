@@ -74,7 +74,7 @@ class CleanuparrEventDetailSheet extends StatelessWidget {
             const Divider(height: Insets.xl),
             if (event.downloadItemTitle != null) ...<Widget>[
               _DetailRow(
-                label: 'Release Title',
+                label: 'Titre de la release',
                 value: event.downloadItemTitle!,
               ),
               const SizedBox(height: Insets.sm),
@@ -95,7 +95,7 @@ class CleanuparrEventDetailSheet extends StatelessWidget {
             ],
             if (event.deleteReason != null) ...<Widget>[
               _DetailRow(
-                label: 'Delete Reason',
+                label: 'Motif de suppression',
                 value: event.deleteReason!,
               ),
               const SizedBox(height: Insets.sm),

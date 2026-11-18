@@ -27,7 +27,7 @@ void main() {
       (WidgetTester tester) async {
     await pumpServices(tester);
 
-    expect(find.text('Blocked services'), findsWidgets);
+    expect(find.text('Services bloqués'), findsWidgets);
     expect(find.text('TikTok'), findsOneWidget);
     expect(find.text('Europe/Berlin'), findsOneWidget);
     expect(find.text('09:00 to 17:00'), findsOneWidget);
@@ -40,10 +40,10 @@ void main() {
 
     await tester.tap(find.text('TikTok'));
     await tester.pumpAndSettle();
-    expect(find.text('Blocked for everyone'), findsOneWidget);
+    expect(find.text('Bloqué pour tout le monde'), findsOneWidget);
     await tester.tap(find.text('Netflix'));
     await tester.pump();
-    await tester.tap(find.text('Done'));
+    await tester.tap(find.text('Terminé'));
     await tester.pumpAndSettle();
 
     expect(pumped.actions.calls, <String>['services tiktok,netflix']);
@@ -56,7 +56,7 @@ void main() {
 
     await tester.tap(find.text('TikTok'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Done'));
+    await tester.tap(find.text('Terminé'));
     await tester.pumpAndSettle();
 
     expect(pumped.actions.calls, isEmpty);
@@ -65,9 +65,9 @@ void main() {
   testWidgets('a change to the schedule is saved', (WidgetTester tester) async {
     final Pumped pumped = await pumpServices(tester);
 
-    await tester.tap(find.text('Sunday'));
+    await tester.tap(find.text('Dimanche'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Pause blocking'));
+    await tester.tap(find.text('Mettre le blocage en pause'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Remove pause'));
     await tester.pumpAndSettle();
@@ -81,13 +81,13 @@ void main() {
     final Pumped pumped = await pumpServices(tester);
     pumped.actions.writeHold = Completer<void>();
 
-    await tester.tap(find.text('Sunday'));
+    await tester.tap(find.text('Dimanche'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Pause blocking'));
+    await tester.tap(find.text('Mettre le blocage en pause'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Remove pause'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Monday'));
+    await tester.tap(find.text('Lundi'));
     await tester.pumpAndSettle();
 
     expect(find.byType(AdguardHomePauseSheet), findsNothing);
@@ -102,9 +102,9 @@ void main() {
       'json.Decode: unknown time zone Mars/Base',
     );
 
-    await tester.tap(find.text('Sunday'));
+    await tester.tap(find.text('Dimanche'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Pause blocking'));
+    await tester.tap(find.text('Mettre le blocage en pause'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Remove pause'));
     await tester.pumpAndSettle();
@@ -121,7 +121,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('None'), findsOneWidget);
+    expect(find.text('Aucun'), findsOneWidget);
     expect(
       find.textContaining('Nothing is blocked'),
       findsOneWidget,

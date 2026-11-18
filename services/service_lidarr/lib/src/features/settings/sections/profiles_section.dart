@@ -40,7 +40,7 @@ class ProfilesSection extends ConsumerWidget {
     if (baseProfile == null && isNew) {
       messenger.showSnackBar(
         const SnackBar(
-          content: Text('Failed to load quality profile template.'),
+          content: Text('Échec du chargement du modèle de profil de qualité.'),
         ),
       );
       return;
@@ -87,7 +87,7 @@ class ProfilesSection extends ConsumerWidget {
 
             return AlertDialog(
               title:
-                  Text(isNew ? 'Add Quality Profile' : 'Edit Quality Profile'),
+                  Text(isNew ? 'Ajouter un profil de qualité' : 'Modifier le profil de qualité'),
               content: SizedBox(
                 width: double.maxFinite,
                 child: SingleChildScrollView(
@@ -98,15 +98,15 @@ class ProfilesSection extends ConsumerWidget {
                       TextField(
                         controller: nameController,
                         decoration: const InputDecoration(
-                          labelText: 'Profile Name',
+                          labelText: 'Nom du profil',
                           border: OutlineInputBorder(),
                         ),
                       ),
                       const SizedBox(height: Insets.md),
                       SwitchListTile(
-                        title: const Text('Allow Upgrades'),
+                        title: const Text('Autoriser les mises à niveau'),
                         subtitle: const Text(
-                          'Download higher quality releases when found',
+                          'Télécharger les releases de qualité supérieure quand elles sont trouvées',
                         ),
                         value: upgradeAllowed,
                         contentPadding: EdgeInsets.zero,
@@ -123,13 +123,13 @@ class ProfilesSection extends ConsumerWidget {
                               ? cutoffId
                               : (cutoffOptions.first['id'] as int?),
                           decoration: const InputDecoration(
-                            labelText: 'Upgrade Until (Cutoff)',
+                            labelText: "Mettre à niveau jusqu'à (cutoff)",
                             border: OutlineInputBorder(),
                           ),
                           items: cutoffOptions.map((Map<String, dynamic> o) {
                             return DropdownMenuItem<int>(
                               value: o['id'] as int?,
-                              child: Text(o['name'] as String? ?? 'Unknown'),
+                              child: Text(o['name'] as String? ?? 'Inconnu'),
                             );
                           }).toList(),
                           onChanged: (int? val) {
@@ -175,7 +175,7 @@ class ProfilesSection extends ConsumerWidget {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(dCtx),
-                  child: const Text('Cancel'),
+                  child: const Text('Annuler'),
                 ),
                 FilledButton(
                   onPressed: () async {
@@ -183,7 +183,7 @@ class ProfilesSection extends ConsumerWidget {
                     if (profileName.isEmpty) {
                       messenger.showSnackBar(
                         const SnackBar(
-                          content: Text('Please enter a profile name.'),
+                          content: Text('Veuillez saisir un nom de profil.'),
                         ),
                       );
                       return;
@@ -239,12 +239,12 @@ class ProfilesSection extends ConsumerWidget {
                     } catch (e) {
                       if (dCtx.mounted) {
                         messenger.showSnackBar(
-                          SnackBar(content: Text('Error: $e')),
+                          SnackBar(content: Text('Erreur : $e')),
                         );
                       }
                     }
                   },
-                  child: const Text('Save'),
+                  child: const Text('Enregistrer'),
                 ),
               ],
             );
@@ -265,14 +265,14 @@ class ProfilesSection extends ConsumerWidget {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: Text('Delete ${profile.name ?? 'Quality Profile'}?'),
+        title: Text('Supprimer ${profile.name ?? 'Quality Profile'}?'),
         content: Text(
           'Are you sure you want to delete the "${profile.name}" quality profile?',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -280,7 +280,7 @@ class ProfilesSection extends ConsumerWidget {
               foregroundColor: Theme.of(ctx).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Delete'),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
@@ -295,17 +295,17 @@ class ProfilesSection extends ConsumerWidget {
           await api.qualityProfile.deleteQualityprofileById(id: id);
       if (!resp.isSuccess) {
         throw Exception(
-          resp.error?.message ?? 'Failed to delete quality profile',
+          resp.error?.message ?? 'Échec de la suppression du profil de qualité',
         );
       }
 
       ref.invalidate(lidarrQualityProfilesProvider(instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Quality profile deleted.')),
+        const SnackBar(content: Text('Profil de qualité supprimé.')),
       );
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Failed to delete quality profile: $e')),
+        SnackBar(content: Text('Échec de la suppression du profil de qualité : $e')),
       );
     }
   }
@@ -337,7 +337,7 @@ class ProfilesSection extends ConsumerWidget {
     if (baseProfile == null && isNew) {
       messenger.showSnackBar(
         const SnackBar(
-          content: Text('Failed to load metadata profile template.'),
+          content: Text('Échec du chargement du modèle de profil de métadonnées.'),
         ),
       );
       return;
@@ -385,7 +385,7 @@ class ProfilesSection extends ConsumerWidget {
                       TextField(
                         controller: nameController,
                         decoration: const InputDecoration(
-                          labelText: 'Profile Name',
+                          labelText: 'Nom du profil',
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -489,7 +489,7 @@ class ProfilesSection extends ConsumerWidget {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(dCtx),
-                  child: const Text('Cancel'),
+                  child: const Text('Annuler'),
                 ),
                 FilledButton(
                   onPressed: () async {
@@ -497,7 +497,7 @@ class ProfilesSection extends ConsumerWidget {
                     if (profileName.isEmpty) {
                       messenger.showSnackBar(
                         const SnackBar(
-                          content: Text('Please enter a profile name.'),
+                          content: Text('Veuillez saisir un nom de profil.'),
                         ),
                       );
                       return;
@@ -553,12 +553,12 @@ class ProfilesSection extends ConsumerWidget {
                     } catch (e) {
                       if (dCtx.mounted) {
                         messenger.showSnackBar(
-                          SnackBar(content: Text('Error: $e')),
+                          SnackBar(content: Text('Erreur : $e')),
                         );
                       }
                     }
                   },
-                  child: const Text('Save'),
+                  child: const Text('Enregistrer'),
                 ),
               ],
             );
@@ -579,14 +579,14 @@ class ProfilesSection extends ConsumerWidget {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: Text('Delete ${profile.name ?? 'Metadata Profile'}?'),
+        title: Text('Supprimer ${profile.name ?? 'Metadata Profile'}?'),
         content: Text(
           'Are you sure you want to delete the "${profile.name}" metadata profile?',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -594,7 +594,7 @@ class ProfilesSection extends ConsumerWidget {
               foregroundColor: Theme.of(ctx).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Delete'),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
@@ -609,17 +609,17 @@ class ProfilesSection extends ConsumerWidget {
           await api.metadataProfile.deleteMetadataprofileById(id: id);
       if (!resp.isSuccess) {
         throw Exception(
-          resp.error?.message ?? 'Failed to delete metadata profile',
+          resp.error?.message ?? 'Échec de la suppression du profil de métadonnées',
         );
       }
 
       ref.invalidate(lidarrMetadataProfilesProvider(instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Metadata profile deleted.')),
+        const SnackBar(content: Text('Profil de métadonnées supprimé.')),
       );
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Failed to delete metadata profile: $e')),
+        SnackBar(content: Text('Échec de la suppression du profil de métadonnées : $e')),
       );
     }
   }
@@ -659,7 +659,7 @@ class ProfilesSection extends ConsumerWidget {
                 ref.watch(lidarrTagsProvider(instance));
 
             return AlertDialog(
-              title: Text(isNew ? 'Add Delay Profile' : 'Edit Delay Profile'),
+              title: Text(isNew ? 'Ajouter un profil de délai' : 'Modifier le profil de délai'),
               content: SizedBox(
                 width: double.maxFinite,
                 child: SingleChildScrollView(
@@ -668,14 +668,14 @@ class ProfilesSection extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SwitchListTile(
-                        title: const Text('Enable Usenet'),
+                        title: const Text('Activer Usenet'),
                         value: enableUsenet,
                         contentPadding: EdgeInsets.zero,
                         onChanged: (bool val) =>
                             setDialogState(() => enableUsenet = val),
                       ),
                       SwitchListTile(
-                        title: const Text('Enable Torrent'),
+                        title: const Text('Activer Torrent'),
                         value: enableTorrent,
                         contentPadding: EdgeInsets.zero,
                         onChanged: (bool val) =>
@@ -685,7 +685,7 @@ class ProfilesSection extends ConsumerWidget {
                       DropdownButtonFormField<DownloadProtocol>(
                         initialValue: preferredProtocol,
                         decoration: const InputDecoration(
-                          labelText: 'Preferred Protocol',
+                          labelText: 'Protocole préféré',
                           border: OutlineInputBorder(),
                         ),
                         items: const [
@@ -709,7 +709,7 @@ class ProfilesSection extends ConsumerWidget {
                         controller: usenetDelayController,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
-                          labelText: 'Usenet Delay (minutes)',
+                          labelText: 'Délai Usenet (minutes)',
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -718,20 +718,20 @@ class ProfilesSection extends ConsumerWidget {
                         controller: torrentDelayController,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
-                          labelText: 'Torrent Delay (minutes)',
+                          labelText: 'Délai Torrent (minutes)',
                           border: OutlineInputBorder(),
                         ),
                       ),
                       const SizedBox(height: Insets.xs),
                       SwitchListTile(
-                        title: const Text('Bypass if Highest Quality'),
+                        title: const Text('Ignorer si qualité maximale'),
                         value: bypassIfHighestQuality,
                         contentPadding: EdgeInsets.zero,
                         onChanged: (bool val) =>
                             setDialogState(() => bypassIfHighestQuality = val),
                       ),
                       SwitchListTile(
-                        title: const Text('Bypass if Above CF Score'),
+                        title: const Text('Ignorer si score CF supérieur'),
                         value: bypassIfAboveScore,
                         contentPadding: EdgeInsets.zero,
                         onChanged: (bool val) =>
@@ -743,7 +743,7 @@ class ProfilesSection extends ConsumerWidget {
                           controller: minScoreController,
                           keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
-                            labelText: 'Minimum Custom Format Score',
+                            labelText: 'Score minimal des formats personnalisés',
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -757,7 +757,7 @@ class ProfilesSection extends ConsumerWidget {
                       asyncTags.when(
                         data: (List<TagResource> allTags) {
                           if (allTags.isEmpty) {
-                            return const Text('No tags available.');
+                            return const Text('Aucune balise disponible.');
                           }
                           return Wrap(
                             spacing: 6,
@@ -767,7 +767,7 @@ class ProfilesSection extends ConsumerWidget {
                               if (tId == null) return const SizedBox.shrink();
                               final bool isSelected = tags.contains(tId);
                               return FilterChip(
-                                label: Text(t.label ?? 'Tag $tId'),
+                                label: Text(t.label ?? 'Balise $tId'),
                                 selected: isSelected,
                                 onSelected: (bool selected) {
                                   setDialogState(() {
@@ -783,7 +783,7 @@ class ProfilesSection extends ConsumerWidget {
                           );
                         },
                         loading: () => const SizedBox.shrink(),
-                        error: (_, __) => const Text('Failed to load tags'),
+                        error: (_, __) => const Text('Échec du chargement des balises'),
                       ),
                     ],
                   ),
@@ -792,7 +792,7 @@ class ProfilesSection extends ConsumerWidget {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(dCtx),
-                  child: const Text('Cancel'),
+                  child: const Text('Annuler'),
                 ),
                 FilledButton(
                   onPressed: () async {
@@ -857,12 +857,12 @@ class ProfilesSection extends ConsumerWidget {
                     } catch (e) {
                       if (dCtx.mounted) {
                         messenger.showSnackBar(
-                          SnackBar(content: Text('Error: $e')),
+                          SnackBar(content: Text('Erreur : $e')),
                         );
                       }
                     }
                   },
-                  child: const Text('Save'),
+                  child: const Text('Enregistrer'),
                 ),
               ],
             );
@@ -883,14 +883,14 @@ class ProfilesSection extends ConsumerWidget {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Delete Delay Profile?'),
+        title: const Text('Supprimer le profil de délai ?'),
         content: const Text(
-          'Are you sure you want to delete this delay profile?',
+          'Voulez-vous vraiment supprimer ce profil de délai ?',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -898,7 +898,7 @@ class ProfilesSection extends ConsumerWidget {
               foregroundColor: Theme.of(ctx).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Delete'),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
@@ -913,17 +913,17 @@ class ProfilesSection extends ConsumerWidget {
           await api.delayProfile.deleteDelayprofileById(id: id);
       if (!resp.isSuccess) {
         throw Exception(
-          resp.error?.message ?? 'Failed to delete delay profile',
+          resp.error?.message ?? 'Échec de la suppression du profil de délai',
         );
       }
 
       ref.invalidate(lidarrDelayProfilesProvider(instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Delay profile deleted.')),
+        const SnackBar(content: Text('Profil de délai supprimé.')),
       );
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Failed to delete delay profile: $e')),
+        SnackBar(content: Text('Échec de la suppression du profil de délai : $e')),
       );
     }
   }
@@ -961,7 +961,7 @@ class ProfilesSection extends ConsumerWidget {
 
             return AlertDialog(
               title:
-                  Text(isNew ? 'Add Release Profile' : 'Edit Release Profile'),
+                  Text(isNew ? 'Ajouter un profil de release' : 'Modifier le profil de release'),
               content: SizedBox(
                 width: double.maxFinite,
                 child: SingleChildScrollView(
@@ -970,7 +970,7 @@ class ProfilesSection extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SwitchListTile(
-                        title: const Text('Enabled'),
+                        title: const Text('Activé'),
                         value: enabled,
                         contentPadding: EdgeInsets.zero,
                         onChanged: (bool val) =>
@@ -980,8 +980,8 @@ class ProfilesSection extends ConsumerWidget {
                       TextField(
                         controller: requiredController,
                         decoration: const InputDecoration(
-                          labelText: 'Must Contain',
-                          hintText: 'Comma separated terms (e.g. FLAC, 24bit)',
+                          labelText: 'Doit contenir',
+                          hintText: 'Termes séparés par des virgules (ex. FLAC, 24bit)',
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -989,7 +989,7 @@ class ProfilesSection extends ConsumerWidget {
                       TextField(
                         controller: ignoredController,
                         decoration: const InputDecoration(
-                          labelText: 'Must Not Contain',
+                          labelText: 'Ne doit pas contenir',
                           hintText:
                               'Comma separated terms (e.g. live, bootleg)',
                           border: OutlineInputBorder(),
@@ -1001,17 +1001,17 @@ class ProfilesSection extends ConsumerWidget {
                           return DropdownButtonFormField<int?>(
                             initialValue: indexerId,
                             decoration: const InputDecoration(
-                              labelText: 'Indexer',
+                              labelText: 'Indexeur',
                               border: OutlineInputBorder(),
                             ),
                             items: [
                               const DropdownMenuItem<int?>(
-                                child: Text('Any / All Indexers'),
+                                child: Text('Tous les indexeurs'),
                               ),
                               ...indexers.map((IndexerResource idx) {
                                 return DropdownMenuItem<int?>(
                                   value: idx.id,
-                                  child: Text(idx.name ?? 'Indexer ${idx.id}'),
+                                  child: Text(idx.name ?? 'Indexeur ${idx.id}'),
                                 );
                               }),
                             ],
@@ -1032,7 +1032,7 @@ class ProfilesSection extends ConsumerWidget {
                       asyncTags.when(
                         data: (List<TagResource> allTags) {
                           if (allTags.isEmpty) {
-                            return const Text('No tags available.');
+                            return const Text('Aucune balise disponible.');
                           }
                           return Wrap(
                             spacing: 6,
@@ -1042,7 +1042,7 @@ class ProfilesSection extends ConsumerWidget {
                               if (tId == null) return const SizedBox.shrink();
                               final bool isSelected = tags.contains(tId);
                               return FilterChip(
-                                label: Text(t.label ?? 'Tag $tId'),
+                                label: Text(t.label ?? 'Balise $tId'),
                                 selected: isSelected,
                                 onSelected: (bool selected) {
                                   setDialogState(() {
@@ -1058,7 +1058,7 @@ class ProfilesSection extends ConsumerWidget {
                           );
                         },
                         loading: () => const SizedBox.shrink(),
-                        error: (_, __) => const Text('Failed to load tags'),
+                        error: (_, __) => const Text('Échec du chargement des balises'),
                       ),
                     ],
                   ),
@@ -1067,7 +1067,7 @@ class ProfilesSection extends ConsumerWidget {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(dCtx),
-                  child: const Text('Cancel'),
+                  child: const Text('Annuler'),
                 ),
                 FilledButton(
                   onPressed: () async {
@@ -1132,12 +1132,12 @@ class ProfilesSection extends ConsumerWidget {
                     } catch (e) {
                       if (dCtx.mounted) {
                         messenger.showSnackBar(
-                          SnackBar(content: Text('Error: $e')),
+                          SnackBar(content: Text('Erreur : $e')),
                         );
                       }
                     }
                   },
-                  child: const Text('Save'),
+                  child: const Text('Enregistrer'),
                 ),
               ],
             );
@@ -1158,14 +1158,14 @@ class ProfilesSection extends ConsumerWidget {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Delete Release Profile?'),
+        title: const Text('Supprimer le profil de release ?'),
         content: const Text(
-          'Are you sure you want to delete this release profile?',
+          'Voulez-vous vraiment supprimer ce profil de release ?',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -1173,7 +1173,7 @@ class ProfilesSection extends ConsumerWidget {
               foregroundColor: Theme.of(ctx).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Delete'),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
@@ -1188,17 +1188,17 @@ class ProfilesSection extends ConsumerWidget {
           await api.releaseProfile.deleteReleaseprofileById(id: id);
       if (!resp.isSuccess) {
         throw Exception(
-          resp.error?.message ?? 'Failed to delete release profile',
+          resp.error?.message ?? 'Échec de la suppression du profil de release',
         );
       }
 
       ref.invalidate(lidarrReleaseProfilesProvider(instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Release profile deleted.')),
+        const SnackBar(content: Text('Profil de release supprimé.')),
       );
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Failed to delete release profile: $e')),
+        SnackBar(content: Text('Échec de la suppression du profil de release : $e')),
       );
     }
   }
@@ -1253,7 +1253,7 @@ class ProfilesSection extends ConsumerWidget {
               ),
               IconButton.filledTonal(
                 icon: const Icon(Icons.add, size: 18),
-                tooltip: 'Add Quality Profile',
+                tooltip: 'Ajouter un profil de qualité',
                 onPressed: () => _showQualityProfileDialog(context, ref),
               ),
             ],
@@ -1284,7 +1284,7 @@ class ProfilesSection extends ConsumerWidget {
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(
-                            'No quality profiles found.',
+                            'Aucun profil de qualité trouvé.',
                             style: TextStyle(
                               color: cs.onSurfaceVariant,
                               fontSize: 13,
@@ -1365,7 +1365,7 @@ class ProfilesSection extends ConsumerWidget {
                             const SizedBox(width: 4),
                             IconButton(
                               icon: const Icon(Icons.delete_outline, size: 20),
-                              tooltip: 'Delete Quality Profile',
+                              tooltip: 'Supprimer le profil de qualité',
                               onPressed: () =>
                                   _deleteQualityProfile(context, ref, p),
                             ),
@@ -1403,7 +1403,7 @@ class ProfilesSection extends ConsumerWidget {
               ),
               IconButton.filledTonal(
                 icon: const Icon(Icons.add, size: 18),
-                tooltip: 'Add Metadata Profile',
+                tooltip: 'Ajouter un profil de métadonnées',
                 onPressed: () => _showMetadataProfileDialog(context, ref),
               ),
             ],
@@ -1434,7 +1434,7 @@ class ProfilesSection extends ConsumerWidget {
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(
-                            'No metadata profiles found.',
+                            'Aucun profil de métadonnées trouvé.',
                             style: TextStyle(
                               color: cs.onSurfaceVariant,
                               fontSize: 13,
@@ -1487,16 +1487,16 @@ class ProfilesSection extends ConsumerWidget {
                         subtitle: Text(
                           [
                             if (p.primaryAlbumTypes != null)
-                              '${p.primaryAlbumTypes!.where((ProfilePrimaryAlbumTypeItemResource t) => t.allowed == true).length} Primary Types',
+                              '${p.primaryAlbumTypes!.where((ProfilePrimaryAlbumTypeItemResource t) => t.allowed == true).length} types primaires',
                             if (p.secondaryAlbumTypes != null)
-                              '${p.secondaryAlbumTypes!.where((ProfileSecondaryAlbumTypeItemResource t) => t.allowed == true).length} Secondary Types',
+                              '${p.secondaryAlbumTypes!.where((ProfileSecondaryAlbumTypeItemResource t) => t.allowed == true).length} types secondaires',
                             if (p.releaseStatuses != null)
-                              '${p.releaseStatuses!.where((ProfileReleaseStatusItemResource s) => s.allowed == true).length} Release Statuses',
+                              '${p.releaseStatuses!.where((ProfileReleaseStatusItemResource s) => s.allowed == true).length} statuts de release',
                           ].join(' • '),
                         ),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete_outline, size: 20),
-                          tooltip: 'Delete Metadata Profile',
+                          tooltip: 'Supprimer le profil de métadonnées',
                           onPressed: () =>
                               _deleteMetadataProfile(context, ref, p),
                         ),
@@ -1533,7 +1533,7 @@ class ProfilesSection extends ConsumerWidget {
               ),
               IconButton.filledTonal(
                 icon: const Icon(Icons.add, size: 18),
-                tooltip: 'Add Delay Profile',
+                tooltip: 'Ajouter un profil de délai',
                 onPressed: () => _showDelayProfileDialog(context, ref),
               ),
             ],
@@ -1632,7 +1632,7 @@ class ProfilesSection extends ConsumerWidget {
                         ),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete_outline, size: 20),
-                          tooltip: 'Delete Delay Profile',
+                          tooltip: 'Supprimer le profil de délai',
                           onPressed: () =>
                               _deleteDelayProfile(context, ref, dp),
                         ),
@@ -1664,7 +1664,7 @@ class ProfilesSection extends ConsumerWidget {
               ),
               IconButton.filledTonal(
                 icon: const Icon(Icons.add, size: 18),
-                tooltip: 'Add Release Profile',
+                tooltip: 'Ajouter un profil de release',
                 onPressed: () => _showReleaseProfileDialog(context, ref),
               ),
             ],
@@ -1778,7 +1778,7 @@ class ProfilesSection extends ConsumerWidget {
                         ),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete_outline, size: 20),
-                          tooltip: 'Delete Release Profile',
+                          tooltip: 'Supprimer le profil de release',
                           onPressed: () =>
                               _deleteReleaseProfile(context, ref, rp),
                         ),

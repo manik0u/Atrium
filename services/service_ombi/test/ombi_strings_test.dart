@@ -22,7 +22,7 @@ void main() {
       (<int>[], null),
       (<int>[1], 'Season 1'),
       (<int>[4], 'Season 4'),
-      (<int>[0], 'Specials'),
+      (<int>[0], 'Épisodes spéciaux'),
       (<int>[1, 2, 3], 'Seasons 1-3'),
       // A gap cannot be written as a range.
       (<int>[1, 3], '2 seasons'),
@@ -94,9 +94,9 @@ void main() {
           kind: OmbiMediaKind.movie,
           year: 2016,
           runtimeMinutes: 116,
-          releaseStatus: 'Released',
+          releaseStatus: 'Sortie',
         ),
-        <String>['Movie', '2016', '1h 56m', 'Released'],
+        <String>['Film', '2016', '1h 56m', 'Sortie'],
       );
     });
 
@@ -109,14 +109,14 @@ void main() {
           network: 'Apple TV+',
           releaseStatus: 'Returning Series',
         ),
-        <String>['TV show', '2022', '50m', 'Apple TV+', 'Returning Series'],
+        <String>['Série', '2022', '50m', 'Apple TV+', 'Returning Series'],
       );
     });
 
     test('what is not known is left out, not shown empty', () {
       expect(
         ombiTitleFacts(kind: OmbiMediaKind.tv),
-        <String>['TV show'],
+        <String>['Série'],
       );
     });
   });

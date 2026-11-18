@@ -178,7 +178,7 @@ class MediaStorageSummaryBar extends StatelessWidget {
                     child: Row(
                       children: [
                         FilterChip(
-                          label: const Text('All Libraries'),
+                          label: const Text('Toutes les bibliothèques'),
                           selected:
                               selectedFilter == 'all' || selectedFilter.isEmpty,
                           onSelected: (selected) {

@@ -126,7 +126,7 @@ class _LogsViewState extends ConsumerState<LogsView> {
               ),
               ListTile(
                 leading: const Icon(Icons.clear_all),
-                title: const Text('All'),
+                title: const Text('Tous'),
                 trailing: _levelFilter == null ? const Icon(Icons.check) : null,
                 onTap: () {
                   Navigator.pop(ctx);
@@ -136,7 +136,7 @@ class _LogsViewState extends ConsumerState<LogsView> {
               ),
               ListTile(
                 leading: const Icon(Icons.info_outline),
-                title: const Text('Info'),
+                title: const Text('Infos'),
                 trailing:
                     _levelFilter == 'info' ? const Icon(Icons.check) : null,
                 onTap: () {
@@ -147,7 +147,7 @@ class _LogsViewState extends ConsumerState<LogsView> {
               ),
               ListTile(
                 leading: const Icon(Icons.warning_amber_outlined),
-                title: const Text('Warning'),
+                title: const Text('Avertissement'),
                 trailing:
                     _levelFilter == 'warn' ? const Icon(Icons.check) : null,
                 onTap: () {
@@ -158,7 +158,7 @@ class _LogsViewState extends ConsumerState<LogsView> {
               ),
               ListTile(
                 leading: const Icon(Icons.error_outline),
-                title: const Text('Error'),
+                title: const Text('Erreur'),
                 trailing:
                     _levelFilter == 'error' ? const Icon(Icons.check) : null,
                 onTap: () {
@@ -169,7 +169,7 @@ class _LogsViewState extends ConsumerState<LogsView> {
               ),
               ListTile(
                 leading: const Icon(Icons.bug_report_outlined),
-                title: const Text('Trace / Debug'),
+                title: const Text('Trace / Débogage'),
                 trailing:
                     _levelFilter == 'trace' ? const Icon(Icons.check) : null,
                 onTap: () {
@@ -195,7 +195,7 @@ class _LogsViewState extends ConsumerState<LogsView> {
           'Level: ${log.level?.toUpperCase() ?? '--'}',
           'Logger: ${log.logger ?? '--'}',
           if (log.method != null) 'Method: ${log.method}',
-          'Message: ${log.message ?? '--'}',
+          'Message : ${log.message ?? '--'}',
           if (log.exception != null && log.exception!.isNotEmpty)
             '\nException:\n${log.exception}',
         ].join('\n');
@@ -232,18 +232,18 @@ class _LogsViewState extends ConsumerState<LogsView> {
           actions: [
             TextButton.icon(
               icon: const Icon(Icons.copy, size: 16),
-              label: const Text('Copy'),
+              label: const Text('Copier'),
               onPressed: () {
                 Clipboard.setData(ClipboardData(text: fullDetails));
                 Navigator.pop(ctx);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Log copied to clipboard')),
+                  const SnackBar(content: Text('Journal copié dans le presse-papiers')),
                 );
               },
             ),
             FilledButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text('Close'),
+              child: const Text('Fermer'),
             ),
           ],
         );
@@ -257,13 +257,13 @@ class _LogsViewState extends ConsumerState<LogsView> {
     if (_loading && _logs.isEmpty) {
       content = const Center(child: ExpressiveProgressIndicator());
     } else if (_error != null && _logs.isEmpty) {
-      content = Center(child: Text('Error: $_error'));
+      content = Center(child: Text('Erreur : $_error'));
     } else if (_logs.isEmpty) {
       content = const Center(
         child: EmptyView(
           icon: Icons.article_outlined,
-          title: 'No Log Entries',
-          message: 'No logs match the current criteria.',
+          title: 'Aucune entrée de journal',
+          message: 'Aucun journal ne correspond aux critères actuels.',
         ),
       );
     } else {
@@ -289,7 +289,7 @@ class _LogsViewState extends ConsumerState<LogsView> {
       backgroundColor: Colors.transparent,
       floatingActionButton: FloatingActionButton(
         onPressed: _showFilterBottomSheet,
-        tooltip: 'Filter Logs',
+        tooltip: 'Filtrer les journaux',
         child: const Icon(Icons.filter_list),
       ),
       body: content,
@@ -358,7 +358,7 @@ class _LogEntryTile extends StatelessWidget {
           Clipboard.setData(ClipboardData(text: copyText));
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Log line copied to clipboard'),
+              content: Text('Ligne de journal copiée dans le presse-papiers'),
               behavior: SnackBarBehavior.floating,
             ),
           );

@@ -53,7 +53,7 @@ Future<void> _toggle(
             ? SnackBar(content: Text(message))
             : SnackBar(
                 content: Text(message),
-                action: SnackBarAction(label: 'Undo', onPressed: onUndo),
+                action: SnackBarAction(label: 'Annuler', onPressed: onUndo),
                 // A message with an action would otherwise stay until it is
                 // dismissed. This one leaves by itself, after long enough
                 // to read the rule and reach for Undo.
@@ -71,7 +71,7 @@ Future<void> _toggle(
     );
     say(
       switch (edit.change) {
-        AdguardHomeRuleChange.added => 'Added ${edit.rule} to the custom rules',
+        AdguardHomeRuleChange.added => '${edit.rule} ajouté aux règles personnalisées',
         AdguardHomeRuleChange.removed =>
           'Removed ${edit.rule} from the custom rules',
         AdguardHomeRuleChange.alreadyThere =>

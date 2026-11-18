@@ -42,7 +42,7 @@ class BeszelHome extends ConsumerWidget {
                   hasScrollBody: false,
                   child: Container(
                     alignment: Alignment.center,
-                    child: const Text('No systems found'),
+                    child: const Text('Aucun système trouvé'),
                   ),
                 ),
               ],
@@ -104,7 +104,7 @@ class BeszelHome extends ConsumerWidget {
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (e, st) => Center(child: Text('Error: $e')),
+      error: (e, st) => Center(child: Text('Erreur : $e')),
     );
   }
 }

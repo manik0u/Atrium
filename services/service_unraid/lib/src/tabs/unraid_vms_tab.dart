@@ -51,16 +51,16 @@ class _VmBody extends StatelessWidget {
     if (!list.enabled) {
       return const EmptyView(
         icon: Icons.desktop_access_disabled_outlined,
-        title: 'Virtual machines are off',
-        message: 'This server has no VM manager running. Turn it on under '
-            'Settings, VM Manager, to see virtual machines here.',
+        title: 'Les machines virtuelles sont éteintes',
+        message: "Ce serveur n'a aucun gestionnaire de VM actif. Activez-le dans "
+            'Paramètres, Gestionnaire de VM, pour voir les machines virtuelles ici.',
       );
     }
     if (list.vms.isEmpty) {
       return const EmptyView(
         icon: Icons.desktop_windows_outlined,
-        title: 'No virtual machines',
-        message: 'The VM manager is on, but no machines are defined yet.',
+        title: 'Aucune machine virtuelle',
+        message: "Le gestionnaire de VM est actif, mais aucune machine n'est définie.",
       );
     }
 
@@ -79,7 +79,7 @@ class _VmBody extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         UnraidSectionHeader(
-          title: 'Virtual machines',
+          title: 'Machines virtuelles',
           trailing: '$running of ${list.vms.length} running',
         ),
         const SizedBox(height: Insets.sm),

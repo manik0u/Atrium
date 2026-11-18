@@ -25,12 +25,12 @@ class ProwlarrSyncProfilesScreen extends ConsumerWidget {
     final AsyncValue<List<Map<String, dynamic>>> profiles =
         ref.watch(prowlarrProvidersProvider(_args));
     return Scaffold(
-      appBar: AppBar(title: const Text('Sync Profiles')),
+      appBar: AppBar(title: const Text('Profils de synchro')),
       floatingActionButton: FloatingActionButton.extended(
         heroTag: 'prowlarr-add-appprofile',
         onPressed: () => _openForm(context),
         icon: const Icon(Icons.add),
-        label: const Text('Add'),
+        label: const Text('Ajouter'),
       ),
       body: AsyncValueView<List<Map<String, dynamic>>>(
           value: profiles,
@@ -55,8 +55,8 @@ class ProwlarrSyncProfilesScreen extends ConsumerWidget {
             SizedBox(height: 100),
             EmptyView(
                 icon: Icons.tune_outlined,
-                title: 'No sync profiles',
-                message: 'Tap Add to create a sync profile.',
+                title: 'Aucun profil de synchro',
+                message: 'Touchez Ajouter pour créer un profil de synchro.',
               ),
           ],
         ),
@@ -80,7 +80,7 @@ class ProwlarrSyncProfilesScreen extends ConsumerWidget {
                 final Map<String, dynamic> p = items[i];
                 return ListTile(
                   leading: const Icon(Icons.tune_outlined),
-                  title: Text((p['name'] as String?) ?? 'Profile'),
+                  title: Text((p['name'] as String?) ?? 'Profil'),
                   subtitle: Text(_summary(p)),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => _openForm(context, profile: p),
@@ -100,7 +100,7 @@ class ProwlarrSyncProfilesScreen extends ConsumerWidget {
       if (p['enableAutomaticSearch'] == true) 'Automatic',
       if (p['enableInteractiveSearch'] == true) 'Interactive',
     ];
-    final String search = modes.isEmpty ? 'No search modes' : modes.join(' • ');
+    final String search = modes.isEmpty ? 'Aucun mode de recherche' : modes.join(' • ');
     return '$search • min ${(p['minimumSeeders'] as num?)?.toInt() ?? 0} seeders';
   }
 
@@ -198,12 +198,12 @@ class _ProwlarrSyncProfileFormScreenState
       }
       _invalidate();
       messenger.showSnackBar(
-        SnackBar(content: Text(_isEdit ? 'Profile saved' : 'Profile added')),
+        SnackBar(content: Text(_isEdit ? 'Profil enregistré' : 'Profil ajouté')),
       );
       nav.pop();
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Save failed: ${_err(e)}')),
+        SnackBar(content: Text("Échec de l'enregistrement : ${_err(e)}")),
       );
       if (mounted) {
         setState(() => _saving = false);
@@ -215,12 +215,12 @@ class _ProwlarrSyncProfileFormScreenState
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Delete sync profile?'),
-        content: Text('Remove "${_nameController.text}" from Prowlarr?'),
+        title: const Text('Supprimer le profil de synchro ?'),
+        content: Text('Retirer « ${_nameController.text} » de Prowlarr ?'),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -228,7 +228,7 @@ class _ProwlarrSyncProfileFormScreenState
               foregroundColor: Theme.of(context).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Delete'),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
@@ -247,11 +247,11 @@ class _ProwlarrSyncProfileFormScreenState
         (widget.profile!['id'] as num).toInt(),
       );
       _invalidate();
-      messenger.showSnackBar(const SnackBar(content: Text('Profile deleted')));
+      messenger.showSnackBar(const SnackBar(content: Text('Profil supprimé')));
       nav.pop();
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Delete failed: ${_err(e)}')),
+        SnackBar(content: Text('Échec de la suppression : ${_err(e)}')),
       );
       if (mounted) {
         setState(() => _deleting = false);
@@ -269,11 +269,11 @@ class _ProwlarrSyncProfileFormScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_isEdit ? 'Edit sync profile' : 'Add sync profile'),
+        title: Text(_isEdit ? 'Modifier le profil de synchro' : 'Ajouter un profil de synchro'),
         actions: <Widget>[
           if (_isEdit)
             IconButton(
-              tooltip: 'Delete',
+              tooltip: 'Supprimer',
               icon: _deleting
                   ? const SizedBox(
                       width: 18,
@@ -293,7 +293,7 @@ class _ProwlarrSyncProfileFormScreenState
             TextFormField(
               controller: _nameController,
               decoration: const InputDecoration(
-                labelText: 'Name',
+                labelText: 'Nom',
                 border: OutlineInputBorder(),
               ),
               validator: (String? v) =>
@@ -301,26 +301,26 @@ class _ProwlarrSyncProfileFormScreenState
             ),
             const SizedBox(height: Insets.md),
             ProwlarrSwitchTile(
-              label: 'Enable RSS',
-              subtitle: 'Allow apps to pull new releases via RSS sync',
+              label: 'Activer RSS',
+              subtitle: 'Autoriser les applications à récupérer les nouvelles releases via la synchro RSS',
               value: _rss,
               onChanged: (bool v) => setState(() => _rss = v),
             ),
             ProwlarrSwitchTile(
-              label: 'Enable automatic search',
-              subtitle: 'Allow apps to run automatic searches',
+              label: 'Activer la recherche automatique',
+              subtitle: 'Autoriser les applications à lancer des recherches automatiques',
               value: _automatic,
               onChanged: (bool v) => setState(() => _automatic = v),
             ),
             ProwlarrSwitchTile(
-              label: 'Enable interactive search',
-              subtitle: 'Allow apps to run interactive searches',
+              label: 'Activer la recherche interactive',
+              subtitle: 'Autoriser les applications à lancer des recherches interactives',
               value: _interactive,
               onChanged: (bool v) => setState(() => _interactive = v),
             ),
             ProwlarrIntField(
-              label: 'Minimum seeders',
-              helperText: 'Torrents below this seed count are rejected',
+              label: 'Seeders minimum',
+              helperText: 'Les torrents sous ce nombre de seeders sont rejetés',
               value: _minSeeders,
               onChanged: (int v) => _minSeeders = v,
             ),
@@ -334,7 +334,7 @@ class _ProwlarrSyncProfileFormScreenState
                       child: ExpressiveProgressIndicator(strokeWidth: 2),
                     )
                   : const Icon(Icons.save_outlined),
-              label: Text(_isEdit ? 'Save' : 'Add'),
+              label: Text(_isEdit ? 'Enregistrer' : 'Ajouter'),
             ),
           ],
         ),

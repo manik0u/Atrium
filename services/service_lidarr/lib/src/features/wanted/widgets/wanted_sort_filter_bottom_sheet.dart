@@ -73,7 +73,7 @@ class WantedSortFilterBottomSheet extends ConsumerWidget {
                             )
                             .state = false;
                       },
-                      child: const Text('Reset'),
+                      child: const Text('Réinitialiser'),
                     ),
                 ],
               ),
@@ -91,12 +91,12 @@ class WantedSortFilterBottomSheet extends ConsumerWidget {
                   ButtonSegment<bool>(
                     value: true,
                     icon: Icon(Icons.bookmark_outlined),
-                    label: Text('Monitored Only'),
+                    label: Text('Surveillés uniquement'),
                   ),
                   ButtonSegment<bool>(
                     value: false,
                     icon: Icon(Icons.all_inclusive_outlined),
-                    label: Text('All Albums'),
+                    label: Text('Tous les albums'),
                   ),
                 ],
                 selected: <bool>{monitoredOnly},

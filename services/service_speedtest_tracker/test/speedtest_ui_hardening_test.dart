@@ -33,8 +33,8 @@ void main() {
     );
 
     expect(tester.takeException(), isNull);
-    expect(find.text('Download history'), findsOneWidget);
-    expect(find.text('Upload history'), findsOneWidget);
+    expect(find.text('Historique des téléchargements'), findsOneWidget);
+    expect(find.text('Historique des envois'), findsOneWidget);
     expect(find.text('Gbps'), findsOneWidget);
     expect(find.text('Mbps'), findsOneWidget);
     semantics.dispose();
@@ -115,7 +115,7 @@ void main() {
         MaterialApp(home: SpeedtestHistoryChart(results: results)),
       );
       expect(
-        find.text('Run at least two tests to draw a history.'),
+        find.text('Lancez au moins deux tests pour tracer un historique.'),
         findsOneWidget,
       );
     }
@@ -135,7 +135,7 @@ void main() {
     );
 
     expect(
-      find.text('Run at least two tests to draw a history.'),
+      find.text('Lancez au moins deux tests pour tracer un historique.'),
       findsOneWidget,
     );
     expect(tester.takeException(), isNull);

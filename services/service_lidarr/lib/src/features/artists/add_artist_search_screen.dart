@@ -131,7 +131,7 @@ class _LidarrAddArtistSearchScreenState
             child: SearchBar(
               focusNode: _searchFocusNode,
               controller: _searchController,
-              hintText: 'Search online artist catalog...',
+              hintText: "Rechercher dans le catalogue d'artistes en ligne…",
               textInputAction: TextInputAction.search,
               onSubmitted: (_) {
                 if (_searchFocusNode.hasFocus) {
@@ -179,7 +179,7 @@ class _LidarrAddArtistSearchScreenState
                     ),
                     const SizedBox(height: Insets.md),
                     Text(
-                      'Search for an artist to add',
+                      'Rechercher un artiste à ajouter',
                       style: theme.textTheme.bodyLarge?.copyWith(
                         color: cs.onSurfaceVariant,
                       ),
@@ -200,9 +200,9 @@ class _LidarrAddArtistSearchScreenState
                   if (results.isEmpty) {
                     return const EmptyView(
                       icon: Icons.search_off_outlined,
-                      title: 'No artists found',
+                      title: 'Aucun artiste trouvé',
                       message:
-                          'We couldn\'t find any artists matching your query.',
+                          "Nous n'avons trouvé aucun artiste correspondant à votre requête.",
                     );
                   }
 

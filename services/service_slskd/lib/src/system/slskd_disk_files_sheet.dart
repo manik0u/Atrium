@@ -92,14 +92,14 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
     final bool confirmed = await showDialog<bool>(
           context: context,
           builder: (ctx) => AlertDialog(
-            title: const Text('Delete File?'),
+            title: const Text('Supprimer le fichier ?'),
             content: Text(
               'Are you sure you want to delete "${file.name}" from host storage? This cannot be undone.',
             ),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.of(ctx).pop(false),
-                child: const Text('Cancel'),
+                child: const Text('Annuler'),
               ),
               FilledButton(
                 style: FilledButton.styleFrom(
@@ -107,7 +107,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                   foregroundColor: Theme.of(ctx).colorScheme.onError,
                 ),
                 onPressed: () => Navigator.of(ctx).pop(true),
-                child: const Text('Delete'),
+                child: const Text('Supprimer'),
               ),
             ],
           ),
@@ -133,7 +133,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
       if (!mounted) return;
       messenger.showSnackBar(
         SnackBar(
-          content: Text('Deleted "${file.name}"'),
+          content: Text('« ${file.name} » supprimé'),
           duration: const Duration(seconds: 2),
         ),
       );
@@ -160,14 +160,14 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
     final bool confirmed = await showDialog<bool>(
           context: context,
           builder: (ctx) => AlertDialog(
-            title: const Text('Delete Folder?'),
+            title: const Text('Supprimer le dossier ?'),
             content: Text(
               'Are you sure you want to permanently delete folder "${dir.name}" and all its contents?',
             ),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.of(ctx).pop(false),
-                child: const Text('Cancel'),
+                child: const Text('Annuler'),
               ),
               FilledButton(
                 style: FilledButton.styleFrom(
@@ -175,7 +175,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                   foregroundColor: Theme.of(ctx).colorScheme.onError,
                 ),
                 onPressed: () => Navigator.of(ctx).pop(true),
-                child: const Text('Delete Folder'),
+                child: const Text('Supprimer le dossier'),
               ),
             ],
           ),
@@ -201,7 +201,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
       if (!mounted) return;
       messenger.showSnackBar(
         SnackBar(
-          content: Text('Deleted folder "${dir.name}"'),
+          content: Text('Dossier « ${dir.name} » supprimé'),
           duration: const Duration(seconds: 2),
         ),
       );
@@ -328,7 +328,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                     ),
                     IconButton(
                       icon: const Icon(Icons.refresh_rounded),
-                      tooltip: 'Refresh',
+                      tooltip: 'Actualiser',
                       onPressed: _isActionInProgress ? null : _refreshDirectory,
                     ),
                     IconButton(
@@ -354,8 +354,8 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                 ),
                 unselectedLabelStyle: textTheme.titleSmall,
                 tabs: const <Widget>[
-                  Tab(text: 'Downloads'),
-                  Tab(text: 'Incomplete'),
+                  Tab(text: 'Téléchargements'),
+                  Tab(text: 'Incomplet'),
                 ],
               ),
 
@@ -372,7 +372,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                     children: <Widget>[
                       ActionChip(
                         avatar: const Icon(Icons.home_rounded, size: 16),
-                        label: Text(_selectedSegment == 0 ? 'Downloads' : 'Incomplete'),
+                        label: Text(_selectedSegment == 0 ? 'Téléchargements' : 'Incomplet'),
                         visualDensity: VisualDensity.compact,
                         onPressed: _pathSegments.isEmpty
                             ? null
@@ -413,7 +413,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                               size: 48, color: colorScheme.error),
                           const SizedBox(height: Insets.md),
                           Text(
-                            'Directory Not Accessible',
+                            'Répertoire inaccessible',
                             style: textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -443,7 +443,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                                   size: 48, color: colorScheme.outline),
                               const SizedBox(height: Insets.md),
                               Text(
-                                'Folder is Empty',
+                                'Le dossier est vide',
                                 style: textTheme.titleSmall?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -451,8 +451,8 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                               const SizedBox(height: Insets.xs),
                               Text(
                                 _selectedSegment == 0
-                                    ? 'No completed files or subdirectories in this path.'
-                                    : 'No incomplete partial downloads.',
+                                    ? 'Aucun fichier terminé ni sous-répertoire dans ce chemin.'
+                                    : 'Aucun téléchargement partiel incomplet.',
                                 textAlign: TextAlign.center,
                                 style: textTheme.bodySmall?.copyWith(
                                   color: colorScheme.onSurfaceVariant,
@@ -483,7 +483,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                             return ListTile(
                               leading: const Icon(Icons.arrow_upward_rounded),
                               title: const Text('..'),
-                              subtitle: const Text('Back to parent folder'),
+                              subtitle: const Text('Retour au dossier parent'),
                               onTap: _navigateBack,
                             );
                           }
@@ -521,7 +521,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                                     size: 20,
                                     color: colorScheme.error,
                                   ),
-                                  tooltip: 'Delete folder',
+                                  tooltip: 'Supprimer le dossier',
                                   onPressed: _isActionInProgress
                                       ? null
                                       : () => _deleteDirectory(subdir),
@@ -558,7 +558,7 @@ class _SlskdDiskFilesSheetState extends ConsumerState<SlskdDiskFilesSheet>
                               size: 20,
                               color: colorScheme.error,
                             ),
-                            tooltip: 'Delete file',
+                            tooltip: 'Supprimer le fichier',
                             onPressed: _isActionInProgress
                                 ? null
                                 : () => _deleteFile(file),

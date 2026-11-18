@@ -73,13 +73,13 @@ class _SlskdRoomMembersSheetState extends ConsumerState<SlskdRoomMembersSheet> {
         if (!mounted) return;
         ref.invalidate(slskdRoomUsersProvider((widget.instance, widget.roomName)));
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Invited $result to #${widget.roomName}')),
+          SnackBar(content: Text('$result invité dans #${widget.roomName}')),
         );
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Failed to invite member: $e'),
+              content: Text("Échec de l'invitation du membre : $e"),
               backgroundColor: Theme.of(context).colorScheme.error,
             ),
           );
@@ -124,12 +124,12 @@ class _SlskdRoomMembersSheetState extends ConsumerState<SlskdRoomMembersSheet> {
               ),
               if (isPrivate)
                 IconButton(
-                  tooltip: 'Invite member to private room',
+                  tooltip: 'Inviter un membre dans le salon privé',
                   icon: const Icon(Icons.person_add_alt_1_rounded, size: 20),
                   onPressed: _showInviteMemberDialog,
                 ),
               IconButton(
-                tooltip: 'Refresh member list',
+                tooltip: 'Actualiser la liste des membres',
                 icon: const Icon(Icons.refresh_rounded, size: 20),
                 onPressed: () {
                   ref.invalidate(slskdRoomUsersProvider((widget.instance, widget.roomName)));
@@ -144,7 +144,7 @@ class _SlskdRoomMembersSheetState extends ConsumerState<SlskdRoomMembersSheet> {
             controller: _searchController,
             onChanged: (val) => setState(() => _filterQuery = val.trim()),
             decoration: InputDecoration(
-              hintText: 'Search members...',
+              hintText: 'Rechercher des membres…',
               isDense: true,
               prefixIcon: const Icon(Icons.search_rounded, size: 20),
               suffixIcon: _filterQuery.isNotEmpty
@@ -196,8 +196,8 @@ class _SlskdRoomMembersSheetState extends ConsumerState<SlskdRoomMembersSheet> {
       return Center(
         child: Text(
           _filterQuery.isNotEmpty
-              ? 'No members match "$_filterQuery"'
-              : 'No members found',
+              ? 'Aucun membre ne correspond à « $_filterQuery »'
+              : 'Aucun membre trouvé',
           style: textTheme.bodyMedium?.copyWith(color: colorScheme.outline),
         ),
       );
@@ -359,19 +359,19 @@ class _InviteMemberDialogState extends State<_InviteMemberDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Invite to #${widget.roomName}'),
+      title: Text('Inviter dans #${widget.roomName}'),
       content: TextField(
         controller: _controller,
         autofocus: true,
         decoration: const InputDecoration(
-          labelText: 'Soulseek Username',
-          hintText: 'Enter username to grant access',
+          labelText: "Nom d'utilisateur Soulseek",
+          hintText: "Saisissez le nom d'utilisateur à autoriser",
         ),
       ),
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: () {
@@ -379,7 +379,7 @@ class _InviteMemberDialogState extends State<_InviteMemberDialog> {
             if (text.isEmpty) return;
             Navigator.of(context).pop(text);
           },
-          child: const Text('Invite'),
+          child: const Text('Inviter'),
         ),
       ],
     );

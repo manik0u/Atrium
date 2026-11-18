@@ -31,8 +31,8 @@ class UpdatesView extends ConsumerWidget {
             return const Center(
               child: EmptyView(
                 icon: Icons.system_update_outlined,
-                title: 'No Updates Found',
-                message: 'No update history available.',
+                title: 'Aucune mise à jour trouvée',
+                message: 'Aucun historique de mises à jour disponible.',
               ),
             );
           }

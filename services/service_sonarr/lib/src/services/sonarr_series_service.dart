@@ -18,7 +18,7 @@ class SonarrSeriesService {
     }
     if (response.error != null) {
       throw SonarrException(
-        response.error!.message ?? 'Failed to fetch series',
+        response.error!.message ?? 'Échec de la récupération des séries',
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -34,7 +34,7 @@ class SonarrSeriesService {
     }
     if (response.error != null) {
       throw SonarrException(
-        response.error!.message ?? 'Failed to fetch series',
+        response.error!.message ?? 'Échec de la récupération des séries',
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -50,7 +50,7 @@ class SonarrSeriesService {
     }
     if (response.error != null) {
       throw SonarrException(
-        response.error!.message ?? 'Series lookup failed',
+        response.error!.message ?? 'Échec de la recherche de la série',
         statusCode: response.statusCode,
         error: response.error,
       );

@@ -79,14 +79,14 @@ enum RtorrentSortField {
 
 extension RtorrentSortFieldX on RtorrentSortField {
   String get displayName => switch (this) {
-        RtorrentSortField.name => 'Name',
-        RtorrentSortField.size => 'Size',
-        RtorrentSortField.progress => 'Progress',
-        RtorrentSortField.status => 'Status',
-        RtorrentSortField.downSpeed => 'Down speed',
-        RtorrentSortField.upSpeed => 'Up speed',
+        RtorrentSortField.name => 'Nom',
+        RtorrentSortField.size => 'Taille',
+        RtorrentSortField.progress => 'Progression',
+        RtorrentSortField.status => 'Statut',
+        RtorrentSortField.downSpeed => 'Vitesse de réception',
+        RtorrentSortField.upSpeed => "Vitesse d'envoi",
         RtorrentSortField.ratio => 'Ratio',
-        RtorrentSortField.priority => 'Priority',
+        RtorrentSortField.priority => 'Priorité',
       };
 }
 

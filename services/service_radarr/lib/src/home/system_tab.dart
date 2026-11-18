@@ -70,7 +70,7 @@ class _SystemTabState extends ConsumerState<SystemTab> {
                   icon: const Icon(Icons.menu),
                   onPressed: () => Scaffold.of(context).openDrawer(),
                 ),
-                title: const Text('System'),
+                title: const Text('Système'),
                 actions: <Widget>[
                   PopupMenuButton<String>(
                     icon: const Icon(Icons.more_vert),
@@ -87,7 +87,7 @@ class _SystemTabState extends ConsumerState<SystemTab> {
                         value: 'restart',
                         child: ListTile(
                           leading: Icon(Icons.restart_alt),
-                          title: Text('Restart'),
+                          title: Text('Redémarrer'),
                           dense: true,
                           contentPadding: EdgeInsets.zero,
                         ),
@@ -96,7 +96,7 @@ class _SystemTabState extends ConsumerState<SystemTab> {
                         value: 'shutdown',
                         child: ListTile(
                           leading: Icon(Icons.power_settings_new),
-                          title: Text('Shutdown'),
+                          title: Text('Arrêter'),
                           dense: true,
                           contentPadding: EdgeInsets.zero,
                         ),
@@ -118,11 +118,11 @@ class _SystemTabState extends ConsumerState<SystemTab> {
                   ),
                   unselectedLabelStyle: theme.textTheme.titleSmall,
                   tabs: const <Widget>[
-                    Tab(text: 'Status'),
-                    Tab(text: 'Tasks'),
-                    Tab(text: 'Updates'),
-                    Tab(text: 'Logs'),
-                    Tab(text: 'Backups'),
+                    Tab(text: 'Statut'),
+                    Tab(text: 'Tâches'),
+                    Tab(text: 'Mises à jour'),
+                    Tab(text: 'Journaux'),
+                    Tab(text: 'Sauvegardes'),
                   ],
                 ),
               ),
@@ -146,18 +146,18 @@ class _SystemTabState extends ConsumerState<SystemTab> {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Restart Radarr?'),
+        title: const Text('Redémarrer Radarr ?'),
         content: const Text(
           'This will restart the Radarr service. It will be temporarily unavailable.',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Restart'),
+            child: const Text('Redémarrer'),
           ),
         ],
       ),
@@ -169,13 +169,13 @@ class _SystemTabState extends ConsumerState<SystemTab> {
         await api.restartRadarr();
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Restart signal sent!')),
+            const SnackBar(content: Text('Signal de redémarrage envoyé !')),
           );
         }
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to restart: $e')),
+            SnackBar(content: Text('Échec du redémarrage : $e')),
           );
         }
       }
@@ -186,21 +186,21 @@ class _SystemTabState extends ConsumerState<SystemTab> {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Shutdown Radarr?'),
+        title: const Text('Arrêter Radarr ?'),
         content: const Text(
           'This will shut down the Radarr service. You will need to restart it manually.',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
               backgroundColor: Theme.of(ctx).colorScheme.error,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Shutdown'),
+            child: const Text('Arrêter'),
           ),
         ],
       ),
@@ -212,13 +212,13 @@ class _SystemTabState extends ConsumerState<SystemTab> {
         await api.shutdownRadarr();
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Shutdown signal sent!')),
+            const SnackBar(content: Text("Signal d'arrêt envoyé !")),
           );
         }
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to shutdown: $e')),
+            SnackBar(content: Text("Échec de l'arrêt : $e")),
           );
         }
       }
@@ -263,7 +263,7 @@ class _StatusTab extends ConsumerWidget {
         children: <Widget>[
           healthAsync.when(
             loading: () => const SizedBox.shrink(),
-            error: (Object err, _) => _sectionError('Health', err),
+            error: (Object err, _) => _sectionError('Santé', err),
             data: (List<Map<String, dynamic>> items) {
               if (items.isEmpty) return const SizedBox.shrink();
               return Column(
@@ -280,7 +280,7 @@ class _StatusTab extends ConsumerWidget {
           ),
           statusAsync.when(
             loading: () => const Center(child: ExpressiveProgressIndicator()),
-            error: (Object err, _) => _sectionError('Status', err),
+            error: (Object err, _) => _sectionError('Statut', err),
             data: (Map<String, dynamic> s) {
               final String version = s['version'] as String? ?? 'Unknown';
               final String branch = s['branch'] as String? ?? 'Unknown';
@@ -328,7 +328,7 @@ class _StatusTab extends ConsumerWidget {
                       ),
                       _InfoChip(
                         icon: Icons.account_tree_outlined,
-                        label: 'Branch',
+                        label: 'Branche',
                         value: branch,
                       ),
                       if (isDocker)
@@ -339,31 +339,31 @@ class _StatusTab extends ConsumerWidget {
                         ),
                       _InfoChip(
                         icon: Icons.computer_outlined,
-                        label: 'OS',
+                        label: 'Système',
                         value: '$osName $osVersion'.trim(),
                       ),
                       if (runtimeName.isNotEmpty)
                         _InfoChip(
                           icon: Icons.memory_outlined,
-                          label: 'Runtime',
+                          label: 'Environnement',
                           value: '$runtimeName $runtimeVersion'.trim(),
                         ),
                       if (dbType.isNotEmpty)
                         _InfoChip(
                           icon: Icons.storage_outlined,
-                          label: 'Database',
+                          label: 'Base de données',
                           value: '$dbType $dbVersion'.trim(),
                         ),
                       if (uptimeText.isNotEmpty)
                         _InfoChip(
                           icon: Icons.timer_outlined,
-                          label: 'Uptime',
+                          label: 'Disponibilité',
                           value: uptimeText,
                         ),
                       if (packageAuthor.isNotEmpty)
                         _InfoChip(
                           icon: Icons.person_outline,
-                          label: 'Package',
+                          label: 'Paquet',
                           value: packageAuthor.replaceAll(
                             RegExp(r'\[|\]\(.*?\)'),
                             '',
@@ -372,13 +372,13 @@ class _StatusTab extends ConsumerWidget {
                       if (appData.isNotEmpty)
                         _InfoChip(
                           icon: Icons.folder_outlined,
-                          label: 'App Data',
+                          label: "Données de l'app",
                           value: appData,
                         ),
                       if (startupPath.isNotEmpty)
                         _InfoChip(
                           icon: Icons.launch_outlined,
-                          label: 'Startup',
+                          label: 'Démarrage',
                           value: startupPath,
                         ),
                     ],
@@ -390,7 +390,7 @@ class _StatusTab extends ConsumerWidget {
           ),
           diskAsync.when(
             loading: () => const SizedBox.shrink(),
-            error: (Object err, _) => _sectionError('Disk Space', err),
+            error: (Object err, _) => _sectionError('Espace disque', err),
             data: (List<Map<String, dynamic>> disks) {
               if (disks.isEmpty) return const SizedBox.shrink();
               return Column(
@@ -426,7 +426,7 @@ class _StatusTab extends ConsumerWidget {
   Widget _sectionError(String section, Object err) {
     return Padding(
       padding: const EdgeInsets.only(bottom: Insets.md),
-      child: Text('$section error: $err'),
+      child: Text('Erreur de $section : $err'),
     );
   }
 }
@@ -483,7 +483,7 @@ class _HealthCard extends StatelessWidget {
                   }
                   await launchUrl(uri, mode: LaunchMode.externalApplication);
                 },
-                tooltip: 'Open wiki',
+                tooltip: 'Ouvrir le wiki',
               )
             : null,
       ),
@@ -651,7 +651,7 @@ class _TasksTab extends ConsumerWidget {
       await api.runCommand(<String, dynamic>{'name': taskName});
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('$taskName started!')),
+          SnackBar(content: Text('$taskName démarré !')),
         );
       }
       await Future<void>.delayed(const Duration(seconds: 2));
@@ -659,7 +659,7 @@ class _TasksTab extends ConsumerWidget {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to run task: $e')),
+          SnackBar(content: Text("Échec de l'exécution de la tâche : $e")),
         );
       }
     }
@@ -686,10 +686,10 @@ class _TasksTab extends ConsumerWidget {
       },
       child: tasksAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (Object err, _) => Center(child: Text('Error: $err')),
+        error: (Object err, _) => Center(child: Text('Erreur : $err')),
         data: (List<Map<String, dynamic>> tasks) {
           if (tasks.isEmpty) {
-            return const Center(child: Text('No scheduled tasks.'));
+            return const Center(child: Text('Aucune tâche planifiée.'));
           }
 
           return ListView.builder(
@@ -748,7 +748,7 @@ class _TasksTab extends ConsumerWidget {
                   ),
                   trailing: IconButton(
                     icon: const Icon(Icons.play_arrow_outlined),
-                    tooltip: 'Run now',
+                    tooltip: 'Exécuter maintenant',
                     onPressed: () => _runTask(context, ref, taskName),
                   ),
                 ),
@@ -831,11 +831,11 @@ class _UpdatesTab extends ConsumerWidget {
       },
       child: updatesAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (Object err, _) => Center(child: Text('Error: $err')),
+        error: (Object err, _) => Center(child: Text('Erreur : $err')),
         data: (List<Map<String, dynamic>> updates) {
           if (updates.isEmpty) {
             return const Center(
-              child: Text('No updates available.'),
+              child: Text('Aucune mise à jour disponible.'),
             );
           }
 
@@ -917,7 +917,7 @@ class _UpdateCard extends StatelessWidget {
                 const SizedBox(width: Insets.sm),
                 if (installed)
                   Chip(
-                    label: const Text('Installed'),
+                    label: const Text('Installée'),
                     backgroundColor: theme.colorScheme.primaryContainer,
                     labelStyle: theme.textTheme.labelSmall?.copyWith(
                       color: theme.colorScheme.onPrimaryContainer,
@@ -929,7 +929,7 @@ class _UpdateCard extends StatelessWidget {
                   ),
                 if (latest && !installed)
                   Chip(
-                    label: const Text('Latest'),
+                    label: const Text('Dernière'),
                     backgroundColor: theme.colorScheme.tertiary.withAlpha(30),
                     labelStyle: theme.textTheme.labelSmall?.copyWith(
                       color: theme.colorScheme.tertiary,
@@ -1148,7 +1148,7 @@ class _LogsTabState extends ConsumerState<_LogsTab> {
               ),
               ListTile(
                 leading: const Icon(Icons.clear_all),
-                title: const Text('All'),
+                title: const Text('Tous'),
                 trailing: _levelFilter == null ? const Icon(Icons.check) : null,
                 onTap: () {
                   Navigator.pop(context);
@@ -1158,7 +1158,7 @@ class _LogsTabState extends ConsumerState<_LogsTab> {
               ),
               ListTile(
                 leading: const Icon(Icons.info_outline),
-                title: const Text('Info'),
+                title: const Text('Infos'),
                 trailing: _levelFilter == 'info' ? const Icon(Icons.check) : null,
                 onTap: () {
                   Navigator.pop(context);
@@ -1168,7 +1168,7 @@ class _LogsTabState extends ConsumerState<_LogsTab> {
               ),
               ListTile(
                 leading: const Icon(Icons.warning_amber_outlined),
-                title: const Text('Warning'),
+                title: const Text('Avertissement'),
                 trailing: _levelFilter == 'warn' ? const Icon(Icons.check) : null,
                 onTap: () {
                   Navigator.pop(context);
@@ -1178,7 +1178,7 @@ class _LogsTabState extends ConsumerState<_LogsTab> {
               ),
               ListTile(
                 leading: const Icon(Icons.error_outline),
-                title: const Text('Error'),
+                title: const Text('Erreur'),
                 trailing: _levelFilter == 'error' ? const Icon(Icons.check) : null,
                 onTap: () {
                   Navigator.pop(context);
@@ -1199,9 +1199,9 @@ class _LogsTabState extends ConsumerState<_LogsTab> {
     if (_loading && _logs.isEmpty) {
       body = const Center(child: ExpressiveProgressIndicator());
     } else if (_error != null && _logs.isEmpty) {
-      body = Center(child: Text('Error: $_error'));
+      body = Center(child: Text('Erreur : $_error'));
     } else if (_logs.isEmpty) {
-      body = const Center(child: Text('No log entries.'));
+      body = const Center(child: Text('Aucune entrée de journal.'));
     } else {
       body = EasyRefresh(
         header: const ClassicHeader(
@@ -1377,19 +1377,19 @@ class _BackupsTab extends ConsumerWidget {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Delete Backup?'),
-        content: Text('Delete "$name"? This cannot be undone.'),
+        title: const Text('Supprimer la sauvegarde ?'),
+        content: Text('Supprimer « $name » ? Cette action est irréversible.'),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
               backgroundColor: Theme.of(ctx).colorScheme.error,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Delete'),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
@@ -1403,13 +1403,13 @@ class _BackupsTab extends ConsumerWidget {
         ref.invalidate(radarrBackupsProvider(instance));
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Backup deleted!')),
+            const SnackBar(content: Text('Sauvegarde supprimée !')),
           );
         }
       } catch (e) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to delete backup: $e')),
+            SnackBar(content: Text('Échec de la suppression de la sauvegarde : $e')),
           );
         }
       }
@@ -1437,10 +1437,10 @@ class _BackupsTab extends ConsumerWidget {
       },
       child: backupsAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (Object err, _) => Center(child: Text('Error: $err')),
+        error: (Object err, _) => Center(child: Text('Erreur : $err')),
         data: (List<Map<String, dynamic>> backups) {
           if (backups.isEmpty) {
-            return const Center(child: Text('No backups found.'));
+            return const Center(child: Text('Aucune sauvegarde trouvée.'));
           }
 
           return ListView.builder(

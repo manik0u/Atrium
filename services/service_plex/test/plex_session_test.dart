@@ -41,7 +41,7 @@ void main() {
       expect(s.user?.title, 'alice');
       expect(s.player?.controllable, isTrue);
       expect(s.isTranscode, isFalse);
-      expect(s.decisionLabel, 'Direct Play');
+      expect(s.decisionLabel, 'Lecture directe');
       expect(s.progress, closeTo(0.1, 0.001));
       expect(s.bandwidth, 4200);
       expect(s.location, 'lan');
@@ -74,7 +74,7 @@ void main() {
       final PlexSession s = r.mediaContainer!.metadata.single;
       expect(s.player?.controllable, isFalse); // no 'playback' capability
       expect(s.isTranscode, isTrue);
-      expect(s.decisionLabel, 'Transcode');
+      expect(s.decisionLabel, 'Transcodage');
       expect(s.progress, 0.0); // no offset/duration
       expect(s.user, isNull);
     });

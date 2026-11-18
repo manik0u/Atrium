@@ -99,10 +99,10 @@ class NzbgetApi {
     }
   }
 
-  Future<void> pauseItems(List<int> ids) => editQueue('GroupPause', '', ids);
-  Future<void> resumeItems(List<int> ids) => editQueue('GroupResume', '', ids);
-  Future<void> deleteItems(List<int> ids) => editQueue('GroupDelete', '', ids);
-  Future<void> moveTop(List<int> ids) => editQueue('GroupMoveTop', '', ids);
+  Future<void> pauseItems(List<int> ids) => editQueue('Mettre le groupe en pause', '', ids);
+  Future<void> resumeItems(List<int> ids) => editQueue('Reprendre le groupe', '', ids);
+  Future<void> deleteItems(List<int> ids) => editQueue('Supprimer le groupe', '', ids);
+  Future<void> moveTop(List<int> ids) => editQueue('Groupe en haut', '', ids);
   Future<void> moveBottom(List<int> ids) =>
       editQueue('GroupMoveBottom', '', ids);
 

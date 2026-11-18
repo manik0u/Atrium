@@ -63,9 +63,9 @@ Future<void> runTitleShare(
       .toList(growable: false);
 
   final String? missing = switch (share.kind) {
-    TitleKind.movie when radarrs.isEmpty => 'No Radarr is set up',
-    TitleKind.show when sonarrs.isEmpty => 'No Sonarr is set up',
-    _ when radarrs.isEmpty && sonarrs.isEmpty => 'No Radarr or Sonarr is set up',
+    TitleKind.movie when radarrs.isEmpty => 'Aucun Radarr configuré',
+    TitleKind.show when sonarrs.isEmpty => 'Aucun Sonarr configuré',
+    _ when radarrs.isEmpty && sonarrs.isEmpty => "Ni Radarr ni Sonarr n'est configuré",
     _ => null,
   };
   if (missing != null) {
@@ -89,10 +89,10 @@ Future<void> runTitleShare(
   if (resolution.matches.isEmpty) {
     await tell(
       resolution.unreachable.isNotEmpty
-          ? 'Could not reach '
+          ? 'Impossible de joindre '
               '${resolution.unreachable.map((Instance i) => i.name).join(', ')}'
               ', so nothing was added.'
-          : 'Could not find that title in Radarr or Sonarr, so nothing was '
+          : "Titre introuvable dans Radarr ou Sonarr, rien n'a donc été "
               'added.',
     );
     return;
@@ -191,7 +191,7 @@ Future<T> _whileFinding<T>(
                 ),
                 const SizedBox(width: 20),
                 Text(
-                  'Finding that title…',
+                  'Recherche du titre…',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
@@ -233,7 +233,7 @@ Future<TitleMatch?> _pickMatch(
           Padding(
             padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
             child: Text(
-              'Pick the title',
+              'Choisissez le titre',
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
@@ -318,7 +318,7 @@ String? _sonarrPoster(WidgetRef ref, Instance on, SonarrSeries s) {
 Future<Instance?> pickInstance(
   BuildContext? context,
   List<Instance> instances, {
-  String title = 'Add to',
+  String title = 'Ajouter à',
 }) async {
   if (context == null || !context.mounted) {
     return null;

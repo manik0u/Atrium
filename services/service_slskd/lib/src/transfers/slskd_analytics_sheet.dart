@@ -125,7 +125,7 @@ class _SlskdAnalyticsSheetState extends ConsumerState<SlskdAnalyticsSheet> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.refresh_rounded),
-                      tooltip: 'Refresh analytics',
+                      tooltip: 'Actualiser les analyses',
                       onPressed: () {
                         ref.invalidate(
                           slskdTransferLeaderboardProvider((
@@ -171,7 +171,7 @@ class _SlskdAnalyticsSheetState extends ConsumerState<SlskdAnalyticsSheet> {
                     ),
                     const SizedBox(width: Insets.sm),
                     FilterChip(
-                      label: const Text('24h'),
+                      label: const Text('24 h'),
                       selected: selectedDays == 1,
                       onSelected: (val) {
                         if (val) {
@@ -187,7 +187,7 @@ class _SlskdAnalyticsSheetState extends ConsumerState<SlskdAnalyticsSheet> {
                     ),
                     const SizedBox(width: Insets.xs),
                     FilterChip(
-                      label: const Text('7 Days'),
+                      label: const Text('7 jours'),
                       selected: selectedDays == 7,
                       onSelected: (val) {
                         if (val) {
@@ -203,7 +203,7 @@ class _SlskdAnalyticsSheetState extends ConsumerState<SlskdAnalyticsSheet> {
                     ),
                     const SizedBox(width: Insets.xs),
                     FilterChip(
-                      label: const Text('30 Days'),
+                      label: const Text('30 jours'),
                       selected: selectedDays == 30,
                       onSelected: (val) {
                         if (val) {
@@ -295,7 +295,7 @@ class _SlskdAnalyticsSheetState extends ConsumerState<SlskdAnalyticsSheet> {
                                 Expanded(
                                   child: _buildMetricItem(
                                     context,
-                                    label: 'Resident Memory',
+                                    label: 'Mémoire résidente',
                                     value: memBytes > 0
                                         ? slskdFormatBytes(memBytes)
                                         : 'N/A',
@@ -312,7 +312,7 @@ class _SlskdAnalyticsSheetState extends ConsumerState<SlskdAnalyticsSheet> {
                                 Expanded(
                                   child: _buildMetricItem(
                                     context,
-                                    label: 'Managed Heap',
+                                    label: 'Tas managé',
                                     value: dotnetBytes > 0
                                         ? slskdFormatBytes(dotnetBytes)
                                         : 'N/A',
@@ -329,7 +329,7 @@ class _SlskdAnalyticsSheetState extends ConsumerState<SlskdAnalyticsSheet> {
                                 Expanded(
                                   child: _buildMetricItem(
                                     context,
-                                    label: 'TCP Connections',
+                                    label: 'Connexions TCP',
                                     value: connCount.isFinite
                                         ? connCount.toInt().toString()
                                         : '0',
@@ -416,7 +416,7 @@ class _SlskdAnalyticsSheetState extends ConsumerState<SlskdAnalyticsSheet> {
                               padding: const EdgeInsets.all(Insets.lg),
                               child: Center(
                                 child: Text(
-                                  'No transfer activity recorded in this timeframe.',
+                                  'Aucune activité de transfert enregistrée sur cette période.',
                                   style: textTheme.bodySmall?.copyWith(
                                     color: colorScheme.onSurfaceVariant,
                                   ),
@@ -679,7 +679,7 @@ class _SlskdAnalyticsSheetState extends ConsumerState<SlskdAnalyticsSheet> {
                               padding: const EdgeInsets.all(Insets.lg),
                               child: Center(
                                 child: Text(
-                                  'No directory download statistics yet.',
+                                  'Aucune statistique de téléchargement par répertoire pour le moment.',
                                   style: textTheme.bodySmall?.copyWith(
                                     color: colorScheme.onSurfaceVariant,
                                   ),

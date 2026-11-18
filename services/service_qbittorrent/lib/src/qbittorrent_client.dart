@@ -129,7 +129,7 @@ class QbittorrentClient {
       if (status == 403) {
         throw const NetworkAuthException(
           'qBittorrent banned this IP after repeated failed logins. '
-          "Wait ~5 minutes and retry, or disable the ban in qBit's "
+          'Attendez ~5 minutes et réessayez, ou désactivez le bannissement dans '
           'Tools → Options → Web UI → Authentication.',
         );
       }
@@ -778,7 +778,7 @@ class QbittorrentClient {
         if (_usesApiKey) {
           throw const NetworkAuthException(
             'qBittorrent rejected the API key. Check it in qBittorrent 5.2+ '
-            'Web UI settings (sent as Authorization: Bearer), or rotate the '
+            "les paramètres de l'interface web (envoyés comme Authorization: Bearer), ou renouvelez "
             'key and re-enter it.',
           );
         }

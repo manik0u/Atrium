@@ -34,7 +34,7 @@ Future<void> verifyBeszelConnection(Dio dio, InstanceAuth auth) async {
     }
     if (status < 200 || status >= 300) {
       throw NetworkBadResponseException(
-        'Unexpected response from Beszel (HTTP $status).',
+        'Réponse inattendue de Beszel (HTTP $status).',
         status: status,
       );
     }
@@ -62,7 +62,7 @@ Future<void> verifyBeszelConnection(Dio dio, InstanceAuth auth) async {
     // resources with 401/403 - all three mean the login did not succeed.
     if (status == 400 || status == 401 || status == 403) {
       throw const NetworkAuthException(
-        'Beszel rejected the email or password.',
+        "Beszel a rejeté l'e-mail ou le mot de passe.",
       );
     }
     throw NetworkException.fromDio(e);

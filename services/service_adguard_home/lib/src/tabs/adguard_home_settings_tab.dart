@@ -37,12 +37,12 @@ class AdguardHomeSettingsTab extends ConsumerWidget {
         const _Heading('Protection'),
         _Section(
           icon: Icons.tune,
-          title: 'General',
+          title: 'Général',
           summary: switch (filtering) {
-            true => 'Filtering on, safe browsing, parental control, safe '
+            true => 'Filtrage activé, navigation sécurisée, contrôle parental, recherche sécurisée activés'
                 'search',
-            false => 'Filtering off',
-            null => 'Filtering, safe browsing, parental control, safe search',
+            false => 'Filtrage désactivé',
+            null => 'Filtrage, navigation sécurisée, contrôle parental, recherche sécurisée',
           },
           onTap: () =>
               open(AdguardHomeGeneralSettingsScreen(instance: instance)),
@@ -50,8 +50,8 @@ class AdguardHomeSettingsTab extends ConsumerWidget {
         const _Heading('Logs'),
         _Section(
           icon: Icons.receipt_long_outlined,
-          title: 'Query log',
-          summary: 'How long queries are kept, and which are left out',
+          title: 'Journal des requêtes',
+          summary: 'Combien de temps les requêtes sont conservées, et lesquelles sont exclues',
           onTap: () => open(
             AdguardHomeRetentionScreen(
               instance: instance,
@@ -61,8 +61,8 @@ class AdguardHomeSettingsTab extends ConsumerWidget {
         ),
         _Section(
           icon: Icons.insights_outlined,
-          title: 'Statistics',
-          summary: 'How long they are kept, and Reset statistics',
+          title: 'Statistiques',
+          summary: 'Combien de temps elles sont conservées, et Réinitialiser les statistiques',
           onTap: () => open(
             AdguardHomeRetentionScreen(
               instance: instance,
@@ -73,44 +73,44 @@ class AdguardHomeSettingsTab extends ConsumerWidget {
         const _Heading('DNS'),
         _Section(
           icon: Icons.dns_outlined,
-          title: 'Upstreams',
-          summary: 'Upstream, fallback and bootstrap servers, Test upstreams',
+          title: 'Serveurs amont',
+          summary: "Serveurs amont, de secours et d'amorçage, Tester les amonts",
           onTap: () => open(AdguardHomeDnsUpstreamsScreen(instance: instance)),
         ),
         _Section(
           icon: Icons.settings_ethernet,
-          title: 'DNS server',
+          title: 'Serveur DNS',
           summary: 'Rate limit, EDNS, DNSSEC, IPv6, blocking mode',
           onTap: () => open(AdguardHomeDnsServerScreen(instance: instance)),
         ),
         _Section(
           icon: Icons.cached,
-          title: 'DNS cache',
+          title: 'Cache DNS',
           summary: 'Size, TTL overrides, optimistic caching, Clear cache',
           onTap: () => open(AdguardHomeDnsCacheScreen(instance: instance)),
         ),
         _Section(
           icon: Icons.admin_panel_settings_outlined,
-          title: 'Access',
-          summary: 'Allowed and disallowed clients, disallowed domains',
+          title: 'Accès',
+          summary: 'Clients autorisés et interdits, domaines interdits',
           onTap: () => open(AdguardHomeAccessScreen(instance: instance)),
         ),
         const _Heading('Server'),
         _Section(
           icon: Icons.lock_outline,
-          title: 'Encryption',
+          title: 'Chiffrement',
           summary: 'Whether DNS over HTTPS, TLS and QUIC are set up',
           onTap: () => open(AdguardHomeEncryptionScreen(instance: instance)),
         ),
         _Section(
           icon: Icons.router_outlined,
           title: 'DHCP',
-          summary: 'Whether it hands out addresses, and to whom',
+          summary: "S'il distribue des adresses, et à qui",
           onTap: () => open(AdguardHomeDhcpScreen(instance: instance)),
         ),
         _Section(
           icon: Icons.info_outline,
-          title: 'About',
+          title: 'À propos',
           summary: status == null || status.version.isEmpty
               ? 'Version, DNS addresses, updates'
               : 'Version ${status.version}',

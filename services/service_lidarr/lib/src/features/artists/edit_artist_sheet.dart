@@ -153,7 +153,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                                   initialValue: selectedVal,
                                   isExpanded: true,
                                   decoration: InputDecoration(
-                                    labelText: 'Quality Profile',
+                                    labelText: 'Profil de qualité',
                                     prefixIcon:
                                         const Icon(Icons.high_quality_outlined),
                                     border: OutlineInputBorder(
@@ -164,7 +164,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                                       profiles.map((QualityProfileResource p) {
                                     return DropdownMenuItem<int>(
                                       value: p.id,
-                                      child: Text(p.name ?? 'Profile ${p.id}'),
+                                      child: Text(p.name ?? 'Profil ${p.id}'),
                                     );
                                   }).toList(),
                                   onChanged: (int? val) {
@@ -180,7 +180,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                                 child: ExpressiveProgressIndicator(),
                               ),
                               error: (e, _) =>
-                                  Text('Failed to load quality profiles: $e'),
+                                  Text('Échec du chargement des profils de qualité : $e'),
                             ),
                             const SizedBox(height: Insets.md),
 
@@ -203,7 +203,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                                   initialValue: selectedVal,
                                   isExpanded: true,
                                   decoration: InputDecoration(
-                                    labelText: 'Metadata Profile',
+                                    labelText: 'Profil de métadonnées',
                                     prefixIcon: const Icon(
                                       Icons.library_music_outlined,
                                     ),
@@ -215,7 +215,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                                       profiles.map((MetadataProfileResource p) {
                                     return DropdownMenuItem<int>(
                                       value: p.id,
-                                      child: Text(p.name ?? 'Profile ${p.id}'),
+                                      child: Text(p.name ?? 'Profil ${p.id}'),
                                     );
                                   }).toList(),
                                   onChanged: (int? val) {
@@ -231,7 +231,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                                 child: ExpressiveProgressIndicator(),
                               ),
                               error: (e, _) =>
-                                  Text('Failed to load metadata profiles: $e'),
+                                  Text('Échec du chargement des profils de métadonnées : $e'),
                             ),
                             const SizedBox(height: Insets.md),
 
@@ -255,7 +255,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                                   initialValue: selectedVal,
                                   isExpanded: true,
                                   decoration: InputDecoration(
-                                    labelText: 'Root Folder',
+                                    labelText: 'Dossier racine',
                                     prefixIcon:
                                         const Icon(Icons.folder_outlined),
                                     border: OutlineInputBorder(
@@ -281,7 +281,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                                 child: ExpressiveProgressIndicator(),
                               ),
                               error: (e, _) =>
-                                  Text('Failed to load root folders: $e'),
+                                  Text('Échec du chargement des dossiers racine : $e'),
                             ),
                           ],
                         ),
@@ -318,7 +318,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                               initialValue: _selectedMonitorNewItems,
                               isExpanded: true,
                               decoration: InputDecoration(
-                                labelText: 'Monitor New Releases',
+                                labelText: 'Surveiller les nouvelles sorties',
                                 prefixIcon:
                                     const Icon(Icons.new_releases_outlined),
                                 border: OutlineInputBorder(
@@ -328,15 +328,15 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                               items: const [
                                 DropdownMenuItem(
                                   value: NewItemMonitorTypes.all,
-                                  child: Text('All'),
+                                  child: Text('Tous'),
                                 ),
                                 DropdownMenuItem(
                                   value: NewItemMonitorTypes.newVal,
-                                  child: Text('New Only'),
+                                  child: Text('Nouvelles uniquement'),
                                 ),
                                 DropdownMenuItem(
                                   value: NewItemMonitorTypes.none,
-                                  child: Text('None'),
+                                  child: Text('Aucun'),
                                 ),
                               ],
                               onChanged: (NewItemMonitorTypes? val) {
@@ -351,9 +351,9 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
 
                             SwitchListTile(
                               contentPadding: EdgeInsets.zero,
-                              title: const Text('Monitored'),
+                              title: const Text('Surveillé'),
                               subtitle: const Text(
-                                'Monitor this artist for new releases and upgrades',
+                                'Surveiller cet artiste pour les nouvelles sorties et mises à niveau',
                               ),
                               value: _monitored,
                               onChanged: (bool val) {
@@ -399,7 +399,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
                                   runSpacing: 8,
                                   children: tags.map((TagResource tag) {
                                     final int id = tag.id ?? 0;
-                                    final String label = tag.label ?? 'Tag $id';
+                                    final String label = tag.label ?? 'Balise $id';
                                     final bool isSelected =
                                         _selectedTagIds.contains(id);
                                     return FilterChip(
@@ -505,7 +505,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
       );
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Failed to update artist');
+        throw Exception(resp.error?.message ?? "Échec de la mise à jour de l'artiste");
       }
 
       if (mounted) {
@@ -529,7 +529,7 @@ class _LidarrEditArtistSheetState extends ConsumerState<LidarrEditArtistSheet> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to update artist: $e'),
+            content: Text("Échec de la mise à jour de l'artiste : $e"),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );

@@ -102,7 +102,7 @@ class EmbyItemDetailScreen extends ConsumerWidget {
                           ?.refreshMetadata(itemId);
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Refresh queued')),
+                          const SnackBar(content: Text("Actualisation en file d'attente")),
                         );
                         ref.invalidate(
                           embyItemDetailsProvider((instance, itemId)),
@@ -111,7 +111,7 @@ class EmbyItemDetailScreen extends ConsumerWidget {
                     } catch (e) {
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Failed to refresh: $e')),
+                          SnackBar(content: Text("Échec de l'actualisation : $e")),
                         );
                       }
                     }
@@ -132,15 +132,15 @@ class EmbyItemDetailScreen extends ConsumerWidget {
                   return const <PopupMenuEntry<String>>[
                     PopupMenuItem<String>(
                       value: 'identify',
-                      child: Text('Identify'),
+                      child: Text('Identifier'),
                     ),
                     PopupMenuItem<String>(
                       value: 'refresh',
-                      child: Text('Refresh Metadata'),
+                      child: Text('Actualiser les métadonnées'),
                     ),
                     PopupMenuItem<String>(
                       value: 'backdrop',
-                      child: Text('Change Backdrop'),
+                      child: Text('Changer le fond'),
                     ),
                   ];
                 },
@@ -695,7 +695,7 @@ class _InfoSection extends StatelessWidget {
           if (item.seriesName != null && item.seriesName!.isNotEmpty)
             _InfoRow(
               icon: Icons.tv,
-              label: 'Series',
+              label: 'Séries',
               value: item.seriesName!,
             ),
           if (item.parentIndexNumber != null &&
@@ -704,7 +704,7 @@ class _InfoSection extends StatelessWidget {
               const SizedBox(height: Insets.sm),
             _InfoRow(
               icon: Icons.tag,
-              label: 'Episode',
+              label: 'Épisode',
               value:
                   'Season ${item.parentIndexNumber} Episode ${item.indexNumber}',
             ),

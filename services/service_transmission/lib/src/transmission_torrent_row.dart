@@ -120,7 +120,7 @@ class TransmissionTorrentRow extends StatelessWidget {
                       ),
                       if (!selectionMode)
                         PopupMenuButton<TransmissionTorrentAction>(
-                          tooltip: 'Torrent actions',
+                          tooltip: 'Actions sur le torrent',
                           padding: EdgeInsets.zero,
                           icon: Icon(
                             Icons.more_vert_rounded,
@@ -278,7 +278,7 @@ class TransmissionTorrentRow extends StatelessWidget {
                   ),
                   if (!selectionMode)
                     PopupMenuButton<TransmissionTorrentAction>(
-                      tooltip: 'Torrent actions',
+                      tooltip: 'Actions sur le torrent',
                       padding: EdgeInsets.zero,
                       icon: Icon(
                         Icons.more_vert_rounded,

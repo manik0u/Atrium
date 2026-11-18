@@ -158,7 +158,7 @@ class SlskdUserBioSheet extends StatelessWidget {
               ),
 
               IconButton(
-                tooltip: 'Close',
+                tooltip: 'Fermer',
                 icon: const Icon(Icons.close_rounded),
                 onPressed: () => Navigator.of(context).pop(),
               ),
@@ -254,7 +254,7 @@ class SlskdUserBioSheet extends StatelessWidget {
               child: SelectableText(
                 userInfo.description.isNotEmpty
                     ? userInfo.description
-                    : 'This peer has not set a user bio.',
+                    : "Ce pair n'a pas défini de bio.",
                 style: textTheme.bodySmall?.copyWith(
                   color: userInfo.description.isNotEmpty
                       ? colorScheme.onSurface
@@ -269,7 +269,7 @@ class SlskdUserBioSheet extends StatelessWidget {
           // Close button
           FilledButton.tonal(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
+            child: const Text('Fermer'),
           ),
         ],
       ),

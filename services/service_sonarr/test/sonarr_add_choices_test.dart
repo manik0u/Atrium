@@ -97,7 +97,7 @@ Future<void> _open(WidgetTester tester, _Adapter adapter) async {
 }
 
 Future<void> _add(WidgetTester tester) async {
-  final Finder add = find.widgetWithText(FilledButton, 'Add Series');
+  final Finder add = find.widgetWithText(FilledButton, 'Ajouter une série');
   await tester.scrollUntilVisible(add, 100);
   await tester.pumpAndSettle();
   await tester.tap(add);
@@ -206,7 +206,7 @@ void main() {
       (WidgetTester tester) async {
     final _Adapter adapter = _Adapter()..gate = Completer<void>();
     await _open(tester, adapter);
-    final Finder add = find.widgetWithText(FilledButton, 'Add Series');
+    final Finder add = find.widgetWithText(FilledButton, 'Ajouter une série');
     await tester.scrollUntilVisible(add, 100);
     await tester.pumpAndSettle();
     await tester.tap(add);
@@ -215,7 +215,7 @@ void main() {
     }
     expect(adapter.posted, isNotNull);
 
-    final Finder tile = find.widgetWithText(SwitchListTile, 'Season Folder');
+    final Finder tile = find.widgetWithText(SwitchListTile, 'Dossier de saison');
     await tester.scrollUntilVisible(tile, 100);
     await tester.pump();
     await tester.tap(tile);
@@ -235,7 +235,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Ultra-HD').last);
     await tester.pumpAndSettle();
-    await _flip(tester, 'Season Folder');
+    await _flip(tester, 'Dossier de saison');
     await _add(tester);
 
     expect(adapter.posted!['qualityProfileId'], 2);

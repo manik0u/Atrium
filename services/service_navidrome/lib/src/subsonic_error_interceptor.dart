@@ -37,7 +37,7 @@ class SubsonicErrorInterceptor extends Interceptor {
 
     final Object? error = envelope['error'];
     final String message = error is Map
-        ? (error['message'] as String? ?? 'Request failed')
+        ? (error['message'] as String? ?? 'Échec de la demande')
         : 'Request failed';
     final int? code =
         error is Map ? (error['code'] as num?)?.toInt() : null;
@@ -47,7 +47,7 @@ class SubsonicErrorInterceptor extends Interceptor {
         requestOptions: response.requestOptions,
         response: response,
         type: DioExceptionType.badResponse,
-        error: code == null ? message : '$message (Subsonic error $code)',
+        error: code == null ? message : '$message (erreur Subsonic $code)',
       ),
       true,
     );

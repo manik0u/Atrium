@@ -23,14 +23,14 @@ class SeerrStatusStyle {
 /// 5 available (green). Returns null for unknown / not-yet-requested items
 /// (null or 1) so callers can simply render nothing.
 SeerrStatusStyle? seerrMediaStatusStyle(int? status) => switch (status) {
-      5 => const SeerrStatusStyle(_green, Icons.check_circle, 'Available'),
+      5 => const SeerrStatusStyle(_green, Icons.check_circle, 'Disponible'),
       4 => const SeerrStatusStyle(
           _teal,
           Icons.check_circle_outline,
           'Partial',
         ),
-      3 => const SeerrStatusStyle(_blue, Icons.downloading, 'Processing'),
-      2 => const SeerrStatusStyle(_amber, Icons.hourglass_top, 'Requested'),
+      3 => const SeerrStatusStyle(_blue, Icons.downloading, 'En cours de traitement'),
+      2 => const SeerrStatusStyle(_amber, Icons.hourglass_top, 'Demandé'),
       _ => null,
     };
 
@@ -38,11 +38,11 @@ SeerrStatusStyle? seerrMediaStatusStyle(int? status) => switch (status) {
 /// (green), 3 declined (red), 4 failed (red), 5 completed (green).
 /// Returns null otherwise.
 SeerrStatusStyle? seerrRequestStatusStyle(int? status) => switch (status) {
-      1 => const SeerrStatusStyle(_amber, Icons.pending, 'Pending'),
-      2 => const SeerrStatusStyle(_green, Icons.check_circle, 'Approved'),
-      3 => const SeerrStatusStyle(_red, Icons.cancel, 'Declined'),
-      4 => const SeerrStatusStyle(_red, Icons.error_outline, 'Failed'),
-      5 => const SeerrStatusStyle(_green, Icons.task_alt, 'Completed'),
+      1 => const SeerrStatusStyle(_amber, Icons.pending, 'En attente'),
+      2 => const SeerrStatusStyle(_green, Icons.check_circle, 'Approuvé'),
+      3 => const SeerrStatusStyle(_red, Icons.cancel, 'Refusée'),
+      4 => const SeerrStatusStyle(_red, Icons.error_outline, 'Échec'),
+      5 => const SeerrStatusStyle(_green, Icons.task_alt, 'Terminé'),
       _ => null,
     };
 

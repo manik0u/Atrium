@@ -36,18 +36,18 @@ class _QueueViewState extends ConsumerState<QueueView> {
       builder: (BuildContext ctx) => StatefulBuilder(
         builder: (BuildContext context, StateSetter setDialogState) {
           return AlertDialog(
-            title: const Text('Remove from Queue'),
+            title: const Text("Retirer de la file d'attente"),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Remove "${item.title ?? 'Download'}" from download queue?',
+                  'Retirer « ${item.title ?? 'Download'}" from download queue?',
                 ),
                 const SizedBox(height: Insets.md),
                 CheckboxListTile(
-                  title: const Text('Remove from Download Client'),
-                  subtitle: const Text('Delete from client and discard files'),
+                  title: const Text('Retirer du client de téléchargement'),
+                  subtitle: const Text('Supprimer du client et ignorer les fichiers'),
                   value: removeFromClient,
                   contentPadding: EdgeInsets.zero,
                   dense: true,
@@ -58,7 +58,7 @@ class _QueueViewState extends ConsumerState<QueueView> {
                   },
                 ),
                 CheckboxListTile(
-                  title: const Text('Blocklist Release'),
+                  title: const Text('Mettre la release en liste de blocage'),
                   subtitle: const Text(
                     'Prevent Lidarr from grabbing this release again',
                   ),
@@ -76,7 +76,7 @@ class _QueueViewState extends ConsumerState<QueueView> {
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.of(ctx).pop(false),
-                child: const Text('Cancel'),
+                child: const Text('Annuler'),
               ),
               FilledButton(
                 style: FilledButton.styleFrom(
@@ -84,7 +84,7 @@ class _QueueViewState extends ConsumerState<QueueView> {
                   foregroundColor: Theme.of(ctx).colorScheme.onError,
                 ),
                 onPressed: () => Navigator.of(ctx).pop(true),
-                child: const Text('Remove'),
+                child: const Text('Retirer'),
               ),
             ],
           );
@@ -104,7 +104,7 @@ class _QueueViewState extends ConsumerState<QueueView> {
       );
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Failed to remove queue item');
+        throw Exception(resp.error?.message ?? "Échec du retrait de l'élément de la file");
       }
 
       ref.invalidate(lidarrQueueProvider(widget.instance));
@@ -113,7 +113,7 @@ class _QueueViewState extends ConsumerState<QueueView> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Removed "${item.title ?? 'Item'}" from queue'),
+            content: Text('Retiré « ${item.title ?? 'Item'}" from queue'),
           ),
         );
       }
@@ -121,7 +121,7 @@ class _QueueViewState extends ConsumerState<QueueView> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to remove item: $e'),
+            content: Text("Échec de la suppression de l'élément : $e"),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -166,7 +166,7 @@ class _QueueViewState extends ConsumerState<QueueView> {
           String statusDescription;
           if (isImportBlocked) {
             statusDescription =
-                'One or more tracks expected in this release were not imported automatically. Use Manual Import below to match files.';
+                "Une ou plusieurs pistes attendues dans cette release n'ont pas été importées automatiquement. Utilisez l'import manuel ci-dessous pour associer les fichiers.";
           } else if (item.trackedDownloadState ==
               TrackedDownloadState.importPending) {
             statusDescription =
@@ -174,7 +174,7 @@ class _QueueViewState extends ConsumerState<QueueView> {
           } else if (item.trackedDownloadState ==
               TrackedDownloadState.importing) {
             statusDescription =
-                'Currently importing and organizing audio files into your library.';
+                'Import et organisation des fichiers audio dans votre bibliothèque en cours.';
           } else if (status == 'downloading') {
             statusDescription =
                 'Currently downloading via ${item.downloadClient ?? 'download client'}.';
@@ -183,13 +183,13 @@ class _QueueViewState extends ConsumerState<QueueView> {
           } else if (status == 'paused') {
             statusDescription = 'Download paused in download client.';
           } else {
-            statusDescription = 'Release is currently queued for download.';
+            statusDescription = 'La release est actuellement en file pour téléchargement.';
           }
 
           return Scaffold(
             backgroundColor: cs.surface,
             appBar: AppBar(
-              title: const Text('Download Details'),
+              title: const Text('Détails du téléchargement'),
               leading: IconButton(
                 icon: const Icon(Icons.close),
                 onPressed: () => Navigator.of(context).pop(),
@@ -197,7 +197,7 @@ class _QueueViewState extends ConsumerState<QueueView> {
               actions: <Widget>[
                 IconButton(
                   icon: Icon(Icons.delete_outline, color: cs.error),
-                  tooltip: 'Remove from Queue',
+                  tooltip: "Retirer de la file d'attente",
                   onPressed: () {
                     Navigator.of(context).pop();
                     _removeQueueItem(item);
@@ -267,7 +267,7 @@ class _QueueViewState extends ConsumerState<QueueView> {
                           if (item.album?.title != null) ...[
                             const SizedBox(height: 2),
                             Text(
-                              'Album: ${item.album!.title!}',
+                              'Album : ${item.album!.title!}',
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: cs.onSurfaceVariant,
                               ),
@@ -407,7 +407,7 @@ class _QueueViewState extends ConsumerState<QueueView> {
                         Icons.drive_folder_upload_outlined,
                         size: 18,
                       ),
-                      label: const Text('Manual Import'),
+                      label: const Text('Import manuel'),
                       onPressed: () {
                         Navigator.of(context).pop();
                         showLidarrManualImportFlow(
@@ -422,7 +422,7 @@ class _QueueViewState extends ConsumerState<QueueView> {
                     if (item.albumId != null)
                       OutlinedButton.icon(
                         icon: const Icon(Icons.search, size: 18),
-                        label: const Text('Interactive Search'),
+                        label: const Text('Recherche interactive'),
                         onPressed: () {
                           Navigator.of(context).pop();
                           Navigator.of(context).push(
@@ -684,10 +684,10 @@ class _QueueViewState extends ConsumerState<QueueView> {
             child: Center(
               child: EmptyView(
                 icon: Icons.cloud_done_outlined,
-                title: rawQueue.isEmpty ? 'Queue Empty' : 'No matches found',
+                title: rawQueue.isEmpty ? "File d'attente vide" : 'Aucune correspondance trouvée',
                 message: rawQueue.isEmpty
-                    ? 'No active music downloads in progress.'
-                    : 'No downloads matching your search query.',
+                    ? 'Aucun téléchargement musical en cours.'
+                    : 'Aucun téléchargement ne correspond à votre recherche.',
               ),
             ),
           );
@@ -795,12 +795,12 @@ class _QueueViewState extends ConsumerState<QueueView> {
               color: Theme.of(context).colorScheme.error,
             ),
             const SizedBox(height: 12),
-            Text('Failed to load queue: $error'),
+            Text("Échec du chargement de la file d'attente : $error"),
             const SizedBox(height: 12),
             FilledButton.tonal(
               onPressed: () =>
                   ref.invalidate(lidarrQueueProvider(widget.instance)),
-              child: const Text('Retry'),
+              child: const Text('Réessayer'),
             ),
           ],
         ),
@@ -1048,7 +1048,7 @@ class _QueueItemRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    item.album?.title ?? item.title ?? 'Download Item',
+                    item.album?.title ?? item.title ?? "Télécharger l'élément",
                     style: theme.textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -1139,7 +1139,7 @@ class _QueueItemRow extends StatelessWidget {
               const SizedBox(width: 8),
               IconButton(
                 icon: Icon(Icons.close, size: 18, color: cs.onSurfaceVariant),
-                tooltip: 'Remove from Queue',
+                tooltip: "Retirer de la file d'attente",
                 visualDensity: VisualDensity.compact,
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(minWidth: 28, minHeight: 28),
@@ -1259,7 +1259,7 @@ class _QueueCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          item.album?.title ?? item.title ?? 'Download Item',
+                          item.album?.title ?? item.title ?? "Télécharger l'élément",
                           style: theme.textTheme.titleSmall?.copyWith(
                             fontWeight: FontWeight.w600,
                             fontSize: 14,
@@ -1292,7 +1292,7 @@ class _QueueCard extends StatelessWidget {
                         size: 18,
                         color: cs.onSurfaceVariant,
                       ),
-                      tooltip: 'Remove from Queue',
+                      tooltip: "Retirer de la file d'attente",
                       visualDensity: VisualDensity.compact,
                       padding: EdgeInsets.zero,
                       constraints:

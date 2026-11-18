@@ -102,7 +102,7 @@ class OverviewActivityChart extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    'No playback activity recorded in the past 7 days.',
+                    'Aucune activité de lecture enregistrée ces 7 derniers jours.',
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),

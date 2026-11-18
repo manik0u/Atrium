@@ -76,7 +76,7 @@ void main() {
   }
 
   Future<void> copy(WidgetTester tester) async {
-    await tester.tap(find.byTooltip('Copy logs'));
+    await tester.tap(find.byTooltip('Copier les journaux'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
   }
@@ -125,7 +125,7 @@ void main() {
     await copy(tester);
 
     expect(find.textContaining('Copied'), findsNothing);
-    expect(find.text('Could not copy to the clipboard'), findsOneWidget);
+    expect(find.text('Impossible de copier dans le presse-papiers'), findsOneWidget);
   });
 
   testWidgets('tapping one entry reports a refused copy too',
@@ -138,6 +138,6 @@ void main() {
     await tester.pump(const Duration(milliseconds: 100));
 
     expect(find.text('Log entry copied to clipboard'), findsNothing);
-    expect(find.text('Could not copy to the clipboard'), findsOneWidget);
+    expect(find.text('Impossible de copier dans le presse-papiers'), findsOneWidget);
   });
 }

@@ -21,8 +21,8 @@ class BazarrSettingsTab extends StatelessWidget {
         const SizedBox(height: Insets.sm),
         _SettingsTile(
           icon: Icons.language,
-          title: 'Languages',
-          subtitle: 'Enable the subtitle languages Bazarr searches for',
+          title: 'Langues',
+          subtitle: 'Activez les langues de sous-titres que Bazarr recherche',
           onTap: () => _push(
             context,
             BazarrLanguagesScreen(instance: instance),
@@ -30,8 +30,8 @@ class BazarrSettingsTab extends StatelessWidget {
         ),
         _SettingsTile(
           icon: Icons.cloud_outlined,
-          title: 'Providers',
-          subtitle: 'Enable and configure subtitle providers',
+          title: 'Fournisseurs',
+          subtitle: 'Activez et configurez les fournisseurs de sous-titres',
           onTap: () => _push(
             context,
             BazarrProvidersScreen(instance: instance),
@@ -39,8 +39,8 @@ class BazarrSettingsTab extends StatelessWidget {
         ),
         _SettingsTile(
           icon: Icons.tune_outlined,
-          title: 'Language Profiles',
-          subtitle: 'The language sets assigned to series and movies',
+          title: 'Profils de langue',
+          subtitle: 'Les ensembles de langues attribués aux séries et films',
           onTap: () => _push(
             context,
             BazarrProfilesScreen(instance: instance),

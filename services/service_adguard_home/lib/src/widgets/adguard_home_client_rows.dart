@@ -188,9 +188,9 @@ class AdguardHomePersistentClientRow extends StatelessWidget {
           const AdguardHomeClientMark('Own upstreams', strong: true),
         // Both explain a missing or a small count.
         if (client.ignoreQueryLog)
-          const AdguardHomeClientMark('Not in the query log', strong: true),
+          const AdguardHomeClientMark('Pas dans le journal des requêtes', strong: true),
         if (client.ignoreStatistics)
-          const AdguardHomeClientMark('Not in statistics', strong: true),
+          const AdguardHomeClientMark('Pas dans les statistiques', strong: true),
       ],
       queries: row.queries,
       onTap: onTap,

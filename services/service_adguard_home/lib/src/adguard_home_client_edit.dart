@@ -184,10 +184,10 @@ class AdguardHomeClientDraft {
   /// hold with an error about its own code. An identifier it cannot read it
   /// names itself, in plain words.
   AdguardHomeClientProblems get problems => AdguardHomeClientProblems(
-        name: name.trim().isEmpty ? 'Give the client a name.' : null,
+        name: name.trim().isEmpty ? 'Donnez un nom au client.' : null,
         ids: cleanIds.isEmpty ? 'Add at least one identifier.' : null,
         cacheSize: cacheSize == null
-            ? 'A whole number from 0 to $adguardHomeMaxCacheSize.'
+            ? 'Un nombre entier de 0 à $adguardHomeMaxCacheSize.'
             : null,
       );
 
@@ -366,8 +366,8 @@ String? adguardHomeIpProblem(String text, {int? version}) {
           (version == 6 && bytes.length == 16));
   if (fits) return null;
   return switch (version) {
-    4 => 'An IPv4 address, such as 0.0.0.0.',
-    6 => 'An IPv6 address, such as ::.',
-    _ => 'An IP address.',
+    4 => 'Une adresse IPv4, par ex. 0.0.0.0.',
+    6 => 'Une adresse IPv6, par ex. ::.',
+    _ => 'Une adresse IP.',
   };
 }

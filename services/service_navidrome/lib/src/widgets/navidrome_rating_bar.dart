@@ -206,7 +206,7 @@ Future<void> showNavidromeRatingModal({
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text('Failed to set rating: $e'),
+                              content: Text('Échec de la définition de la note : $e'),
                             ),
                           );
                         }
@@ -228,14 +228,14 @@ Future<void> showNavidromeRatingModal({
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text('Failed to clear rating: $e'),
+                                content: Text('Échec de la suppression de la note : $e'),
                               ),
                             );
                           }
                         }
                       },
                       icon: const Icon(Icons.clear_rounded, size: 18),
-                      label: const Text('Remove Rating'),
+                      label: const Text('Supprimer la note'),
                     ),
                 ],
               ),

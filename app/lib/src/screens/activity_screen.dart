@@ -45,8 +45,8 @@ class ActivityScreen extends ConsumerWidget {
     } else if (nothing) {
       body = const EmptyView(
         icon: Icons.swap_vert_outlined,
-        title: 'Nothing happening right now',
-        message: 'Active streams and transfers will show up here.',
+        title: 'Rien en ce moment',
+        message: 'Les flux actifs et transferts apparaîtront ici.',
       );
     } else {
       final bool showStreams =
@@ -70,7 +70,7 @@ class ActivityScreen extends ConsumerWidget {
             _SummaryBar(summary: summary),
             if (showStreams) ...<Widget>[
               _SectionHeader(
-                title: 'Now Streaming',
+                title: 'En cours de lecture',
                 trailing: '${streamsState.streams.length}',
               ),
               if (streamsState.errors.isNotEmpty)
@@ -86,7 +86,7 @@ class ActivityScreen extends ConsumerWidget {
             if (showStreams && showDownloads) const SizedBox(height: Insets.sm),
             if (showDownloads) ...<Widget>[
               _SectionHeader(
-                title: 'Transfers',
+                title: 'Transferts',
                 trailing: <String>[
                   '${downloadsState.downloads.length}',
                   if (summary.totalDlBps > 0)
@@ -128,7 +128,7 @@ class ActivityScreen extends ConsumerWidget {
               );
             },
           ),
-          title: const Text('Activity'),
+          title: const Text('Activité'),
         ),
         body: body,
       ),
@@ -194,7 +194,7 @@ class _SummaryBar extends StatelessWidget {
             child: _StatTile(
               icon: Icons.sensors,
               value: '${summary.streamCount}',
-              label: summary.streamCount == 1 ? 'Stream' : 'Streams',
+              label: summary.streamCount == 1 ? 'Flux' : 'Flux',
               color: cs.primary,
             ),
           ),
@@ -203,7 +203,7 @@ class _SummaryBar extends StatelessWidget {
             child: _StatTile(
               icon: Icons.swap_vert,
               value: '${summary.downloadCount}',
-              label: summary.downloadCount == 1 ? 'Transfer' : 'Transfers',
+              label: summary.downloadCount == 1 ? 'Transfert' : 'Transferts',
               color: cs.secondary,
             ),
           ),
@@ -215,7 +215,7 @@ class _SummaryBar extends StatelessWidget {
                   ? '↓ ${fmtSpeedBps(summary.totalDlBps)}'
                       '  ↑ ${fmtSpeedBps(summary.totalUpBps)}'
                   : fmtSpeedBps(summary.totalDlBps),
-              label: 'Speed',
+              label: 'Vitesse',
               color: cs.tertiary,
             ),
           ),

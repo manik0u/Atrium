@@ -61,7 +61,7 @@ final slskdSystemSegmentProvider =
 
 /// Log level filter ('All', 'Error', 'Warning', 'Information', 'Debug').
 final slskdLogSeverityFilterProvider =
-    StateProvider.autoDispose.family<String, Instance>((ref, instance) => 'All');
+    StateProvider.autoDispose.family<String, Instance>((ref, instance) => 'Tous');
 
 /// Search filter query for System logs.
 final slskdLogSearchQueryProvider =

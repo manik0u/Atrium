@@ -33,7 +33,7 @@ class DashboardMySpeedWidget extends ConsumerWidget {
           ? () => _open(context, instances.first)
           : null,
       child: instances.isEmpty
-          ? const DashboardIdleRow(text: 'No MySpeed instances configured')
+          ? const DashboardIdleRow(text: 'Aucune instance MySpeed configurée')
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -115,16 +115,16 @@ class _MySpeedInstanceBlockState extends ConsumerState<_MySpeedInstanceBlock> {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Run speedtest'),
-        content: Text('Start a new speedtest on ${widget.instance.name}?'),
+        title: const Text('Lancer un speedtest'),
+        content: Text('Lancer un nouveau speedtest sur ${widget.instance.name} ?'),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Start'),
+            child: const Text('Démarrer'),
           ),
         ],
       ),
@@ -140,14 +140,14 @@ class _MySpeedInstanceBlockState extends ConsumerState<_MySpeedInstanceBlock> {
       await api.runSpeedtest();
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Speedtest triggered successfully')),
+        const SnackBar(content: Text('Speedtest lancé avec succès')),
       );
       _startPolling();
     } catch (e) {
       if (!mounted) return;
       setState(() => _isLocallyRunning = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to trigger speedtest: $e')),
+        SnackBar(content: Text('Échec du lancement du speedtest : $e')),
       );
     }
   }
@@ -238,7 +238,7 @@ class _MySpeedInstanceBlockState extends ConsumerState<_MySpeedInstanceBlock> {
             Expanded(
               child: MySpeedMetricBox(
                 icon: Icons.arrow_downward_rounded,
-                label: 'DOWN',
+                label: 'DESCENTE',
                 value: latest != null
                     ? latest.download.toStringAsFixed(1)
                     : '--',
@@ -252,7 +252,7 @@ class _MySpeedInstanceBlockState extends ConsumerState<_MySpeedInstanceBlock> {
             Expanded(
               child: MySpeedMetricBox(
                 icon: Icons.arrow_upward_rounded,
-                label: 'UP',
+                label: 'MONTÉE',
                 value:
                     latest != null ? latest.upload.toStringAsFixed(1) : '--',
                 unit: 'Mbps',
@@ -313,7 +313,7 @@ class _MySpeedInstanceBlockState extends ConsumerState<_MySpeedInstanceBlock> {
               child: Text(
                 latest?.server != null && latest!.server!.isNotEmpty
                     ? latest.server!
-                    : (latest?.createdAt == null ? 'No results yet' : ''),
+                    : (latest?.createdAt == null ? 'Aucun résultat pour le moment' : ''),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.bodySmall?.copyWith(
@@ -352,7 +352,7 @@ class _MySpeedInstanceBlockState extends ConsumerState<_MySpeedInstanceBlock> {
                         children: <Widget>[
                           Icon(Icons.play_arrow_rounded, size: 16),
                           SizedBox(width: 4),
-                          Text('Run test'),
+                          Text('Lancer le test'),
                         ],
                       ),
               ),

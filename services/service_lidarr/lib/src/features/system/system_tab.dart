@@ -42,18 +42,18 @@ class _SystemTabState extends ConsumerState<SystemTab>
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Restart Lidarr?'),
+        title: const Text('Redémarrer Lidarr ?'),
         content: const Text(
           'This will restart the Lidarr service. It will be temporarily unavailable.',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Restart'),
+            child: const Text('Redémarrer'),
           ),
         ],
       ),
@@ -65,13 +65,13 @@ class _SystemTabState extends ConsumerState<SystemTab>
         await api.system.postSystemRestart();
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Restart signal sent!')),
+            const SnackBar(content: Text('Signal de redémarrage envoyé !')),
           );
         }
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to restart: $e')),
+            SnackBar(content: Text('Échec du redémarrage : $e')),
           );
         }
       }
@@ -82,21 +82,21 @@ class _SystemTabState extends ConsumerState<SystemTab>
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Shutdown Lidarr?'),
+        title: const Text('Arrêter Lidarr ?'),
         content: const Text(
           'This will shut down the Lidarr service. You will need to restart it manually.',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
               backgroundColor: Theme.of(ctx).colorScheme.error,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Shutdown'),
+            child: const Text('Arrêter'),
           ),
         ],
       ),
@@ -108,13 +108,13 @@ class _SystemTabState extends ConsumerState<SystemTab>
         await api.system.postSystemShutdown();
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Shutdown signal sent!')),
+            const SnackBar(content: Text("Signal d'arrêt envoyé !")),
           );
         }
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to shutdown: $e')),
+            SnackBar(content: Text("Échec de l'arrêt : $e")),
           );
         }
       }
@@ -129,7 +129,7 @@ class _SystemTabState extends ConsumerState<SystemTab>
           icon: const Icon(Icons.menu),
           onPressed: () => Scaffold.of(context).openDrawer(),
         ),
-        title: const Text('System'),
+        title: const Text('Système'),
         actions: <Widget>[
           PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert),
@@ -145,7 +145,7 @@ class _SystemTabState extends ConsumerState<SystemTab>
                 value: 'restart',
                 child: ListTile(
                   leading: Icon(Icons.restart_alt),
-                  title: Text('Restart'),
+                  title: Text('Redémarrer'),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
@@ -154,7 +154,7 @@ class _SystemTabState extends ConsumerState<SystemTab>
                 value: 'shutdown',
                 child: ListTile(
                   leading: Icon(Icons.power_settings_new),
-                  title: Text('Shutdown'),
+                  title: Text('Arrêter'),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
@@ -167,13 +167,13 @@ class _SystemTabState extends ConsumerState<SystemTab>
           isScrollable: true,
           tabAlignment: TabAlignment.start,
           tabs: const [
-            Tab(text: 'Status'),
-            Tab(text: 'Disk Space'),
-            Tab(text: 'Tasks'),
-            Tab(text: 'Backups'),
-            Tab(text: 'Updates'),
-            Tab(text: 'Logs'),
-            Tab(text: 'Log Files'),
+            Tab(text: 'Statut'),
+            Tab(text: 'Espace disque'),
+            Tab(text: 'Tâches'),
+            Tab(text: 'Sauvegardes'),
+            Tab(text: 'Mises à jour'),
+            Tab(text: 'Journaux'),
+            Tab(text: 'Fichiers journaux'),
           ],
         ),
       ),

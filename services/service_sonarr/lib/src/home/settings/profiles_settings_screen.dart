@@ -39,15 +39,15 @@ class _ProfilesSettingsScreenState extends ConsumerState<ProfilesSettingsScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profiles & Formats'),
+        title: const Text('Profils et formats'),
         bottom: TabBar(
           controller: _tabController,
           isScrollable: true,
           tabs: const [
-            Tab(text: 'Quality Profiles'),
-            Tab(text: 'Delay Profiles'),
-            Tab(text: 'Release Profiles'),
-            Tab(text: 'Custom Formats'),
+            Tab(text: 'Profils de qualité'),
+            Tab(text: 'Profils de délai'),
+            Tab(text: 'Profils de release'),
+            Tab(text: 'Formats personnalisés'),
           ],
         ),
       ),
@@ -86,7 +86,7 @@ class _QualityProfilesTab extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Failed to load quality profile schema'),
+            content: Text('Échec du chargement du schéma du profil de qualité'),
           ),
         );
       }
@@ -148,7 +148,7 @@ class _QualityProfilesTab extends ConsumerWidget {
 
             return AlertDialog(
               title:
-                  Text(isEdit ? 'Edit Quality Profile' : 'Add Quality Profile'),
+                  Text(isEdit ? 'Modifier le profil de qualité' : 'Ajouter un profil de qualité'),
               content: SizedBox(
                 width: double.maxFinite,
                 child: SingleChildScrollView(
@@ -159,14 +159,14 @@ class _QualityProfilesTab extends ConsumerWidget {
                       TextField(
                         controller: nameController,
                         decoration: const InputDecoration(
-                          labelText: 'Profile Name',
+                          labelText: 'Nom du profil',
                           border: OutlineInputBorder(),
                         ),
                       ),
                       const SizedBox(height: 16),
                       SwitchListTile(
                         contentPadding: EdgeInsets.zero,
-                        title: const Text('Allow Upgrades'),
+                        title: const Text('Autoriser les mises à niveau'),
                         value: upgradeAllowed,
                         onChanged: (val) =>
                             setDialogState(() => upgradeAllowed = val),
@@ -175,7 +175,7 @@ class _QualityProfilesTab extends ConsumerWidget {
                         const SizedBox(height: 8),
                         DropdownButtonFormField<int>(
                           decoration: const InputDecoration(
-                            labelText: 'Upgrade Until (Cutoff)',
+                            labelText: "Mettre à niveau jusqu'à (cutoff)",
                             border: OutlineInputBorder(),
                           ),
                           initialValue:
@@ -185,7 +185,7 @@ class _QualityProfilesTab extends ConsumerWidget {
                           items: cutoffOptions.map((q) {
                             return DropdownMenuItem<int>(
                               value: q['id'] as int,
-                              child: Text(q['name'] as String? ?? 'Unknown'),
+                              child: Text(q['name'] as String? ?? 'Inconnu'),
                             );
                           }).toList(),
                           onChanged: (val) {
@@ -249,7 +249,7 @@ class _QualityProfilesTab extends ConsumerWidget {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
+                  child: const Text('Annuler'),
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -272,7 +272,7 @@ class _QualityProfilesTab extends ConsumerWidget {
                     if (allowedIds.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('Allow at least one quality first.'),
+                          content: Text("Autorisez d'abord au moins une qualité."),
                         ),
                       );
                       return;
@@ -315,12 +315,12 @@ class _QualityProfilesTab extends ConsumerWidget {
                     } catch (e) {
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Error: $e')),
+                          SnackBar(content: Text('Erreur : $e')),
                         );
                       }
                     }
                   },
-                  child: const Text('Save'),
+                  child: const Text('Enregistrer'),
                 ),
               ],
             );
@@ -342,13 +342,13 @@ class _QualityProfilesTab extends ConsumerWidget {
       ref.invalidate(sonarrQualityProfilesProvider(instance));
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Quality profile deleted!')),
+          const SnackBar(content: Text('Profil de qualité supprimé !')),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to delete quality profile: $e')),
+          SnackBar(content: Text('Échec de la suppression du profil de qualité : $e')),
         );
       }
     }
@@ -368,10 +368,10 @@ class _QualityProfilesTab extends ConsumerWidget {
       ),
       body: profilesAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Error: $err')),
+        error: (err, stack) => Center(child: Text('Erreur : $err')),
         data: (profiles) {
           if (profiles.isEmpty) {
-            return const Center(child: Text('No quality profiles configured.'));
+            return const Center(child: Text('Aucun profil de qualité configuré.'));
           }
 
           return ListView.builder(
@@ -449,7 +449,7 @@ class _QualityProfilesTab extends ConsumerWidget {
                           ),
                           const SizedBox(height: Insets.sm),
                           if (enabledQualities.isEmpty)
-                            const Text('No qualities allowed')
+                            const Text('Aucune qualité autorisée')
                           else
                             Wrap(
                               spacing: Insets.xs,
@@ -485,7 +485,7 @@ class _QualityProfilesTab extends ConsumerWidget {
                                 onPressed: () =>
                                     _showProfileDialog(context, ref, profile),
                                 icon: const Icon(Icons.edit_outlined, size: 18),
-                                label: const Text('Edit'),
+                                label: const Text('Modifier'),
                               ),
                               const SizedBox(width: 8),
                               TextButton.icon(
@@ -493,7 +493,7 @@ class _QualityProfilesTab extends ConsumerWidget {
                                     _deleteProfile(context, ref, id),
                                 icon:
                                     const Icon(Icons.delete_outline, size: 18),
-                                label: const Text('Delete'),
+                                label: const Text('Supprimer'),
                                 style: TextButton.styleFrom(
                                   foregroundColor: theme.colorScheme.error,
                                 ),
@@ -547,14 +547,14 @@ class _DelayProfilesTab extends ConsumerWidget {
         return StatefulBuilder(
           builder: (context, setDialogState) {
             return AlertDialog(
-              title: Text(isEdit ? 'Edit Delay Profile' : 'Add Delay Profile'),
+              title: Text(isEdit ? 'Modifier le profil de délai' : 'Ajouter un profil de délai'),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SwitchListTile(
                       contentPadding: EdgeInsets.zero,
-                      title: const Text('Enable Usenet'),
+                      title: const Text('Activer Usenet'),
                       value: enableUsenet,
                       onChanged: (val) =>
                           setDialogState(() => enableUsenet = val),
@@ -564,14 +564,14 @@ class _DelayProfilesTab extends ConsumerWidget {
                         controller: usenetDelayController,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
-                          labelText: 'Usenet Delay (Minutes)',
+                          labelText: 'Délai Usenet (minutes)',
                           border: OutlineInputBorder(),
                         ),
                       ),
                     const SizedBox(height: Insets.md),
                     SwitchListTile(
                       contentPadding: EdgeInsets.zero,
-                      title: const Text('Enable Torrent'),
+                      title: const Text('Activer Torrent'),
                       value: enableTorrent,
                       onChanged: (val) =>
                           setDialogState(() => enableTorrent = val),
@@ -581,7 +581,7 @@ class _DelayProfilesTab extends ConsumerWidget {
                         controller: torrentDelayController,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
-                          labelText: 'Torrent Delay (Minutes)',
+                          labelText: 'Délai Torrent (minutes)',
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -589,7 +589,7 @@ class _DelayProfilesTab extends ConsumerWidget {
                     DropdownButtonFormField<String>(
                       initialValue: preferredProtocol,
                       decoration: const InputDecoration(
-                        labelText: 'Preferred Protocol',
+                        labelText: 'Protocole préféré',
                         border: OutlineInputBorder(),
                       ),
                       // Sonarr only accepts usenet or torrent here. Keep any
@@ -620,7 +620,7 @@ class _DelayProfilesTab extends ConsumerWidget {
                     const SizedBox(height: Insets.md),
                     SwitchListTile(
                       contentPadding: EdgeInsets.zero,
-                      title: const Text('Bypass if Highest Quality'),
+                      title: const Text('Ignorer si qualité maximale'),
                       value: bypassIfHighest,
                       onChanged: (val) =>
                           setDialogState(() => bypassIfHighest = val),
@@ -631,7 +631,7 @@ class _DelayProfilesTab extends ConsumerWidget {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
+                  child: const Text('Annuler'),
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -674,12 +674,12 @@ class _DelayProfilesTab extends ConsumerWidget {
                     } catch (e) {
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Error: $e')),
+                          SnackBar(content: Text('Erreur : $e')),
                         );
                       }
                     }
                   },
-                  child: const Text('Save'),
+                  child: const Text('Enregistrer'),
                 ),
               ],
             );
@@ -701,13 +701,13 @@ class _DelayProfilesTab extends ConsumerWidget {
       ref.invalidate(sonarrDelayProfilesProvider(instance));
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Delay profile deleted!')),
+          const SnackBar(content: Text('Profil de délai supprimé !')),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to delete delay profile: $e')),
+          SnackBar(content: Text('Échec de la suppression du profil de délai : $e')),
         );
       }
     }
@@ -725,10 +725,10 @@ class _DelayProfilesTab extends ConsumerWidget {
       ),
       body: delayProfilesAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Error: $err')),
+        error: (err, stack) => Center(child: Text('Erreur : $err')),
         data: (profiles) {
           if (profiles.isEmpty) {
-            return const Center(child: Text('No delay profiles configured.'));
+            return const Center(child: Text('Aucun profil de délai configuré.'));
           }
 
           return ListView.builder(
@@ -832,7 +832,7 @@ class _ReleaseProfilesTab extends ConsumerWidget {
           builder: (context, setDialogState) {
             return AlertDialog(
               title:
-                  Text(isEdit ? 'Edit Release Profile' : 'Add Release Profile'),
+                  Text(isEdit ? 'Modifier le profil de release' : 'Ajouter un profil de release'),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -840,7 +840,7 @@ class _ReleaseProfilesTab extends ConsumerWidget {
                     TextField(
                       controller: nameController,
                       decoration: const InputDecoration(
-                        labelText: 'Profile Name',
+                        labelText: 'Nom du profil',
                         border: OutlineInputBorder(),
                       ),
                     ),
@@ -848,7 +848,7 @@ class _ReleaseProfilesTab extends ConsumerWidget {
                     TextField(
                       controller: requiredController,
                       decoration: const InputDecoration(
-                        labelText: 'Must Contain (Comma separated)',
+                        labelText: 'Doit contenir (séparés par des virgules)',
                         border: OutlineInputBorder(),
                       ),
                     ),
@@ -856,14 +856,14 @@ class _ReleaseProfilesTab extends ConsumerWidget {
                     TextField(
                       controller: ignoredController,
                       decoration: const InputDecoration(
-                        labelText: 'Must Not Contain (Comma separated)',
+                        labelText: 'Ne doit pas contenir (séparés par des virgules)',
                         border: OutlineInputBorder(),
                       ),
                     ),
                     const SizedBox(height: Insets.md),
                     SwitchListTile(
                       contentPadding: EdgeInsets.zero,
-                      title: const Text('Enabled'),
+                      title: const Text('Activé'),
                       value: enabled,
                       onChanged: (val) => setDialogState(() => enabled = val),
                     ),
@@ -873,7 +873,7 @@ class _ReleaseProfilesTab extends ConsumerWidget {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
+                  child: const Text('Annuler'),
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -913,12 +913,12 @@ class _ReleaseProfilesTab extends ConsumerWidget {
                     } catch (e) {
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Error: $e')),
+                          SnackBar(content: Text('Erreur : $e')),
                         );
                       }
                     }
                   },
-                  child: const Text('Save'),
+                  child: const Text('Enregistrer'),
                 ),
               ],
             );
@@ -940,13 +940,13 @@ class _ReleaseProfilesTab extends ConsumerWidget {
       ref.invalidate(sonarrReleaseProfilesProvider(instance));
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Release profile deleted!')),
+          const SnackBar(content: Text('Profil de release supprimé !')),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to delete release profile: $e')),
+          SnackBar(content: Text('Échec de la suppression du profil de release : $e')),
         );
       }
     }
@@ -965,10 +965,10 @@ class _ReleaseProfilesTab extends ConsumerWidget {
       ),
       body: releaseProfilesAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Error: $err')),
+        error: (err, stack) => Center(child: Text('Erreur : $err')),
         data: (profiles) {
           if (profiles.isEmpty) {
-            return const Center(child: Text('No release profiles configured.'));
+            return const Center(child: Text('Aucun profil de release configuré.'));
           }
 
           return ListView.builder(
@@ -1051,7 +1051,7 @@ class _CustomFormatsTab extends ConsumerWidget {
         return StatefulBuilder(
           builder: (context, setDialogState) {
             return AlertDialog(
-              title: Text(isEdit ? 'Edit Custom Format' : 'Add Custom Format'),
+              title: Text(isEdit ? 'Modifier le format personnalisé' : 'Ajouter un format personnalisé'),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -1059,14 +1059,14 @@ class _CustomFormatsTab extends ConsumerWidget {
                     TextField(
                       controller: nameController,
                       decoration: const InputDecoration(
-                        labelText: 'Format Name',
+                        labelText: 'Nom du format',
                         border: OutlineInputBorder(),
                       ),
                     ),
                     const SizedBox(height: Insets.md),
                     SwitchListTile(
                       contentPadding: EdgeInsets.zero,
-                      title: const Text('Include in Rename'),
+                      title: const Text('Inclure dans le renommage'),
                       subtitle: const Text(
                         'Incorporate format in renaming output tokens',
                       ),
@@ -1089,7 +1089,7 @@ class _CustomFormatsTab extends ConsumerWidget {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
+                  child: const Text('Annuler'),
                 ),
                 ElevatedButton(
                   // Sonarr rejects custom formats without specifications and
@@ -1117,19 +1117,19 @@ class _CustomFormatsTab extends ConsumerWidget {
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  content: Text('Custom format updated!'),
+                                  content: Text('Format personnalisé mis à jour !'),
                                 ),
                               );
                             }
                           } catch (e) {
                             if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Error: $e')),
+                                SnackBar(content: Text('Erreur : $e')),
                               );
                             }
                           }
                         },
-                  child: const Text('Save'),
+                  child: const Text('Enregistrer'),
                 ),
               ],
             );
@@ -1151,13 +1151,13 @@ class _CustomFormatsTab extends ConsumerWidget {
       ref.invalidate(sonarrCustomFormatsProvider(instance));
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Custom format deleted!')),
+          const SnackBar(content: Text('Format personnalisé supprimé !')),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to delete custom format: $e')),
+          SnackBar(content: Text('Échec de la suppression du format personnalisé : $e')),
         );
       }
     }
@@ -1175,10 +1175,10 @@ class _CustomFormatsTab extends ConsumerWidget {
       ),
       body: customFormatsAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Error: $err')),
+        error: (err, stack) => Center(child: Text('Erreur : $err')),
         data: (formats) {
           if (formats.isEmpty) {
-            return const Center(child: Text('No custom formats configured.'));
+            return const Center(child: Text('Aucun format personnalisé configuré.'));
           }
 
           return ListView.builder(

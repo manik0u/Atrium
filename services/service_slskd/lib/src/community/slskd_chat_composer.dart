@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class SlskdChatComposer extends StatefulWidget {
   const SlskdChatComposer({
     required this.onSend,
-    this.hintText = 'Type a message...',
+    this.hintText = 'Saisissez un message…',
     this.autofocus = false,
     super.key,
   });

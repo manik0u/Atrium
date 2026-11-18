@@ -66,12 +66,12 @@ class TorrentDetailScreen extends ConsumerWidget {
                         : 'magnet:?xt=urn:btih:${current.hash}&dn=${Uri.encodeComponent(current.name)}';
                     await Clipboard.setData(ClipboardData(text: magnet));
                     messenger.showSnackBar(
-                      const SnackBar(content: Text('Magnet link copied')),
+                      const SnackBar(content: Text('Lien magnet copié')),
                     );
                   case 'copy_hash':
                     await Clipboard.setData(ClipboardData(text: current.hash));
                     messenger.showSnackBar(
-                      const SnackBar(content: Text('Torrent hash copied')),
+                      const SnackBar(content: Text('Hash du torrent copié')),
                     );
                   default:
                     try {
@@ -104,7 +104,7 @@ class TorrentDetailScreen extends ConsumerWidget {
                       ref.invalidate(qbitRawTorrentsProvider(instance));
                     } catch (_) {
                       messenger.showSnackBar(
-                        const SnackBar(content: Text('Action failed')),
+                        const SnackBar(content: Text("Échec de l'action")),
                       );
                     }
                 }
@@ -116,46 +116,46 @@ class TorrentDetailScreen extends ConsumerWidget {
                 ),
                 const PopupMenuItem<String>(
                   value: 'resume',
-                  child: Text('Resume'),
+                  child: Text('Reprendre'),
                 ),
                 const PopupMenuItem<String>(
                   value: 'forcestart',
-                  child: Text('Force Start'),
+                  child: Text('Forcer le démarrage'),
                 ),
                 const PopupMenuDivider(),
                 const PopupMenuItem<String>(
                   value: 'queue_top',
-                  child: Text('Queue to Top'),
+                  child: Text('En haut de la file'),
                 ),
                 const PopupMenuItem<String>(
                   value: 'queue_up',
-                  child: Text('Queue Up'),
+                  child: Text('Monter dans la file'),
                 ),
                 const PopupMenuItem<String>(
                   value: 'queue_down',
-                  child: Text('Queue Down'),
+                  child: Text('Descendre dans la file'),
                 ),
                 const PopupMenuItem<String>(
                   value: 'queue_bottom',
-                  child: Text('Queue to Bottom'),
+                  child: Text('En bas de la file'),
                 ),
                 const PopupMenuDivider(),
                 const PopupMenuItem<String>(
                   value: 'copy_magnet',
-                  child: Text('Copy Magnet Link'),
+                  child: Text('Copier le lien magnet'),
                 ),
                 const PopupMenuItem<String>(
                   value: 'copy_hash',
-                  child: Text('Copy Hash'),
+                  child: Text('Copier le hash'),
                 ),
                 const PopupMenuDivider(),
                 const PopupMenuItem<String>(
                   value: 'recheck',
-                  child: Text('Force Recheck'),
+                  child: Text('Forcer la revérification'),
                 ),
                 const PopupMenuItem<String>(
                   value: 'reannounce',
-                  child: Text('Force Reannounce'),
+                  child: Text('Forcer le ré-annonce'),
                 ),
               ],
             ),
@@ -164,10 +164,10 @@ class TorrentDetailScreen extends ConsumerWidget {
             isScrollable: true,
             tabAlignment: TabAlignment.start,
             tabs: <Widget>[
-              Tab(text: 'Overview'),
-              Tab(text: 'Files'),
+              Tab(text: "Vue d'ensemble"),
+              Tab(text: 'Fichiers'),
               Tab(text: 'Trackers'),
-              Tab(text: 'Peers'),
+              Tab(text: 'Pairs'),
             ],
           ),
         ),
@@ -385,7 +385,7 @@ class _OverviewTab extends ConsumerWidget {
                                   icon: isPrivate
                                       ? Icons.lock_outline
                                       : Icons.public,
-                                  label: isPrivate ? 'Private' : 'Public',
+                                  label: isPrivate ? 'Privé' : 'Public',
                                   // Not the outline colour: that one is
                                   // for borders and reads as disabled.
                                   color: isPrivate
@@ -432,7 +432,7 @@ class _OverviewTab extends ConsumerWidget {
                               isPaused ? Icons.play_arrow : Icons.pause,
                               size: 18,
                             ),
-                            label: Text(isPaused ? 'Resume' : 'Pause'),
+                            label: Text(isPaused ? 'Reprendre' : 'Pause'),
                             onPressed: () async {
                               final ScaffoldMessengerState messenger =
                                   ScaffoldMessenger.of(context);
@@ -452,7 +452,7 @@ class _OverviewTab extends ConsumerWidget {
                               } catch (_) {
                                 messenger.showSnackBar(
                                   const SnackBar(
-                                    content: Text('Action failed'),
+                                    content: Text("Échec de l'action"),
                                   ),
                                 );
                               }
@@ -469,7 +469,7 @@ class _OverviewTab extends ConsumerWidget {
                               ),
                             ),
                             icon: const Icon(Icons.fast_forward, size: 18),
-                            label: const Text('Force Start'),
+                            label: const Text('Forcer le démarrage'),
                             onPressed: () async {
                               final ScaffoldMessengerState messenger =
                                   ScaffoldMessenger.of(context);
@@ -488,7 +488,7 @@ class _OverviewTab extends ConsumerWidget {
                               } catch (_) {
                                 messenger.showSnackBar(
                                   const SnackBar(
-                                    content: Text('Action failed'),
+                                    content: Text("Échec de l'action"),
                                   ),
                                 );
                               }
@@ -516,7 +516,7 @@ class _OverviewTab extends ConsumerWidget {
                               );
                               messenger.showSnackBar(
                                 const SnackBar(
-                                  content: Text('Magnet link copied'),
+                                  content: Text('Lien magnet copié'),
                                 ),
                               );
                             },
@@ -540,7 +540,7 @@ class _OverviewTab extends ConsumerWidget {
                               );
                               messenger.showSnackBar(
                                 const SnackBar(
-                                  content: Text('Torrent hash copied'),
+                                  content: Text('Hash du torrent copié'),
                                 ),
                               );
                             },
@@ -555,7 +555,7 @@ class _OverviewTab extends ConsumerWidget {
                               ),
                             ),
                             icon: const Icon(Icons.delete, size: 18),
-                            label: const Text('Delete'),
+                            label: const Text('Supprimer'),
                             onPressed: () async {
                               final bool? shouldDeleteFiles =
                                   await showDialog<bool>(
@@ -568,14 +568,14 @@ class _OverviewTab extends ConsumerWidget {
                                       StateSetter setState,
                                     ) {
                                       return AlertDialog(
-                                        title: const Text('Delete Torrent'),
+                                        title: const Text('Supprimer le torrent'),
                                         content: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
                                             const Text(
-                                              'Are you sure you want to delete this torrent?',
+                                              'Voulez-vous vraiment supprimer ce torrent ?',
                                             ),
                                             const SizedBox(height: 16),
                                             CheckboxListTile(
@@ -601,7 +601,7 @@ class _OverviewTab extends ConsumerWidget {
                                           TextButton(
                                             onPressed: () =>
                                                 Navigator.of(context).pop(),
-                                            child: const Text('Cancel'),
+                                            child: const Text('Annuler'),
                                           ),
                                           TextButton(
                                             onPressed: () =>
@@ -612,7 +612,7 @@ class _OverviewTab extends ConsumerWidget {
                                                   .colorScheme
                                                   .error,
                                             ),
-                                            child: const Text('Delete'),
+                                            child: const Text('Supprimer'),
                                           ),
                                         ],
                                       );
@@ -640,7 +640,7 @@ class _OverviewTab extends ConsumerWidget {
                               } catch (_) {
                                 messenger.showSnackBar(
                                   const SnackBar(
-                                    content: Text('Action failed'),
+                                    content: Text("Échec de l'action"),
                                   ),
                                 );
                               }
@@ -654,7 +654,7 @@ class _OverviewTab extends ConsumerWidget {
               ),
               const SizedBox(height: Insets.md),
               _SectionCard(
-                title: 'Transfer',
+                title: 'Transfert',
                 rows: <(String, String)>[
                   ('Downloaded', fmtBytes(p.totalDownloaded)),
                   ('Uploaded', fmtBytes(p.totalUploaded)),
@@ -669,7 +669,7 @@ class _OverviewTab extends ConsumerWidget {
               ),
               const SizedBox(height: Insets.md),
               _SectionCard(
-                title: 'Info',
+                title: 'Infos',
                 rows: <(String, String)>[
                   ('Save path', p.savePath),
                   ('Added', date(p.additionDate)),
@@ -807,7 +807,7 @@ class _TagsCard extends ConsumerWidget {
     } catch (e) {
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Tag update failed: $e')),
+        SnackBar(content: Text('Échec de la mise à jour de la balise : $e')),
       );
     }
   }
@@ -825,7 +825,7 @@ class _TagsCard extends ConsumerWidget {
     final String? chosen = await showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Add tag'),
+        title: const Text('Ajouter une balise'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -833,7 +833,7 @@ class _TagsCard extends ConsumerWidget {
             TextField(
               controller: ctrl,
               autofocus: true,
-              decoration: const InputDecoration(hintText: 'New tag'),
+              decoration: const InputDecoration(hintText: 'Nouvelle balise'),
               onSubmitted: (String v) => Navigator.of(context).pop(v.trim()),
             ),
             if (available.isNotEmpty) ...<Widget>[
@@ -855,11 +855,11 @@ class _TagsCard extends ConsumerWidget {
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(ctrl.text.trim()),
-            child: const Text('Add'),
+            child: const Text('Ajouter'),
           ),
         ],
       ),
@@ -900,7 +900,7 @@ class _TagsCard extends ConsumerWidget {
               TextButton.icon(
                 onPressed: () => _addTag(context, ref),
                 icon: const Icon(Icons.add, size: 18),
-                label: const Text('Add'),
+                label: const Text('Ajouter'),
               ),
             ],
           ),
@@ -1082,8 +1082,8 @@ class _FilesTabState extends ConsumerState<_FilesTab>
                 SizedBox(height: 100),
                 EmptyView(
                   icon: Icons.description_outlined,
-                  title: 'No files',
-                  message: 'Metadata not downloaded yet.',
+                  title: 'Aucun fichier',
+                  message: 'Métadonnées pas encore téléchargées.',
                 ),
               ],
             ),
@@ -1242,7 +1242,7 @@ class _TrackersTab extends ConsumerWidget {
       await action(client);
       return true;
     } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text('$failed: $e')));
+      messenger.showSnackBar(SnackBar(content: Text('$failed : $e')));
       return false;
     } finally {
       // The screen may have been left while the server answered, and a
@@ -1268,7 +1268,7 @@ class _TrackersTab extends ConsumerWidget {
     _refresh(ref);
     if (saved == true) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Trackers updated')),
+        const SnackBar(content: Text('Trackers mis à jour')),
       );
     }
   }
@@ -1286,7 +1286,7 @@ class _TrackersTab extends ConsumerWidget {
           final String value = ctrl.text.trim();
           final bool valid = qbitIsTrackerUrl(value) && value != tracker.url;
           return AlertDialog(
-            title: const Text('Edit tracker URL'),
+            title: const Text("Modifier l'URL du tracker"),
             content: TextField(
               controller: ctrl,
               autofocus: true,
@@ -1295,7 +1295,7 @@ class _TrackersTab extends ConsumerWidget {
               decoration: InputDecoration(
                 errorText: value.isEmpty || qbitIsTrackerUrl(value)
                     ? null
-                    : 'Not a tracker URL',
+                    : 'Pas une URL de tracker',
               ),
               onChanged: (_) => setState(() {}),
               onSubmitted: (_) {
@@ -1305,11 +1305,11 @@ class _TrackersTab extends ConsumerWidget {
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Cancel'),
+                child: const Text('Annuler'),
               ),
               FilledButton(
                 onPressed: valid ? () => Navigator.of(context).pop(value) : null,
-                child: const Text('Save'),
+                child: const Text('Enregistrer'),
               ),
             ],
           );
@@ -1320,7 +1320,7 @@ class _TrackersTab extends ConsumerWidget {
     await _apply(
       context,
       ref,
-      'Could not change the tracker',
+      'Impossible de modifier le tracker',
       (QbittorrentClient c) => c.editTracker(hash, tracker.url, newUrl),
     );
   }
@@ -1333,16 +1333,16 @@ class _TrackersTab extends ConsumerWidget {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Remove tracker?'),
+        title: const Text('Retirer le tracker ?'),
         content: Text(tracker.url),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Remove'),
+            child: const Text('Retirer'),
           ),
         ],
       ),
@@ -1351,7 +1351,7 @@ class _TrackersTab extends ConsumerWidget {
     await _apply(
       context,
       ref,
-      'Could not remove the tracker',
+      'Impossible de retirer le tracker',
       (QbittorrentClient c) => c.removeTrackers(hash, <String>[tracker.url]),
     );
   }
@@ -1389,15 +1389,15 @@ class _TrackersTab extends ConsumerWidget {
                 const SizedBox(height: 100),
                 const EmptyView(
                   icon: Icons.dns_outlined,
-                  title: 'No trackers',
-                  message: 'This torrent has no HTTP trackers (DHT only).',
+                  title: 'Aucun tracker',
+                  message: "Ce torrent n'a aucun tracker HTTP (DHT uniquement).",
                 ),
                 const SizedBox(height: Insets.lg),
                 Center(
                   child: FilledButton.tonalIcon(
                     onPressed: () => _openEditor(context, ref, list),
                     icon: const Icon(Icons.add),
-                    label: const Text('Add trackers'),
+                    label: const Text('Ajouter des trackers'),
                   ),
                 ),
               ],
@@ -1425,25 +1425,25 @@ class _TrackersTab extends ConsumerWidget {
                     TextButton.icon(
                       onPressed: () => _openEditor(context, ref, list),
                       icon: const Icon(Icons.edit_outlined, size: 18),
-                      label: const Text('Edit trackers'),
+                      label: const Text('Modifier les trackers'),
                     ),
                   ],
                 );
               }
               final QbitTracker t = real[index - 1];
               final (Color c, IconData ic, String label) = switch (t.status) {
-                2 => (cs.tertiary, Icons.check_circle, 'Working'),
-                3 => (cs.primary, Icons.sync, 'Updating'),
-                4 => (cs.error, Icons.error_outline, 'Not working'),
-                5 => (cs.error, Icons.error_outline, 'Tracker error'),
-                6 => (cs.error, Icons.cloud_off_outlined, 'Unreachable'),
+                2 => (cs.tertiary, Icons.check_circle, 'Fonctionne'),
+                3 => (cs.primary, Icons.sync, 'Mise à jour en cours'),
+                4 => (cs.error, Icons.error_outline, 'Ne fonctionne pas'),
+                5 => (cs.error, Icons.error_outline, 'Erreur de tracker'),
+                6 => (cs.error, Icons.cloud_off_outlined, 'Injoignable'),
                 1 => (
                     cs.outline,
                     Icons.radio_button_unchecked,
                     'Not contacted'
                   ),
-                0 => (cs.outline, Icons.block, 'Disabled'),
-                _ => (cs.outline, Icons.help_outline, 'Unknown'),
+                0 => (cs.outline, Icons.block, 'Désactivé'),
+                _ => (cs.outline, Icons.help_outline, 'Inconnu'),
               };
               final bool failing = t.status >= 4 && t.status <= 6;
               return Container(
@@ -1509,7 +1509,7 @@ class _TrackersTab extends ConsumerWidget {
                     ),
                     PopupMenuButton<String>(
                       icon: const Icon(Icons.more_vert, size: 20),
-                      tooltip: 'Tracker actions',
+                      tooltip: 'Actions sur le tracker',
                       onSelected: (String action) async {
                         switch (action) {
                           case 'copy':
@@ -1517,7 +1517,7 @@ class _TrackersTab extends ConsumerWidget {
                             if (!context.mounted) return;
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('Tracker URL copied'),
+                                content: Text('URL du tracker copiée'),
                               ),
                             );
                           case 'edit':
@@ -1530,15 +1530,15 @@ class _TrackersTab extends ConsumerWidget {
                           const <PopupMenuEntry<String>>[
                         PopupMenuItem<String>(
                           value: 'copy',
-                          child: Text('Copy URL'),
+                          child: Text("Copier l'URL"),
                         ),
                         PopupMenuItem<String>(
                           value: 'edit',
-                          child: Text('Edit URL'),
+                          child: Text("Modifier l'URL"),
                         ),
                         PopupMenuItem<String>(
                           value: 'remove',
-                          child: Text('Remove'),
+                          child: Text('Retirer'),
                         ),
                       ],
                     ),
@@ -1655,7 +1655,7 @@ class _TrackerEditorSheetState extends ConsumerState<_TrackerEditorSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Text('Edit trackers', style: theme.textTheme.titleLarge),
+            Text('Modifier les trackers', style: theme.textTheme.titleLarge),
             const SizedBox(height: Insets.xs),
             Text(
               'One URL per line. A blank line starts the next tier. Trackers '
@@ -1701,7 +1701,7 @@ class _TrackerEditorSheetState extends ConsumerState<_TrackerEditorSheet> {
               children: <Widget>[
                 TextButton(
                   onPressed: _saving ? null : () => Navigator.of(context).pop(),
-                  child: const Text('Cancel'),
+                  child: const Text('Annuler'),
                 ),
                 const SizedBox(width: Insets.sm),
                 FilledButton(
@@ -1716,7 +1716,7 @@ class _TrackerEditorSheetState extends ConsumerState<_TrackerEditorSheet> {
                             size: CircularProgressM3ESize.s,
                           ),
                         )
-                      : const Text('Save'),
+                      : const Text('Enregistrer'),
                 ),
               ],
             ),
@@ -1771,8 +1771,8 @@ class _PeersTab extends ConsumerWidget {
                 SizedBox(height: 100),
                 EmptyView(
                   icon: Icons.people_outline,
-                  title: 'No peers',
-                  message: 'Not connected to any peers.',
+                  title: 'Aucun pair',
+                  message: 'Connecté à aucun pair.',
                 ),
               ],
             ),

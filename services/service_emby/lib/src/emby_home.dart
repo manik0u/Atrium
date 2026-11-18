@@ -58,8 +58,8 @@ class _EmbyHomeState extends ConsumerState<EmbyHome> {
         if (libraries.isEmpty) {
           return const EmptyView(
             icon: Icons.theaters_outlined,
-            title: 'No Libraries',
-            message: 'This Emby server has no libraries to show.',
+            title: 'Aucune bibliothèque',
+            message: "Ce serveur Emby n'a aucune bibliothèque à afficher.",
           );
         }
 
@@ -79,10 +79,10 @@ class _EmbyHomeState extends ConsumerState<EmbyHome> {
                   isScrollable: true,
                   tabAlignment: TabAlignment.start,
                   tabs: <Widget>[
-                    const Tab(text: 'Home'),
+                    const Tab(text: 'Accueil'),
                     for (final EmbyView lib in libraries) Tab(text: lib.name),
-                    const Tab(text: 'Watched'),
-                    const Tab(text: 'Unwatched'),
+                    const Tab(text: 'Vu'),
+                    const Tab(text: 'Non vu'),
                   ],
                 ),
                 Expanded(
@@ -204,8 +204,8 @@ class EmbyLibraryGrid extends ConsumerWidget {
             SliverToBoxAdapter(
               child: EmptyView(
                 icon: Icons.movie_outlined,
-                title: 'Empty library',
-                message: 'Nothing in this library yet.',
+                title: 'Bibliothèque vide',
+                message: 'Rien dans cette bibliothèque pour le moment.',
               ),
             ),
           ],
@@ -412,8 +412,8 @@ class EmbyItemsGrid extends ConsumerWidget {
             SliverToBoxAdapter(
               child: EmptyView(
                 icon: Icons.movie_outlined,
-                title: 'Empty library',
-                message: 'Nothing in this library yet.',
+                title: 'Bibliothèque vide',
+                message: 'Rien dans cette bibliothèque pour le moment.',
               ),
             ),
           ],
@@ -645,7 +645,7 @@ class EmbyPosterCard extends ConsumerWidget {
                     ),
                     title: Text(
                       item.userData?.isFavorite == true
-                          ? 'Remove from Favorites'
+                          ? 'Retirer des favoris'
                           : 'Add to Favorites',
                     ),
                     onTap: () async {
@@ -676,7 +676,7 @@ class EmbyPosterCard extends ConsumerWidget {
                   if (item.type == 'Movie' || item.type == 'Series')
                     ListTile(
                       leading: const Icon(Icons.search),
-                      title: const Text('Identify'),
+                      title: const Text('Identifier'),
                       onTap: () async {
                         Navigator.of(sheetContext).pop();
                         final bool? changed = await pushScreen<bool>(
@@ -698,7 +698,7 @@ class EmbyPosterCard extends ConsumerWidget {
                     ),
                   ListTile(
                     leading: const Icon(Icons.refresh),
-                    title: const Text('Refresh Metadata'),
+                    title: const Text('Actualiser les métadonnées'),
                     onTap: () async {
                       final ScaffoldMessengerState messenger =
                           ScaffoldMessenger.of(context);
@@ -710,7 +710,7 @@ class EmbyPosterCard extends ConsumerWidget {
                           await client.refreshMetadata(item.id);
                           messenger.showSnackBar(
                             const SnackBar(
-                              content: Text('Metadata refresh queued'),
+                              content: Text("Actualisation des métadonnées en file d'attente"),
                             ),
                           );
                           if (!context.mounted) return;
@@ -719,7 +719,7 @@ class EmbyPosterCard extends ConsumerWidget {
                           );
                         } catch (e) {
                           messenger.showSnackBar(
-                            SnackBar(content: Text('Failed to refresh: $e')),
+                            SnackBar(content: Text("Échec de l'actualisation : $e")),
                           );
                         }
                       }
@@ -961,7 +961,7 @@ class EmbyBannerCard extends ConsumerWidget {
                       ),
                       title: Text(
                         item.userData?.isFavorite == true
-                            ? 'Remove from Favorites'
+                            ? 'Retirer des favoris'
                             : 'Add to Favorites',
                       ),
                       onTap: () async {
@@ -992,7 +992,7 @@ class EmbyBannerCard extends ConsumerWidget {
                     if (item.type == 'Movie' || item.type == 'Series')
                       ListTile(
                         leading: const Icon(Icons.search),
-                        title: const Text('Identify'),
+                        title: const Text('Identifier'),
                         onTap: () async {
                           Navigator.of(sheetContext).pop();
                           final bool? changed = await pushScreen<bool>(
@@ -1242,22 +1242,22 @@ class _HomeSections extends ConsumerWidget {
                   _ActiveSessionsSection(instance: instance),
                   _HorizontalSection(
                     instance: instance,
-                    title: 'Currently Watching',
+                    title: 'En cours de visionnage',
                     provider: embyResumeItemsProvider(instance),
                   ),
                   _HorizontalSection(
                     instance: instance,
-                    title: 'Next Up',
+                    title: 'À suivre',
                     provider: embyNextUpProvider(instance),
                   ),
                   _HorizontalSection(
                     instance: instance,
-                    title: 'Recently Added',
+                    title: 'Ajouts récents',
                     provider: embyLatestItemsProvider(instance),
                   ),
                   _HorizontalSection(
                     instance: instance,
-                    title: 'Favorites',
+                    title: 'Favoris',
                     provider: embyFavoritesProvider(instance),
                   ),
                   const SizedBox(height: Insets.xl),

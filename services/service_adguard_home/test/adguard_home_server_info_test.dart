@@ -46,7 +46,7 @@ void main() {
         (WidgetTester tester) async {
       await pump(tester, encryption);
 
-      expect(find.text('Encryption is off'), findsOneWidget);
+      expect(find.text('Le chiffrement est désactivé'), findsOneWidget);
       expect(find.text('Certificate'), findsNothing);
     });
 
@@ -58,7 +58,7 @@ void main() {
         tls: AdguardHomeTlsStatus.fromJson(tlsOnJson()),
       );
 
-      expect(find.text('Encryption is on'), findsOneWidget);
+      expect(find.text('Le chiffrement est activé'), findsOneWidget);
       expect(find.text('dns.home.example'), findsWidgets);
       expect(find.text('853'), findsNWidgets(2));
       expect(find.text('DNSCrypt port'), findsNothing);
@@ -84,7 +84,7 @@ void main() {
     testWidgets('off, says so', (WidgetTester tester) async {
       await pump(tester, dhcpScreen);
 
-      expect(find.text('DHCP is off on this server'), findsOneWidget);
+      expect(find.text('DHCP est désactivé sur ce serveur'), findsOneWidget);
       expect(find.text('IPv4'), findsNothing);
     });
 
@@ -135,7 +135,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('DHCP is not available on this server'), findsOneWidget);
+    expect(find.text("DHCP n'est pas disponible sur ce serveur"), findsOneWidget);
     expect(pumped.settingsReads, 0);
   });
 
@@ -164,12 +164,12 @@ void main() {
         (WidgetTester tester) async {
       final Pumped pumped = await pump(tester, about);
 
-      await tester.tap(find.text('Check for updates'));
+      await tester.tap(find.text('Rechercher des mises à jour'));
       await tester.pumpAndSettle();
 
       expect(pumped.actions.calls, <String>['version now']);
       expect(
-        find.text('Update checks are off on this server.'),
+        find.text('Les vérifications de mises à jour sont désactivées sur ce serveur.'),
         findsOneWidget,
       );
     });
@@ -180,11 +180,11 @@ void main() {
       pumped.actions.versionCheck =
           AdguardHomeVersionCheck.fromJson(versionNewJson());
 
-      await tester.tap(find.text('Check for updates'));
+      await tester.tap(find.text('Rechercher des mises à jour'));
       await tester.pumpAndSettle();
 
       expect(find.text('AdGuard Home v0.107.80 is out.'), findsOneWidget);
-      expect(find.text("What's new"), findsOneWidget);
+      expect(find.text('Nouveautés'), findsOneWidget);
     });
 
     testWidgets('the same version is the latest', (WidgetTester tester) async {
@@ -192,10 +192,10 @@ void main() {
       pumped.actions.versionCheck =
           const AdguardHomeVersionCheck(newVersion: 'v0.107.79');
 
-      await tester.tap(find.text('Check for updates'));
+      await tester.tap(find.text('Rechercher des mises à jour'));
       await tester.pumpAndSettle();
 
-      expect(find.text('This is the latest version.'), findsOneWidget);
+      expect(find.text("C'est la dernière version."), findsOneWidget);
     });
 
     testWidgets('a check refused for the sign-in is tried again on the '
@@ -203,11 +203,11 @@ void main() {
       final Pumped pumped = await pump(tester, about);
       pumped.actions.lookupFailure = const AdguardHomeSignInRefused();
 
-      await tester.tap(find.text('Check for updates'));
+      await tester.tap(find.text('Rechercher des mises à jour'));
       await tester.pumpAndSettle();
-      expect(find.text('AdGuard Home refused the sign-in.'), findsOneWidget);
+      expect(find.text('AdGuard Home a refusé la connexion.'), findsOneWidget);
 
-      await tester.tap(find.text('Try again'));
+      await tester.tap(find.text('Réessayer'));
       await tester.pumpAndSettle();
 
       expect(
@@ -215,7 +215,7 @@ void main() {
         <String>['version now', 'retry', 'version now'],
       );
       expect(
-        find.text('Update checks are off on this server.'),
+        find.text('Les vérifications de mises à jour sont désactivées sur ce serveur.'),
         findsOneWidget,
       );
     });
@@ -224,7 +224,7 @@ void main() {
       final Pumped pumped = await pump(tester, about);
       pumped.actions.lookupFailure = const AdguardHomeRequestRefused('nope');
 
-      await tester.tap(find.text('Check for updates'));
+      await tester.tap(find.text('Rechercher des mises à jour'));
       await tester.pumpAndSettle();
 
       expect(find.text('nope'), findsOneWidget);
@@ -239,7 +239,7 @@ void main() {
       settingsError: const AdguardHomeSignInRefused(),
     );
 
-    expect(find.text('Try again'), findsOneWidget);
+    expect(find.text('Réessayer'), findsOneWidget);
   });
 
   for (final double width in <double>[320, 411]) {

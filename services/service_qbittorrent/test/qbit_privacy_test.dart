@@ -97,7 +97,7 @@ void main() {
         torrentRowJson(hash: 'b' * 40, name: 'Public one'),
       ]);
 
-      expect(_badgeOf(tester, 'Private one'), 'Private');
+      expect(_badgeOf(tester, 'Private one'), 'Privé');
       expect(_badgeOf(tester, 'Public one'), 'Public');
     });
 
@@ -113,7 +113,7 @@ void main() {
 
       expect(find.text('Private one'), findsOneWidget);
       expect(find.text('Public'), findsNothing);
-      expect(find.text('Private'), findsNothing);
+      expect(find.text('Privé'), findsNothing);
     });
 
     testWidgets('says neither while a magnet is fetching its metadata',
@@ -130,7 +130,7 @@ void main() {
 
       expect(find.text('Fetching metadata'), findsOneWidget);
       expect(find.text('Public'), findsNothing);
-      expect(find.text('Private'), findsNothing);
+      expect(find.text('Privé'), findsNothing);
     });
 
     // The state pill and the badge share a line with the sizes. Where they
@@ -147,7 +147,7 @@ void main() {
       );
 
       expect(tester.takeException(), isNull);
-      expect(_badgeOf(tester, 'Private one'), 'Private');
+      expect(_badgeOf(tester, 'Private one'), 'Privé');
       final Finder sizes = find.text('754 MB / 754 MB');
       expect(sizes, findsOneWidget);
       expect(_isCutShort(tester, sizes), isFalse);
@@ -158,7 +158,7 @@ void main() {
     testWidgets('says Private on qBittorrent 5', (WidgetTester tester) async {
       await _openDetail(tester, QbitRelease.v512, private: true);
 
-      expect(find.text('Private'), findsOneWidget);
+      expect(find.text('Privé'), findsOneWidget);
       expect(find.text('Public'), findsNothing);
     });
 
@@ -166,7 +166,7 @@ void main() {
       await _openDetail(tester, QbitRelease.v512, private: false);
 
       expect(find.text('Public'), findsOneWidget);
-      expect(find.text('Private'), findsNothing);
+      expect(find.text('Privé'), findsNothing);
     });
 
     // The list cannot say on 4.6, but the properties this screen already
@@ -175,7 +175,7 @@ void main() {
         (WidgetTester tester) async {
       await _openDetail(tester, QbitRelease.v467, private: true);
 
-      expect(find.text('Private'), findsOneWidget);
+      expect(find.text('Privé'), findsOneWidget);
       expect(find.text('Public'), findsNothing);
     });
 
@@ -184,7 +184,7 @@ void main() {
       await _openDetail(tester, QbitRelease.v467, private: false);
 
       expect(find.text('Public'), findsOneWidget);
-      expect(find.text('Private'), findsNothing);
+      expect(find.text('Privé'), findsNothing);
     });
 
     testWidgets('says neither on a qBittorrent too old to tell',
@@ -193,7 +193,7 @@ void main() {
 
       expect(find.text('Seeding (idle)'), findsOneWidget);
       expect(find.text('Public'), findsNothing);
-      expect(find.text('Private'), findsNothing);
+      expect(find.text('Privé'), findsNothing);
     });
 
     // Without metadata 4.6 answers `is_private: false` for every torrent.
@@ -213,7 +213,7 @@ void main() {
 
         expect(find.text('Fetching metadata'), findsOneWidget);
         expect(find.text('Public'), findsNothing, reason: '$release');
-        expect(find.text('Private'), findsNothing, reason: '$release');
+        expect(find.text('Privé'), findsNothing, reason: '$release');
       }
     });
 
@@ -233,7 +233,7 @@ void main() {
       );
 
       expect(tester.takeException(), isNull);
-      expect(find.text('Private'), findsOneWidget);
+      expect(find.text('Privé'), findsOneWidget);
       expect(find.text('11.2 MB/s'), findsOneWidget);
       expect(find.text('27m 10s'), findsOneWidget);
     });
@@ -342,7 +342,7 @@ String? _badgeOf(WidgetTester tester, String name) {
     of: find.text(name),
     matching: find.byType(InkWell),
   );
-  for (final String word in <String>['Private', 'Public']) {
+  for (final String word in <String>['Privé', 'Public']) {
     if (find
         .descendant(of: row.first, matching: find.text(word))
         .evaluate()

@@ -184,7 +184,7 @@ class _TorrentShareListenerState extends ConsumerState<TorrentShareListener> {
     await _openAddSheet(target, share);
   }
 
-  Future<void> _tell(String message, {String title = 'Nothing added'}) async {
+  Future<void> _tell(String message, {String title = "Rien d'ajouté"}) async {
     final BuildContext? context = _presentContext;
     if (context == null) {
       return;

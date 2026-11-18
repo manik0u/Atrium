@@ -26,7 +26,7 @@ class MetadataConsumersSection extends ConsumerWidget {
     if (schemas.isEmpty) {
       messenger.showSnackBar(
         const SnackBar(
-          content: Text('No metadata consumer presets available.'),
+          content: Text('Aucun préréglage de consommateur de métadonnées disponible.'),
         ),
       );
       return;
@@ -35,7 +35,7 @@ class MetadataConsumersSection extends ConsumerWidget {
     final MetadataResource? selected =
         await showSchemaPresetPicker<MetadataResource>(
       context: context,
-      title: 'Add Metadata Consumer',
+      title: 'Ajouter un consommateur de métadonnées',
       presets: schemas,
       titleBuilder: (schema) {
         final String impl = schema.implementationName?.trim() ?? '';
@@ -112,13 +112,13 @@ class MetadataConsumersSection extends ConsumerWidget {
                       TextField(
                         controller: nameController,
                         decoration: const InputDecoration(
-                          labelText: 'Name',
+                          labelText: 'Nom',
                           border: OutlineInputBorder(),
                         ),
                       ),
                       const SizedBox(height: Insets.sm),
                       SwitchListTile(
-                        title: const Text('Enable Consumer'),
+                        title: const Text('Activer le consommateur'),
                         value: enable,
                         contentPadding: EdgeInsets.zero,
                         onChanged: (bool val) =>
@@ -143,7 +143,7 @@ class MetadataConsumersSection extends ConsumerWidget {
                               .postMetadataTest(body: payload);
                           if (!resp.isSuccess) {
                             throw Exception(
-                              resp.error?.message ?? 'Test failed',
+                              resp.error?.message ?? 'Échec du test',
                             );
                           }
                         },
@@ -203,7 +203,7 @@ class MetadataConsumersSection extends ConsumerWidget {
                           } catch (e) {
                             if (ctx.mounted) {
                               messenger.showSnackBar(
-                                SnackBar(content: Text('Error: $e')),
+                                SnackBar(content: Text('Erreur : $e')),
                               );
                             }
                           }
@@ -231,12 +231,12 @@ class MetadataConsumersSection extends ConsumerWidget {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: Text('Delete ${consumer.name ?? 'Consumer'}?'),
-        content: Text('Are you sure you want to delete "${consumer.name}"?'),
+        title: Text('Supprimer ${consumer.name ?? 'Consumer'}?'),
+        content: Text('Voulez-vous vraiment supprimer « ${consumer.name} » ?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -244,7 +244,7 @@ class MetadataConsumersSection extends ConsumerWidget {
               foregroundColor: Theme.of(ctx).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Delete'),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
@@ -259,17 +259,17 @@ class MetadataConsumersSection extends ConsumerWidget {
           await api.metadata.deleteMetadataById(id: id);
       if (!resp.isSuccess) {
         throw Exception(
-          resp.error?.message ?? 'Failed to delete metadata consumer',
+          resp.error?.message ?? 'Échec de la suppression du consommateur de métadonnées',
         );
       }
 
       ref.invalidate(lidarrMetadataConsumersProvider(instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Metadata consumer deleted.')),
+        const SnackBar(content: Text('Consommateur de métadonnées supprimé.')),
       );
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Failed to delete metadata consumer: $e')),
+        SnackBar(content: Text('Échec de la suppression du consommateur de métadonnées : $e')),
       );
     }
   }
@@ -286,7 +286,7 @@ class MetadataConsumersSection extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         heroTag: 'add_metadata_consumer_fab',
         onPressed: () => _showAddMetadataConsumerDialog(context, ref),
-        tooltip: 'Add Metadata Consumer',
+        tooltip: 'Ajouter un consommateur de métadonnées',
         child: const Icon(Icons.add),
       ),
       body: EasyRefresh(
@@ -300,14 +300,14 @@ class MetadataConsumersSection extends ConsumerWidget {
               return Center(
                 child: EmptyView(
                   icon: Icons.perm_media_outlined,
-                  title: 'No Metadata Consumers',
+                  title: 'Aucun consommateur de métadonnées',
                   message:
                       'Add metadata consumers (Kodi, Roon, WMP) to write metadata and cover images alongside audio tracks.',
                   action: FilledButton.icon(
                     onPressed: () =>
                         _showAddMetadataConsumerDialog(context, ref),
                     icon: const Icon(Icons.add),
-                    label: const Text('Add Metadata Consumer'),
+                    label: const Text('Ajouter un consommateur de métadonnées'),
                   ),
                 ),
               );
@@ -409,7 +409,7 @@ class MetadataConsumersSection extends ConsumerWidget {
                     ),
                     trailing: IconButton(
                       icon: const Icon(Icons.delete_outline, size: 20),
-                      tooltip: 'Delete Consumer',
+                      tooltip: 'Supprimer le consommateur',
                       onPressed: () =>
                           _deleteMetadataConsumer(context, ref, item),
                     ),

@@ -123,14 +123,14 @@ class _DashboardResult extends StatelessWidget {
     final SpeedtestResult? latestAny = data.latestAny;
     if (result == null) {
       if (latestAny?.status.isInProgress ?? false) {
-        return const DashboardIdleRow(text: 'Latest speed test is running');
+        return const DashboardIdleRow(text: 'Le dernier speedtest est en cours');
       }
       if (latestAny?.status.isFailure ?? false) {
         return DashboardIdleRow(
-          text: 'Latest speed test ${latestAny!.status.label.toLowerCase()}',
+          text: 'Dernier speedtest : ${latestAny!.status.label.toLowerCase()}',
         );
       }
-      return const DashboardIdleRow(text: 'No completed results');
+      return const DashboardIdleRow(text: 'Aucun résultat terminé');
     }
 
     final ThemeData theme = Theme.of(context);
@@ -157,8 +157,8 @@ class _DashboardResult extends StatelessWidget {
               Expanded(
                 child: Text(
                   latestFailed
-                      ? 'Latest speed test ${latestAny.status.label.toLowerCase()}'
-                      : 'Latest speed test is ${latestAny.status.label.toLowerCase()}',
+                      ? 'Dernier speedtest : ${latestAny.status.label.toLowerCase()}'
+                      : 'Le dernier speedtest est : ${latestAny.status.label.toLowerCase()}',
                   style: theme.textTheme.labelSmall,
                 ),
               ),
@@ -170,13 +170,13 @@ class _DashboardResult extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: _DashboardMetric(
-                label: 'Download',
+                label: 'Télécharger',
                 value: formatSpeed(result.downloadBitsPerSecond),
               ),
             ),
             Expanded(
               child: _DashboardMetric(
-                label: 'Upload',
+                label: 'Téléverser',
                 value: formatSpeed(result.uploadBitsPerSecond),
               ),
             ),
@@ -189,7 +189,7 @@ class _DashboardResult extends StatelessWidget {
             if (result.packetLossPercent != null)
               Expanded(
                 child: _DashboardMetric(
-                  label: 'Loss',
+                  label: 'Perte',
                   value: formatPacketLoss(result.packetLossPercent),
                 ),
               ),
@@ -251,14 +251,14 @@ class _DashboardError extends StatelessWidget {
   Widget build(BuildContext context) {
     final String message = error is SpeedtestTrackerException
         ? (error as SpeedtestTrackerException).message
-        : 'Could not load Speedtest Tracker results.';
+        : 'Impossible de charger les résultats de Speedtest Tracker.';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(message, style: Theme.of(context).textTheme.bodySmall),
         Align(
           alignment: Alignment.centerRight,
-          child: TextButton(onPressed: onRetry, child: const Text('Retry')),
+          child: TextButton(onPressed: onRetry, child: const Text('Réessayer')),
         ),
       ],
     );

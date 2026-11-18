@@ -110,7 +110,7 @@ class CleanuparrHome extends ConsumerWidget {
           const NavigationDestination(
             icon: Icon(Icons.dashboard_outlined),
             selectedIcon: Icon(Icons.dashboard),
-            label: 'Overview',
+            label: "Vue d'ensemble",
           ),
           NavigationDestination(
             icon: Badge(
@@ -128,7 +128,7 @@ class CleanuparrHome extends ConsumerWidget {
           const NavigationDestination(
             icon: Icon(Icons.receipt_long_outlined),
             selectedIcon: Icon(Icons.receipt_long),
-            label: 'Events',
+            label: 'Événements',
           ),
         ],
       ),

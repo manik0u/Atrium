@@ -127,7 +127,7 @@ void main() {
 
       expect(
         describeGluetunFailure(error, 'GET /v1/vpn/status'),
-        'Gluetun could not be reached.',
+        'Gluetun est injoignable.',
       );
     });
   });
@@ -169,7 +169,7 @@ void main() {
         (WidgetTester tester) async {
       await pumpRefusingHome(tester);
 
-      await tester.tap(find.text('Update Servers'));
+      await tester.tap(find.text('Mettre à jour les serveurs'));
       await settle(tester);
 
       expect(find.textContaining('Triggered server list'), findsNothing);
@@ -181,7 +181,7 @@ void main() {
         (WidgetTester tester) async {
       await pumpRefusingHome(tester);
 
-      await tester.tap(find.text('Stop'));
+      await tester.tap(find.text('Arrêter'));
       await settle(tester);
       await tester.tap(
         find.descendant(
@@ -252,8 +252,8 @@ void main() {
     // What the refusals used to be passed off as.
     expect(find.textContaining('check disabled'), findsNothing);
     expect(find.text('UNKNOWN'), findsNothing);
-    expect(find.text('IDLE'), findsNothing);
-    expect(find.text('Start'), findsNothing);
+    expect(find.text('INACTIF'), findsNothing);
+    expect(find.text('Démarrer'), findsNothing);
   });
 }
 

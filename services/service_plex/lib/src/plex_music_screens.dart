@@ -54,8 +54,8 @@ class PlexArtistScreen extends ConsumerWidget {
             SizedBox(height: 100),
             EmptyView(
                 icon: Icons.album_outlined,
-                title: 'No albums',
-                message: 'This artist has no albums yet.',
+                title: 'Aucun album',
+                message: "Cet artiste n'a pas encore d'albums.",
               ),
           ],
         ),
@@ -202,7 +202,7 @@ class PlexAlbumScreen extends ConsumerWidget {
         elevation: 0,
         actions: <Widget>[
           IconButton(
-            tooltip: 'Open in Plex',
+            tooltip: 'Ouvrir dans Plex',
             icon: const Icon(Icons.open_in_new),
             onPressed: () => launchPlexDeepLink(context),
           ),
@@ -298,8 +298,8 @@ class PlexAlbumScreen extends ConsumerWidget {
                   if (list.isEmpty) {
                     return const EmptyView(
                       icon: Icons.music_note_outlined,
-                      title: 'No tracks',
-                      message: 'This album has no tracks yet.',
+                      title: 'Aucune piste',
+                      message: 'Cet album ne contient pas encore de pistes.',
                     );
                   }
                   return Column(

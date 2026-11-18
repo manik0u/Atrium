@@ -6,7 +6,7 @@ export 'torrent_share.dart' show AtriumLink, LinkItem;
 
 /// The heading a link's messages are shown under. A link only opens things,
 /// so "Nothing added" would be the wrong thing to say.
-const String linkProblemTitle = 'Could not open that link';
+const String linkProblemTitle = "Impossible d'ouvrir ce lien";
 
 const TorrentShareProblem _unreadable = TorrentShareProblem(
   'That Atrium link could not be read, so it went nowhere.',

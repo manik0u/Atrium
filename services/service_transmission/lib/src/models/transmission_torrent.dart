@@ -6,11 +6,11 @@ part 'transmission_torrent.g.dart';
 /// Transmission's `status` field, which arrives as a bare integer.
 enum TransmissionStatus {
   stopped(0, 'Paused'),
-  checkWait(1, 'Queued for verification'),
+  checkWait(1, 'En file pour vérification'),
   checking(2, 'Verifying local data'),
-  downloadWait(3, 'Queued for download'),
+  downloadWait(3, 'En file pour téléchargement'),
   downloading(4, 'Downloading'),
-  seedWait(5, 'Queued for seeding'),
+  seedWait(5, 'En file pour seed'),
   seeding(6, 'Seeding'),
   unknown(-1, 'Unknown');
 

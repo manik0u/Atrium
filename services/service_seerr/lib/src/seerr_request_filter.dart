@@ -5,18 +5,18 @@ import 'models/seerr_request.dart';
 /// 5 completed), as Seerr's own filters do: a request moves from approved
 /// to completed once its media is available. [all] keeps every one.
 enum SeerrRequestFilter {
-  all('All', 'No requests', 'No media requests yet.'),
-  pending('Pending', 'No pending requests', 'Nothing is waiting for approval.'),
-  approved('Approved', 'No approved requests', 'No request has been approved.'),
+  all('All', 'No requests', 'Aucune demande de média pour le moment.'),
+  pending('Pending', 'Aucune demande en attente', "Rien n'attend une approbation."),
+  approved('Approved', 'Aucune demande approuvée', "Aucune demande n'a été approuvée."),
   completed(
     'Completed',
-    'No completed requests',
-    'Requests show here once their media is available.',
+    'Aucune demande terminée',
+    'Les demandes apparaissent ici une fois leur média disponible.',
   ),
-  declined('Declined', 'No declined requests', 'No request has been declined.'),
+  declined('Declined', 'Aucune demande refusée', "Aucune demande n'a été refusée."),
   failed(
     'Failed',
-    'No failed requests',
+    'Aucune demande échouée',
     'Every approved request reached Sonarr or Radarr.',
   );
 

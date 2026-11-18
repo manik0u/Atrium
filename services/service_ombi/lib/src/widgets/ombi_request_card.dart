@@ -126,7 +126,7 @@ class OmbiRequestCard extends StatelessWidget {
                     ),
                   ),
                   PopupMenuButton<String>(
-                    tooltip: 'More',
+                    tooltip: 'Plus',
                     onSelected: (String action) {
                       if (action == 'approve') {
                         onApprove();
@@ -141,16 +141,16 @@ class OmbiRequestCard extends StatelessWidget {
                       if (_pending) ...const <PopupMenuEntry<String>>[
                         PopupMenuItem<String>(
                           value: 'approve',
-                          child: Text('Approve'),
+                          child: Text('Approuver'),
                         ),
                         PopupMenuItem<String>(
                           value: 'deny',
-                          child: Text('Deny'),
+                          child: Text('Refuser'),
                         ),
                       ],
                       const PopupMenuItem<String>(
                         value: 'delete',
-                        child: Text('Delete'),
+                        child: Text('Supprimer'),
                       ),
                     ],
                   ),
@@ -164,7 +164,7 @@ class OmbiRequestCard extends StatelessWidget {
                       child: OutlinedButton.icon(
                         onPressed: onDeny,
                         icon: const Icon(Icons.close_rounded, size: 18),
-                        label: const Text('Deny'),
+                        label: const Text('Refuser'),
                       ),
                     ),
                     const SizedBox(width: Insets.sm),
@@ -172,7 +172,7 @@ class OmbiRequestCard extends StatelessWidget {
                       child: FilledButton.icon(
                         onPressed: onApprove,
                         icon: const Icon(Icons.check_rounded, size: 18),
-                        label: const Text('Approve'),
+                        label: const Text('Approuver'),
                       ),
                     ),
                   ],

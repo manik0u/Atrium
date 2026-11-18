@@ -193,7 +193,7 @@ class GlancesHome extends ConsumerWidget {
           const Spacer(),
           IconButton(
             icon: const Icon(Icons.filter_list),
-            tooltip: 'Filter Interfaces',
+            tooltip: 'Filtrer les interfaces',
             onPressed: () {
               _showNetworkFilterDialog(context, ref, networks);
             },
@@ -216,7 +216,7 @@ class GlancesHome extends ConsumerWidget {
             final Set<String> pinnedNets =
                 ref.watch(glancesPinnedNetworkProvider(instance));
             return AlertDialog(
-              title: const Text('Filter Network Interfaces'),
+              title: const Text('Filtrer les interfaces réseau'),
               content: SizedBox(
                 width: double.maxFinite,
                 child: ListView(
@@ -263,11 +263,11 @@ class GlancesHome extends ConsumerWidget {
                         .read(glancesPinnedNetworkProvider(instance).notifier)
                         .set(<String>{});
                   },
-                  child: const Text('Reset'),
+                  child: const Text('Réinitialiser'),
                 ),
                 TextButton(
                   onPressed: () => Navigator.of(dialogContext).pop(),
-                  child: const Text('Done'),
+                  child: const Text('Terminé'),
                 ),
               ],
             );
@@ -295,7 +295,7 @@ class GlancesHome extends ConsumerWidget {
             const SizedBox(width: Insets.sm),
             Expanded(
               child: _GaugeCard(
-                title: 'Memory',
+                title: 'Mémoire',
                 percent: stats.memory.percentage / 100.0,
                 subtitle:
                     '${(stats.memory.used / 1024 / 1024 / 1024).toStringAsFixed(2)} / ${(stats.memory.total / 1024 / 1024 / 1024).toStringAsFixed(2)} GB',

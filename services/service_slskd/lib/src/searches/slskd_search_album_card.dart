@@ -161,7 +161,7 @@ class _SlskdSearchAlbumCardState extends ConsumerState<SlskdSearchAlbumCard> {
                   ),
                 ),
                 IconButton(
-                  tooltip: _isExpanded ? 'Collapse tracks' : 'Expand tracks',
+                  tooltip: _isExpanded ? 'Replier les pistes' : 'Déplier les pistes',
                   visualDensity: VisualDensity.compact,
                   icon: Icon(
                     _isExpanded ? Icons.expand_less_rounded : Icons.expand_more_rounded,
@@ -211,7 +211,7 @@ class _SlskdSearchAlbumCardState extends ConsumerState<SlskdSearchAlbumCard> {
                     textStyle: textTheme.labelSmall?.copyWith(fontWeight: FontWeight.bold),
                   ),
                   icon: const Icon(Icons.download_rounded, size: 16),
-                  label: const Text('Download Album'),
+                  label: const Text("Télécharger l'album"),
                   onPressed: (group.files.isNotEmpty && group.files.any((f) => !f.isLocked))
                       ? () => widget.onDownloadAlbum(group)
                       : null,
@@ -313,7 +313,7 @@ class _TrackRow extends StatelessWidget {
             ),
           ),
           IconButton(
-            tooltip: file.isLocked ? 'Track is locked by peer' : 'Download track',
+            tooltip: file.isLocked ? 'La piste est verrouillée par le pair' : 'Télécharger la piste',
             visualDensity: VisualDensity.compact,
             icon: Icon(
               file.isLocked ? Icons.lock_clock_outlined : Icons.download_rounded,

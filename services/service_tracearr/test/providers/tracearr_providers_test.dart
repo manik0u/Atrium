@@ -85,7 +85,7 @@ class FakeV2ApiForProviders implements RawPublicAPIV2Api {
       );
     }
 
-    final titlePrefix = libraryId != null ? 'Lib-$libraryId' : 'All';
+    final titlePrefix = libraryId != null ? 'Lib-$libraryId' : 'Tous';
     if (cursor == null) {
       return ApiResponse.success(
         RecentlyAddedResponse(

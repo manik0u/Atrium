@@ -234,19 +234,19 @@ class SlskdTransferDetailsSheet extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       _MetricItem(
-                        label: 'Transferred',
+                        label: 'Transféré',
                         value: bytesText,
                         colorScheme: colorScheme,
                         textTheme: textTheme,
                       ),
                       _MetricItem(
-                        label: 'Speed',
+                        label: 'Vitesse',
                         value: speedText,
                         colorScheme: colorScheme,
                         textTheme: textTheme,
                       ),
                       _MetricItem(
-                        label: 'Remaining',
+                        label: 'Restant',
                         value: remainingText,
                         colorScheme: colorScheme,
                         textTheme: textTheme,
@@ -312,7 +312,7 @@ class SlskdTransferDetailsSheet extends ConsumerWidget {
                       ),
                       FilledButton.tonalIcon(
                         icon: const Icon(Icons.folder_shared_outlined, size: 16),
-                        label: const Text('Browse Shares'),
+                        label: const Text('Parcourir les partages'),
                         style: FilledButton.styleFrom(
                           visualDensity: VisualDensity.compact,
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -330,14 +330,14 @@ class SlskdTransferDetailsSheet extends ConsumerWidget {
                   ),
                   const Divider(height: Insets.lg),
                   _DiagnosticRow(
-                    label: 'Network State',
+                    label: 'État du réseau',
                     value: transfer.state,
                     colorScheme: colorScheme,
                     textTheme: textTheme,
                   ),
                   const SizedBox(height: Insets.xs),
                   _DiagnosticRow(
-                    label: 'Queue Rank',
+                    label: 'Rang dans la file',
                     value: liveQueuePos != null && liveQueuePos > 0
                         ? '#$liveQueuePos'
                         : 'Active / Direct',
@@ -346,7 +346,7 @@ class SlskdTransferDetailsSheet extends ConsumerWidget {
                   ),
                   const SizedBox(height: Insets.xs),
                   _DiagnosticRow(
-                    label: 'Retry Attempts',
+                    label: 'Tentatives',
                     value: '${transfer.attempts}',
                     colorScheme: colorScheme,
                     textTheme: textTheme,
@@ -406,14 +406,14 @@ class SlskdTransferDetailsSheet extends ConsumerWidget {
                         ),
                       ),
                       IconButton(
-                        tooltip: 'Copy path',
+                        tooltip: 'Copier le chemin',
                         visualDensity: VisualDensity.compact,
                         icon: const Icon(Icons.copy_rounded, size: 16),
                         onPressed: () {
                           Clipboard.setData(ClipboardData(text: transfer.filename));
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text('File path copied to clipboard'),
+                              content: Text('Chemin du fichier copié dans le presse-papiers'),
                               duration: Duration(seconds: 2),
                             ),
                           );
@@ -470,14 +470,14 @@ class SlskdTransferDetailsSheet extends ConsumerWidget {
                   ),
                   const SizedBox(height: Insets.sm),
                   _DiagnosticRow(
-                    label: 'Requested',
+                    label: 'Demandé',
                     value: slskdFormatDateTime(transfer.requestedAt),
                     colorScheme: colorScheme,
                     textTheme: textTheme,
                   ),
                   const SizedBox(height: Insets.xs),
                   _DiagnosticRow(
-                    label: 'Started',
+                    label: 'Démarré',
                     value: transfer.startedAt != null ? slskdFormatDateTime(transfer.startedAt!) : 'Waiting in queue',
                     colorScheme: colorScheme,
                     textTheme: textTheme,
@@ -485,7 +485,7 @@ class SlskdTransferDetailsSheet extends ConsumerWidget {
                   if (transfer.endedAt != null) ...<Widget>[
                     const SizedBox(height: Insets.xs),
                     _DiagnosticRow(
-                      label: 'Ended',
+                      label: 'Terminé',
                       value: slskdFormatDateTime(transfer.endedAt!),
                       colorScheme: colorScheme,
                       textTheme: textTheme,
@@ -509,7 +509,7 @@ class SlskdTransferDetailsSheet extends ConsumerWidget {
                       padding: const EdgeInsets.symmetric(vertical: Insets.sm),
                     ),
                     icon: const Icon(Icons.refresh_rounded, size: 18),
-                    label: const Text('Retry'),
+                    label: const Text('Réessayer'),
                     onPressed: () async {
                       try {
                         final api = await ref.read(slskdApiProvider(instance).future);
@@ -533,7 +533,7 @@ class SlskdTransferDetailsSheet extends ConsumerWidget {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  'Could not retry: $failReason',
+                                  'Nouvelle tentative impossible : $failReason',
                                   style: TextStyle(color: colorScheme.onError),
                                 ),
                                 backgroundColor: colorScheme.error,
@@ -542,7 +542,7 @@ class SlskdTransferDetailsSheet extends ConsumerWidget {
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('Retrying download...'),
+                                content: Text('Nouvelle tentative de téléchargement…'),
                                 duration: Duration(seconds: 2),
                               ),
                             );
@@ -576,7 +576,7 @@ class SlskdTransferDetailsSheet extends ConsumerWidget {
                       padding: const EdgeInsets.symmetric(vertical: Insets.sm),
                     ),
                     icon: const Icon(Icons.stop_circle_outlined, size: 18),
-                    label: Text(isDownload ? 'Cancel' : 'Abort'),
+                    label: Text(isDownload ? 'Annuler' : 'Abandonner'),
                     onPressed: () async {
                       try {
                         final api = await ref.read(slskdApiProvider(instance).future);
@@ -590,7 +590,7 @@ class SlskdTransferDetailsSheet extends ConsumerWidget {
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text(isDownload ? 'Cancelled download' : 'Aborted upload'),
+                              content: Text(isDownload ? 'Téléchargement annulé' : 'Envoi interrompu'),
                               duration: const Duration(seconds: 2),
                             ),
                           );
@@ -622,7 +622,7 @@ class SlskdTransferDetailsSheet extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(vertical: Insets.sm),
                   ),
                   icon: const Icon(Icons.delete_outline_rounded, size: 18),
-                  label: const Text('Remove'),
+                  label: const Text('Retirer'),
                   onPressed: () async {
                     try {
                       final api = await ref.read(slskdApiProvider(instance).future);
@@ -636,7 +636,7 @@ class SlskdTransferDetailsSheet extends ConsumerWidget {
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text('Removed transfer from list'),
+                            content: Text('Transfert retiré de la liste'),
                             duration: Duration(seconds: 2),
                           ),
                         );

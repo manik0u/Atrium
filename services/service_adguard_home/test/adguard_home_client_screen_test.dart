@@ -13,7 +13,7 @@ void main() {
   const Key cacheField = Key('adguard-client-cache-size');
   Key idField(int row) => Key('adguard-client-id-$row');
 
-  final Finder save = find.widgetWithText(FilledButton, 'Save');
+  final Finder save = find.widgetWithText(FilledButton, 'Enregistrer');
 
   /// Opens the form from a screen with a button, the way the app does, and
   /// notes what the form hands back each time it closes.
@@ -87,18 +87,18 @@ void main() {
         (WidgetTester tester) async {
       await open(tester);
 
-      expect(find.text('New client'), findsOneWidget);
+      expect(find.text('Nouveau client'), findsOneWidget);
       expect(textOf(tester, nameField), isEmpty);
       expect(textOf(tester, idField(0)), isEmpty);
       expect(find.byKey(idField(1)), findsNothing);
-      expect(switchOf(tester, 'Use global settings').value, isTrue);
-      expect(switchOf(tester, 'Use global blocked services').value, isTrue);
-      expect(switchOf(tester, 'Ignore in the query log').value, isFalse);
-      expect(switchOf(tester, 'Ignore in statistics').value, isFalse);
+      expect(switchOf(tester, 'Utiliser les paramètres globaux').value, isTrue);
+      expect(switchOf(tester, 'Utiliser les services bloqués globaux').value, isTrue);
+      expect(switchOf(tester, 'Ignorer dans le journal des requêtes').value, isFalse);
+      expect(switchOf(tester, 'Ignorer dans les statistiques').value, isFalse);
       expect(textOf(tester, upstreamsField), isEmpty);
       expect(textOf(tester, cacheField), '0');
       // Nothing to delete yet.
-      expect(find.byTooltip('Delete client'), findsNothing);
+      expect(find.byTooltip('Supprimer le client'), findsNothing);
     });
 
     testWidgets('offers every tag the server supports, none picked',
@@ -116,7 +116,7 @@ void main() {
 
       // As the web UI starts one: a copy of the server's own, to be changed
       // once the global settings are turned off.
-      expect(switchOf(tester, 'Safe search').value, isTrue);
+      expect(switchOf(tester, 'Recherche sécurisée').value, isTrue);
       for (final String engine in <String>[
         'Bing',
         'DuckDuckGo',
@@ -152,7 +152,7 @@ void main() {
       expect(find.byKey(nameField), findsNothing);
       expect(save, findsNothing);
 
-      await tester.tap(find.text('Retry'));
+      await tester.tap(find.text('Réessayer'));
       await tester.pumpAndSettle();
 
       expect(find.byKey(nameField), findsOneWidget);
@@ -164,25 +164,25 @@ void main() {
     testWidgets('is shown as the server has it', (WidgetTester tester) async {
       await open(tester, client: capturedClient('Kids tablet'));
 
-      expect(find.text('Edit client'), findsOneWidget);
+      expect(find.text('Modifier le client'), findsOneWidget);
       expect(textOf(tester, nameField), 'Kids tablet');
       expect(textOf(tester, idField(0)), '192.168.50.0/28');
       expect(textOf(tester, idField(1)), 'aa:bb:cc:dd:ee:01');
       expect(chip(tester, 'device_tablet').selected, isTrue);
       expect(chip(tester, 'user_child').selected, isTrue);
       expect(chip(tester, 'device_phone').selected, isFalse);
-      expect(switchOf(tester, 'Use global settings').value, isFalse);
+      expect(switchOf(tester, 'Utiliser les paramètres globaux').value, isFalse);
       expect(
-        switchOf(tester, 'Block domains using filters and hosts files').value,
+        switchOf(tester, 'Bloquez des domaines avec les filtres et les fichiers hosts').value,
         isTrue,
       );
-      expect(switchOf(tester, 'Browsing security').value, isTrue);
-      expect(switchOf(tester, 'Parental control').value, isTrue);
-      expect(switchOf(tester, 'Safe search').value, isTrue);
+      expect(switchOf(tester, 'Sécurité de navigation').value, isTrue);
+      expect(switchOf(tester, 'Contrôle parental').value, isTrue);
+      expect(switchOf(tester, 'Recherche sécurisée').value, isTrue);
       expect(switchOf(tester, 'Google').value, isTrue);
       expect(switchOf(tester, 'YouTube').value, isFalse);
-      expect(switchOf(tester, 'Use global blocked services').value, isFalse);
-      expect(find.byTooltip('Delete client'), findsOneWidget);
+      expect(switchOf(tester, 'Utiliser les services bloqués globaux').value, isFalse);
+      expect(find.byTooltip('Supprimer le client'), findsOneWidget);
     });
 
     testWidgets('names the services blocked for it', (WidgetTester tester) async {
@@ -218,11 +218,11 @@ void main() {
         '1.1.1.1\n[/corp.example/]10.0.0.1',
       );
       expect(
-        switchOf(tester, 'Cache the answers of these servers').value,
+        switchOf(tester, 'Mettre en cache les réponses de ces serveurs').value,
         isTrue,
       );
       expect(textOf(tester, cacheField), '4096');
-      expect(switchOf(tester, 'Ignore in the query log').value, isTrue);
+      expect(switchOf(tester, 'Ignorer dans le journal des requêtes').value, isTrue);
     });
 
     testWidgets('keeps a tag the server no longer supports, to be taken off',
@@ -247,34 +247,34 @@ void main() {
       await open(tester);
 
       const List<String> own = <String>[
-        'Block domains using filters and hosts files',
-        'Browsing security',
-        'Parental control',
-        'Safe search',
+        'Bloquez des domaines avec les filtres et les fichiers hosts',
+        'Sécurité de navigation',
+        'Contrôle parental',
+        'Recherche sécurisée',
         'Google',
       ];
       for (final String title in own) {
         expect(switchOf(tester, title).onChanged, isNull, reason: title);
       }
 
-      await flip(tester, 'Use global settings');
+      await flip(tester, 'Utiliser les paramètres globaux');
 
       for (final String title in own) {
         expect(switchOf(tester, title).onChanged, isNotNull, reason: title);
       }
       // The other two are never part of the global settings.
-      expect(switchOf(tester, 'Ignore in statistics').onChanged, isNotNull);
+      expect(switchOf(tester, 'Ignorer dans les statistiques').onChanged, isNotNull);
     });
 
     testWidgets('the search engines can only be set while safe search is on',
         (WidgetTester tester) async {
       await open(tester);
-      await flip(tester, 'Use global settings');
+      await flip(tester, 'Utiliser les paramètres globaux');
       expect(switchOf(tester, 'Google').onChanged, isNotNull);
 
-      await flip(tester, 'Safe search');
+      await flip(tester, 'Recherche sécurisée');
 
-      expect(switchOf(tester, 'Safe search').value, isFalse);
+      expect(switchOf(tester, 'Recherche sécurisée').value, isFalse);
       expect(switchOf(tester, 'Google').onChanged, isNull);
       // What was set for it is kept for when it is turned back on.
       expect(switchOf(tester, 'Google').value, isTrue);
@@ -285,14 +285,14 @@ void main() {
       await open(tester);
 
       ListTile services() => tester.widget<ListTile>(
-            find.widgetWithText(ListTile, 'Blocked for this client'),
+            find.widgetWithText(ListTile, 'Bloqué pour ce client'),
           );
       expect(services().enabled, isFalse);
 
-      await flip(tester, 'Use global blocked services');
+      await flip(tester, 'Utiliser les services bloqués globaux');
 
       expect(services().enabled, isTrue);
-      expect(find.text('None'), findsOneWidget);
+      expect(find.text('Aucun'), findsOneWidget);
     });
   });
 
@@ -300,7 +300,7 @@ void main() {
     testWidgets('a row can be added and typed in', (WidgetTester tester) async {
       await open(tester);
 
-      await tester.tap(find.text('Add identifier'));
+      await tester.tap(find.text('Ajouter un identifiant'));
       await tester.pump();
       await tester.enterText(find.byKey(idField(1)), 'aa:bb:cc:dd:ee:02');
 
@@ -311,19 +311,19 @@ void main() {
     testWidgets('the only row cannot be removed', (WidgetTester tester) async {
       await open(tester);
 
-      expect(find.byTooltip('Remove identifier'), findsNothing);
+      expect(find.byTooltip("Retirer l'identifiant"), findsNothing);
     });
 
     testWidgets('a row is removed, and the others keep what they held',
         (WidgetTester tester) async {
       await open(tester, client: capturedClient('Kids tablet'));
 
-      await tester.tap(find.byTooltip('Remove identifier').first);
+      await tester.tap(find.byTooltip("Retirer l'identifiant").first);
       await tester.pump();
 
       expect(textOf(tester, idField(0)), 'aa:bb:cc:dd:ee:01');
       expect(find.byKey(idField(1)), findsNothing);
-      expect(find.byTooltip('Remove identifier'), findsNothing);
+      expect(find.byTooltip("Retirer l'identifiant"), findsNothing);
     });
 
     testWidgets('a tag is picked and unpicked by its chip',
@@ -344,7 +344,7 @@ void main() {
       (WidgetTester tester) async {
     await open(tester, client: capturedClient('Kids tablet'));
 
-    await tester.tap(find.text('Blocked for this client'));
+    await tester.tap(find.text('Bloqué pour ce client'));
     await tester.pumpAndSettle();
     expect(find.text('Blocked for Kids tablet'), findsOneWidget);
 
@@ -352,7 +352,7 @@ void main() {
     await tester.pump();
     await tester.tap(find.text('TikTok'));
     await tester.pump();
-    await tester.tap(find.text('Done'));
+    await tester.tap(find.text('Terminé'));
     await tester.pumpAndSettle();
 
     // What is left keeps its place, and what was added comes after it.
@@ -368,7 +368,7 @@ void main() {
         List<AdguardHomeClientOutcome?> outcomes
       }) form = await open(tester, client: capturedClient('Laptop'));
 
-      expect(find.text('None'), findsOneWidget);
+      expect(find.text('Aucun'), findsOneWidget);
       expect(form.pumped.servicesReads, 0);
     });
 
@@ -397,15 +397,15 @@ void main() {
         'catalogue\'s order', (WidgetTester tester) async {
       await open(tester, client: capturedClient('Laptop'));
 
-      await flip(tester, 'Use global blocked services');
-      await tester.tap(find.text('Blocked for this client'));
+      await flip(tester, 'Utiliser les services bloqués globaux');
+      await tester.tap(find.text('Bloqué pour ce client'));
       await tester.pumpAndSettle();
       // Picked the other way round.
       await tester.tap(find.text('Netflix'));
       await tester.pump();
       await tester.tap(find.text('TikTok'));
       await tester.pump();
-      await tester.tap(find.text('Done'));
+      await tester.tap(find.text('Terminé'));
       await tester.pumpAndSettle();
 
       expect(find.text('TikTok, Netflix'), findsOneWidget);
@@ -437,7 +437,7 @@ void main() {
       expect(form.outcomes, <AdguardHomeClientOutcome?>[
         AdguardHomeClientOutcome.saved,
       ]);
-      expect(find.text('New client'), findsNothing);
+      expect(find.text('Nouveau client'), findsNothing);
       expect(find.text('Client "Kitchen" added'), findsOneWidget);
     });
 
@@ -449,7 +449,7 @@ void main() {
       }) form = await open(tester, client: capturedClient('Kids tablet'));
 
       await tester.enterText(find.byKey(nameField), 'Tablet');
-      await flip(tester, 'Ignore in statistics');
+      await flip(tester, 'Ignorer dans les statistiques');
       await flip(tester, 'YouTube');
       await tester.enterText(find.byKey(upstreamsField), '9.9.9.9\n1.1.1.1');
       await tester.tap(save);
@@ -483,7 +483,7 @@ void main() {
 
       expect(form.pumped.actions.saved, isEmpty);
       expect(form.outcomes, <AdguardHomeClientOutcome?>[null]);
-      expect(find.text('Edit client'), findsNothing);
+      expect(find.text('Modifier le client'), findsNothing);
     });
 
     testWidgets('without a name says so, sends nothing and stays',
@@ -497,14 +497,14 @@ void main() {
       await tester.tap(save);
       await tester.pumpAndSettle();
 
-      expect(find.text('Give the client a name.'), findsOneWidget);
+      expect(find.text('Donnez un nom au client.'), findsOneWidget);
       expect(form.pumped.actions.saved, isEmpty);
-      expect(find.text('New client'), findsOneWidget);
+      expect(find.text('Nouveau client'), findsOneWidget);
 
       // The complaint goes as soon as it is put right.
       await tester.enterText(find.byKey(nameField), 'Kitchen');
       await tester.pump();
-      expect(find.text('Give the client a name.'), findsNothing);
+      expect(find.text('Donnez un nom au client.'), findsNothing);
 
       await tester.tap(save);
       await tester.pumpAndSettle();
@@ -522,7 +522,7 @@ void main() {
       await tester.tap(save);
       await tester.pumpAndSettle();
 
-      expect(find.text('Give the client a name.'), findsOneWidget);
+      expect(find.text('Donnez un nom au client.'), findsOneWidget);
       expect(form.pumped.actions.saved, isEmpty);
     });
 
@@ -575,7 +575,7 @@ void main() {
       await tester.tap(save);
       await tester.pumpAndSettle();
 
-      expect(find.text('Not saved'), findsOneWidget);
+      expect(find.text('Non enregistré'), findsOneWidget);
       expect(
         find.text('adding client: another client uses the same name "Laptop"'),
         findsOneWidget,
@@ -584,7 +584,7 @@ void main() {
       await tester.tap(find.text('OK'));
       await tester.pumpAndSettle();
 
-      expect(find.text('New client'), findsOneWidget);
+      expect(find.text('Nouveau client'), findsOneWidget);
       expect(textOf(tester, nameField), 'Laptop');
       expect(textOf(tester, idField(0)), '10.0.0.4');
       expect(form.outcomes, isEmpty);
@@ -604,12 +604,12 @@ void main() {
       }) form = await open(tester, client: capturedClient('Laptop'));
       form.pumped.actions.writeFailure = const AdguardHomeSignInRefused();
 
-      await flip(tester, 'Ignore in statistics');
+      await flip(tester, 'Ignorer dans les statistiques');
       await tester.tap(save);
       await tester.pumpAndSettle();
 
-      expect(find.text('Not saved'), findsOneWidget);
-      expect(find.text('AdGuard Home refused the sign-in.'), findsOneWidget);
+      expect(find.text('Non enregistré'), findsOneWidget);
+      expect(find.text('AdGuard Home a refusé la connexion.'), findsOneWidget);
     });
 
     testWidgets('says so when the client is gone from the server',
@@ -620,7 +620,7 @@ void main() {
       }) form = await open(tester, client: capturedClient('Laptop'));
       form.pumped.actions.writeFailure = const AdguardHomeClientGone('Laptop');
 
-      await flip(tester, 'Ignore in statistics');
+      await flip(tester, 'Ignorer dans les statistiques');
       await tester.tap(save);
       await tester.pumpAndSettle();
 
@@ -637,7 +637,7 @@ void main() {
       }) form = await open(tester, client: capturedClient('Laptop'));
       form.pumped.actions.writeHold = Completer<void>();
 
-      await flip(tester, 'Ignore in statistics');
+      await flip(tester, 'Ignorer dans les statistiques');
       await tester.tap(save);
       await tester.pump();
       await tester.tap(save, warnIfMissed: false);
@@ -655,8 +655,8 @@ void main() {
       );
       await tester.pageBack();
       await tester.pump();
-      expect(find.text('Edit client'), findsOneWidget);
-      expect(find.text('Discard changes?'), findsNothing);
+      expect(find.text('Modifier le client'), findsOneWidget);
+      expect(find.text('Ignorer les modifications ?'), findsNothing);
 
       form.pumped.actions.writeHold!.complete();
       await tester.pumpAndSettle();
@@ -664,7 +664,7 @@ void main() {
       expect(form.outcomes, <AdguardHomeClientOutcome?>[
         AdguardHomeClientOutcome.saved,
       ]);
-      expect(find.text('Edit client'), findsNothing);
+      expect(find.text('Modifier le client'), findsNothing);
     });
   });
 
@@ -690,7 +690,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(form.pumped.actions.saved, isEmpty);
-      final Finder complaint = find.text('Give the client a name.');
+      final Finder complaint = find.text('Donnez un nom au client.');
       expect(complaint, findsOneWidget);
       expect(
         screen(tester).contains(tester.getCenter(complaint)),
@@ -764,13 +764,13 @@ void main() {
         List<AdguardHomeClientOutcome?> outcomes
       }) form = await open(tester, client: capturedClient('Kids tablet'));
       form.pumped.actions.writeHold = Completer<void>();
-      await flip(tester, 'Ignore in the query log');
+      await flip(tester, 'Ignorer dans le journal des requêtes');
       await tester.tap(save);
       await tester.pump();
 
       // The picker would put a screen over a form that is about to close.
       await tester.tap(
-        find.text('Blocked for this client'),
+        find.text('Bloqué pour ce client'),
         warnIfMissed: false,
       );
       // Several frames: a screen that is pushed is not there on the first.
@@ -779,9 +779,9 @@ void main() {
       }
       expect(find.byType(AdguardHomeServicesScreen), findsNothing);
       // And a switch flipped now would not be in what was sent.
-      await tester.tap(find.text('Parental control'), warnIfMissed: false);
+      await tester.tap(find.text('Contrôle parental'), warnIfMissed: false);
       await tester.pump();
-      expect(switchOf(tester, 'Parental control').value, isTrue);
+      expect(switchOf(tester, 'Contrôle parental').value, isTrue);
 
       form.pumped.actions.writeHold!.complete();
       await tester.pumpAndSettle();
@@ -789,7 +789,7 @@ void main() {
       expect(form.outcomes, <AdguardHomeClientOutcome?>[
         AdguardHomeClientOutcome.saved,
       ]);
-      expect(find.text('Edit client'), findsNothing);
+      expect(find.text('Modifier le client'), findsNothing);
     });
 
     for (final String what in <String>['save', 'delete']) {
@@ -801,12 +801,12 @@ void main() {
         }) form = await open(tester, client: capturedClient('Kids tablet'));
         form.pumped.actions.writeHold = Completer<void>();
         if (what == 'save') {
-          await flip(tester, 'Ignore in the query log');
+          await flip(tester, 'Ignorer dans le journal des requêtes');
           await tester.tap(save);
         } else {
-          await tester.tap(find.byTooltip('Delete client'));
+          await tester.tap(find.byTooltip('Supprimer le client'));
           await tester.pumpAndSettle();
-          await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
+          await tester.tap(find.widgetWithText(FilledButton, 'Supprimer'));
         }
         await tester.pump(const Duration(milliseconds: 500));
 
@@ -840,7 +840,7 @@ void main() {
             AdguardHomeClientOutcome.deleted,
         ]);
         expect(find.text('On top'), findsNothing);
-        expect(find.text('Edit client'), findsNothing);
+        expect(find.text('Modifier le client'), findsNothing);
         expect(find.text('Open'), findsOneWidget);
       });
     }
@@ -854,9 +854,9 @@ void main() {
         List<AdguardHomeClientOutcome?> outcomes
       }) form = await open(tester, client: capturedClient('Kids tablet'));
 
-      await tester.tap(find.text('Sunday'));
+      await tester.tap(find.text('Dimanche'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Pause blocking'));
+      await tester.tap(find.text('Mettre le blocage en pause'));
       await tester.pumpAndSettle();
       await tester.tap(find.widgetWithText(FilledButton, 'Remove pause'));
       await tester.pumpAndSettle();
@@ -876,7 +876,7 @@ void main() {
         (WidgetTester tester) async {
       await open(tester, client: capturedClient('Laptop'));
 
-      await flip(tester, 'Use global blocked services');
+      await flip(tester, 'Utiliser les services bloqués globaux');
 
       expect(find.byType(AdguardHomeScheduleEditor), findsOneWidget);
     });
@@ -885,14 +885,14 @@ void main() {
         (WidgetTester tester) async {
       await open(tester, client: capturedClient('Kids tablet'));
 
-      await tester.tap(find.text('Monday'));
+      await tester.tap(find.text('Lundi'));
       await tester.pumpAndSettle();
       await tester.tap(find.widgetWithText(FilledButton, 'Add pause'));
       await tester.pumpAndSettle();
       await tester.pageBack();
       await tester.pumpAndSettle();
 
-      expect(find.text('Discard changes?'), findsOneWidget);
+      expect(find.text('Ignorer les modifications ?'), findsOneWidget);
     });
   });
 
@@ -921,10 +921,10 @@ void main() {
       await tester.tap(save);
       await tester.pumpAndSettle();
 
-      expect(find.text('Update the custom rules?'), findsOneWidget);
+      expect(find.text('Mettre à jour les règles personnalisées ?'), findsOneWidget);
       expect(find.textContaining('2 custom rules name'), findsOneWidget);
       expect(form.pumped.actions.calls, isEmpty);
-      await tester.tap(find.text('Update them'));
+      await tester.tap(find.text('Les mettre à jour'));
       await tester.pumpAndSettle();
 
       expect(form.pumped.actions.calls, <String>[
@@ -951,7 +951,7 @@ void main() {
       await tester.enterText(find.byKey(nameField), 'Tablet');
       await tester.tap(save);
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Leave them'));
+      await tester.tap(find.text('Les laisser'));
       await tester.pumpAndSettle();
 
       expect(form.pumped.actions.calls, <String>['save Kids tablet as Tablet']);
@@ -972,7 +972,7 @@ void main() {
       await tester.enterText(find.byKey(nameField), 'Tablet');
       await tester.tap(save);
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Cancel'));
+      await tester.tap(find.text('Annuler'));
       await tester.pumpAndSettle();
 
       expect(form.pumped.actions.calls, isEmpty);
@@ -980,7 +980,7 @@ void main() {
       // Not stuck: Save asks again.
       await tester.tap(save);
       await tester.pumpAndSettle();
-      expect(find.text('Update the custom rules?'), findsOneWidget);
+      expect(find.text('Mettre à jour les règles personnalisées ?'), findsOneWidget);
     });
 
     testWidgets('after a refused sign-in, Try again keeps the answer',
@@ -998,12 +998,12 @@ void main() {
       await tester.enterText(find.byKey(nameField), 'Tablet');
       await tester.tap(save);
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Update them'));
+      await tester.tap(find.text('Les mettre à jour'));
       await tester.pumpAndSettle();
-      await tester.tap(find.widgetWithText(FilledButton, 'Try again'));
+      await tester.tap(find.widgetWithText(FilledButton, 'Réessayer'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Update the custom rules?'), findsNothing);
+      expect(find.text('Mettre à jour les règles personnalisées ?'), findsNothing);
       expect(form.pumped.actions.calls, <String>[
         'save Kids tablet as Tablet',
         'retry',
@@ -1030,7 +1030,7 @@ void main() {
         List<AdguardHomeClientOutcome?> outcomes
       }) form = await open(tester, client: capturedClient('Kids tablet'));
 
-      await flip(tester, 'Ignore in statistics');
+      await flip(tester, 'Ignorer dans les statistiques');
       await tester.tap(save);
       await tester.pumpAndSettle();
 
@@ -1048,17 +1048,17 @@ void main() {
         List<AdguardHomeClientOutcome?> outcomes
       }) form = await open(tester, client: capturedClient('Kids tablet'));
 
-      await tester.tap(find.byTooltip('Delete client'));
+      await tester.tap(find.byTooltip('Supprimer le client'));
       await tester.pumpAndSettle();
 
       expect(find.text('Delete "Kids tablet"?'), findsOneWidget);
       expect(form.pumped.actions.calls, isEmpty);
 
-      await tester.tap(find.text('Cancel'));
+      await tester.tap(find.text('Annuler'));
       await tester.pumpAndSettle();
 
       expect(form.pumped.actions.calls, isEmpty);
-      expect(find.text('Edit client'), findsOneWidget);
+      expect(find.text('Modifier le client'), findsOneWidget);
     });
 
     testWidgets('says how many custom rules name the client',
@@ -1075,7 +1075,7 @@ void main() {
         ),
       );
 
-      await tester.tap(find.byTooltip('Delete client'));
+      await tester.tap(find.byTooltip('Supprimer le client'));
       await tester.pumpAndSettle();
 
       expect(
@@ -1088,7 +1088,7 @@ void main() {
         (WidgetTester tester) async {
       await open(tester, client: capturedClient('Kids tablet'));
 
-      await tester.tap(find.byTooltip('Delete client'));
+      await tester.tap(find.byTooltip('Supprimer le client'));
       await tester.pumpAndSettle();
 
       expect(find.textContaining('custom rule'), findsNothing);
@@ -1103,14 +1103,14 @@ void main() {
 
       // Typed over, but not saved: the server still knows the old name.
       await tester.enterText(find.byKey(nameField), 'Tablet');
-      await tester.tap(find.byTooltip('Delete client'));
+      await tester.tap(find.byTooltip('Supprimer le client'));
       await tester.pumpAndSettle();
-      await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
+      await tester.tap(find.widgetWithText(FilledButton, 'Supprimer'));
       await tester.pumpAndSettle();
 
       expect(form.pumped.actions.calls, <String>['delete client Kids tablet']);
       expect(form.outcomes.single, AdguardHomeClientOutcome.deleted);
-      expect(find.text('Edit client'), findsNothing);
+      expect(find.text('Modifier le client'), findsNothing);
       expect(find.text('Client "Kids tablet" deleted'), findsOneWidget);
     });
 
@@ -1123,16 +1123,16 @@ void main() {
       form.pumped.actions.writeFailure =
           const AdguardHomeRequestRefused('Client not found');
 
-      await tester.tap(find.byTooltip('Delete client'));
+      await tester.tap(find.byTooltip('Supprimer le client'));
       await tester.pumpAndSettle();
-      await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
+      await tester.tap(find.widgetWithText(FilledButton, 'Supprimer'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Not deleted'), findsOneWidget);
+      expect(find.text('Non supprimé'), findsOneWidget);
       expect(find.text('Client not found'), findsOneWidget);
       await tester.tap(find.text('OK'));
       await tester.pumpAndSettle();
-      expect(find.text('Edit client'), findsOneWidget);
+      expect(find.text('Modifier le client'), findsOneWidget);
       expect(form.outcomes, isEmpty);
     });
   });
@@ -1148,8 +1148,8 @@ void main() {
       await tester.pageBack();
       await tester.pumpAndSettle();
 
-      expect(find.text('Edit client'), findsNothing);
-      expect(find.text('Discard changes?'), findsNothing);
+      expect(find.text('Modifier le client'), findsNothing);
+      expect(find.text('Ignorer les modifications ?'), findsNothing);
       expect(form.outcomes, <AdguardHomeClientOutcome?>[null]);
     });
 
@@ -1162,12 +1162,12 @@ void main() {
       await tester.pageBack();
       await tester.pumpAndSettle();
 
-      expect(find.text('Discard changes?'), findsOneWidget);
+      expect(find.text('Ignorer les modifications ?'), findsOneWidget);
 
-      await tester.tap(find.text('Keep editing'));
+      await tester.tap(find.text("Continuer l'édition"));
       await tester.pumpAndSettle();
 
-      expect(find.text('Edit client'), findsOneWidget);
+      expect(find.text('Modifier le client'), findsOneWidget);
       expect(textOf(tester, nameField), 'Old laptop');
     });
 
@@ -1178,13 +1178,13 @@ void main() {
         List<AdguardHomeClientOutcome?> outcomes
       }) form = await open(tester, client: capturedClient('Laptop'));
 
-      await flip(tester, 'Ignore in statistics');
+      await flip(tester, 'Ignorer dans les statistiques');
       await tester.pageBack();
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Discard'));
+      await tester.tap(find.text('Ignorer'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Edit client'), findsNothing);
+      expect(find.text('Modifier le client'), findsNothing);
       expect(form.pumped.actions.saved, isEmpty);
       expect(form.outcomes, <AdguardHomeClientOutcome?>[null]);
     });
@@ -1193,13 +1193,13 @@ void main() {
         (WidgetTester tester) async {
       await open(tester, client: capturedClient('Laptop'));
 
-      await flip(tester, 'Ignore in statistics');
-      await flip(tester, 'Ignore in statistics');
+      await flip(tester, 'Ignorer dans les statistiques');
+      await flip(tester, 'Ignorer dans les statistiques');
       await tester.pageBack();
       await tester.pumpAndSettle();
 
-      expect(find.text('Discard changes?'), findsNothing);
-      expect(find.text('Edit client'), findsNothing);
+      expect(find.text('Ignorer les modifications ?'), findsNothing);
+      expect(find.text('Modifier le client'), findsNothing);
     });
   });
 
@@ -1220,7 +1220,7 @@ void main() {
         await tester.tap(save);
         await tester.pumpAndSettle();
 
-        expect(find.text('Give the client a name.'), findsOneWidget);
+        expect(find.text('Donnez un nom au client.'), findsOneWidget);
         expect(
           find.text('A whole number from 0 to 4294967295.'),
           findsOneWidget,

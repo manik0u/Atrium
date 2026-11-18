@@ -59,7 +59,7 @@ void main() {
   void expectThemeColoured(WidgetTester tester, ColorScheme scheme) {
     // Both the VPN banner and the DNS row read RUNNING.
     final Iterable<Text> running =
-        tester.widgetList<Text>(find.text('RUNNING'));
+        tester.widgetList<Text>(find.text('EN COURS'));
     expect(running, hasLength(2));
     for (final Text text in running) {
       expect(text.style?.color, scheme.primary);

@@ -57,7 +57,7 @@ class _PeopleTabState extends ConsumerState<PeopleTab> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.menu),
-          tooltip: 'Open menu',
+          tooltip: 'Ouvrir le menu',
           onPressed: () => Scaffold.of(context).openDrawer(),
         ),
         title: Column(

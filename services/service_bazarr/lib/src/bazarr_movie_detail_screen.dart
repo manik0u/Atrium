@@ -34,7 +34,7 @@ class BazarrMovieDetailScreen extends ConsumerWidget {
         title: Text(title, overflow: TextOverflow.ellipsis),
         actions: <Widget>[
           IconButton(
-            tooltip: 'Search subtitles',
+            tooltip: 'Rechercher des sous-titres',
             icon: const Icon(Icons.subtitles_outlined),
             onPressed: () => Navigator.of(context, rootNavigator: true).push(
               MaterialPageRoute<void>(
@@ -64,8 +64,8 @@ class BazarrMovieDetailScreen extends ConsumerWidget {
           if (movie == null) {
             return const EmptyView(
               icon: Icons.movie_outlined,
-              title: 'Movie not found',
-              message: 'It may have been removed from Bazarr.',
+              title: 'Film introuvable',
+              message: 'Il a peut-être été retiré de Bazarr.',
             );
           }
           final BazarrMovie m = movie;
@@ -75,7 +75,7 @@ class BazarrMovieDetailScreen extends ConsumerWidget {
               _HeaderCard(movie: m),
               const SizedBox(height: Insets.md),
               _SectionCard(
-                title: 'Subtitles',
+                title: 'Sous-titres',
                 child: m.subtitles.isEmpty
                     ? const _MutedLine('None downloaded')
                     : BazarrSubtitleChips(
@@ -86,7 +86,7 @@ class BazarrMovieDetailScreen extends ConsumerWidget {
               ),
               const SizedBox(height: Insets.md),
               _SectionCard(
-                title: 'Missing',
+                title: 'Manquant',
                 child: m.missingSubtitles.isEmpty
                     ? const _MutedLine('Nothing missing')
                     : BazarrSubtitleChips(missing: m.missingSubtitles),
@@ -109,7 +109,7 @@ class BazarrMovieDetailScreen extends ConsumerWidget {
       messenger.showSnackBar(
         const SnackBar(
           content: Text(
-            'This subtitle is embedded in the video and cannot be removed here.',
+            'Ce sous-titre est intégré à la vidéo et ne peut pas être supprimé ici.',
           ),
         ),
       );
@@ -118,15 +118,15 @@ class BazarrMovieDetailScreen extends ConsumerWidget {
     final bool? ok = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Delete subtitle?'),
+        title: const Text('Supprimer le sous-titre ?'),
         content: Text(
           'Remove the ${s.name.isNotEmpty ? s.name : s.code2.toUpperCase()} '
-          'subtitle for this movie?',
+          'sous-titre pour ce film ?',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -134,7 +134,7 @@ class BazarrMovieDetailScreen extends ConsumerWidget {
               foregroundColor: Theme.of(ctx).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Delete'),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
@@ -148,10 +148,10 @@ class BazarrMovieDetailScreen extends ConsumerWidget {
       ref.invalidate(bazarrMoviesProvider(instance));
       ref.invalidate(bazarrWantedProvider(instance));
       ref.invalidate(bazarrBadgesProvider(instance));
-      messenger.showSnackBar(const SnackBar(content: Text('Subtitle deleted')));
+      messenger.showSnackBar(const SnackBar(content: Text('Sous-titre supprimé')));
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Delete failed: ${_err(e)}')),
+        SnackBar(content: Text('Échec de la suppression : ${_err(e)}')),
       );
     }
   }
@@ -216,18 +216,18 @@ class _HeaderCard extends StatelessWidget {
                       icon: movie.monitored
                           ? Icons.bookmark
                           : Icons.bookmark_border,
-                      label: movie.monitored ? 'Monitored' : 'Unmonitored',
+                      label: movie.monitored ? 'Surveillé' : 'Non surveillé',
                       color: movie.monitored ? cs.primary : cs.outline,
                     ),
                     _MetaPill(
                       icon: Icons.subtitles_outlined,
-                      label: '$present subs',
+                      label: '$present sous-titres',
                       color: cs.tertiary,
                     ),
                     if (missing > 0)
                       _MetaPill(
                         icon: Icons.report_outlined,
-                        label: '$missing missing',
+                        label: '$missing manquants',
                         color: cs.error,
                       ),
                   ],

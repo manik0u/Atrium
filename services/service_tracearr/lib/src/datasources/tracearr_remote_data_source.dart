@@ -35,7 +35,7 @@ class TracearrRemoteDataSource {
     final response = await _apiV2.getPublicStreams(serverId: serverId);
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Failed to fetch active streams',
+        response.error?.message ?? 'Échec de la récupération des flux actifs',
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -59,7 +59,7 @@ class TracearrRemoteDataSource {
     );
     if (!response.isSuccess) {
       throw TracearrException(
-        response.error?.message ?? 'Failed to terminate stream',
+        response.error?.message ?? "Échec de l'interruption du flux",
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -82,7 +82,7 @@ class TracearrRemoteDataSource {
     );
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Failed to fetch watch history',
+        response.error?.message ?? "Échec de la récupération de l'historique de visionnage",
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -105,7 +105,7 @@ class TracearrRemoteDataSource {
     );
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Failed to fetch recently added items',
+        response.error?.message ?? 'Échec de la récupération des ajouts récents',
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -118,7 +118,7 @@ class TracearrRemoteDataSource {
     final response = await _apiV2.getPublicUsers();
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Failed to fetch user list',
+        response.error?.message ?? 'Échec de la récupération de la liste des utilisateurs',
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -133,7 +133,7 @@ class TracearrRemoteDataSource {
     final response = await _apiV2.getPublicUsersById(id: id);
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Failed to fetch user profile',
+        response.error?.message ?? 'Échec de la récupération du profil utilisateur',
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -178,7 +178,7 @@ class TracearrRemoteDataSource {
     final response = await _apiV2.getPublicMediaByRef(ref: ref);
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Failed to fetch media details',
+        response.error?.message ?? 'Échec de la récupération des détails du média',
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -234,7 +234,7 @@ class TracearrRemoteDataSource {
     final response = await _apiV1.getPublicViolations(severity: severity);
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Failed to fetch rule violations',
+        response.error?.message ?? 'Échec de la récupération des violations de règles',
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -247,7 +247,7 @@ class TracearrRemoteDataSource {
     final response = await _apiV2.getPublicLibraries();
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Failed to fetch library statistics',
+        response.error?.message ?? 'Échec de la récupération des statistiques de bibliothèque',
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -263,7 +263,7 @@ class TracearrRemoteDataSource {
     final response = await _apiV1.getPublicHealth();
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Failed to fetch health status',
+        response.error?.message ?? "Échec de la récupération de l'état de santé",
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -285,7 +285,7 @@ class TracearrRemoteDataSource {
     );
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Failed to fetch today stats',
+        response.error?.message ?? 'Échec de la récupération des stats du jour',
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -309,7 +309,7 @@ class TracearrRemoteDataSource {
     );
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Failed to fetch activity trends',
+        response.error?.message ?? "Échec de la récupération des tendances d'activité",
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -329,7 +329,7 @@ class TracearrRemoteDataSource {
     );
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Failed to fetch aggregate stats',
+        response.error?.message ?? 'Échec de la récupération des stats agrégées',
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -350,7 +350,7 @@ class TracearrRemoteDataSource {
     );
     if (!response.isSuccess || response.data == null) {
       throw TracearrException(
-        response.error?.message ?? 'Failed to fetch media history',
+        response.error?.message ?? "Échec de la récupération de l'historique des médias",
         statusCode: response.statusCode,
         error: response.error,
       );

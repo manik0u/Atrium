@@ -5,11 +5,11 @@ import 'ombi_visuals.dart';
 
 /// Ombi's Recently Requested cards' words, which the dashboard shows.
 String ombiRecentStatusLabel(OmbiRecentStatus status) => switch (status) {
-      OmbiRecentStatus.pending => 'Pending',
-      OmbiRecentStatus.approved => 'Approved',
-      OmbiRecentStatus.partlyAvailable => 'Partially Available',
-      OmbiRecentStatus.available => 'Available',
-      OmbiRecentStatus.denied => 'Denied',
+      OmbiRecentStatus.pending => 'En attente',
+      OmbiRecentStatus.approved => 'Approuvé',
+      OmbiRecentStatus.partlyAvailable => 'Partiellement disponible',
+      OmbiRecentStatus.available => 'Disponible',
+      OmbiRecentStatus.denied => 'Refusée',
     };
 
 /// Where a request stands, as a small filled pill, in the words of Ombi's
@@ -20,10 +20,10 @@ class OmbiStatusBadge extends StatelessWidget {
   final OmbiRequestStatus status;
 
   static String labelFor(OmbiRequestStatus status) => switch (status) {
-        OmbiRequestStatus.pending => 'Pending Approval',
-        OmbiRequestStatus.processing => 'Processing Request',
-        OmbiRequestStatus.available => 'Available',
-        OmbiRequestStatus.denied => 'Denied',
+        OmbiRequestStatus.pending => "En attente d'approbation",
+        OmbiRequestStatus.processing => 'Demande en cours de traitement',
+        OmbiRequestStatus.available => 'Disponible',
+        OmbiRequestStatus.denied => 'Refusée',
       };
 
   @override

@@ -49,13 +49,13 @@ String aria2StatusLabel(String status, {bool seeder = false}) {
     return 'Seeding';
   }
   return switch (status) {
-    'active' => 'Downloading',
-    'waiting' => 'Queued',
-    'paused' => 'Paused',
-    'complete' => 'Complete',
-    'error' => 'Error',
-    'removed' => 'Removed',
-    '' => 'Unknown',
+    'active' => 'Téléchargement en cours',
+    'waiting' => "En file d'attente",
+    'paused' => 'En pause',
+    'complete' => 'Terminé',
+    'error' => 'Erreur',
+    'removed' => 'Retiré',
+    '' => 'Inconnu',
     _ => status,
   };
 }

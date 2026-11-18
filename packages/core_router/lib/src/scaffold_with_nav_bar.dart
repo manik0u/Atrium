@@ -93,22 +93,22 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
                 NavigationDestination(
                   icon: Icon(Icons.dashboard_outlined),
                   selectedIcon: Icon(Icons.dashboard),
-                  label: 'Dashboard',
+                  label: 'Tableau de bord',
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.calendar_today_outlined),
                   selectedIcon: Icon(Icons.calendar_today),
-                  label: 'Calendar',
+                  label: 'Calendrier',
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.swap_vert_outlined),
                   selectedIcon: Icon(Icons.swap_vert),
-                  label: 'Activity',
+                  label: 'Activité',
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.settings_outlined),
                   selectedIcon: Icon(Icons.settings),
-                  label: 'Settings',
+                  label: 'Paramètres',
                 ),
               ],
             ),

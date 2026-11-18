@@ -42,7 +42,7 @@ class ArtistDiscographyView extends ConsumerWidget {
         ),
       );
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Failed to update albums');
+        throw Exception(resp.error?.message ?? 'Échec de la mise à jour des albums');
       }
 
       ref.invalidate(
@@ -69,7 +69,7 @@ class ArtistDiscographyView extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to update album monitoring: $e'),
+            content: Text("Échec de la mise à jour de la surveillance de l'album : $e"),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -79,15 +79,15 @@ class ArtistDiscographyView extends ConsumerWidget {
 
   String _formatGroupTitle(String groupType) {
     return switch (groupType.toLowerCase()) {
-      'studio' => 'Studio Albums',
+      'studio' => 'Albums studio',
       'album' => 'Albums',
-      'ep' => 'EPs',
+      'ep' => 'EP',
       'single' => 'Singles',
-      'live' => 'Live Albums',
-      'broadcast' => 'Broadcasts',
+      'live' => 'Albums live',
+      'broadcast' => 'Émissions',
       'compilation' => 'Compilations',
-      'soundtrack' => 'Soundtracks',
-      _ => '$groupType Releases',
+      'soundtrack' => 'Bandes-son',
+      _ => 'Releases de type $groupType',
     };
   }
 
@@ -101,7 +101,7 @@ class ArtistDiscographyView extends ConsumerWidget {
 
     final Map<String, List<AlbumResource>> grouped = groupBy(
       albums,
-      (AlbumResource a) => a.albumType ?? 'Other',
+      (AlbumResource a) => a.albumType ?? 'Autre',
     );
 
     const List<String> canonicalOrder = [
@@ -258,8 +258,8 @@ class ArtistDiscographyView extends ConsumerWidget {
               child: Center(
                 child: EmptyView(
                   icon: Icons.album_outlined,
-                  title: 'No Albums Found',
-                  message: 'No albums available for this artist.',
+                  title: 'Aucun album trouvé',
+                  message: 'Aucun album disponible pour cet artiste.',
                 ),
               ),
             ),

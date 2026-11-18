@@ -102,13 +102,13 @@ class _AddNzbFormState extends ConsumerState<_AddNzbForm> {
       }
       ref.invalidate(nzbgetQueueProvider(widget.instance));
       navigator.pop();
-      messenger.showSnackBar(const SnackBar(content: Text('NZB added')));
+      messenger.showSnackBar(const SnackBar(content: Text('NZB ajouté')));
     } catch (e) {
       if (!mounted) {
         return;
       }
       setState(() => _busy = false);
-      messenger.showSnackBar(SnackBar(content: Text('Add failed: $e')));
+      messenger.showSnackBar(SnackBar(content: Text("Échec de l'ajout : $e")));
     }
   }
 
@@ -131,12 +131,12 @@ class _AddNzbFormState extends ConsumerState<_AddNzbForm> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Text('Add NZB', style: Theme.of(context).textTheme.titleLarge),
+            Text('Ajouter un NZB', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: Insets.md),
             TextField(
               controller: _url,
               decoration: const InputDecoration(
-                labelText: 'NZB URL',
+                labelText: 'URL du NZB',
                 hintText: 'https://indexer.example/get/...',
               ),
               onChanged: (String value) {
@@ -152,13 +152,13 @@ class _AddNzbFormState extends ConsumerState<_AddNzbForm> {
             OutlinedButton.icon(
               onPressed: _pickFile,
               icon: const Icon(Icons.attach_file),
-              label: Text(_fileName ?? 'Or pick an .nzb file'),
+              label: Text(_fileName ?? 'Ou choisissez un fichier .nzb'),
             ),
             const SizedBox(height: Insets.md),
             DropdownButtonFormField<String>(
               initialValue: _category.isEmpty ? null : _category,
               decoration:
-                  const InputDecoration(labelText: 'Category (optional)'),
+                  const InputDecoration(labelText: 'Catégorie (facultatif)'),
               items: <DropdownMenuItem<String>>[
                 for (final String name
                     in categories.value ?? const <String>[])
@@ -170,7 +170,7 @@ class _AddNzbFormState extends ConsumerState<_AddNzbForm> {
             const SizedBox(height: Insets.sm),
             DropdownButtonFormField<int>(
               initialValue: _priority,
-              decoration: const InputDecoration(labelText: 'Priority'),
+              decoration: const InputDecoration(labelText: 'Priorité'),
               items: <DropdownMenuItem<int>>[
                 for (final (String label, int value) in priorities)
                   DropdownMenuItem<int>(value: value, child: Text(label)),
@@ -180,7 +180,7 @@ class _AddNzbFormState extends ConsumerState<_AddNzbForm> {
             ),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Add paused'),
+              title: const Text('Ajouter en pause'),
               value: _addPaused,
               onChanged: (bool value) => setState(() => _addPaused = value),
             ),
@@ -193,7 +193,7 @@ class _AddNzbFormState extends ConsumerState<_AddNzbForm> {
                       height: 18,
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
-                  : const Text('Add'),
+                  : const Text('Ajouter'),
             ),
           ],
         ),

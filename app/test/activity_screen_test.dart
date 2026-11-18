@@ -104,7 +104,7 @@ void main() {
             ),
       ],
     );
-    expect(find.text('Now Streaming'), findsOneWidget);
+    expect(find.text('En cours de lecture'), findsOneWidget);
     expect(find.text('Dune'), findsOneWidget);
     expect(find.text('The Wire'), findsOneWidget);
     expect(find.text('Plex'), findsOneWidget);
@@ -157,12 +157,12 @@ void main() {
       ],
     );
     // 'Transfers' appears in the summary bar tile and the section header.
-    expect(find.text('Transfers'), findsWidgets);
+    expect(find.text('Transferts'), findsWidgets);
     expect(find.text('Ubuntu.iso'), findsOneWidget);
     expect(find.text('Severance.S01E01.1080p'), findsOneWidget);
     // The seeding torrent shows as an active upload with its status label.
     expect(find.text('Fedora.iso'), findsOneWidget);
-    expect(find.text('Seeding'), findsOneWidget);
+    expect(find.text('Seed en cours'), findsOneWidget);
   });
 
   testWidgets('an unreachable source shows a chip without hiding the rest',
@@ -211,7 +211,7 @@ void main() {
         ),
       ],
     );
-    expect(find.text('Nothing happening right now'), findsOneWidget);
+    expect(find.text('Rien en ce moment'), findsOneWidget);
   });
 
   testWidgets('renders Emby music session with poster in Activity tab',
@@ -246,7 +246,7 @@ void main() {
             ),
       ],
     );
-    expect(find.text('Now Streaming'), findsOneWidget);
+    expect(find.text('En cours de lecture'), findsOneWidget);
     expect(find.text('Blood Swamps'), findsOneWidget);
     expect(find.text('Andrew Hulshult'), findsOneWidget);
     expect(find.text('Emby'), findsOneWidget);
@@ -288,7 +288,7 @@ void main() {
             ),
       ],
     );
-    expect(find.text('Now Streaming'), findsOneWidget);
+    expect(find.text('En cours de lecture'), findsOneWidget);
     expect(find.text('Collection'), findsOneWidget);
     expect(find.text('Gemini Drive'), findsOneWidget);
     expect(find.text('Jellyfin'), findsOneWidget);

@@ -102,7 +102,7 @@ class _QbittorrentLogsTabState extends ConsumerState<QbittorrentLogsTab> {
     try {
       await Clipboard.setData(ClipboardData(text: text));
     } on PlatformException {
-      message = 'Could not copy to the clipboard';
+      message = 'Impossible de copier dans le presse-papiers';
     }
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
@@ -136,18 +136,18 @@ class _QbittorrentLogsTabState extends ConsumerState<QbittorrentLogsTab> {
                 autofocus: true,
                 style: theme.textTheme.titleMedium,
                 decoration: InputDecoration(
-                  hintText: 'Search logs...',
+                  hintText: 'Rechercher dans les journaux…',
                   border: InputBorder.none,
                   hintStyle: theme.textTheme.titleMedium
                       ?.copyWith(color: cs.onSurfaceVariant),
                 ),
               )
-            : Text('${widget.instance.name} Logs'),
+            : Text('Journaux de ${widget.instance.name}'),
         actions: <Widget>[
           if (_isSearching)
             IconButton(
               icon: const Icon(Icons.close),
-              tooltip: 'Close search',
+              tooltip: 'Fermer la recherche',
               onPressed: () {
                 setState(() {
                   _isSearching = false;
@@ -159,13 +159,13 @@ class _QbittorrentLogsTabState extends ConsumerState<QbittorrentLogsTab> {
           else ...<Widget>[
             IconButton(
               icon: const Icon(Icons.search),
-              tooltip: 'Search logs',
+              tooltip: 'Rechercher dans les journaux',
               onPressed: () => setState(() => _isSearching = true),
             ),
             IconButton(
               icon: const Icon(Icons.copy_all_outlined),
               // It copies what the filter and search leave, not everything.
-              tooltip: 'Copy logs',
+              tooltip: 'Copier les journaux',
               onPressed: () {
                 final List<QbitLogEntry>? currentLogs = logsAsync.value;
                 if (currentLogs != null) {
@@ -176,7 +176,7 @@ class _QbittorrentLogsTabState extends ConsumerState<QbittorrentLogsTab> {
             ),
             IconButton(
               icon: const Icon(Icons.refresh),
-              tooltip: 'Refresh',
+              tooltip: 'Actualiser',
               onPressed: () => ref.invalidate(qbitLogsProvider(widget.instance)),
             ),
           ],
@@ -198,11 +198,11 @@ class _QbittorrentLogsTabState extends ConsumerState<QbittorrentLogsTab> {
                   return EmptyView(
                     icon: Icons.article_outlined,
                     title: allLogs.isEmpty
-                        ? 'No logs available'
-                        : 'No matching logs',
+                        ? 'Aucun journal disponible'
+                        : 'Aucun journal correspondant',
                     message: allLogs.isEmpty
                         ? 'qBittorrent has not reported any log entries yet.'
-                        : 'Try changing your search query or level filter.',
+                        : 'Essayez de changer votre requête ou votre filtre de niveau.',
                   );
                 }
 
@@ -272,7 +272,7 @@ class _QbittorrentLogsTabState extends ConsumerState<QbittorrentLogsTab> {
             padding: const EdgeInsets.only(right: Insets.xs),
             child: FilterChip(
               selected: _selectedLevel == null,
-              label: const Text('All'),
+              label: const Text('Tous'),
               onSelected: (_) => setState(() => _selectedLevel = null),
             ),
           ),

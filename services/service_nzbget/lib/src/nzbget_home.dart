@@ -18,8 +18,8 @@ class NzbgetHome extends StatelessWidget {
         children: <Widget>[
           const TabBar(
             tabs: <Widget>[
-              Tab(text: 'Queue', icon: Icon(Icons.download_outlined)),
-              Tab(text: 'History', icon: Icon(Icons.history)),
+              Tab(text: "File d'attente", icon: Icon(Icons.download_outlined)),
+              Tab(text: 'Historique', icon: Icon(Icons.history)),
             ],
           ),
           Expanded(

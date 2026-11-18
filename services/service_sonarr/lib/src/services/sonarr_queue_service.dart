@@ -35,7 +35,7 @@ class SonarrQueueService {
     }
     if (response.error != null) {
       throw SonarrException(
-        response.error!.message ?? 'Failed to fetch queue',
+        response.error!.message ?? "Échec de la récupération de la file d'attente",
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -57,7 +57,7 @@ class SonarrQueueService {
     }
     if (response.error != null) {
       throw SonarrException(
-        response.error!.message ?? 'Failed to fetch queue details',
+        response.error!.message ?? 'Échec de la récupération des détails de la file',
         statusCode: response.statusCode,
         error: response.error,
       );
@@ -73,7 +73,7 @@ class SonarrQueueService {
     }
     if (response.error != null) {
       throw SonarrException(
-        response.error!.message ?? 'Failed to fetch queue status',
+        response.error!.message ?? 'Échec de la récupération du statut de la file',
         statusCode: response.statusCode,
         error: response.error,
       );

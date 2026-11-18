@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 class ExpandableFab extends StatefulWidget {
   const ExpandableFab({
     required this.builder,
-    this.tooltip = 'Add',
+    this.tooltip = 'Ajouter',
     this.step = 68,
     super.key,
   });
@@ -115,7 +115,7 @@ class _ExpandableFabState extends State<ExpandableFab>
             ),
           FloatingActionButton(
             heroTag: null,
-            tooltip: _open ? 'Close' : widget.tooltip,
+            tooltip: _open ? 'Fermer' : widget.tooltip,
             onPressed: _toggle,
             child: AnimatedBuilder(
               animation: _expandAnimation,

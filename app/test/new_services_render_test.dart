@@ -122,14 +122,14 @@ void main() {
       <Override>[
         sabQueueProvider(instance).overrideWith(
           (Ref ref) async => const SabQueue(
-            status: 'Downloading',
+            status: 'Téléchargement en cours',
             speed: '1.2 M',
             slots: <SabSlot>[
               SabSlot(
                 nzoId: '1',
                 filename: 'Ubuntu.24.04.iso',
                 percentage: '45',
-                status: 'Downloading',
+                status: 'Téléchargement en cours',
                 timeleft: '0:05:00',
               ),
             ],
@@ -186,7 +186,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 100));
     await tester.pump(const Duration(milliseconds: 100));
     expect(find.textContaining('Arrival'), findsOneWidget);
-    expect(find.text('Approve'), findsOneWidget);
+    expect(find.text('Approuver'), findsOneWidget);
   });
 
   testWidgets('SeerrHome renders a request with its media details',
@@ -258,7 +258,7 @@ void main() {
       BazarrHome(instance: instance),
     );
     // Wanted is the third tab now; switch to it before asserting.
-    await tester.tap(find.text('Wanted'));
+    await tester.tap(find.text('Recherchés'));
     await tester.pump(); // register the tap, start the tab animation
     await tester.pump(const Duration(milliseconds: 400)); // finish animation
     await tester.pump(); // let the wanted provider resolve and render
@@ -277,7 +277,7 @@ void main() {
         ),
         plexLibrariesProvider(instance).overrideWith(
           (Ref ref) async => const <PlexLibrary>[
-            PlexLibrary(key: '1', title: 'Movies', type: 'movie'),
+            PlexLibrary(key: '1', title: 'Films', type: 'movie'),
           ],
         ),
         // No active streams: the Now Streaming row renders nothing (and the
@@ -311,10 +311,10 @@ void main() {
       PlexHome(instance: instance),
       pumps: 4,
     );
-    expect(find.text('Continue Watching'), findsOneWidget);
+    expect(find.text('Continuer le visionnage'), findsOneWidget);
     // Once in the featured hero, once in the Continue Watching row.
     expect(find.text('Blade Runner'), findsNWidgets(2));
-    expect(find.text('Movies'), findsOneWidget);
+    expect(find.text('Films'), findsOneWidget);
   });
 
   testWidgets('CalendarScreen renders Radarr aggregated entries',
@@ -355,7 +355,7 @@ void main() {
     );
 
     expect(find.text('Inception'), findsOneWidget);
-    expect(find.text('Missing'), findsOneWidget);
+    expect(find.text('Manquant'), findsOneWidget);
   });
 
   testWidgets('CalendarScreen renders Lidarr aggregated entries',
@@ -404,7 +404,7 @@ void main() {
     );
 
     expect(find.text('Radiohead - A Moon Shaped Pool'), findsOneWidget);
-    expect(find.text('Downloaded'), findsOneWidget);
+    expect(find.text('Téléchargé'), findsOneWidget);
   });
 
   testWidgets('MySpeedHome renders', (WidgetTester tester) async {
@@ -421,7 +421,7 @@ void main() {
     );
 
     expect(find.text('Execution status'), findsOneWidget);
-    expect(find.text('Idle'), findsOneWidget);
+    expect(find.text('Inactif'), findsOneWidget);
     expect(find.byType(NavigationBar), findsOneWidget);
   });
 
@@ -453,8 +453,8 @@ void main() {
       pumps: 2,
     );
 
-    expect(find.text('Protection is on'), findsOneWidget);
-    expect(find.text('DNS queries'), findsOneWidget);
+    expect(find.text('La protection est activée'), findsOneWidget);
+    expect(find.text('Requêtes DNS'), findsOneWidget);
     expect(find.text('68'), findsOneWidget);
   });
 

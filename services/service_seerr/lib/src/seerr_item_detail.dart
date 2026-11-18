@@ -279,14 +279,14 @@ class _SeerrItemDetailScreenState extends ConsumerState<SeerrItemDetailScreen> {
             SliverToBoxAdapter(child: _CastRow(cast: cast, api: api)),
           SliverToBoxAdapter(
             child: _MediaRow(
-              title: 'Recommendations',
+              title: 'Recommandations',
               instance: widget.instance,
               provider: seerrRecommendationsProvider(args),
             ),
           ),
           SliverToBoxAdapter(
             child: _MediaRow(
-              title: 'Similar',
+              title: 'Similaires',
               instance: widget.instance,
               provider: seerrSimilarProvider(args),
             ),
@@ -500,7 +500,7 @@ class _ReportIssueButton extends StatelessWidget {
         title: item.displayTitle,
       ),
       icon: const Icon(Icons.flag_outlined),
-      label: const Text('Report issue'),
+      label: const Text('Signaler un problème'),
     );
   }
 }
@@ -798,7 +798,7 @@ class _RequestButtonState extends ConsumerState<_RequestButton> {
     if (requested == true && mounted) {
       setState(() => _requestedLocal = true);
       messenger.showSnackBar(
-        const SnackBar(content: Text('Request submitted successfully!')),
+        const SnackBar(content: Text('Demande envoyée avec succès !')),
       );
       ref.invalidate(seerrRequestCountsProvider(widget.instance));
       ref.invalidate(seerrRequestsProvider(widget.instance));
@@ -812,13 +812,13 @@ class _RequestButtonState extends ConsumerState<_RequestButton> {
     if (_requestedLocal || status == 2 || status == 3) {
       return _StatusPanel(
         icon: status == 3 ? Icons.downloading : Icons.hourglass_top,
-        label: status == 3 ? 'Processing' : 'Requested',
+        label: status == 3 ? 'En cours de traitement' : 'Demandé',
         accent: widget.accent,
       );
     } else if (status == 4 || status == 5) {
       return _StatusPanel(
         icon: Icons.check_circle,
-        label: status == 4 ? 'Partially available' : 'Available',
+        label: status == 4 ? 'Partiellement disponible' : 'Disponible',
         accent: widget.accent,
       );
     }
@@ -830,7 +830,7 @@ class _RequestButtonState extends ConsumerState<_RequestButton> {
       ),
       onPressed: _openRequestSheet,
       icon: const Icon(Icons.add_to_queue),
-      label: const Text('Request'),
+      label: const Text('Demande'),
     );
   }
 }
@@ -994,7 +994,7 @@ class _RequestOptionsSheetState extends ConsumerState<_RequestOptionsSheet> {
     final bool hasStandard = servers.any((SeerrServer s) => !s.is4k) &&
         (me?.canRequest(_mediaType) ?? true);
     if (!has4k && !hasStandard) {
-      return _fallback('Requesting will use the Seerr defaults.');
+      return _fallback('La demande utilisera les valeurs par défaut de Seerr.');
     }
     // Only offer/force 4K when a 4K server exists; when nothing but 4K
     // servers are configured the request has to be 4K.
@@ -1002,7 +1002,7 @@ class _RequestOptionsSheetState extends ConsumerState<_RequestOptionsSheet> {
     final Widget fourK = SwitchListTile(
       value: is4k,
       contentPadding: EdgeInsets.zero,
-      title: const Text('Request in 4K'),
+      title: const Text('Demander en 4K'),
       onChanged: (bool v) => setState(() {
         _is4k = v;
         _serverId = null;
@@ -1022,7 +1022,7 @@ class _RequestOptionsSheetState extends ConsumerState<_RequestOptionsSheet> {
             fourK,
             const SizedBox(height: Insets.md),
           ],
-          _submitButton('Request', () => _submit(is4k: is4k)),
+          _submitButton('Demande', () => _submit(is4k: is4k)),
           if (_error != null) ...<Widget>[
             const SizedBox(height: Insets.sm),
             Text(
@@ -1066,14 +1066,14 @@ class _RequestOptionsSheetState extends ConsumerState<_RequestOptionsSheet> {
             key: ValueKey<String>('server-$is4k'),
             initialValue: serverId,
             decoration: const InputDecoration(
-              labelText: 'Server',
+              labelText: 'Serveur',
               border: OutlineInputBorder(),
             ),
             items: pool
                 .map(
                   (SeerrServer s) => DropdownMenuItem<int>(
                     value: s.id,
-                    child: Text(s.name.isEmpty ? 'Server ${s.id}' : s.name),
+                    child: Text(s.name.isEmpty ? 'Serveur ${s.id}' : s.name),
                   ),
                 )
                 .toList(),
@@ -1094,12 +1094,12 @@ class _RequestOptionsSheetState extends ConsumerState<_RequestOptionsSheet> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Text(
-                'Could not load quality profiles for this server.',
+                'Impossible de charger les profils de qualité de ce serveur.',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: Insets.md),
               _submitButton(
-                'Request with defaults',
+                'Demander avec les valeurs par défaut',
                 () => _submit(serverId: serverId, is4k: is4k),
               ),
             ],
@@ -1148,7 +1148,7 @@ class _RequestOptionsSheetState extends ConsumerState<_RequestOptionsSheet> {
             key: ValueKey<String>('profile-$serverId'),
             initialValue: profileId,
             decoration: const InputDecoration(
-              labelText: 'Quality profile',
+              labelText: 'Profil de qualité',
               border: OutlineInputBorder(),
             ),
             items: profiles
@@ -1168,7 +1168,7 @@ class _RequestOptionsSheetState extends ConsumerState<_RequestOptionsSheet> {
             initialValue: rootFolder,
             isExpanded: true,
             decoration: const InputDecoration(
-              labelText: 'Root folder',
+              labelText: 'Dossier racine',
               border: OutlineInputBorder(),
             ),
             items: roots
@@ -1205,7 +1205,7 @@ class _RequestOptionsSheetState extends ConsumerState<_RequestOptionsSheet> {
     final bool fourK = me?.canRequest(_mediaType, is4k: true) ?? false;
     if (!standard && !fourK) {
       return Text(
-        'This account cannot request '
+        'Ce compte ne peut pas demander '
         '${_mediaType == 'tv' ? 'series' : 'movies'} in Seerr.',
         style: Theme.of(context).textTheme.bodyMedium,
       );
@@ -1217,7 +1217,7 @@ class _RequestOptionsSheetState extends ConsumerState<_RequestOptionsSheet> {
         Text(message, style: Theme.of(context).textTheme.bodyMedium),
         const SizedBox(height: Insets.lg),
         // An account allowed only 4K has to ask for 4K.
-        _submitButton('Request', () => _submit(is4k: !standard)),
+        _submitButton('Demande', () => _submit(is4k: !standard)),
         if (_error != null) ...<Widget>[
           const SizedBox(height: Insets.sm),
           Text(

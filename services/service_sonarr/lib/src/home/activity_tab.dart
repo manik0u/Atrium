@@ -205,7 +205,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
                   : SearchBar(
                       focusNode: _searchFocusNode,
                       controller: _searchController,
-                      hintText: 'Search activity...',
+                      hintText: "Rechercher dans l'activité…",
                       onTapOutside: (event) {
                         if (_searchFocusNode.hasFocus) {
                           _searchFocusNode.unfocus();
@@ -280,9 +280,9 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
                 ),
                 unselectedLabelStyle: theme.textTheme.titleSmall,
                 tabs: const <Widget>[
-                  Tab(text: 'Queue'),
-                  Tab(text: 'History'),
-                  Tab(text: 'Blocklist'),
+                  Tab(text: "File d'attente"),
+                  Tab(text: 'Historique'),
+                  Tab(text: 'Liste de blocage'),
                 ],
               ),
             ),
@@ -379,8 +379,8 @@ class _QueueView extends ConsumerWidget {
                       const SizedBox(height: 16),
                       Text(
                         searchQuery.isEmpty
-                            ? 'Queue is empty'
-                            : 'No items match search',
+                            ? "La file d'attente est vide"
+                            : 'Aucun élément ne correspond à la recherche',
                         style: theme.textTheme.titleMedium?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
@@ -449,7 +449,7 @@ class _QueueView extends ConsumerWidget {
                 FilledButton.tonal(
                   onPressed: () =>
                       ref.invalidate(sonarrQueueProvider(instance)),
-                  child: const Text('Retry'),
+                  child: const Text('Réessayer'),
                 ),
               ],
             ),
@@ -618,7 +618,7 @@ class _QueueItemCard extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      item.series?.title ?? item.title ?? 'Unknown Release',
+                      item.series?.title ?? item.title ?? 'Release inconnue',
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: theme.colorScheme.onSurface,
@@ -628,7 +628,7 @@ class _QueueItemCard extends ConsumerWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      item.title ?? 'No release name',
+                      item.title ?? 'Sans nom de release',
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
@@ -802,35 +802,35 @@ class _QueueItemCard extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                _DetailRow(label: 'Title', value: item.title ?? 'No title'),
+                _DetailRow(label: 'Titre', value: item.title ?? 'Sans titre'),
                 _DetailRow(
-                  label: 'Series',
-                  value: item.series?.title ?? 'Unknown Series',
+                  label: 'Séries',
+                  value: item.series?.title ?? 'Série inconnue',
                 ),
-                _DetailRow(label: 'Episodes', value: episodesDisplay),
-                _DetailRow(label: 'Status', value: item.status ?? 'Unknown'),
+                _DetailRow(label: 'Épisodes', value: episodesDisplay),
+                _DetailRow(label: 'Statut', value: item.status ?? 'Inconnu'),
                 _DetailRow(
-                  label: 'Tracked State',
+                  label: 'État de suivi',
                   value: item.trackedDownloadState ?? 'None',
                 ),
                 _DetailRow(
-                  label: 'Download Client',
+                  label: 'Client de téléchargement',
                   value: item.downloadClient ?? 'Unknown',
                 ),
                 _DetailRow(
-                  label: 'Download ID',
+                  label: 'ID de téléchargement',
                   value: item.downloadId ?? 'Unknown',
                 ),
-                _DetailRow(label: 'Indexer', value: item.indexer ?? 'Unknown'),
+                _DetailRow(label: 'Indexeur', value: item.indexer ?? 'Inconnu'),
                 _DetailRow(
-                  label: 'Output Path',
+                  label: 'Chemin de sortie',
                   value: item.outputPath ?? 'Unknown',
                 ),
                 if (item.errorMessage != null &&
                     item.errorMessage!.isNotEmpty) ...[
                   const SizedBox(height: 12),
                   Text(
-                    'Error Message:',
+                    "Message d'erreur :",
                     style: theme.textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: theme.colorScheme.error,
@@ -861,7 +861,7 @@ class _QueueItemCard extends ConsumerWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Close'),
+              child: const Text('Fermer'),
             ),
           ],
         );
@@ -900,12 +900,12 @@ class _QueueItemCard extends ConsumerWidget {
                   Text(
                     group.length > 1
                         ? 'Are you sure you want to remove all ${group.length} episodes of this item from the active queue?'
-                        : 'Are you sure you want to remove this item from the active queue?',
+                        : 'Voulez-vous vraiment retirer cet élément de la file active ?',
                     style: theme.textTheme.bodyMedium,
                   ),
                   const SizedBox(height: 16),
                   CheckboxListTile(
-                    title: const Text('Remove from download client'),
+                    title: const Text('Retirer du client de téléchargement'),
                     value: removeFromClient,
                     controlAffinity: ListTileControlAffinity.leading,
                     contentPadding: EdgeInsets.zero,
@@ -916,7 +916,7 @@ class _QueueItemCard extends ConsumerWidget {
                     },
                   ),
                   CheckboxListTile(
-                    title: const Text('Blocklist this release'),
+                    title: const Text('Mettre cette release en liste de blocage'),
                     subtitle: const Text(
                       'Prevents Sonarr from grabbing this file again',
                     ),
@@ -934,7 +934,7 @@ class _QueueItemCard extends ConsumerWidget {
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Cancel'),
+                  child: const Text('Annuler'),
                 ),
                 FilledButton(
                   style: FilledButton.styleFrom(
@@ -969,12 +969,12 @@ class _QueueItemCard extends ConsumerWidget {
                     } catch (e) {
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Failed to delete item: $e')),
+                          SnackBar(content: Text("Échec de la suppression de l'élément : $e")),
                         );
                       }
                     }
                   },
-                  child: const Text('Remove'),
+                  child: const Text('Retirer'),
                 ),
               ],
             );
@@ -1024,8 +1024,8 @@ class _HistoryView extends ConsumerWidget {
                 const SizedBox(height: 16),
                 Text(
                   searchQuery.isEmpty
-                      ? 'No history records'
-                      : 'No history matches search',
+                      ? "Aucun enregistrement d'historique"
+                      : 'Aucun historique ne correspond à la recherche',
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
@@ -1150,7 +1150,7 @@ class _HistoryView extends ConsumerWidget {
                 FilledButton.tonal(
                   onPressed: () =>
                       ref.invalidate(sonarrHistoryProvider(instance)),
-                  child: const Text('Retry'),
+                  child: const Text('Réessayer'),
                 ),
               ],
             ),
@@ -1263,7 +1263,7 @@ class _GroupedHistoryCardState extends ConsumerState<_GroupedHistoryCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          widget.series?.title ?? 'Other / Unknown Releases',
+                          widget.series?.title ?? 'Autres releases / inconnues',
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -1471,8 +1471,8 @@ class _BlocklistView extends ConsumerWidget {
                 const SizedBox(height: 16),
                 Text(
                   searchQuery.isEmpty
-                      ? 'No blocklisted items'
-                      : 'No blocklist matches search',
+                      ? 'Aucun élément en liste de blocage'
+                      : 'Aucune liste de blocage ne correspond à la recherche',
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
@@ -1597,7 +1597,7 @@ class _BlocklistView extends ConsumerWidget {
                 FilledButton.tonal(
                   onPressed: () =>
                       ref.invalidate(sonarrBlocklistProvider(instance)),
-                  child: const Text('Retry'),
+                  child: const Text('Réessayer'),
                 ),
               ],
             ),
@@ -1756,7 +1756,7 @@ class _GroupedBlocklistCardState extends ConsumerState<_GroupedBlocklistCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          widget.series?.title ?? 'Other / Unknown Releases',
+                          widget.series?.title ?? 'Autres releases / inconnues',
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -2145,14 +2145,14 @@ void _showHistoryDetails(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              _DetailRow(label: 'Event Type', value: eventType.toUpperCase()),
+              _DetailRow(label: "Type d'événement", value: eventType.toUpperCase()),
               _DetailRow(label: 'Date', value: _formatDateTime(item.date)),
               _DetailRow(
-                label: 'Source Title',
+                label: 'Titre source',
                 value: item.sourceTitle ?? 'None',
               ),
               if (item.downloadId != null)
-                _DetailRow(label: 'Download ID', value: item.downloadId!),
+                _DetailRow(label: 'ID de téléchargement', value: item.downloadId!),
               if (item.data != null && item.data!.isNotEmpty) ...[
                 const SizedBox(height: 12),
                 Text(
@@ -2211,16 +2211,16 @@ void _showHistoryDetails(
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Failed to flag release: $e')),
+                      SnackBar(content: Text('Échec du marquage de la release : $e')),
                     );
                   }
                 }
               },
-              child: const Text('Mark as Failed'),
+              child: const Text('Marquer comme échoué'),
             ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
+            child: const Text('Fermer'),
           ),
         ],
       );
@@ -2254,7 +2254,7 @@ void _confirmDeleteBlocklistItem(
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -2270,19 +2270,19 @@ void _confirmDeleteBlocklistItem(
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text('Item removed from blocklist.'),
+                      content: Text('Élément retiré de la liste de blocage.'),
                     ),
                   );
                 }
               } catch (e) {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Failed to remove item: $e')),
+                    SnackBar(content: Text("Échec de la suppression de l'élément : $e")),
                   );
                 }
               }
             },
-            child: const Text('Remove'),
+            child: const Text('Retirer'),
           ),
         ],
       );
@@ -2365,7 +2365,7 @@ class _ActivityBulkActionsBar extends StatelessWidget {
                 ).ignore();
               },
               icon: const Icon(Icons.download_outlined),
-              label: const Text('Force Grab'),
+              label: const Text('Grab forcé'),
             ),
             TextButton.icon(
               style: TextButton.styleFrom(
@@ -2382,7 +2382,7 @@ class _ActivityBulkActionsBar extends StatelessWidget {
                 ).ignore();
               },
               icon: const Icon(Icons.delete_outline),
-              label: const Text('Remove'),
+              label: const Text('Retirer'),
             ),
           ] else ...[
             TextButton.icon(
@@ -2400,7 +2400,7 @@ class _ActivityBulkActionsBar extends StatelessWidget {
                 ).ignore();
               },
               icon: const Icon(Icons.delete_outline),
-              label: const Text('Remove'),
+              label: const Text('Retirer'),
             ),
           ],
         ],
@@ -2423,14 +2423,14 @@ class _QueueBulkGrabDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
-      title: Text('Force Grab ${selectedIds.length} Releases?'),
+      title: Text('Forcer le grab de ${selectedIds.length} releases ?'),
       content: const Text(
-        'Are you sure you want to force download the selected releases from the queue?',
+        'Voulez-vous vraiment forcer le téléchargement des releases sélectionnées depuis la file ?',
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         ElevatedButton(
           onPressed: () async {
@@ -2458,7 +2458,7 @@ class _QueueBulkGrabDialog extends ConsumerWidget {
             if (!context.mounted) return;
             if (error != null) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Error grabbing items: $error')),
+                SnackBar(content: Text('Erreur lors du grab des éléments : $error')),
               );
               return;
             }
@@ -2468,11 +2468,11 @@ class _QueueBulkGrabDialog extends ConsumerWidget {
 
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text('Forced grab successfully triggered'),
+                content: Text('Grab forcé déclenché avec succès'),
               ),
             );
           },
-          child: const Text('Force Grab'),
+          child: const Text('Grab forcé'),
         ),
       ],
     );
@@ -2502,17 +2502,17 @@ class _QueueBulkDeleteDialogState
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Remove ${widget.selectedIds.length} items from Queue?'),
+      title: Text("Retirer ${widget.selectedIds.length} éléments de la file d'attente ?"),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Are you sure you want to remove these items from download client queue?',
+            'Voulez-vous vraiment retirer ces éléments de la file du client de téléchargement ?',
           ),
           const SizedBox(height: 16),
           CheckboxListTile(
-            title: const Text('Add items to blocklist'),
+            title: const Text('Ajouter les éléments à la liste de blocage'),
             value: _blocklist,
             contentPadding: EdgeInsets.zero,
             onChanged: (val) => setState(() => _blocklist = val ?? false),
@@ -2522,7 +2522,7 @@ class _QueueBulkDeleteDialogState
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -2558,7 +2558,7 @@ class _QueueBulkDeleteDialogState
             if (!context.mounted) return;
             if (error != null) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Error removing items: $error')),
+                SnackBar(content: Text('Erreur lors de la suppression des éléments : $error')),
               );
               return;
             }
@@ -2567,10 +2567,10 @@ class _QueueBulkDeleteDialogState
             Navigator.pop(context); // pop dialog
 
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Successfully removed items')),
+              const SnackBar(content: Text('Éléments supprimés avec succès')),
             );
           },
-          child: const Text('Remove'),
+          child: const Text('Retirer'),
         ),
       ],
     );
@@ -2591,14 +2591,14 @@ class _BlocklistBulkDeleteDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
-      title: Text('Remove ${selectedIds.length} items from Blocklist?'),
+      title: Text('Retirer ${selectedIds.length} éléments de la liste de blocage ?'),
       content: const Text(
         'Are you sure you want to remove these items from blocklist? Sonarr will be able to search and grab these releases again.',
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -2630,7 +2630,7 @@ class _BlocklistBulkDeleteDialog extends ConsumerWidget {
             if (!context.mounted) return;
             if (error != null) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Error removing items: $error')),
+                SnackBar(content: Text('Erreur lors de la suppression des éléments : $error')),
               );
               return;
             }
@@ -2640,11 +2640,11 @@ class _BlocklistBulkDeleteDialog extends ConsumerWidget {
 
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text('Successfully removed items from blocklist'),
+                content: Text('Éléments retirés de la liste de blocage avec succès'),
               ),
             );
           },
-          child: const Text('Remove'),
+          child: const Text('Retirer'),
         ),
       ],
     );

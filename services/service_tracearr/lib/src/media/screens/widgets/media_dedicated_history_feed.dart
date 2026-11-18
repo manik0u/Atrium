@@ -94,7 +94,7 @@ class MediaDedicatedHistoryFeed extends ConsumerWidget {
                 ),
                 child: Center(
                   child: Text(
-                    'No watch sessions recorded for this item.',
+                    'Aucune session de visionnage enregistrée pour cet élément.',
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),

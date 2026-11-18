@@ -55,7 +55,7 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
       final ApiResponse<void> resp =
           await api.artistEditor.putArtistEditor(body: resource);
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Failed to update artists');
+        throw Exception(resp.error?.message ?? 'Échec de la mise à jour des artistes');
       }
 
       if (!mounted) return;
@@ -79,7 +79,7 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Bulk update failed: $e'),
+            content: Text('Échec de la mise à jour groupée : $e'),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -116,13 +116,13 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
               isExpanded: true,
               initialValue: _monitored,
               decoration: const InputDecoration(
-                labelText: 'Monitored',
+                labelText: 'Surveillé',
                 border: OutlineInputBorder(),
               ),
               items: const [
-                DropdownMenuItem(child: Text('Keep current')),
-                DropdownMenuItem(value: true, child: Text('Monitored')),
-                DropdownMenuItem(value: false, child: Text('Unmonitored')),
+                DropdownMenuItem(child: Text("Conserver l'actuel")),
+                DropdownMenuItem(value: true, child: Text('Surveillé')),
+                DropdownMenuItem(value: false, child: Text('Non surveillé')),
               ],
               onChanged: (val) => setState(() => _monitored = val),
             ),
@@ -132,22 +132,22 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
               isExpanded: true,
               initialValue: _monitorNewItems,
               decoration: const InputDecoration(
-                labelText: 'Monitor New Items',
+                labelText: 'Surveiller les nouveaux éléments',
                 border: OutlineInputBorder(),
               ),
               items: const [
-                DropdownMenuItem(child: Text('Keep current')),
+                DropdownMenuItem(child: Text("Conserver l'actuel")),
                 DropdownMenuItem(
                   value: NewItemMonitorTypes.all,
-                  child: Text('All Albums'),
+                  child: Text('Tous les albums'),
                 ),
                 DropdownMenuItem(
                   value: NewItemMonitorTypes.newVal,
-                  child: Text('New Albums'),
+                  child: Text('Nouveaux albums'),
                 ),
                 DropdownMenuItem(
                   value: NewItemMonitorTypes.none,
-                  child: Text('None'),
+                  child: Text('Aucun'),
                 ),
               ],
               onChanged: (val) => setState(() => _monitorNewItems = val),
@@ -159,15 +159,15 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
                 isExpanded: true,
                 initialValue: _qualityProfileId,
                 decoration: const InputDecoration(
-                  labelText: 'Quality Profile',
+                  labelText: 'Profil de qualité',
                   border: OutlineInputBorder(),
                 ),
                 items: [
-                  const DropdownMenuItem(child: Text('Keep current')),
+                  const DropdownMenuItem(child: Text("Conserver l'actuel")),
                   ...profiles.map(
                     (p) => DropdownMenuItem(
                       value: p.id,
-                      child: Text(p.name ?? 'Profile ${p.id}'),
+                      child: Text(p.name ?? 'Profil ${p.id}'),
                     ),
                   ),
                 ],
@@ -177,7 +177,7 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
                 height: 50,
                 child: Center(child: ExpressiveProgressIndicator()),
               ),
-              error: (_, __) => const Text('Error loading quality profiles'),
+              error: (_, __) => const Text('Erreur lors du chargement des profils de qualité'),
             ),
             const SizedBox(height: Insets.md),
             // Metadata Profile
@@ -186,15 +186,15 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
                 isExpanded: true,
                 initialValue: _metadataProfileId,
                 decoration: const InputDecoration(
-                  labelText: 'Metadata Profile',
+                  labelText: 'Profil de métadonnées',
                   border: OutlineInputBorder(),
                 ),
                 items: [
-                  const DropdownMenuItem(child: Text('Keep current')),
+                  const DropdownMenuItem(child: Text("Conserver l'actuel")),
                   ...profiles.map(
                     (p) => DropdownMenuItem(
                       value: p.id,
-                      child: Text(p.name ?? 'Profile ${p.id}'),
+                      child: Text(p.name ?? 'Profil ${p.id}'),
                     ),
                   ),
                 ],
@@ -204,7 +204,7 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
                 height: 50,
                 child: Center(child: ExpressiveProgressIndicator()),
               ),
-              error: (_, __) => const Text('Error loading metadata profiles'),
+              error: (_, __) => const Text('Erreur lors du chargement des profils de métadonnées'),
             ),
             const SizedBox(height: Insets.md),
             // Root Folder
@@ -215,11 +215,11 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
                     isExpanded: true,
                     initialValue: _rootFolderPath,
                     decoration: const InputDecoration(
-                      labelText: 'Root Folder',
+                      labelText: 'Dossier racine',
                       border: OutlineInputBorder(),
                     ),
                     items: [
-                      const DropdownMenuItem(child: Text('Keep current')),
+                      const DropdownMenuItem(child: Text("Conserver l'actuel")),
                       ...folders.map(
                         (f) => DropdownMenuItem(
                           value: f.path,
@@ -237,9 +237,9 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
                   ),
                   if (_rootFolderPath != null)
                     CheckboxListTile(
-                      title: const Text('Move existing files'),
+                      title: const Text('Déplacer les fichiers existants'),
                       subtitle: const Text(
-                        'Automatically migrate audio files to the new root folder.',
+                        'Migrer automatiquement les fichiers audio vers le nouveau dossier racine.',
                       ),
                       value: _moveFiles,
                       contentPadding: EdgeInsets.zero,
@@ -252,14 +252,14 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
                 height: 50,
                 child: Center(child: ExpressiveProgressIndicator()),
               ),
-              error: (_, __) => const Text('Error loading root folders'),
+              error: (_, __) => const Text('Erreur lors du chargement des dossiers racine'),
             ),
           ],
         ),
       actions: [
         TextButton(
           onPressed: _submitting ? null : () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: _submitting ? null : _submit,
@@ -269,7 +269,7 @@ class _BulkEditDialogState extends ConsumerState<BulkEditDialog> {
                   height: 16,
                   child: ExpressiveProgressIndicator(strokeWidth: 2),
                 )
-              : const Text('Apply Changes'),
+              : const Text('Appliquer les modifications'),
         ),
       ],
     );

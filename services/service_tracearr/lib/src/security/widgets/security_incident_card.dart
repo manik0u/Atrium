@@ -220,7 +220,7 @@ class SecurityIncidentCard extends StatelessWidget {
                   ),
                   icon: const Icon(Icons.done, size: 14),
                   label:
-                      const Text('Acknowledge', style: TextStyle(fontSize: 11)),
+                      const Text('Accuser réception', style: TextStyle(fontSize: 11)),
                   onPressed: onAcknowledge,
                 ),
             ],

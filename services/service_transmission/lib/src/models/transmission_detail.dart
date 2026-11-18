@@ -37,8 +37,8 @@ abstract class TransmissionFile with _$TransmissionFile {
       length <= 0 ? 0 : (bytesCompleted / length).clamp(0, 1).toDouble();
 
   String get priorityLabel => switch (priority) {
-        -1 => 'Low',
-        1 => 'High',
+        -1 => 'Basse',
+        1 => 'Élevée',
         _ => 'Normal',
       };
 }

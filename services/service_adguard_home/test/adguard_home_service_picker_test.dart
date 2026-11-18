@@ -64,21 +64,21 @@ void main() {
     await pumpPicker(tester);
 
     // Of the twelve groups, four hold the six services.
-    expect(find.text('AI'), findsOneWidget);
-    expect(find.text('Social networks'), findsOneWidget);
+    expect(find.text('IA'), findsOneWidget);
+    expect(find.text('Réseaux sociaux'), findsOneWidget);
     expect(find.text('Streaming'), findsOneWidget);
     expect(find.text('Dating'), findsNothing);
     expect(find.text('Gaming'), findsOneWidget);
     expect(
-      tester.getTopLeft(find.text('AI')).dy,
+      tester.getTopLeft(find.text('IA')).dy,
       lessThan(tester.getTopLeft(find.text('Gaming')).dy),
     );
     expect(
       tester.getTopLeft(find.text('Gaming')).dy,
-      lessThan(tester.getTopLeft(find.text('Social networks')).dy),
+      lessThan(tester.getTopLeft(find.text('Réseaux sociaux')).dy),
     );
     expect(
-      tester.getTopLeft(find.text('Social networks')).dy,
+      tester.getTopLeft(find.text('Réseaux sociaux')).dy,
       lessThan(tester.getTopLeft(find.text('Streaming')).dy),
     );
     for (final String name in <String>[
@@ -120,7 +120,7 @@ void main() {
     final Set<String> Function() selected =
         await pumpPicker(tester, selected: <String>{'tiktok'});
 
-    await tester.tap(find.text('Block all'));
+    await tester.tap(find.text('Tout bloquer'));
     await tester.pump();
     expect(selected(), <String>{
       'tiktok',
@@ -131,7 +131,7 @@ void main() {
       'twitter',
     });
 
-    await tester.tap(find.text('Unblock all'));
+    await tester.tap(find.text('Tout débloquer'));
     await tester.pump();
     expect(selected(), isEmpty);
   });
@@ -147,7 +147,7 @@ void main() {
     expect(find.text('TikTok'), findsNothing);
     // Only the group of what is left.
     expect(find.text('Streaming'), findsOneWidget);
-    expect(find.text('Social networks'), findsNothing);
+    expect(find.text('Réseaux sociaux'), findsNothing);
   });
 
   testWidgets('searching finds a service by its id too',
@@ -168,8 +168,8 @@ void main() {
     await tester.enterText(find.byType(TextField), 'tik');
     await tester.pump();
 
-    expect(find.text('Block all'), findsNothing);
-    expect(find.text('Unblock all'), findsNothing);
+    expect(find.text('Tout bloquer'), findsNothing);
+    expect(find.text('Tout débloquer'), findsNothing);
   });
 
   testWidgets('a search that finds nothing says so, and can be cleared',
@@ -178,12 +178,12 @@ void main() {
 
     await tester.enterText(find.byType(TextField), 'zzz');
     await tester.pump();
-    expect(find.text('No service matches'), findsOneWidget);
+    expect(find.text('Aucun service ne correspond'), findsOneWidget);
 
-    await tester.tap(find.byTooltip('Clear search'));
+    await tester.tap(find.byTooltip('Effacer la recherche'));
     await tester.pump();
     expect(find.text('TikTok'), findsOneWidget);
-    expect(find.text('Block all'), findsOneWidget);
+    expect(find.text('Tout bloquer'), findsOneWidget);
   });
 
   testWidgets('a blocked service the server no longer lists can still be '
@@ -195,7 +195,7 @@ void main() {
       selected: <String>{'tiktok', 'gone_service'},
     );
 
-    expect(find.text('No longer offered by the server'), findsOneWidget);
+    expect(find.text("N'est plus proposé par le serveur"), findsOneWidget);
     expect(tile(tester, 'gone_service').value, isTrue);
 
     await tester.tap(find.text('gone_service'));
@@ -212,7 +212,7 @@ void main() {
       selected: <String>{'tiktok', 'gone_service'},
     );
 
-    await tester.tap(find.text('Unblock all'));
+    await tester.tap(find.text('Tout débloquer'));
     await tester.pump();
 
     expect(selected(), isEmpty);
@@ -236,12 +236,12 @@ void main() {
       ),
     );
 
-    expect(find.text('Other'), findsOneWidget);
+    expect(find.text('Autre'), findsOneWidget);
     expect(find.text('Loose'), findsOneWidget);
     expect(find.text('Odd'), findsOneWidget);
     expect(
       tester.getTopLeft(find.text('Streaming')).dy,
-      lessThan(tester.getTopLeft(find.text('Other')).dy),
+      lessThan(tester.getTopLeft(find.text('Autre')).dy),
     );
   });
 
@@ -280,7 +280,7 @@ void main() {
       (WidgetTester tester) async {
     await pumpPicker(tester, services: const AdguardHomeServiceCatalogue());
 
-    expect(find.text('The server offers no services to block'), findsOneWidget);
+    expect(find.text("Le serveur n'offre aucun service à bloquer"), findsOneWidget);
   });
 
   for (final double width in <double>[320, 360, 411]) {
@@ -367,7 +367,7 @@ void main() {
 
       await tester.tap(find.text('YouTube'));
       await tester.pump();
-      await tester.tap(find.text('Done'));
+      await tester.tap(find.text('Terminé'));
       await tester.pumpAndSettle();
 
       expect(results.single, <String>{'tiktok', 'youtube'});
@@ -396,7 +396,7 @@ void main() {
       expect(find.text('catalogue unavailable'), findsOneWidget);
       expect(find.text('TikTok'), findsNothing);
 
-      await tester.tap(find.text('Retry'));
+      await tester.tap(find.text('Réessayer'));
       await tester.pumpAndSettle();
 
       expect(find.text('TikTok'), findsOneWidget);

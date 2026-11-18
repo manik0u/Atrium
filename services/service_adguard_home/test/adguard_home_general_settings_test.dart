@@ -39,12 +39,12 @@ void main() {
     await pumpGeneral(tester);
 
     expect(
-      tile(tester, 'Block domains using filters and hosts files').value,
+      tile(tester, 'Bloquez des domaines avec les filtres et les fichiers hosts').value,
       isTrue,
     );
-    expect(tile(tester, 'Browsing security').value, isTrue);
-    expect(tile(tester, 'Parental control').value, isFalse);
-    expect(tile(tester, 'Safe search').value, isTrue);
+    expect(tile(tester, 'Sécurité de navigation').value, isTrue);
+    expect(tile(tester, 'Contrôle parental').value, isFalse);
+    expect(tile(tester, 'Recherche sécurisée').value, isTrue);
     expect(find.widgetWithText(SwitchListTile, 'YouTube'), findsOneWidget);
   });
 
@@ -54,17 +54,17 @@ void main() {
     final Completer<void> hold = Completer<void>();
     pumped.actions.writeHold = hold;
 
-    await tester.tap(find.text('Parental control'));
+    await tester.tap(find.text('Contrôle parental'));
     await tester.pump();
 
     expect(pumped.actions.calls, <String>['parental on']);
-    expect(tile(tester, 'Parental control').value, isTrue);
-    expect(tile(tester, 'Browsing security').onChanged, isNull);
+    expect(tile(tester, 'Contrôle parental').value, isTrue);
+    expect(tile(tester, 'Sécurité de navigation').onChanged, isNull);
     expect(find.byType(LinearProgressIndicatorM3E), findsOneWidget);
 
     hold.complete();
     await tester.pumpAndSettle();
-    expect(tile(tester, 'Browsing security').onChanged, isNotNull);
+    expect(tile(tester, 'Sécurité de navigation').onChanged, isNotNull);
     expect(find.byType(LinearProgressIndicatorM3E), findsNothing);
   });
 
@@ -72,9 +72,9 @@ void main() {
       (WidgetTester tester) async {
     final Pumped pumped = await pumpGeneral(tester);
 
-    await tester.tap(find.text('Block domains using filters and hosts files'));
+    await tester.tap(find.text('Bloquez des domaines avec les filtres et les fichiers hosts'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Browsing security'));
+    await tester.tap(find.text('Sécurité de navigation'));
     await tester.pumpAndSettle();
 
     expect(
@@ -118,11 +118,11 @@ void main() {
     final Pumped pumped = await pumpGeneral(tester);
     pumped.actions.writeFailure = const AdguardHomeRequestRefused('nope');
 
-    await tester.tap(find.text('Parental control'));
+    await tester.tap(find.text('Contrôle parental'));
     await tester.pumpAndSettle();
 
     expect(find.text('nope'), findsOneWidget);
-    expect(tile(tester, 'Parental control').value, isFalse);
+    expect(tile(tester, 'Contrôle parental').value, isFalse);
   });
 
   testWidgets('a refused sign-in shows Try again',
@@ -132,7 +132,7 @@ void main() {
       settingsError: const AdguardHomeSignInRefused(),
     );
 
-    expect(find.text('Try again'), findsOneWidget);
+    expect(find.text('Réessayer'), findsOneWidget);
     expect(find.byType(SwitchListTile), findsNothing);
   });
 

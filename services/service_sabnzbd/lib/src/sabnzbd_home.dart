@@ -24,9 +24,9 @@ class SabnzbdHome extends StatelessWidget {
         children: <Widget>[
           const TabBar(
             tabs: <Widget>[
-              Tab(text: 'Queue', icon: Icon(Icons.download_outlined)),
-              Tab(text: 'History', icon: Icon(Icons.history)),
-              Tab(text: 'Server', icon: Icon(Icons.dns_outlined)),
+              Tab(text: "File d'attente", icon: Icon(Icons.download_outlined)),
+              Tab(text: 'Historique', icon: Icon(Icons.history)),
+              Tab(text: 'Serveur', icon: Icon(Icons.dns_outlined)),
             ],
           ),
           Expanded(
@@ -78,8 +78,8 @@ class _QueueTab extends ConsumerWidget {
                 const SizedBox(height: Insets.xl),
                 const EmptyView(
                   icon: Icons.download_done_outlined,
-                  title: 'Queue is empty',
-                  message: 'Nothing downloading right now.',
+                  title: "La file d'attente est vide",
+                  message: 'Aucun téléchargement en cours pour le moment.',
                 ),
               ],
             ),
@@ -189,7 +189,7 @@ class _QueueSummary extends ConsumerWidget {
                   foregroundColor: cs.onSecondaryContainer,
                 ),
                 icon: Icon(_isPaused ? Icons.play_arrow : Icons.pause),
-                label: Text(_isPaused ? 'Resume' : 'Pause'),
+                label: Text(_isPaused ? 'Reprendre' : 'Pause'),
                 onPressed: () async {
                   final SabnzbdApi api =
                       await ref.read(sabnzbdApiProvider(instance).future);
@@ -216,7 +216,7 @@ class _QueueSummary extends ConsumerWidget {
                 const SizedBox(width: Insets.sm),
                 _StatPill(
                   icon: Icons.sd_storage_outlined,
-                  label: '${queue.diskspace1} GB free',
+                  label: '${queue.diskspace1} Go libres',
                   color: cs.primary,
                 ),
               ],
@@ -369,8 +369,8 @@ class _HistoryTab extends ConsumerWidget {
                 SizedBox(height: 80),
                 EmptyView(
                   icon: Icons.history,
-                  title: 'No history',
-                  message: 'Completed and failed downloads will show up here.',
+                  title: 'Aucun historique',
+                  message: 'Les téléchargements terminés et échoués apparaîtront ici.',
                 ),
               ],
             ),
@@ -466,7 +466,7 @@ class _HistoryCard extends ConsumerWidget {
                 if (failed)
                   IconButton(
                     visualDensity: VisualDensity.compact,
-                    tooltip: 'Retry',
+                    tooltip: 'Réessayer',
                     icon: const Icon(Icons.refresh),
                     onPressed: () async {
                       final SabnzbdApi api =
@@ -478,7 +478,7 @@ class _HistoryCard extends ConsumerWidget {
                   ),
                 IconButton(
                   visualDensity: VisualDensity.compact,
-                  tooltip: 'Remove',
+                  tooltip: 'Retirer',
                   icon: const Icon(Icons.delete_outline),
                   onPressed: () async {
                     final SabnzbdApi api =
@@ -537,18 +537,18 @@ class _ServerTab extends ConsumerWidget {
         padding: Insets.page,
         children: <Widget>[
           _SectionCard(
-            title: 'Usage',
+            title: 'Utilisation',
             child: stats.when(
               data: (SabServerStats s) => Row(
                 children: <Widget>[
                   Expanded(
-                    child: _StatTile(label: 'Today', value: _fmtBytes(s.day)),
+                    child: _StatTile(label: "Aujourd'hui", value: _fmtBytes(s.day)),
                   ),
                   Expanded(
-                    child: _StatTile(label: 'Week', value: _fmtBytes(s.week)),
+                    child: _StatTile(label: 'Semaine', value: _fmtBytes(s.week)),
                   ),
                   Expanded(
-                    child: _StatTile(label: 'Month', value: _fmtBytes(s.month)),
+                    child: _StatTile(label: 'Mois', value: _fmtBytes(s.month)),
                   ),
                   Expanded(
                     child: _StatTile(label: 'Total', value: _fmtBytes(s.total)),
@@ -560,14 +560,14 @@ class _ServerTab extends ConsumerWidget {
                 child: Center(child: ExpressiveProgressIndicator()),
               ),
               error: (Object e, _) => Text(
-                'Could not load stats',
+                'Impossible de charger les statistiques',
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
             ),
           ),
           const SizedBox(height: Insets.md),
           _SectionCard(
-            title: 'Speed limit',
+            title: 'Limite de vitesse',
             child: _SpeedLimitControl(
               instance: instance,
               initialPercent: currentLimit.clamp(0, 100),
@@ -575,7 +575,7 @@ class _ServerTab extends ConsumerWidget {
           ),
           const SizedBox(height: Insets.md),
           _SectionCard(
-            title: 'Server',
+            title: 'Serveur',
             child: Column(
               children: <Widget>[
                 _kv('Version', version.isEmpty ? '-' : version),
@@ -633,7 +633,7 @@ class _SpeedLimitControlState extends ConsumerState<_SpeedLimitControl> {
           value: _value.clamp(0, 100),
           max: 100,
           divisions: 20,
-          label: _value <= 0 ? 'Off' : '${_value.round()}%',
+          label: _value <= 0 ? 'Désactivé' : '${_value.round()} %',
           onChanged: (double v) => setState(() => _value = v),
           onChangeEnd: (double v) async {
             final SabnzbdApi api =

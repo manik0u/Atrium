@@ -115,7 +115,7 @@ class SlskdUserCard extends StatelessWidget {
                 Expanded(
                   child: _StatBox(
                     icon: Icons.speed_rounded,
-                    label: 'Avg Speed',
+                    label: 'Vitesse moyenne',
                     value: slskdFormatRate(user.averageSpeed),
                   ),
                 ),
@@ -123,7 +123,7 @@ class SlskdUserCard extends StatelessWidget {
                 Expanded(
                   child: _StatBox(
                     icon: Icons.cloud_upload_rounded,
-                    label: 'Uploads',
+                    label: 'Envois',
                     value: '${user.uploadCount}',
                   ),
                 ),
@@ -135,7 +135,7 @@ class SlskdUserCard extends StatelessWidget {
                 Expanded(
                   child: _StatBox(
                     icon: Icons.insert_drive_file_rounded,
-                    label: 'Shared Files',
+                    label: 'Fichiers partagés',
                     value: '${user.fileCount}',
                   ),
                 ),
@@ -143,7 +143,7 @@ class SlskdUserCard extends StatelessWidget {
                 Expanded(
                   child: _StatBox(
                     icon: Icons.folder_rounded,
-                    label: 'Directories',
+                    label: 'Répertoires',
                     value: '${user.directoryCount}',
                   ),
                 ),

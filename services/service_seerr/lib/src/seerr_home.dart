@@ -38,11 +38,11 @@ class SeerrHome extends ConsumerWidget {
         children: <Widget>[
           TabBar(
             tabs: <Widget>[
-              const Tab(text: 'Requests', icon: Icon(Icons.playlist_play)),
-              const Tab(text: 'Discover', icon: Icon(Icons.explore_outlined)),
+              const Tab(text: 'Demandes', icon: Icon(Icons.playlist_play)),
+              const Tab(text: 'Découvrir', icon: Icon(Icons.explore_outlined)),
               if (issues)
                 const Tab(
-                  text: 'Issues',
+                  text: 'Problèmes',
                   icon: Icon(Icons.report_problem_outlined),
                 ),
             ],
@@ -194,13 +194,13 @@ class _RequestTileState extends ConsumerState<_RequestTile> {
         ref.invalidate(seerrRequestsProvider(widget.instance));
         ref.invalidate(seerrRequestCountsProvider(widget.instance));
         messenger.showSnackBar(
-          const SnackBar(content: Text('Action successful')),
+          const SnackBar(content: Text('Action réussie')),
         );
       }
     } catch (e) {
       if (mounted) {
         messenger.showSnackBar(
-          SnackBar(content: Text('Action failed: $e')),
+          SnackBar(content: Text("Échec de l'action : $e")),
         );
       }
     } finally {
@@ -227,8 +227,8 @@ class _RequestTileState extends ConsumerState<_RequestTile> {
     if (mediaType.isEmpty || tmdbId == null) {
       return Card(
         child: ListTile(
-          title: Text('Unknown Request #${request.id}'),
-          subtitle: Text('Status: ${_statusString(request.status)}'),
+          title: Text('Demande inconnue n° ${request.id}'),
+          subtitle: Text('Statut : ${_statusString(request.status)}'),
         ),
       );
     }
@@ -267,8 +267,8 @@ class _RequestTileState extends ConsumerState<_RequestTile> {
         child: Center(child: ExpressiveProgressIndicator()),
       ),
       error: (_, __) => ListTile(
-        title: Text('Request #${request.id}'),
-        subtitle: Text('Status: ${_statusString(request.status)}'),
+        title: Text('Demande n° ${request.id}'),
+        subtitle: Text('Statut : ${_statusString(request.status)}'),
         trailing: Icon(Icons.error, color: Theme.of(context).colorScheme.error),
       ),
     );
@@ -299,16 +299,16 @@ class _RequestTileState extends ConsumerState<_RequestTile> {
           if (widget.request.status == 1) ...<PopupMenuEntry<String>>[
             const PopupMenuItem<String>(
               value: 'approve',
-              child: Text('Approve'),
+              child: Text('Approuver'),
             ),
             const PopupMenuItem<String>(
               value: 'decline',
-              child: Text('Decline'),
+              child: Text('Refuser'),
             ),
           ],
           const PopupMenuItem<String>(
             value: 'retry',
-            child: Text('Retry'),
+            child: Text('Réessayer'),
           ),
         ],
         if (_canManage && _canDelete) const PopupMenuDivider(),
@@ -337,7 +337,7 @@ class _RequestTileState extends ConsumerState<_RequestTile> {
           child: FilledButton.tonalIcon(
             onPressed: _busy ? null : () => _handleAction('approve'),
             icon: const Icon(Icons.check, size: 18),
-            label: const Text('Approve'),
+            label: const Text('Approuver'),
           ),
         ),
         const SizedBox(width: Insets.sm),
@@ -345,7 +345,7 @@ class _RequestTileState extends ConsumerState<_RequestTile> {
           child: OutlinedButton.icon(
             onPressed: _busy ? null : () => _handleAction('decline'),
             icon: const Icon(Icons.close, size: 18),
-            label: const Text('Decline'),
+            label: const Text('Refuser'),
           ),
         ),
       ],
@@ -353,5 +353,5 @@ class _RequestTileState extends ConsumerState<_RequestTile> {
   }
 
   String _statusString(int status) =>
-      seerrRequestStatusStyle(status)?.label ?? 'Unknown ($status)';
+      seerrRequestStatusStyle(status)?.label ?? 'Inconnu ($status)';
 }

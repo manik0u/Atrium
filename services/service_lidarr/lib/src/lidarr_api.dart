@@ -116,7 +116,7 @@ class LidarrApi {
       );
     }
     return const ApiResponse.error(
-      LidarrError(message: 'Failed to read log file contents'),
+      LidarrError(message: 'Échec de la lecture du contenu du fichier journal'),
       statusCode: 404,
     );
   }

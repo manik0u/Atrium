@@ -20,7 +20,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
     final presets = schemasAsync.value ?? [];
     if (presets.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Loading notification presets...')),
+        const SnackBar(content: Text('Chargement des préréglages de notifications…')),
       );
       return;
     }
@@ -126,7 +126,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                       TextField(
                         controller: nameController,
                         decoration: const InputDecoration(
-                          labelText: 'Name',
+                          labelText: 'Nom',
                           border: OutlineInputBorder(),
                         ),
                       ),
@@ -166,7 +166,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                                 if (notification['supportsOnGrab'] == true)
                                   CheckboxListTile(
                                     contentPadding: EdgeInsets.zero,
-                                    title: const Text('On Grab'),
+                                    title: const Text('Lors du grab'),
                                     value: onGrab,
                                     onChanged: (val) => setDialogState(
                                       () => onGrab = val ?? false,
@@ -175,7 +175,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                                 if (notification['supportsOnDownload'] == true)
                                   CheckboxListTile(
                                     contentPadding: EdgeInsets.zero,
-                                    title: const Text('On Download'),
+                                    title: const Text('Lors du téléchargement'),
                                     value: onDownload,
                                     onChanged: (val) => setDialogState(
                                       () => onDownload = val ?? false,
@@ -184,7 +184,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                                 if (notification['supportsOnUpgrade'] == true)
                                   CheckboxListTile(
                                     contentPadding: EdgeInsets.zero,
-                                    title: const Text('On Upgrade'),
+                                    title: const Text('Lors de la mise à niveau'),
                                     value: onUpgrade,
                                     onChanged: (val) => setDialogState(
                                       () => onUpgrade = val ?? false,
@@ -193,7 +193,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                                 if (notification['supportsOnRename'] == true)
                                   CheckboxListTile(
                                     contentPadding: EdgeInsets.zero,
-                                    title: const Text('On Rename'),
+                                    title: const Text('Lors du renommage'),
                                     value: onRename,
                                     onChanged: (val) => setDialogState(
                                       () => onRename = val ?? false,
@@ -202,7 +202,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                                 if (notification['supportsOnMovieAdded'] == true)
                                   CheckboxListTile(
                                     contentPadding: EdgeInsets.zero,
-                                    title: const Text('On Movie Added'),
+                                    title: const Text('Film ajouté'),
                                     value: onMovieAdded,
                                     onChanged: (val) => setDialogState(
                                       () => onMovieAdded = val ?? false,
@@ -211,7 +211,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                                 if (notification['supportsOnMovieDelete'] == true)
                                   CheckboxListTile(
                                     contentPadding: EdgeInsets.zero,
-                                    title: const Text('On Movie Delete'),
+                                    title: const Text('Film supprimé'),
                                     value: onMovieDelete,
                                     onChanged: (val) => setDialogState(
                                       () => onMovieDelete = val ?? false,
@@ -220,7 +220,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                                 if (notification['supportsOnMovieFileDelete'] == true)
                                   CheckboxListTile(
                                     contentPadding: EdgeInsets.zero,
-                                    title: const Text('On Movie File Delete'),
+                                    title: const Text('Fichier de film supprimé'),
                                     value: onMovieFileDelete,
                                     onChanged: (val) => setDialogState(
                                       () => onMovieFileDelete = val ?? false,
@@ -229,7 +229,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                                 if (notification['supportsOnMovieFileDeleteForUpgrade'] == true)
                                   CheckboxListTile(
                                     contentPadding: EdgeInsets.zero,
-                                    title: const Text('On Movie File Delete for Upgrade'),
+                                    title: const Text("Fichier de film supprimé lors d'une mise à niveau"),
                                     value: onMovieFileDeleteForUpgrade,
                                     onChanged: (val) => setDialogState(
                                       () => onMovieFileDeleteForUpgrade = val ?? false,
@@ -238,7 +238,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                                 if (notification['supportsOnHealthIssue'] == true)
                                   CheckboxListTile(
                                     contentPadding: EdgeInsets.zero,
-                                    title: const Text('On Health Issue'),
+                                    title: const Text('En cas de problème de santé'),
                                     value: onHealthIssue,
                                     onChanged: (val) => setDialogState(
                                       () => onHealthIssue = val ?? false,
@@ -247,7 +247,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                                 if (notification['supportsOnHealthRestored'] == true)
                                   CheckboxListTile(
                                     contentPadding: EdgeInsets.zero,
-                                    title: const Text('On Health Restored'),
+                                    title: const Text('Santé rétablie'),
                                     value: onHealthRestored,
                                     onChanged: (val) => setDialogState(
                                       () => onHealthRestored = val ?? false,
@@ -256,7 +256,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                                 if (notification['supportsOnApplicationUpdate'] == true)
                                   CheckboxListTile(
                                     contentPadding: EdgeInsets.zero,
-                                    title: const Text('On Application Update'),
+                                    title: const Text("Mise à jour de l'application"),
                                     value: onApplicationUpdate,
                                     onChanged: (val) => setDialogState(
                                       () => onApplicationUpdate = val ?? false,
@@ -265,7 +265,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                                 if (notification['supportsOnManualInteractionRequired'] == true)
                                   CheckboxListTile(
                                     contentPadding: EdgeInsets.zero,
-                                    title: const Text('On Manual Interaction Required'),
+                                    title: const Text('Interaction manuelle requise'),
                                     value: onManualInteractionRequired,
                                     onChanged: (val) => setDialogState(
                                       () => onManualInteractionRequired = val ?? false,
@@ -343,7 +343,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                             if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text('Failed to save notification: $e'),
+                                  content: Text("Échec de l'enregistrement de la notification : $e"),
                                 ),
                               );
                             }
@@ -376,13 +376,13 @@ class ConnectSettingsScreen extends ConsumerWidget {
       ref.invalidate(radarrNotificationsProvider(instance));
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Notification deleted!')),
+          const SnackBar(content: Text('Notification supprimée !')),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to delete notification: $e')),
+          SnackBar(content: Text('Échec de la suppression de la notification : $e')),
         );
       }
     }
@@ -397,7 +397,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Connect / Notifications'),
+        title: const Text('Connexion / Notifications'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _selectNotificationPresetAndAdd(context, ref),
@@ -405,12 +405,12 @@ class ConnectSettingsScreen extends ConsumerWidget {
       ),
       body: notificationsAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, _) => Center(child: Text('Error: $err')),
+        error: (err, _) => Center(child: Text('Erreur : $err')),
         data: (notifications) {
           if (notifications.isEmpty) {
             return const Center(
               child: Text(
-                'No connection notifications configured. Tap + to add one.',
+                'Aucune notification de connexion configurée. Touchez + pour en ajouter une.',
               ),
             );
           }
@@ -432,7 +432,7 @@ class ConnectSettingsScreen extends ConsumerWidget {
                     name,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text('Type: $impl'),
+                  subtitle: Text('Type : $impl'),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

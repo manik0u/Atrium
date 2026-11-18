@@ -89,7 +89,7 @@ class _ServiceGridScreenState extends State<ServiceGridScreen> {
             key: const Key('service_search_bar'),
             controller: _searchController,
             decoration: InputDecoration(
-              hintText: 'Search services...',
+              hintText: 'Rechercher des services…',
               prefixIcon: const Icon(Icons.search, size: 20),
               suffixIcon: _searchQuery.isNotEmpty
                   ? IconButton(
@@ -211,7 +211,7 @@ class _ServiceRow extends StatelessWidget {
 
     return Semantics(
       button: true,
-      label: 'Add ${kind.displayName}',
+      label: 'Ajouter ${kind.displayName}',
       child: InkWell(
         key: ValueKey<String>('service_card_${kind.name}'),
         onTap: onTap,
@@ -293,7 +293,7 @@ class _NoResults extends StatelessWidget {
           children: <Widget>[
             Icon(Icons.search_off_rounded, size: 48, color: cs.onSurfaceVariant),
             const SizedBox(height: Insets.md),
-            Text('No services found', style: theme.textTheme.titleMedium),
+            Text('Aucun service trouvé', style: theme.textTheme.titleMedium),
             const SizedBox(height: Insets.xs),
             Text(
               'Try a different search.',
@@ -306,7 +306,7 @@ class _NoResults extends StatelessWidget {
             TextButton.icon(
               onPressed: onReset,
               icon: const Icon(Icons.refresh),
-              label: const Text('Clear search'),
+              label: const Text('Effacer la recherche'),
             ),
           ],
         ),

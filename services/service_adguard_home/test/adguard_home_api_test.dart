@@ -337,7 +337,7 @@ void main() {
   test('describes each failure in a sentence', () {
     expect(
       describeAdguardHomeError(const AdguardHomeSignInRefused()),
-      'AdGuard Home refused the sign-in.',
+      'AdGuard Home a refusé la connexion.',
     );
     expect(
       describeAdguardHomeError(const AdguardHomeRequestRefused('bad rule')),
@@ -345,13 +345,13 @@ void main() {
     );
     expect(
       describeAdguardHomeError(const AdguardHomeUnexpectedAnswer()),
-      'This address answered, but not as AdGuard Home.',
+      'Cette adresse a répondu, mais pas comme AdGuard Home.',
     );
     expect(
       describeAdguardHomeError(
         DioException(requestOptions: RequestOptions(path: 'x')),
       ),
-      'Something went wrong talking to AdGuard Home.',
+      'Un problème est survenu en communiquant avec AdGuard Home.',
     );
   });
 }

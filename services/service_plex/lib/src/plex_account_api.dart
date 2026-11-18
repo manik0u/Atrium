@@ -406,11 +406,11 @@ class PlexAccountApi {
       return 'Plex rejected the sign-in. Try signing in again.';
     }
     if (status == 404) {
-      return 'Plex forgot this sign-in. Start again.';
+      return 'Plex a oublié cette connexion. Recommencez.';
     }
     if (status != null) {
       return 'plex.tv answered HTTP $status.';
     }
-    return 'Could not reach plex.tv.';
+    return 'Impossible de joindre plex.tv.';
   }
 }

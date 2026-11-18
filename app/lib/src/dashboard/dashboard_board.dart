@@ -81,8 +81,8 @@ class DashboardBoard extends ConsumerWidget {
     if (visible.isEmpty) {
       return const EmptyView(
         icon: Icons.dashboard_customize_outlined,
-        title: 'No widgets to show',
-        message: 'Use the customize button (top right) to add widgets.',
+        title: 'Aucun widget à afficher',
+        message: 'Utilisez le bouton de personnalisation (en haut à droite) pour ajouter des widgets.',
       );
     }
 
@@ -370,7 +370,7 @@ class _EditBoard extends ConsumerWidget {
                             wolDeviceCount: wolCount,
                           )
                               ? 'Show widget'
-                              : 'Needs something that can fill it',
+                              : 'A besoin de quelque chose pour le remplir',
                           icon: const Icon(Icons.add_circle_outline),
                           onPressed:
                               DashboardBoard._configured(
@@ -400,7 +400,7 @@ class _EditBoard extends ConsumerWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   IconButton(
-                    tooltip: 'Hide widget',
+                    tooltip: 'Masquer le widget',
                     icon: const Icon(Icons.visibility_off_outlined),
                     onPressed: () => ref
                         .read(dashboardLayoutProvider.notifier)

@@ -65,7 +65,7 @@ class CleanuparrEvent {
       severity: json['severity']?.toString() ??
           (json['level']?.toString() ?? 'Info'),
       message: json['message']?.toString() ??
-          (json['description']?.toString() ?? 'Operation completed'),
+          (json['description']?.toString() ?? 'Opération terminée'),
       downloadItemTitle: json['itemTitle']?.toString() ??
           json['downloadItemTitle']?.toString() ??
           json['title']?.toString() ??

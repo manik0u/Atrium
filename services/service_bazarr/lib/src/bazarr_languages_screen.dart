@@ -44,11 +44,11 @@ class _BazarrLanguagesScreenState extends ConsumerState<BazarrLanguagesScreen> {
       ref.invalidate(bazarrWantedProvider(widget.instance));
       ref.invalidate(bazarrBadgesProvider(widget.instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Languages saved')),
+        const SnackBar(content: Text('Langues enregistrées')),
       );
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Save failed: ${_err(e)}')),
+        SnackBar(content: Text("Échec de l'enregistrement : ${_err(e)}")),
       );
     } finally {
       if (mounted) {
@@ -63,7 +63,7 @@ class _BazarrLanguagesScreenState extends ConsumerState<BazarrLanguagesScreen> {
         ref.watch(bazarrLanguagesProvider(widget.instance));
     return Scaffold(
       appBar: AppBar(
-        title: Text('Languages (${_enabled.length})'),
+        title: Text('Langues (${_enabled.length})'),
         actions: <Widget>[
           if (_saving)
             const Padding(
@@ -78,7 +78,7 @@ class _BazarrLanguagesScreenState extends ConsumerState<BazarrLanguagesScreen> {
             )
           else
             IconButton(
-              tooltip: 'Save',
+              tooltip: 'Enregistrer',
               icon: const Icon(Icons.save_outlined),
               onPressed: _seeded ? _save : null,
             ),
@@ -116,7 +116,7 @@ class _BazarrLanguagesScreenState extends ConsumerState<BazarrLanguagesScreen> {
                 child: TextField(
                   controller: _query,
                   decoration: const InputDecoration(
-                    hintText: 'Search languages...',
+                    hintText: 'Rechercher des langues…',
                     prefixIcon: Icon(Icons.search),
                     border: OutlineInputBorder(),
                   ),

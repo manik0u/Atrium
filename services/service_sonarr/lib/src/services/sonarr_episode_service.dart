@@ -22,7 +22,7 @@ class SonarrEpisodeService {
     }
     if (response.error != null) {
       throw SonarrException(
-        response.error!.message ?? 'Failed to fetch episodes',
+        response.error!.message ?? 'Échec de la récupération des épisodes',
         statusCode: response.statusCode,
         error: response.error,
       );

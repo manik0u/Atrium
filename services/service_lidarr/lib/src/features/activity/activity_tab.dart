@@ -144,7 +144,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
               leading: inSelectionMode
                   ? IconButton(
                       icon: const Icon(Icons.close),
-                      tooltip: 'Clear selection',
+                      tooltip: 'Effacer la sélection',
                       onPressed: _clearSelection,
                     )
                   : Padding(
@@ -153,7 +153,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
                               _searchFocusNode.hasFocus)
                           ? IconButton(
                               icon: const Icon(Icons.arrow_back),
-                              tooltip: 'Back',
+                              tooltip: 'Retour',
                               onPressed: () {
                                 _searchFocusNode.unfocus();
                                 _searchController.clear();
@@ -168,7 +168,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
                             )
                           : IconButton(
                               icon: const Icon(Icons.menu),
-                              tooltip: 'Open drawer',
+                              tooltip: 'Ouvrir le menu latéral',
                               onPressed: () =>
                                   Scaffold.of(context).openDrawer(),
                             ),
@@ -200,7 +200,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
                                 focusNode: _searchFocusNode,
                                 style: theme.textTheme.bodyLarge,
                                 decoration: InputDecoration(
-                                  hintText: 'Search activity...',
+                                  hintText: "Rechercher dans l'activité…",
                                   hintStyle:
                                       theme.textTheme.bodyLarge?.copyWith(
                                     color: theme.colorScheme.onSurfaceVariant,
@@ -226,7 +226,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
                             if (_searchController.text.isNotEmpty)
                               IconButton(
                                 icon: const Icon(Icons.clear, size: 22),
-                                tooltip: 'Clear search',
+                                tooltip: 'Effacer la recherche',
                                 visualDensity: VisualDensity.compact,
                                 onPressed: () {
                                   _searchController.clear();
@@ -288,7 +288,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
                                 .toSet();
                           }
                         },
-                        child: const Text('Select All'),
+                        child: const Text('Tout sélectionner'),
                       ),
                       TextButton(
                         onPressed: () {
@@ -336,7 +336,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
                                 .state = inverted;
                           }
                         },
-                        child: const Text('Invert'),
+                        child: const Text('Inverser'),
                       ),
                       const SizedBox(width: 4),
                     ]
@@ -374,9 +374,9 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
                 ),
                 unselectedLabelStyle: theme.textTheme.titleSmall,
                 tabs: const <Widget>[
-                  Tab(text: 'Queue'),
-                  Tab(text: 'History'),
-                  Tab(text: 'Blocklist'),
+                  Tab(text: "File d'attente"),
+                  Tab(text: 'Historique'),
+                  Tab(text: 'Liste de blocage'),
                 ],
               ),
             ),
@@ -418,7 +418,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
         heroTag: 'lidarr_activity_history_filter_fab',
         backgroundColor: cs.primaryContainer,
         foregroundColor: cs.onPrimaryContainer,
-        tooltip: 'Filter & Group History',
+        tooltip: "Filtrer et grouper l'historique",
         onPressed: () => HistoryFilterBottomSheet.show(
           context,
           widget.instance,
@@ -435,7 +435,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab>
         heroTag: 'lidarr_activity_manual_import_fab',
         backgroundColor: cs.primaryContainer,
         foregroundColor: cs.onPrimaryContainer,
-        tooltip: 'Manual Import',
+        tooltip: 'Import manuel',
         onPressed: () => showLidarrManualImportFlow(
           context,
           ref,

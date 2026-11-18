@@ -28,7 +28,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Activity'), findsOneWidget);
+    expect(find.text('Activité'), findsOneWidget);
     expect(find.byType(EmptyView), findsOneWidget);
   });
 }

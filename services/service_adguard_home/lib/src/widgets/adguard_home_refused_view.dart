@@ -39,7 +39,7 @@ class AdguardHomeRefusedView extends StatelessWidget {
 
   /// What is said instead of [explanation] when nothing was entered.
   static const String noCredentials =
-      'This AdGuard Home has a user, and this instance has no username or '
+      "Cet AdGuard Home a un utilisateur, et cette instance n'a ni nom d'utilisateur ni "
       'password. Add them under Edit instance.';
 
   @override
@@ -56,8 +56,8 @@ class AdguardHomeRefusedView extends StatelessWidget {
             const SizedBox(height: Insets.lg),
             Text(
               hasCredentials
-                  ? 'AdGuard Home refused the sign-in'
-                  : 'AdGuard Home asks for a sign-in',
+                  ? 'AdGuard Home a refusé la connexion'
+                  : 'AdGuard Home demande une connexion',
               style: theme.textTheme.titleMedium,
               textAlign: TextAlign.center,
             ),
@@ -71,7 +71,7 @@ class AdguardHomeRefusedView extends StatelessWidget {
             if (hasCredentials && refusals > 1) ...<Widget>[
               const SizedBox(height: Insets.sm),
               Text(
-                'Refused $refusals times in a row from this app.',
+                'Refusé $refusals fois de suite depuis cette app.',
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: cs.error,
                   fontWeight: FontWeight.w600,
@@ -83,12 +83,12 @@ class AdguardHomeRefusedView extends StatelessWidget {
             FilledButton.tonalIcon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh),
-              label: const Text('Try again'),
+              label: const Text('Réessayer'),
             ),
             if (onEdit != null)
               TextButton(
                 onPressed: onEdit,
-                child: const Text('Edit instance'),
+                child: const Text("Modifier l'instance"),
               ),
           ],
         ),

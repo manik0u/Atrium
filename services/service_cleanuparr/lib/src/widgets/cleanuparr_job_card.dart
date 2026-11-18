@@ -35,7 +35,7 @@ class _CleanuparrJobCardState extends ConsumerState<CleanuparrJobCard> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Triggered ${widget.job.displayName}'),
+          content: Text('${widget.job.displayName} déclenché'),
           duration: const Duration(seconds: 2),
         ),
       );
@@ -111,7 +111,7 @@ class _CleanuparrJobCardState extends ConsumerState<CleanuparrJobCard> {
               ),
             ),
             IconButton(
-              tooltip: 'Run ${widget.job.displayName} now',
+              tooltip: 'Exécuter ${widget.job.displayName} maintenant',
               icon: _isTriggering
                   ? SizedBox(
                       width: 18,

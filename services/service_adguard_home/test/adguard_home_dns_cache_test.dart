@@ -6,7 +6,7 @@ import 'support/adguard_home_test_instance.dart';
 import 'support/pump.dart';
 
 void main() {
-  final Finder save = find.widgetWithText(FilledButton, 'Save');
+  final Finder save = find.widgetWithText(FilledButton, 'Enregistrer');
   Finder field(String key) => find.byKey(Key('adguard-cache-$key'));
 
   Future<Pumped> open(
@@ -54,7 +54,7 @@ void main() {
     await tester.enterText(field('size'), '8388608');
     await tester.pump();
     expect(find.text('8 MB'), findsOneWidget);
-    await tester.tap(find.text('Optimistic caching'));
+    await tester.tap(find.text('Mise en cache optimiste'));
     await tester.pump();
     await tester.tap(save);
     await tester.pumpAndSettle();
@@ -73,7 +73,7 @@ void main() {
     await tester.enterText(field('min'), '600');
     await tester.enterText(field('max'), '60');
     await tester.pump();
-    expect(find.text('Has to be at most the maximum.'), findsOneWidget);
+    expect(find.text('Doit être au plus égal au maximum.'), findsOneWidget);
     await tester.tap(save);
     await tester.pumpAndSettle();
     expect(pumped.actions.calls, isEmpty);
@@ -91,19 +91,19 @@ void main() {
   testWidgets('Clear cache asks first', (WidgetTester tester) async {
     final Pumped pumped = await open(tester);
 
-    await tester.tap(find.text('Clear cache'));
+    await tester.tap(find.text('Vider le cache'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Cancel'));
+    await tester.tap(find.text('Annuler'));
     await tester.pumpAndSettle();
     expect(pumped.actions.calls, isEmpty);
 
-    await tester.tap(find.text('Clear cache'));
+    await tester.tap(find.text('Vider le cache'));
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(FilledButton, 'Clear'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Effacer'));
     await tester.pumpAndSettle();
 
     expect(pumped.actions.calls, <String>['clear cache']);
-    expect(find.text('DNS cache cleared'), findsOneWidget);
+    expect(find.text('Cache DNS vidé'), findsOneWidget);
   });
 
   testWidgets('a clear refused for the sign-in offers Try again, which '
@@ -111,19 +111,19 @@ void main() {
     final Pumped pumped = await open(tester);
     pumped.actions.writeFailure = const AdguardHomeSignInRefused();
 
-    await tester.tap(find.text('Clear cache'));
+    await tester.tap(find.text('Vider le cache'));
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(FilledButton, 'Clear'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Effacer'));
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(SnackBarAction, 'Try again'));
+    await tester.tap(find.widgetWithText(SnackBarAction, 'Réessayer'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Clear the DNS cache?'), findsNothing);
+    expect(find.text('Vider le cache DNS ?'), findsNothing);
     expect(
       pumped.actions.calls,
       <String>['clear cache', 'retry', 'clear cache'],
     );
-    expect(find.text('DNS cache cleared'), findsOneWidget);
+    expect(find.text('Cache DNS vidé'), findsOneWidget);
   });
 
   testWidgets('any other failure says why, with no Try again',
@@ -131,9 +131,9 @@ void main() {
     final Pumped pumped = await open(tester);
     pumped.actions.writeFailure = const AdguardHomeRequestRefused('nope');
 
-    await tester.tap(find.text('Clear cache'));
+    await tester.tap(find.text('Vider le cache'));
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(FilledButton, 'Clear'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Effacer'));
     await tester.pumpAndSettle();
 
     expect(find.text('nope'), findsOneWidget);

@@ -33,7 +33,7 @@ void main() {
     await tester.pumpAndSettle();
 
     final Finder bearerField = find.ancestor(
-      of: find.text('Bearer API token'),
+      of: find.text('Jeton API Bearer'),
       matching: find.byType(TextFormField),
     );
     expect(bearerField, findsOneWidget);
@@ -45,7 +45,7 @@ void main() {
     expect(find.byIcon(Icons.visibility_off), findsNothing);
 
     final Finder externalField = find.ancestor(
-      of: find.text('External URL'),
+      of: find.text('URL externe'),
       matching: find.byType(TextFormField),
     );
     await tester.enterText(externalField, 'http://tracker.example.test');

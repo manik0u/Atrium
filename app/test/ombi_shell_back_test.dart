@@ -65,7 +65,7 @@ void main() {
           activeProfileProvider.overrideWithValue(
             const Profile(
               id: 'p',
-              name: 'Default',
+              name: 'Par défaut',
               instances: <Instance>[ombi],
             ),
           ),
@@ -81,7 +81,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 50));
     }
 
-    await tester.tap(find.text('Discover'));
+    await tester.tap(find.text('Découvrir'));
     for (int i = 0; i < 10; i++) {
       await tester.pump(const Duration(milliseconds: 50));
     }

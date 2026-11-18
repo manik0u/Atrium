@@ -31,7 +31,7 @@ class TrackList extends ConsumerWidget {
         if (tracks.isEmpty) {
           return const Padding(
             padding: EdgeInsets.all(16.0),
-            child: Center(child: Text('No tracks available')),
+            child: Center(child: Text('Aucune piste disponible')),
           );
         }
 
@@ -90,7 +90,7 @@ class TrackList extends ConsumerWidget {
       ),
       error: (err, _) => Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Text('Failed to load tracks: $err'),
+        child: Text('Échec du chargement des pistes : $err'),
       ),
     );
   }
@@ -134,7 +134,7 @@ class TrackList extends ConsumerWidget {
         children: [
           Expanded(
             child: Text(
-              track.title ?? 'Unknown Track',
+              track.title ?? 'Piste inconnue',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -236,7 +236,7 @@ class TrackList extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  track.title ?? 'Track Details',
+                                  track.title ?? 'Détails de la piste',
                                   style: theme.textTheme.titleMedium?.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -267,7 +267,7 @@ class TrackList extends ConsumerWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Text(
-                            'No downloaded track file on disk for this track.',
+                            'Aucun fichier de piste téléchargé sur le disque pour cette piste.',
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: cs.onSurfaceVariant,
                             ),
@@ -343,14 +343,14 @@ class TrackList extends ConsumerWidget {
                                   ListTile(
                                     contentPadding: EdgeInsets.zero,
                                     leading: const Icon(Icons.group_outlined),
-                                    title: const Text('Release Group'),
+                                    title: const Text('Groupe de release'),
                                     subtitle: Text(file.releaseGroup!),
                                   ),
                                 if (file.size != null && file.size! > 0)
                                   ListTile(
                                     contentPadding: EdgeInsets.zero,
                                     leading: const Icon(Icons.storage_outlined),
-                                    title: const Text('Size on Disk'),
+                                    title: const Text('Taille sur le disque'),
                                     subtitle: Text(
                                       LidarrFormatters.formatBytes(file.size),
                                     ),
@@ -359,7 +359,7 @@ class TrackList extends ConsumerWidget {
                                   ListTile(
                                     contentPadding: EdgeInsets.zero,
                                     leading: const Icon(Icons.folder_outlined),
-                                    title: const Text('File Path'),
+                                    title: const Text('Chemin du fichier'),
                                     subtitle: Text(
                                       file.path!,
                                       style:
@@ -375,7 +375,7 @@ class TrackList extends ConsumerWidget {
                                     side: BorderSide(color: cs.error),
                                   ),
                                   icon: const Icon(Icons.delete_outline),
-                                  label: const Text('Delete Audio File'),
+                                  label: const Text('Supprimer le fichier audio'),
                                   onPressed: () async {
                                     final bool? confirm =
                                         await showDialog<bool>(
@@ -383,15 +383,15 @@ class TrackList extends ConsumerWidget {
                                       builder: (BuildContext dCtx) {
                                         return AlertDialog(
                                           title:
-                                              const Text('Delete Track File?'),
+                                              const Text('Supprimer le fichier de piste ?'),
                                           content: Text(
-                                            'Are you sure you want to delete "${track.title ?? 'this file'}" from disk?',
+                                            'Voulez-vous vraiment supprimer « ${track.title ?? 'this file'}" from disk?',
                                           ),
                                           actions: [
                                             TextButton(
                                               onPressed: () =>
                                                   Navigator.of(dCtx).pop(false),
-                                              child: const Text('Cancel'),
+                                              child: const Text('Annuler'),
                                             ),
                                             FilledButton(
                                               style: FilledButton.styleFrom(
@@ -400,7 +400,7 @@ class TrackList extends ConsumerWidget {
                                               ),
                                               onPressed: () =>
                                                   Navigator.of(dCtx).pop(true),
-                                              child: const Text('Delete'),
+                                              child: const Text('Supprimer'),
                                             ),
                                           ],
                                         );
@@ -446,7 +446,7 @@ class TrackList extends ConsumerWidget {
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                'Deleted audio file for "${track.title ?? 'track'}"',
+                                                'Fichier audio supprimé pour « ${track.title ?? 'track'}"',
                                               ),
                                               backgroundColor: cs.primary,
                                             ),

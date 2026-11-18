@@ -77,7 +77,7 @@ class _ContainerSheetState extends ConsumerState<_ContainerSheet> {
       if (!mounted) return;
       messenger.showSnackBar(
         SnackBar(
-          content: Text(e is NetworkException ? e.message : 'Action failed.'),
+          content: Text(e is NetworkException ? e.message : "Échec de l'action."),
         ),
       );
     } finally {
@@ -93,12 +93,12 @@ class _ContainerSheetState extends ConsumerState<_ContainerSheet> {
         mode: LaunchMode.externalApplication,
       );
       if (!opened && mounted) {
-        messenger.showSnackBar(SnackBar(content: Text('Could not open $url')));
+        messenger.showSnackBar(SnackBar(content: Text("Impossible d'ouvrir $url")));
       }
     } on Object {
       if (!mounted) return;
       messenger.showSnackBar(
-        const SnackBar(content: Text('Could not open that link.')),
+        const SnackBar(content: Text("Impossible d'ouvrir ce lien.")),
       );
     }
   }
@@ -277,7 +277,7 @@ class _Actions extends StatelessWidget {
         FilledButton.tonalIcon(
           onPressed: () => run((UnraidClient c) => c.stopContainer(container.id)),
           icon: const Icon(Icons.stop_rounded),
-          label: const Text('Stop'),
+          label: const Text('Arrêter'),
         ),
         OutlinedButton.icon(
           onPressed: () =>
@@ -290,19 +290,19 @@ class _Actions extends StatelessWidget {
           onPressed: () =>
               run((UnraidClient c) => c.unpauseContainer(container.id)),
           icon: const Icon(Icons.play_arrow_rounded),
-          label: const Text('Resume'),
+          label: const Text('Reprendre'),
         ),
         OutlinedButton.icon(
           onPressed: () => run((UnraidClient c) => c.stopContainer(container.id)),
           icon: const Icon(Icons.stop_rounded),
-          label: const Text('Stop'),
+          label: const Text('Arrêter'),
         ),
       ] else
         FilledButton.icon(
           onPressed: () =>
               run((UnraidClient c) => c.startContainer(container.id)),
           icon: const Icon(Icons.play_arrow_rounded),
-          label: const Text('Start'),
+          label: const Text('Démarrer'),
         ),
     ];
 

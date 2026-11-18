@@ -161,7 +161,7 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                             color: isStarred ? Colors.redAccent : null,
                           ),
                           tooltip: isStarred
-                              ? 'Remove from favorites'
+                              ? 'Retirer des favoris'
                               : 'Add to favorites',
                           onPressed: () async {
                             final bool willStar = !isStarred;
@@ -188,7 +188,7 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content:
-                                        Text('Failed to update favorite: $e'),
+                                        Text('Échec de la mise à jour des favoris : $e'),
                                   ),
                                 );
                               }
@@ -256,7 +256,7 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content:
-                                            Text('Failed to set rating: $e'),
+                                            Text('Échec de la définition de la note : $e'),
                                       ),
                                     );
                                   }
@@ -294,13 +294,13 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                     const SizedBox(height: Insets.sm),
                     const Divider(),
                 _DetailTile(
-                  label: 'Duration',
+                  label: 'Durée',
                   value: _formatDuration(song.duration),
                   icon: Icons.schedule_rounded,
                 ),
                 if (song.track != null)
                   _DetailTile(
-                    label: 'Track',
+                    label: 'Piste',
                     value:
                         '${song.track}${song.discNumber != null ? ' (Disc ${song.discNumber})' : ''}',
                     icon: Icons.numbers_rounded,
@@ -314,7 +314,7 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                   ),
                 if (song.size != null && song.size! > 0)
                   _DetailTile(
-                    label: 'File Size',
+                    label: 'Taille du fichier',
                     value: _formatFileSize(song.size),
                     icon: Icons.storage_rounded,
                   ),
@@ -326,7 +326,7 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                   ),
                 if (song.playCount > 0)
                   _DetailTile(
-                    label: 'Play Count',
+                    label: 'Nombre de lectures',
                     value: '${song.playCount} plays',
                     icon: Icons.play_arrow_rounded,
                   ),
@@ -377,7 +377,7 @@ class NavidromeAlbumScreen extends ConsumerWidget {
               onPressed: () {
                 showNavidromeRatingModal(
                   context: context,
-                  title: 'Rate Album',
+                  title: "Noter l'album",
                   subtitle: album.name,
                   initialRating: album.userRating ?? 0,
                   onRatingChanged: (int newRating) async {
@@ -403,7 +403,7 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                 color: album.isStarred ? Colors.redAccent : null,
               ),
               tooltip: album.isStarred
-                  ? 'Remove from favorites'
+                  ? 'Retirer des favoris'
                   : 'Add to favorites',
               onPressed: () async {
                 final bool willStar = !album.isStarred;
@@ -420,7 +420,7 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Failed to update favorite: $e')),
+                      SnackBar(content: Text('Échec de la mise à jour des favoris : $e')),
                     );
                   }
                 }
@@ -693,7 +693,7 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                 const SliverFillRemaining(
                   hasScrollBody: false,
                   child: Center(
-                    child: Text('No tracks found in this album'),
+                    child: Text('Aucune piste trouvée dans cet album'),
                   ),
                 )
               else
@@ -885,13 +885,13 @@ class NavidromeAlbumScreen extends ConsumerWidget {
                 color: Colors.red,
               ),
               const SizedBox(height: Insets.md),
-              Text('Failed to load album: $err'),
+              Text("Échec du chargement de l'album : $err"),
               const SizedBox(height: Insets.md),
               FilledButton.tonal(
                 onPressed: () => ref.invalidate(
                   navidromeAlbumDetailProvider((instance, albumId)),
                 ),
-                child: const Text('Retry'),
+                child: const Text('Réessayer'),
               ),
             ],
           ),

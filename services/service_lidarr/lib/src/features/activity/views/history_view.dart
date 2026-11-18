@@ -170,14 +170,14 @@ class HistoryViewState extends ConsumerState<HistoryView>
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Mark as Failed?'),
+        title: const Text('Marquer comme échoué ?'),
         content: Text(
           'Mark "${item.sourceTitle ?? 'Release'}" as failed and search for an alternative release?',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -185,7 +185,7 @@ class HistoryViewState extends ConsumerState<HistoryView>
               foregroundColor: Theme.of(ctx).colorScheme.onError,
             ),
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Mark Failed'),
+            child: const Text('Marquer comme échoué'),
           ),
         ],
       ),
@@ -200,7 +200,7 @@ class HistoryViewState extends ConsumerState<HistoryView>
           await api.history.postHistoryFailedById(id: id);
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Failed to mark as failed');
+        throw Exception(resp.error?.message ?? 'Échec du marquage comme échoué');
       }
 
       await _loadInitial();
@@ -209,14 +209,14 @@ class HistoryViewState extends ConsumerState<HistoryView>
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Marked release as failed')),
+          const SnackBar(content: Text('Release marquée comme échouée')),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error: $e'),
+            content: Text('Erreur : $e'),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -244,7 +244,7 @@ class HistoryViewState extends ConsumerState<HistoryView>
           return Scaffold(
             backgroundColor: cs.surface,
             appBar: AppBar(
-              title: const Text('Event Details'),
+              title: const Text("Détails de l'événement"),
               leading: IconButton(
                 icon: const Icon(Icons.close),
                 onPressed: () => Navigator.of(context).pop(),
@@ -253,7 +253,7 @@ class HistoryViewState extends ConsumerState<HistoryView>
                 if (item.eventType == EntityHistoryEventType.grabbed)
                   IconButton(
                     icon: Icon(Icons.report_problem_outlined, color: cs.error),
-                    tooltip: 'Mark as Failed',
+                    tooltip: 'Marquer comme échoué',
                     onPressed: () {
                       Navigator.of(context).pop();
                       _markAsFailed(item);
@@ -305,7 +305,7 @@ class HistoryViewState extends ConsumerState<HistoryView>
                           if (item.album?.title != null) ...[
                             const SizedBox(height: 2),
                             Text(
-                              'Album: ${item.album!.title!}',
+                              'Album : ${item.album!.title!}',
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: cs.onSurfaceVariant,
                               ),
@@ -489,7 +489,7 @@ class HistoryViewState extends ConsumerState<HistoryView>
             const SizedBox(height: 8),
             FilledButton.tonal(
               onPressed: _loadInitial,
-              child: const Text('Retry'),
+              child: const Text('Réessayer'),
             ),
           ],
         ),
@@ -542,10 +542,10 @@ class HistoryViewState extends ConsumerState<HistoryView>
                 const SizedBox(height: 12),
                 Text(
                   filterQuery.trim().isNotEmpty
-                      ? 'No history matching "$filterQuery"'
+                      ? 'Aucun historique ne correspond à « $filterQuery »'
                       : activeFilter != null
-                          ? 'No history for selected filter'
-                          : 'No history records found',
+                          ? 'Aucun historique pour le filtre sélectionné'
+                          : "Aucun enregistrement d'historique trouvé",
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: cs.onSurfaceVariant,
                   ),
@@ -653,7 +653,7 @@ class HistoryViewState extends ConsumerState<HistoryView>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      item.sourceTitle ?? item.album?.title ?? 'Unknown Event',
+                      item.sourceTitle ?? item.album?.title ?? 'Événement inconnu',
                       style: theme.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
@@ -709,7 +709,7 @@ class HistoryViewState extends ConsumerState<HistoryView>
                     size: 18,
                     color: cs.error,
                   ),
-                  tooltip: 'Mark as Failed',
+                  tooltip: 'Marquer comme échoué',
                   visualDensity: VisualDensity.compact,
                   onPressed: () => _markAsFailed(item),
                 ),
@@ -765,12 +765,12 @@ class HistoryFilterBottomSheet extends ConsumerWidget {
                   ButtonSegment<bool>(
                     value: true,
                     icon: Icon(Icons.group_work_outlined),
-                    label: Text('Grouped by Date'),
+                    label: Text('Groupés par date'),
                   ),
                   ButtonSegment<bool>(
                     value: false,
                     icon: Icon(Icons.format_list_bulleted),
-                    label: Text('Plain List'),
+                    label: Text('Liste simple'),
                   ),
                 ],
                 selected: <bool>{grouped},
@@ -801,7 +801,7 @@ class HistoryFilterBottomSheet extends ConsumerWidget {
                             )
                             .state = null;
                       },
-                      child: const Text('Reset'),
+                      child: const Text('Réinitialiser'),
                     ),
                 ],
               ),
@@ -811,7 +811,7 @@ class HistoryFilterBottomSheet extends ConsumerWidget {
                 runSpacing: 8,
                 children: <Widget>[
                   ChoiceChip(
-                    label: const Text('All Events'),
+                    label: const Text('Tous les événements'),
                     selected: activeFilter == null,
                     onSelected: (bool val) {
                       if (val) {
@@ -827,7 +827,7 @@ class HistoryFilterBottomSheet extends ConsumerWidget {
                   ),
                   ChoiceChip(
                     avatar: const Icon(Icons.cloud_download_outlined, size: 16),
-                    label: const Text('Grabbed'),
+                    label: const Text('Grabée'),
                     selected: activeFilter == EntityHistoryEventType.grabbed,
                     onSelected: (bool val) {
                       ref
@@ -841,7 +841,7 @@ class HistoryFilterBottomSheet extends ConsumerWidget {
                   ),
                   ChoiceChip(
                     avatar: const Icon(Icons.check_circle_outline, size: 16),
-                    label: const Text('Imported'),
+                    label: const Text('Importée'),
                     selected: activeFilter ==
                             EntityHistoryEventType.downloadImported ||
                         activeFilter ==
@@ -859,7 +859,7 @@ class HistoryFilterBottomSheet extends ConsumerWidget {
                   ),
                   ChoiceChip(
                     avatar: const Icon(Icons.error_outline, size: 16),
-                    label: const Text('Failed'),
+                    label: const Text('Échec'),
                     selected:
                         activeFilter == EntityHistoryEventType.downloadFailed,
                     onSelected: (bool val) {
@@ -875,7 +875,7 @@ class HistoryFilterBottomSheet extends ConsumerWidget {
                   ),
                   ChoiceChip(
                     avatar: const Icon(Icons.delete_outline, size: 16),
-                    label: const Text('Deleted'),
+                    label: const Text('Supprimée'),
                     selected:
                         activeFilter == EntityHistoryEventType.trackFileDeleted,
                     onSelected: (bool val) {
@@ -892,7 +892,7 @@ class HistoryFilterBottomSheet extends ConsumerWidget {
                   ChoiceChip(
                     avatar:
                         const Icon(Icons.drive_file_rename_outline, size: 16),
-                    label: const Text('Renamed'),
+                    label: const Text('Renommée'),
                     selected:
                         activeFilter == EntityHistoryEventType.trackFileRenamed,
                     onSelected: (bool val) {

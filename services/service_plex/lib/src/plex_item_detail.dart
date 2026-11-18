@@ -65,7 +65,7 @@ class _PlexItemDetailScreenState extends ConsumerState<PlexItemDetailScreen> {
       await api.setWatched(widget.ratingKey, watched: !watched);
     } catch (_) {
       messenger.showSnackBar(
-        const SnackBar(content: Text('Could not update watched state')),
+        const SnackBar(content: Text("Impossible de mettre à jour l'état de visionnage")),
       );
       return;
     }
@@ -143,7 +143,7 @@ class _PlexItemDetailScreenState extends ConsumerState<PlexItemDetailScreen> {
                 onPressed: () => _toggleWatched(api, current),
               ),
             IconButton(
-              tooltip: 'Open in Plex',
+              tooltip: 'Ouvrir dans Plex',
               icon: const Icon(Icons.open_in_new),
               onPressed: () => launchPlexDeepLink(context),
             ),
@@ -158,8 +158,8 @@ class _PlexItemDetailScreenState extends ConsumerState<PlexItemDetailScreen> {
             if (item == null) {
               return const EmptyView(
                 icon: Icons.error_outline,
-                title: 'Not found',
-                message: 'This item is no longer on the server.',
+                title: 'Introuvable',
+                message: "Cet élément n'est plus sur le serveur.",
               );
             }
             return CustomScrollView(

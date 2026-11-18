@@ -41,7 +41,7 @@ class _RtorrentHomeState extends ConsumerState<RtorrentHome> {
           await ref.read(rtorrentApiProvider(widget.instance).future);
       await action(api);
     } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text('Action failed: $e')));
+      messenger.showSnackBar(SnackBar(content: Text("Échec de l'action : $e")));
     } finally {
       if (mounted) _refresh();
     }
@@ -51,7 +51,7 @@ class _RtorrentHomeState extends ConsumerState<RtorrentHome> {
     final bool? go = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Remove torrent'),
+        title: const Text('Retirer le torrent'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,11 +71,11 @@ class _RtorrentHomeState extends ConsumerState<RtorrentHome> {
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Remove'),
+            child: const Text('Retirer'),
           ),
         ],
       ),
@@ -88,7 +88,7 @@ class _RtorrentHomeState extends ConsumerState<RtorrentHome> {
     final int? priority = await showDialog<int>(
       context: context,
       builder: (BuildContext context) => SimpleDialog(
-        title: const Text('Priority'),
+        title: const Text('Priorité'),
         children: <Widget>[
           for (final (int value, String label) in const <(int, String)>[
             (0, 'Off'),
@@ -154,8 +154,8 @@ class _RtorrentHomeState extends ConsumerState<RtorrentHome> {
                   padding: EdgeInsets.only(top: Insets.xl),
                   child: EmptyView(
                     icon: Icons.download_done_outlined,
-                    title: 'No torrents',
-                    message: 'Nothing here yet. Use Add to start one.',
+                    title: 'Aucun torrent',
+                    message: 'Rien ici pour le moment. Utilisez Ajouter pour en démarrer un.',
                   ),
                 )
               else
@@ -260,7 +260,7 @@ class _GlobalSummary extends ConsumerWidget {
                     onPressed: () async {
                       final int? bytes = await showRtorrentSpeedDialog(
                         context,
-                        title: 'Download limit',
+                        title: 'Limite de téléchargement',
                         currentBytesPerSec: g.downLimit,
                       );
                       if (bytes != null) onSetDown(bytes);
@@ -274,7 +274,7 @@ class _GlobalSummary extends ConsumerWidget {
                     onPressed: () async {
                       final int? bytes = await showRtorrentSpeedDialog(
                         context,
-                        title: 'Upload limit',
+                        title: "Limite d'envoi",
                         currentBytesPerSec: g.upLimit,
                       );
                       if (bytes != null) onSetUp(bytes);
@@ -285,7 +285,7 @@ class _GlobalSummary extends ConsumerWidget {
                 FilledButton.icon(
                   onPressed: onAdd,
                   icon: const Icon(Icons.add),
-                  label: const Text('Add'),
+                  label: const Text('Ajouter'),
                 ),
               ],
             ),
@@ -399,7 +399,7 @@ class _FilterBar extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.only(right: Insets.xs),
                 child: FilterChip(
-                  label: Text('All (${all.length})'),
+                  label: Text('Tous (${all.length})'),
                   selected: filter.status == null,
                   onSelected: (_) => ref
                       .read(rtorrentFilterProvider(instance).notifier)
@@ -502,7 +502,7 @@ class _SortMenu extends ConsumerWidget {
           ),
         ),
         IconButton(
-          tooltip: descending ? 'Descending' : 'Ascending',
+          tooltip: descending ? 'Décroissant' : 'Croissant',
           icon: Icon(descending ? Icons.arrow_downward : Icons.arrow_upward),
           onPressed: () => ref
               .read(rtorrentSortDescendingProvider(instance).notifier)
@@ -724,7 +724,7 @@ class _RowMenu extends StatelessWidget {
         // stopped and removed. Only worth offering while the torrent is open.
         if (isOpen) _item('close', Icons.eject_outlined, 'Close'),
         _item('recheck', Icons.fact_check_outlined, 'Check hash'),
-        _item('reannounce', Icons.campaign_outlined, 'Ask tracker for peers'),
+        _item('reannounce', Icons.campaign_outlined, 'Demander des pairs au tracker'),
         const PopupMenuDivider(),
         _item('priority', Icons.low_priority, 'Priority'),
         const PopupMenuDivider(),

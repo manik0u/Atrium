@@ -199,7 +199,7 @@ class SlskdTransferFileTile extends ConsumerWidget {
   Widget _buildActionsMenu(BuildContext context, WidgetRef ref, bool isDownload) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return PopupMenuButton<String>(
-      tooltip: 'Transfer options',
+      tooltip: 'Options de transfert',
       padding: EdgeInsets.zero,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: Insets.xs + 2, vertical: Insets.xs),
@@ -233,7 +233,7 @@ class SlskdTransferFileTile extends ConsumerWidget {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      'Could not retry: $failReason',
+                      'Nouvelle tentative impossible : $failReason',
                       style: TextStyle(color: colorScheme.onError),
                     ),
                     backgroundColor: colorScheme.error,
@@ -242,7 +242,7 @@ class SlskdTransferFileTile extends ConsumerWidget {
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('Retrying download...'),
+                    content: Text('Nouvelle tentative de téléchargement…'),
                     duration: Duration(seconds: 2),
                   ),
                 );
@@ -259,7 +259,7 @@ class SlskdTransferFileTile extends ConsumerWidget {
             if (context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(isDownload ? 'Cancelled download' : 'Aborted upload'),
+                  content: Text(isDownload ? 'Téléchargement annulé' : 'Envoi interrompu'),
                   duration: const Duration(seconds: 2),
                 ),
               );
@@ -275,7 +275,7 @@ class SlskdTransferFileTile extends ConsumerWidget {
             if (context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('Removed transfer from list'),
+                  content: Text('Transfert retiré de la liste'),
                   duration: Duration(seconds: 2),
                 ),
               );
@@ -303,7 +303,7 @@ class SlskdTransferFileTile extends ConsumerWidget {
               children: <Widget>[
                 Icon(Icons.refresh_rounded, size: 18),
                 SizedBox(width: Insets.sm),
-                Text('Retry Download'),
+                Text('Réessayer le téléchargement'),
               ],
             ),
           ),
@@ -314,7 +314,7 @@ class SlskdTransferFileTile extends ConsumerWidget {
               children: <Widget>[
                 const Icon(Icons.stop_circle_outlined, size: 18),
                 const SizedBox(width: Insets.sm),
-                Text(isDownload ? 'Cancel Download' : 'Abort Upload'),
+                Text(isDownload ? 'Annuler le téléchargement' : "Interrompre l'envoi"),
               ],
             ),
           ),
@@ -324,7 +324,7 @@ class SlskdTransferFileTile extends ConsumerWidget {
             children: <Widget>[
               Icon(Icons.delete_outline_rounded, size: 18),
               SizedBox(width: Insets.sm),
-              Text('Remove from List'),
+              Text('Retirer de la liste'),
             ],
           ),
         ),

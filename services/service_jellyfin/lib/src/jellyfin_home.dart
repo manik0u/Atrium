@@ -58,8 +58,8 @@ class _JellyfinHomeState extends ConsumerState<JellyfinHome> {
         if (libraries.isEmpty) {
           return const EmptyView(
             icon: Icons.theaters_outlined,
-            title: 'No Libraries',
-            message: 'This Jellyfin server has no libraries to show.',
+            title: 'Aucune bibliothèque',
+            message: "Ce serveur Jellyfin n'a aucune bibliothèque à afficher.",
           );
         }
 
@@ -80,11 +80,11 @@ class _JellyfinHomeState extends ConsumerState<JellyfinHome> {
                   isScrollable: true,
                   tabAlignment: TabAlignment.start,
                   tabs: <Widget>[
-                    const Tab(text: 'Home'),
+                    const Tab(text: 'Accueil'),
                     for (final JellyfinView lib in libraries)
                       Tab(text: lib.name),
-                    const Tab(text: 'Watched'),
-                    const Tab(text: 'Unwatched'),
+                    const Tab(text: 'Vu'),
+                    const Tab(text: 'Non vu'),
                   ],
                 ),
                 Expanded(
@@ -208,8 +208,8 @@ class JellyfinLibraryGrid extends ConsumerWidget {
             SliverToBoxAdapter(
               child: EmptyView(
                 icon: Icons.movie_outlined,
-                title: 'Empty library',
-                message: 'Nothing in this library yet.',
+                title: 'Bibliothèque vide',
+                message: 'Rien dans cette bibliothèque pour le moment.',
               ),
             ),
           ],
@@ -420,8 +420,8 @@ class JellyfinItemsGrid extends ConsumerWidget {
             SliverToBoxAdapter(
               child: EmptyView(
                 icon: Icons.movie_outlined,
-                title: 'Empty library',
-                message: 'Nothing in this library yet.',
+                title: 'Bibliothèque vide',
+                message: 'Rien dans cette bibliothèque pour le moment.',
               ),
             ),
           ],
@@ -647,7 +647,7 @@ class JellyfinPosterCard extends ConsumerWidget {
                     ),
                     title: Text(
                       item.userData?.isFavorite == true
-                          ? 'Remove from Favorites'
+                          ? 'Retirer des favoris'
                           : 'Add to Favorites',
                     ),
                     onTap: () async {
@@ -674,7 +674,7 @@ class JellyfinPosterCard extends ConsumerWidget {
                   if (item.type == 'Movie' || item.type == 'Series')
                     ListTile(
                       leading: const Icon(Icons.search),
-                      title: const Text('Identify'),
+                      title: const Text('Identifier'),
                       onTap: () async {
                         Navigator.of(sheetContext).pop();
                         final bool? changed = await pushScreen<bool>(
@@ -923,7 +923,7 @@ class JellyfinBannerCard extends ConsumerWidget {
                       ),
                       title: Text(
                         item.userData?.isFavorite == true
-                            ? 'Remove from Favorites'
+                            ? 'Retirer des favoris'
                             : 'Add to Favorites',
                       ),
                       onTap: () async {
@@ -956,7 +956,7 @@ class JellyfinBannerCard extends ConsumerWidget {
                     if (item.type == 'Movie' || item.type == 'Series')
                       ListTile(
                         leading: const Icon(Icons.search),
-                        title: const Text('Identify'),
+                        title: const Text('Identifier'),
                         onTap: () async {
                           Navigator.of(sheetContext).pop();
                           final bool? changed = await pushScreen<bool>(
@@ -1208,22 +1208,22 @@ class _HomeSections extends ConsumerWidget {
                   _ActiveSessionsSection(instance: instance),
                   _HorizontalSection(
                     instance: instance,
-                    title: 'Currently Watching',
+                    title: 'En cours de visionnage',
                     provider: jellyfinResumeItemsProvider(instance),
                   ),
                   _HorizontalSection(
                     instance: instance,
-                    title: 'Next Up',
+                    title: 'À suivre',
                     provider: jellyfinNextUpProvider(instance),
                   ),
                   _HorizontalSection(
                     instance: instance,
-                    title: 'Recently Added',
+                    title: 'Ajouts récents',
                     provider: jellyfinLatestItemsProvider(instance),
                   ),
                   _HorizontalSection(
                     instance: instance,
-                    title: 'Favorites',
+                    title: 'Favoris',
                     provider: jellyfinFavoritesProvider(instance),
                   ),
                   const SizedBox(height: Insets.xl),

@@ -101,12 +101,12 @@ class _MySpeedHomeState extends ConsumerState<MySpeedHome> {
             NavigationDestination(
               icon: Icon(Icons.speed_outlined),
               selectedIcon: Icon(Icons.speed),
-              label: 'Status',
+              label: 'Statut',
             ),
             NavigationDestination(
               icon: Icon(Icons.history_outlined),
               selectedIcon: Icon(Icons.history),
-              label: 'History',
+              label: 'Historique',
             ),
             NavigationDestination(
               icon: Icon(Icons.settings_outlined),

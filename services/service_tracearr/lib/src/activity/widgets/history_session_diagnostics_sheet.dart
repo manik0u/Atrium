@@ -155,12 +155,12 @@ class HistorySessionDiagnosticsSheet extends StatelessWidget {
 
                   // 1. Session & Chain History
                   const _SectionHeader(
-                    title: 'SESSION & CHAIN HISTORY',
+                    title: 'HISTORIQUE DES SESSIONS ET CHAÎNES',
                     icon: Icons.history_outlined,
                   ),
                   const SizedBox(height: Insets.sm),
                   _TelemetryRow(
-                    label: 'Status',
+                    label: 'Statut',
                     value: item.watched
                         ? 'Completed'
                         : item.percentComplete != null
@@ -172,23 +172,23 @@ class HistorySessionDiagnosticsSheet extends StatelessWidget {
                   ),
                   if (item.durationMs != null && item.durationMs! > 0)
                     _TelemetryRow(
-                      label: 'Watch Time',
+                      label: 'Temps de visionnage',
                       value: _formatDuration(item.durationMs),
                     ),
                   if (item.segmentCount != null && item.segmentCount! > 1)
                     _TelemetryRow(
-                      label: 'Resume Chain',
+                      label: 'Chaîne de reprise',
                       value: '${item.segmentCount} sessions merged',
                       badgeColor: const Color(0xFF9C27B0),
                     ),
                   if (item.startedAt != null)
                     _TelemetryRow(
-                      label: 'Started At',
+                      label: 'Débuté à',
                       value: _formatDateTime(item.startedAt!),
                     ),
                   if (item.stoppedAt != null)
                     _TelemetryRow(
-                      label: 'Stopped At',
+                      label: 'Arrêté à',
                       value: _formatDateTime(item.stoppedAt!),
                     ),
 
@@ -198,23 +198,23 @@ class HistorySessionDiagnosticsSheet extends StatelessWidget {
 
                   // 2. Video Stream & Pipeline Diagnostics
                   const _SectionHeader(
-                    title: 'VIDEO PIPELINE TELEMETRY',
+                    title: 'TÉLÉMÉTRIE DU PIPELINE VIDÉO',
                     icon: Icons.videocam_outlined,
                   ),
                   const SizedBox(height: Insets.sm),
                   _TelemetryRow(
-                    label: 'Decision',
+                    label: 'Décision',
                     value: videoDecision,
                     highlight: isTranscode,
                   ),
                   if (item.videoCodec != null)
                     _TelemetryRow(
-                      label: 'Video Codec',
+                      label: 'Codec vidéo',
                       value: item.videoCodec!.toUpperCase(),
                     ),
                   if (item.resolution != null)
                     _TelemetryRow(
-                      label: 'Resolution',
+                      label: 'Résolution',
                       value: item.resolution!,
                     ),
                   if (dimensions != null)
@@ -224,7 +224,7 @@ class HistorySessionDiagnosticsSheet extends StatelessWidget {
                     ),
                   if (hasDifferentDr) ...[
                     _TelemetryRow(
-                      label: 'Source Dynamic Range',
+                      label: 'Plage dynamique source',
                       value: sourceDr.toUpperCase(),
                       badgeColor: sourceDr.toUpperCase().contains('HDR') ||
                               sourceDr.toUpperCase().contains('VISION')
@@ -232,13 +232,13 @@ class HistorySessionDiagnosticsSheet extends StatelessWidget {
                           : null,
                     ),
                     _TelemetryRow(
-                      label: 'Stream Dynamic Range',
+                      label: 'Plage dynamique du flux',
                       value: '${streamDr.toUpperCase()} (Tone-Mapped)',
                       badgeColor: const Color(0xFF2196F3),
                     ),
                   ] else if (hasSourceDr || hasStreamDr) ...[
                     _TelemetryRow(
-                      label: 'Dynamic Range',
+                      label: 'Plage dynamique',
                       value: (sourceDr ?? streamDr)!.toUpperCase(),
                       badgeColor: (sourceDr ?? streamDr)!
                                   .toUpperCase()
@@ -252,24 +252,24 @@ class HistorySessionDiagnosticsSheet extends StatelessWidget {
                   ],
                   if (containerRemux != null)
                     _TelemetryRow(
-                      label: 'Container',
+                      label: 'Conteneur',
                       value: containerRemux,
                     ),
                   if (isHw)
                     _TelemetryRow(
-                      label: 'Hardware Acceleration',
+                      label: 'Accélération matérielle',
                       value:
                           'Active (${item.hwDecoding ?? item.hwEncoding ?? "Hardware"})',
                       badgeColor: const Color(0xFF2196F3),
                     ),
                   if (item.transcodeSpeed != null)
                     _TelemetryRow(
-                      label: 'Transcode Speed',
+                      label: 'Vitesse de transcodage',
                       value: '${item.transcodeSpeed!.toStringAsFixed(1)}x',
                     ),
                   if (item.isThrottled != null)
                     _TelemetryRow(
-                      label: 'Throttled',
+                      label: 'Ralenti',
                       value: item.isThrottled! ? 'Yes (CPU Saved)' : 'No',
                     ),
                   if (item.transcodeReasons.isNotEmpty)
@@ -303,32 +303,32 @@ class HistorySessionDiagnosticsSheet extends StatelessWidget {
 
                   // 3. Audio & Subtitles
                   const _SectionHeader(
-                    title: 'AUDIO & SUBTITLES',
+                    title: 'AUDIO ET SOUS-TITRES',
                     icon: Icons.audiotrack_outlined,
                   ),
                   const SizedBox(height: Insets.sm),
-                  _TelemetryRow(label: 'Audio Decision', value: audioDecision),
+                  _TelemetryRow(label: 'Décision audio', value: audioDecision),
                   if (item.audioCodec != null)
                     _TelemetryRow(
-                      label: 'Audio Codec',
+                      label: 'Codec audio',
                       value: item.audioCodec!.toUpperCase(),
                     ),
                   if (item.audioChannels != null)
                     _TelemetryRow(
-                      label: 'Audio Channels',
+                      label: 'Canaux audio',
                       value: item.audioChannels!,
                     ),
                   if (item.subtitleLanguage != null ||
                       item.subtitleCodec != null ||
                       item.subtitleDecision != null) ...[
                     _TelemetryRow(
-                      label: 'Subtitles',
+                      label: 'Sous-titres',
                       value:
                           '${item.subtitleLanguage ?? "Unknown"} (${item.subtitleCodec?.toUpperCase() ?? "Standard"})',
                     ),
                     if (item.subtitleDecision != null)
                       _TelemetryRow(
-                        label: 'Subtitle Mode',
+                        label: 'Mode des sous-titres',
                         value: item.subtitleDecision!.toUpperCase(),
                         badgeColor:
                             item.subtitleDecision!.toLowerCase() == 'burn'
@@ -343,21 +343,21 @@ class HistorySessionDiagnosticsSheet extends StatelessWidget {
 
                   // 4. Client & Network Environment
                   const _SectionHeader(
-                    title: 'CLIENT & PLAYBACK ENVIRONMENT',
+                    title: 'ENVIRONNEMENT CLIENT ET LECTURE',
                     icon: Icons.devices_outlined,
                   ),
                   const SizedBox(height: Insets.sm),
                   if (item.player != null)
-                    _TelemetryRow(label: 'Player', value: item.player!),
+                    _TelemetryRow(label: 'Lecteur', value: item.player!),
                   if (item.device != null)
-                    _TelemetryRow(label: 'Device', value: item.device!),
+                    _TelemetryRow(label: 'Appareil', value: item.device!),
                   if (item.product != null)
-                    _TelemetryRow(label: 'Product', value: item.product!),
+                    _TelemetryRow(label: 'Produit', value: item.product!),
                   if (item.platform != null)
-                    _TelemetryRow(label: 'Platform', value: item.platform!),
+                    _TelemetryRow(label: 'Plateforme', value: item.platform!),
                   if (item.bitrate != null && item.bitrate! > 0)
                     _TelemetryRow(
-                      label: 'Average Bitrate',
+                      label: 'Débit moyen',
                       value: item.bitrate! >= 1000
                           ? '${(item.bitrate! / 1000).toStringAsFixed(1)} Mbps'
                           : '${item.bitrate} kbps',

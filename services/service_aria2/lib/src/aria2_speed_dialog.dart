@@ -132,7 +132,7 @@ class _GlobalSpeedDialogContentState extends State<_GlobalSpeedDialogContent> {
   void _submit() {
     final int? bytes = parseAria2SpeedBytes(_custom.text);
     if (bytes == null) {
-      setState(() => _errorText = 'Invalid speed (e.g. 512, 10M, 1500 B)');
+      setState(() => _errorText = 'Vitesse invalide (ex. 512, 10M, 1500 B)');
       return;
     }
     Navigator.of(context).pop(bytes);
@@ -141,7 +141,7 @@ class _GlobalSpeedDialogContentState extends State<_GlobalSpeedDialogContent> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Download limit'),
+      title: const Text('Limite de téléchargement'),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -159,9 +159,9 @@ class _GlobalSpeedDialogContentState extends State<_GlobalSpeedDialogContent> {
             TextField(
               controller: _custom,
               decoration: InputDecoration(
-                labelText: 'Custom limit',
+                labelText: 'Limite personnalisée',
                 hintText: 'e.g. 512, 10M, 1500 B',
-                helperText: 'Numbers default to KB/s; 0 for unlimited',
+                helperText: 'Les nombres sont en Ko/s par défaut ; 0 pour illimité',
                 errorText: _errorText,
                 border: const OutlineInputBorder(),
               ),
@@ -178,11 +178,11 @@ class _GlobalSpeedDialogContentState extends State<_GlobalSpeedDialogContent> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: _submit,
-          child: const Text('Set'),
+          child: const Text('Définir'),
         ),
       ],
     );
@@ -251,16 +251,16 @@ class _TaskSpeedDialogContentState extends State<_TaskSpeedDialogContent> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Task speed limits'),
+      title: const Text('Limites de vitesse des tâches'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TextField(
             controller: _dlController,
             decoration: InputDecoration(
-              labelText: 'Download limit',
+              labelText: 'Limite de téléchargement',
               hintText: 'e.g. 512, 5M, 1500 B',
-              helperText: '0 or empty for unlimited (default KB/s)',
+              helperText: '0 ou vide pour illimité (Ko/s par défaut)',
               errorText: _dlErrorText,
               border: const OutlineInputBorder(),
             ),
@@ -274,9 +274,9 @@ class _TaskSpeedDialogContentState extends State<_TaskSpeedDialogContent> {
           TextField(
             controller: _ulController,
             decoration: InputDecoration(
-              labelText: 'Upload limit',
+              labelText: "Limite d'envoi",
               hintText: 'e.g. 256, 2M, 1500 B',
-              helperText: '0 or empty for unlimited (default KB/s)',
+              helperText: '0 ou vide pour illimité (Ko/s par défaut)',
               errorText: _ulErrorText,
               border: const OutlineInputBorder(),
             ),
@@ -291,11 +291,11 @@ class _TaskSpeedDialogContentState extends State<_TaskSpeedDialogContent> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: _submit,
-          child: const Text('Save'),
+          child: const Text('Enregistrer'),
         ),
       ],
     );

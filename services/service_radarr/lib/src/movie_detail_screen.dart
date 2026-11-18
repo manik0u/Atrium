@@ -45,9 +45,9 @@ class MovieDetailScreen extends ConsumerWidget {
         ),
         loading: () => const Center(child: ExpressiveProgressIndicator()),
         error: (error, stack) => Scaffold(
-          appBar: AppBar(title: const Text('Error')),
+          appBar: AppBar(title: const Text('Erreur')),
           body: ErrorView(
-            title: 'Failed to load movie details',
+            title: 'Échec du chargement des détails du film',
             message: error.toString(),
             onRetry: () =>
                 ref.invalidate(radarrMovieByIdProvider((instance, movieId))),
@@ -117,7 +117,7 @@ class _MovieDetailBodyState extends ConsumerState<_MovieDetailBody> {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to refresh: $e')),
+          SnackBar(content: Text("Échec de l'actualisation : $e")),
         );
       }
     } finally {
@@ -584,7 +584,7 @@ class _StatusPill extends StatelessWidget {
     final bool hasFile = movie.hasFile;
     final Color background = hasFile ? cs.primaryContainer : cs.errorContainer;
     final Color tint = hasFile ? cs.onPrimaryContainer : cs.onErrorContainer;
-    final String label = hasFile ? 'Downloaded' : 'Missing';
+    final String label = hasFile ? 'Téléchargé' : 'Manquant';
     final IconData icon = hasFile ? Icons.check : Icons.warning_amber_rounded;
 
     return Container(
@@ -684,8 +684,8 @@ class _CollectionSectionState extends ConsumerState<_CollectionSection> {
         SnackBar(
           content: Text(
             newMonitored
-                ? 'Collection "${collection.title ?? 'Collection'}" monitored.'
-                : 'Collection "${collection.title ?? 'Collection'}" unmonitored.',
+                ? 'Collection « ${collection.title ?? 'Collection'}" monitored.'
+                : 'Collection « ${collection.title ?? 'Collection'}" unmonitored.',
           ),
         ),
       );
@@ -697,7 +697,7 @@ class _CollectionSectionState extends ConsumerState<_CollectionSection> {
       widget.onRefreshed();
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Failed to update collection monitoring: $e')),
+        SnackBar(content: Text('Échec de la mise à jour de la surveillance de la collection : $e')),
       );
     } finally {
       if (mounted) {
@@ -817,7 +817,7 @@ class _CollectionSectionState extends ConsumerState<_CollectionSection> {
                               ),
                               icon:
                                   const Icon(Icons.bookmark_border, size: 18),
-                              label: const Text('Collection unmonitored'),
+                              label: const Text('Collection non surveillée'),
                               onPressed:
                                   (collection == null || collection.id <= 0)
                                       ? null
@@ -1093,7 +1093,7 @@ class _ActionsRow extends ConsumerWidget {
                     ),
                   ),
                   icon: const Icon(Icons.bookmark_border, size: 20),
-                  label: const Text('Unmonitored'),
+                  label: const Text('Non surveillé'),
                   onPressed: () => _toggleMonitored(context, ref),
                 ),
         ),
@@ -1122,11 +1122,11 @@ class _ActionsRow extends ConsumerWidget {
                   'movieIds': <int>[movie.id],
                 });
                 messenger.showSnackBar(
-                  const SnackBar(content: Text('Search started')),
+                  const SnackBar(content: Text('Recherche lancée')),
                 );
               } catch (e) {
                 messenger.showSnackBar(
-                  SnackBar(content: Text('Failed to start search: $e')),
+                  SnackBar(content: Text('Échec du démarrage de la recherche : $e')),
                 );
               }
             },
@@ -1135,7 +1135,7 @@ class _ActionsRow extends ConsumerWidget {
         const SizedBox(width: Insets.sm),
         IconButton.filledTonal(
           icon: const Icon(Icons.manage_search),
-          tooltip: 'Manual search',
+          tooltip: 'Recherche manuelle',
           onPressed: () {
             Navigator.of(context, rootNavigator: true).push(
               FadePageRoute<void>(
@@ -1167,7 +1167,7 @@ class _ActionsRow extends ConsumerWidget {
       onRefreshed();
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Failed to update monitoring: $e')),
+        SnackBar(content: Text('Échec de la mise à jour de la surveillance : $e')),
       );
     }
   }
@@ -1208,7 +1208,7 @@ class _OverflowMenu extends ConsumerWidget {
           value: 'edit',
           child: ListTile(
             leading: Icon(Icons.edit_outlined),
-            title: Text('Edit settings'),
+            title: Text('Modifier les paramètres'),
             contentPadding: EdgeInsets.zero,
           ),
         ),
@@ -1216,7 +1216,7 @@ class _OverflowMenu extends ConsumerWidget {
           value: 'rename',
           child: ListTile(
             leading: Icon(Icons.drive_file_rename_outline),
-            title: Text('Rename files'),
+            title: Text('Renommer les fichiers'),
             contentPadding: EdgeInsets.zero,
           ),
         ),
@@ -1224,7 +1224,7 @@ class _OverflowMenu extends ConsumerWidget {
           value: 'history',
           child: ListTile(
             leading: Icon(Icons.history),
-            title: Text('History'),
+            title: Text('Historique'),
             contentPadding: EdgeInsets.zero,
           ),
         ),
@@ -1233,7 +1233,7 @@ class _OverflowMenu extends ConsumerWidget {
             value: 'delete_file',
             child: ListTile(
               leading: Icon(Icons.delete_sweep_outlined),
-              title: Text('Delete movie file'),
+              title: Text('Supprimer le fichier du film'),
               contentPadding: EdgeInsets.zero,
             ),
           ),
@@ -1241,7 +1241,7 @@ class _OverflowMenu extends ConsumerWidget {
           value: 'delete',
           child: ListTile(
             leading: Icon(Icons.delete_outline),
-            title: Text('Delete movie'),
+            title: Text('Supprimer le film'),
             contentPadding: EdgeInsets.zero,
           ),
         ),
@@ -1288,19 +1288,19 @@ class _OverflowMenu extends ConsumerWidget {
       context: context,
       builder: (BuildContext context) => StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) => AlertDialog(
-          title: const Text('Delete movie file?'),
+          title: const Text('Supprimer le fichier du film ?'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'Are you sure you want to delete the file for "${movie.title}" from disk? The movie entry will remain in Radarr.',
+                'Voulez-vous vraiment supprimer le fichier de « ${movie.title} » du disque ? La fiche restera dans Radarr.',
               ),
               const SizedBox(height: Insets.sm),
               CheckboxListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Unmonitor movie'),
-                subtitle: const Text('Prevent automatic re-downloads'),
+                title: const Text('Ne plus surveiller le film'),
+                subtitle: const Text('Empêcher les re-téléchargements automatiques'),
                 value: unmonitor,
                 onChanged: (bool? v) => setState(() => unmonitor = v ?? false),
               ),
@@ -1309,7 +1309,7 @@ class _OverflowMenu extends ConsumerWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('Cancel'),
+              child: const Text('Annuler'),
             ),
             FilledButton(
               style: FilledButton.styleFrom(
@@ -1317,7 +1317,7 @@ class _OverflowMenu extends ConsumerWidget {
                 foregroundColor: Theme.of(context).colorScheme.onError,
               ),
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('Delete File'),
+              child: const Text('Supprimer le fichier'),
             ),
           ],
         ),
@@ -1364,15 +1364,15 @@ class _OverflowMenu extends ConsumerWidget {
           SnackBar(
             content: Text(
               unmonitored
-                  ? 'File deleted and movie unmonitored.'
-                  : 'File deleted from disk.',
+                  ? 'Fichier supprimé et film non surveillé.'
+                  : 'Fichier supprimé du disque.',
             ),
           ),
         );
       }
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Failed to delete file: $e')),
+        SnackBar(content: Text('Échec de la suppression du fichier : $e')),
       );
     }
   }
@@ -1384,7 +1384,7 @@ class _OverflowMenu extends ConsumerWidget {
       context: context,
       builder: (BuildContext context) => StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) => AlertDialog(
-          title: const Text('Delete movie?'),
+          title: const Text('Supprimer le film ?'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1392,7 +1392,7 @@ class _OverflowMenu extends ConsumerWidget {
               Text(movie.title),
               CheckboxListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Also delete file on disk'),
+                title: const Text('Supprimer aussi le fichier du disque'),
                 value: deleteFiles,
                 onChanged: (bool? v) =>
                     setState(() => deleteFiles = v ?? false),
@@ -1402,11 +1402,11 @@ class _OverflowMenu extends ConsumerWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('Cancel'),
+              child: const Text('Annuler'),
             ),
             FilledButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('Delete'),
+              child: const Text('Supprimer'),
             ),
           ],
         ),
@@ -1424,7 +1424,7 @@ class _OverflowMenu extends ConsumerWidget {
       }
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Failed to delete movie: $e')),
+        SnackBar(content: Text('Échec de la suppression du film : $e')),
       );
     }
   }
@@ -1639,13 +1639,13 @@ class RadarrMovieHistoryScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${movie.title} - History'),
+        title: Text('${movie.title} - Historique'),
         surfaceTintColor: Colors.transparent,
       ),
       body: historyAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
         error: (Object error, StackTrace? _) => ErrorView(
-          title: 'Failed to load history',
+          title: "Échec du chargement de l'historique",
           message: error.toString(),
           onRetry: () => ref.invalidate(radarrMovieHistoryProvider((instance, movie.id))),
         ),
@@ -1662,7 +1662,7 @@ class RadarrMovieHistoryScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: Insets.lg),
                   Text(
-                    'No history items found.',
+                    "Aucun élément dans l'historique.",
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: cs.outline,
                     ),
@@ -1698,7 +1698,7 @@ class RadarrMovieHistoryScreen extends ConsumerWidget {
                     ),
                   ),
                   subtitle: Text(
-                    item.sourceTitle ?? 'No release title',
+                    item.sourceTitle ?? 'Sans titre de release',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -1828,14 +1828,14 @@ void _showHistoryDetails(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              _DetailRow(label: 'Event Type', value: eventType.toUpperCase()),
+              _DetailRow(label: "Type d'événement", value: eventType.toUpperCase()),
               _DetailRow(label: 'Date', value: _formatDateTime(item.date)),
               _DetailRow(
-                label: 'Source Title',
+                label: 'Titre source',
                 value: item.sourceTitle ?? 'None',
               ),
               if (item.downloadId != null)
-                _DetailRow(label: 'Download ID', value: item.downloadId!),
+                _DetailRow(label: 'ID de téléchargement', value: item.downloadId!),
               if (item.data != null && item.data!.isNotEmpty) ...[
                 const SizedBox(height: 12),
                 Text(
@@ -1894,16 +1894,16 @@ void _showHistoryDetails(
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Failed to flag release: $e')),
+                      SnackBar(content: Text('Échec du marquage de la release : $e')),
                     );
                   }
                 }
               },
-              child: const Text('Mark Failed'),
+              child: const Text('Marquer comme échoué'),
             ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
+            child: const Text('Fermer'),
           ),
         ],
       );

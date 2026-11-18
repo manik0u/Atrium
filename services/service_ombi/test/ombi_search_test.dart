@@ -72,8 +72,8 @@ void main() {
       (WidgetTester tester) async {
     await search(tester, 'arrival');
 
-    expect(find.text('Movie'), findsOneWidget);
-    expect(find.text('TV show'), findsOneWidget);
+    expect(find.text('Film'), findsOneWidget);
+    expect(find.text('Série'), findsOneWidget);
     expect(
       find.text('A linguist is recruited to talk to visitors.'),
       findsOneWidget,
@@ -90,7 +90,7 @@ void main() {
 
     await tester.tap(find.text('Arrival'));
     await settle(tester);
-    await tester.tap(find.widgetWithText(FilledButton, 'Request'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Demande'));
     await settle(tester);
 
     expect(
@@ -113,8 +113,8 @@ void main() {
     await settle(tester);
 
     // Ombi's own title page says Requested, approved or not.
-    expect(find.text('Requested'), findsOneWidget);
-    expect(find.widgetWithText(FilledButton, 'Request'), findsNothing);
+    expect(find.text('Demandé'), findsOneWidget);
+    expect(find.widgetWithText(FilledButton, 'Demande'), findsNothing);
   });
 
   testWidgets('an available title says Available', (WidgetTester tester) async {
@@ -128,8 +128,8 @@ void main() {
     await tester.tap(find.text('Arrival'));
     await settle(tester);
 
-    expect(find.text('Available'), findsOneWidget);
-    expect(find.widgetWithText(FilledButton, 'Request'), findsNothing);
+    expect(find.text('Disponible'), findsOneWidget);
+    expect(find.widgetWithText(FilledButton, 'Demande'), findsNothing);
   });
 
   testWidgets('a show partly in says so and can still be requested',
@@ -144,8 +144,8 @@ void main() {
     await tester.tap(find.text('Severance'));
     await settle(tester);
 
-    expect(find.text('Partially Available'), findsOneWidget);
-    expect(find.text('All seasons'), findsOneWidget);
+    expect(find.text('Partiellement disponible'), findsOneWidget);
+    expect(find.text('Toutes les saisons'), findsOneWidget);
   });
 
   testWidgets('a show offers all, first or latest season',
@@ -157,9 +157,9 @@ void main() {
 
     await tester.tap(find.text('Severance'));
     await settle(tester);
-    expect(find.text('All seasons'), findsOneWidget);
-    expect(find.text('First season'), findsOneWidget);
-    await tester.tap(find.text('Latest season'));
+    expect(find.text('Toutes les saisons'), findsOneWidget);
+    expect(find.text('Première saison'), findsOneWidget);
+    await tester.tap(find.text('Dernière saison'));
     await settle(tester);
 
     expect(
@@ -207,6 +207,6 @@ void main() {
       ),
       findsOneWidget,
     );
-    expect(find.text('Retry'), findsOneWidget);
+    expect(find.text('Réessayer'), findsOneWidget);
   });
 }

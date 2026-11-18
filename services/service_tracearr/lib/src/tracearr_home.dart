@@ -152,7 +152,7 @@ class TracearrHomeScreen extends ConsumerWidget {
                 const NavigationDestination(
                   icon: Icon(Icons.dashboard_outlined),
                   selectedIcon: Icon(Icons.dashboard),
-                  label: 'Overview',
+                  label: "Vue d'ensemble",
                 ),
                 NavigationDestination(
                   icon: activeStreamsCount > 0
@@ -167,17 +167,17 @@ class TracearrHomeScreen extends ConsumerWidget {
                           child: const Icon(Icons.sensors),
                         )
                       : const Icon(Icons.sensors),
-                  label: 'Activity',
+                  label: 'Activité',
                 ),
                 const NavigationDestination(
                   icon: Icon(Icons.video_library_outlined),
                   selectedIcon: Icon(Icons.video_library),
-                  label: 'Media',
+                  label: 'Médias',
                 ),
                 const NavigationDestination(
                   icon: Icon(Icons.people_outline),
                   selectedIcon: Icon(Icons.people),
-                  label: 'People',
+                  label: 'Personnes',
                 ),
                 NavigationDestination(
                   icon: unackViolationsCount > 0
@@ -192,7 +192,7 @@ class TracearrHomeScreen extends ConsumerWidget {
                           child: const Icon(Icons.shield),
                         )
                       : const Icon(Icons.shield),
-                  label: 'Security',
+                  label: 'Sécurité',
                 ),
               ],
             ),

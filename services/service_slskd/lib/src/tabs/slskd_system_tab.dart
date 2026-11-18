@@ -97,11 +97,11 @@ class _SlskdSystemTabState extends ConsumerState<SlskdSystemTab>
                 onPressed: widget.onOpenDrawer,
               )
             : null,
-        title: const Text('System & Health'),
+        title: const Text('Système et santé'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.refresh_rounded),
-            tooltip: 'Refresh system info',
+            tooltip: 'Actualiser les infos système',
             onPressed: () {
               ref.invalidate(slskdApplicationStateProvider(widget.instance));
               ref.invalidate(slskdSharesProvider(widget.instance));
@@ -124,7 +124,7 @@ class _SlskdSystemTabState extends ConsumerState<SlskdSystemTab>
                 value: 'analytics',
                 child: ListTile(
                   leading: Icon(Icons.analytics_outlined),
-                  title: Text('Transfer analytics & KPIs'),
+                  title: Text('Analyses et indicateurs des transferts'),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
@@ -133,7 +133,7 @@ class _SlskdSystemTabState extends ConsumerState<SlskdSystemTab>
                 value: 'storage',
                 child: ListTile(
                   leading: Icon(Icons.folder_open_rounded),
-                  title: Text('Host storage explorer'),
+                  title: Text("Explorateur de stockage de l'hôte"),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
@@ -142,7 +142,7 @@ class _SlskdSystemTabState extends ConsumerState<SlskdSystemTab>
                 value: 'options',
                 child: ListTile(
                   leading: Icon(Icons.settings_suggest_rounded),
-                  title: Text('Configuration & diagnostics'),
+                  title: Text('Configuration et diagnostics'),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
@@ -163,7 +163,7 @@ class _SlskdSystemTabState extends ConsumerState<SlskdSystemTab>
                 children: <Widget>[
                   Icon(Icons.health_and_safety_outlined, size: 18),
                   SizedBox(width: Insets.xs),
-                  Text('Health'),
+                  Text('Santé'),
                 ],
               ),
             ),
@@ -173,7 +173,7 @@ class _SlskdSystemTabState extends ConsumerState<SlskdSystemTab>
                 children: <Widget>[
                   Icon(Icons.folder_shared_outlined, size: 18),
                   SizedBox(width: Insets.xs),
-                  Text('Shares'),
+                  Text('Partages'),
                 ],
               ),
             ),
@@ -183,7 +183,7 @@ class _SlskdSystemTabState extends ConsumerState<SlskdSystemTab>
                 children: <Widget>[
                   Icon(Icons.article_outlined, size: 18),
                   SizedBox(width: Insets.xs),
-                  Text('Logs'),
+                  Text('Journaux'),
                 ],
               ),
             ),

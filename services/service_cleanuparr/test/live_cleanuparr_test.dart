@@ -193,7 +193,7 @@ void main() {
                 'id': '8a09f1d2-0011-2233-4455-66778899aabb',
                 'timestamp': '2026-10-23T11:00:00Z',
                 'eventType': 'QueueItemDeleted',
-                'severity': 'Error',
+                'severity': 'Erreur',
                 'message': 'Blocked executable disguised payload inside archive',
                 'itemTitle': 'Photoshop.2025.Crack.Payload.exe',
                 'itemHash': 'fedcba9876543210',
@@ -203,7 +203,7 @@ void main() {
                 'id': '9b1ae2e3-1122-3344-5566-778899aabbcc',
                 'timestamp': '2026-10-23T10:30:00Z',
                 'eventType': 'StalledStrike',
-                'severity': 'Warning',
+                'severity': 'Avertissement',
                 'message': 'Download stalled exceeding 15m idle threshold',
                 'itemTitle': 'Gladiator.II.2024.1080p',
                 'itemHash': '0123456789abcdef',
@@ -222,7 +222,7 @@ void main() {
             <String, dynamic>{
               'name': 'MalwareBlocker',
               'jobType': 'MalwareBlocker',
-              'status': 'Idle',
+              'status': 'Inactif',
               'schedule': '0 */5 * * * ?',
               'previousRunTime': '2026-10-23T10:55:00Z',
               'nextRunTime': '2026-10-23T11:00:00Z',
@@ -230,7 +230,7 @@ void main() {
             <String, dynamic>{
               'name': 'QueueCleaner',
               'jobType': 'QueueCleaner',
-              'status': 'Idle',
+              'status': 'Inactif',
               'schedule': '0 */15 * * * ?',
               'previousRunTime': '2026-10-23T10:45:00Z',
               'nextRunTime': '2026-10-23T11:00:00Z',
@@ -310,7 +310,7 @@ void main() {
     final List<CleanuparrEvent> events = await api.getEvents();
     expect(events.length, equals(2));
     expect(events.first.eventType, equals('QueueItemDeleted'));
-    expect(events.first.severity, equals('Error'));
+    expect(events.first.severity, equals('Erreur'));
     expect(events.first.downloadItemTitle, contains('Photoshop'));
     expect(events.first.hash, equals('fedcba9876543210'));
     expect(events.first.deleteReason, equals('AllFilesBlocked'));

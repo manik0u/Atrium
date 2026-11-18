@@ -62,7 +62,7 @@ void main() {
       ),
     );
     expect(find.text('Dashdot'), findsOneWidget);
-    expect(find.text('No Dashdot instances configured'), findsOneWidget);
+    expect(find.text('Aucune instance Dashdot configurée'), findsOneWidget);
   });
 
   testWidgets(
@@ -127,18 +127,18 @@ void main() {
     expect(find.text('Dashdot'), findsOneWidget);
     expect(find.text('CPU'), findsOneWidget);
     expect(find.text('RAM'), findsOneWidget);
-    expect(find.text('Disk'), findsOneWidget);
+    expect(find.text('Disque'), findsOneWidget);
     expect(find.text('25%'), findsOneWidget); // CPU
     expect(find.text('50%'), findsNWidgets(2)); // RAM 8/16 & Disk 250/500
 
     // Vitals pills
-    expect(find.text('Down'), findsOneWidget);
+    expect(find.text('Descendant'), findsOneWidget);
     expect(find.text('5.0 MB/s'), findsOneWidget);
-    expect(find.text('Up'), findsOneWidget);
+    expect(find.text('Montant'), findsOneWidget);
     expect(find.text('1.0 MB/s'), findsOneWidget);
-    expect(find.text('Temp'), findsOneWidget);
+    expect(find.text('Température'), findsOneWidget);
     expect(find.text('48°'), findsOneWidget);
-    expect(find.text('Uptime'), findsOneWidget);
+    expect(find.text('Disponibilité'), findsOneWidget);
     expect(find.text('1d 1h'), findsOneWidget);
   });
 }

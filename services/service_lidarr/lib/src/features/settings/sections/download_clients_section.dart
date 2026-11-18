@@ -25,7 +25,7 @@ class DownloadClientsSection extends ConsumerWidget {
     final List<DownloadClientResource> presets = schemasAsync.value ?? [];
     if (presets.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Loading download client presets...')),
+        const SnackBar(content: Text('Chargement des préréglages de clients de téléchargement…')),
       );
       return;
     }
@@ -33,7 +33,7 @@ class DownloadClientsSection extends ConsumerWidget {
     final DownloadClientResource? selectedPreset =
         await showSchemaPresetPicker<DownloadClientResource>(
       context: context,
-      title: 'Add Download Client',
+      title: 'Ajouter un client de téléchargement',
       presets: presets,
       titleBuilder: (preset) {
         final String impl = preset.implementationName?.trim() ?? '';
@@ -101,7 +101,7 @@ class DownloadClientsSection extends ConsumerWidget {
                       .postDownloadclientTest(body: payload);
                   if (!resp.isSuccess) {
                     throw Exception(
-                      resp.error?.message ?? 'Connection test failed',
+                      resp.error?.message ?? 'Échec du test de connexion',
                     );
                   }
                 },
@@ -156,7 +156,7 @@ class DownloadClientsSection extends ConsumerWidget {
                   } catch (e) {
                     if (ctx.mounted) {
                       messenger.showSnackBar(
-                        SnackBar(content: Text('Error saving client: $e')),
+                        SnackBar(content: Text("Erreur lors de l'enregistrement du client : $e")),
                       );
                     }
                   }
@@ -167,7 +167,7 @@ class DownloadClientsSection extends ConsumerWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text('Cancel'),
+              child: const Text('Annuler'),
             ),
           ],
         );
@@ -184,19 +184,19 @@ class DownloadClientsSection extends ConsumerWidget {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: Text('Delete ${client.name ?? 'Download Client'}?'),
-        content: Text('Are you sure you want to delete "${client.name}"?'),
+        title: Text('Supprimer ${client.name ?? 'Download Client'}?'),
+        content: Text('Voulez-vous vraiment supprimer « ${client.name} » ?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
               backgroundColor: Theme.of(ctx).colorScheme.error,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Delete'),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
@@ -209,11 +209,11 @@ class DownloadClientsSection extends ConsumerWidget {
       await api.downloadClient.deleteDownloadclientById(id: client.id!);
       ref.invalidate(lidarrDownloadClientsProvider(instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Download client deleted.')),
+        const SnackBar(content: Text('Client de téléchargement supprimé.')),
       );
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Error deleting client: $e')),
+        SnackBar(content: Text('Erreur lors de la suppression du client : $e')),
       );
     }
   }
@@ -242,15 +242,15 @@ class DownloadClientsSection extends ConsumerWidget {
         return StatefulBuilder(
           builder: (BuildContext dCtx, StateSetter setModalState) {
             return AlertDialog(
-              title: const Text('Download Client Handling'),
+              title: const Text('Gestion du client de téléchargement'),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SwitchListTile(
-                      title: const Text('Completed Download Handling'),
+                      title: const Text('Gestion des téléchargements terminés'),
                       subtitle: const Text(
-                        'Automatically import completed downloads from clients',
+                        'Importer automatiquement les téléchargements terminés depuis les clients',
                       ),
                       value: enableCompletedHandling,
                       contentPadding: EdgeInsets.zero,
@@ -259,9 +259,9 @@ class DownloadClientsSection extends ConsumerWidget {
                     ),
                     const SizedBox(height: Insets.xs),
                     SwitchListTile(
-                      title: const Text('Auto Redownload Failed'),
+                      title: const Text("Re-téléchargement auto en cas d'échec"),
                       subtitle: const Text(
-                        'Automatically search for alternatives if a download fails',
+                        'Rechercher automatiquement des alternatives si un téléchargement échoue',
                       ),
                       value: autoRedownloadFailed,
                       contentPadding: EdgeInsets.zero,
@@ -270,9 +270,9 @@ class DownloadClientsSection extends ConsumerWidget {
                     ),
                     const SizedBox(height: Insets.xs),
                     SwitchListTile(
-                      title: const Text('Redownload Interactive Search'),
+                      title: const Text('Re-télécharger via la recherche interactive'),
                       subtitle: const Text(
-                        'Auto redownload failures from interactive search',
+                        'Re-télécharger automatiquement les échecs de la recherche interactive',
                       ),
                       value: autoRedownloadInteractive,
                       contentPadding: EdgeInsets.zero,
@@ -284,8 +284,8 @@ class DownloadClientsSection extends ConsumerWidget {
                     TextField(
                       controller: workingFoldersController,
                       decoration: const InputDecoration(
-                        labelText: 'Working Folders Pattern',
-                        hintText: 'e.g. _UNPACK_',
+                        labelText: 'Motif des dossiers de travail',
+                        hintText: 'ex. _UNPACK_',
                         border: OutlineInputBorder(),
                       ),
                     ),
@@ -295,7 +295,7 @@ class DownloadClientsSection extends ConsumerWidget {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(dCtx),
-                  child: const Text('Cancel'),
+                  child: const Text('Annuler'),
                 ),
                 FilledButton(
                   onPressed: () async {
@@ -331,19 +331,19 @@ class DownloadClientsSection extends ConsumerWidget {
                         Navigator.pop(dCtx);
                         messenger.showSnackBar(
                           const SnackBar(
-                            content: Text('Download client options saved!'),
+                            content: Text('Options du client de téléchargement enregistrées !'),
                           ),
                         );
                       }
                     } catch (e) {
                       if (dCtx.mounted) {
                         messenger.showSnackBar(
-                          SnackBar(content: Text('Error: $e')),
+                          SnackBar(content: Text('Erreur : $e')),
                         );
                       }
                     }
                   },
-                  child: const Text('Save'),
+                  child: const Text('Enregistrer'),
                 ),
               ],
             );
@@ -383,8 +383,8 @@ class DownloadClientsSection extends ConsumerWidget {
                   TextFormField(
                     controller: hostController,
                     decoration: const InputDecoration(
-                      labelText: 'Host',
-                      hintText: 'e.g. 192.168.1.100 or localhost',
+                      labelText: 'Hôte',
+                      hintText: 'ex. 192.168.1.100 ou localhost',
                       border: OutlineInputBorder(),
                     ),
                     validator: (String? value) {
@@ -398,8 +398,8 @@ class DownloadClientsSection extends ConsumerWidget {
                   TextFormField(
                     controller: remotePathController,
                     decoration: const InputDecoration(
-                      labelText: 'Remote Path',
-                      hintText: 'e.g. /downloads/music/',
+                      labelText: 'Chemin distant',
+                      hintText: 'ex. /downloads/music/',
                       border: OutlineInputBorder(),
                     ),
                     validator: (String? value) {
@@ -413,7 +413,7 @@ class DownloadClientsSection extends ConsumerWidget {
                   TextFormField(
                     controller: localPathController,
                     decoration: const InputDecoration(
-                      labelText: 'Local Path',
+                      labelText: 'Chemin local',
                       hintText: r'e.g. /mnt/downloads/ or D:\Downloads\',
                       border: OutlineInputBorder(),
                     ),
@@ -431,7 +431,7 @@ class DownloadClientsSection extends ConsumerWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text('Cancel'),
+              child: const Text('Annuler'),
             ),
             FilledButton(
               onPressed: () async {
@@ -489,12 +489,12 @@ class DownloadClientsSection extends ConsumerWidget {
                 } catch (e) {
                   if (ctx.mounted) {
                     messenger.showSnackBar(
-                      SnackBar(content: Text('Error saving mapping: $e')),
+                      SnackBar(content: Text("Erreur lors de l'enregistrement du mappage : $e")),
                     );
                   }
                 }
               },
-              child: const Text('Save'),
+              child: const Text('Enregistrer'),
             ),
           ],
         );
@@ -513,21 +513,21 @@ class DownloadClientsSection extends ConsumerWidget {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Delete Remote Path Mapping?'),
+        title: const Text('Supprimer le mappage de chemin distant ?'),
         content: Text(
           'Are you sure you want to delete the mapping for "${mapping.host ?? 'Host'}" (${mapping.remotePath ?? ''} -> ${mapping.localPath ?? ''})?',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
               backgroundColor: Theme.of(ctx).colorScheme.error,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Delete'),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
@@ -541,11 +541,11 @@ class DownloadClientsSection extends ConsumerWidget {
       await api.remotePathMapping.deleteRemotepathmappingById(id: id);
       ref.invalidate(lidarrRemotePathMappingsProvider(instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Remote path mapping deleted.')),
+        const SnackBar(content: Text('Mappage de chemin distant supprimé.')),
       );
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Error deleting mapping: $e')),
+        SnackBar(content: Text('Erreur lors de la suppression du mappage : $e')),
       );
     }
   }
@@ -567,7 +567,7 @@ class DownloadClientsSection extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         heroTag: 'client_add_fab',
         onPressed: () => _selectClientPresetAndAdd(context, ref),
-        tooltip: 'Add Download Client',
+        tooltip: 'Ajouter un client de téléchargement',
         child: const Icon(Icons.add),
       ),
       body: EasyRefresh(
@@ -608,7 +608,7 @@ class DownloadClientsSection extends ConsumerWidget {
                   style: TextStyle(fontWeight: FontWeight.w600),
                 ),
                 subtitle: const Text(
-                  'Completed handling, intervals, and redownloads',
+                  'Gestion des terminés, intervalles et re-téléchargements',
                   style: TextStyle(fontSize: 12),
                 ),
                 trailing: const Icon(Icons.chevron_right, size: 20),
@@ -664,14 +664,14 @@ class DownloadClientsSection extends ConsumerWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'No Download Clients',
+                            'Aucun client de téléchargement',
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'No download clients configured in Lidarr.',
+                            'Aucun client de téléchargement configuré dans Lidarr.',
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: cs.onSurfaceVariant,
                             ),
@@ -782,7 +782,7 @@ class DownloadClientsSection extends ConsumerWidget {
                           ),
                           trailing: IconButton(
                             icon: const Icon(Icons.delete_outline, size: 20),
-                            tooltip: 'Delete Client',
+                            tooltip: 'Supprimer le client',
                             onPressed: () =>
                                 _deleteClient(context, ref, client),
                           ),
@@ -815,7 +815,7 @@ class DownloadClientsSection extends ConsumerWidget {
                 ),
                 IconButton(
                   icon: const Icon(Icons.add, size: 20),
-                  tooltip: 'Add Remote Path Mapping',
+                  tooltip: 'Ajouter un mappage de chemin distant',
                   onPressed: () =>
                       _showRemotePathMappingEditorDialog(context, ref),
                 ),
@@ -850,7 +850,7 @@ class DownloadClientsSection extends ConsumerWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'No Remote Path Mappings',
+                            'Aucun mappage de chemin distant',
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -929,7 +929,7 @@ class DownloadClientsSection extends ConsumerWidget {
                           ),
                           trailing: IconButton(
                             icon: const Icon(Icons.delete_outline, size: 20),
-                            tooltip: 'Delete Mapping',
+                            tooltip: 'Supprimer le mappage',
                             onPressed: () => _deleteRemotePathMapping(
                               context,
                               ref,

@@ -12,10 +12,10 @@ Future<String?> showTransmissionLocationDialog(
     showDialog<String>(
       context: context,
       builder: (BuildContext _) => const _TextDialog(
-        title: 'Set torrent location',
-        label: 'Location',
+        title: "Définir l'emplacement du torrent",
+        label: 'Emplacement',
         verb: 'Apply',
-        helper: 'A path as the server sees it. The data is moved there.',
+        helper: 'Un chemin tel que le serveur le voit. Les données y sont déplacées.',
         initial: '',
       ).withInitial(initial),
     );
@@ -27,8 +27,8 @@ Future<String?> showTransmissionRenameDialog(
     showDialog<String>(
       context: context,
       builder: (BuildContext _) => _TextDialog(
-        title: 'Rename',
-        label: 'Enter new name',
+        title: 'Renommer',
+        label: 'Saisir un nouveau nom',
         verb: 'Rename',
         initial: initial,
       ),
@@ -88,7 +88,7 @@ class _TextDialogState extends State<_TextDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(_controller.text.trim()),
@@ -140,7 +140,7 @@ class _LabelsDialogState extends State<_LabelsDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Edit labels'),
+      title: const Text('Modifier les labels'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,7 +151,7 @@ class _LabelsDialogState extends State<_LabelsDialog> {
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Labels',
-              helperText: 'Separate labels with commas',
+              helperText: 'Séparez les labels par des virgules',
             ),
           ),
           if (widget.suggestions.isNotEmpty) ...<Widget>[
@@ -177,11 +177,11 @@ class _LabelsDialogState extends State<_LabelsDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(_parse(_controller.text)),
-          child: const Text('Save'),
+          child: const Text('Enregistrer'),
         ),
       ],
     );
@@ -218,18 +218,18 @@ Future<bool?> showTransmissionRemoveDialog(
               contentPadding: EdgeInsets.zero,
               value: withData,
               onChanged: (bool? v) => setLocal(() => withData = v ?? false),
-              title: const Text('Also trash the downloaded data'),
+              title: const Text('Mettre aussi les données téléchargées à la corbeille'),
             ),
           ],
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(withData),
-            child: const Text('Remove'),
+            child: const Text('Retirer'),
           ),
         ],
       ),
@@ -240,15 +240,15 @@ Future<bool?> showTransmissionRemoveDialog(
 /// The web UI's peer flag legend, letter for letter.
 const List<(String, String)> transmissionPeerFlags = <(String, String)>[
   ('O', 'Optimistic unchoke'),
-  ('D', 'Downloading from this peer'),
-  ('d', "We would download from this peer if they'd let us"),
+  ('D', 'Téléchargement depuis ce pair'),
+  ('d', "Nous téléchargerions depuis ce pair s'il nous le permettait"),
   ('U', 'Uploading to peer'),
-  ('u', "We would upload to this peer if they'd ask"),
-  ('K', "Peer has unchoked us, but we're not interested"),
-  ('?', "We unchoked this peer, but they're not interested"),
+  ('u', "Nous enverrions à ce pair s'il le demandait"),
+  ('K', 'Le pair nous a désétouffé, mais nous ne sommes pas intéressés'),
+  ('?', "Nous avons désétouffé ce pair, mais il n'est pas intéressé"),
   ('E', 'Encrypted connection'),
-  ('H', 'Peer was discovered through DHT'),
-  ('X', 'Peer was discovered through Peer Exchange (PEX)'),
+  ('H', 'Pair découvert via DHT'),
+  ('X', "Pair découvert via l'échange de pairs (PEX)"),
   ('I', 'Peer is an incoming connection'),
   ('T', 'Peer is connected via uTP'),
 ];
@@ -264,7 +264,7 @@ Future<void> showTransmissionPeerFlagsSheet(BuildContext context) =>
           padding:
               const EdgeInsets.fromLTRB(Insets.lg, 0, Insets.lg, Insets.lg),
           children: <Widget>[
-            Text('Peer flags', style: Theme.of(context).textTheme.titleMedium),
+            Text('Drapeaux de pairs', style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: Insets.sm),
             for (final (String flag, String meaning) in transmissionPeerFlags)
               ListTile(

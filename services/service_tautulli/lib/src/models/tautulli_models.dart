@@ -113,17 +113,17 @@ class TautulliHomeStat {
 
   /// Human section header for a stat_id.
   String get title => switch (statId) {
-        'top_movies' => 'Top movies',
-        'popular_movies' => 'Popular movies',
-        'top_tv' => 'Top TV shows',
-        'popular_tv' => 'Popular TV shows',
-        'top_music' => 'Top music',
-        'popular_music' => 'Popular music',
-        'top_libraries' => 'Top libraries',
-        'top_users' => 'Top users',
-        'top_platforms' => 'Top platforms',
-        'last_watched' => 'Recently watched',
-        'most_concurrent' => 'Most concurrent streams',
+        'top_movies' => 'Films les plus vus',
+        'popular_movies' => 'Films populaires',
+        'top_tv' => 'Séries les plus vues',
+        'popular_tv' => 'Séries populaires',
+        'top_music' => 'Musique la plus écoutée',
+        'popular_music' => 'Musique populaire',
+        'top_libraries' => 'Bibliothèques les plus vues',
+        'top_users' => 'Utilisateurs les plus actifs',
+        'top_platforms' => 'Plateformes les plus utilisées',
+        'last_watched' => 'Vus récemment',
+        'most_concurrent' => 'Plus de flux simultanés',
         _ => statId,
       };
 }

@@ -271,7 +271,7 @@ class ActiveStreamCard extends StatelessWidget {
                       color: colorScheme.error,
                       size: 24,
                     ),
-                    tooltip: 'Terminate Stream',
+                    tooltip: 'Interrompre le flux',
                     onPressed: () => TerminateStreamDialog.show(
                       context,
                       instance: instance,

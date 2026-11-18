@@ -55,19 +55,19 @@ Future<void> deleteOmbiRequest(
   final bool? confirmed = await showDialog<bool>(
     context: context,
     builder: (BuildContext dialogContext) => AlertDialog(
-      title: const Text('Delete this request?'),
+      title: const Text('Supprimer cette demande ?'),
       content: Text(
-        "${request.title} leaves Ombi's request list. Anything already "
+        "${request.title} quitte la liste des demandes d'Ombi. Tout ce qui est déjà "
         'downloaded stays where it is.',
       ),
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(dialogContext).pop(false),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: () => Navigator.of(dialogContext).pop(true),
-          child: const Text('Delete'),
+          child: const Text('Supprimer'),
         ),
       ],
     ),
@@ -123,23 +123,23 @@ class _DenyDialogState extends State<_DenyDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Deny ${widget.title}?'),
+      title: Text('Refuser ${widget.title} ?'),
       content: TextField(
         controller: _reason,
         autofocus: true,
         decoration: const InputDecoration(
-          labelText: 'Reason (optional)',
+          labelText: 'Motif (facultatif)',
           border: OutlineInputBorder(),
         ),
       ),
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(_reason.text.trim()),
-          child: const Text('Deny'),
+          child: const Text('Refuser'),
         ),
       ],
     );

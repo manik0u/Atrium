@@ -75,7 +75,7 @@ class _AdguardHomeDnsCacheScreenState
     final int? max = int.tryParse(_ttlMax.text.trim());
     // 0 is no override, so it bounds nothing.
     if (min != null && max != null && min > 0 && max > 0 && min > max) {
-      problems['min'] = 'Has to be at most the maximum.';
+      problems['min'] = 'Doit être au plus égal au maximum.';
     }
     return problems;
   }
@@ -119,18 +119,18 @@ class _AdguardHomeDnsCacheScreenState
     final bool? clear = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Clear the DNS cache?'),
+        title: const Text('Vider le cache DNS ?'),
         content: const Text(
-          'Every name is asked of the upstream servers again the next time.',
+          'Chaque nom est redemandé aux serveurs amont la prochaine fois.',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Clear'),
+            child: const Text('Effacer'),
           ),
         ],
       ),
@@ -146,7 +146,7 @@ class _AdguardHomeDnsCacheScreenState
     final AdguardHomeActions actions =
         ref.read(adguardHomeActionsProvider(_instance));
     setState(() => _busy = true);
-    SnackBar said = const SnackBar(content: Text('DNS cache cleared'));
+    SnackBar said = const SnackBar(content: Text('Cache DNS vidé'));
     try {
       await actions.clearDnsCache();
     } on Object catch (error) {
@@ -170,7 +170,7 @@ class _AdguardHomeDnsCacheScreenState
     // Filled once. A later read must not replace what is being typed.
     if (_before == null && value != null) _fill(value);
     return AdguardHomeSettingsForm(
-      title: 'DNS cache',
+      title: 'Cache DNS',
       busy: _busy,
       changed: _changed,
       onSave: _save,
@@ -200,7 +200,7 @@ class _AdguardHomeDnsCacheScreenState
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
           title: const Text('Cache'),
-          subtitle: const Text('Keep answers to answer again from'),
+          subtitle: const Text('Conserver les réponses pour répondre à nouveau depuis'),
           value: _enabled,
           onChanged: (bool on) => setState(() => _enabled = on),
         ),
@@ -224,14 +224,14 @@ class _AdguardHomeDnsCacheScreenState
           'max',
           _ttlMax,
           'Maximum TTL in seconds',
-          'No answer is kept longer. 0 leaves the time as it came.',
+          "Aucune réponse n'est conservée plus longtemps. 0 laisse la durée telle quelle.",
           shown('max'),
         ),
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
-          title: const Text('Optimistic caching'),
+          title: const Text('Mise en cache optimiste'),
           subtitle: const Text(
-            'Answer from the cache even after an answer expired, and fetch '
+            "Répondre depuis le cache même après expiration d'une réponse, et récupérer "
             'it again meanwhile',
           ),
           value: _optimistic,
@@ -246,7 +246,7 @@ class _AdguardHomeDnsCacheScreenState
             ),
             onPressed: _clear,
             icon: const Icon(Icons.delete_sweep_outlined),
-            label: const Text('Clear cache'),
+            label: const Text('Vider le cache'),
           ),
         ),
       ],

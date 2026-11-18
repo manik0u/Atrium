@@ -53,7 +53,7 @@ class UnraidHome extends ConsumerWidget {
               : Builder(
                   builder: (BuildContext context) => IconButton(
                     icon: const Icon(Icons.menu),
-                    tooltip: 'Open menu',
+                    tooltip: 'Ouvrir le menu',
                     onPressed: Scaffold.of(context).openDrawer,
                   ),
                 ),
@@ -75,12 +75,12 @@ class UnraidHome extends ConsumerWidget {
             NavigationDestination(
               icon: Icon(Icons.dns_outlined),
               selectedIcon: Icon(Icons.dns),
-              label: 'Array',
+              label: 'Tableau',
             ),
             NavigationDestination(
               icon: Icon(Icons.speed_outlined),
               selectedIcon: Icon(Icons.speed),
-              label: 'System',
+              label: 'Système',
             ),
             NavigationDestination(
               icon: Icon(Icons.inventory_2_outlined),
@@ -90,7 +90,7 @@ class UnraidHome extends ConsumerWidget {
             NavigationDestination(
               icon: Icon(Icons.desktop_windows_outlined),
               selectedIcon: Icon(Icons.desktop_windows),
-              label: 'VMs',
+              label: 'VM',
             ),
           ],
         ),

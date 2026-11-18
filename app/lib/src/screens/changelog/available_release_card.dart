@@ -65,7 +65,7 @@ class AvailableReleaseCard extends ConsumerWidget {
                 state.releaseUrl ?? AtriumLinks.releases,
               ),
               icon: const Icon(Icons.open_in_new, size: 18),
-              label: const Text('See full release'),
+              label: const Text('Voir la release complète'),
             ),
           ),
         ],

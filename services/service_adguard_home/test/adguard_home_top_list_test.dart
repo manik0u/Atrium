@@ -35,7 +35,7 @@ void main() {
     // 95 + 94 + 93.
     expect(find.text('Others'), findsOneWidget);
     expect(find.text('282'), findsOneWidget);
-    expect(find.text('View all'), findsOneWidget);
+    expect(find.text('Tout voir'), findsOneWidget);
   });
 
   testWidgets('a list that fits has no Others and nothing more to open',
@@ -51,7 +51,7 @@ void main() {
 
     expect(find.text('site4.example'), findsOneWidget);
     expect(find.text('Others'), findsNothing);
-    expect(find.text('View all'), findsNothing);
+    expect(find.text('Tout voir'), findsNothing);
   });
 
   testWidgets('response times are not added up', (WidgetTester tester) async {
@@ -71,7 +71,7 @@ void main() {
     // Seconds, written as milliseconds.
     expect(find.text('700 ms'), findsOneWidget);
     expect(find.text('Others'), findsNothing);
-    expect(find.text('View all'), findsOneWidget);
+    expect(find.text('Tout voir'), findsOneWidget);
   });
 
   testWidgets('View all and a row\'s button tell whoever shows the list',
@@ -90,7 +90,7 @@ void main() {
     );
 
     await tester.tap(find.byTooltip('Unblock site1.example'));
-    await tester.tap(find.text('View all'));
+    await tester.tap(find.text('Tout voir'));
 
     expect(asked, <String>['unblock site1.example']);
     expect(opened, 1);
@@ -195,7 +195,7 @@ void main() {
       ),
     );
 
-    expect(find.text('Nothing yet'), findsOneWidget);
+    expect(find.text('Rien pour le moment'), findsOneWidget);
     expect(find.text('Others'), findsNothing);
   });
 

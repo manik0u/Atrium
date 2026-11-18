@@ -172,7 +172,7 @@ void main() {
         const RadarrMovie(title: 'Dune', year: 2021, tmdbId: 438631),
       ],
     );
-    expect(find.text('Pick the title'), findsOneWidget);
+    expect(find.text('Choisissez le titre'), findsOneWidget);
     await tester.tap(find.text('Dune (2021)'));
     await tester.pumpAndSettle();
     expect((o.adding! as MovieMatch).movie.tmdbId, 438631);
@@ -218,7 +218,7 @@ void main() {
         ];
       },
     );
-    expect(find.text('Add to'), findsOneWidget);
+    expect(find.text('Ajouter à'), findsOneWidget);
     await tester.tap(find.text('Radarr Two'));
     await tester.pumpAndSettle();
     expect(asked, <String>[
@@ -248,7 +248,7 @@ void main() {
         ];
       },
     );
-    expect(find.text('Add to'), findsOneWidget);
+    expect(find.text('Ajouter à'), findsOneWidget);
     expect(find.text('Radarr Test'), findsNothing);
     await tester.tap(find.text('Sonarr Two'));
     await tester.pumpAndSettle();
@@ -317,7 +317,7 @@ void main() {
       },
     );
     expect(asked, <String>['Radarr Two|tmdb:860']);
-    expect(find.text('Add to'), findsNothing);
+    expect(find.text('Ajouter à'), findsNothing);
     expect(o.addingOn, _radarr2);
   });
 

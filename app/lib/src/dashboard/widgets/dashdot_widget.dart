@@ -22,7 +22,7 @@ class DashboardDashdotWidget extends ConsumerWidget {
       return DashboardWidgetCard(
         kind: DashboardWidgetKind.dashdot,
         accent: accent,
-        child: const DashboardIdleRow(text: 'No Dashdot instances configured'),
+        child: const DashboardIdleRow(text: 'Aucune instance Dashdot configurée'),
       );
     }
 
@@ -126,7 +126,7 @@ class _DashdotInstanceBlock extends ConsumerWidget {
                   child: _DashdotStatPill(
                     icon: Icons.arrow_downward_rounded,
                     iconColor: cs.primary,
-                    label: 'Down',
+                    label: 'Descendant',
                     value: _formatSpeed(currentDownBytes),
                   ),
                 ),
@@ -135,7 +135,7 @@ class _DashdotInstanceBlock extends ConsumerWidget {
                   child: _DashdotStatPill(
                     icon: Icons.arrow_upward_rounded,
                     iconColor: cs.tertiary,
-                    label: 'Up',
+                    label: 'Montant',
                     value: _formatSpeed(currentUpBytes),
                   ),
                 ),
@@ -146,7 +146,7 @@ class _DashdotInstanceBlock extends ConsumerWidget {
                     iconColor: cpuTemp >= 80
                         ? cs.error
                         : (cpuTemp > 0 ? cs.secondary : cs.outline),
-                    label: 'Temp',
+                    label: 'Température',
                     value: cpuTemp > 0 ? '${cpuTemp.toStringAsFixed(0)}°' : '--',
                   ),
                 ),
@@ -155,7 +155,7 @@ class _DashdotInstanceBlock extends ConsumerWidget {
                   child: _DashdotStatPill(
                     icon: Icons.timer_outlined,
                     iconColor: cs.outline,
-                    label: 'Uptime',
+                    label: 'Disponibilité',
                     value: uptimeSecs > 0 ? uptimeStr : '--',
                   ),
                 ),

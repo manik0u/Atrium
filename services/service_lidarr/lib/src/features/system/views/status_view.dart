@@ -73,14 +73,14 @@ class StatusAndHealthView extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'All Health Checks Passing',
+                                'Tous les contrôles de santé passent',
                                 style: theme.textTheme.titleSmall?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               const SizedBox(height: 2),
                               Text(
-                                'No system issues or warnings detected.',
+                                'Aucun problème ni avertissement système détecté.',
                                 style: theme.textTheme.bodySmall?.copyWith(
                                   color: cs.onSurfaceVariant,
                                 ),
@@ -144,7 +144,7 @@ class StatusAndHealthView extends ConsumerWidget {
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
-                                  h.message ?? 'No details provided',
+                                  h.message ?? 'Aucun détail fourni',
                                   style: theme.textTheme.bodySmall?.copyWith(
                                     color: cs.onSurfaceVariant,
                                   ),
@@ -266,7 +266,7 @@ class StatusAndHealthView extends ConsumerWidget {
         Clipboard.setData(ClipboardData(text: value));
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('$title copied to clipboard!'),
+            content: Text('$title copié dans le presse-papiers !'),
             duration: const Duration(seconds: 1),
           ),
         );

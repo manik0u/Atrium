@@ -40,7 +40,7 @@ class AlbumBulkActionsBar extends ConsumerWidget {
       );
       if (!resp.isSuccess) {
         throw Exception(
-          resp.error?.message ?? 'Failed to update album monitoring',
+          resp.error?.message ?? "Échec de la mise à jour de la surveillance de l'album",
         );
       }
 
@@ -59,7 +59,7 @@ class AlbumBulkActionsBar extends ConsumerWidget {
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(
-          content: Text('Failed: $e'),
+          content: Text('Échec : $e'),
           backgroundColor: errorColor,
         ),
       );
@@ -77,7 +77,7 @@ class AlbumBulkActionsBar extends ConsumerWidget {
       );
       if (!resp.isSuccess) {
         throw Exception(
-          resp.error?.message ?? 'Failed to trigger search for selected albums',
+          resp.error?.message ?? 'Échec du déclenchement de la recherche pour les albums sélectionnés',
         );
       }
 
@@ -92,7 +92,7 @@ class AlbumBulkActionsBar extends ConsumerWidget {
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(
-          content: Text('Search failed: $e'),
+          content: Text('Échec de la recherche : $e'),
           backgroundColor: errorColor,
         ),
       );
@@ -112,7 +112,7 @@ class AlbumBulkActionsBar extends ConsumerWidget {
             final ColorScheme cs = theme.colorScheme;
 
             return AlertDialog(
-              title: Text('Delete ${selectedIds.length} Albums?'),
+              title: Text('Supprimer ${selectedIds.length} albums ?'),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,17 +123,17 @@ class AlbumBulkActionsBar extends ConsumerWidget {
                   ),
                   const SizedBox(height: 12),
                   CheckboxListTile(
-                    title: const Text('Delete files from disk'),
-                    subtitle: const Text('Permanently remove audio files'),
+                    title: const Text('Supprimer les fichiers du disque'),
+                    subtitle: const Text('Supprimer définitivement les fichiers audio'),
                     value: deleteFiles,
                     contentPadding: EdgeInsets.zero,
                     onChanged: (bool? val) =>
                         setState(() => deleteFiles = val ?? false),
                   ),
                   CheckboxListTile(
-                    title: const Text('Add import list exclusion'),
+                    title: const Text("Ajouter une exclusion de liste d'import"),
                     subtitle:
-                        const Text('Prevent re-adding by automated lists'),
+                        const Text('Empêcher le rajout par les listes automatiques'),
                     value: addImportListExclusion,
                     contentPadding: EdgeInsets.zero,
                     onChanged: (bool? val) =>
@@ -144,7 +144,7 @@ class AlbumBulkActionsBar extends ConsumerWidget {
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.of(ctx).pop(false),
-                  child: const Text('Cancel'),
+                  child: const Text('Annuler'),
                 ),
                 FilledButton(
                   style: FilledButton.styleFrom(
@@ -152,7 +152,7 @@ class AlbumBulkActionsBar extends ConsumerWidget {
                     foregroundColor: cs.onError,
                   ),
                   onPressed: () => Navigator.of(ctx).pop(true),
-                  child: const Text('Delete'),
+                  child: const Text('Supprimer'),
                 ),
               ],
             );
@@ -182,13 +182,13 @@ class AlbumBulkActionsBar extends ConsumerWidget {
 
       messenger.showSnackBar(
         SnackBar(
-          content: Text('${selectedIds.length} albums deleted successfully.'),
+          content: Text('${selectedIds.length} album(s) supprimé(s) avec succès.'),
         ),
       );
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(
-          content: Text('Failed to delete albums: $e'),
+          content: Text('Échec de la suppression des albums : $e'),
           backgroundColor: errorColor,
         ),
       );
@@ -246,31 +246,31 @@ class AlbumBulkActionsBar extends ConsumerWidget {
             children: [
               _buildActionItem(
                 icon: Icons.bookmark,
-                label: 'Monitor',
+                label: 'Surveiller',
                 color: cs.primary,
                 onPressed: () => _setMonitoring(context, ref, true),
               ),
               _buildActionItem(
                 icon: Icons.bookmark_border,
-                label: 'Unmonitor',
+                label: 'Ne plus surveiller',
                 color: cs.onSurfaceVariant,
                 onPressed: () => _setMonitoring(context, ref, false),
               ),
               _buildActionItem(
                 icon: Icons.search,
-                label: 'Search',
+                label: 'Rechercher',
                 color: cs.primary,
                 onPressed: () => _searchSelected(context, ref),
               ),
               _buildActionItem(
                 icon: Icons.delete_outline,
-                label: 'Delete',
+                label: 'Supprimer',
                 color: cs.error,
                 onPressed: () => _deleteSelected(context, ref),
               ),
               _buildActionItem(
                 icon: Icons.more_vert,
-                label: 'More',
+                label: 'Plus',
                 color: cs.onSurfaceVariant,
                 onPressed: () {
                   showModalBottomSheet<void>(
@@ -286,7 +286,7 @@ class AlbumBulkActionsBar extends ConsumerWidget {
                               leading: const Icon(
                                 Icons.drive_file_rename_outline,
                               ),
-                              title: const Text('Rename Files'),
+                              title: const Text('Renommer les fichiers'),
                               subtitle: Text(
                                 'Rename audio files for ${selectedIds.length} albums',
                               ),
@@ -303,7 +303,7 @@ class AlbumBulkActionsBar extends ConsumerWidget {
                             ),
                             ListTile(
                               leading: const Icon(Icons.sell_outlined),
-                              title: const Text('Write Audio Tags'),
+                              title: const Text('Écrire les balises audio'),
                               subtitle: Text(
                                 'Sync metadata tags for ${selectedIds.length} albums',
                               ),

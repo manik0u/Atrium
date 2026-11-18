@@ -49,7 +49,7 @@ class _DelugeHomeState extends ConsumerState<DelugeHome> {
           await ref.read(delugeClientProvider(widget.instance).future);
       await action(client);
     } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text('Action failed: $e')));
+      messenger.showSnackBar(SnackBar(content: Text("Échec de l'action : $e")));
     } finally {
       if (mounted) _refresh();
     }
@@ -61,7 +61,7 @@ class _DelugeHomeState extends ConsumerState<DelugeHome> {
       context: context,
       builder: (BuildContext context) => StatefulBuilder(
         builder: (BuildContext context, StateSetter setLocal) => AlertDialog(
-          title: const Text('Remove torrent'),
+          title: const Text('Retirer le torrent'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,18 +73,18 @@ class _DelugeHomeState extends ConsumerState<DelugeHome> {
                 value: withData,
                 onChanged: (bool? v) =>
                     setLocal(() => withData = v ?? false),
-                title: const Text('Also delete downloaded files'),
+                title: const Text('Supprimer aussi les fichiers téléchargés'),
               ),
             ],
           ),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('Cancel'),
+              child: const Text('Annuler'),
             ),
             FilledButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('Remove'),
+              child: const Text('Retirer'),
             ),
           ],
         ),
@@ -120,7 +120,7 @@ class _DelugeHomeState extends ConsumerState<DelugeHome> {
       // Adding a torrent is the one global action here, so it floats over the
       // list instead of crowding the session card.
       floatingActionButton: FloatingActionButton(
-        tooltip: 'Add torrent',
+        tooltip: 'Ajouter un torrent',
         onPressed: () => showDelugeAddSheet(context, widget.instance),
         child: const Icon(Icons.add),
       ),
@@ -160,10 +160,10 @@ class _DelugeHomeState extends ConsumerState<DelugeHome> {
                     padding: const EdgeInsets.only(top: Insets.xl),
                     child: EmptyView(
                       icon: Icons.download_done_outlined,
-                      title: 'No torrents',
+                      title: 'Aucun torrent',
                       message: filtered
-                          ? 'Nothing matches this filter.'
-                          : 'Add one with the + button.',
+                          ? 'Rien ne correspond à ce filtre.'
+                          : 'Ajoutez-en un avec le bouton +.',
                     ),
                   )
                 else
@@ -252,7 +252,7 @@ class _SessionSummary extends ConsumerWidget {
                   Expanded(
                     child: _StatBox(
                       icon: Icons.south,
-                      label: 'Download',
+                      label: 'Télécharger',
                       value: downValue,
                       unit: downUnit,
                       background: scheme.primaryContainer,
@@ -264,7 +264,7 @@ class _SessionSummary extends ConsumerWidget {
                   Expanded(
                     child: _StatBox(
                       icon: Icons.north,
-                      label: 'Upload',
+                      label: 'Téléverser',
                       value: upValue,
                       unit: upUnit,
                       background: scheme.tertiaryContainer,
@@ -276,7 +276,7 @@ class _SessionSummary extends ConsumerWidget {
                   Expanded(
                     child: _StatBox(
                       icon: Icons.storage_outlined,
-                      label: 'Free space',
+                      label: 'Espace libre',
                       value: freeValue,
                       unit: freeUnit,
                       background: scheme.surfaceContainerHighest,
@@ -296,7 +296,7 @@ class _SessionSummary extends ConsumerWidget {
               crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
                 IconButton.filledTonal(
-                  tooltip: paused ? 'Resume session' : 'Pause session',
+                  tooltip: paused ? 'Reprendre la session' : 'Mettre la session en pause',
                   onPressed: () => onTogglePause(!paused),
                   icon: Icon(paused ? Icons.play_arrow : Icons.pause),
                 ),
@@ -306,7 +306,7 @@ class _SessionSummary extends ConsumerWidget {
                   onPressed: () async {
                     final double? kib = await showDelugeSpeedDialog(
                       context,
-                      title: 'Download limit',
+                      title: 'Limite de téléchargement',
                       current: limits.maxDownloadKib,
                     );
                     if (kib != null) onSetDownLimit(kib);
@@ -318,7 +318,7 @@ class _SessionSummary extends ConsumerWidget {
                   onPressed: () async {
                     final double? kib = await showDelugeSpeedDialog(
                       context,
-                      title: 'Upload limit',
+                      title: "Limite d'envoi",
                       current: limits.maxUploadKib,
                     );
                     if (kib != null) onSetUpLimit(kib);
@@ -478,7 +478,7 @@ class _FilterBar extends ConsumerWidget {
             state: filter.state,
             onClear: () => ref
                 .read(delugeFilterProvider(instance).notifier)
-                .update((DelugeFilter f) => f.copyWith(state: 'All')),
+                .update((DelugeFilter f) => f.copyWith(state: 'Tous')),
           );
     if (tree.states.isEmpty) return active ?? const SizedBox.shrink();
 
@@ -541,7 +541,7 @@ class _ActiveStateFilter extends StatelessWidget {
           foreground: scheme.onPrimaryContainer,
         ),
         const Spacer(),
-        TextButton(onPressed: onClear, child: const Text('Clear')),
+        TextButton(onPressed: onClear, child: const Text('Effacer')),
       ],
     );
   }
@@ -612,7 +612,7 @@ class _SortMenu extends ConsumerWidget {
           ),
         ),
         IconButton(
-          tooltip: descending ? 'Descending' : 'Ascending',
+          tooltip: descending ? 'Décroissant' : 'Croissant',
           icon: Icon(descending ? Icons.arrow_downward : Icons.arrow_upward),
           onPressed: () => ref
               .read(delugeSortDescendingProvider(instance).notifier)
@@ -671,38 +671,38 @@ class _TorrentRow extends StatelessWidget {
                 leading: Icon(
                   torrent.isPaused ? Icons.play_arrow : Icons.pause,
                 ),
-                title: Text(torrent.isPaused ? 'Resume' : 'Pause'),
+                title: Text(torrent.isPaused ? 'Reprendre' : 'Pause'),
                 onTap: () => run(onPauseResume),
               ),
               ListTile(
                 leading: const Icon(Icons.fact_check_outlined),
-                title: const Text('Force recheck'),
+                title: const Text('Forcer la revérification'),
                 onTap: () => run(onRecheck),
               ),
               ListTile(
                 leading: const Icon(Icons.campaign_outlined),
-                title: const Text('Reannounce'),
+                title: const Text('Ré-annoncer'),
                 onTap: () => run(onReannounce),
               ),
               const Divider(),
               ListTile(
                 leading: const Icon(Icons.vertical_align_top),
-                title: const Text('Queue to top'),
+                title: const Text('En haut de la file'),
                 onTap: () => run(onQueueTop),
               ),
               ListTile(
                 leading: const Icon(Icons.arrow_upward),
-                title: const Text('Queue up'),
+                title: const Text('Monter dans la file'),
                 onTap: () => run(onQueueUp),
               ),
               ListTile(
                 leading: const Icon(Icons.arrow_downward),
-                title: const Text('Queue down'),
+                title: const Text('Descendre dans la file'),
                 onTap: () => run(onQueueDown),
               ),
               ListTile(
                 leading: const Icon(Icons.vertical_align_bottom),
-                title: const Text('Queue to bottom'),
+                title: const Text('En bas de la file'),
                 onTap: () => run(onQueueBottom),
               ),
               const Divider(),

@@ -193,14 +193,14 @@ class UnraidDisk {
     final String raw = status ?? '';
     if (raw.isEmpty) return 'Unknown';
     return switch (raw) {
-      'DISK_OK' => 'Healthy',
-      'DISK_NP' => 'Not present',
-      'DISK_NP_DSBL' || 'DISK_DSBL' => 'Disabled',
-      'DISK_DSBL_NEW' => 'Disabled, new disk',
-      'DISK_INVALID' => 'Invalid',
-      'DISK_WRONG' => 'Wrong disk',
-      'DISK_NP_MISSING' => 'Missing',
-      'DISK_NEW' => 'New',
+      'DISK_OK' => 'Sain',
+      'DISK_NP' => 'Non présent',
+      'DISK_NP_DSBL' || 'DISK_DSBL' => 'Désactivé',
+      'DISK_DSBL_NEW' => 'Désactivé, nouveau disque',
+      'DISK_INVALID' => 'Invalide',
+      'DISK_WRONG' => 'Mauvais disque',
+      'DISK_NP_MISSING' => 'Manquant',
+      'DISK_NEW' => 'Nouveau',
       _ => raw,
     };
   }
@@ -270,12 +270,12 @@ class UnraidParityCheck {
   /// Plain words for the status, or null when the server has said nothing.
   String? get statusLabel => switch (status) {
         null || '' => null,
-        'NEVER_RUN' => 'Never run',
-        'RUNNING' => 'Running',
-        'PAUSED' => 'Paused',
-        'COMPLETED' => 'Completed',
-        'CANCELLED' => 'Cancelled',
-        'FAILED' => 'Failed',
+        'NEVER_RUN' => 'Jamais exécuté',
+        'RUNNING' => 'En cours',
+        'PAUSED' => 'En pause',
+        'COMPLETED' => 'Terminé',
+        'CANCELLED' => 'Annulé',
+        'FAILED' => 'Échec',
         _ => status,
       };
 }
@@ -870,15 +870,15 @@ class UnraidVm {
   bool get hasCrashed => state == 'CRASHED';
 
   String get stateLabel => switch (state) {
-        null || '' => 'Unknown',
-        'RUNNING' => 'Running',
-        'IDLE' => 'Idle',
-        'PAUSED' => 'Paused',
-        'PMSUSPENDED' => 'Suspended',
-        'SHUTDOWN' => 'Shutting down',
-        'SHUTOFF' => 'Stopped',
-        'CRASHED' => 'Crashed',
-        'NOSTATE' => 'Unknown',
+        null || '' => 'Inconnu',
+        'RUNNING' => 'En cours',
+        'IDLE' => 'Inactif',
+        'PAUSED' => 'En pause',
+        'PMSUSPENDED' => 'En veille',
+        'SHUTDOWN' => 'Arrêt en cours',
+        'SHUTOFF' => 'Arrêté',
+        'CRASHED' => 'Planté',
+        'NOSTATE' => 'Inconnu',
         _ => state!,
       };
 }

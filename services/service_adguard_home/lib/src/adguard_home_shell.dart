@@ -119,13 +119,13 @@ class _AdguardHomeShellState extends ConsumerState<AdguardHomeShell> {
           actions: <Widget>[
             if (tab == _queryLog)
               PopupMenuButton<void>(
-                tooltip: 'More',
+                tooltip: 'Plus',
                 useRootNavigator: true,
                 itemBuilder: (BuildContext _) => <PopupMenuEntry<void>>[
                   PopupMenuItem<void>(
                     onTap: () =>
                         adguardHomeClearQueryLog(context, ref, _instance),
-                    child: const Text('Clear query log'),
+                    child: const Text('Effacer le journal des requêtes'),
                   ),
                 ],
               ),
@@ -163,7 +163,7 @@ class _AdguardHomeShellState extends ConsumerState<AdguardHomeShell> {
                   supportedTags: addTo.supportedTags,
                 ),
                 icon: const Icon(Icons.add),
-                label: const Text('Add client'),
+                label: const Text('Ajouter un client'),
               ),
         bottomNavigationBar: AtriumBottomNav(
           visible: true,
@@ -173,17 +173,17 @@ class _AdguardHomeShellState extends ConsumerState<AdguardHomeShell> {
             NavigationDestination(
               icon: Icon(Icons.shield_outlined),
               selectedIcon: Icon(Icons.shield),
-              label: 'Home',
+              label: 'Accueil',
             ),
             NavigationDestination(
               icon: Icon(Icons.receipt_long_outlined),
               selectedIcon: Icon(Icons.receipt_long),
-              label: 'Query log',
+              label: 'Journal des requêtes',
             ),
             NavigationDestination(
               icon: Icon(Icons.filter_alt_outlined),
               selectedIcon: Icon(Icons.filter_alt),
-              label: 'Filters',
+              label: 'Filtres',
             ),
             NavigationDestination(
               icon: Icon(Icons.devices_outlined),
@@ -193,7 +193,7 @@ class _AdguardHomeShellState extends ConsumerState<AdguardHomeShell> {
             NavigationDestination(
               icon: Icon(Icons.settings_outlined),
               selectedIcon: Icon(Icons.settings),
-              label: 'Settings',
+              label: 'Paramètres',
             ),
           ],
         ),

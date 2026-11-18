@@ -9,7 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 Profile _testProfile() => const Profile(
       id: 'p1',
-      name: 'Home',
+      name: 'Accueil',
       instances: <Instance>[
         Instance(
           id: 'i1',

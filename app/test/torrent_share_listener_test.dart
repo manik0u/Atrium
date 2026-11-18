@@ -79,8 +79,8 @@ void main() {
       intake,
       const AtriumLink(service: ServiceKind.sonarr),
     );
-    expect(find.text('Could not open that link'), findsOneWidget);
-    expect(find.text('Nothing added'), findsNothing);
+    expect(find.text("Impossible d'ouvrir ce lien"), findsOneWidget);
+    expect(find.text("Rien d'ajouté"), findsNothing);
     expect(find.text('No Sonarr is set up in Atrium yet.'), findsOneWidget);
   });
 
@@ -88,8 +88,8 @@ void main() {
       (WidgetTester tester) async {
     final _FakeIntake intake = await _mount(tester);
     await _push(tester, intake, parseAtriumLink('atrium://nope'));
-    expect(find.text('Could not open that link'), findsOneWidget);
-    expect(find.text('Nothing added'), findsNothing);
+    expect(find.text("Impossible d'ouvrir ce lien"), findsOneWidget);
+    expect(find.text("Rien d'ajouté"), findsNothing);
   });
 
   testWidgets('a torrent that cannot be read still says nothing was added',
@@ -100,7 +100,7 @@ void main() {
       intake,
       const TorrentShareProblem('That file is not a torrent.'),
     );
-    expect(find.text('Nothing added'), findsOneWidget);
+    expect(find.text("Rien d'ajouté"), findsOneWidget);
   });
 
   testWidgets('a link when profiles cannot be read does not talk of torrents',
@@ -111,7 +111,7 @@ void main() {
       intake,
       const AtriumLink(service: ServiceKind.sonarr),
     );
-    expect(find.text('Could not open that link'), findsOneWidget);
+    expect(find.text("Impossible d'ouvrir ce lien"), findsOneWidget);
     expect(
       find.text(
         'Atrium could not read your saved profiles, so it could not open '

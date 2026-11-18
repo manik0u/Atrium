@@ -30,8 +30,8 @@ class DiskSpaceView extends ConsumerWidget {
             return const Center(
               child: EmptyView(
                 icon: Icons.storage_outlined,
-                title: 'No Disk Mounts',
-                message: 'No storage disks detected by Lidarr.',
+                title: 'Aucun montage de disque',
+                message: 'Aucun disque de stockage détecté par Lidarr.',
               ),
             );
           }

@@ -93,11 +93,11 @@ class _AdguardHomeRewritesScreenState
         ref.watch(adguardHomeRewritesEnabledProvider(_instance)).value;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('DNS rewrites'),
+        title: const Text('Réécritures DNS'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.add),
-            tooltip: 'Add rewrite',
+            tooltip: 'Ajouter une réécriture',
             onPressed: _open,
           ),
         ],
@@ -137,12 +137,12 @@ class _AdguardHomeRewritesScreenState
         final Widget? overall = enabled == null
             ? null
             : SwitchListTile(
-                title: const Text('Use rewrites'),
+                title: const Text('Utiliser les réécritures'),
                 subtitle: enabled
                     ? (rewrites.any((AdguardHomeRewrite r) => r.switchable)
-                        ? const Text('Each rewrite still has its own switch.')
+                        ? const Text('Chaque réécriture a son propre interrupteur.')
                         : null)
-                    : const Text('None of these apply while this is off.'),
+                    : const Text("Aucune ne s'applique tant que c'est désactivé."),
                 value: enabled,
                 onChanged: _switchingAll ? null : _switchAll,
               );
@@ -154,13 +154,13 @@ class _AdguardHomeRewritesScreenState
                 if (overall != null) overall,
                 EmptyView(
                   icon: Icons.alt_route,
-                  title: 'No rewrites',
-                  message: 'A rewrite answers a domain with an address or '
+                  title: 'Aucune réécriture',
+                  message: 'Une réécriture répond à un domaine avec une adresse ou '
                       'another domain of your choosing.',
                   action: FilledButton.tonalIcon(
                     onPressed: _open,
                     icon: const Icon(Icons.add),
-                    label: const Text('Add rewrite'),
+                    label: const Text('Ajouter une réécriture'),
                   ),
                 ),
               ],
@@ -347,7 +347,7 @@ class _AdguardHomeRewriteScreenState
       setState(() => _busy = false);
       final bool again = await showAdguardHomeFailure(
         context,
-        title: 'Not saved',
+        title: 'Non enregistré',
         error: error,
       );
       if (again && mounted) {
@@ -373,21 +373,21 @@ class _AdguardHomeRewriteScreenState
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: Text('Delete the rewrite of ${rewrite.domain}?'),
+        title: Text('Supprimer la réécriture de ${rewrite.domain} ?'),
         content: Text(
           copies > 1
               ? 'AdGuard Home holds it $copies times, and every copy goes. '
-                  'The domain will be answered as it is again.'
-              : 'The domain will be answered as it is again.',
+                  'Le domaine sera à nouveau résolu normalement.'
+              : 'Le domaine sera à nouveau résolu normalement.',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Delete'),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
@@ -404,7 +404,7 @@ class _AdguardHomeRewriteScreenState
       setState(() => _busy = false);
       final bool again = await showAdguardHomeFailure(
         context,
-        title: 'Not deleted',
+        title: 'Non supprimé',
         error: error,
       );
       if (again && mounted) {
@@ -421,16 +421,16 @@ class _AdguardHomeRewriteScreenState
     final bool? discard = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Discard changes?'),
-        content: const Text('What was changed here has not been saved.'),
+        title: const Text('Ignorer les modifications ?'),
+        content: const Text("Les modifications apportées ici n'ont pas été enregistrées."),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Keep editing'),
+            child: const Text("Continuer l'édition"),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Discard'),
+            child: const Text('Ignorer'),
           ),
         ],
       ),
@@ -450,17 +450,17 @@ class _AdguardHomeRewriteScreenState
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.rewrite == null ? 'New rewrite' : 'Edit rewrite'),
+          title: Text(widget.rewrite == null ? 'Nouvelle réécriture' : 'Modifier la réécriture'),
           actions: <Widget>[
             if (widget.rewrite != null)
               IconButton(
                 icon: const Icon(Icons.delete_outline),
-                tooltip: 'Delete rewrite',
+                tooltip: 'Supprimer la réécriture',
                 onPressed: _busy ? null : _delete,
               ),
             FilledButton(
               onPressed: _busy ? null : _save,
-              child: const Text('Save'),
+              child: const Text('Enregistrer'),
             ),
             const SizedBox(width: Insets.md),
           ],
@@ -487,9 +487,9 @@ class _AdguardHomeRewriteScreenState
                 enableSuggestions: false,
                 keyboardType: TextInputType.url,
                 decoration: InputDecoration(
-                  labelText: 'Domain',
+                  labelText: 'Domaine',
                   hintText: 'nas.home.example',
-                  helperText: 'A domain, or *.example.org for every name '
+                  helperText: 'Un domaine, ou *.example.org pour chaque nom '
                       'under it.',
                   helperMaxLines: 3,
                   errorText: missingDomain ? 'Enter a domain.' : null,
@@ -505,9 +505,9 @@ class _AdguardHomeRewriteScreenState
                 enableSuggestions: false,
                 keyboardType: TextInputType.url,
                 decoration: InputDecoration(
-                  labelText: 'Answer',
+                  labelText: 'Réponse',
                   hintText: '192.168.1.10',
-                  helperText: 'An IP address; a domain, to answer with its '
+                  helperText: 'Une adresse IP ; un domaine, pour répondre avec son '
                       'address; or A or AAAA to keep the upstream\'s answer '
                       'of that type.',
                   helperMaxLines: 4,

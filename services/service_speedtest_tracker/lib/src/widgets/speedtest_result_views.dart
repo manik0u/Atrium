@@ -30,7 +30,7 @@ class SpeedtestLatestCard extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child:
-                      Text('Latest result', style: theme.textTheme.titleMedium),
+                      Text('Dernier résultat', style: theme.textTheme.titleMedium),
                 ),
                 if (result.healthy != null)
                   Chip(
@@ -38,7 +38,7 @@ class SpeedtestLatestCard extends StatelessWidget {
                       result.healthy! ? Icons.check_circle : Icons.warning,
                       size: 17,
                     ),
-                    label: Text(result.healthy! ? 'Healthy' : 'Unhealthy'),
+                    label: Text(result.healthy! ? 'Sain' : 'Défectueux'),
                     visualDensity: VisualDensity.compact,
                   ),
               ],
@@ -49,7 +49,7 @@ class SpeedtestLatestCard extends StatelessWidget {
                 Expanded(
                   child: _Metric(
                     icon: Icons.download,
-                    label: 'Download',
+                    label: 'Télécharger',
                     value: formatSpeed(result.downloadBitsPerSecond),
                     color: theme.colorScheme.primary,
                   ),
@@ -58,7 +58,7 @@ class SpeedtestLatestCard extends StatelessWidget {
                 Expanded(
                   child: _Metric(
                     icon: Icons.upload,
-                    label: 'Upload',
+                    label: 'Téléverser',
                     value: formatSpeed(result.uploadBitsPerSecond),
                     color: theme.colorScheme.tertiary,
                   ),
@@ -215,13 +215,13 @@ void showSpeedtestResultDetails(
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: Insets.md),
-            _DetailRow(label: 'Status', value: result.status.label),
+            _DetailRow(label: 'Statut', value: result.status.label),
             _DetailRow(
-              label: 'Download',
+              label: 'Télécharger',
               value: formatSpeed(result.downloadBitsPerSecond),
             ),
             _DetailRow(
-              label: 'Upload',
+              label: 'Téléverser',
               value: formatSpeed(result.uploadBitsPerSecond),
             ),
             _DetailRow(
@@ -230,25 +230,25 @@ void showSpeedtestResultDetails(
             ),
             if (result.jitterMilliseconds != null)
               _DetailRow(
-                label: 'Jitter',
+                label: 'Gigue',
                 value: formatMilliseconds(result.jitterMilliseconds),
               ),
             if (result.packetLossPercent != null)
               _DetailRow(
-                label: 'Packet loss',
+                label: 'Perte de paquets',
                 value: formatPacketLoss(result.packetLossPercent),
               ),
             if (result.server?.displayName != null)
-              _DetailRow(label: 'Server', value: result.server!.displayName!),
+              _DetailRow(label: 'Serveur', value: result.server!.displayName!),
             if (result.server?.displayLocation != null)
               _DetailRow(
-                label: 'Location',
+                label: 'Emplacement',
                 value: result.server!.displayLocation!,
               ),
             if (result.isp != null)
-              _DetailRow(label: 'Provider', value: result.isp!),
+              _DetailRow(label: 'Fournisseur', value: result.isp!),
             _DetailRow(
-              label: 'Completed',
+              label: 'Terminé',
               value: formatResultTime(result.completedAt),
             ),
           ],

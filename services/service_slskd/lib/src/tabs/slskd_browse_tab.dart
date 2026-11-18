@@ -92,7 +92,7 @@ class _SlskdBrowseTabState extends ConsumerState<SlskdBrowseTab> {
     final files = node.getDownloadableFilesRecursive();
     if (files.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Nothing in "${node.segment}" can be downloaded')),
+        SnackBar(content: Text('Rien dans « ${node.segment} » ne peut être téléchargé')),
       );
       return;
     }
@@ -124,10 +124,10 @@ class _SlskdBrowseTabState extends ConsumerState<SlskdBrowseTab> {
 
       if (enqueuedCount == 0 && failureCount > 0) {
         final firstFailure =
-            resp.failures.first.message ?? 'already downloading or queued';
+            resp.failures.first.message ?? "déjà en téléchargement ou en file d'attente";
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Could not queue "${node.segment}": $firstFailure'),
+            content: Text("Impossible de mettre « ${node.segment} » en file d'attente : $firstFailure"),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -139,7 +139,7 @@ class _SlskdBrowseTabState extends ConsumerState<SlskdBrowseTab> {
           SnackBar(
             content: Text(summaryMsg),
             action: SnackBarAction(
-              label: 'View Transfers',
+              label: 'Voir les transferts',
               onPressed: () {
                 ref
                     .read(slskdActiveTabProvider(widget.instance).notifier)
@@ -153,7 +153,7 @@ class _SlskdBrowseTabState extends ConsumerState<SlskdBrowseTab> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to enqueue folder: $e'),
+            content: Text("Échec de la mise en file d'attente du dossier : $e"),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -178,19 +178,19 @@ class _SlskdBrowseTabState extends ConsumerState<SlskdBrowseTab> {
       if (resp.failures.isNotEmpty &&
           (resp.batch?.transfers.isEmpty ?? true)) {
         final failMsg =
-            resp.failures.first.message ?? 'already downloading or queued';
+            resp.failures.first.message ?? "déjà en téléchargement ou en file d'attente";
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Could not queue "${file.trackTitle}": $failMsg'),
+            content: Text("Impossible de mettre « ${file.trackTitle} » en file d'attente : $failMsg"),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Downloading "${file.trackTitle}"'),
+            content: Text('Téléchargement de « ${file.trackTitle} »'),
             action: SnackBarAction(
-              label: 'View Transfers',
+              label: 'Voir les transferts',
               onPressed: () {
                 ref
                     .read(slskdActiveTabProvider(widget.instance).notifier)
@@ -204,7 +204,7 @@ class _SlskdBrowseTabState extends ConsumerState<SlskdBrowseTab> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to enqueue track: $e'),
+            content: Text("Échec de la mise en file d'attente de la piste : $e"),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -254,7 +254,7 @@ class _SlskdBrowseTabState extends ConsumerState<SlskdBrowseTab> {
           icon: const Icon(Icons.menu),
           onPressed: widget.onOpenDrawer ?? Scaffold.of(context).openDrawer,
         ),
-        title: const Text('Peer Library Explorer'),
+        title: const Text('Explorateur de bibliothèque du pair'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -286,7 +286,7 @@ class _SlskdBrowseTabState extends ConsumerState<SlskdBrowseTab> {
               ),
               const SizedBox(height: Insets.xs),
               Text(
-                'Explore full music libraries, discographies, and directories shared by any Soulseek user.',
+                "Explorez les bibliothèques musicales complètes, discographies et répertoires partagés par n'importe quel utilisateur Soulseek.",
                 textAlign: TextAlign.center,
                 style: textTheme.bodyMedium?.copyWith(color: colorScheme.onSurfaceVariant),
               ),
@@ -295,7 +295,7 @@ class _SlskdBrowseTabState extends ConsumerState<SlskdBrowseTab> {
               // Peer input SearchBar
               SearchBar(
                 controller: _userSearchController,
-                hintText: 'Enter Soulseek username...',
+                hintText: "Saisissez le nom d'utilisateur Soulseek…",
                 elevation: const WidgetStatePropertyAll<double>(0),
                 backgroundColor: WidgetStatePropertyAll<Color>(colorScheme.surfaceContainerHigh),
                 padding: const WidgetStatePropertyAll<EdgeInsets>(
@@ -359,7 +359,7 @@ class _SlskdBrowseTabState extends ConsumerState<SlskdBrowseTab> {
               scrolledUnderElevation: 0,
               backgroundColor: colorScheme.surface,
               leading: IconButton(
-                tooltip: currentPathSegments.isNotEmpty ? 'Back to parent folder' : 'Exit Peer Browse',
+                tooltip: currentPathSegments.isNotEmpty ? 'Retour au dossier parent' : "Quitter l'exploration du pair",
                 icon: const Icon(Icons.arrow_back_rounded),
                 onPressed: _handleBack,
               ),
@@ -372,7 +372,7 @@ class _SlskdBrowseTabState extends ConsumerState<SlskdBrowseTab> {
               ),
               actions: <Widget>[
                 IconButton(
-                  tooltip: 'Refresh peer shares',
+                  tooltip: 'Actualiser les partages du pair',
                   icon: const Icon(Icons.refresh_rounded),
                   onPressed: () {
                     ref.invalidate(slskdUserDirectoriesProvider((widget.instance, username)));
@@ -468,7 +468,7 @@ class _SlskdBrowseTabState extends ConsumerState<SlskdBrowseTab> {
                             ],
                             const SizedBox(height: Insets.xs),
                             Text(
-                              'Connecting to $username across the Soulseek network',
+                              'Connexion à $username sur le réseau Soulseek',
                               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                     color: colorScheme.onSurfaceVariant,
                                   ),
@@ -508,7 +508,7 @@ class _SlskdBrowseTabState extends ConsumerState<SlskdBrowseTab> {
                           const SizedBox(height: Insets.md),
                           OutlinedButton.icon(
                             icon: const Icon(Icons.refresh_rounded, size: 18),
-                            label: const Text('Retry'),
+                            label: const Text('Réessayer'),
                             onPressed: () {
                               ref.invalidate(
                                 slskdUserDirectoriesProvider((widget.instance, username)),
@@ -562,7 +562,7 @@ class _SlskdBrowseTabState extends ConsumerState<SlskdBrowseTab> {
                   Icon(Icons.folder_off_outlined, size: 56, color: colorScheme.outline),
                   const SizedBox(height: Insets.md),
                   Text(
-                    'No shared files found',
+                    'Aucun fichier partagé trouvé',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -698,8 +698,8 @@ class _SlskdBrowseTabState extends ConsumerState<SlskdBrowseTab> {
             child: Center(
               child: Text(
                 _filterQuery.isNotEmpty
-                    ? 'No files or folders match "$_filterQuery"'
-                    : 'This folder is empty',
+                    ? 'Aucun fichier ou dossier ne correspond à « $_filterQuery »'
+                    : 'Ce dossier est vide',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: colorScheme.outline,
                     ),
@@ -736,7 +736,7 @@ class _SlskdBrowseTabState extends ConsumerState<SlskdBrowseTab> {
             // Root chip
             ActionChip(
               avatar: const Icon(Icons.home_rounded, size: 16),
-              label: const Text('Root'),
+              label: const Text('Racine'),
               visualDensity: VisualDensity.compact,
               onPressed: () {
                 if (currentPathSegments.isNotEmpty) {
@@ -827,7 +827,7 @@ class _SlskdBrowseTabState extends ConsumerState<SlskdBrowseTab> {
                     node.isLocked ? Icons.lock_clock_outlined : Icons.download_rounded,
                     size: 16,
                   ),
-                  label: Text(node.isLocked ? 'Locked' : 'Download Folder'),
+                  label: Text(node.isLocked ? 'Verrouillé' : 'Dossier de téléchargement'),
                   onPressed: node.isLocked ? null : () => _downloadFolder(username, node),
                 ),
             ],
@@ -837,7 +837,7 @@ class _SlskdBrowseTabState extends ConsumerState<SlskdBrowseTab> {
           // In-folder search filter
           SearchBar(
             controller: _filterController,
-            hintText: 'Filter files or subfolders...',
+            hintText: 'Filtrer les fichiers ou sous-dossiers…',
             elevation: const WidgetStatePropertyAll<double>(0),
             backgroundColor: WidgetStatePropertyAll<Color>(colorScheme.surfaceContainerHigh),
             padding: const WidgetStatePropertyAll<EdgeInsets>(
@@ -872,7 +872,7 @@ class _SlskdBrowseTabState extends ConsumerState<SlskdBrowseTab> {
                 return Padding(
                   padding: const EdgeInsets.only(right: Insets.xs),
                   child: ChoiceChip(
-                    label: Text(f == SlskdSearchFormatFilter.all ? 'All' : f.label.replaceAll(' Only', '')),
+                    label: Text(f == SlskdSearchFormatFilter.all ? 'Tous' : f.label.replaceAll(' uniquement', '')),
                     visualDensity: VisualDensity.compact,
                     selected: _formatFilter == f,
                     onSelected: (sel) {

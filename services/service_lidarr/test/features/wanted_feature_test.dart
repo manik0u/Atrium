@@ -133,34 +133,34 @@ void main() {
         await tester.pumpAndSettle();
 
         // 1. Verify Missing Tab
-        expect(find.text('Missing'), findsOneWidget);
-        expect(find.text('Cutoff Unmet'), findsOneWidget);
+        expect(find.text('Manquant'), findsOneWidget);
+        expect(find.text('Cutoff non atteint'), findsOneWidget);
         expect(find.text('OK Computer'), findsOneWidget);
         expect(find.text('Radiohead'), findsOneWidget);
 
         // Verify Top Stadium Header & Sort/Filter Button
-        expect(find.text('Search wanted albums...'), findsOneWidget);
-        expect(find.byTooltip('Sort & Filter'), findsOneWidget);
+        expect(find.text('Rechercher les albums recherchés…'), findsOneWidget);
+        expect(find.byTooltip('Trier et filtrer'), findsOneWidget);
 
         // Open Sort & Filter Sheet
-        await tester.tap(find.byTooltip('Sort & Filter'));
+        await tester.tap(find.byTooltip('Trier et filtrer'));
         await tester.pumpAndSettle();
         expect(find.text('Filter & Sort'), findsOneWidget);
-        expect(find.text('Monitored Only'), findsOneWidget);
+        expect(find.text('Surveillés uniquement'), findsOneWidget);
 
         // Close sheet
         await tester.tapAt(const Offset(100, 100));
         await tester.pumpAndSettle();
 
         // Search Single Album
-        await tester.tap(find.byTooltip('Auto Search').first);
+        await tester.tap(find.byTooltip('Recherche automatique').first);
         await tester.pumpAndSettle();
 
         expect(commandDispatched, equals('AlbumSearch'));
         expect(commandPayload?['albumIds'], equals(<int>[501]));
 
         // Toggle Monitored
-        await tester.tap(find.byTooltip('Monitored').first);
+        await tester.tap(find.byTooltip('Surveillé').first);
         await tester.pumpAndSettle();
 
         expect(albumPutCalled, isTrue);
@@ -168,17 +168,17 @@ void main() {
 
         // Search All Missing via Primary FAB
         commandDispatched = null;
-        await tester.tap(find.byTooltip('Search All Missing'));
+        await tester.tap(find.byTooltip('Tout rechercher (manquants)'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Search All Missing?'), findsOneWidget);
-        await tester.tap(find.widgetWithText(FilledButton, 'Search All'));
+        expect(find.text('Tout rechercher (manquants) ?'), findsOneWidget);
+        await tester.tap(find.widgetWithText(FilledButton, 'Tout rechercher'));
         await tester.pumpAndSettle();
 
         expect(commandDispatched, equals('MissingAlbumSearch'));
 
         // 2. Switch to Cutoff Unmet Tab
-        await tester.tap(find.text('Cutoff Unmet'));
+        await tester.tap(find.text('Cutoff non atteint'));
         await tester.pumpAndSettle();
 
         expect(find.text('Random Access Memories'), findsOneWidget);
@@ -186,11 +186,11 @@ void main() {
 
         // Search All Cutoff Unmet via Primary FAB
         commandDispatched = null;
-        await tester.tap(find.byTooltip('Search All Cutoff'));
+        await tester.tap(find.byTooltip('Tout rechercher (cutoff)'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Search All Cutoff Unmet?'), findsOneWidget);
-        await tester.tap(find.widgetWithText(FilledButton, 'Search All'));
+        expect(find.text('Tout rechercher (cutoff non atteint) ?'), findsOneWidget);
+        await tester.tap(find.widgetWithText(FilledButton, 'Tout rechercher'));
         await tester.pumpAndSettle();
 
         expect(commandDispatched, equals('CutoffUnmetAlbumSearch'));
@@ -305,8 +305,8 @@ void main() {
 
         expect(find.text('1 selected'), findsOneWidget);
         expect(find.text('Search (1)'), findsOneWidget);
-        expect(find.text('Monitor'), findsOneWidget);
-        expect(find.text('Unmonitor'), findsOneWidget);
+        expect(find.text('Surveiller'), findsOneWidget);
+        expect(find.text('Ne plus surveiller'), findsOneWidget);
 
         // 2. Select 'Kid A' by tapping it in selection mode
         await tester.tap(find.text('Kid A'));
@@ -333,7 +333,7 @@ void main() {
         await tester.pumpAndSettle();
         expect(find.text('1 selected'), findsOneWidget);
 
-        await tester.tap(find.text('Monitor'));
+        await tester.tap(find.text('Surveiller'));
         await tester.pumpAndSettle();
 
         expect(lastPutMonitorBody?['albumIds'], equals(<int>[202]));

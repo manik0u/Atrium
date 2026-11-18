@@ -128,12 +128,12 @@ void main() {
 
     expect(opened, hasLength(1));
     expect(opened.single.origin, 'https://app.plex.tv');
-    expect(find.text('Waiting for Plex'), findsOneWidget);
+    expect(find.text('En attente de Plex'), findsOneWidget);
 
     // plex.tv/link only takes the four character kind of code, and this one
     // is a strong PIN, so the fallback has to be the link itself.
     expect(find.textContaining('plex.tv/link'), findsNothing);
-    expect(find.text('Copy the sign-in link'), findsOneWidget);
+    expect(find.text('Copier le lien de connexion'), findsOneWidget);
   });
 
   testWidgets('picking a server hands back its own token and both URLs',
@@ -166,7 +166,7 @@ void main() {
 
     expect(find.textContaining('HTTP 500'), findsOneWidget);
 
-    await tester.tap(find.text('Just use the token'));
+    await tester.tap(find.text('Utilisez directement le jeton'));
     await advance(tester);
     await advance(tester);
 

@@ -88,7 +88,7 @@ const int adguardHomeRetentionMaxHours = 365 * 24;
 String? adguardHomeRetentionProblem(int? hours) {
   if (hours == null) return 'Enter a number of hours.';
   if (hours < 1 || hours > adguardHomeRetentionMaxHours) {
-    return 'From 1 to $adguardHomeRetentionMaxHours hours.';
+    return 'De 1 à $adguardHomeRetentionMaxHours heures.';
   }
   return null;
 }
@@ -466,6 +466,6 @@ String? adguardHomeWholeNumberProblem(
 }) {
   final int? value = int.tryParse(text.trim());
   if (value == null) return 'Enter a number.';
-  if (value < min || value > max) return 'From $min to $max.';
+  if (value < min || value > max) return 'De $min à $max.';
   return null;
 }

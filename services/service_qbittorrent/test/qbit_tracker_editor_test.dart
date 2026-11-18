@@ -128,7 +128,7 @@ Finder get _editor => find.descendant(
 
 Finder get _save => find.descendant(
       of: find.byType(BottomSheet),
-      matching: find.widgetWithText(FilledButton, 'Save'),
+      matching: find.widgetWithText(FilledButton, 'Enregistrer'),
     );
 
 Future<void> _unmount(WidgetTester tester) async {
@@ -140,7 +140,7 @@ void main() {
   testWidgets('says that trackers already there keep their tier',
       (WidgetTester tester) async {
     await _openTrackers(tester, _FakeQbit());
-    await tester.tap(find.text('Edit trackers'));
+    await tester.tap(find.text('Modifier les trackers'));
     await tester.pumpAndSettle();
 
     expect(
@@ -155,7 +155,7 @@ void main() {
       'out against what the torrent has now', (WidgetTester tester) async {
     final _FakeQbit server = _FakeQbit();
     await _openTrackers(tester, server);
-    await tester.tap(find.text('Edit trackers'));
+    await tester.tap(find.text('Modifier les trackers'));
     await tester.pumpAndSettle();
 
     // Swap A for B: B is added, then removing A fails.

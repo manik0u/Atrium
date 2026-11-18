@@ -26,15 +26,15 @@ extension SpeedtestResultStatusX on SpeedtestResultStatus {
       this == SpeedtestResultStatus.skipped;
 
   String get label => switch (this) {
-        SpeedtestResultStatus.waiting => 'Waiting',
-        SpeedtestResultStatus.started => 'Started',
-        SpeedtestResultStatus.checking => 'Checking',
-        SpeedtestResultStatus.running => 'Running',
-        SpeedtestResultStatus.benchmarking => 'Benchmarking',
-        SpeedtestResultStatus.completed => 'Completed',
-        SpeedtestResultStatus.failed => 'Failed',
-        SpeedtestResultStatus.skipped => 'Skipped',
-        SpeedtestResultStatus.unknown => 'Unknown',
+        SpeedtestResultStatus.waiting => 'En attente',
+        SpeedtestResultStatus.started => 'Démarré',
+        SpeedtestResultStatus.checking => 'Vérification en cours',
+        SpeedtestResultStatus.running => 'En cours',
+        SpeedtestResultStatus.benchmarking => 'Benchmark en cours',
+        SpeedtestResultStatus.completed => 'Terminé',
+        SpeedtestResultStatus.failed => 'Échec',
+        SpeedtestResultStatus.skipped => 'Ignoré',
+        SpeedtestResultStatus.unknown => 'Inconnu',
       };
 }
 
@@ -187,7 +187,7 @@ class SpeedtestResultsPage {
     final Object? data = json['data'];
     if (data is! List<dynamic>) {
       throw const SpeedtestProtocolException(
-        'The result history response does not contain a data list.',
+        "La réponse de l'historique des résultats ne contient pas de liste de données.",
       );
     }
     final List<SpeedtestResult> results = <SpeedtestResult>[

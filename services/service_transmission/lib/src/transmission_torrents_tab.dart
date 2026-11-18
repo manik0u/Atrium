@@ -163,13 +163,13 @@ class _TransmissionTorrentsTabState
                   : null,
               actions: <Widget>[
                 IconButton(
-                  tooltip: 'Filter torrents',
+                  tooltip: 'Filtrer les torrents',
                   icon: const Icon(Icons.filter_list),
                   onPressed: widget.onOpenFilters ??
                       () => Scaffold.of(context).openEndDrawer(),
                 ),
                 IconButton(
-                  tooltip: 'Sort torrents',
+                  tooltip: 'Trier les torrents',
                   icon: const Icon(Icons.sort),
                   onPressed: _showSortSheet,
                 ),
@@ -181,11 +181,11 @@ class _TransmissionTorrentsTabState
               selection: selection,
             ),
       floatingActionButton: ExpandableFab(
-        tooltip: 'Add torrent',
+        tooltip: 'Ajouter un torrent',
         builder: (BuildContext context, VoidCallback close) => <Widget>[
           FloatingActionButton(
             heroTag: null,
-            tooltip: 'Magnet or URL',
+            tooltip: 'Lien magnet ou URL',
             onPressed: () {
               close();
               _add();
@@ -194,7 +194,7 @@ class _TransmissionTorrentsTabState
           ),
           FloatingActionButton(
             heroTag: null,
-            tooltip: 'Torrent file',
+            tooltip: 'Fichier torrent',
             onPressed: () {
               close();
               _add(file: true);
@@ -254,8 +254,8 @@ class _TransmissionTorrentsTabState
                     child: filter.isActive || search.trim().isNotEmpty
                         ? EmptyView(
                             icon: Icons.filter_alt_off_outlined,
-                            title: 'No torrents match',
-                            message: 'Nothing matches the filter or search '
+                            title: 'Aucun torrent ne correspond',
+                            message: 'Rien ne correspond au filtre ou à la recherche '
                                 'right now.',
                             action: FilledButton.tonalIcon(
                               onPressed: _clearNarrowing,
@@ -269,7 +269,7 @@ class _TransmissionTorrentsTabState
                           )
                         : const EmptyView(
                             icon: Icons.download_done_outlined,
-                            title: 'No torrents',
+                            title: 'Aucun torrent',
                             message:
                                 'Tap + to add a magnet, URL, or .torrent file.',
                           ),
@@ -334,7 +334,7 @@ class _TransmissionTorrentsTabState
                   leading: Icon(
                     descending ? Icons.arrow_downward : Icons.arrow_upward,
                   ),
-                  title: Text(descending ? 'Descending' : 'Ascending'),
+                  title: Text(descending ? 'Décroissant' : 'Croissant'),
                   trailing: Switch(
                     value: descending,
                     onChanged: (_) => ref
@@ -450,7 +450,7 @@ class _TransferPanel extends ConsumerWidget {
               const SizedBox(width: Insets.sm),
               Expanded(
                 child: TransmissionStatBadge(
-                  label: 'Down',
+                  label: 'Descendant',
                   value: '$downloading',
                   icon: Icons.arrow_downward_rounded,
                   color: cs.primary,
@@ -460,7 +460,7 @@ class _TransferPanel extends ConsumerWidget {
               const SizedBox(width: Insets.sm),
               Expanded(
                 child: TransmissionStatBadge(
-                  label: 'Up',
+                  label: 'Montant',
                   value: '$seeding',
                   icon: Icons.arrow_upward_rounded,
                   color: cs.tertiary,
@@ -527,7 +527,7 @@ class _TransferPanel extends ConsumerWidget {
                     enabled: true,
                     onTap: () => _editLimit(
                       context,
-                      title: 'Download limit',
+                      title: 'Limite de téléchargement',
                       kbps: session.speedLimitDown,
                       enabled: session.speedLimitDownEnabled,
                       onSet: onSetDown,
@@ -542,7 +542,7 @@ class _TransferPanel extends ConsumerWidget {
                     enabled: true,
                     onTap: () => _editLimit(
                       context,
-                      title: 'Upload limit',
+                      title: "Limite d'envoi",
                       kbps: session.speedLimitUp,
                       enabled: session.speedLimitUpEnabled,
                       onSet: onSetUp,
@@ -559,7 +559,7 @@ class _TransferPanel extends ConsumerWidget {
             children: <Widget>[
               Expanded(
                 child: _BulkButton(
-                  tooltip: 'Resume all',
+                  tooltip: 'Tout reprendre',
                   icon: Icons.play_arrow_rounded,
                   onPressed: onStartAll,
                 ),
@@ -567,7 +567,7 @@ class _TransferPanel extends ConsumerWidget {
               const SizedBox(width: Insets.sm),
               Expanded(
                 child: _BulkButton(
-                  tooltip: 'Pause all',
+                  tooltip: 'Tout mettre en pause',
                   icon: Icons.pause_rounded,
                   onPressed: onPauseAll,
                 ),
@@ -579,7 +579,7 @@ class _TransferPanel extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(16),
                   clipBehavior: Clip.antiAlias,
                   child: PopupMenuButton<String>(
-                    tooltip: 'More',
+                    tooltip: 'Plus',
                     padding: EdgeInsets.zero,
                     position: PopupMenuPosition.under,
                     onSelected: (String value) => switch (value) {
@@ -587,14 +587,14 @@ class _TransferPanel extends ConsumerWidget {
                       'startAll' => onStartAll(),
                       'limitDown' => _editLimit(
                           context,
-                          title: 'Download limit',
+                          title: 'Limite de téléchargement',
                           kbps: session.speedLimitDown,
                           enabled: session.speedLimitDownEnabled,
                           onSet: onSetDown,
                         ),
                       'limitUp' => _editLimit(
                           context,
-                          title: 'Upload limit',
+                          title: "Limite d'envoi",
                           kbps: session.speedLimitUp,
                           enabled: session.speedLimitUpEnabled,
                           onSet: onSetUp,
@@ -606,11 +606,11 @@ class _TransferPanel extends ConsumerWidget {
                     itemBuilder: (BuildContext _) => <PopupMenuEntry<String>>[
                       const PopupMenuItem<String>(
                         value: 'pauseAll',
-                        child: Text('Pause all'),
+                        child: Text('Tout mettre en pause'),
                       ),
                       const PopupMenuItem<String>(
                         value: 'startAll',
-                        child: Text('Start all'),
+                        child: Text('Tout démarrer'),
                       ),
                       const PopupMenuDivider(),
                       PopupMenuItem<String>(
@@ -635,7 +635,7 @@ class _TransferPanel extends ConsumerWidget {
                       CheckedPopupMenuItem<String>(
                         value: 'compact',
                         checked: compact,
-                        child: const Text('Compact rows'),
+                        child: const Text('Lignes compactes'),
                       ),
                     ],
                     // The menu button's own child fills the surface so the
@@ -766,7 +766,7 @@ class _SearchRowState extends ConsumerState<_SearchRow> {
         child: Row(
           children: <Widget>[
             IconButton(
-              tooltip: 'Close search',
+              tooltip: 'Fermer la recherche',
               icon: const Icon(Icons.arrow_back_rounded, size: 22),
               onPressed: _close,
             ),
@@ -776,7 +776,7 @@ class _SearchRowState extends ConsumerState<_SearchRow> {
                 autofocus: true,
                 style: theme.textTheme.bodyMedium,
                 decoration: const InputDecoration(
-                  hintText: 'Search torrents...',
+                  hintText: 'Rechercher des torrents…',
                   filled: false,
                   border: InputBorder.none,
                   enabledBorder: InputBorder.none,
@@ -800,7 +800,7 @@ class _SearchRowState extends ConsumerState<_SearchRow> {
             ),
             if (query.isNotEmpty)
               IconButton(
-                tooltip: 'Clear search',
+                tooltip: 'Effacer la recherche',
                 icon: const Icon(Icons.clear_rounded, size: 22),
                 onPressed: () {
                   _search.clear();
@@ -847,7 +847,7 @@ class _SearchRowState extends ConsumerState<_SearchRow> {
             ),
             if (query.isNotEmpty)
               Tooltip(
-                message: 'Clear search',
+                message: 'Effacer la recherche',
                 child: InkWell(
                   onTap: () {
                     _search.clear();
@@ -981,7 +981,7 @@ class _ActiveFilterBar extends StatelessWidget {
               minimumSize: const Size(0, 40),
               padding: const EdgeInsets.symmetric(horizontal: Insets.md),
             ),
-            child: const Text('Clear'),
+            child: const Text('Effacer'),
           ),
         ],
       ),
@@ -1024,15 +1024,15 @@ class _SelectionAppBar extends ConsumerWidget implements PreferredSizeWidget {
       backgroundColor: theme.colorScheme.primaryContainer,
       foregroundColor: theme.colorScheme.onPrimaryContainer,
       leading: IconButton(
-        tooltip: 'Clear selection',
+        tooltip: 'Effacer la sélection',
         icon: const Icon(Icons.close),
         onPressed: () =>
             ref.invalidate(transmissionSelectionProvider(instance)),
       ),
-      title: Text('${selection.length} selected'),
+      title: Text('${selection.length} sélectionné(s)'),
       actions: <Widget>[
         IconButton(
-          tooltip: 'Select all',
+          tooltip: 'Tout sélectionner',
           icon: const Icon(Icons.select_all),
           onPressed: () => ref
               .read(transmissionSelectionProvider(instance).notifier)
@@ -1041,7 +1041,7 @@ class _SelectionAppBar extends ConsumerWidget implements PreferredSizeWidget {
           },
         ),
         PopupMenuButton<TransmissionTorrentAction>(
-          tooltip: 'Selection actions',
+          tooltip: 'Actions de la sélection',
           icon: const Icon(Icons.more_vert),
           itemBuilder: (BuildContext _) => transmissionActionMenuItems(
             anyStopped: targets.any(

@@ -127,11 +127,11 @@ class _ProwlarrIndexerFormScreenState
           await ref.read(prowlarrApiProvider(widget.instance).future);
       await api.testIndexerRaw(_buildPayload());
       messenger.showSnackBar(
-        const SnackBar(content: Text('Test passed')),
+        const SnackBar(content: Text('Test réussi')),
       );
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Test failed: ${_errorMessage(e)}')),
+        SnackBar(content: Text('Échec du test : ${_errorMessage(e)}')),
       );
     } finally {
       if (mounted) {
@@ -158,12 +158,12 @@ class _ProwlarrIndexerFormScreenState
       }
       ref.invalidate(prowlarrIndexersProvider(widget.instance));
       messenger.showSnackBar(
-        SnackBar(content: Text(_isEdit ? 'Indexer saved' : 'Indexer added')),
+        SnackBar(content: Text(_isEdit ? 'Indexeur enregistré' : 'Indexeur ajouté')),
       );
       nav.pop();
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Save failed: ${_errorMessage(e)}')),
+        SnackBar(content: Text("Échec de l'enregistrement : ${_errorMessage(e)}")),
       );
       if (mounted) {
         setState(() => _saving = false);
@@ -175,12 +175,12 @@ class _ProwlarrIndexerFormScreenState
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Delete indexer?'),
-        content: Text('Remove "${_nameController.text}" from Prowlarr?'),
+        title: const Text("Supprimer l'indexeur ?"),
+        content: Text('Retirer « ${_nameController.text} » de Prowlarr ?'),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -188,7 +188,7 @@ class _ProwlarrIndexerFormScreenState
               foregroundColor: Theme.of(context).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Delete'),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
@@ -204,11 +204,11 @@ class _ProwlarrIndexerFormScreenState
           await ref.read(prowlarrApiProvider(widget.instance).future);
       await api.deleteIndexer(widget.indexerId!);
       ref.invalidate(prowlarrIndexersProvider(widget.instance));
-      messenger.showSnackBar(const SnackBar(content: Text('Indexer deleted')));
+      messenger.showSnackBar(const SnackBar(content: Text('Indexeur supprimé')));
       nav.pop();
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Delete failed: ${_errorMessage(e)}')),
+        SnackBar(content: Text('Échec de la suppression : ${_errorMessage(e)}')),
       );
       if (mounted) {
         setState(() => _deleting = false);
@@ -220,10 +220,10 @@ class _ProwlarrIndexerFormScreenState
   Widget build(BuildContext context) {
     if (_isEdit && _selected == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Edit indexer')),
+        appBar: AppBar(title: const Text("Modifier l'indexeur")),
         body: _loadError != null
             ? ErrorView(
-                title: 'Could not load indexer',
+                title: "Impossible de charger l'indexeur",
                 message: _loadError!,
                 onRetry: _loadRaw,
               )
@@ -263,7 +263,7 @@ class _ProwlarrIndexerFormScreenState
         actions: <Widget>[
           if (_isEdit)
             IconButton(
-              tooltip: 'Delete',
+              tooltip: 'Supprimer',
               icon: _deleting
                   ? const SizedBox(
                       width: 18,
@@ -276,7 +276,7 @@ class _ProwlarrIndexerFormScreenState
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const Text('Advanced', style: TextStyle(fontSize: 12)),
+              const Text('Avancé', style: TextStyle(fontSize: 12)),
               Switch(
                 value: _showAdvanced,
                 onChanged: (bool v) => setState(() => _showAdvanced = v),
@@ -293,7 +293,7 @@ class _ProwlarrIndexerFormScreenState
             TextFormField(
               controller: _nameController,
               decoration: const InputDecoration(
-                labelText: 'Name',
+                labelText: 'Nom',
                 border: OutlineInputBorder(),
               ),
               validator: (String? v) =>
@@ -308,7 +308,7 @@ class _ProwlarrIndexerFormScreenState
               child: SwitchListTile(
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: Insets.md),
-                title: const Text('Enabled'),
+                title: const Text('Activé'),
                 value: _enabled,
                 onChanged: (bool v) => setState(() => _enabled = v),
               ),
@@ -318,8 +318,8 @@ class _ProwlarrIndexerFormScreenState
               initialValue: '$_priority',
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                labelText: 'Priority',
-                helperText: 'Lower is higher priority (1-50, default 25)',
+                labelText: 'Priorité',
+                helperText: 'Plus la valeur est basse, plus la priorité est haute (1-50, 25 par défaut)',
                 border: OutlineInputBorder(),
               ),
               onChanged: (String v) => _priority = int.tryParse(v) ?? _priority,
@@ -352,7 +352,7 @@ class _ProwlarrIndexerFormScreenState
                             child: ExpressiveProgressIndicator(strokeWidth: 2),
                           )
                         : const Icon(Icons.science_outlined),
-                    label: const Text('Test'),
+                    label: const Text('Tester'),
                   ),
                 ),
                 const SizedBox(width: Insets.md),
@@ -366,7 +366,7 @@ class _ProwlarrIndexerFormScreenState
                             child: ExpressiveProgressIndicator(strokeWidth: 2),
                           )
                         : const Icon(Icons.save_outlined),
-                    label: Text(_isEdit ? 'Save' : 'Add'),
+                    label: Text(_isEdit ? 'Enregistrer' : 'Ajouter'),
                   ),
                 ),
               ],
@@ -411,7 +411,7 @@ class _SchemaPickerState extends ConsumerState<_SchemaPicker> {
     final AsyncValue<List<Map<String, dynamic>>> schemas =
         ref.watch(prowlarrIndexerSchemasProvider(widget.instance));
     return Scaffold(
-      appBar: AppBar(title: const Text('Add indexer')),
+      appBar: AppBar(title: const Text('Ajouter un indexeur')),
       body: Column(
         children: <Widget>[
           Padding(
@@ -420,7 +420,7 @@ class _SchemaPickerState extends ConsumerState<_SchemaPicker> {
               controller: _query,
               autofocus: true,
               decoration: const InputDecoration(
-                hintText: 'Search indexers...',
+                hintText: 'Rechercher des indexeurs…',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
               ),
@@ -447,8 +447,8 @@ class _SchemaPickerState extends ConsumerState<_SchemaPicker> {
                 if (filtered.isEmpty) {
                   return const EmptyView(
                     icon: Icons.search_off,
-                    title: 'No matches',
-                    message: 'No indexer definition matches your search.',
+                    title: 'Aucune correspondance',
+                    message: "Aucune définition d'indexeur ne correspond à votre recherche.",
                   );
                 }
                 return ListView.builder(
@@ -502,10 +502,10 @@ class _SyncProfileDropdown extends ConsumerWidget {
     return profiles.when(
       loading: () => const InputDecorator(
         decoration: InputDecoration(
-          labelText: 'Sync profile',
+          labelText: 'Profil de synchro',
           border: OutlineInputBorder(),
         ),
-        child: Text('Loading...'),
+        child: Text('Chargement…'),
       ),
       error: (_, __) => const SizedBox.shrink(),
       data: (List<Map<String, dynamic>> list) {
@@ -526,14 +526,14 @@ class _SyncProfileDropdown extends ConsumerWidget {
         return DropdownButtonFormField<int>(
           initialValue: effective,
           decoration: const InputDecoration(
-            labelText: 'Sync profile',
+            labelText: 'Profil de synchro',
             border: OutlineInputBorder(),
           ),
           items: list
               .map(
                 (Map<String, dynamic> p) => DropdownMenuItem<int>(
                   value: (p['id'] as num).toInt(),
-                  child: Text((p['name'] ?? 'Profile') as String),
+                  child: Text((p['name'] ?? 'Profil') as String),
                 ),
               )
               .toList(),
@@ -562,7 +562,7 @@ class _IndexerStatsSection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text('Statistics', style: theme.textTheme.titleMedium),
+        Text('Statistiques', style: theme.textTheme.titleMedium),
         const SizedBox(height: Insets.sm),
         _row(theme, 'Queries', '${stat.numberOfQueries}'),
         _row(theme, 'Grabs', '${stat.numberOfGrabs}'),

@@ -71,7 +71,7 @@ class EmbySearchDelegate extends SearchDelegate<void> {
   @override
   Widget buildSuggestions(BuildContext context) {
     if (query.trim().isEmpty) {
-      return const Center(child: Text('Search for movies or shows.'));
+      return const Center(child: Text('Rechercher un film ou une série.'));
     }
     return _SearchResults(instance: instance, query: query);
   }
@@ -92,7 +92,7 @@ class _SearchResults extends ConsumerWidget {
     }
 
     if (query.trim().isEmpty) {
-      return const Center(child: Text('Search for movies or shows.'));
+      return const Center(child: Text('Rechercher un film ou une série.'));
     }
 
     return FutureBuilder<List<EmbyItem>>(
@@ -102,15 +102,15 @@ class _SearchResults extends ConsumerWidget {
           return const Center(child: ExpressiveProgressIndicator());
         }
         if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
+          return Center(child: Text('Erreur : ${snapshot.error}'));
         }
 
         final List<EmbyItem> list = snapshot.data ?? <EmbyItem>[];
         if (list.isEmpty) {
           return const EmptyView(
             icon: Icons.search_off,
-            title: 'No results',
-            message: 'No items found matching your search.',
+            title: 'Aucun résultat',
+            message: 'Aucun élément ne correspond à votre recherche.',
           );
         }
 

@@ -7,7 +7,7 @@ import 'support/adguard_home_test_instance.dart';
 import 'support/pump.dart';
 
 void main() {
-  final Finder save = find.widgetWithText(FilledButton, 'Save');
+  final Finder save = find.widgetWithText(FilledButton, 'Enregistrer');
   Finder field(String key) => find.byKey(Key('adguard-dns-$key'));
 
   Future<Pumped> open(
@@ -52,7 +52,7 @@ void main() {
     expect(text(tester, field('subnet6')), '56');
     expect(text(tester, field('ttl')), '10');
     expect(on(tester, 'DNSSEC'), isTrue);
-    expect(on(tester, 'EDNS client subnet'), isFalse);
+    expect(on(tester, 'Sous-réseau client EDNS'), isFalse);
     expect(field('ipv4'), findsNothing);
     expect(tester.widget<FilledButton>(save).onPressed, isNull);
   });
@@ -118,13 +118,13 @@ void main() {
     await tester.tap(save);
     await tester.pumpAndSettle();
 
-    expect(find.text('An IPv4 address, such as 0.0.0.0.'), findsOneWidget);
-    expect(find.text('An IPv6 address, such as ::.'), findsOneWidget);
+    expect(find.text('Une adresse IPv4, par ex. 0.0.0.0.'), findsOneWidget);
+    expect(find.text('Une adresse IPv6, par ex. ::.'), findsOneWidget);
     expect(pumped.actions.calls, isEmpty);
 
     await tester.enterText(field('ipv4'), '::1');
     await tester.pump();
-    expect(find.text('An IPv4 address, such as 0.0.0.0.'), findsOneWidget);
+    expect(find.text('Une adresse IPv4, par ex. 0.0.0.0.'), findsOneWidget);
 
     await tester.enterText(field('ipv4'), '10.0.0.1');
     await tester.enterText(field('ipv6'), 'fd00::1');
@@ -146,19 +146,19 @@ void main() {
     expect(
       tester
           .widget<SwitchListTile>(
-            find.widgetWithText(SwitchListTile, 'Use a custom IP for EDNS'),
+            find.widgetWithText(SwitchListTile, 'Utiliser une IP personnalisée pour EDNS'),
           )
           .onChanged,
       isNull,
     );
 
-    await tester.tap(find.text('EDNS client subnet'));
+    await tester.tap(find.text('Sous-réseau client EDNS'));
     await tester.pump();
-    await tester.tap(find.text('Use a custom IP for EDNS'));
+    await tester.tap(find.text('Utiliser une IP personnalisée pour EDNS'));
     await tester.pump();
     await tester.tap(save);
     await tester.pumpAndSettle();
-    expect(find.text('An IP address.'), findsOneWidget);
+    expect(find.text('Une adresse IP.'), findsOneWidget);
 
     await tester.enterText(field('ednsIp'), '203.0.113.0');
     await tester.pump();
@@ -208,7 +208,7 @@ void main() {
     await tester.pump();
     await tester.enterText(field('ipv4'), '1.2.3');
     await tester.pump();
-    await tester.tap(find.text('Default'));
+    await tester.tap(find.text('Par défaut'));
     await tester.pump();
 
     expect(tester.widget<FilledButton>(save).onPressed, isNull);

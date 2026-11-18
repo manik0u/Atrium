@@ -24,7 +24,7 @@ class BazarrSubtitleChips extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     if (present.isEmpty && missing.isEmpty) {
       return Text(
-        'No subtitles tracked',
+        'Aucun sous-titre suivi',
         style: theme.textTheme.labelSmall
             ?.copyWith(color: theme.colorScheme.outline),
       );

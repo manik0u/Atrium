@@ -198,7 +198,7 @@ class _EmbySessionDetailScreenState
                               }
                             } catch (_) {
                               messenger.showSnackBar(
-                                const SnackBar(content: Text('Action failed')),
+                                const SnackBar(content: Text("Échec de l'action")),
                               );
                             }
                           },
@@ -253,7 +253,7 @@ class _EmbySessionDetailScreenState
                                 } catch (_) {
                                   messenger.showSnackBar(
                                     const SnackBar(
-                                      content: Text('Action failed'),
+                                      content: Text("Échec de l'action"),
                                     ),
                                   );
                                 }
@@ -421,7 +421,7 @@ class _EmbySessionDetailScreenState
                                 } catch (_) {
                                   messenger.showSnackBar(
                                     const SnackBar(
-                                      content: Text('Action failed'),
+                                      content: Text("Échec de l'action"),
                                     ),
                                   );
                                 }
@@ -495,7 +495,7 @@ class _EmbySessionDetailScreenState
                               } catch (_) {
                                 messenger.showSnackBar(
                                   const SnackBar(
-                                    content: Text('Action failed'),
+                                    content: Text("Échec de l'action"),
                                   ),
                                 );
                               }
@@ -532,7 +532,7 @@ class _EmbySessionDetailScreenState
                               } catch (_) {
                                 messenger.showSnackBar(
                                   const SnackBar(
-                                    content: Text('Action failed'),
+                                    content: Text("Échec de l'action"),
                                   ),
                                 );
                               }
@@ -579,7 +579,7 @@ class _EmbySessionDetailScreenState
                               } catch (_) {
                                 messenger.showSnackBar(
                                   const SnackBar(
-                                    content: Text('Action failed'),
+                                    content: Text("Échec de l'action"),
                                   ),
                                 );
                               }
@@ -628,7 +628,7 @@ class _EmbySessionDetailScreenState
                               } catch (_) {
                                 messenger.showSnackBar(
                                   const SnackBar(
-                                    content: Text('Action failed'),
+                                    content: Text("Échec de l'action"),
                                   ),
                                 );
                               }
@@ -668,7 +668,7 @@ class _EmbySessionDetailScreenState
                               } catch (_) {
                                 messenger.showSnackBar(
                                   const SnackBar(
-                                    content: Text('Action failed'),
+                                    content: Text("Échec de l'action"),
                                   ),
                                 );
                               }
@@ -705,7 +705,7 @@ class _EmbySessionDetailScreenState
                               } catch (_) {
                                 messenger.showSnackBar(
                                   const SnackBar(
-                                    content: Text('Action failed'),
+                                    content: Text("Échec de l'action"),
                                   ),
                                 );
                               }

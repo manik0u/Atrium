@@ -87,7 +87,7 @@ String formatAdguardHomeLogMoment(DateTime? time) =>
 /// The way a query arrived, in the web UI's words. One this app does not
 /// know is shown as the server sent it.
 String adguardHomeProtocolLabel(String protocol) => switch (protocol) {
-      '' => 'Plain DNS',
+      '' => 'DNS simple',
       'doh' => 'DNS-over-HTTPS',
       'dot' => 'DNS-over-TLS',
       'doq' => 'DNS-over-QUIC',
@@ -98,9 +98,9 @@ String adguardHomeProtocolLabel(String protocol) => switch (protocol) {
 /// Where the server learned of a runtime client, in words. A source this
 /// app does not know is shown as the server sent it.
 String adguardHomeClientSourceLabel(String source) => switch (source) {
-      'ARP' => 'ARP table',
-      'rDNS' => 'Reverse DNS',
-      'etc/hosts' => 'Hosts file',
+      'ARP' => 'Table ARP',
+      'rDNS' => 'DNS inverse',
+      'etc/hosts' => 'Fichier hosts',
       _ => source,
     };
 
@@ -115,19 +115,19 @@ String adguardHomeSearchEngineLabel(String key) => switch (key) {
 /// A group of blockable services by name. The server sends only an id, such
 /// as `social_network`.
 String adguardHomeServiceGroupLabel(String id) => switch (id) {
-      '' => 'Other',
-      'ai' => 'AI',
+      '' => 'Autre',
+      'ai' => 'IA',
       'cdn' => 'CDN',
-      'messenger' => 'Messengers',
-      'social_network' => 'Social networks',
+      'messenger' => 'Messageries',
+      'social_network' => 'Réseaux sociaux',
       _ => _sentence(id),
     };
 
 /// How many services a client has blocked for itself.
 String adguardHomeServicesBlockedLabel(int count) => switch (count) {
-      0 => 'No services blocked',
-      1 => '1 service blocked',
-      _ => '$count services blocked',
+      0 => 'Aucun service bloqué',
+      1 => '1 service bloqué',
+      _ => '$count services bloqués',
     };
 
 /// When service blocking pauses, in a line: `Sat 09:00 to 17:00, Sun 09:00
@@ -145,13 +145,13 @@ String formatAdguardHomePauses(
 }
 
 String _dayLabel(String day) => switch (day) {
-      'mon' => 'Mon',
-      'tue' => 'Tue',
-      'wed' => 'Wed',
-      'thu' => 'Thu',
-      'fri' => 'Fri',
-      'sat' => 'Sat',
-      'sun' => 'Sun',
+      'mon' => 'Lun',
+      'tue' => 'Mar',
+      'wed' => 'Mer',
+      'thu' => 'Jeu',
+      'fri' => 'Ven',
+      'sat' => 'Sam',
+      'sun' => 'Dim',
       _ => day,
     };
 
@@ -164,13 +164,13 @@ String formatAdguardHomeClock(Duration fromMidnight) {
 
 /// A weekday by its whole name, from the server's `mon` to `sun`.
 String adguardHomeWeekdayName(String day) => switch (day) {
-      'mon' => 'Monday',
-      'tue' => 'Tuesday',
-      'wed' => 'Wednesday',
-      'thu' => 'Thursday',
-      'fri' => 'Friday',
-      'sat' => 'Saturday',
-      'sun' => 'Sunday',
+      'mon' => 'Lundi',
+      'tue' => 'Mardi',
+      'wed' => 'Mercredi',
+      'thu' => 'Jeudi',
+      'fri' => 'Vendredi',
+      'sat' => 'Samedi',
+      'sun' => 'Dimanche',
       _ => day,
     };
 
@@ -185,7 +185,7 @@ String adguardHomePauseLabel(AdguardHomeServicePause pause) =>
 /// its keyword.
 String adguardHomeTimeZoneLabel(String timeZone) =>
     timeZone.isEmpty || timeZone == adguardHomeServerTimeZone
-        ? "The server's time zone"
+        ? 'Le fuseau horaire du serveur'
         : timeZone;
 
 /// `social_network` as `Social network`.
@@ -201,11 +201,11 @@ const List<int> adguardHomeIntervalOptions = <int>[0, 1, 12, 24, 72, 168];
 
 /// How often the lists are fetched again, the way the web UI names it.
 String adguardHomeIntervalLabel(int hours) => switch (hours) {
-      0 => 'Never',
-      1 => 'Every hour',
-      72 => 'Every 3 days',
-      168 => 'Every 7 days',
-      _ => 'Every $hours hours',
+      0 => 'Jamais',
+      1 => 'Toutes les heures',
+      72 => 'Tous les 3 jours',
+      168 => 'Tous les 7 jours',
+      _ => 'Toutes les $hours heures',
     };
 
 final DateFormat _date = DateFormat('d MMM y, HH:mm', 'en_US');

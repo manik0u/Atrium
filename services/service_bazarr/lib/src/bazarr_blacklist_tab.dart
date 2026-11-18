@@ -42,8 +42,8 @@ class BazarrBlacklistTab extends ConsumerWidget {
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.block,
-              title: 'Blacklist empty',
-              message: 'Blacklisted subtitles will appear here.',
+              title: 'Liste noire vide',
+              message: 'Les sous-titres en liste noire apparaîtront ici.',
             ),
           ],
         ),
@@ -123,7 +123,7 @@ class _BlacklistTile extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    title.isEmpty ? 'Unknown' : title,
+                    title.isEmpty ? 'Inconnu' : title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.bodyMedium
@@ -141,7 +141,7 @@ class _BlacklistTile extends ConsumerWidget {
               ),
             ),
             IconButton(
-              tooltip: 'Remove from blacklist',
+              tooltip: 'Retirer de la liste noire',
               visualDensity: VisualDensity.compact,
               icon: const Icon(Icons.delete_outline),
               onPressed: () => _confirmRemove(context, ref),
@@ -157,18 +157,18 @@ class _BlacklistTile extends ConsumerWidget {
     final bool? ok = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Remove from blacklist?'),
+        title: const Text('Retirer de la liste noire ?'),
         content: const Text(
-          'Bazarr will be allowed to download this subtitle again.',
+          'Bazarr pourra télécharger ce sous-titre à nouveau.',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Remove'),
+            child: const Text('Retirer'),
           ),
         ],
       ),
@@ -191,11 +191,11 @@ class _BlacklistTile extends ConsumerWidget {
       }
       ref.invalidate(bazarrBlacklistProvider(instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Removed from blacklist')),
+        const SnackBar(content: Text('Retiré de la liste noire')),
       );
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Remove failed: ${_err(e)}')),
+        SnackBar(content: Text('Échec de la suppression : ${_err(e)}')),
       );
     }
   }

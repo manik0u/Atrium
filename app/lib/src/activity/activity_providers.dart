@@ -496,9 +496,9 @@ String _tautulliSessionId(TautulliSession s, int index) {
 
 String? _decisionLabel(String decision) => switch (decision.toLowerCase()) {
       '' => null,
-      'direct play' => 'Direct Play',
-      'copy' || 'direct stream' => 'Direct Stream',
-      'transcode' => 'Transcode',
+      'direct play' => 'Lecture directe',
+      'copy' || 'direct stream' => 'Flux direct',
+      'transcode' => 'Transcodage',
       _ => decision,
     };
 
@@ -743,7 +743,7 @@ List<ActivityDownload> _sonarrDownloads(
         sourceKind: instance.kind,
         title: (item.title ?? '').isNotEmpty
             ? item.title!
-            : (item.series?.title ?? 'Unknown'),
+            : (item.series?.title ?? 'Inconnu'),
         progress: _sizeProgress(item.size ?? 0, item.sizeleft ?? 0),
         eta: (item.timeleft ?? '').isEmpty ? null : item.timeleft,
         status: _arrStatusLabel(item.status, item.trackedDownloadState),
@@ -770,7 +770,7 @@ List<ActivityDownload> _radarrDownloads(
         key: '${instance.id}:${item.id}',
         instance: instance,
         sourceKind: instance.kind,
-        title: (item.title ?? '').isEmpty ? 'Unknown' : item.title!,
+        title: (item.title ?? '').isEmpty ? 'Inconnu' : item.title!,
         progress: _sizeProgress(item.size ?? 0, item.sizeleft ?? 0),
         eta: (item.timeleft ?? '').isEmpty ? null : item.timeleft,
         status: _arrStatusLabel(item.status, item.trackedDownloadState),
@@ -799,12 +799,12 @@ String _arrStatusLabel(String? status, String? trackedState) {
     return 'Importing';
   }
   return switch ((status ?? '').toLowerCase()) {
-    'downloading' => 'Downloading',
-    'queued' || 'delay' => 'Queued',
-    'paused' => 'Paused',
+    'downloading' => 'Téléchargement en cours',
+    'queued' || 'delay' => "En file d'attente",
+    'paused' => 'En pause',
     // Download client finished; the item is waiting on / being imported.
-    'completed' => 'Importing',
-    '' => 'Queued',
+    'completed' => 'Import en cours',
+    '' => "En file d'attente",
     _ => _capitalized(status!),
   };
 }

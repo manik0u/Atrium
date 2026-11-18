@@ -12,7 +12,7 @@ enum OmbiLookup { search, list, title }
 String describeOmbiFailure(Object error, {OmbiLookup? lookup}) {
   final int? status = error is OmbiException ? error.statusCode : null;
   if (error is! OmbiException || status == null) {
-    return 'Ombi could not be reached.';
+    return 'Ombi est injoignable.';
   }
   if (status == 401 || status == 403) {
     return 'Ombi refused the API key. It is under Settings, Ombi.';
@@ -29,7 +29,7 @@ String describeOmbiFailure(Object error, {OmbiLookup? lookup}) {
         return 'Ombi could not load this list right now. It could not reach '
             'its movie database.';
       case OmbiLookup.title:
-        return 'Ombi could not look this title up right now. It could not '
+        return "Ombi n'a pas pu rechercher ce titre pour le moment. Il n'a pas pu "
             'reach its movie database.';
       case null:
         break;

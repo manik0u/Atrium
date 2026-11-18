@@ -9,7 +9,7 @@ class AdguardHomeSignInRefused implements Exception {
   const AdguardHomeSignInRefused();
 
   @override
-  String toString() => 'AdGuard Home refused the sign-in.';
+  String toString() => 'AdGuard Home a refusé la connexion.';
 }
 
 /// AdGuard Home turned a request down and said why, in its own words.
@@ -28,7 +28,7 @@ class AdguardHomeUnexpectedAnswer implements Exception {
   const AdguardHomeUnexpectedAnswer();
 
   @override
-  String toString() => 'This address answered, but not as AdGuard Home.';
+  String toString() => 'Cette adresse a répondu, mais pas comme AdGuard Home.';
 }
 
 /// The client is the only entry of the allowed clients, so it cannot be
@@ -52,7 +52,7 @@ class AdguardHomeAllowedByWiderEntry implements Exception {
   const AdguardHomeAllowedByWiderEntry();
 
   static const String message =
-      'Only the allowed clients are answered, and this one is let in by an '
+      'Seuls les clients autorisés reçoivent une réponse, et celui-ci est admis par un '
       'entry that covers more than itself, such as a range. It has no entry '
       'of its own to take off. Change the allowed clients in AdGuard Home '
       'instead.';
@@ -90,7 +90,7 @@ class AdguardHomeRulesChanged implements Exception {
   final List<String> rules;
 
   static const String message =
-      'The custom rules were changed on the server since you opened them.';
+      'Les règles personnalisées ont été modifiées sur le serveur depuis que vous les avez ouvertes.';
 
   @override
   String toString() => message;
@@ -105,8 +105,8 @@ class AdguardHomeEntryGone implements Exception {
   /// What it was, as a sentence names it: "list", "rewrite".
   final String what;
 
-  String get message => 'The $what is no longer on the server as it was. '
-      'It was changed or removed somewhere else.';
+  String get message => "$what n'est plus sur le serveur tel qu'il était. "
+      'Elle a été modifiée ou supprimée ailleurs.';
 
   @override
   String toString() => message;
@@ -123,7 +123,7 @@ class AdguardHomeRewriteRepeated implements Exception {
   /// How many there are.
   final int copies;
 
-  String get message => 'AdGuard Home holds the rewrite of $domain $copies '
+  String get message => 'AdGuard Home conserve la réécriture de $domain $copies '
       'times and can only change the first. Delete it and add it again.';
 
   @override
@@ -132,7 +132,7 @@ class AdguardHomeRewriteRepeated implements Exception {
 
 /// One sentence for whatever went wrong, fit to show as it is.
 String describeAdguardHomeError(Object error) => switch (error) {
-      AdguardHomeSignInRefused() => 'AdGuard Home refused the sign-in.',
+      AdguardHomeSignInRefused() => 'AdGuard Home a refusé la connexion.',
       AdguardHomeClientGone(:final String message) => message,
       AdguardHomeEntryGone(:final String message) => message,
       AdguardHomeRewriteRepeated(:final String message) => message,
@@ -144,5 +144,5 @@ String describeAdguardHomeError(Object error) => switch (error) {
       AdguardHomeUnexpectedAnswer() =>
         'This address answered, but not as AdGuard Home.',
       NetworkException(:final String message) => message,
-      _ => 'Something went wrong talking to AdGuard Home.',
+      _ => 'Un problème est survenu en communiquant avec AdGuard Home.',
     };

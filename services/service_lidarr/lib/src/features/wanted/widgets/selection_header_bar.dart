@@ -40,7 +40,7 @@ class SelectionHeaderBar extends StatelessWidget {
         children: [
           IconButton(
             icon: const Icon(Icons.close),
-            tooltip: 'Cancel Selection',
+            tooltip: 'Annuler la sélection',
             onPressed: onClear,
           ),
           const SizedBox(width: Insets.xs),
@@ -54,11 +54,11 @@ class SelectionHeaderBar extends StatelessWidget {
           const Spacer(),
           TextButton(
             onPressed: onSelectAll,
-            child: const Text('Select All'),
+            child: const Text('Tout sélectionner'),
           ),
           TextButton(
             onPressed: onInvert,
-            child: const Text('Invert'),
+            child: const Text('Inverser'),
           ),
         ],
       ),

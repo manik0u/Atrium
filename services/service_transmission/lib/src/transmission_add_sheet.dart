@@ -121,8 +121,8 @@ class _TransmissionAddSheetState
   }
 
   String get _fileLabel => switch (_files.length) {
-        0 => 'Choose .torrent files',
-        1 => _files.first.name ?? 'One torrent',
+        0 => 'Choisir des fichiers .torrent',
+        1 => _files.first.name ?? 'Un torrent',
         final int n => '$n torrents',
       };
 
@@ -244,13 +244,13 @@ class _TransmissionAddSheetState
       messenger.showSnackBar(
         SnackBar(
           content: Text(
-            added ? 'Torrent added' : 'Transmission already has that torrent',
+            added ? 'Torrent added' : 'Transmission a déjà ce torrent',
           ),
         ),
       );
     } catch (e) {
       if (mounted) setState(() => _busy = false);
-      messenger.showSnackBar(SnackBar(content: Text('Add failed: $e')));
+      messenger.showSnackBar(SnackBar(content: Text("Échec de l'ajout : $e")));
     }
   }
 
@@ -310,12 +310,12 @@ class _TransmissionAddSheetState
               segments: const <ButtonSegment<_AddMode>>[
                 ButtonSegment<_AddMode>(
                   value: _AddMode.link,
-                  label: Text('Magnet or URL'),
+                  label: Text('Lien magnet ou URL'),
                   icon: Icon(Icons.link),
                 ),
                 ButtonSegment<_AddMode>(
                   value: _AddMode.file,
-                  label: Text('File'),
+                  label: Text('Fichier'),
                   icon: Icon(Icons.attach_file),
                 ),
               ],
@@ -333,7 +333,7 @@ class _TransmissionAddSheetState
                 maxLines: 3,
                 decoration: transmissionFieldDecoration(
                   context,
-                  label: 'magnet: link or .torrent URL',
+                  label: 'lien magnet ou URL de .torrent',
                   prefixIcon: const Icon(Icons.link),
                 ),
                 onChanged: (_) => setState(() {}),
@@ -349,7 +349,7 @@ class _TransmissionAddSheetState
               controller: _downloadDir,
               decoration: transmissionFieldDecoration(
                 context,
-                label: 'Download folder (optional)',
+                label: 'Dossier de téléchargement (facultatif)',
                 helper: 'A path as the server sees it, not your phone',
                 prefixIcon: const Icon(Icons.folder_outlined),
               ),
@@ -377,13 +377,13 @@ class _TransmissionAddSheetState
                       ),
                     AsyncError<int?>() => TransmissionPill(
                         icon: Icons.help_outline,
-                        label: 'Free space unknown',
+                        label: 'Espace libre inconnu',
                         foreground: cs.onSurfaceVariant,
                         background: cs.surfaceContainerHighest,
                       ),
                     _ => TransmissionPill(
                         icon: Icons.hourglass_empty_rounded,
-                        label: 'Checking free space',
+                        label: "Vérification de l'espace libre",
                         foreground: cs.onSurfaceVariant,
                         background: cs.surfaceContainerHighest,
                       ),
@@ -397,7 +397,7 @@ class _TransmissionAddSheetState
               onChanged: _busy
                   ? null
                   : (bool v) => setState(() => _startWhenAdded = v),
-              title: const Text('Start when added'),
+              title: const Text("Démarrer à l'ajout"),
             ),
             const SizedBox(height: Insets.sm),
             FilledButton.icon(

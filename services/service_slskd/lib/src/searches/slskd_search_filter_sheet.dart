@@ -75,7 +75,7 @@ class _SlskdSearchFilterSheetState extends State<SlskdSearchFilterSheet> {
                 ),
                 TextButton(
                   onPressed: _reset,
-                  child: const Text('Reset All'),
+                  child: const Text('Tout réinitialiser'),
                 ),
               ],
             ),
@@ -123,7 +123,7 @@ class _SlskdSearchFilterSheetState extends State<SlskdSearchFilterSheet> {
                     size: 16,
                     color: _freeSlotOnly ? colorScheme.onSecondaryContainer : colorScheme.outline,
                   ),
-                  label: const Text('Free Slot Only (Instant)'),
+                  label: const Text('Emplacement libre uniquement (instantané)'),
                   selected: _freeSlotOnly,
                   onSelected: (val) => setState(() => _freeSlotOnly = val),
                 ),
@@ -133,7 +133,7 @@ class _SlskdSearchFilterSheetState extends State<SlskdSearchFilterSheet> {
                     size: 16,
                     color: _hideLocked ? colorScheme.onSecondaryContainer : colorScheme.outline,
                   ),
-                  label: const Text('Hide Locked Files'),
+                  label: const Text('Masquer les fichiers verrouillés'),
                   selected: _hideLocked,
                   onSelected: (val) => setState(() => _hideLocked = val),
                 ),
@@ -179,7 +179,7 @@ class _SlskdSearchFilterSheetState extends State<SlskdSearchFilterSheet> {
                   );
                   Navigator.of(context).pop();
                 },
-                child: const Text('Done'),
+                child: const Text('Terminé'),
               ),
             ),
           ],

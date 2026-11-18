@@ -364,7 +364,7 @@ class TransmissionApi {
       if (status == 401 || status == 403) {
         throw NetworkAuthException(
           'Transmission rejected the credentials (HTTP $status). RPC auth is '
-          'optional: leave both fields empty if the server has it turned off, '
+          "facultatif : laissez les deux champs vides si le serveur l'a désactivé, "
           'otherwise check the username and password.',
         );
       }
@@ -379,7 +379,7 @@ class TransmissionApi {
       if (body is! Map<String, dynamic>) {
         throw const NetworkBadResponseException(
           'Transmission returned a body Atrium could not parse. Check that the '
-          'URL points at the RPC endpoint.',
+          "L'URL pointe vers le point RPC.",
           status: 200,
         );
       }

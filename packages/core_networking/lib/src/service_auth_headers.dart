@@ -118,7 +118,7 @@ String? headerConflictWarning(String headerName, List<Instance> instances) {
   if (overwritten.isNotEmpty) {
     final bool one = overwritten.length == 1;
     buffer.write('${overwritten.join(', ')} ${one ? 'uses' : 'use'} this '
-        'header for ${one ? 'its' : 'their'} own sign-in, so your value is '
+        'en-tête pour ${one ? 'its' : 'their'} own sign-in, so your value is '
         'replaced before the request is sent. ');
   }
   if (refused.isNotEmpty) {
@@ -126,8 +126,8 @@ String? headerConflictWarning(String headerName, List<Instance> instances) {
         '${refused.length == 1 ? 'refuses' : 'refuse'} a header of this name '
         'that it did not issue, and will answer 401. ');
   }
-  buffer.write('Use $proxyAuthHeaderName instead where your proxy accepts '
-      'it, such as Authelia. nginx basic auth only reads this header.');
+  buffer.write("Utilisez $proxyAuthHeaderName à la place là où votre proxy l'accepte "
+      "tel qu'Authelia. nginx ne lit cet en-tête que pour l'authentification basic.");
   return buffer.toString();
 }
 

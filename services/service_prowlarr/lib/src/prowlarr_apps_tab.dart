@@ -47,7 +47,7 @@ class ProwlarrAppsTab extends ConsumerWidget {
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.apps_outlined,
-              title: 'No applications',
+              title: 'Aucune application',
               message:
                   'Tap "Add application" to connect Sonarr, Radarr, and more.',
             ),
@@ -184,7 +184,7 @@ String _syncLabel(String level) {
     case 'fullSync':
       return 'Full sync';
     case 'addOnly':
-      return 'Add and remove only';
+      return 'Ajouter et retirer uniquement';
     case 'disabled':
       return 'Disabled';
     default:

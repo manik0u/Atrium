@@ -27,13 +27,13 @@ class _WakeOnLanScreenState extends ConsumerState<WakeOnLanScreen> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: profile == null ? null : _addDevice,
         icon: const Icon(Icons.add),
-        label: const Text('Add device'),
+        label: const Text('Ajouter un appareil'),
       ),
       body: devices.isEmpty
           ? const EmptyView(
               icon: Icons.bolt_outlined,
-              title: 'No devices',
-              message: 'Add a device to wake it over the network.',
+              title: 'Aucun appareil',
+              message: 'Ajoutez un appareil à réveiller sur le réseau.',
             )
           : ListView(
               padding: Insets.page,
@@ -59,11 +59,11 @@ class _WakeOnLanScreenState extends ConsumerState<WakeOnLanScreen> {
         port: device.port,
       );
       messenger.showSnackBar(
-        SnackBar(content: Text('Magic packet sent to ${device.name}')),
+        SnackBar(content: Text('Paquet magique envoyé à ${device.name}')),
       );
     } catch (_) {
       messenger.showSnackBar(
-        const SnackBar(content: Text('Failed to send magic packet')),
+        const SnackBar(content: Text("Échec de l'envoi du paquet magique")),
       );
     }
   }
@@ -101,16 +101,16 @@ class _WakeOnLanScreenState extends ConsumerState<WakeOnLanScreen> {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: Text('Delete ${device.name}?'),
-        content: const Text('This removes the device from Wake-on-LAN.'),
+        title: Text('Supprimer ${device.name} ?'),
+        content: const Text("Cela retire l'appareil du Wake-on-LAN."),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Delete'),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
@@ -202,7 +202,7 @@ class _WolDeviceCard extends StatelessWidget {
               FilledButton.tonalIcon(
                 onPressed: onWake,
                 icon: const Icon(Icons.bolt, size: 18),
-                label: const Text('Wake'),
+                label: const Text('Réveiller'),
               ),
             ],
           ),
@@ -262,7 +262,7 @@ class _WolDeviceDialogState extends State<_WolDeviceDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(widget.initial == null ? 'Add device' : 'Edit device'),
+      title: Text(widget.initial == null ? 'Ajouter un appareil' : "Modifier l'appareil"),
       content: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -274,7 +274,7 @@ class _WolDeviceDialogState extends State<_WolDeviceDialog> {
                 autofocus: widget.initial == null,
                 textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
-                  labelText: 'Name',
+                  labelText: 'Nom',
                   hintText: 'NAS',
                 ),
                 validator: (String? v) =>
@@ -285,7 +285,7 @@ class _WolDeviceDialogState extends State<_WolDeviceDialog> {
                 controller: _mac,
                 textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
-                  labelText: 'MAC address',
+                  labelText: 'Adresse MAC',
                   hintText: 'AA:BB:CC:DD:EE:FF',
                 ),
                 validator: (String? v) {
@@ -302,7 +302,7 @@ class _WolDeviceDialogState extends State<_WolDeviceDialog> {
                 controller: _broadcast,
                 textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
-                  labelText: 'Broadcast address',
+                  labelText: 'Adresse de diffusion',
                 ),
                 validator: (String? v) =>
                     (v ?? '').trim().isEmpty ? 'Enter an address' : null,
@@ -329,11 +329,11 @@ class _WolDeviceDialogState extends State<_WolDeviceDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: _submit,
-          child: const Text('Save'),
+          child: const Text('Enregistrer'),
         ),
       ],
     );

@@ -65,7 +65,7 @@ class _SettingsTabState extends ConsumerState<SettingsTab> {
           icon: const Icon(Icons.menu),
           onPressed: () => Scaffold.of(context).openDrawer(),
         ),
-        title: const Text('Sonarr Settings'),
+        title: const Text('Paramètres Sonarr'),
       ),
       body: ListView(
         controller: _scrollController,
@@ -74,25 +74,25 @@ class _SettingsTabState extends ConsumerState<SettingsTab> {
           _buildCategoryHeader(context, 'Media Handling'),
           _buildSettingsCard(
             context: context,
-            title: 'Media Management',
+            title: 'Gestion des médias',
             subtitle:
-                'Rename episodes, configure empty folders, copy links & permission details.',
+                'Renommez les épisodes, configurez les dossiers vides, copiez les liens et les détails de permissions.',
             icon: Icons.folder_open_outlined,
             screen: MediaManagementSettingsScreen(instance: instance),
           ),
           _buildSettingsCard(
             context: context,
-            title: 'Profiles',
+            title: 'Profils',
             subtitle:
-                'Manage quality profiles, delay profiles, release profiles, and custom formats.',
+                'Gérez les profils de qualité, de délai, de release et les formats personnalisés.',
             icon: Icons.high_quality_outlined,
             screen: ProfilesSettingsScreen(instance: instance),
           ),
           _buildSettingsCard(
             context: context,
-            title: 'Quality Definitions',
+            title: 'Définitions de qualité',
             subtitle:
-                'Configure minimum, maximum, and preferred size limits per quality type.',
+                'Configurez les limites de taille min, max et préférée par type de qualité.',
             icon: Icons.aspect_ratio_outlined,
             screen: QualityDefinitionsScreen(instance: instance),
           ),
@@ -100,7 +100,7 @@ class _SettingsTabState extends ConsumerState<SettingsTab> {
           _buildCategoryHeader(context, 'Network & Integration'),
           _buildSettingsCard(
             context: context,
-            title: 'Indexers & Trackers',
+            title: 'Indexeurs et trackers',
             subtitle:
                 'RSS feeds, automatic search, indexers list, and import lists configurations.',
             icon: Icons.rss_feed_outlined,
@@ -108,15 +108,15 @@ class _SettingsTabState extends ConsumerState<SettingsTab> {
           ),
           _buildSettingsCard(
             context: context,
-            title: 'Download Clients',
+            title: 'Clients de téléchargement',
             subtitle:
-                'Clients list, connections, download tracking, and path override mappings.',
+                'Liste des clients, connexions, suivi des téléchargements et mappages de chemins.',
             icon: Icons.download_for_offline_outlined,
             screen: DownloadClientsScreen(instance: instance),
           ),
           _buildSettingsCard(
             context: context,
-            title: 'Connect',
+            title: 'Se connecter',
             subtitle:
                 'Discord, Telegram, Email, Plex notifications and trigger events.',
             icon: Icons.connect_without_contact,
@@ -124,7 +124,7 @@ class _SettingsTabState extends ConsumerState<SettingsTab> {
           ),
           _buildSettingsCard(
             context: context,
-            title: 'Metadata Consumers',
+            title: 'Consommateurs de métadonnées',
             subtitle:
                 'Configure metadata files creation for Kodi, Plex, Emby, and WDTV.',
             icon: Icons.settings_applications_outlined,
@@ -134,7 +134,7 @@ class _SettingsTabState extends ConsumerState<SettingsTab> {
           _buildCategoryHeader(context, 'Application System'),
           _buildSettingsCard(
             context: context,
-            title: 'General',
+            title: 'Général',
             subtitle:
                 'Set server listening port, SSL certifications, API Keys, and logs.',
             icon: Icons.dns_outlined,
@@ -142,25 +142,25 @@ class _SettingsTabState extends ConsumerState<SettingsTab> {
           ),
           _buildSettingsCard(
             context: context,
-            title: 'UI Settings',
+            title: "Paramètres d'interface",
             subtitle:
-                'Date formatting, first day of week selection, and color options.',
+                'Format des dates, premier jour de la semaine et options de couleur.',
             icon: Icons.palette_outlined,
             screen: UiSettingsScreen(instance: instance),
           ),
           _buildSettingsCard(
             context: context,
-            title: 'Tags',
+            title: 'Balises',
             subtitle:
-                'Manage label identifiers for categories, series, and profiles.',
+                'Gérez les identifiants de labels pour les catégories, séries et profils.',
             icon: Icons.label_outline,
             screen: TagsSettingsScreen(instance: instance),
           ),
           _buildSettingsCard(
             context: context,
-            title: 'Connection Settings',
+            title: 'Paramètres de connexion',
             subtitle:
-                'Edit connection URL, API Key, and label for this Sonarr instance in Atrium.',
+                "Modifiez l'URL de connexion, la clé API et le label de cette instance Sonarr dans Atrium.",
             icon: Icons.key_outlined,
             onTap: () {
               context.pushNamed(
@@ -175,9 +175,9 @@ class _SettingsTabState extends ConsumerState<SettingsTab> {
           _buildCategoryHeader(context, 'Diagnostics & Troubleshooting'),
           _buildSettingsCard(
             context: context,
-            title: 'Parse Title',
+            title: 'Analyser le titre',
             subtitle:
-                'Extract metadata and check matching series database results for any release name.',
+                'Extrayez les métadonnées et vérifiez les correspondances de la base de séries pour tout nom de release.',
             icon: Icons.troubleshoot_outlined,
             onTap: () {
               showDialog<void>(

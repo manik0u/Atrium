@@ -87,7 +87,7 @@ class NavidromeOverviewTab extends ConsumerWidget {
           // 1. Last Listened to Artist
           _buildSectionHeader(
             context: context,
-            title: 'Last Listened Artist',
+            title: 'Dernier artiste écouté',
             icon: Icons.person_rounded,
           ),
           lastListenedAsync.when(
@@ -100,7 +100,7 @@ class NavidromeOverviewTab extends ConsumerWidget {
                     vertical: Insets.xs,
                   ),
                   child: Text(
-                    'No recently played artist',
+                    'Aucun artiste récemment écouté',
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: cs.onSurfaceVariant,
                     ),
@@ -195,7 +195,7 @@ class NavidromeOverviewTab extends ConsumerWidget {
             ),
             error: (Object err, _) => Padding(
               padding: const EdgeInsets.all(Insets.md),
-              child: Text('Failed to load recent artist: $err'),
+              child: Text("Échec du chargement de l'artiste récent : $err"),
             ),
           ),
 
@@ -213,7 +213,7 @@ class NavidromeOverviewTab extends ConsumerWidget {
           // 2. Last Listened to Song
           _buildSectionHeader(
             context: context,
-            title: 'Last Listened Song',
+            title: 'Dernier morceau écouté',
             icon: Icons.music_note_rounded,
           ),
           lastListenedAsync.when(
@@ -226,7 +226,7 @@ class NavidromeOverviewTab extends ConsumerWidget {
                     vertical: Insets.xs,
                   ),
                   child: Text(
-                    'No recently played song',
+                    'Aucun morceau récemment écouté',
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: cs.onSurfaceVariant,
                     ),
@@ -303,7 +303,7 @@ class NavidromeOverviewTab extends ConsumerWidget {
                         ),
                         IconButton(
                           icon: const Icon(Icons.playlist_add_rounded),
-                          tooltip: 'Add to playlist',
+                          tooltip: 'Ajouter à la playlist',
                           onPressed: () {
                             showNavidromePlaylistPicker(
                               context: context,
@@ -325,7 +325,7 @@ class NavidromeOverviewTab extends ConsumerWidget {
             ),
             error: (Object err, _) => Padding(
               padding: const EdgeInsets.all(Insets.md),
-              child: Text('Failed to load recent song: $err'),
+              child: Text('Échec du chargement du morceau récent : $err'),
             ),
           ),
 
@@ -343,7 +343,7 @@ class NavidromeOverviewTab extends ConsumerWidget {
           // 3. Top Albums
           _buildSectionHeader(
             context: context,
-            title: 'Top Albums',
+            title: 'Albums les plus écoutés',
             icon: Icons.album_rounded,
           ),
           frequentAlbumsAsync.when(
@@ -355,7 +355,7 @@ class NavidromeOverviewTab extends ConsumerWidget {
                     vertical: Insets.xs,
                   ),
                   child: Text(
-                    'No played albums yet',
+                    'Aucun album écouté pour le moment',
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: cs.onSurfaceVariant,
                     ),
@@ -510,7 +510,7 @@ class NavidromeOverviewTab extends ConsumerWidget {
             ),
             error: (Object err, _) => Padding(
               padding: const EdgeInsets.all(Insets.md),
-              child: Text('Failed to load top albums: $err'),
+              child: Text('Échec du chargement des albums les plus écoutés : $err'),
             ),
           ),
         ],

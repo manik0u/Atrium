@@ -75,7 +75,7 @@ class _AdguardHomeAccessScreenState
     final bool? sure = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Save the access settings?'),
+        title: const Text("Enregistrer les paramètres d'accès ?"),
         content: Text(
           allowlist
               ? 'Only the allowed clients will get answers. A device not on '
@@ -86,11 +86,11 @@ class _AdguardHomeAccessScreenState
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Save'),
+            child: const Text('Enregistrer'),
           ),
         ],
       ),
@@ -124,7 +124,7 @@ class _AdguardHomeAccessScreenState
     // Filled once. A later read must not replace what is being typed.
     if (_before == null && value != null) _fill(value);
     return AdguardHomeSettingsForm(
-      title: 'Access',
+      title: 'Accès',
       busy: _busy,
       changed: _changed,
       onSave: _save,
@@ -161,7 +161,7 @@ class _AdguardHomeAccessScreenState
           'disallowed',
           _disallowed,
           allowlist
-              ? 'Not in force while there are allowed clients.'
+              ? "Sans effet tant qu'il y a des clients autorisés."
               : 'IP addresses, ranges or ClientIDs, one per line. These get '
                   'no answers.',
           enabled: !allowlist,

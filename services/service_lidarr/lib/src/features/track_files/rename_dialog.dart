@@ -94,7 +94,7 @@ class _LidarrRenameDialogState extends ConsumerState<LidarrRenameDialog> {
       );
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Failed to execute rename');
+        throw Exception(resp.error?.message ?? "Échec de l'exécution du renommage");
       }
 
       if (!mounted) return;
@@ -139,7 +139,7 @@ class _LidarrRenameDialogState extends ConsumerState<LidarrRenameDialog> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Rename failed: $e'),
+            content: Text('Échec du renommage : $e'),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -218,7 +218,7 @@ class _LidarrRenameDialogState extends ConsumerState<LidarrRenameDialog> {
                     );
                   },
                   icon: const Icon(Icons.refresh),
-                  label: const Text('Retry'),
+                  label: const Text('Réessayer'),
                 ),
               ],
             ),
@@ -249,7 +249,7 @@ class _LidarrRenameDialogState extends ConsumerState<LidarrRenameDialog> {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        'All files are correctly named',
+                        'Tous les fichiers sont correctement nommés',
                         style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -257,7 +257,7 @@ class _LidarrRenameDialogState extends ConsumerState<LidarrRenameDialog> {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        'No audio files need to be organized or renamed.',
+                        "Aucun fichier audio n'a besoin d'être organisé ou renommé.",
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: cs.onSurfaceVariant,
                         ),
@@ -421,7 +421,7 @@ class _LidarrRenameDialogState extends ConsumerState<LidarrRenameDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: _renaming ? null : () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         previewAsync.maybeWhen(
           data: (List<RenameTrackResource> files) {

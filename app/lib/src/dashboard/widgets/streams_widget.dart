@@ -215,7 +215,7 @@ class DashboardStreamsWidget extends ConsumerWidget {
     } else if (totalCount == 0 && anyError) {
       body = DashboardErrorRow(onRetry: () => _refresh(ref));
     } else if (totalCount == 0) {
-      body = const DashboardIdleRow(text: 'No one is streaming');
+      body = const DashboardIdleRow(text: 'Personne ne regarde en ce moment');
     } else {
       body = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -237,7 +237,7 @@ class DashboardStreamsWidget extends ConsumerWidget {
       trailing: totalCount > 0
           ? DashboardPill(
               icon: Icons.play_arrow_rounded,
-              label: '$totalCount streaming',
+              label: '$totalCount en lecture',
               color: cs.tertiary,
             )
           : null,

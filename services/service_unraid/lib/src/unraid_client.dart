@@ -81,7 +81,7 @@ class UnraidClient {
       return error?.toString() ?? 'Unknown GraphQL error';
     }
     final String message =
-        error['message']?.toString() ?? 'Unknown GraphQL error';
+        error['message']?.toString() ?? 'Erreur GraphQL inconnue';
     final dynamic extensions = error['extensions'];
     final Object? code = extensions is Map<String, dynamic>
         ? extensions['code']
@@ -151,7 +151,7 @@ class UnraidClient {
       if (e.message.toLowerCase().contains('docker socket')) {
         throw const NetworkUnknownException(
           'Docker is not running on this server. Start it under Settings, '
-          'Docker, to manage containers from here.',
+          'Docker, pour gérer les conteneurs depuis ici.',
         );
       }
       rethrow;

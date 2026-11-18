@@ -15,24 +15,24 @@ import '../plex_client_identifier.dart';
 import '../service_icon.dart';
 
 const String speedtestConnectionSuccessMessage =
-    'Connected with results:read. Run permission cannot be verified until used.';
+    "Connecté avec results:read. La permission d'exécution ne peut pas être vérifiée avant utilisation.";
 
 String speedtestConnectionErrorMessage(SpeedtestTrackerException error) =>
     switch (error.kind) {
       SpeedtestErrorKind.authentication =>
-        'The bearer token was rejected or lacks results:read.',
+        "Le jeton a été rejeté ou n'a pas results:read.",
       SpeedtestErrorKind.permission =>
         'The API token does not have the required permission.',
       SpeedtestErrorKind.unsupported =>
         'Authenticated results require Speedtest Tracker 1.1 or newer.',
-      SpeedtestErrorKind.offline => 'Could not reach Speedtest Tracker.',
+      SpeedtestErrorKind.offline => 'Impossible de joindre Speedtest Tracker.',
       SpeedtestErrorKind.timeout =>
         'Speedtest Tracker took too long to respond.',
-      SpeedtestErrorKind.server => 'Speedtest Tracker returned a server error.',
+      SpeedtestErrorKind.server => 'Speedtest Tracker a renvoyé une erreur serveur.',
       SpeedtestErrorKind.malformed =>
         'Speedtest Tracker returned an unsupported response.',
       SpeedtestErrorKind.notFound =>
-        'The requested Speedtest Tracker result was not found.',
+        'Le résultat Speedtest Tracker demandé est introuvable.',
       SpeedtestErrorKind.other =>
         'Speedtest Tracker returned an unexpected response.',
     };
@@ -265,7 +265,7 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
           'connection back on itself.';
     }
     if (result.usesRelay) {
-      return 'Nothing answered on that server\'s public address, so the '
+      return "Rien n'a répondu sur l'adresse publique de ce serveur, donc "
           'external URL is a Plex Relay one. It works, but Plex caps it at '
           '1 Mbps.';
     }
@@ -371,12 +371,12 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
       builder: (BuildContext context) => AlertDialog(
         title: Text('Delete ${_name.text.isEmpty ? "service" : _name.text}?'),
         content: const Text(
-          'This will permanently remove this instance and its connection credentials.',
+          'Cela supprimera définitivement cette instance et ses identifiants de connexion.',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -384,7 +384,7 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
               foregroundColor: Theme.of(context).colorScheme.onError,
             ),
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Delete'),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
@@ -420,11 +420,11 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_isEdit ? 'Edit service' : 'Add service'),
+        title: Text(_isEdit ? 'Modifier le service' : 'Ajouter un service'),
         actions: <Widget>[
           if (_isEdit)
             IconButton(
-              tooltip: 'Delete',
+              tooltip: 'Supprimer',
               icon: const Icon(Icons.delete_outline),
               onPressed: _delete,
             ),
@@ -448,7 +448,7 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
               ),
               child: Semantics(
                 button: true,
-                label: 'Change service',
+                label: 'Changer de service',
                 child: InkWell(
                   key: const Key('service_header'),
                   onTap: _changeService,
@@ -512,15 +512,15 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
 
             // General Information Card
             _FormSectionCard(
-              title: 'General',
+              title: 'Général',
               icon: Icons.badge_outlined,
               children: <Widget>[
                 TextFormField(
                   controller: _name,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    labelText: 'Name',
-                    hintText: 'e.g. Home ${_kind.displayName}',
+                    labelText: 'Nom',
+                    hintText: 'ex. Accueil ${_kind.displayName}',
                   ),
                   textInputAction: TextInputAction.next,
                   validator: (String? v) =>
@@ -532,14 +532,14 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
 
             // Connection Card
             _FormSectionCard(
-              title: 'Connection',
+              title: 'Connexion',
               icon: Icons.lan_outlined,
               children: <Widget>[
                 TextFormField(
                   controller: _localUrl,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    labelText: 'Local URL',
+                    labelText: 'URL locale',
                     hintText: _kind.defaultPort == null
                         ? 'http://192.168.1.10'
                         : 'http://192.168.1.10:${_kind.defaultPort}',
@@ -554,7 +554,7 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
                   controller: _externalUrl,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    labelText: 'External URL',
+                    labelText: 'URL externe',
                     hintText: _kind == ServiceKind.speedtestTracker
                         ? 'https://speedtest.example.com'
                         : 'https://sonarr.example.com',
@@ -597,20 +597,20 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
                 const SizedBox(height: Insets.md),
                 DropdownMenu<UrlMode>(
                   initialSelection: _urlMode,
-                  label: const Text('URL selection'),
+                  label: const Text("Choix de l'URL"),
                   expandedInsets: EdgeInsets.zero,
                   dropdownMenuEntries: const <DropdownMenuEntry<UrlMode>>[
                     DropdownMenuEntry<UrlMode>(
                       value: UrlMode.auto,
-                      label: 'Auto (probe local, fall back to external)',
+                      label: 'Auto (sonde locale, repli sur externe)',
                     ),
                     DropdownMenuEntry<UrlMode>(
                       value: UrlMode.forceLocal,
-                      label: 'Always local',
+                      label: 'Toujours locale',
                     ),
                     DropdownMenuEntry<UrlMode>(
                       value: UrlMode.forceExternal,
-                      label: 'Always external',
+                      label: 'Toujours externe',
                     ),
                   ],
                   onSelected: (UrlMode? m) => setState(() {
@@ -624,7 +624,7 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
 
             // Authentication Card
             _FormSectionCard(
-              title: 'Authentication',
+              title: 'Authentification',
               icon: Icons.lock_outline,
               children: _authFields(),
             ),
@@ -632,12 +632,12 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
 
             // Preferences Card
             _FormSectionCard(
-              title: 'Preferences',
+              title: 'Préférences',
               icon: Icons.tune_outlined,
               children: <Widget>[
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('Allow self-signed certificates'),
+                  title: const Text('Autoriser les certificats auto-signés'),
                   subtitle: const Text(
                     'Skip TLS validation for this instance only.',
                   ),
@@ -657,7 +657,7 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
                     controller: _pollingInterval,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Polling Interval (seconds)',
+                      labelText: "Intervalle d'interrogation (secondes)",
                       hintText: '5',
                       suffixText: 'sec',
                     ),
@@ -679,7 +679,7 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
             _FormSectionCard(
               title: 'Diagnostics',
               icon: Icons.cable_outlined,
-              subtitle: 'Verify connectivity before saving.',
+              subtitle: "Vérifier la connectivité avant d'enregistrer.",
               children: <Widget>[
                 OutlinedButton.icon(
                   onPressed: _testingConnection ? null : _testConnection,
@@ -763,12 +763,12 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
         segments: const <ButtonSegment<bool>>[
           ButtonSegment<bool>(
             value: false,
-            label: Text('API key'),
+            label: Text('Clé API'),
             icon: Icon(Icons.key),
           ),
           ButtonSegment<bool>(
             value: true,
-            label: Text('Sign in'),
+            label: Text('Se connecter'),
             icon: Icon(Icons.person_outline),
           ),
         ],
@@ -784,8 +784,8 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
           controller: _apiKey,
           decoration: const InputDecoration(
             border: OutlineInputBorder(),
-            labelText: 'API key',
-            helperText: 'Settings, General in Seerr. Acts as the Seerr owner.',
+            labelText: 'Clé API',
+            helperText: 'Paramètres, Général dans Seerr. Agit comme propriétaire de Seerr.',
           ),
           autocorrect: false,
           onChanged: _clearConnectionTest,
@@ -797,11 +797,11 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
           segments: const <ButtonSegment<SeerrAccountKind>>[
             ButtonSegment<SeerrAccountKind>(
               value: SeerrAccountKind.local,
-              label: Text('Seerr account'),
+              label: Text('Compte Seerr'),
             ),
             ButtonSegment<SeerrAccountKind>(
               value: SeerrAccountKind.mediaServer,
-              label: Text('Jellyfin or Emby'),
+              label: Text('Jellyfin ou Emby'),
             ),
           ],
           selected: <SeerrAccountKind>{_seerrAccount},
@@ -815,7 +815,7 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
           controller: _username,
           decoration: InputDecoration(
             border: const OutlineInputBorder(),
-            labelText: local ? 'Email' : 'Username',
+            labelText: local ? 'E-mail' : "Nom d'utilisateur",
           ),
           keyboardType:
               local ? TextInputType.emailAddress : TextInputType.text,
@@ -831,7 +831,7 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
           decoration: InputDecoration(
             border: const OutlineInputBorder(),
             // A Jellyfin or Emby account may have no password.
-            labelText: local ? 'Password' : 'Password (Optional)',
+            labelText: local ? 'Mot de passe' : 'Mot de passe (facultatif)',
             helperText:
                 'What this account may do follows its permissions in Seerr.',
             helperMaxLines: 2,
@@ -839,7 +839,7 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
           obscureText: true,
           onChanged: _clearConnectionTest,
           validator: local
-              ? (String? v) => (v == null || v.isEmpty) ? 'Required' : null
+              ? (String? v) => (v == null || v.isEmpty) ? 'Requis' : null
               : (String? v) => null,
         ),
       ],
@@ -858,9 +858,9 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
               controller: _apiKey,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'Password (optional)',
+                labelText: 'Mot de passe (facultatif)',
                 helperText:
-                    'Leave empty if password protection is disabled on your MySpeed instance.',
+                    'Laissez vide si la protection par mot de passe est désactivée sur votre instance MySpeed.',
               ),
               obscureText: true,
               autocorrect: false,
@@ -881,9 +881,9 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
               controller: _apiKey,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'RPC secret (optional)',
-                helperText: 'aria2\'s --rpc-secret, sent as the first '
-                    'parameter of every RPC call. Leave empty if the daemon '
+                labelText: 'Secret RPC (facultatif)',
+                helperText: "--rpc-secret d'aria2, envoyé comme premier "
+                    'paramètre de chaque appel RPC. Laissez vide si le démon '
                     'has no secret.',
               ),
               autocorrect: false,
@@ -902,11 +902,11 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
             controller: _apiKey,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
-              labelText: keyOptional ? 'API key (optional)' : 'API key',
+              labelText: keyOptional ? 'Clé API (facultatif)' : 'Clé API',
               helperText: keyOptional
                   ? (_kind == ServiceKind.slskd
-                      ? 'Leave empty if authentication is disabled in slskd.'
-                      : 'Leave empty if the control server has auth turned off.')
+                      ? "Laissez vide si l'authentification est désactivée dans slskd."
+                      : "Laissez vide si le serveur de contrôle a l'authentification désactivée.")
                   : null,
             ),
             autocorrect: false,
@@ -923,8 +923,8 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
             controller: _apiKey,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
-              labelText: 'Bearer API token',
-              helperText: 'Requires results:read; speedtests:run is optional.',
+              labelText: 'Jeton API Bearer',
+              helperText: 'Nécessite results:read ; speedtests:run est facultatif.',
             ),
             obscureText: true,
             autocorrect: false,
@@ -939,14 +939,14 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
           OutlinedButton.icon(
             onPressed: _signInWithPlex,
             icon: const Icon(Icons.login_rounded),
-            label: const Text('Sign in with Plex'),
+            label: const Text('Se connecter avec Plex'),
           ),
           const SizedBox(height: Insets.sm),
           TextFormField(
             controller: _apiKey,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
-              labelText: 'Plex token (X-Plex-Token)',
+              labelText: 'Jeton Plex (X-Plex-Token)',
             ),
             autocorrect: false,
             onChanged: _clearConnectionTest,
@@ -973,7 +973,7 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
           controller: _password,
           decoration: InputDecoration(
             border: const OutlineInputBorder(),
-            labelText: passwordOptional ? 'Password (Optional)' : 'Password',
+            labelText: passwordOptional ? 'Mot de passe (facultatif)' : 'Mot de passe',
           ),
           obscureText: true,
           validator: passwordOptional
@@ -986,7 +986,7 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
             controller: _username,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
-              labelText: authOptional ? 'Username (Optional)' : 'Username',
+              labelText: authOptional ? "Nom d'utilisateur (facultatif)" : "Nom d'utilisateur",
             ),
             autocorrect: false,
             textInputAction: TextInputAction.next,
@@ -1014,12 +1014,12 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
             segments: const <ButtonSegment<bool>>[
               ButtonSegment<bool>(
                 value: false,
-                label: Text('Password'),
+                label: Text('Mot de passe'),
                 icon: Icon(Icons.password),
               ),
               ButtonSegment<bool>(
                 value: true,
-                label: Text('API key'),
+                label: Text('Clé API'),
                 icon: Icon(Icons.key),
               ),
             ],
@@ -1033,8 +1033,8 @@ class _InstanceFormScreenState extends ConsumerState<InstanceFormScreen> {
               controller: _apiKey,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'API key',
-                helperText: 'qBittorrent 5.2+ Web UI setting; '
+                labelText: 'Clé API',
+                helperText: "Paramètre de l'interface web de qBittorrent 5.2+ ; "
                     'sent as Authorization: Bearer',
               ),
               autocorrect: false,
@@ -1211,7 +1211,7 @@ class _ServiceKindDialogState extends State<_ServiceKindDialog> {
                 Insets.lg,
                 Insets.sm,
               ),
-              child: Text('Change service', style: theme.textTheme.titleLarge),
+              child: Text('Changer de service', style: theme.textTheme.titleLarge),
             ),
             Divider(height: 1, color: cs.outlineVariant),
             // Every row is built up front so the current one can be scrolled
@@ -1235,7 +1235,7 @@ class _ServiceKindDialogState extends State<_ServiceKindDialog> {
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Cancel'),
+                  child: const Text('Annuler'),
                 ),
               ),
             ),

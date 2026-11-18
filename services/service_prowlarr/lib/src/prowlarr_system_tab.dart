@@ -102,7 +102,7 @@ class _HealthSection extends ConsumerWidget {
     final AsyncValue<List<ProwlarrHealth>> health =
         ref.watch(prowlarrHealthProvider(instance));
     return _SectionCard(
-      title: 'Health',
+      title: 'Santé',
       child: health.when(
         loading: () => const Padding(
           padding: EdgeInsets.symmetric(vertical: Insets.md),
@@ -118,7 +118,7 @@ class _HealthSection extends ConsumerWidget {
             return _StatusRow(
               icon: Icons.check_circle,
               color: cs.tertiary,
-              text: 'All healthy',
+              text: 'Tout est sain',
               pill: 'OK',
             );
           }
@@ -155,9 +155,9 @@ class _HealthSection extends ConsumerWidget {
       };
 
   String? _healthPill(String type) => switch (type.toLowerCase()) {
-        'error' => 'Error',
-        'warning' => 'Warning',
-        'notice' => 'Notice',
+        'error' => 'Erreur',
+        'warning' => 'Avertissement',
+        'notice' => 'Remarque',
         _ => null,
       };
 }
@@ -172,7 +172,7 @@ class _TasksSection extends ConsumerWidget {
     final AsyncValue<List<ProwlarrSystemTask>> tasks =
         ref.watch(prowlarrTasksProvider(instance));
     return _SectionCard(
-      title: 'Tasks',
+      title: 'Tâches',
       child: tasks.when(
         loading: () => const SizedBox.shrink(),
         error: (Object e, _) => _StatusRow(
@@ -214,11 +214,11 @@ class _TaskTileState extends ConsumerState<_TaskTile> {
           await ref.read(prowlarrApiProvider(widget.instance).future);
       await api.runCommand(widget.task.taskName);
       messenger.showSnackBar(
-        SnackBar(content: Text('Started ${widget.task.name}')),
+        SnackBar(content: Text('${widget.task.name} démarré')),
       );
       ref.invalidate(prowlarrTasksProvider(widget.instance));
     } on Object catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text('Failed: ${_msg(e)}')));
+      messenger.showSnackBar(SnackBar(content: Text('Échec : ${_msg(e)}')));
     } finally {
       if (mounted) {
         setState(() => _running = false);
@@ -273,7 +273,7 @@ class _TaskTileState extends ConsumerState<_TaskTile> {
                 child: ExpressiveProgressIndicator(strokeWidth: 2),
               )
             : IconButton(
-                tooltip: 'Run now',
+                tooltip: 'Exécuter maintenant',
                 icon: const Icon(Icons.play_arrow),
                 onPressed: _run,
               ),
@@ -307,10 +307,10 @@ class _BackupsSection extends ConsumerWidget {
           await ref.read(prowlarrApiProvider(instance).future);
       await api.runCommand('Backup');
       messenger.showSnackBar(
-        const SnackBar(content: Text('Backup started; pull to refresh')),
+        const SnackBar(content: Text('Sauvegarde démarrée ; tirez pour actualiser')),
       );
     } on Object catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text('Failed: ${_msg(e)}')));
+      messenger.showSnackBar(SnackBar(content: Text('Échec : ${_msg(e)}')));
     }
   }
 
@@ -322,12 +322,12 @@ class _BackupsSection extends ConsumerWidget {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Delete backup?'),
+        title: const Text('Supprimer la sauvegarde ?'),
         content: Text(backup.name),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -335,7 +335,7 @@ class _BackupsSection extends ConsumerWidget {
               foregroundColor: Theme.of(context).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Delete'),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
@@ -349,9 +349,9 @@ class _BackupsSection extends ConsumerWidget {
           await ref.read(prowlarrApiProvider(instance).future);
       await api.deleteBackup(backup.id);
       ref.invalidate(prowlarrBackupsProvider(instance));
-      messenger.showSnackBar(const SnackBar(content: Text('Backup deleted')));
+      messenger.showSnackBar(const SnackBar(content: Text('Sauvegarde supprimée')));
     } on Object catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text('Failed: ${_msg(e)}')));
+      messenger.showSnackBar(SnackBar(content: Text('Échec : ${_msg(e)}')));
     }
   }
 
@@ -362,11 +362,11 @@ class _BackupsSection extends ConsumerWidget {
     final AsyncValue<List<ProwlarrBackup>> backups =
         ref.watch(prowlarrBackupsProvider(instance));
     return _SectionCard(
-      title: 'Backups',
+      title: 'Sauvegardes',
       action: TextButton.icon(
         onPressed: () => _create(context, ref),
         icon: const Icon(Icons.add, size: 18),
-        label: const Text('Create'),
+        label: const Text('Créer'),
       ),
       child: backups.when(
         loading: () => const SizedBox.shrink(),
@@ -378,7 +378,7 @@ class _BackupsSection extends ConsumerWidget {
         data: (List<ProwlarrBackup> list) {
           if (list.isEmpty) {
             return Text(
-              'No backups yet.',
+              'Aucune sauvegarde pour le moment.',
               style: theme.textTheme.bodyMedium
                   ?.copyWith(color: cs.onSurfaceVariant),
             );
@@ -448,7 +448,7 @@ class _BackupRow extends StatelessWidget {
           ),
         ),
         IconButton(
-          tooltip: 'Delete',
+          tooltip: 'Supprimer',
           icon: Icon(Icons.delete_outline, color: cs.error),
           onPressed: onDelete,
         ),
@@ -468,7 +468,7 @@ class _StatusSection extends ConsumerWidget {
     final AsyncValue<ProwlarrSystemStatus> status =
         ref.watch(prowlarrSystemStatusProvider(instance));
     return _SectionCard(
-      title: 'Status',
+      title: 'Statut',
       child: status.when(
         loading: () => const SizedBox.shrink(),
         error: (Object e, _) => _StatusRow(

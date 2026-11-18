@@ -29,7 +29,7 @@ void main() {
         const TorrentShareProblem(
           'Atrium does not know a service called "nope", so that link went '
           'nowhere.',
-          title: 'Could not open that link',
+          title: "Impossible d'ouvrir ce lien",
         ),
       );
     });
@@ -109,7 +109,7 @@ void main() {
           parseAtriumLink(bad),
           const TorrentShareProblem(
             'That Atrium link could not be read, so it went nowhere.',
-            title: 'Could not open that link',
+            title: "Impossible d'ouvrir ce lien",
           ),
         );
       });

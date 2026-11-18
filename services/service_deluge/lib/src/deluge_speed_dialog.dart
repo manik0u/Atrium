@@ -74,8 +74,8 @@ class _SpeedDialogContentState extends State<_SpeedDialogContent> {
                 decimal: true,
               ),
               decoration: const InputDecoration(
-                labelText: 'Custom (KB/s)',
-                helperText: '0 stops transfers entirely',
+                labelText: 'Personnalisée (Ko/s)',
+                helperText: '0 arrête complètement les transferts',
               ),
               onSubmitted: (_) => _submitCustom(),
             ),
@@ -85,11 +85,11 @@ class _SpeedDialogContentState extends State<_SpeedDialogContent> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: _submitCustom,
-          child: const Text('Set'),
+          child: const Text('Définir'),
         ),
       ],
     );

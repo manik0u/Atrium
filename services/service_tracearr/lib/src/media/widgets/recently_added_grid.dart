@@ -99,7 +99,7 @@ class _RecentlyAddedGridState extends ConsumerState<RecentlyAddedGrid> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.refresh),
-                  tooltip: 'Retry',
+                  tooltip: 'Réessayer',
                   onPressed: notifier.refresh,
                 ),
               ],
@@ -118,7 +118,7 @@ class _RecentlyAddedGridState extends ConsumerState<RecentlyAddedGrid> {
             ),
             child: Center(
               child: Text(
-                'No recently added media found.',
+                'Aucun média récemment ajouté trouvé.',
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: colorScheme.onSurfaceVariant,
                 ),

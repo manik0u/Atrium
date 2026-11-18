@@ -646,12 +646,12 @@ void main() {
                           '/music/Radiohead/A Moon Shaped Pool/01 - Burn the Witch.flac',
                       'changes': [
                         {
-                          'field': 'Title',
+                          'field': 'Titre',
                           'oldValue': 'Burn the Witch (Live)',
                           'newValue': 'Burn the Witch',
                         },
                         {
-                          'field': 'Artist',
+                          'field': 'Artiste',
                           'oldValue': 'Radiohead feat. London Orchestra',
                           'newValue': 'Radiohead',
                         },
@@ -680,7 +680,7 @@ void main() {
       expect(files[0].trackFileId, equals(901));
       expect(files[0].path, contains('01 - Burn the Witch.flac'));
       expect(files[0].changes?.length, equals(2));
-      expect(files[0].changes?[0].field, equals('Title'));
+      expect(files[0].changes?[0].field, equals('Titre'));
       expect(files[0].changes?[0].oldValue, equals('Burn the Witch (Live)'));
       expect(files[0].changes?[0].newValue, equals('Burn the Witch'));
     });

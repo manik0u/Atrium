@@ -190,19 +190,19 @@ void main() {
     ),
     SlskdLogRecord(
       timestamp: DateTime(2026, 10, 24, 20, 22, 11),
-      level: 'Warning',
+      level: 'Avertissement',
       context: 'slskd.Transfers',
       message: 'Peer VinylLover timed out during transfer handshake; retrying (attempt 1/3).',
     ),
     SlskdLogRecord(
       timestamp: DateTime(2026, 10, 24, 20, 25, 48),
-      level: 'Error',
+      level: 'Erreur',
       context: 'slskd.Network.UPnP',
       message: 'UPnP port mapping failed for port 50300: Gateway returned HTTP 500.',
     ),
     SlskdLogRecord(
       timestamp: DateTime(2026, 10, 24, 20, 30),
-      level: 'Debug',
+      level: 'Débogage',
       context: 'slskd.Search.Distributed',
       message: 'Routing search query "Daft Punk Discovery" to 14 distributed child nodes.',
     ),
@@ -252,7 +252,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // 1. Verify and capture Health view
-      expect(find.text('System & Health'), findsOneWidget);
+      expect(find.text('Système et santé'), findsOneWidget);
       expect(find.text('Soulseek Network'), findsOneWidget);
       expect(find.text('server.slsknet.org:2242'), findsOneWidget);
       expect(find.text('AudioPhileX'), findsOneWidget);
@@ -262,12 +262,12 @@ void main() {
       await capture(tester, repaintKey, 'slskd_system_health.png');
 
       // 2. Switch to Shares segment
-      await tester.tap(find.text('Shares'));
+      await tester.tap(find.text('Partages'));
       await tester.pumpAndSettle();
 
       expect(find.text('Shared Library'), findsOneWidget);
       expect(find.text('3420 files across 128 folders'), findsOneWidget);
-      expect(find.text('Rescan Shares'), findsOneWidget);
+      expect(find.text("Relancer l'analyse des partages"), findsOneWidget);
       expect(find.text('FLAC Hi-Res Albums'), findsOneWidget);
       expect(find.text('MP3 320k Discography'), findsOneWidget);
       expect(find.text('Private Incomplete Stash'), findsOneWidget);
@@ -276,14 +276,14 @@ void main() {
       await capture(tester, repaintKey, 'slskd_system_shares.png');
 
       // 3. Switch to Logs segment
-      await tester.tap(find.text('Logs'));
+      await tester.tap(find.text('Journaux'));
       await tester.pumpAndSettle();
 
-      expect(find.text('All'), findsOneWidget);
-      expect(find.text('Error'), findsOneWidget);
-      expect(find.text('Warning'), findsOneWidget);
+      expect(find.text('Tous'), findsOneWidget);
+      expect(find.text('Erreur'), findsOneWidget);
+      expect(find.text('Avertissement'), findsOneWidget);
       expect(find.text('Information'), findsOneWidget);
-      expect(find.text('Debug'), findsOneWidget);
+      expect(find.text('Débogage'), findsOneWidget);
       expect(find.textContaining('Successfully established connection'), findsOneWidget);
 
       await capture(tester, repaintKey, 'slskd_system_logs.png');
@@ -292,7 +292,7 @@ void main() {
       await tester.tap(find.textContaining('UPnP port mapping failed'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Log Message'), findsOneWidget);
+      expect(find.text('Message du journal'), findsOneWidget);
       expect(find.text('Context: slskd.Network.UPnP'), findsOneWidget);
 
       await capture(tester, repaintKey, 'slskd_system_log_details.png');
@@ -305,9 +305,9 @@ void main() {
       await tester.tap(find.byIcon(Icons.more_vert));
       await tester.pumpAndSettle();
 
-      expect(find.text('Transfer analytics & KPIs'), findsOneWidget);
-      expect(find.text('Host storage explorer'), findsOneWidget);
-      expect(find.text('Configuration & diagnostics'), findsOneWidget);
+      expect(find.text('Analyses et indicateurs des transferts'), findsOneWidget);
+      expect(find.text("Explorateur de stockage de l'hôte"), findsOneWidget);
+      expect(find.text('Configuration et diagnostics'), findsOneWidget);
     });
 
     testWidgets('renders SlskdShareContentsSheet with folder tree and files',
@@ -435,8 +435,8 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Host Storage Explorer'), findsOneWidget);
-      expect(find.text('Downloads'), findsNWidgets(2));
-      expect(find.text('Incomplete'), findsOneWidget);
+      expect(find.text('Téléchargements'), findsNWidgets(2));
+      expect(find.text('Incomplet'), findsOneWidget);
       expect(find.text('Daft Punk - Discovery (2001)'), findsOneWidget);
       expect(find.text('ambient_session_live.flac'), findsOneWidget);
 
@@ -511,9 +511,9 @@ void main() {
       // Test Diagnostics segment
       await tester.tap(find.text('Diagnostics'));
       await tester.pumpAndSettle();
-      expect(find.text('Force Garbage Collection'), findsOneWidget);
-      expect(find.text('Loopback Echo Test'), findsOneWidget);
-      expect(find.text('Run GC'), findsOneWidget);
+      expect(find.text('Forcer le nettoyage de la mémoire'), findsOneWidget);
+      expect(find.text("Test d'écho en boucle locale"), findsOneWidget);
+      expect(find.text('Lancer le GC'), findsOneWidget);
       expect(find.text('Ping'), findsOneWidget);
       await capture(tester, repaintKey, 'slskd_system_options_diagnostics.png');
     });
@@ -537,11 +537,11 @@ void main() {
           );
 
       await pumpCard(null);
-      expect(find.text('Up to date'), findsNothing);
-      expect(find.text('Check for updates'), findsOneWidget);
+      expect(find.text('À jour'), findsNothing);
+      expect(find.text('Rechercher des mises à jour'), findsOneWidget);
 
       await pumpCard(false);
-      expect(find.text('Up to date'), findsOneWidget);
+      expect(find.text('À jour'), findsOneWidget);
 
       await pumpCard(true);
       expect(find.text('Update Available'), findsOneWidget);
@@ -589,7 +589,7 @@ void main() {
 
       expect(tester.takeException(), isNull);
       expect(find.textContaining('an old line'), findsNothing);
-      expect(find.text('Live Stream (In-Memory)'), findsOneWidget);
+      expect(find.text('Flux en direct (en mémoire)'), findsOneWidget);
     });
 
     test('SlskdVersionState trims a trailing .0 from four-part build versions', () {
@@ -645,7 +645,7 @@ void main() {
         ),
         findsOneWidget,
       );
-      final retryButton = find.widgetWithText(FilledButton, 'Retry');
+      final retryButton = find.widgetWithText(FilledButton, 'Réessayer');
       expect(retryButton, findsOneWidget);
 
       final int loadsBefore = loadCount;

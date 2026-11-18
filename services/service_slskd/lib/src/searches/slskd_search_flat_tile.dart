@@ -88,7 +88,7 @@ class SlskdSearchFlatTile extends ConsumerWidget {
                   const SizedBox(width: Insets.xs / 2),
                 ],
                 IconButton(
-                  tooltip: file.isLocked ? 'File is locked' : 'Download track',
+                  tooltip: file.isLocked ? 'Le fichier est verrouillé' : 'Télécharger la piste',
                   visualDensity: VisualDensity.compact,
                   icon: Icon(
                     file.isLocked

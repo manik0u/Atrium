@@ -165,8 +165,8 @@ class PlexEpisodeList extends ConsumerWidget {
             SizedBox(height: 100),
             EmptyView(
                 icon: Icons.tv_outlined,
-                title: 'No episodes',
-                message: 'This season has no episodes yet.',
+                title: 'Aucun épisode',
+                message: "Cette saison n'a pas encore d'épisodes.",
               ),
           ],
         ),
@@ -229,7 +229,7 @@ class _EpisodeTile extends ConsumerWidget {
       title: Text(label, maxLines: 2, overflow: TextOverflow.ellipsis),
       subtitle: minutes > 0 ? Text('$minutes min') : null,
       trailing: IconButton(
-        tooltip: watched ? 'Mark as unwatched' : 'Mark as watched',
+        tooltip: watched ? 'Marquer comme non vu' : 'Marquer comme vu',
         icon: Icon(
           watched ? Icons.check_circle : Icons.check_circle_outline,
           color: watched ? theme.colorScheme.primary : null,
@@ -244,7 +244,7 @@ class _EpisodeTile extends ConsumerWidget {
                 } catch (_) {
                   messenger.showSnackBar(
                     const SnackBar(
-                      content: Text('Could not update watched state'),
+                      content: Text("Impossible de mettre à jour l'état de visionnage"),
                     ),
                   );
                   return;

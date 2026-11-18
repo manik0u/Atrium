@@ -16,10 +16,10 @@ class ChangelogScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Change log'),
+        title: const Text('Journal des modifications'),
         actions: <Widget>[
           IconButton(
-            tooltip: 'View releases on GitHub',
+            tooltip: 'Voir les versions sur GitHub',
             icon: const Icon(Icons.open_in_new),
             onPressed: () => openExternal(
               ScaffoldMessenger.of(context),

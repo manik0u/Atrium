@@ -41,7 +41,7 @@ class LogFilesView extends ConsumerWidget {
       if (!launched && context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Could not open download URL: $downloadUrl'),
+            content: Text("Impossible d'ouvrir l'URL de téléchargement : $downloadUrl"),
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -50,7 +50,7 @@ class LogFilesView extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to trigger download: $e'),
+            content: Text('Échec du déclenchement du téléchargement : $e'),
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -94,7 +94,7 @@ class LogFilesView extends ConsumerWidget {
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.schedule),
-                title: const Text('Last Modified'),
+                title: const Text('Dernière modification'),
                 subtitle: Text(LidarrFormatters.formatDate(file.lastWriteTime)),
                 dense: true,
               ),
@@ -102,7 +102,7 @@ class LogFilesView extends ConsumerWidget {
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   leading: const Icon(Icons.link),
-                  title: const Text('Contents URL'),
+                  title: const Text('URL du contenu'),
                   subtitle: Text(file.contentsUrl!),
                   dense: true,
                 ),
@@ -110,7 +110,7 @@ class LogFilesView extends ConsumerWidget {
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   leading: const Icon(Icons.download),
-                  title: const Text('Download URL'),
+                  title: const Text('URL de téléchargement'),
                   subtitle: Text(file.downloadUrl!),
                   dense: true,
                 ),
@@ -119,15 +119,15 @@ class LogFilesView extends ConsumerWidget {
           actions: [
             TextButton.icon(
               icon: const Icon(Icons.copy, size: 16),
-              label: const Text('Copy Name'),
+              label: const Text('Copier le nom'),
               onPressed: () {
                 Clipboard.setData(
-                  ClipboardData(text: file.filename ?? 'Log File'),
+                  ClipboardData(text: file.filename ?? 'Fichier journal'),
                 );
                 Navigator.pop(ctx);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Copied "${file.filename}" to clipboard'),
+                    content: Text('« ${file.filename} » copié dans le presse-papiers'),
                     behavior: SnackBarBehavior.floating,
                   ),
                 );
@@ -135,7 +135,7 @@ class LogFilesView extends ConsumerWidget {
             ),
             OutlinedButton.icon(
               icon: const Icon(Icons.download, size: 16),
-              label: const Text('Download'),
+              label: const Text('Télécharger'),
               onPressed: () {
                 Navigator.pop(ctx);
                 _downloadFile(context, file);
@@ -143,7 +143,7 @@ class LogFilesView extends ConsumerWidget {
             ),
             FilledButton.icon(
               icon: const Icon(Icons.visibility, size: 16),
-              label: const Text('Read Log'),
+              label: const Text('Lire le journal'),
               onPressed: () {
                 Navigator.pop(ctx);
                 _openFileReader(context, file);
@@ -171,8 +171,8 @@ class LogFilesView extends ConsumerWidget {
             return const Center(
               child: EmptyView(
                 icon: Icons.folder_open_outlined,
-                title: 'No Log Files',
-                message: 'No log files available on disk.',
+                title: 'Aucun fichier journal',
+                message: 'Aucun fichier journal disponible sur le disque.',
               ),
             );
           }
@@ -243,12 +243,12 @@ class LogFilesView extends ConsumerWidget {
                         ),
                         IconButton(
                           icon: const Icon(Icons.download_outlined, size: 20),
-                          tooltip: 'Download',
+                          tooltip: 'Télécharger',
                           onPressed: () => _downloadFile(context, file),
                         ),
                         IconButton(
                           icon: const Icon(Icons.info_outline, size: 20),
-                          tooltip: 'Details',
+                          tooltip: 'Détails',
                           onPressed: () => _showFileDetailDialog(context, file),
                         ),
                         const Icon(

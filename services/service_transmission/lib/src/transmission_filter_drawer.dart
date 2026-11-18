@@ -88,14 +88,14 @@ class TransmissionFilterDrawer extends ConsumerWidget {
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    child: Text('Filters', style: theme.textTheme.titleMedium),
+                    child: Text('Filtres', style: theme.textTheme.titleMedium),
                   ),
                   if (filter.isActive)
                     TextButton(
                       onPressed: () => ref
                           .read(transmissionFilterProvider(instance).notifier)
                           .state = const TransmissionFilter(),
-                      child: const Text('Clear'),
+                      child: const Text('Effacer'),
                     ),
                 ],
               ),
@@ -155,7 +155,7 @@ class TransmissionFilterDrawer extends ConsumerWidget {
             if (trackers.isNotEmpty)
               section('Trackers', <Widget>[
                 tile(
-                  title: 'All trackers',
+                  title: 'Tous les trackers',
                   count: countFor(filter.copyWith(tracker: '')),
                   icon: Icons.dns,
                   selected: filter.tracker.isEmpty,
@@ -177,7 +177,7 @@ class TransmissionFilterDrawer extends ConsumerWidget {
             if (labels.isNotEmpty)
               section('Labels', <Widget>[
                 tile(
-                  title: 'All labels',
+                  title: 'Tous les labels',
                   count: countFor(filter.copyWith(label: '')),
                   icon: Icons.sell,
                   selected: filter.label.isEmpty,

@@ -97,7 +97,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      expect(find.text('Interactive Search'), findsOneWidget);
+      expect(find.text('Recherche interactive'), findsOneWidget);
       expect(find.text('Kyogen'), findsOneWidget);
       expect(find.text('Ado - Kyogen [FLAC]'), findsOneWidget);
       expect(find.text('Ado - Kyogen [MP3 320]'), findsOneWidget);
@@ -130,11 +130,11 @@ void main() {
       await tester.tap(find.byTooltip('Rejected (Force Grab)'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Force Grab Release?'), findsOneWidget);
+      expect(find.text('Forcer le grab de la release ?'), findsOneWidget);
       expect(find.text('Existing file meets cutoff: FLAC'), findsAtLeast(1));
 
       // Confirm force grab
-      await tester.tap(find.widgetWithText(FilledButton, 'Grab Anyway'));
+      await tester.tap(find.widgetWithText(FilledButton, 'Grab quand même'));
       await tester.pumpAndSettle();
 
       expect(postGrabCalled, isTrue);
@@ -265,41 +265,41 @@ void main() {
       await tester.pumpAndSettle();
 
       // 1. Verify Queue sub-tab
-      expect(find.text('Queue'), findsOneWidget);
-      expect(find.text('History'), findsOneWidget);
-      expect(find.text('Blocklist'), findsOneWidget);
+      expect(find.text("File d'attente"), findsOneWidget);
+      expect(find.text('Historique'), findsOneWidget);
+      expect(find.text('Liste de blocage'), findsOneWidget);
       expect(find.text('Kyogen'), findsOneWidget);
       expect(find.textContaining('Ado'), findsAtLeast(1));
 
       // Remove from Queue
-      await tester.tap(find.byTooltip('Remove from Queue'));
+      await tester.tap(find.byTooltip("Retirer de la file d'attente"));
       await tester.pumpAndSettle();
 
-      expect(find.text('Remove from Queue'), findsOneWidget);
-      await tester.tap(find.widgetWithText(FilledButton, 'Remove'));
+      expect(find.text("Retirer de la file d'attente"), findsOneWidget);
+      await tester.tap(find.widgetWithText(FilledButton, 'Retirer'));
       await tester.pumpAndSettle();
 
       expect(queueDeleted, isTrue);
       expect(deletedQueueId, equals(101));
 
       // 2. Switch to History sub-tab
-      await tester.tap(find.text('History'));
+      await tester.tap(find.text('Historique'));
       await tester.pumpAndSettle();
 
       expect(find.text('Ado - Kyogen [FLAC] (Grabbed)'), findsOneWidget);
 
       // Open Filter Sheet
-      await tester.tap(find.byTooltip('Filter & Group History'));
+      await tester.tap(find.byTooltip("Filtrer et grouper l'historique"));
       await tester.pumpAndSettle();
 
       expect(find.text('Event Type Filter'), findsOneWidget);
-      expect(find.text('Grabbed'), findsOneWidget);
-      expect(find.text('Imported'), findsOneWidget);
-      expect(find.text('Failed'), findsOneWidget);
-      expect(find.text('Deleted'), findsOneWidget);
+      expect(find.text('Grabée'), findsOneWidget);
+      expect(find.text('Importée'), findsOneWidget);
+      expect(find.text('Échec'), findsOneWidget);
+      expect(find.text('Supprimée'), findsOneWidget);
 
       // Filter by 'Imported' -> empty list
-      await tester.tap(find.text('Imported'));
+      await tester.tap(find.text('Importée'));
       await tester.pumpAndSettle();
       // Dismiss sheet
       await tester.tapAt(const Offset(20, 20));
@@ -307,39 +307,39 @@ void main() {
       expect(find.text('Ado - Kyogen [FLAC] (Grabbed)'), findsNothing);
 
       // Open Filter Sheet and Reset
-      await tester.tap(find.byTooltip('Filter & Group History'));
+      await tester.tap(find.byTooltip("Filtrer et grouper l'historique"));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('All Events'));
+      await tester.tap(find.text('Tous les événements'));
       await tester.pumpAndSettle();
       await tester.tapAt(const Offset(20, 20));
       await tester.pumpAndSettle();
       expect(find.text('Ado - Kyogen [FLAC] (Grabbed)'), findsOneWidget);
 
       // Mark as Failed
-      await tester.tap(find.byTooltip('Mark as Failed'));
+      await tester.tap(find.byTooltip('Marquer comme échoué'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Mark as Failed?'), findsOneWidget);
-      await tester.tap(find.widgetWithText(FilledButton, 'Mark Failed'));
+      expect(find.text('Marquer comme échoué ?'), findsOneWidget);
+      await tester.tap(find.widgetWithText(FilledButton, 'Marquer comme échoué'));
       await tester.pumpAndSettle();
 
       expect(historyFailedCalled, isTrue);
       expect(failedHistoryId, equals(1));
 
       // 3. Switch to Blocklist sub-tab
-      await tester.tap(find.text('Blocklist'));
+      await tester.tap(find.text('Liste de blocage'));
       await tester.pumpAndSettle();
 
       expect(find.text('Ado - Fake Track [MP3]'), findsOneWidget);
       expect(find.text('Invalid track length / bad quality'), findsOneWidget);
-      expect(find.byTooltip('Clear Blocklist'), findsOneWidget);
+      expect(find.byTooltip('Vider la liste de blocage'), findsOneWidget);
 
       // Remove from Blocklist
-      await tester.tap(find.byTooltip('Remove from Blocklist'));
+      await tester.tap(find.byTooltip('Retirer de la liste de blocage'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Remove from Blocklist?'), findsOneWidget);
-      await tester.tap(find.widgetWithText(FilledButton, 'Remove'));
+      expect(find.text('Retirer de la liste de blocage ?'), findsOneWidget);
+      await tester.tap(find.widgetWithText(FilledButton, 'Retirer'));
       await tester.pumpAndSettle();
 
       expect(blocklistDeleted, isTrue);
@@ -408,12 +408,12 @@ void main() {
       await tester.pumpAndSettle();
 
       // 1. Verify Unified Search Bar in header
-      expect(find.text('Search activity...'), findsOneWidget);
+      expect(find.text("Rechercher dans l'activité…"), findsOneWidget);
 
       // Filter query that doesn't match
       await tester.enterText(find.byType(TextField), 'Yoasobi');
       await tester.pumpAndSettle();
-      expect(find.text('No matches found'), findsOneWidget);
+      expect(find.text('Aucune correspondance trouvée'), findsOneWidget);
 
       // Clear search
       await tester.tap(find.byIcon(Icons.clear));
@@ -421,17 +421,17 @@ void main() {
       expect(find.text('Kyogen'), findsOneWidget);
 
       // 2. Toggle grouping mode (default grouped -> plain list)
-      expect(find.byTooltip('Switch to plain list'), findsOneWidget);
-      await tester.tap(find.byTooltip('Switch to plain list'));
+      expect(find.byTooltip('Passer à la liste simple'), findsOneWidget);
+      await tester.tap(find.byTooltip('Passer à la liste simple'));
       await tester.pumpAndSettle();
-      expect(find.byTooltip('Switch to grouped view'), findsOneWidget);
+      expect(find.byTooltip('Passer à la vue groupée'), findsOneWidget);
 
       // 3. Tap on queue item to open Deep Diagnostics Sheet
       await tester.tap(find.text('Kyogen'));
       await tester.pumpAndSettle();
 
       // Verify Deep Item Modal Sheet content
-      expect(find.text('Download Details'), findsOneWidget);
+      expect(find.text('Détails du téléchargement'), findsOneWidget);
       expect(find.text('Technical Details'), findsOneWidget);
       expect(find.text('qBittorrent'), findsOneWidget);
       expect(find.text('Nyaa'), findsOneWidget);
@@ -439,11 +439,11 @@ void main() {
       expect(find.text('100'), findsOneWidget);
       expect(find.text('/downloads/music/Ado'), findsOneWidget);
       expect(
-        find.widgetWithText(FilledButton, 'Manual Import'),
+        find.widgetWithText(FilledButton, 'Import manuel'),
         findsOneWidget,
       );
       expect(
-        find.widgetWithText(OutlinedButton, 'Interactive Search'),
+        find.widgetWithText(OutlinedButton, 'Recherche interactive'),
         findsOneWidget,
       );
 
@@ -455,7 +455,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(find.text('Download Details'), findsNothing);
+      expect(find.text('Détails du téléchargement'), findsNothing);
     });
 
     testWidgets(

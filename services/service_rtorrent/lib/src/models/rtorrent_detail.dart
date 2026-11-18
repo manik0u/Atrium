@@ -106,8 +106,8 @@ abstract class RtorrentFile with _$RtorrentFile {
   String get displayName => path.contains('/') ? path.split('/').last : path;
 
   String get priorityLabel => switch (priority) {
-        0 => 'Skip',
-        2 => 'High',
+        0 => 'Ignorer',
+        2 => 'Élevée',
         _ => 'Normal',
       };
 }

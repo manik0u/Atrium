@@ -24,7 +24,7 @@ class OmbiRequestService {
       return response.data;
     }
     throw OmbiException(
-      response.error?.message ?? 'Movie request info failed',
+      response.error?.message ?? 'Échec des infos de la demande de film',
       statusCode: response.statusCode,
       error: response.error,
     );

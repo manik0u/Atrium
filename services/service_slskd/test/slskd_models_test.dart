@@ -10,7 +10,7 @@ void main() {
         'id': '6fa459ea-ee8a-3ca4-894e-db77e160355e',
         'batchId': '3fa85f64-5717-4562-b3fc-2c963f66afa6',
         'username': 'MusicLover42',
-        'direction': 'Download',
+        'direction': 'Télécharger',
         'filename': 'Music\\Daft Punk\\Discovery\\01 - One More Time.flac',
         'size': 35000000,
         'state': 'InProgress',
@@ -43,7 +43,7 @@ void main() {
       final completed = SlskdTransfer.fromJson({
         'id': '1',
         'username': 'u1',
-        'direction': 'Download',
+        'direction': 'Télécharger',
         'filename': 'test.mp3',
         'size': 1000,
         'state': 'Completed, Succeeded',
@@ -59,7 +59,7 @@ void main() {
       final failed = SlskdTransfer.fromJson({
         'id': '2',
         'username': 'u1',
-        'direction': 'Download',
+        'direction': 'Télécharger',
         'filename': 'test.mp3',
         'size': 1000,
         'state': 'Completed, Errored',
@@ -74,7 +74,7 @@ void main() {
       final queued = SlskdTransfer.fromJson({
         'id': '3',
         'username': 'u1',
-        'direction': 'Upload',
+        'direction': 'Téléverser',
         'filename': 'test.mp3',
         'size': 1000,
         'state': 'Queued, Remotely',
@@ -98,7 +98,7 @@ void main() {
               {
                 'id': 'f1',
                 'username': 'audiophile',
-                'direction': 'Download',
+                'direction': 'Télécharger',
                 'filename': 'FLAC/Radiohead/Kid A/01 Everything.flac',
                 'size': 20000000,
                 'bytesTransferred': 10000000,
@@ -109,7 +109,7 @@ void main() {
               {
                 'id': 'f2',
                 'username': 'audiophile',
-                'direction': 'Download',
+                'direction': 'Télécharger',
                 'filename': 'FLAC/Radiohead/Kid A/02 Kid A.flac',
                 'size': 20000000,
                 'bytesTransferred': 5000000,
@@ -152,7 +152,7 @@ void main() {
       final searchJson = {
         'id': 's-123',
         'searchText': 'Aphex Twin',
-        'state': 'Completed',
+        'state': 'Terminé',
         'isComplete': true,
         'fileCount': 150,
         'lockedFileCount': 5,
@@ -258,7 +258,7 @@ void main() {
       });
 
       expect(onlineUser.isOnline, isTrue);
-      expect(onlineUser.statusLabel, 'Online');
+      expect(onlineUser.statusLabel, 'En ligne');
       expect(onlineUser.countryCode, 'DE');
       expect(onlineUser.fileCount, 12000);
     });
@@ -352,7 +352,7 @@ void main() {
     test('SlskdLogRecord parsing and severity helpers', () {
       final log = SlskdLogRecord.fromJson({
         'timestamp': '2026-10-24T12:00:00Z',
-        'level': 'Error',
+        'level': 'Erreur',
         'context': 'SoulseekClient',
         'message': 'Connection reset by peer',
       });
@@ -369,13 +369,13 @@ void main() {
           'id': 'b1',
           'searchId': 's1',
           'username': 'peerA',
-          'direction': 'Download',
+          'direction': 'Télécharger',
           'createdAt': '2026-10-24T12:00:00Z',
           'transfers': [
             {
               'id': 't1',
               'username': 'peerA',
-              'direction': 'Download',
+              'direction': 'Télécharger',
               'filename': 'a.mp3',
               'size': 100,
               'state': 'InProgress',
@@ -411,7 +411,7 @@ void main() {
 
       final status = SlskdUserStatus.fromJson({
         'isPrivileged': true,
-        'presence': 'Online',
+        'presence': 'En ligne',
       });
       expect(status.isPrivileged, isTrue);
       expect(status.isOnline, isTrue);
@@ -445,7 +445,7 @@ void main() {
       final searchActive = SlskdSearch.fromJson({
         'id': 's2',
         'searchText': 'justice',
-        'state': 'Requested',
+        'state': 'Demandé',
         'startedAt': '2026-10-24T12:00:00Z',
       });
       expect(searchActive.isComplete, isFalse);
@@ -529,7 +529,7 @@ void main() {
       final transfer = SlskdTransfer.fromJson({
         'id': '99',
         'username': 'u1',
-        'direction': 'Download',
+        'direction': 'Télécharger',
         'filename': 'Music/album/song.mp3',
         'size': 5000,
         'state': 'Completed, Failed',
@@ -542,7 +542,7 @@ void main() {
       final search = SlskdSearch.fromJson({
         'id': 's1',
         'searchText': 'test query',
-        'state': 'Errored',
+        'state': 'En erreur',
       });
       expect(search.isComplete, isTrue);
     });

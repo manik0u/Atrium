@@ -112,7 +112,7 @@ class DashboardRequestsWidget extends ConsumerWidget {
         },
       );
     } else if (entries.isEmpty) {
-      body = const DashboardIdleRow(text: 'No requests yet');
+      body = const DashboardIdleRow(text: 'Aucune demande pour le moment');
     } else {
       body = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,7 +128,7 @@ class DashboardRequestsWidget extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.only(top: Insets.sm),
               child: DashboardIdleRow(
-                text: '+${entries.length - top.length} more',
+                text: '+${entries.length - top.length} de plus',
               ),
             ),
         ],
@@ -149,7 +149,7 @@ class DashboardRequestsWidget extends ConsumerWidget {
       trailing: totalRequested > 0
           ? DashboardPill(
               icon: Icons.bookmark_added_outlined,
-              label: '$totalRequested requested',
+              label: '$totalRequested demandé(s)',
               color: cs.secondary,
             )
           : null,
@@ -173,7 +173,7 @@ class _SeerrRequestRow extends ConsumerWidget {
     // Fall back to the request type while it loads or when there is no
     // TMDB id.
     final int? tmdbId = r.media?.tmdbId;
-    String title = r.type == 'movie' ? 'Movie request' : 'Series request';
+    String title = r.type == 'movie' ? 'Demande de film' : 'Demande de série';
     String? posterPath;
     if (tmdbId != null) {
       final String mediaType =
@@ -215,10 +215,10 @@ class _SeerrRequestRow extends ConsumerWidget {
       return ('Needs approval', cs.primary);
     }
     return switch (r.media?.status ?? 1) {
-      5 => ('Available', cs.tertiary),
-      4 => ('Partial', cs.tertiary),
-      3 => ('Processing', cs.secondary),
-      _ => ('Requested', cs.onSurfaceVariant),
+      5 => ('Disponible', cs.tertiary),
+      4 => ('Partiel', cs.tertiary),
+      3 => ('En cours de traitement', cs.secondary),
+      _ => ('Demandé', cs.onSurfaceVariant),
     };
   }
 }

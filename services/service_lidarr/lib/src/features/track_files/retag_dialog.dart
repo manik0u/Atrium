@@ -94,7 +94,7 @@ class _LidarrRetagDialogState extends ConsumerState<LidarrRetagDialog> {
       );
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Failed to execute retag');
+        throw Exception(resp.error?.message ?? "Échec de l'exécution du re-tag");
       }
 
       if (!mounted) return;
@@ -139,7 +139,7 @@ class _LidarrRetagDialogState extends ConsumerState<LidarrRetagDialog> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Retag failed: $e'),
+            content: Text('Échec du re-tag : $e'),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -218,7 +218,7 @@ class _LidarrRetagDialogState extends ConsumerState<LidarrRetagDialog> {
                     );
                   },
                   icon: const Icon(Icons.refresh),
-                  label: const Text('Retry'),
+                  label: const Text('Réessayer'),
                 ),
               ],
             ),
@@ -249,7 +249,7 @@ class _LidarrRetagDialogState extends ConsumerState<LidarrRetagDialog> {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        'All tags are up-to-date',
+                        'Toutes les balises sont à jour',
                         style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -257,7 +257,7 @@ class _LidarrRetagDialogState extends ConsumerState<LidarrRetagDialog> {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        'No audio files need tag modifications.',
+                        "Aucun fichier audio n'a besoin de modification de balises.",
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: cs.onSurfaceVariant,
                         ),
@@ -413,9 +413,9 @@ class _LidarrRetagDialogState extends ConsumerState<LidarrRetagDialog> {
                                             Flexible(
                                               child: Text(
                                                 change.oldValue?.isEmpty == true
-                                                    ? '<empty>'
+                                                    ? '<vide>'
                                                     : change.oldValue ??
-                                                        '<empty>',
+                                                        '<vide>',
                                                 style: theme.textTheme.bodySmall
                                                     ?.copyWith(
                                                   color: cs.error,
@@ -439,9 +439,9 @@ class _LidarrRetagDialogState extends ConsumerState<LidarrRetagDialog> {
                                             Flexible(
                                               child: Text(
                                                 change.newValue?.isEmpty == true
-                                                    ? '<empty>'
+                                                    ? '<vide>'
                                                     : change.newValue ??
-                                                        '<empty>',
+                                                        '<vide>',
                                                 style: theme.textTheme.bodySmall
                                                     ?.copyWith(
                                                   color: cs.tertiary,
@@ -471,7 +471,7 @@ class _LidarrRetagDialogState extends ConsumerState<LidarrRetagDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: _retagging ? null : () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         previewAsync.maybeWhen(
           data: (List<RetagTrackResource> files) {

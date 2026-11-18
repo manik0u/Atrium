@@ -13,7 +13,7 @@ void main() {
   test('Profile.fromJson without new keys falls back to defaults', () {
     final Profile profile = Profile.fromJson(<String, dynamic>{
       'id': 'p1',
-      'name': 'Default',
+      'name': 'Par défaut',
       'instances': <dynamic>[],
     });
 
@@ -24,7 +24,7 @@ void main() {
   test('round-trip preserves headers and WOL devices', () {
     const Profile profile = Profile(
       id: 'p1',
-      name: 'Default',
+      name: 'Par défaut',
       instances: <Instance>[
         Instance(
           id: 'i1',

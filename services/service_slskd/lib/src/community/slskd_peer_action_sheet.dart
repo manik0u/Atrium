@@ -158,8 +158,8 @@ class SlskdPeerActionSheet extends ConsumerWidget {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             child: ListTile(
               leading: Icon(Icons.folder_shared_rounded, color: colorScheme.primary),
-              title: const Text('Browse User Shares', style: TextStyle(fontWeight: FontWeight.w600)),
-              subtitle: const Text('Explore files, albums, and discographies'),
+              title: const Text("Parcourir les partages de l'utilisateur", style: TextStyle(fontWeight: FontWeight.w600)),
+              subtitle: const Text('Explorez les fichiers, albums et discographies'),
               trailing: const Icon(Icons.chevron_right_rounded),
               onTap: () {
                 Navigator.of(context).pop();
@@ -178,8 +178,8 @@ class SlskdPeerActionSheet extends ConsumerWidget {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             child: ListTile(
               leading: Icon(Icons.chat_bubble_outline_rounded, color: colorScheme.tertiary),
-              title: const Text('Send Direct Message', style: TextStyle(fontWeight: FontWeight.w600)),
-              subtitle: const Text('Open a private 1-on-1 chat conversation'),
+              title: const Text('Envoyer un message privé', style: TextStyle(fontWeight: FontWeight.w600)),
+              subtitle: const Text('Ouvrir une conversation privée individuelle'),
               trailing: const Icon(Icons.chevron_right_rounded),
               onTap: () {
                 Navigator.of(context).pop();
@@ -199,8 +199,8 @@ class SlskdPeerActionSheet extends ConsumerWidget {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             child: ListTile(
               leading: Icon(Icons.account_circle_outlined, color: colorScheme.secondary),
-              title: const Text('View User Profile', style: TextStyle(fontWeight: FontWeight.w600)),
-              subtitle: const Text('Check bio, avatar, and upload slot metrics'),
+              title: const Text("Voir le profil de l'utilisateur", style: TextStyle(fontWeight: FontWeight.w600)),
+              subtitle: const Text("Consultez la bio, l'avatar et les métriques d'emplacement d'envoi"),
               trailing: const Icon(Icons.chevron_right_rounded),
               onTap: () {
                 final parentContext = Navigator.of(context).context;

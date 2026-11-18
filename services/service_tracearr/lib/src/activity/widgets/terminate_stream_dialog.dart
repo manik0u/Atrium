@@ -88,7 +88,7 @@ class _TerminateStreamDialogState extends State<TerminateStreamDialog> {
         setState(() => _isTerminating = false);
         scaffoldMessenger.showSnackBar(
           const SnackBar(
-            content: Text('Failed to terminate stream. Please try again.'),
+            content: Text("Impossible d'interrompre le flux. Veuillez réessayer."),
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -98,7 +98,7 @@ class _TerminateStreamDialogState extends State<TerminateStreamDialog> {
       setState(() => _isTerminating = false);
       scaffoldMessenger.showSnackBar(
         SnackBar(
-          content: Text('Error terminating stream: $e'),
+          content: Text("Erreur lors de l'interruption du flux : $e"),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -118,7 +118,7 @@ class _TerminateStreamDialogState extends State<TerminateStreamDialog> {
               Icon(Icons.stop_circle_outlined, color: colorScheme.error),
               const SizedBox(width: Insets.sm),
               const Expanded(
-                child: Text('Terminate Stream'),
+                child: Text('Interrompre le flux'),
               ),
             ],
           ),
@@ -141,7 +141,7 @@ class _TerminateStreamDialogState extends State<TerminateStreamDialog> {
                 ),
                 const SizedBox(height: Insets.md),
                 Text(
-                  'Quick Message Preset:',
+                  'Préréglage de message rapide :',
                   style: theme.textTheme.labelMedium?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                   ),
@@ -167,8 +167,8 @@ class _TerminateStreamDialogState extends State<TerminateStreamDialog> {
                 TextField(
                   controller: _messageController,
                   decoration: const InputDecoration(
-                    labelText: 'Custom Message to User (Optional)',
-                    hintText: 'e.g. Server restarting in 5 minutes',
+                    labelText: "Message personnalisé pour l'utilisateur (facultatif)",
+                    hintText: 'ex. Le serveur redémarre dans 5 minutes',
                     border: OutlineInputBorder(),
                     isDense: true,
                   ),
@@ -183,7 +183,7 @@ class _TerminateStreamDialogState extends State<TerminateStreamDialog> {
               onPressed: _isTerminating
                   ? null
                   : () => Navigator.of(context).pop(false),
-              child: const Text('Cancel'),
+              child: const Text('Annuler'),
             ),
             FilledButton(
               style: FilledButton.styleFrom(
@@ -200,7 +200,7 @@ class _TerminateStreamDialogState extends State<TerminateStreamDialog> {
                         color: Colors.white,
                       ),
                     )
-                  : const Text('Stop Stream'),
+                  : const Text('Arrêter le flux'),
             ),
           ],
         );

@@ -47,7 +47,7 @@ class BazarrSubtitleSearchScreen extends ConsumerWidget {
         );
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Search subtitles'),
+        title: const Text('Rechercher des sous-titres'),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(20),
           child: Padding(
@@ -75,8 +75,8 @@ class BazarrSubtitleSearchScreen extends ConsumerWidget {
           if (list.isEmpty) {
             return const EmptyView(
               icon: Icons.search_off,
-              title: 'No subtitles found',
-              message: 'No provider returned a match.',
+              title: 'Aucun sous-titre trouvé',
+              message: "Aucun fournisseur n'a renvoyé de correspondance.",
             );
           }
           return ListView.builder(
@@ -146,12 +146,12 @@ class _ResultCardState extends ConsumerState<_ResultCard> {
       ref.invalidate(bazarrWantedProvider(widget.instance));
       ref.invalidate(bazarrBadgesProvider(widget.instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Subtitle downloaded')),
+        const SnackBar(content: Text('Sous-titre téléchargé')),
       );
       nav.pop();
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Download failed: ${_err(e)}')),
+        SnackBar(content: Text('Échec du téléchargement : ${_err(e)}')),
       );
       if (mounted) {
         setState(() => _downloading = false);
@@ -190,8 +190,8 @@ class _ResultCardState extends ConsumerState<_ResultCard> {
               crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
                 Text('Score ${r.score}', style: theme.textTheme.labelSmall),
-                if (hi) Text('HI', style: theme.textTheme.labelSmall),
-                if (forced) Text('Forced', style: theme.textTheme.labelSmall),
+                if (hi) Text('ÉLEVÉ', style: theme.textTheme.labelSmall),
+                if (forced) Text('Forcé', style: theme.textTheme.labelSmall),
                 if (r.uploader != null && r.uploader!.isNotEmpty)
                   Text(
                     r.uploader!,
@@ -209,7 +209,7 @@ class _ResultCardState extends ConsumerState<_ResultCard> {
                 child: ExpressiveProgressIndicator(strokeWidth: 2),
               )
             : IconButton(
-                tooltip: 'Download',
+                tooltip: 'Télécharger',
                 icon: const Icon(Icons.download_outlined),
                 onPressed: _download,
               ),

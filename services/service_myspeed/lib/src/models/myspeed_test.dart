@@ -113,8 +113,8 @@ class MySpeedTest {
     return double.tryParse(val.toString()) ?? 0.0;
   }
 
-  String get formattedDownload => '${download.toStringAsFixed(1)} Mbps';
-  String get formattedUpload => '${upload.toStringAsFixed(1)} Mbps';
+  String get formattedDownload => '${download.toStringAsFixed(1)} Mbit/s';
+  String get formattedUpload => '${upload.toStringAsFixed(1)} Mbit/s';
   String get formattedPing => '${ping.toStringAsFixed(0)} ms';
   String? get formattedJitter => jitter != null ? '${jitter!.toStringAsFixed(0)} ms' : null;
 

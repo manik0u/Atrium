@@ -54,7 +54,7 @@ Future<void> launchPlexDeepLink(BuildContext context, {String? webUrl}) async {
   if (context.mounted) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Could not open the Plex app.'),
+        content: Text("Impossible d'ouvrir l'application Plex."),
         behavior: SnackBarBehavior.floating,
       ),
     );

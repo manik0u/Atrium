@@ -52,26 +52,26 @@ class SettingsTab extends ConsumerWidget {
 
   static final List<_SettingsGroup> _groups = [
     _SettingsGroup(
-      title: 'Profiles & Quality',
+      title: 'Profils et qualité',
       items: [
         _SettingsItem(
           id: 'profiles',
-          title: 'Profiles',
-          subtitle: 'Quality, metadata, delay, and release profiles',
+          title: 'Profils',
+          subtitle: 'Profils de qualité, métadonnées, délai et release',
           icon: Icons.tune,
           builder: (context, instance) => ProfilesSection(instance: instance),
         ),
         _SettingsItem(
           id: 'quality',
-          title: 'Quality Definitions',
-          subtitle: 'Bitrate thresholds and file size limits',
+          title: 'Définitions de qualité',
+          subtitle: 'Seuils de débit et limites de taille de fichier',
           icon: Icons.high_quality_outlined,
           builder: (context, instance) => QualitySection(instance: instance),
         ),
         _SettingsItem(
           id: 'custom_formats',
-          title: 'Custom Formats',
-          subtitle: 'Release matching rules and scoring',
+          title: 'Formats personnalisés',
+          subtitle: 'Règles de correspondance des releases et scoring',
           icon: Icons.filter_list,
           builder: (context, instance) =>
               CustomFormatsSection(instance: instance),
@@ -79,55 +79,55 @@ class SettingsTab extends ConsumerWidget {
       ],
     ),
     _SettingsGroup(
-      title: 'Media & Organization',
+      title: 'Médias et organisation',
       items: [
         _SettingsItem(
           id: 'media_management',
-          title: 'Media Management',
-          subtitle: 'Track naming, folder structures, and importing',
+          title: 'Gestion des médias',
+          subtitle: 'Nommage des pistes, structures de dossiers et import',
           icon: Icons.folder_copy_outlined,
           builder: (context, instance) =>
               MediaManagementSection(instance: instance),
         ),
         _SettingsItem(
           id: 'root_folders',
-          title: 'Root Folders',
-          subtitle: 'Library storage paths and disk space',
+          title: 'Dossiers racine',
+          subtitle: 'Chemins de stockage de la bibliothèque et espace disque',
           icon: Icons.folder_open_outlined,
           builder: (context, instance) =>
               RootFoldersSection(instance: instance),
         ),
         _SettingsItem(
           id: 'tags',
-          title: 'Tags',
-          subtitle: 'Artist and release organization labels',
+          title: 'Balises',
+          subtitle: "Labels d'organisation des artistes et releases",
           icon: Icons.label_outline,
           builder: (context, instance) => TagsSection(instance: instance),
         ),
       ],
     ),
     _SettingsGroup(
-      title: 'Indexers & Downloads',
+      title: 'Indexeurs et téléchargements',
       items: [
         _SettingsItem(
           id: 'indexers',
-          title: 'Indexers',
-          subtitle: 'Search feeds and restrictions',
+          title: 'Indexeurs',
+          subtitle: 'Flux de recherche et restrictions',
           icon: Icons.travel_explore,
           builder: (context, instance) => IndexersSection(instance: instance),
         ),
         _SettingsItem(
           id: 'download_clients',
-          title: 'Download Clients',
-          subtitle: 'Torrent and Usenet client connections',
+          title: 'Clients de téléchargement',
+          subtitle: 'Connexions des clients torrent et Usenet',
           icon: Icons.download_outlined,
           builder: (context, instance) =>
               DownloadClientsSection(instance: instance),
         ),
         _SettingsItem(
           id: 'import_lists',
-          title: 'Import Lists',
-          subtitle: 'Spotify, Last.fm, and automated sync',
+          title: "Listes d'import",
+          subtitle: 'Spotify, Last.fm et synchro automatique',
           icon: Icons.playlist_add,
           builder: (context, instance) =>
               ImportListsSection(instance: instance),
@@ -135,27 +135,27 @@ class SettingsTab extends ConsumerWidget {
       ],
     ),
     _SettingsGroup(
-      title: 'Integrations & Host',
+      title: 'Intégrations et hôte',
       items: [
         _SettingsItem(
           id: 'connect',
-          title: 'Connect',
-          subtitle: 'Discord, Telegram, Webhooks, and alerts',
+          title: 'Se connecter',
+          subtitle: 'Discord, Telegram, webhooks et alertes',
           icon: Icons.notifications_active_outlined,
           builder: (context, instance) => ConnectSection(instance: instance),
         ),
         _SettingsItem(
           id: 'metadata',
-          title: 'Metadata Consumers',
-          subtitle: 'Kodi, Roon, and local music player metadata',
+          title: 'Consommateurs de métadonnées',
+          subtitle: 'Métadonnées Kodi, Roon et lecteurs locaux',
           icon: Icons.perm_media_outlined,
           builder: (context, instance) =>
               MetadataConsumersSection(instance: instance),
         ),
         _SettingsItem(
           id: 'general',
-          title: 'General',
-          subtitle: 'Host, port, SSL, authentication, and security',
+          title: 'Général',
+          subtitle: 'Hôte, port, SSL, authentification et sécurité',
           icon: Icons.settings_outlined,
           builder: (context, instance) =>
               GeneralSettingsSection(instance: instance),
@@ -191,7 +191,7 @@ class SettingsTab extends ConsumerWidget {
             backgroundColor: theme.colorScheme.surface,
             leading: IconButton(
               icon: const Icon(Icons.menu),
-              tooltip: 'Open drawer',
+              tooltip: 'Ouvrir le menu latéral',
               onPressed: () => Scaffold.of(context).openDrawer(),
             ),
             title: Text(

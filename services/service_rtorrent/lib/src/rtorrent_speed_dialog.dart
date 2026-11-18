@@ -68,7 +68,7 @@ class _SpeedDialogContentState extends State<_SpeedDialogContent> {
             ListTile(
               contentPadding: EdgeInsets.zero,
               selected: unlimited,
-              title: const Text('Unlimited'),
+              title: const Text('Illimité'),
               trailing: unlimited ? const Icon(Icons.check) : null,
               onTap: () => Navigator.of(context).pop(0),
             ),
@@ -86,7 +86,7 @@ class _SpeedDialogContentState extends State<_SpeedDialogContent> {
               controller: _custom,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: 'Custom (KB/s)',
+                labelText: 'Personnalisée (Ko/s)',
                 helperText: unlimited
                     ? 'Currently unlimited'
                     : 'Currently $currentKbps KB/s',
@@ -99,11 +99,11 @@ class _SpeedDialogContentState extends State<_SpeedDialogContent> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: _submitCustom,
-          child: const Text('Set'),
+          child: const Text('Définir'),
         ),
       ],
     );

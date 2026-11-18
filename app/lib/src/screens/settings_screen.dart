@@ -52,7 +52,7 @@ class SettingsScreen extends ConsumerWidget {
             );
           },
         ),
-        title: const Text('Settings'),
+        title: const Text('Paramètres'),
       ),
       body: ListView(
         children: <Widget>[
@@ -68,15 +68,15 @@ class SettingsScreen extends ConsumerWidget {
               children: <Widget>[
                 RadioListTile<ThemeMode>(
                   value: ThemeMode.system,
-                  title: Text('System default'),
+                  title: Text('Valeur par défaut du système'),
                 ),
                 RadioListTile<ThemeMode>(
                   value: ThemeMode.light,
-                  title: Text('Light'),
+                  title: Text('Clair'),
                 ),
                 RadioListTile<ThemeMode>(
                   value: ThemeMode.dark,
-                  title: Text('Dark'),
+                  title: Text('Sombre'),
                 ),
               ],
             ),
@@ -117,7 +117,7 @@ class SettingsScreen extends ConsumerWidget {
               dropdownMenuEntries: const <DropdownMenuEntry<String?>>[
                 DropdownMenuEntry<String?>(
                   value: null,
-                  label: 'System default',
+                  label: 'Valeur par défaut du système',
                 ),
                 DropdownMenuEntry<String?>(
                   value: 'JetBrainsMono Nerd Font',
@@ -143,22 +143,22 @@ class SettingsScreen extends ConsumerWidget {
             title: const Text('Wake-on-LAN'),
             subtitle: Text(
               wolCount == 0
-                  ? 'No devices configured'
+                  ? 'Aucun appareil configuré'
                   : '$wolCount device${wolCount == 1 ? '' : 's'} configured',
             ),
             onTap: () => pushScreen<void>(context, const WakeOnLanScreen()),
           ),
           ListTile(
             leading: const Icon(Icons.language_outlined),
-            title: const Text('Custom Headers'),
-            subtitle: const Text('Add headers for reverse-proxy auth'),
+            title: const Text('En-têtes personnalisés'),
+            subtitle: const Text("Ajouter des en-têtes pour l'authentification du proxy inverse"),
             onTap: () => pushScreen<void>(context, const CustomHeadersScreen()),
           ),
           const Divider(),
           const _SectionHeader('Data'),
           ListTile(
             leading: const Icon(Icons.upload_file_outlined),
-            title: const Text('Export active profile'),
+            title: const Text('Exporter le profil actif'),
             subtitle: const Text(
               'Save the active profile to a JSON file. Optionally include '
               'secrets.',
@@ -167,7 +167,7 @@ class SettingsScreen extends ConsumerWidget {
           ),
           ListTile(
             leading: const Icon(Icons.file_download_outlined),
-            title: const Text('Import profile'),
+            title: const Text('Importer un profil'),
             subtitle: const Text(
               'Add a profile from a JSON file. Your existing profiles are '
               'kept.',
@@ -178,9 +178,9 @@ class SettingsScreen extends ConsumerWidget {
           const _SectionHeader('Sidebar'),
           ListTile(
             leading: const Icon(Icons.reorder_rounded),
-            title: const Text('Reorder sidebar services'),
+            title: const Text('Réorganiser les services de la barre latérale'),
             subtitle:
-                const Text('Drag to change the order services appear in.'),
+                const Text("Faites glisser pour changer l'ordre d'affichage des services."),
             onTap: () =>
                 pushScreen<void>(context, const ReorderSidebarScreen()),
           ),
@@ -202,8 +202,8 @@ class SettingsScreen extends ConsumerWidget {
           ),
           ListTile(
             leading: const Icon(Icons.bug_report_outlined),
-            title: const Text('Report a bug'),
-            subtitle: const Text('Open an issue on GitHub'),
+            title: const Text('Signaler un bug'),
+            subtitle: const Text('Ouvrir un ticket sur GitHub'),
             trailing: const Icon(Icons.open_in_new, size: 18),
             onTap: () => openExternal(
               ScaffoldMessenger.of(context),
@@ -212,8 +212,8 @@ class SettingsScreen extends ConsumerWidget {
           ),
           ListTile(
             leading: const Icon(Icons.lightbulb_outline),
-            title: const Text('Request a feature'),
-            subtitle: const Text('Suggest an idea on GitHub'),
+            title: const Text('Demander une fonctionnalité'),
+            subtitle: const Text('Suggérer une idée sur GitHub'),
             trailing: const Icon(Icons.open_in_new, size: 18),
             onTap: () => openExternal(
               ScaffoldMessenger.of(context),
@@ -222,8 +222,8 @@ class SettingsScreen extends ConsumerWidget {
           ),
           ListTile(
             leading: const Icon(Icons.history),
-            title: const Text('Change log'),
-            subtitle: const Text("What's new in each version"),
+            title: const Text('Journal des modifications'),
+            subtitle: const Text('Les nouveautés de chaque version'),
             onTap: () => pushScreen<void>(context, const ChangelogScreen()),
           ),
         ],
@@ -242,8 +242,8 @@ class _BiometricTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return SwitchListTile(
       secondary: const Icon(Icons.fingerprint),
-      title: const Text('Require unlock on launch'),
-      subtitle: const Text('Use biometrics or device PIN to open Atrium.'),
+      title: const Text('Exiger le déverrouillage au lancement'),
+      subtitle: const Text("Utilisez la biométrie ou le code de l'appareil pour ouvrir Atrium."),
       value: enabled,
       onChanged: (bool want) async {
         if (!want) {
@@ -256,7 +256,7 @@ class _BiometricTile extends StatelessWidget {
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text('No biometric or device credential enrolled.'),
+                content: Text("Aucune donnée biométrique ou d'identification de l'appareil enregistrée."),
               ),
             );
           }
@@ -396,7 +396,7 @@ class _ThemeSettingsSectionState extends ConsumerState<_ThemeSettingsSection> {
     } catch (_) {
       if (!mounted) return;
       messenger.showSnackBar(
-        const SnackBar(content: Text('Could not read that image')),
+        const SnackBar(content: Text('Impossible de lire cette image')),
       );
     } finally {
       if (mounted) {
@@ -462,7 +462,7 @@ class _ThemeSettingsSectionState extends ConsumerState<_ThemeSettingsSection> {
     } catch (_) {
       if (!mounted) return;
       messenger.showSnackBar(
-        const SnackBar(content: Text('Could not read that image')),
+        const SnackBar(content: Text('Impossible de lire cette image')),
       );
     }
   }
@@ -602,7 +602,7 @@ class _ThemeSettingsSectionState extends ConsumerState<_ThemeSettingsSection> {
           DropdownButtonFormField<PaletteStyle>(
             initialValue: _localPaletteStyle,
             decoration: InputDecoration(
-              labelText: 'Palette style',
+              labelText: 'Style de palette',
               filled: true,
               fillColor: previewColorScheme.surfaceContainerHighest
                   .withValues(alpha: 0.3),
@@ -626,13 +626,13 @@ class _ThemeSettingsSectionState extends ConsumerState<_ThemeSettingsSection> {
             items: PaletteStyle.values.map((style) {
               final String label = switch (style) {
                 PaletteStyle.material => 'Material',
-                PaletteStyle.vivid => 'Vivid',
-                PaletteStyle.highContrast => 'High Contrast',
+                PaletteStyle.vivid => 'Vif',
+                PaletteStyle.highContrast => 'Contraste élevé',
                 PaletteStyle.candyPop => 'Candy Pop',
-                PaletteStyle.jolly => 'Jolly',
-                PaletteStyle.oneHue => 'One Hue',
+                PaletteStyle.jolly => 'Joyeux',
+                PaletteStyle.oneHue => 'Une teinte',
                 PaletteStyle.chroma => 'Chroma',
-                PaletteStyle.ultraContrast => 'Ultra Contrast',
+                PaletteStyle.ultraContrast => 'Contraste extrême',
               };
               return DropdownMenuItem<PaletteStyle>(
                 value: style,
@@ -770,7 +770,7 @@ class _ThemeSettingsSectionState extends ConsumerState<_ThemeSettingsSection> {
                               ),
                               icon: const Icon(Icons.change_circle_outlined,
                                   size: 16),
-                              label: const Text('Change',
+                              label: const Text('Modifier',
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold)),
@@ -853,7 +853,7 @@ class _ThemeSettingsSectionState extends ConsumerState<_ThemeSettingsSection> {
                             color: previewColorScheme.onSurfaceVariant),
                         const SizedBox(height: Insets.sm),
                         Text(
-                          'No custom wallpaper loaded',
+                          "Aucun fond d'écran personnalisé chargé",
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
                               color: previewColorScheme.onSurface),
@@ -874,7 +874,7 @@ class _ThemeSettingsSectionState extends ConsumerState<_ThemeSettingsSection> {
                             foregroundColor: previewColorScheme.onPrimary,
                           ),
                           icon: const Icon(Icons.upload, size: 18),
-                          label: const Text('Pick Image'),
+                          label: const Text('Choisir une image'),
                         ),
                       ],
                     ),
@@ -1260,7 +1260,7 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Custom Color'),
+      title: const Text('Couleur personnalisée'),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -1283,7 +1283,7 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
             const SizedBox(height: Insets.lg),
             const Align(
               alignment: Alignment.centerLeft,
-              child: Text('Hue', style: TextStyle(fontWeight: FontWeight.w500)),
+              child: Text('Teinte', style: TextStyle(fontWeight: FontWeight.w500)),
             ),
             SliderTheme(
               data: SliderThemeData(
@@ -1324,7 +1324,7 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
             ),
             const Align(
               alignment: Alignment.centerLeft,
-              child: Text('Lightness',
+              child: Text('Luminosité',
                   style: TextStyle(fontWeight: FontWeight.w500)),
             ),
             Slider(
@@ -1343,7 +1343,7 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
             TextField(
               controller: _hexController,
               decoration: InputDecoration(
-                labelText: 'Hex Code',
+                labelText: 'Code hexadécimal',
                 prefixText: '# ',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -1373,11 +1373,11 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(_currentColor),
-          child: const Text('Select'),
+          child: const Text('Sélectionner'),
         ),
       ],
     );

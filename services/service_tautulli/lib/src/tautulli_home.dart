@@ -30,10 +30,10 @@ class TautulliHome extends StatelessWidget {
             isScrollable: true,
             tabAlignment: TabAlignment.start,
             tabs: <Widget>[
-              Tab(icon: Icon(Icons.play_circle_outline), text: 'Activity'),
-              Tab(icon: Icon(Icons.history), text: 'History'),
-              Tab(icon: Icon(Icons.bar_chart_outlined), text: 'Stats'),
-              Tab(icon: Icon(Icons.people_alt_outlined), text: 'Users'),
+              Tab(icon: Icon(Icons.play_circle_outline), text: 'Activité'),
+              Tab(icon: Icon(Icons.history), text: 'Historique'),
+              Tab(icon: Icon(Icons.bar_chart_outlined), text: 'Statistiques'),
+              Tab(icon: Icon(Icons.people_alt_outlined), text: 'Utilisateurs'),
             ],
           ),
           Expanded(
@@ -89,8 +89,8 @@ class _ActivityTab extends ConsumerWidget {
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.podcasts_outlined,
-              title: 'Nothing playing',
-              message: 'No active streams right now.',
+              title: 'Aucune lecture en cours',
+              message: 'Aucun flux actif pour le moment.',
             ),
           ],
         ),
@@ -171,7 +171,7 @@ class _ActivitySummary extends StatelessWidget {
             child: _StatTile(
               icon: Icons.sensors,
               value: '${activity.streamCount}',
-              label: activity.streamCount == 1 ? 'Stream' : 'Streams',
+              label: activity.streamCount == 1 ? 'Flux' : 'Flux',
               color: cs.primary,
             ),
           ),
@@ -180,7 +180,7 @@ class _ActivitySummary extends StatelessWidget {
             child: _StatTile(
               icon: Icons.speed,
               value: fmtTautulliKbps(activity.totalBandwidth),
-              label: 'Bandwidth',
+              label: 'Bande passante',
               color: cs.tertiary,
             ),
           ),
@@ -189,7 +189,7 @@ class _ActivitySummary extends StatelessWidget {
             child: _StatTile(
               icon: Icons.transform,
               value: '${activity.transcodeCount}',
-              label: 'Transcoding',
+              label: 'Transcodage',
               color: cs.secondary,
             ),
           ),
@@ -486,9 +486,9 @@ class _DecisionChip extends StatelessWidget {
   }
 
   String _label() => switch (decision.toLowerCase()) {
-        'direct play' => 'Direct Play',
-        'copy' || 'direct stream' => 'Direct Stream',
-        'transcode' => 'Transcode',
+        'direct play' => 'Lecture directe',
+        'copy' || 'direct stream' => 'Flux direct',
+        'transcode' => 'Transcodage',
         _ => decision,
       };
 }
@@ -573,10 +573,10 @@ class _SessionSheetState extends ConsumerState<_SessionSheet> {
             _DetailGroup(
               label: 'Session',
               children: <Widget>[
-                _DetailRow(label: 'User', value: s.friendlyName),
-                _DetailRow(label: 'State', value: _capitalize(s.state)),
+                _DetailRow(label: 'Utilisateur', value: s.friendlyName),
+                _DetailRow(label: 'État', value: _capitalize(s.state)),
                 _DetailRow(
-                  label: 'Player',
+                  label: 'Lecteur',
                   value: <String>[
                     if (s.player.isNotEmpty) s.player,
                     if (s.product.isNotEmpty) s.product,
@@ -584,32 +584,32 @@ class _SessionSheetState extends ConsumerState<_SessionSheet> {
                   ].join(' • '),
                 ),
                 if (s.qualityProfile.isNotEmpty)
-                  _DetailRow(label: 'Quality', value: s.qualityProfile),
+                  _DetailRow(label: 'Qualité', value: s.qualityProfile),
                 if (s.location.isNotEmpty)
                   _DetailRow(
-                    label: 'Location',
+                    label: 'Emplacement',
                     value: s.location.toUpperCase(),
                   ),
-                _DetailRow(label: 'Progress', value: '${s.progressPercent}%'),
+                _DetailRow(label: 'Progression', value: '${s.progressPercent} %'),
               ],
             ),
             const SizedBox(height: Insets.md),
             _DetailGroup(
-              label: 'Stream',
+              label: 'Flux',
               children: <Widget>[
                 _ChipDetailRow(
-                  label: 'Decision',
+                  label: 'Décision',
                   value: _capitalize(s.transcodeDecision),
                 ),
                 if (video.isNotEmpty)
-                  _ChipDetailRow(label: 'Video', value: video),
+                  _ChipDetailRow(label: 'Vidéo', value: video),
                 if (audio.isNotEmpty)
                   _ChipDetailRow(label: 'Audio', value: audio),
                 if (s.container.isNotEmpty)
-                  _DetailRow(label: 'Container', value: s.container),
+                  _DetailRow(label: 'Conteneur', value: s.container),
                 if (s.bandwidth > 0)
                   _DetailRow(
-                    label: 'Bandwidth',
+                    label: 'Bande passante',
                     value: fmtTautulliKbps(s.bandwidth),
                   ),
               ],
@@ -628,7 +628,7 @@ class _SessionSheetState extends ConsumerState<_SessionSheet> {
                       child: ExpressiveProgressIndicator(strokeWidth: 2),
                     )
                   : const Icon(Icons.stop_circle_outlined),
-              label: const Text('Terminate stream'),
+              label: const Text('Interrompre le flux'),
             ),
             if (_error != null) ...<Widget>[
               const SizedBox(height: Insets.sm),
@@ -679,19 +679,19 @@ class _SessionSheetState extends ConsumerState<_SessionSheet> {
       // Root navigator is showDialog's default, satisfying the hard rule.
       context: context,
       builder: (BuildContext dialogContext) => AlertDialog(
-        title: const Text('Terminate stream?'),
+        title: const Text('Interrompre le flux ?'),
         content: Text(
-          '${widget.session.friendlyName} will be stopped with a message. '
+          '${widget.session.friendlyName} sera arrêté avec un message. '
           'Requires Plex Pass.',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: const Text('Terminate'),
+            child: const Text('Interrompre'),
           ),
         ],
       ),
@@ -714,7 +714,7 @@ class _SessionSheetState extends ConsumerState<_SessionSheet> {
     } on Object catch (e) {
       if (mounted) {
         setState(() {
-          _error = e is NetworkException ? e.message : 'Terminate failed';
+          _error = e is NetworkException ? e.message : "Échec de l'interruption";
         });
       }
     } finally {
@@ -761,8 +761,8 @@ class _HistoryTab extends ConsumerWidget {
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.history,
-              title: 'No history',
-              message: 'Nothing has been watched yet.',
+              title: 'Aucun historique',
+              message: "Rien n'a encore été regardé.",
             ),
           ],
         ),
@@ -944,8 +944,8 @@ class _StatsTab extends ConsumerWidget {
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.bar_chart,
-              title: 'No statistics',
-              message: 'No plays in the last 30 days.',
+              title: 'Aucune statistique',
+              message: 'Aucune lecture ces 30 derniers jours.',
             ),
           ],
         ),
@@ -1180,8 +1180,8 @@ class _UsersTab extends ConsumerWidget {
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.people_outline,
-              title: 'No users',
-              message: 'Tautulli has not seen any users yet.',
+              title: 'Aucun utilisateur',
+              message: "Tautulli n'a encore vu aucun utilisateur.",
             ),
           ],
         ),

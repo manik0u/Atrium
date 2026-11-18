@@ -44,7 +44,7 @@ class DashboardScreen extends ConsumerWidget {
               builder: (BuildContext context, WidgetRef ref, Widget? _) {
                 final bool editing = ref.watch(dashboardEditModeProvider);
                 return IconButton(
-                  tooltip: editing ? 'Done' : 'Customize dashboard',
+                  tooltip: editing ? 'Terminé' : 'Personnaliser le tableau de bord',
                   icon: Icon(editing ? Icons.check : Icons.tune),
                   onPressed: () => ref
                       .read(dashboardEditModeProvider.notifier)
@@ -57,14 +57,14 @@ class DashboardScreen extends ConsumerWidget {
       body: instances.isEmpty
           ? EmptyView(
               icon: Icons.dns_outlined,
-              title: 'No services yet',
+              title: 'Aucun service pour le moment',
               message:
                   'Add your first service - a Sonarr, qBittorrent, Jellyfin, '
                   'anything in your stack.',
               action: FilledButton.icon(
                 onPressed: () => context.goNamed(AtriumRoutes.addInstanceName),
                 icon: const Icon(Icons.add),
-                label: const Text('Add service'),
+                label: const Text('Ajouter un service'),
               ),
             )
           : const DashboardBoard(),
@@ -235,7 +235,7 @@ class _ServicesDrawerState extends ConsumerState<ServicesDrawer>
                       child: Padding(
                         padding: const EdgeInsets.all(Insets.lg),
                         child: Text(
-                          'No services yet.\nAdd one with the + below.',
+                          'Aucun service pour le moment.\nAjoutez-en un avec le + ci-dessous.',
                           textAlign: TextAlign.center,
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: cs.onSurfaceVariant,
@@ -253,19 +253,19 @@ class _ServicesDrawerState extends ConsumerState<ServicesDrawer>
               child: Row(
                 children: <Widget>[
                   IconButton(
-                    tooltip: 'Settings',
+                    tooltip: 'Paramètres',
                     icon: Icon(Icons.settings, color: cs.onSurfaceVariant),
                     onPressed: () => _navTo(context, AtriumRoutes.settingsName),
                   ),
                   IconButton(
-                    tooltip: 'Add service',
+                    tooltip: 'Ajouter un service',
                     icon: Icon(Icons.add, color: cs.onSurfaceVariant),
                     onPressed: () =>
                         _navTo(context, AtriumRoutes.addInstanceName),
                   ),
                   if (widget.instances.isNotEmpty)
                     IconButton(
-                      tooltip: 'Reorder sidebar',
+                      tooltip: 'Réorganiser la barre latérale',
                       icon: Icon(Icons.reorder, color: cs.onSurfaceVariant),
                       onPressed: () {
                         // Capture the navigator before closing the drawer, then
@@ -283,7 +283,7 @@ class _ServicesDrawerState extends ConsumerState<ServicesDrawer>
                     child: Builder(
                       builder: (BuildContext pillContext) {
                         return _ProfilePill(
-                          label: widget.profile?.name ?? 'Default',
+                          label: widget.profile?.name ?? 'Par défaut',
                           onTap: () async {
                             final RenderBox button =
                                 pillContext.findRenderObject()! as RenderBox;
@@ -348,7 +348,7 @@ class _ServicesDrawerState extends ConsumerState<ServicesDrawer>
                                       Icon(Icons.manage_accounts_outlined,
                                           size: 16),
                                       SizedBox(width: Insets.sm),
-                                      Text('Manage profiles'),
+                                      Text('Gérer les profils'),
                                     ],
                                   ),
                                 ),
@@ -519,7 +519,7 @@ class _HealthAwareTile extends ConsumerWidget {
                 children: <Widget>[
                   ListTile(
                     leading: const Icon(Icons.open_in_new),
-                    title: const Text('Open service'),
+                    title: const Text('Ouvrir le service'),
                     onTap: () {
                       Navigator.pop(sheetContext);
                       final GoRouter router = GoRouter.of(context);
@@ -534,7 +534,7 @@ class _HealthAwareTile extends ConsumerWidget {
                   ),
                   ListTile(
                     leading: const Icon(Icons.edit),
-                    title: const Text('Edit connection settings'),
+                    title: const Text('Modifier les paramètres de connexion'),
                     onTap: () {
                       Navigator.pop(sheetContext);
                       final GoRouter router = GoRouter.of(context);

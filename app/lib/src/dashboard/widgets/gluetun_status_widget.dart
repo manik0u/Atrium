@@ -236,7 +236,7 @@ class _DashboardError extends StatelessWidget {
         ),
         Align(
           alignment: Alignment.centerRight,
-          child: TextButton(onPressed: onRetry, child: const Text('Retry')),
+          child: TextButton(onPressed: onRetry, child: const Text('Réessayer')),
         ),
       ],
     );

@@ -148,12 +148,12 @@ class DashboardErrorRow extends StatelessWidget {
         const SizedBox(width: Insets.sm),
         Expanded(
           child: Text(
-            'Could not load',
+            'Impossible de charger',
             style: theme.textTheme.bodySmall
                 ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
           ),
         ),
-        TextButton(onPressed: onRetry, child: const Text('Retry')),
+        TextButton(onPressed: onRetry, child: const Text('Réessayer')),
       ],
     );
   }

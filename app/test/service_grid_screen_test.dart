@@ -151,9 +151,9 @@ void main() {
       'zzzz',
     );
     await tester.pumpAndSettle();
-    expect(find.text('No services found'), findsOneWidget);
+    expect(find.text('Aucun service trouvé'), findsOneWidget);
 
-    await tester.tap(find.text('Clear search'));
+    await tester.tap(find.text('Effacer la recherche'));
     await tester.pumpAndSettle();
     expect(
       find.byKey(const ValueKey<String>('service_card_adguardHome')),
@@ -178,7 +178,7 @@ void main() {
 
     // Should now be on InstanceFormScreen with AdGuard Home preselected
     expect(find.byType(InstanceFormScreen), findsOneWidget);
-    expect(find.textContaining('Network-wide blocking'), findsWidgets);
+    expect(find.textContaining("Blocage à l'échelle du réseau"), findsWidgets);
     expect(find.text('AdGuard Home'), findsWidgets);
   });
 
@@ -218,7 +218,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Select a service'), findsOneWidget);
+    expect(find.text('Sélectionner un service'), findsOneWidget);
     expect(
       find.text('No service matching "nonexistent_service" was found.'),
       findsOneWidget,

@@ -149,7 +149,7 @@ class _DashboardRecentlyAddedWidgetState
         },
       );
     } else if (items.isEmpty) {
-      body = const DashboardIdleRow(text: 'Nothing added yet');
+      body = const DashboardIdleRow(text: "Rien d'ajouté pour le moment");
     } else {
       if (_needsReset) {
         _needsReset = false;

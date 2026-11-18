@@ -100,10 +100,10 @@ class _BazarrProvidersScreenState extends ConsumerState<BazarrProvidersScreen> {
       await api.setEnabledProviders(_enabled.toList());
       ref.invalidate(bazarrSettingsProvider(widget.instance));
       ref.invalidate(bazarrProviderStatusesProvider(widget.instance));
-      messenger.showSnackBar(const SnackBar(content: Text('Providers saved')));
+      messenger.showSnackBar(const SnackBar(content: Text('Fournisseurs enregistrés')));
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Save failed: ${_err(e)}')),
+        SnackBar(content: Text("Échec de l'enregistrement : ${_err(e)}")),
       );
     } finally {
       if (mounted) {
@@ -118,7 +118,7 @@ class _BazarrProvidersScreenState extends ConsumerState<BazarrProvidersScreen> {
         ref.watch(bazarrSettingsProvider(widget.instance));
     return Scaffold(
       appBar: AppBar(
-        title: Text('Providers (${_enabled.length})'),
+        title: Text('Fournisseurs (${_enabled.length})'),
         actions: <Widget>[
           if (_saving)
             const Padding(
@@ -133,7 +133,7 @@ class _BazarrProvidersScreenState extends ConsumerState<BazarrProvidersScreen> {
             )
           else
             IconButton(
-              tooltip: 'Save',
+              tooltip: 'Enregistrer',
               icon: const Icon(Icons.save_outlined),
               onPressed: _seeded ? _save : null,
             ),
@@ -174,7 +174,7 @@ class _BazarrProvidersScreenState extends ConsumerState<BazarrProvidersScreen> {
                 child: TextField(
                   controller: _query,
                   decoration: const InputDecoration(
-                    hintText: 'Search providers...',
+                    hintText: 'Rechercher des fournisseurs…',
                     prefixIcon: Icon(Icons.search),
                     border: OutlineInputBorder(),
                   ),
@@ -188,7 +188,7 @@ class _BazarrProvidersScreenState extends ConsumerState<BazarrProvidersScreen> {
                     final MapEntry<String, String> p = entries[i];
                     return ListTile(
                       title: Text(p.value),
-                      subtitle: const Text('Tap to configure'),
+                      subtitle: const Text('Touchez pour configurer'),
                       trailing: Switch(
                         value: _enabled.contains(p.key),
                         onChanged: (bool v) => setState(() {
@@ -274,12 +274,12 @@ class _BazarrProviderConfigScreenState
       await api.setProviderConfig(widget.providerKey, fields);
       ref.invalidate(bazarrSettingsProvider(widget.instance));
       messenger.showSnackBar(
-        SnackBar(content: Text('${widget.providerName} saved')),
+        SnackBar(content: Text('${widget.providerName} enregistré')),
       );
       nav.pop();
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Save failed: ${_err(e)}')),
+        SnackBar(content: Text("Échec de l'enregistrement : ${_err(e)}")),
       );
       if (mounted) {
         setState(() => _saving = false);
@@ -309,7 +309,7 @@ class _BazarrProviderConfigScreenState
             )
           else
             IconButton(
-              tooltip: 'Save',
+              tooltip: 'Enregistrer',
               icon: const Icon(Icons.save_outlined),
               onPressed: _seeded ? _save : null,
             ),
@@ -343,8 +343,8 @@ class _BazarrProviderConfigScreenState
           if (fields.isEmpty) {
             return const EmptyView(
               icon: Icons.tune,
-              title: 'No editable settings',
-              message: 'This provider has no scalar options to configure here.',
+              title: 'Aucun paramètre modifiable',
+              message: "Ce fournisseur n'a aucune option scalaire à configurer ici.",
             );
           }
           return ListView(

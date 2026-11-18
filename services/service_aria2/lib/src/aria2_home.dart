@@ -168,17 +168,17 @@ class Aria2Home extends ConsumerWidget {
                 NavigationDestination(
                   icon: Icon(Icons.download_outlined),
                   selectedIcon: Icon(Icons.download),
-                  label: 'Downloads',
+                  label: 'Téléchargements',
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.settings_outlined),
                   selectedIcon: Icon(Icons.settings),
-                  label: 'Settings',
+                  label: 'Paramètres',
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.computer_outlined),
                   selectedIcon: Icon(Icons.computer),
-                  label: 'System',
+                  label: 'Système',
                 ),
               ],
             ),

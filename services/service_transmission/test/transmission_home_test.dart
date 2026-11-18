@@ -43,9 +43,9 @@ void main() {
       ..on('torrent-get', <String, Object?>{'torrents': <Object>[]});
     await open(tester, fake);
 
-    expect(find.text('No torrents'), findsOneWidget);
+    expect(find.text('Aucun torrent'), findsOneWidget);
     expect(find.byType(NavigationBar), findsOneWidget);
-    await tester.tap(find.text('Settings'));
+    await tester.tap(find.text('Paramètres'));
     await settle(tester);
     expect(find.text('This session'), findsOneWidget);
   });
@@ -72,7 +72,7 @@ void main() {
     expect(find.text('1 selected'), findsNothing);
     expect(find.text('Alpha'), findsOneWidget);
 
-    await tester.tap(find.text('Settings'));
+    await tester.tap(find.text('Paramètres'));
     await settle(tester);
     expect(
       tester.widget<NavigationBar>(find.byType(NavigationBar)).selectedIndex,
@@ -96,11 +96,11 @@ void main() {
       ..on('torrent-get', <String, Object?>{'torrents': <Object>[]});
     await open(tester, fake, size: const Size(360, 800));
 
-    await tester.tap(find.text('Settings'));
+    await tester.tap(find.text('Paramètres'));
     await settle(tester);
 
     // Scrolling Settings down hides the bar, as it does on the list.
-    await tester.drag(find.text('Statistics'), const Offset(0, -800));
+    await tester.drag(find.text('Statistiques'), const Offset(0, -800));
     await settle(tester);
     final Finder bar = find.byType(AtriumBottomNav);
     expect(tester.getSize(bar).height, lessThan(1));

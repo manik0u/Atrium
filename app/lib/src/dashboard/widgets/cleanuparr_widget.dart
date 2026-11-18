@@ -32,7 +32,7 @@ class DashboardCleanuparrWidget extends StatelessWidget {
           : null,
       child: instances.isEmpty
           ? const DashboardIdleRow(
-              text: 'No Cleanuparr instances configured',
+              text: 'Aucune instance Cleanuparr configurée',
             )
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,7 +130,7 @@ class _CleanuparrInstanceBlock extends ConsumerWidget {
                   children: <Widget>[
                     _MiniStatPill(
                       icon: Icons.shield_outlined,
-                      label: '${stats.malwareBlocked} blocked',
+                      label: '${stats.malwareBlocked} bloquées',
                       color: stats.malwareBlocked > 0
                           ? colorScheme.errorContainer
                           : colorScheme.surfaceContainerHighest,
@@ -150,7 +150,7 @@ class _CleanuparrInstanceBlock extends ConsumerWidget {
                     ),
                     _MiniStatPill(
                       icon: Icons.cleaning_services_outlined,
-                      label: '${stats.totalCleaned} cleaned',
+                      label: '${stats.totalCleaned} nettoyés',
                       color: colorScheme.surfaceContainerHighest,
                       textColor: colorScheme.onSurfaceVariant,
                     ),
@@ -182,7 +182,7 @@ class _CleanuparrInstanceBlock extends ConsumerWidget {
                           ),
                           const SizedBox(width: Insets.xs),
                           Text(
-                            'All queues clean',
+                            'Toutes les files sont propres',
                             style: textTheme.bodySmall?.copyWith(
                               color: colorScheme.onSurfaceVariant,
                             ),

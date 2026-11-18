@@ -23,7 +23,7 @@ class NzbgetHistoryTab extends ConsumerWidget {
           await ref.read(nzbgetApiProvider(instance).future);
       await action(api);
     } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text('Action failed: $e')));
+      messenger.showSnackBar(SnackBar(content: Text("Échec de l'action : $e")));
     } finally {
       if (context.mounted) {
         ref.invalidate(nzbgetHistoryProvider(instance));
@@ -42,8 +42,8 @@ class NzbgetHistoryTab extends ConsumerWidget {
         if (entries.isEmpty) {
           return const EmptyView(
             icon: Icons.history,
-            title: 'No history',
-            message: 'Completed downloads will show up here.',
+            title: 'Aucun historique',
+            message: 'Les téléchargements terminés apparaîtront ici.',
           );
         }
         return EasyRefresh(
@@ -77,7 +77,7 @@ class NzbgetHistoryTab extends ConsumerWidget {
                   children: <Widget>[
                     if (entry.isFailure)
                       IconButton(
-                        tooltip: 'Retry',
+                        tooltip: 'Réessayer',
                         icon: const Icon(Icons.refresh),
                         onPressed: () => _run(
                           context,
@@ -87,24 +87,24 @@ class NzbgetHistoryTab extends ConsumerWidget {
                         ),
                       ),
                     IconButton(
-                      tooltip: 'Delete',
+                      tooltip: 'Supprimer',
                       icon: const Icon(Icons.delete_outline),
                       onPressed: () async {
                         final bool? confirmed = await showDialog<bool>(
                           context: context,
                           builder: (BuildContext dialogContext) => AlertDialog(
-                            title: const Text('Delete history entry?'),
+                            title: const Text("Supprimer l'entrée de l'historique ?"),
                             content: Text(entry.name),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () =>
                                     Navigator.of(dialogContext).pop(false),
-                                child: const Text('Cancel'),
+                                child: const Text('Annuler'),
                               ),
                               FilledButton(
                                 onPressed: () =>
                                     Navigator.of(dialogContext).pop(true),
-                                child: const Text('Delete'),
+                                child: const Text('Supprimer'),
                               ),
                             ],
                           ),

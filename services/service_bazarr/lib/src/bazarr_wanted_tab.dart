@@ -43,8 +43,8 @@ class BazarrWantedTab extends ConsumerWidget {
                 if (rows.isEmpty) {
                   return const EmptyView(
                     icon: Icons.subtitles_outlined,
-                    title: 'All subtitled',
-                    message: 'Nothing is waiting on subtitles.',
+                    title: 'Tous sous-titrés',
+                    message: 'Aucun sous-titre en attente.',
                   );
                 }
                 return ListView.separated(
@@ -100,7 +100,7 @@ class _BadgesHeader extends ConsumerWidget {
               child: _StatTile(
                 icon: Icons.live_tv_outlined,
                 value: b.episodes,
-                label: 'Episodes',
+                label: 'Épisodes',
                 color: cs.secondary,
               ),
             ),
@@ -108,7 +108,7 @@ class _BadgesHeader extends ConsumerWidget {
               child: _StatTile(
                 icon: Icons.movie_outlined,
                 value: b.movies,
-                label: 'Movies',
+                label: 'Films',
                 color: cs.secondary,
               ),
             ),
@@ -116,7 +116,7 @@ class _BadgesHeader extends ConsumerWidget {
               child: _StatTile(
                 icon: Icons.cloud_outlined,
                 value: b.providers,
-                label: 'Providers',
+                label: 'Fournisseurs',
                 color: cs.primary,
               ),
             ),

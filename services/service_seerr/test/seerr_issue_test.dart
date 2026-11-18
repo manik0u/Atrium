@@ -103,12 +103,12 @@ void main() {
     });
 
     test('typeLabel maps the issue type', () {
-      expect(const SeerrIssue(id: 1, issueType: 1).typeLabel, 'Video');
+      expect(const SeerrIssue(id: 1, issueType: 1).typeLabel, 'Vidéo');
       expect(const SeerrIssue(id: 1, issueType: 2).typeLabel, 'Audio');
-      expect(const SeerrIssue(id: 1, issueType: 3).typeLabel, 'Subtitles');
+      expect(const SeerrIssue(id: 1, issueType: 3).typeLabel, 'Sous-titres');
       // 4 (the default) and anything unknown both read as Other.
-      expect(const SeerrIssue(id: 1).typeLabel, 'Other');
-      expect(const SeerrIssue(id: 1, issueType: 99).typeLabel, 'Other');
+      expect(const SeerrIssue(id: 1).typeLabel, 'Autre');
+      expect(const SeerrIssue(id: 1, issueType: 99).typeLabel, 'Autre');
     });
   });
 

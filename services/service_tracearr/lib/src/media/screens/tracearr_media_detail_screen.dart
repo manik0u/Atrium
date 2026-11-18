@@ -91,7 +91,7 @@ class _TracearrMediaDetailScreenState
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Could not open link: $url'),
+              content: Text("Impossible d'ouvrir le lien : $url"),
               behavior: SnackBarBehavior.floating,
             ),
           );
@@ -126,13 +126,13 @@ class _TracearrMediaDetailScreenState
       body: detailAsync.when(
         loading: () => Scaffold(
           appBar: AppBar(
-            title: Text(widget.initialTitle ?? 'Media Detail'),
+            title: Text(widget.initialTitle ?? 'Détail du média'),
           ),
           body: const Center(child: ExpressiveProgressIndicator()),
         ),
         error: (err, stack) => Scaffold(
           appBar: AppBar(
-            title: Text(widget.initialTitle ?? 'Media Detail'),
+            title: Text(widget.initialTitle ?? 'Détail du média'),
           ),
           body: Center(
             child: SingleChildScrollView(
@@ -167,7 +167,7 @@ class _TracearrMediaDetailScreenState
                       ),
                     ),
                     icon: const Icon(Icons.refresh),
-                    label: const Text('Retry'),
+                    label: const Text('Réessayer'),
                   ),
                 ],
               ),
@@ -495,23 +495,23 @@ class _TracearrMediaDetailScreenState
                         child: Row(
                           children: [
                             _StatTile(
-                              label: 'TOTAL PLAYS',
+                              label: 'LECTURES TOTALES',
                               value: '${detail.allTimePlays}',
                               color: colorScheme.primary,
                             ),
                             _StatTile(
-                              label: 'WATCH TIME',
+                              label: 'TEMPS DE VISIONNAGE',
                               value:
                                   _formatWatchTime(detail.allTimeWatchTimeMs),
                               color: colorScheme.secondary,
                             ),
                             _StatTile(
-                              label: '30D PLAYS',
+                              label: 'LECTURES 30 J',
                               value: '${detail.last30DaysPlays}',
                               color: const Color(0xFF4CAF50),
                             ),
                             _StatTile(
-                              label: '7D PLAYS',
+                              label: 'LECTURES 7 J',
                               value: '${detail.last7DaysPlays}',
                               color: const Color(0xFFFF9800),
                             ),

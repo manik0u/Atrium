@@ -113,7 +113,7 @@ class AdguardHomeTopList extends StatelessWidget {
                   onPressed: onViewAll,
                   icon: const Icon(Icons.arrow_forward, size: 18),
                   iconAlignment: IconAlignment.end,
-                  label: const Text('View all'),
+                  label: const Text('Tout voir'),
                 ),
               ),
           ],
@@ -206,7 +206,7 @@ class AdguardHomeTopRow extends StatelessWidget {
           if (blocks != null && onBlocking != null)
             IconButton(
               icon: Icon(blocks ? Icons.block : Icons.check_circle_outline),
-              tooltip: '${blocks ? 'Block' : 'Unblock'} ${row.name}',
+              tooltip: '${blocks ? 'Block' : 'Débloquer'} ${row.name}',
               visualDensity: VisualDensity.compact,
               onPressed: () => onBlocking(row.name, block: blocks),
             ),

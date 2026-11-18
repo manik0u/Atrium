@@ -85,14 +85,14 @@ class _RadarrSettingsFormScreenState
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Movie settings saved successfully!')),
+          const SnackBar(content: Text('Paramètres du film enregistrés avec succès !')),
         );
         Navigator.pop(context);
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to save settings: $e')),
+          SnackBar(content: Text("Échec de l'enregistrement des paramètres : $e")),
         );
       }
     } finally {
@@ -117,7 +117,7 @@ class _RadarrSettingsFormScreenState
 
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Edit Movie Settings'),
+            title: const Text('Modifier les paramètres du film'),
             actions: [
               if (_saving)
                 const Padding(
@@ -158,22 +158,22 @@ class _RadarrSettingsFormScreenState
                           TextFormField(
                             controller: _pathController,
                             decoration: const InputDecoration(
-                              labelText: 'Path',
+                              labelText: 'Chemin',
                               border: OutlineInputBorder(),
                               prefixIcon: Icon(Icons.folder_open),
                             ),
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
-                                return 'Path cannot be empty';
+                                return 'Le chemin ne peut pas être vide';
                               }
                               return null;
                             },
                           ),
                           const SizedBox(height: Insets.md),
                           SwitchListTile(
-                            title: const Text('Monitored'),
+                            title: const Text('Surveillé'),
                             subtitle: const Text(
-                              'Monitor and download new releases for this movie',
+                              'Surveiller et télécharger les nouvelles sorties de ce film',
                             ),
                             secondary: const Icon(Icons.bookmark_outline),
                             value: _monitored,
@@ -187,7 +187,7 @@ class _RadarrSettingsFormScreenState
                               child: ExpressiveProgressIndicator(),
                             ),
                             error: (err, stack) =>
-                                Text('Error loading profiles: $err'),
+                                Text('Erreur lors du chargement des profils : $err'),
                             data: (profiles) {
                               final hasSelected = profiles.any(
                                 (p) => p['id'] == _selectedQualityProfileId,
@@ -200,7 +200,7 @@ class _RadarrSettingsFormScreenState
                               return DropdownButtonFormField<int>(
                                 initialValue: _selectedQualityProfileId,
                                 decoration: const InputDecoration(
-                                  labelText: 'Quality Profile',
+                                  labelText: 'Profil de qualité',
                                   border: OutlineInputBorder(),
                                   prefixIcon: Icon(Icons.high_quality),
                                 ),
@@ -224,22 +224,22 @@ class _RadarrSettingsFormScreenState
                           DropdownButtonFormField<String>(
                             initialValue: _minimumAvailability,
                             decoration: const InputDecoration(
-                              labelText: 'Minimum Availability',
+                              labelText: 'Disponibilité minimale',
                               border: OutlineInputBorder(),
                               prefixIcon: Icon(Icons.star_border),
                             ),
                             items: const [
                               DropdownMenuItem(
                                 value: 'announced',
-                                child: Text('Announced'),
+                                child: Text('Annoncée'),
                               ),
                               DropdownMenuItem(
                                 value: 'inCinemas',
-                                child: Text('In Cinemas'),
+                                child: Text('Au cinéma'),
                               ),
                               DropdownMenuItem(
                                 value: 'released',
-                                child: Text('Released'),
+                                child: Text('Sortie'),
                               ),
                               DropdownMenuItem(
                                 value: 'preDB',
@@ -258,7 +258,7 @@ class _RadarrSettingsFormScreenState
                               child: ExpressiveProgressIndicator(),
                             ),
                             error: (err, stack) =>
-                                Text('Error loading tags: $err'),
+                                Text('Erreur lors du chargement des balises : $err'),
                             data: (tags) {
                               if (tags.isEmpty) {
                                 return const SizedBox.shrink();

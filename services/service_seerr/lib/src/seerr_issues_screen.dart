@@ -77,8 +77,8 @@ class _SeerrIssuesScreenState extends ConsumerState<SeerrIssuesScreen>
             SizedBox(height: 100),
             EmptyView(
                     icon: Icons.report_off_outlined,
-                    title: 'No issues',
-                    message: 'Nothing has been reported.',
+                    title: 'Aucun problème',
+                    message: "Rien n'a été signalé.",
                   ),
           ],
         ),
@@ -145,7 +145,7 @@ class _IssueCard extends ConsumerWidget {
           )
           .value;
     }
-    final String title = details?.displayTitle ?? 'Issue #${issue.id}';
+    final String title = details?.displayTitle ?? 'Problème n° ${issue.id}';
     final SeerrApi? api = ref.watch(seerrApiProvider(instance)).value;
     final String? posterUrl = api?.imageUrl(details?.posterPath);
     final String time = seerrIssueRelativeTime(issue.createdAt);

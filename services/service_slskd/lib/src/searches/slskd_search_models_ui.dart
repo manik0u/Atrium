@@ -9,10 +9,10 @@ enum SlskdSearchSort {
   fileCount;
 
   String get label => switch (this) {
-        SlskdSearchSort.fastestSpeed => 'Fastest Speed',
-        SlskdSearchSort.highestQuality => 'Highest Quality (FLAC/Bitrate)',
-        SlskdSearchSort.shortestQueue => 'Shortest Queue',
-        SlskdSearchSort.fileCount => 'Most Tracks (Full Albums)',
+        SlskdSearchSort.fastestSpeed => 'Vitesse la plus rapide',
+        SlskdSearchSort.highestQuality => 'Meilleure qualité (FLAC/débit)',
+        SlskdSearchSort.shortestQueue => 'File la plus courte',
+        SlskdSearchSort.fileCount => 'Plus de pistes (albums complets)',
       };
 }
 
@@ -28,14 +28,14 @@ enum SlskdSearchFormatFilter {
   opusOnly;
 
   String get label => switch (this) {
-        SlskdSearchFormatFilter.all => 'All Formats',
-        SlskdSearchFormatFilter.flacOnly => 'FLAC Only',
-        SlskdSearchFormatFilter.mp3Only => 'MP3 Only',
-        SlskdSearchFormatFilter.oggOnly => 'OGG Only',
-        SlskdSearchFormatFilter.wavOnly => 'WAV Only',
-        SlskdSearchFormatFilter.aacOnly => 'AAC Only',
-        SlskdSearchFormatFilter.m4aOnly => 'M4A Only',
-        SlskdSearchFormatFilter.opusOnly => 'Opus Only',
+        SlskdSearchFormatFilter.all => 'Tous les formats',
+        SlskdSearchFormatFilter.flacOnly => 'FLAC uniquement',
+        SlskdSearchFormatFilter.mp3Only => 'MP3 uniquement',
+        SlskdSearchFormatFilter.oggOnly => 'OGG uniquement',
+        SlskdSearchFormatFilter.wavOnly => 'WAV uniquement',
+        SlskdSearchFormatFilter.aacOnly => 'AAC uniquement',
+        SlskdSearchFormatFilter.m4aOnly => 'M4A uniquement',
+        SlskdSearchFormatFilter.opusOnly => 'Opus uniquement',
       };
 
   bool matchesExtension(String ext) {
@@ -90,7 +90,7 @@ class SlskdAlbumGroup {
   String get formattedTotalSize => slskdFormatBytes(totalSize);
 
   /// Formatted upload speed (e.g. '2.5 MB/s').
-  String get formattedSpeed => uploadSpeed > 0 ? slskdFormatRate(uploadSpeed) : 'Unknown';
+  String get formattedSpeed => uploadSpeed > 0 ? slskdFormatRate(uploadSpeed) : 'Inconnu';
 
   /// Predominant quality in this folder.
   String get qualityBadge {

@@ -201,27 +201,27 @@ class SlskdHome extends ConsumerWidget {
           NavigationDestination(
             icon: Icon(Icons.swap_vert_rounded),
             selectedIcon: Icon(Icons.swap_vert_rounded),
-            label: 'Transfers',
+            label: 'Transferts',
           ),
           NavigationDestination(
             icon: Icon(Icons.search_rounded),
             selectedIcon: Icon(Icons.search_rounded),
-            label: 'Search',
+            label: 'Rechercher',
           ),
           NavigationDestination(
             icon: Icon(Icons.folder_outlined),
             selectedIcon: Icon(Icons.folder_rounded),
-            label: 'Browse',
+            label: 'Parcourir',
           ),
           NavigationDestination(
             icon: Icon(Icons.forum_outlined),
             selectedIcon: Icon(Icons.forum_rounded),
-            label: 'Community',
+            label: 'Communauté',
           ),
           NavigationDestination(
             icon: Icon(Icons.dns_outlined),
             selectedIcon: Icon(Icons.dns_rounded),
-            label: 'System',
+            label: 'Système',
           ),
         ],
       ),

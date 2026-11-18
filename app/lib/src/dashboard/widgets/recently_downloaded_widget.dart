@@ -192,7 +192,7 @@ class _DashboardRecentlyDownloadedWidgetState
         final List<int> sortedEps = g.episodes.keys.toList()..sort();
         final String minEp = sortedEps.first.toString().padLeft(2, '0');
         final String maxEp = sortedEps.last.toString().padLeft(2, '0');
-        subtitle = 'S${sNum}E$minEp-E$maxEp (${sortedEps.length} Ep)';
+        subtitle = 'S${sNum}E$minEp-E$maxEp (${sortedEps.length} ép.)';
       }
 
       items.add(_RecentDownloadItem(
@@ -272,7 +272,7 @@ class _DashboardRecentlyDownloadedWidgetState
         },
       );
     } else if (items.isEmpty) {
-      body = const DashboardIdleRow(text: 'No recent downloads found');
+      body = const DashboardIdleRow(text: 'Aucun téléchargement récent trouvé');
     } else {
       if (_needsReset) {
         _needsReset = false;

@@ -222,7 +222,7 @@ class NavidromeClient {
       if (resp is Map<String, dynamic> && resp['status'] == 'failed') {
         final dynamic err = resp['error'];
         final String msg = (err is Map<String, dynamic>)
-            ? (err['message'] as String? ?? 'Failed to set rating')
+            ? (err['message'] as String? ?? 'Échec de la définition de la note')
             : 'Failed to set rating';
         throw Exception(msg);
       }
@@ -248,7 +248,7 @@ class NavidromeClient {
       if (resp is Map<String, dynamic> && resp['status'] == 'failed') {
         final dynamic err = resp['error'];
         final String msg = (err is Map<String, dynamic>)
-            ? (err['message'] as String? ?? 'Failed to favorite')
+            ? (err['message'] as String? ?? "Échec de l'ajout aux favoris")
             : 'Failed to favorite';
         throw Exception(msg);
       }
@@ -274,7 +274,7 @@ class NavidromeClient {
       if (resp is Map<String, dynamic> && resp['status'] == 'failed') {
         final dynamic err = resp['error'];
         final String msg = (err is Map<String, dynamic>)
-            ? (err['message'] as String? ?? 'Failed to unfavorite')
+            ? (err['message'] as String? ?? 'Échec du retrait des favoris')
             : 'Failed to unfavorite';
         throw Exception(msg);
       }
@@ -577,7 +577,7 @@ class NavidromeClient {
         if (resp['status'] == 'failed') {
           final dynamic err = resp['error'];
           final String msg =
-              err is Map ? err['message']?.toString() ?? 'Error' : 'Error';
+              err is Map ? err['message']?.toString() ?? 'Erreur' : 'Erreur';
           throw Exception(msg);
         }
         final dynamic pl = resp['playlist'];
@@ -627,7 +627,7 @@ class NavidromeClient {
       if (resp is Map<String, dynamic> && resp['status'] == 'failed') {
         final dynamic err = resp['error'];
         final String msg =
-            err is Map ? err['message']?.toString() ?? 'Error' : 'Error';
+            err is Map ? err['message']?.toString() ?? 'Erreur' : 'Erreur';
         throw Exception(msg);
       }
     }
@@ -644,7 +644,7 @@ class NavidromeClient {
       if (resp is Map<String, dynamic> && resp['status'] == 'failed') {
         final dynamic err = resp['error'];
         final String msg =
-            err is Map ? err['message']?.toString() ?? 'Error' : 'Error';
+            err is Map ? err['message']?.toString() ?? 'Erreur' : 'Erreur';
         throw Exception(msg);
       }
     }

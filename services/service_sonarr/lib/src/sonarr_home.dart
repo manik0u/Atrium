@@ -189,27 +189,27 @@ class SonarrHome extends ConsumerWidget {
                 NavigationDestination(
                   icon: Icon(Icons.tv_outlined),
                   selectedIcon: Icon(Icons.tv),
-                  label: 'Series',
+                  label: 'Séries',
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.swap_vert_outlined),
                   selectedIcon: Icon(Icons.swap_vert),
-                  label: 'Activity',
+                  label: 'Activité',
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.running_with_errors_outlined),
                   selectedIcon: Icon(Icons.running_with_errors),
-                  label: 'Wanted',
+                  label: 'Recherchés',
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.settings_outlined),
                   selectedIcon: Icon(Icons.settings),
-                  label: 'Settings',
+                  label: 'Paramètres',
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.computer_outlined),
                   selectedIcon: Icon(Icons.computer),
-                  label: 'System',
+                  label: 'Système',
                 ),
               ],
             ),

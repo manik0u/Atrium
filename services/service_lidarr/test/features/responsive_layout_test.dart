@@ -206,16 +206,16 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify bottom sheet opened
-        expect(find.text('Download Details'), findsOneWidget);
-        expect(find.text('Manual Import'), findsOneWidget);
-        expect(find.text('Interactive Search'), findsOneWidget);
+        expect(find.text('Détails du téléchargement'), findsOneWidget);
+        expect(find.text('Import manuel'), findsOneWidget);
+        expect(find.text('Recherche interactive'), findsOneWidget);
 
         // Verify button height symmetry (proves Interactive Search did not break into 2 lines with height mismatch)
         final RenderBox manualBox = tester.renderObject(
-          find.widgetWithText(FilledButton, 'Manual Import'),
+          find.widgetWithText(FilledButton, 'Import manuel'),
         );
         final RenderBox searchBox = tester.renderObject(
-          find.widgetWithText(OutlinedButton, 'Interactive Search'),
+          find.widgetWithText(OutlinedButton, 'Recherche interactive'),
         );
         expect(manualBox.size.height, equals(searchBox.size.height));
 
@@ -428,12 +428,12 @@ void main() {
         // Verify Search bar and Select All action button render cleanly without overflow
         expect(find.byType(TextField), findsOneWidget);
         expect(
-          find.widgetWithText(TextButton, 'Select All'),
+          find.widgetWithText(TextButton, 'Tout sélectionner'),
           findsOneWidget,
         );
 
         // Tap Select All
-        await tester.tap(find.widgetWithText(TextButton, 'Select All'));
+        await tester.tap(find.widgetWithText(TextButton, 'Tout sélectionner'));
         await tester.pumpAndSettle();
 
         // Verify button toggled to Deselect
@@ -464,7 +464,7 @@ void main() {
                 statusCode: 200,
                 data: {
                   'records': [
-                    {'id': 1, 'sourceTitle': 'Test'},
+                    {'id': 1, 'sourceTitle': 'Tester'},
                   ],
                 },
               ),

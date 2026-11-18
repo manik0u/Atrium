@@ -40,7 +40,7 @@ const Map<String, dynamic> usenetJson = <String, dynamic>{
   'title': 'Some.Movie.2026.1080p.BluRay.x264-GRP',
   'publishDate': '2026-06-08T01:00:00Z',
   'categories': <Map<String, dynamic>>[
-    <String, dynamic>{'id': 2000, 'name': 'Movies'},
+    <String, dynamic>{'id': 2000, 'name': 'Films'},
   ],
   'protocol': 'usenet',
   'grabs': 12,

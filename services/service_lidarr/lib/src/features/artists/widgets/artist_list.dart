@@ -241,7 +241,7 @@ class ArtistList extends StatelessWidget {
                                   ? artist.disambiguation!
                                   : (genres.isNotEmpty
                                       ? genres.take(2).join(', ')
-                                      : 'No description'),
+                                      : 'Aucune description'),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: theme.textTheme.bodySmall?.copyWith(

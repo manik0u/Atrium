@@ -85,7 +85,7 @@ class RadarrCalendarEvent extends CalendarEvent {
   String get primaryTitle => movie.title;
 
   @override
-  String get subtitle => movie.year == null ? 'Movie' : '${movie.year} - Movie';
+  String get subtitle => movie.year == null ? 'Film' : '${movie.year} - Film';
 
   static DateTime? _parseDate(String? s) {
     if (s == null || s.isEmpty) return null;
@@ -127,7 +127,7 @@ class SonarrCalendarEvent extends CalendarEvent {
       episode.monitored && (episode.series?.monitored ?? true);
 
   @override
-  String get primaryTitle => episode.series?.title ?? 'Unknown Series';
+  String get primaryTitle => episode.series?.title ?? 'Série inconnue';
 
   @override
   String get subtitle {
@@ -149,7 +149,7 @@ class LidarrCalendarEvent extends CalendarEvent {
   @override
   String get title => album.artist?.artistName != null
       ? '${album.artist!.artistName} - ${album.title ?? 'Unknown Album'}'
-      : album.title ?? 'Unknown Album';
+      : album.title ?? 'Album inconnu';
 
   @override
   DateTime get date {
@@ -170,7 +170,7 @@ class LidarrCalendarEvent extends CalendarEvent {
   bool get monitored => album.monitored ?? false;
 
   @override
-  String get primaryTitle => album.artist?.artistName ?? 'Unknown Artist';
+  String get primaryTitle => album.artist?.artistName ?? 'Artiste inconnu';
 
   @override
   String get subtitle {
@@ -533,11 +533,11 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                 );
               },
             ),
-            title: const Text('Calendar'),
+            title: const Text('Calendrier'),
           ),
           body: const EmptyView(
             icon: Icons.calendar_today_outlined,
-            title: 'No calendar services',
+            title: 'Aucun service de calendrier',
             message:
                 'Add a Sonarr, Radarr, or Lidarr service to see your release schedule here.',
           ),
@@ -563,15 +563,15 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
               );
             },
           ),
-          title: const Text('Calendar'),
+          title: const Text('Calendrier'),
           actions: <Widget>[
             IconButton(
               icon: Icon(
                 showUnmonitored ? Icons.bookmark_border : Icons.bookmark,
               ),
               tooltip: showUnmonitored
-                  ? 'Showing monitored and unmonitored'
-                  : 'Showing monitored only',
+                  ? 'Affichage des surveillés et non surveillés'
+                  : 'Affichage des surveillés uniquement',
               onPressed: () => ref
                   .read(preferencesProvider.notifier)
                   .setCalendarShowUnmonitored(!showUnmonitored),
@@ -686,7 +686,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                                 horizontal: Insets.sm),
                           ),
                           icon: const Icon(Icons.today, size: 16),
-                          label: const Text('Today'),
+                          label: const Text("Aujourd'hui"),
                         ),
                         IconButton(
                           icon: const Icon(Icons.chevron_left),
@@ -721,7 +721,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                               ),
                               const SizedBox(height: Insets.md),
                               Text(
-                                'No releases scheduled this month',
+                                'Aucune sortie prévue ce mois-ci',
                                 style: theme.textTheme.titleMedium?.copyWith(
                                   color: theme.colorScheme.outline,
                                 ),
@@ -823,7 +823,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                               const EdgeInsets.symmetric(horizontal: Insets.sm),
                         ),
                         icon: const Icon(Icons.today, size: 16),
-                        label: const Text('Today'),
+                        label: const Text("Aujourd'hui"),
                       ),
                       IconButton(
                         icon: const Icon(Icons.chevron_left),
@@ -986,7 +986,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                             ),
                             const SizedBox(height: Insets.sm),
                             Text(
-                              'No releases scheduled',
+                              'Aucune sortie prévue',
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 color: theme.colorScheme.outline,
                               ),

@@ -57,7 +57,7 @@ Future<void> launchEmbyDeepLink(
 void _showNotInstalled(BuildContext context) {
   ScaffoldMessenger.of(context).showSnackBar(
     const SnackBar(
-      content: Text('Emby app is not installed or could not be opened.'),
+      content: Text("L'application Emby n'est pas installée ou n'a pas pu être ouverte."),
       behavior: SnackBarBehavior.floating,
       duration: Duration(seconds: 3),
     ),

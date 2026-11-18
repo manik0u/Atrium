@@ -174,14 +174,14 @@ class OverviewLivePulseCard extends StatelessWidget {
                       runSpacing: Insets.xs,
                       children: [
                         _StatusPill(
-                          label: 'Direct Play',
+                          label: 'Lecture directe',
                           count: directPlays,
                           color: const Color(0xFF4CAF50),
                           backgroundColor:
                               const Color(0xFF4CAF50).withValues(alpha: 0.12),
                         ),
                         _StatusPill(
-                          label: 'HW Transcode',
+                          label: 'Transcodage HW',
                           count: hwTranscodes,
                           color: const Color(0xFF2196F3),
                           backgroundColor:
@@ -189,7 +189,7 @@ class OverviewLivePulseCard extends StatelessWidget {
                         ),
                         if (swTranscodes > 0)
                           _StatusPill(
-                            label: 'CPU Transcode',
+                            label: 'Transcodage CPU',
                             count: swTranscodes,
                             color: const Color(0xFFFF9800),
                             backgroundColor:
@@ -199,7 +199,7 @@ class OverviewLivePulseCard extends StatelessWidget {
                     )
                   else
                     Text(
-                      'All connected media servers are currently idle.',
+                      'Tous les serveurs multimédias connectés sont actuellement inactifs.',
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: colorScheme.onSurfaceVariant,
                       ),
@@ -253,7 +253,7 @@ class _StatusPill extends StatelessWidget {
           ),
           const SizedBox(width: 6),
           Text(
-            '$label: $count',
+            '$label : $count',
             style: theme.textTheme.labelSmall?.copyWith(
               color: color,
               fontWeight: FontWeight.w600,

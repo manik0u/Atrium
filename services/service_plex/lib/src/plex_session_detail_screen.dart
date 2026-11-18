@@ -95,7 +95,7 @@ class _PlexSessionDetailScreenState
     } catch (_) {
       messenger.showSnackBar(
         const SnackBar(
-          content: Text('Command failed - the player may not be controllable'),
+          content: Text("Échec de la commande - le lecteur n'est peut-être pas contrôlable"),
         ),
       );
     }
@@ -114,16 +114,16 @@ class _PlexSessionDetailScreenState
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Stop this stream?'),
-          content: Text('This ends playback for $viewer.'),
+          title: const Text('Arrêter ce flux ?'),
+          content: Text('Cela arrête la lecture pour $viewer.'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('Cancel'),
+              child: const Text('Annuler'),
             ),
             FilledButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('Stop stream'),
+              child: const Text('Arrêter le flux'),
             ),
           ],
         );
@@ -149,7 +149,7 @@ class _PlexSessionDetailScreenState
           content: Text(
             e is NetworkAuthException
                 ? 'Terminating a stream requires Plex Pass'
-                : 'Could not stop the stream',
+                : "Impossible d'arrêter le flux",
           ),
         ),
       );
@@ -250,12 +250,12 @@ class _PlexSessionDetailScreenState
           centerTitle: true,
           actions: <Widget>[
             IconButton(
-              tooltip: 'Open in Plex',
+              tooltip: 'Ouvrir dans Plex',
               icon: const Icon(Icons.open_in_new, color: Colors.white),
               onPressed: () => launchPlexDeepLink(context),
             ),
             IconButton(
-              tooltip: 'Stop stream',
+              tooltip: 'Arrêter le flux',
               icon: const Icon(Icons.stop_circle_outlined, color: Colors.white),
               onPressed: () => _confirmTerminate(session),
             ),
@@ -393,7 +393,7 @@ class _PlexSessionDetailScreenState
                       children: <Widget>[
                         _InfoChip(label: session.decisionLabel),
                         if (session.bandwidth != null)
-                          _InfoChip(label: '${session.bandwidth} kbps'),
+                          _InfoChip(label: '${session.bandwidth} kbit/s'),
                         if (session.location != null)
                           _InfoChip(label: session.location!.toUpperCase()),
                       ],
@@ -516,7 +516,7 @@ class _PlexSessionDetailScreenState
                       )
                     else
                       Text(
-                        "This player can't be controlled from here",
+                        'Ce lecteur ne peut pas être contrôlé depuis ici',
                         textAlign: TextAlign.center,
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: Colors.white70,

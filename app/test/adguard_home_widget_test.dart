@@ -74,7 +74,7 @@ void main() {
       ),
       AdguardHomeFilterList(
         id: 2,
-        name: 'Off',
+        name: 'Désactivé',
         url: 'https://lists.example/2.txt',
         enabled: false,
         rulesCount: 99999,
@@ -185,10 +185,10 @@ void main() {
     await pumpWidget(tester, status: statusWith());
 
     expect(find.text('AdGuard Home'), findsOneWidget);
-    expect(find.text('PROTECTED'), findsOneWidget);
-    expect(find.text('Queries'), findsOneWidget);
+    expect(find.text('PROTÉGÉ'), findsOneWidget);
+    expect(find.text('Requêtes'), findsOneWidget);
     expect(find.text('5.69K'), findsOneWidget);
-    expect(find.text('Blocked'), findsOneWidget);
+    expect(find.text('Bloquées'), findsOneWidget);
     expect(find.text('740'), findsOneWidget);
     // The share of the queries that were blocked, inside its ring.
     expect(find.text('13%'), findsOneWidget);
@@ -263,7 +263,7 @@ void main() {
       '10 minutes',
       '1 hour',
       'Until tomorrow',
-      'Until turned back on',
+      "Jusqu'à réactivation",
     ]) {
       expect(find.text(label), findsOneWidget);
     }
@@ -272,7 +272,7 @@ void main() {
 
     await tester.tap(find.text('Pause'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Until turned back on'));
+    await tester.tap(find.text("Jusqu'à réactivation"));
     await tester.pumpAndSettle();
 
     expect(actions.calls, <String>[
@@ -291,11 +291,11 @@ void main() {
       ),
     );
 
-    expect(find.text('PAUSED'), findsOneWidget);
+    expect(find.text('EN PAUSE'), findsOneWidget);
     expect(find.text('9:41'), findsOneWidget);
     expect(find.text('Pause'), findsNothing);
 
-    await tester.tap(find.text('Resume'));
+    await tester.tap(find.text('Reprendre'));
     await tester.pump();
     await tester.pump();
 
@@ -306,8 +306,8 @@ void main() {
       (WidgetTester tester) async {
     await pumpWidget(tester, status: statusWith(enabled: false));
 
-    expect(find.text('OFF'), findsOneWidget);
-    expect(find.text('Resume'), findsOneWidget);
+    expect(find.text('DÉSACTIVÉ'), findsOneWidget);
+    expect(find.text('Reprendre'), findsOneWidget);
     expect(find.byType(AdguardHomeCountdown), findsNothing);
   });
 
@@ -320,10 +320,10 @@ void main() {
 
     expect(find.textContaining('refused the sign-in'), findsOneWidget);
     expect(find.textContaining('15 minutes'), findsOneWidget);
-    expect(find.text('Queries'), findsNothing);
+    expect(find.text('Requêtes'), findsNothing);
     expect(actions.calls, isEmpty);
 
-    await tester.tap(find.text('Try again'));
+    await tester.tap(find.text('Réessayer'));
     await tester.pump();
 
     expect(actions.calls, <String>['retry']);
@@ -371,7 +371,7 @@ void main() {
 
     expect(find.textContaining('asks for a sign-in'), findsOneWidget);
     expect(find.textContaining('15 minutes'), findsNothing);
-    expect(find.text('Try again'), findsOneWidget);
+    expect(find.text('Réessayer'), findsOneWidget);
   });
 
   testWidgets('any other failure shows the usual error row of the board',
@@ -381,8 +381,8 @@ void main() {
       statusError: const AdguardHomeUnexpectedAnswer(),
     );
 
-    expect(find.text('Could not load'), findsOneWidget);
-    await tester.tap(find.text('Retry'));
+    expect(find.text('Impossible de charger'), findsOneWidget);
+    await tester.tap(find.text('Réessayer'));
     await tester.pump();
 
     expect(actions.calls, <String>['refresh']);
@@ -396,7 +396,7 @@ void main() {
       statsError: const AdguardHomeUnexpectedAnswer(),
     );
 
-    expect(find.text('PROTECTED'), findsOneWidget);
+    expect(find.text('PROTÉGÉ'), findsOneWidget);
     // Queries, Blocked and the share wait. The rules come from the filter
     // lists.
     expect(find.text('-'), findsNWidgets(3));
@@ -416,7 +416,7 @@ void main() {
 
     expect(find.text('Home DNS'), findsOneWidget);
     expect(find.text('Cabin DNS'), findsOneWidget);
-    expect(find.text('PROTECTED'), findsNWidgets(2));
+    expect(find.text('PROTÉGÉ'), findsNWidgets(2));
   });
 
   testWidgets('the two figures and the ring share a row',
@@ -449,8 +449,8 @@ void main() {
 
     // An overflow would have been thrown as a layout error.
     expect(tester.takeException(), isNull);
-    expect(find.text('PAUSED'), findsOneWidget);
-    expect(find.text('Resume'), findsOneWidget);
+    expect(find.text('EN PAUSE'), findsOneWidget);
+    expect(find.text('Reprendre'), findsOneWidget);
     expect(find.byType(AdguardHomeSeriesChart), findsOneWidget);
   });
 

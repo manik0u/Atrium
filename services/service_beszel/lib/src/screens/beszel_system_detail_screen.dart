@@ -62,12 +62,12 @@ class _BeszelSystemDetailScreenState extends ConsumerState<BeszelSystemDetailScr
           NavigationDestination(
             icon: Icon(Icons.analytics_outlined),
             selectedIcon: Icon(Icons.analytics),
-            label: 'System Stats',
+            label: 'Statistiques système',
           ),
           NavigationDestination(
             icon: Icon(Icons.inventory_2_outlined),
             selectedIcon: Icon(Icons.inventory_2),
-            label: 'Containers',
+            label: 'Conteneurs',
           ),
           NavigationDestination(
             icon: Icon(Icons.miscellaneous_services_outlined),
@@ -172,7 +172,7 @@ class _BeszelSystemDetailScreenState extends ConsumerState<BeszelSystemDetailScr
             data: (statsList) {
               if (statsList.isEmpty) {
                 return const SliverToBoxAdapter(
-                  child: Center(child: Text('No historical data')),
+                  child: Center(child: Text('Aucune donnée historique')),
                 );
               }
               final reversed = statsList.reversed.toList();
@@ -339,7 +339,7 @@ class _BeszelSystemDetailScreenState extends ConsumerState<BeszelSystemDetailScr
               child: Center(child: CircularProgressIndicator()),
             ),
             error: (e, st) => SliverToBoxAdapter(
-              child: Center(child: Text('Error: $e')),
+              child: Center(child: Text('Erreur : $e')),
             ),
           ),
         ),
@@ -405,7 +405,7 @@ class _BeszelSystemDetailScreenState extends ConsumerState<BeszelSystemDetailScr
             data: (containers) {
               if (containers.isEmpty) {
                 return const SliverToBoxAdapter(
-                  child: Center(child: Text('No containers found')),
+                  child: Center(child: Text('Aucun conteneur trouvé')),
                 );
               }
               return SliverList(
@@ -424,7 +424,7 @@ class _BeszelSystemDetailScreenState extends ConsumerState<BeszelSystemDetailScr
               child: Center(child: CircularProgressIndicator()),
             ),
             error: (e, st) => SliverToBoxAdapter(
-              child: Center(child: Text('Error: $e')),
+              child: Center(child: Text('Erreur : $e')),
             ),
           ),
         ),
@@ -469,7 +469,7 @@ class _BeszelSystemDetailScreenState extends ConsumerState<BeszelSystemDetailScr
                         Icon(Icons.info_outline, size: 48, color: Theme.of(context).colorScheme.primary),
                         const SizedBox(height: 16),
                         Text(
-                          'No systemd services found.',
+                          'Aucun service systemd trouvé.',
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ],
@@ -491,7 +491,7 @@ class _BeszelSystemDetailScreenState extends ConsumerState<BeszelSystemDetailScr
               child: Center(child: CircularProgressIndicator()),
             ),
             error: (e, st) => SliverToBoxAdapter(
-              child: Center(child: Text('Error: $e')),
+              child: Center(child: Text('Erreur : $e')),
             ),
           ),
         ),

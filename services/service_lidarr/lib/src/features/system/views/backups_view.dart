@@ -20,11 +20,11 @@ class BackupsView extends ConsumerWidget {
       final ApiResponse<CommandResource> resp =
           await api.executeCommand('Backup');
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Backup command failed');
+        throw Exception(resp.error?.message ?? 'Échec de la commande de sauvegarde');
       }
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Database backup started!')),
+          const SnackBar(content: Text('Sauvegarde de la base de données démarrée !')),
         );
       }
       await Future<void>.delayed(const Duration(seconds: 2));
@@ -32,7 +32,7 @@ class BackupsView extends ConsumerWidget {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to trigger backup: $e')),
+          SnackBar(content: Text('Échec du déclenchement de la sauvegarde : $e')),
         );
       }
     }
@@ -48,7 +48,7 @@ class BackupsView extends ConsumerWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _triggerBackup(context, ref),
         icon: const Icon(Icons.backup_outlined),
-        label: const Text('Backup Now'),
+        label: const Text('Sauvegarder maintenant'),
       ),
       body: EasyRefresh(
         onRefresh: () async {
@@ -61,8 +61,8 @@ class BackupsView extends ConsumerWidget {
               return const Center(
                 child: EmptyView(
                   icon: Icons.backup_outlined,
-                  title: 'No Backups',
-                  message: 'No system backups found.',
+                  title: 'Aucune sauvegarde',
+                  message: 'Aucune sauvegarde système trouvée.',
                 ),
               );
             }

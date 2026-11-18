@@ -79,7 +79,7 @@ class _VmSheetState extends ConsumerState<_VmSheet> {
       if (!mounted) return;
       messenger.showSnackBar(
         SnackBar(
-          content: Text(e is NetworkException ? e.message : 'Action failed.'),
+          content: Text(e is NetworkException ? e.message : "Échec de l'action."),
         ),
       );
     } finally {
@@ -97,7 +97,7 @@ class _VmSheetState extends ConsumerState<_VmSheet> {
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
@@ -238,7 +238,7 @@ class _VmActions extends StatelessWidget {
         FilledButton.tonalIcon(
           onPressed: () => run((UnraidClient c) => c.stopVm(vm.id)),
           icon: const Icon(Icons.stop_rounded),
-          label: const Text('Shut down'),
+          label: const Text('Arrêter'),
         ),
         OutlinedButton.icon(
           onPressed: () => run((UnraidClient c) => c.pauseVm(vm.id)),
@@ -249,18 +249,18 @@ class _VmActions extends StatelessWidget {
         FilledButton.icon(
           onPressed: () => run((UnraidClient c) => c.resumeVm(vm.id)),
           icon: const Icon(Icons.play_arrow_rounded),
-          label: const Text('Resume'),
+          label: const Text('Reprendre'),
         ),
         OutlinedButton.icon(
           onPressed: () => run((UnraidClient c) => c.stopVm(vm.id)),
           icon: const Icon(Icons.stop_rounded),
-          label: const Text('Shut down'),
+          label: const Text('Arrêter'),
         ),
       ] else
         FilledButton.icon(
           onPressed: () => run((UnraidClient c) => c.startVm(vm.id)),
           icon: const Icon(Icons.play_arrow_rounded),
-          label: const Text('Start'),
+          label: const Text('Démarrer'),
         ),
     ];
 
@@ -272,7 +272,7 @@ class _VmActions extends StatelessWidget {
         TextButton.icon(
           onPressed: () => run((UnraidClient c) => c.rebootVm(vm.id)),
           icon: const Icon(Icons.restart_alt_rounded, size: 18),
-          label: const Text('Reboot'),
+          label: const Text('Redémarrer'),
         ),
       if (vm.isRunning || vm.isPaused || vm.hasCrashed)
         TextButton.icon(
@@ -290,7 +290,7 @@ class _VmActions extends StatelessWidget {
             size: 18,
             color: cs.error,
           ),
-          label: Text('Force stop', style: TextStyle(color: cs.error)),
+          label: Text('Arrêt forcé', style: TextStyle(color: cs.error)),
         ),
       if (vm.isRunning)
         TextButton.icon(
@@ -298,13 +298,13 @@ class _VmActions extends StatelessWidget {
             final bool ok = await confirm(
               'Reset ${vm.displayName}?',
               'The machine restarts without being asked to shut down first. '
-                  'Anything it has not written to disk is lost.',
+                  "Tout ce qu'il n'a pas écrit sur le disque est perdu.",
               'Reset',
             );
             if (ok) await run((UnraidClient c) => c.resetVm(vm.id));
           },
           icon: Icon(Icons.bolt_rounded, size: 18, color: cs.error),
-          label: Text('Reset', style: TextStyle(color: cs.error)),
+          label: Text('Réinitialiser', style: TextStyle(color: cs.error)),
         ),
     ];
 

@@ -87,7 +87,7 @@ class _OmbiHomeState extends ConsumerState<OmbiHome> {
         ),
         actions: <Widget>[
           IconButton(
-            tooltip: 'Search',
+            tooltip: 'Rechercher',
             icon: const Icon(Icons.search),
             onPressed: () => showSearch<void>(
               context: context,
@@ -139,12 +139,12 @@ class _OmbiHomeState extends ConsumerState<OmbiHome> {
         destinations: const <NavigationDestination>[
           NavigationDestination(
             icon: Icon(Icons.playlist_play),
-            label: 'Requests',
+            label: 'Demandes',
           ),
           NavigationDestination(
             icon: Icon(Icons.explore_outlined),
             selectedIcon: Icon(Icons.explore),
-            label: 'Discover',
+            label: 'Découvrir',
           ),
         ],
       ),
@@ -203,7 +203,7 @@ class _OmbiHomeState extends ConsumerState<OmbiHome> {
             segments: <ButtonSegment<OmbiMediaKind>>[
               const ButtonSegment<OmbiMediaKind>(
                 value: OmbiMediaKind.movie,
-                label: Text('Movies'),
+                label: Text('Films'),
                 icon: Icon(Icons.movie_outlined),
               ),
               const ButtonSegment<OmbiMediaKind>(
@@ -214,7 +214,7 @@ class _OmbiHomeState extends ConsumerState<OmbiHome> {
               if (music)
                 const ButtonSegment<OmbiMediaKind>(
                   value: OmbiMediaKind.music,
-                  label: Text('Music'),
+                  label: Text('Musique'),
                   icon: Icon(Icons.album_outlined),
                 ),
             ],
@@ -264,7 +264,7 @@ class _RequestList extends ConsumerWidget {
 
   static const Map<OmbiRequestFilter, String> _emptyTitles =
       <OmbiRequestFilter, String>{
-    OmbiRequestFilter.pending: 'Nothing waiting for approval',
+    OmbiRequestFilter.pending: "Rien n'attend une approbation",
     OmbiRequestFilter.processing: 'Nothing on its way',
     OmbiRequestFilter.available: 'Nothing available yet',
     OmbiRequestFilter.denied: 'Nothing denied',

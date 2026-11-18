@@ -25,12 +25,12 @@ class _ArrayBody extends StatelessWidget {
           _ParityCheckTile(check: check),
         ],
         _DiskSection(
-          title: 'Parity',
+          title: 'Parité',
           disks: array.parities,
           icon: Icons.shield_outlined,
         ),
         _DiskSection(
-          title: 'Data',
+          title: 'Données',
           disks: array.disks,
           icon: Icons.storage_rounded,
         ),
@@ -139,7 +139,7 @@ class _ArrayHero extends StatelessWidget {
                     const SizedBox(height: Insets.xxs),
                     Text(
                       parityCount == 0
-                          ? 'No parity protection'
+                          ? 'Aucune protection de parité'
                           : parityCount == 1
                               ? 'Single parity'
                               : '$parityCount parity disks',
@@ -158,14 +158,14 @@ class _ArrayHero extends StatelessWidget {
           ],
           if (used != null && usage != null) ...<Widget>[
             const SizedBox(height: Insets.lg),
-            UnraidUsageBar(fraction: used, label: usage, caption: 'Array'),
+            UnraidUsageBar(fraction: used, label: usage, caption: 'Tableau'),
           ],
           const SizedBox(height: Insets.lg),
           Row(
             children: <Widget>[
               Expanded(
                 child: UnraidStatBox(
-                  label: 'DISKS',
+                  label: 'DISQUES',
                   value: '${array.disks.length}',
                   unit: array.caches.isEmpty
                       ? 'data'
@@ -176,7 +176,7 @@ class _ArrayHero extends StatelessWidget {
               const SizedBox(width: Insets.sm),
               Expanded(
                 child: UnraidStatBox(
-                  label: 'WARMEST',
+                  label: 'LE PLUS CHAUD',
                   value: warmest?.temp == null ? '--' : '${warmest!.temp}',
                   unit: warmest == null ? 'all idle' : warmest.name,
                   valueColor: warmest == null
@@ -187,7 +187,7 @@ class _ArrayHero extends StatelessWidget {
               const SizedBox(width: Insets.sm),
               Expanded(
                 child: UnraidStatBox(
-                  label: 'HEALTH',
+                  label: 'SANTÉ',
                   value: faults.isEmpty ? 'OK' : '${faults.length}',
                   unit: faults.isEmpty ? 'all disks' : 'need attention',
                   valueColor: faults.isEmpty ? unraidOkGreen(cs) : cs.error,
@@ -230,22 +230,22 @@ class _ParityCheckTile extends StatelessWidget {
           ? 'Parity check running'
           : 'Parity check running, $pct%';
     } else if (check.isPaused) {
-      text = 'Parity check paused';
+      text = 'Vérification de parité en pause';
     } else if (check.foundErrors) {
       final int n = check.errors ?? 0;
       text = n == 1
           ? 'Last parity check found 1 error'
           : 'Last parity check found $n errors';
     } else if (check.status == 'NEVER_RUN') {
-      text = 'Parity has never been checked';
+      text = "La parité n'a jamais été vérifiée";
     } else {
       final String? label = check.statusLabel;
       final String when = unraidAgo(check.date);
       text = label == null
-          ? 'Parity check $when'
+          ? 'Vérification de parité $when'
           : when.isEmpty
-              ? 'Parity check $label'
-              : 'Parity check $label $when';
+              ? 'Vérification de parité : $label'
+              : 'Vérification de parité : $label $when';
     }
 
     return Container(

@@ -241,7 +241,7 @@ class _TransmissionFilesTreeState extends State<TransmissionFilesTree> {
           // 48 px tall, which used to stretch that line and leave a gap
           // between the name and the bar under it.
           PopupMenuButton<TransmissionPriority>(
-            tooltip: 'Priority',
+            tooltip: 'Priorité',
             icon: Icon(
               Icons.more_vert_rounded,
               size: 20,
@@ -261,7 +261,7 @@ class _TransmissionFilesTreeState extends State<TransmissionFilesTree> {
                 const <PopupMenuEntry<TransmissionPriority>>[
               PopupMenuItem<TransmissionPriority>(
                 value: TransmissionPriority.low,
-                child: Text('Low'),
+                child: Text('Basse'),
               ),
               PopupMenuItem<TransmissionPriority>(
                 value: TransmissionPriority.normal,
@@ -269,7 +269,7 @@ class _TransmissionFilesTreeState extends State<TransmissionFilesTree> {
               ),
               PopupMenuItem<TransmissionPriority>(
                 value: TransmissionPriority.high,
-                child: Text('High'),
+                child: Text('Élevée'),
               ),
             ],
           ),

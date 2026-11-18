@@ -100,7 +100,7 @@ class _LibraryChips extends StatelessWidget {
           if (index == 0) {
             return Center(
               child: ChoiceChip(
-                label: const Text('Home'),
+                label: const Text('Accueil'),
                 selected: selectedKey == 'home',
                 onSelected: (_) => onSelect('home'),
               ),
@@ -188,8 +188,8 @@ class _ItemsGridState extends ConsumerState<_ItemsGrid> {
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.movie_outlined,
-              title: 'Empty',
-              message: 'Nothing here yet.',
+              title: 'Vide',
+              message: 'Rien ici pour le moment.',
             ),
           ],
         ),
@@ -265,7 +265,7 @@ class _ItemsGridState extends ConsumerState<_ItemsGrid> {
           if (index == 0) {
             return Center(
               child: FilterChip(
-                label: const Text('All'),
+                label: const Text('Tous'),
                 selected: _genreKey == null,
                 onSelected: (_) => setState(() => _genreKey = null),
               ),
@@ -383,12 +383,12 @@ class _HomeSections extends ConsumerWidget {
           _NowStreamingSection(instance: instance),
           _PlexSection(
             instance: instance,
-            title: 'Continue Watching',
+            title: 'Continuer le visionnage',
             provider: plexOnDeckProvider(instance),
           ),
           _PlexSection(
             instance: instance,
-            title: 'Recently Added',
+            title: 'Ajouts récents',
             provider: plexRecentlyAddedProvider(instance),
           ),
           for (final PlexLibrary lib in libraries)
@@ -499,7 +499,7 @@ class _FeaturedHero extends ConsumerWidget {
                       FilledButton.icon(
                         onPressed: () => openPlexItem(context, instance, item),
                         icon: const Icon(Icons.play_arrow),
-                        label: Text(resume ? 'Resume' : 'Details'),
+                        label: Text(resume ? 'Reprendre' : 'Détails'),
                       ),
                     ],
                   ),
@@ -781,7 +781,7 @@ class _PlexSection extends ConsumerWidget {
                         visualDensity: VisualDensity.compact,
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
-                      child: const Text('See all'),
+                      child: const Text('Tout voir'),
                     ),
                 ],
               ),
@@ -1018,7 +1018,7 @@ class PlexPosterCard extends ConsumerWidget {
             children: <Widget>[
               ListTile(
                 leading: Icon(watched ? Icons.remove_done : Icons.done_all),
-                title: Text(watched ? 'Mark as unwatched' : 'Mark as watched'),
+                title: Text(watched ? 'Marquer comme non vu' : 'Marquer comme vu'),
                 onTap: () async {
                   Navigator.of(sheetContext).pop();
                   final PlexApi? api =
@@ -1036,7 +1036,7 @@ class PlexPosterCard extends ConsumerWidget {
                   } catch (_) {
                     messenger.showSnackBar(
                       const SnackBar(
-                        content: Text('Could not update watched state'),
+                        content: Text("Impossible de mettre à jour l'état de visionnage"),
                       ),
                     );
                     return;

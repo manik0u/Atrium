@@ -241,14 +241,14 @@ class _MediaManagementSettingsScreenState
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Media management settings saved!')),
+          const SnackBar(content: Text('Paramètres de gestion des médias enregistrés !')),
         );
         Navigator.pop(context);
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to save settings: $e')),
+          SnackBar(content: Text("Échec de l'enregistrement des paramètres : $e")),
         );
       }
     } finally {
@@ -273,19 +273,19 @@ class _MediaManagementSettingsScreenState
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Add Root Folder'),
+          title: const Text('Ajouter un dossier racine'),
           content: TextField(
             controller: controller,
             decoration: const InputDecoration(
-              labelText: 'Path',
-              hintText: 'e.g. /data/media/tv',
+              labelText: 'Chemin',
+              hintText: 'ex. /data/media/tv',
               border: OutlineInputBorder(),
             ),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
+              child: const Text('Annuler'),
             ),
             ElevatedButton(
               onPressed: () async {
@@ -299,18 +299,18 @@ class _MediaManagementSettingsScreenState
                   if (context.mounted) {
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Root folder added!')),
+                      const SnackBar(content: Text('Dossier racine ajouté !')),
                     );
                   }
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Failed to add root folder: $e')),
+                      SnackBar(content: Text("Échec de l'ajout du dossier racine : $e")),
                     );
                   }
                 }
               },
-              child: const Text('Save'),
+              child: const Text('Enregistrer'),
             ),
           ],
         );
@@ -327,13 +327,13 @@ class _MediaManagementSettingsScreenState
       ref.invalidate(sonarrRootFoldersProvider(widget.instance));
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Root folder deleted!')),
+          const SnackBar(content: Text('Dossier racine supprimé !')),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to delete root folder: $e')),
+          SnackBar(content: Text('Échec de la suppression du dossier racine : $e')),
         );
       }
     }
@@ -350,7 +350,7 @@ class _MediaManagementSettingsScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Media Management'),
+        title: const Text('Gestion des médias'),
         actions: [
           if (_saving)
             const Padding(
@@ -370,11 +370,11 @@ class _MediaManagementSettingsScreenState
       ),
       body: namingAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Error: $err')),
+        error: (err, stack) => Center(child: Text('Erreur : $err')),
         data: (naming) {
           return mediaMgmtAsync.when(
             loading: () => const Center(child: ExpressiveProgressIndicator()),
-            error: (err, stack) => Center(child: Text('Error: $err')),
+            error: (err, stack) => Center(child: Text('Erreur : $err')),
             data: (mediaMgmt) {
               _initializeValues(naming, mediaMgmt);
 
@@ -408,7 +408,7 @@ class _MediaManagementSettingsScreenState
                             const SizedBox(height: Insets.md),
                             SwitchListTile(
                               contentPadding: EdgeInsets.zero,
-                              title: const Text('Rename Episodes'),
+                              title: const Text('Renommer les épisodes'),
                               subtitle: const Text(
                                 'Change episode file names based on naming format',
                               ),
@@ -418,7 +418,7 @@ class _MediaManagementSettingsScreenState
                             ),
                             SwitchListTile(
                               contentPadding: EdgeInsets.zero,
-                              title: const Text('Replace Illegal Characters'),
+                              title: const Text('Remplacer les caractères interdits'),
                               subtitle: const Text(
                                 'Sanitize standard OS invalid filename characters',
                               ),
@@ -431,29 +431,29 @@ class _MediaManagementSettingsScreenState
                             DropdownButtonFormField<int>(
                               initialValue: _colonReplacementFormat,
                               decoration: const InputDecoration(
-                                labelText: 'Colon Replacement Format',
+                                labelText: 'Format de remplacement des deux-points',
                                 border: OutlineInputBorder(),
                               ),
                               items: [
                                 const DropdownMenuItem(
                                   value: 0,
-                                  child: Text('Delete'),
+                                  child: Text('Supprimer'),
                                 ),
                                 const DropdownMenuItem(
                                   value: 1,
-                                  child: Text('Replace with Space'),
+                                  child: Text('Remplacer par un espace'),
                                 ),
                                 const DropdownMenuItem(
                                   value: 2,
-                                  child: Text('Replace with Dash'),
+                                  child: Text('Remplacer par un tiret'),
                                 ),
                                 const DropdownMenuItem(
                                   value: 3,
-                                  child: Text('Replace with Space Dash Space'),
+                                  child: Text('Remplacer par espace-tiret-espace'),
                                 ),
                                 const DropdownMenuItem(
                                   value: 4,
-                                  child: Text('Smart Replace'),
+                                  child: Text('Remplacement intelligent'),
                                 ),
                                 if (_colonReplacementFormat < 0 ||
                                     _colonReplacementFormat > 4)
@@ -473,17 +473,17 @@ class _MediaManagementSettingsScreenState
                               TextFormField(
                                 controller: _standardEpisodeController,
                                 decoration: const InputDecoration(
-                                  labelText: 'Standard Episode Format',
+                                  labelText: 'Format standard des épisodes',
                                   border: OutlineInputBorder(),
                                   helperText:
-                                      'e.g. {Series Title} - S{season:00}E{episode:00} - {Episode Title}',
+                                      "ex. {Titre de la série} - S{saison:00}E{épisode:00} - {Titre de l'épisode}",
                                 ),
                               ),
                               const SizedBox(height: Insets.md),
                               TextFormField(
                                 controller: _dailyEpisodeController,
                                 decoration: const InputDecoration(
-                                  labelText: 'Daily Episode Format',
+                                  labelText: 'Format des épisodes quotidiens',
                                   border: OutlineInputBorder(),
                                 ),
                               ),
@@ -491,7 +491,7 @@ class _MediaManagementSettingsScreenState
                               TextFormField(
                                 controller: _animeEpisodeController,
                                 decoration: const InputDecoration(
-                                  labelText: 'Anime Episode Format',
+                                  labelText: 'Format des épisodes anime',
                                   border: OutlineInputBorder(),
                                 ),
                               ),
@@ -500,7 +500,7 @@ class _MediaManagementSettingsScreenState
                             TextFormField(
                               controller: _seriesFolderController,
                               decoration: const InputDecoration(
-                                labelText: 'Series Folder Format',
+                                labelText: 'Format des dossiers de séries',
                                 border: OutlineInputBorder(),
                               ),
                             ),
@@ -508,7 +508,7 @@ class _MediaManagementSettingsScreenState
                             TextFormField(
                               controller: _seasonFolderController,
                               decoration: const InputDecoration(
-                                labelText: 'Season Folder Format',
+                                labelText: 'Format des dossiers de saison',
                                 border: OutlineInputBorder(),
                               ),
                             ),
@@ -516,7 +516,7 @@ class _MediaManagementSettingsScreenState
                             TextFormField(
                               controller: _specialsFolderController,
                               decoration: const InputDecoration(
-                                labelText: 'Specials Folder Format',
+                                labelText: "Format des dossiers d'épisodes spéciaux",
                                 border: OutlineInputBorder(),
                               ),
                             ),
@@ -552,12 +552,12 @@ class _MediaManagementSettingsScreenState
                               loading: () => const Center(
                                 child: ExpressiveProgressIndicator(),
                               ),
-                              error: (err, stack) => Text('Error loading root folders: $err'),
+                              error: (err, stack) => Text('Erreur lors du chargement des dossiers racine : $err'),
                               data: (folders) {
                                 if (folders.isEmpty) {
                                   return const Padding(
                                     padding: EdgeInsets.symmetric(vertical: Insets.md),
-                                    child: Text('No root folders configured.'),
+                                    child: Text('Aucun dossier racine configuré.'),
                                   );
                                 }
                                 return ListView.separated(
@@ -599,7 +599,7 @@ class _MediaManagementSettingsScreenState
                               child: OutlinedButton.icon(
                                 onPressed: _showAddRootFolderDialog,
                                 icon: const Icon(Icons.add),
-                                label: const Text('Add Root Folder'),
+                                label: const Text('Ajouter un dossier racine'),
                               ),
                             ),
                           ],
@@ -632,7 +632,7 @@ class _MediaManagementSettingsScreenState
                             const SizedBox(height: Insets.md),
                             SwitchListTile(
                               contentPadding: EdgeInsets.zero,
-                              title: const Text('Create Empty Series Folders'),
+                              title: const Text('Créer les dossiers de séries vides'),
                               subtitle: const Text(
                                 'Create directories automatically on disk scanner activity',
                               ),
@@ -643,9 +643,9 @@ class _MediaManagementSettingsScreenState
                             ),
                             SwitchListTile(
                               contentPadding: EdgeInsets.zero,
-                              title: const Text('Delete Empty Folders'),
+                              title: const Text('Supprimer les dossiers vides'),
                               subtitle: const Text(
-                                'Remove folders that have no media assets remaining',
+                                'Retirer les dossiers sans élément média restant',
                               ),
                               value: _deleteEmptyFolders,
                               onChanged: (val) =>
@@ -654,9 +654,9 @@ class _MediaManagementSettingsScreenState
                             SwitchListTile(
                               contentPadding: EdgeInsets.zero,
                               title:
-                                  const Text('Use Hardlinks instead of Copy'),
+                                  const Text('Utiliser des liens durs au lieu de copier'),
                               subtitle: const Text(
-                                'Highly recommended for same-pool storage seeding setups',
+                                'Fortement recommandé pour les configurations de seed sur le même pool de stockage',
                               ),
                               value: _copyUsingHardlinks,
                               onChanged: (val) =>
@@ -668,7 +668,7 @@ class _MediaManagementSettingsScreenState
                                 'Auto Unmonitor Previously Downloaded',
                               ),
                               subtitle: const Text(
-                                'Unmonitor episodes once they have been deleted from disk',
+                                'Ne plus surveiller les épisodes supprimés du disque',
                               ),
                               value: _autoUnmonitorPreviouslyDownloadedEpisodes,
                               onChanged: (val) => setState(
@@ -680,7 +680,7 @@ class _MediaManagementSettingsScreenState
                             SwitchListTile(
                               contentPadding: EdgeInsets.zero,
                               title: const Text(
-                                'Skip Free Space Check When Importing',
+                                "Ignorer la vérification d'espace libre à l'import",
                               ),
                               value: _skipFreeSpaceCheckWhenImporting,
                               onChanged: (val) => setState(
@@ -692,7 +692,7 @@ class _MediaManagementSettingsScreenState
                               controller: _minimumFreeSpaceController,
                               keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
-                                labelText: 'Minimum Free Space (MB)',
+                                labelText: 'Espace libre minimal (Mo)',
                                 border: OutlineInputBorder(),
                                 helperText:
                                     'Prevent imports if free space drops below threshold',
@@ -709,15 +709,15 @@ class _MediaManagementSettingsScreenState
                             DropdownButtonFormField<String>(
                               initialValue: _downloadPropersAndRepacks,
                               decoration: const InputDecoration(
-                                labelText: 'Propers and Repacks',
+                                labelText: 'Propers et repacks',
                                 border: OutlineInputBorder(),
                               ),
                               items: _dropdownItems(
                                 const {
-                                  'preferAndUpgrade': 'Prefer and Upgrade',
+                                  'preferAndUpgrade': 'Préférer et mettre à niveau',
                                   'doNotUpgrade':
-                                      'Do Not Upgrade Automatically',
-                                  'doNotPrefer': 'Do Not Prefer',
+                                      'Ne pas mettre à niveau automatiquement',
+                                  'doNotPrefer': 'Ne pas préférer',
                                 },
                                 _downloadPropersAndRepacks,
                               ),
@@ -733,14 +733,14 @@ class _MediaManagementSettingsScreenState
                             DropdownButtonFormField<String>(
                               initialValue: _episodeTitleRequired,
                               decoration: const InputDecoration(
-                                labelText: 'Episode Title Required',
+                                labelText: "Titre de l'épisode requis",
                                 border: OutlineInputBorder(),
                               ),
                               items: _dropdownItems(
                                 const {
                                   'always': 'Always',
                                   'bulkSeasonReleases':
-                                      'Only for Bulk Season Releases',
+                                      'Uniquement pour les sorties de saison groupées',
                                   'never': 'Never',
                                 },
                                 _episodeTitleRequired,
@@ -755,7 +755,7 @@ class _MediaManagementSettingsScreenState
                             DropdownButtonFormField<String>(
                               initialValue: _fileDate,
                               decoration: const InputDecoration(
-                                labelText: 'File Date',
+                                labelText: 'Date du fichier',
                                 border: OutlineInputBorder(),
                               ),
                               items: _dropdownItems(
@@ -776,13 +776,13 @@ class _MediaManagementSettingsScreenState
                             DropdownButtonFormField<String>(
                               initialValue: _rescanAfterRefresh,
                               decoration: const InputDecoration(
-                                labelText: 'Rescan After Refresh',
+                                labelText: 'Re-analyser après actualisation',
                                 border: OutlineInputBorder(),
                               ),
                               items: _dropdownItems(
                                 const {
                                   'always': 'Always',
-                                  'afterManual': 'After Manual Refresh',
+                                  'afterManual': 'Après actualisation manuelle',
                                   'never': 'Never',
                                 },
                                 _rescanAfterRefresh,
@@ -823,9 +823,9 @@ class _MediaManagementSettingsScreenState
                             const SizedBox(height: Insets.md),
                             SwitchListTile(
                               contentPadding: EdgeInsets.zero,
-                              title: const Text('Import Extra Files'),
+                              title: const Text('Importer des fichiers supplémentaires'),
                               subtitle: const Text(
-                                'Move subtitles, NFO, or metadata with video files',
+                                'Déplacer les sous-titres, NFO ou métadonnées avec les fichiers vidéo',
                               ),
                               value: _importExtraFiles,
                               onChanged: (val) =>
@@ -836,7 +836,7 @@ class _MediaManagementSettingsScreenState
                               TextFormField(
                                 controller: _extraFileExtensionsController,
                                 decoration: const InputDecoration(
-                                  labelText: 'Extra File Extensions',
+                                  labelText: 'Extensions de fichiers supplémentaires',
                                   border: OutlineInputBorder(),
                                   helperText:
                                       'Comma separated list, e.g. srt, nfo, txt',
@@ -846,9 +846,9 @@ class _MediaManagementSettingsScreenState
                             const SizedBox(height: Insets.md),
                             SwitchListTile(
                               contentPadding: EdgeInsets.zero,
-                              title: const Text('Enable Media Info'),
+                              title: const Text('Activer Media Info'),
                               subtitle: const Text(
-                                'Extract audio channels, video codec, and subtitle info',
+                                'Extraire les canaux audio, le codec vidéo et les infos de sous-titres',
                               ),
                               value: _enableMediaInfo,
                               onChanged: (val) =>
@@ -885,10 +885,10 @@ class _MediaManagementSettingsScreenState
                             TextFormField(
                               controller: _recycleBinController,
                               decoration: const InputDecoration(
-                                labelText: 'Recycle Bin Path',
+                                labelText: 'Chemin de la corbeille',
                                 border: OutlineInputBorder(),
                                 helperText:
-                                    'Deleted files will be moved here instead of permanently deleted',
+                                    "Les fichiers supprimés seront déplacés ici au lieu d'être définitivement supprimés",
                               ),
                             ),
                             const SizedBox(height: Insets.md),
@@ -896,10 +896,10 @@ class _MediaManagementSettingsScreenState
                               controller: _recycleBinCleanupDaysController,
                               keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
-                                labelText: 'Recycle Bin Cleanup Days',
+                                labelText: 'Jours de nettoyage de la corbeille',
                                 border: OutlineInputBorder(),
                                 helperText:
-                                    'Number of days before files are purged. Use 0 to disable.',
+                                    'Nombre de jours avant purge des fichiers. 0 pour désactiver.',
                               ),
                               validator: (val) {
                                 if (val != null &&
@@ -939,7 +939,7 @@ class _MediaManagementSettingsScreenState
                             const SizedBox(height: Insets.md),
                             SwitchListTile(
                               contentPadding: EdgeInsets.zero,
-                              title: const Text('Set Permissions (Linux)'),
+                              title: const Text('Définir les permissions (Linux)'),
                               value: _setPermissionsLinux,
                               onChanged: (val) =>
                                   setState(() => _setPermissionsLinux = val),
@@ -949,18 +949,18 @@ class _MediaManagementSettingsScreenState
                               TextFormField(
                                 controller: _chmodFolderController,
                                 decoration: const InputDecoration(
-                                  labelText: 'Folder CHMOD Mode',
+                                  labelText: 'Mode CHMOD des dossiers',
                                   border: OutlineInputBorder(),
-                                  helperText: 'Octal format, e.g. 755',
+                                  helperText: 'Format octal, ex. 755',
                                 ),
                               ),
                               const SizedBox(height: Insets.md),
                               TextFormField(
                                 controller: _chownGroupController,
                                 decoration: const InputDecoration(
-                                  labelText: 'Group CHOWN Group',
+                                  labelText: 'Groupe CHOWN',
                                   border: OutlineInputBorder(),
-                                  helperText: 'Group name or ID',
+                                  helperText: 'Nom ou ID du groupe',
                                 ),
                               ),
                             ],

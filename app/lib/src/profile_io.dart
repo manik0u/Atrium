@@ -27,7 +27,7 @@ class ProfileIo {
   ) async {
     final Profile? profile = ref.read(activeProfileProvider);
     if (profile == null) {
-      _snack(context, 'No profile to export yet.');
+      _snack(context, 'Aucun profil à exporter pour le moment.');
       return;
     }
 
@@ -55,7 +55,7 @@ class ProfileIo {
       );
     } on PlatformException catch (e) {
       if (context.mounted) {
-        _snack(context, 'Could not open save sheet: ${e.message}');
+        _snack(context, "Impossible d'ouvrir la feuille d'enregistrement : ${e.message}");
       }
       return;
     }
@@ -69,7 +69,7 @@ class ProfileIo {
     _snack(
       context,
       includeSecrets
-          ? 'Exported (includes secrets - keep this file private)'
+          ? 'Exporté (contient des secrets - gardez ce fichier privé)'
           : 'Exported (secrets stripped)',
     );
   }
@@ -92,7 +92,7 @@ class ProfileIo {
       );
     } on PlatformException catch (e) {
       if (context.mounted) {
-        _snack(context, 'Could not open file picker: ${e.message}');
+        _snack(context, "Impossible d'ouvrir le sélecteur de fichiers : ${e.message}");
       }
       return;
     }
@@ -104,7 +104,7 @@ class ProfileIo {
     final String? json = await _readPlatformFile(file);
     if (json == null) {
       if (context.mounted) {
-        _snack(context, 'Could not read file.');
+        _snack(context, 'Impossible de lire le fichier.');
       }
       return;
     }
@@ -114,7 +114,7 @@ class ProfileIo {
       preview = Profile.fromJson(jsonDecode(json) as Map<String, dynamic>);
     } catch (_) {
       if (context.mounted) {
-        _snack(context, 'Not a valid Atrium profile file.');
+        _snack(context, 'Fichier de profil Atrium invalide.');
       }
       return;
     }
@@ -184,7 +184,7 @@ class _ExportOptionsDialogState extends State<_ExportOptionsDialog> {
     final ThemeData theme = Theme.of(context);
     final int n = widget.profile.instances.length;
     return AlertDialog(
-      title: const Text('Export profile'),
+      title: const Text('Exporter le profil'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,11 +194,11 @@ class _ExportOptionsDialogState extends State<_ExportOptionsDialog> {
           const SizedBox(height: 16),
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
-            title: const Text('Include API keys & passwords'),
+            title: const Text('Inclure les clés API et mots de passe'),
             subtitle: Text(
               _includeSecrets
-                  ? 'Anyone with this file can connect to your servers.'
-                  : 'Recommended - credentials are blanked out.',
+                  ? 'Toute personne ayant ce fichier peut se connecter à vos serveurs.'
+                  : 'Recommandé - les identifiants sont masqués.',
               style: theme.textTheme.bodySmall?.copyWith(
                 color: _includeSecrets ? theme.colorScheme.error : null,
               ),
@@ -211,11 +211,11 @@ class _ExportOptionsDialogState extends State<_ExportOptionsDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(_includeSecrets),
-          child: const Text('Export'),
+          child: const Text('Exporter'),
         ),
       ],
     );
@@ -231,16 +231,16 @@ class _ImportConfirmDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final int n = profile.instances.length;
     return AlertDialog(
-      title: const Text('Import profile'),
+      title: const Text('Importer un profil'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text('Profile: ${profile.name}'),
-          Text('Instances: $n'),
+          Text('Profil : ${profile.name}'),
+          Text('Instances : $n'),
           const SizedBox(height: 12),
           Text(
-            "A new profile will be added - your existing profiles aren't "
+            'Un nouveau profil sera ajouté - vos profils existants ne sont pas '
             'touched. Instances arrive with their credentials only if the '
             'export included them.',
             style: Theme.of(context).textTheme.bodySmall,
@@ -250,11 +250,11 @@ class _ImportConfirmDialog extends StatelessWidget {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(true),
-          child: const Text('Import'),
+          child: const Text('Importer'),
         ),
       ],
     );

@@ -101,7 +101,7 @@ class __ManualImportSetupDialogState
     final String folder = _pathController.text.trim();
     if (folder.isEmpty && widget.downloadId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select or enter a folder path.')),
+        const SnackBar(content: Text('Veuillez sélectionner ou saisir un chemin de dossier.')),
       );
       return;
     }
@@ -125,7 +125,7 @@ class __ManualImportSetupDialogState
       );
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Failed to scan folder');
+        throw Exception(resp.error?.message ?? "Échec de l'analyse du dossier");
       }
       files = resp.data ?? <ManualImportResource>[];
     } catch (e) {
@@ -138,7 +138,7 @@ class __ManualImportSetupDialogState
       setState(() => _scanning = false);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Scan failed: $scanError'),
+          content: Text("Échec de l'analyse : $scanError"),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
@@ -149,7 +149,7 @@ class __ManualImportSetupDialogState
       setState(() => _scanning = false);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('No audio files found to import in this folder.'),
+          content: Text('Aucun fichier audio à importer dans ce dossier.'),
         ),
       );
       return;
@@ -191,7 +191,7 @@ class __ManualImportSetupDialogState
           Icon(Icons.drive_folder_upload_outlined, color: cs.primary, size: 26),
           const SizedBox(width: 10),
           const Expanded(
-            child: Text('Manual Import', overflow: TextOverflow.ellipsis),
+            child: Text('Import manuel', overflow: TextOverflow.ellipsis),
           ),
         ],
       ),
@@ -204,14 +204,14 @@ class __ManualImportSetupDialogState
                   const ExpressiveProgressIndicator(),
                   const SizedBox(height: 20),
                   Text(
-                    'Scanning folder for audio tracks...',
+                    'Analyse du dossier à la recherche de pistes audio…',
                     style: theme.textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Querying server and matching tags...',
+                    'Interrogation du serveur et correspondance des balises…',
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: cs.onSurfaceVariant,
                     ),
@@ -237,8 +237,8 @@ class __ManualImportSetupDialogState
                         child: TextField(
                           controller: _pathController,
                           decoration: InputDecoration(
-                            labelText: 'Folder Path',
-                            hintText: '/data/media/music/...',
+                            labelText: 'Chemin du dossier',
+                            hintText: '/data/media/music/…',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -252,7 +252,7 @@ class __ManualImportSetupDialogState
                       const SizedBox(width: 8),
                       IconButton.filledTonal(
                         icon: const Icon(Icons.folder_open),
-                        tooltip: 'Browse Server Folders',
+                        tooltip: 'Parcourir les dossiers du serveur',
                         onPressed: _browseFolder,
                       ),
                     ],
@@ -262,7 +262,7 @@ class __ManualImportSetupDialogState
                     initialValue: _importMode,
                     isExpanded: true,
                     decoration: InputDecoration(
-                      labelText: 'Import Mode',
+                      labelText: "Mode d'import",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -274,15 +274,15 @@ class __ManualImportSetupDialogState
                     items: const <DropdownMenuItem<String>>[
                       DropdownMenuItem(
                         value: 'auto',
-                        child: Text('Auto (Lidarr Default)'),
+                        child: Text('Auto (par défaut Lidarr)'),
                       ),
                       DropdownMenuItem(
                         value: 'move',
-                        child: Text('Move (Recommended)'),
+                        child: Text('Déplacer (recommandé)'),
                       ),
                       DropdownMenuItem(
                         value: 'copy',
-                        child: Text('Copy'),
+                        child: Text('Copier'),
                       ),
                     ],
                     onChanged: (String? val) {
@@ -292,9 +292,9 @@ class __ManualImportSetupDialogState
                   const SizedBox(height: 8),
                   CheckboxListTile(
                     contentPadding: EdgeInsets.zero,
-                    title: const Text('Filter Existing Files'),
+                    title: const Text('Filtrer les fichiers existants'),
                     subtitle:
-                        const Text('Skip tracks already imported in library'),
+                        const Text('Ignorer les pistes déjà importées dans la bibliothèque'),
                     value: _filterExistingFiles,
                     onChanged: (bool? val) {
                       setState(() => _filterExistingFiles = val ?? true);
@@ -302,8 +302,8 @@ class __ManualImportSetupDialogState
                   ),
                   CheckboxListTile(
                     contentPadding: EdgeInsets.zero,
-                    title: const Text('Replace Existing Files'),
-                    subtitle: const Text('Allow upgrades of existing tracks'),
+                    title: const Text('Remplacer les fichiers existants'),
+                    subtitle: const Text('Autoriser les mises à niveau des pistes existantes'),
                     value: _replaceExistingFiles,
                     onChanged: (bool? val) {
                       setState(() => _replaceExistingFiles = val ?? true);
@@ -319,18 +319,18 @@ class __ManualImportSetupDialogState
                   _cancelToken?.cancel('user_cancelled');
                   setState(() => _scanning = false);
                 },
-                child: const Text('Cancel'),
+                child: const Text('Annuler'),
               ),
             ]
           : <Widget>[
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('Cancel'),
+                child: const Text('Annuler'),
               ),
               FilledButton.icon(
                 onPressed: _startScan,
                 icon: const Icon(Icons.search),
-                label: const Text('Scan Folder'),
+                label: const Text('Analyser le dossier'),
               ),
             ],
     );
@@ -459,7 +459,7 @@ class _LidarrManualImportScreenState
     final ArtistResource? artist = _files[index].artist;
     if (artist == null || artist.id == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select an artist first.')),
+        const SnackBar(content: Text("Veuillez d'abord sélectionner un artiste.")),
       );
       return;
     }
@@ -496,7 +496,7 @@ class _LidarrManualImportScreenState
         album.id == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Please select an artist and album first.'),
+          content: Text("Veuillez d'abord sélectionner un artiste et un album."),
         ),
       );
       return;
@@ -556,7 +556,7 @@ class _LidarrManualImportScreenState
 
     if (selectedItems.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No files selected to import.')),
+        const SnackBar(content: Text('Aucun fichier sélectionné à importer.')),
       );
       return;
     }
@@ -597,7 +597,7 @@ class _LidarrManualImportScreenState
       );
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Failed to trigger import');
+        throw Exception(resp.error?.message ?? "Échec du déclenchement de l'import");
       }
 
       ref.invalidate(lidarrQueueProvider(widget.instance));
@@ -621,7 +621,7 @@ class _LidarrManualImportScreenState
         setState(() => _importing = false);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Import failed: $e'),
+            content: Text("Échec de l'import : $e"),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -738,7 +738,7 @@ class _LidarrManualImportScreenState
                 focusNode: _searchFocusNode,
                 decoration: InputDecoration(
                   hintText:
-                      'Filter scanned audio files by title, artist, album...',
+                      'Filtrer les fichiers audio analysés par titre, artiste, album…',
                   prefixIcon: const Icon(Icons.search, size: 20),
                   suffixIcon: _searchQuery.isNotEmpty
                       ? IconButton(
@@ -805,7 +805,7 @@ class _LidarrManualImportScreenState
                           ),
                           const SizedBox(height: 12),
                           Text(
-                            'No files matching this filter',
+                            'Aucun fichier ne correspond à ce filtre',
                             style: theme.textTheme.titleSmall?.copyWith(
                               color: cs.onSurfaceVariant,
                             ),
@@ -1001,7 +1001,7 @@ class _LidarrManualImportScreenState
                                         const SizedBox(width: 8),
                                         Expanded(
                                           child: Text(
-                                            'ID3: ${item.audioTags?.artistTitle ?? 'Unknown'} • ${item.audioTags?.albumTitle ?? 'Unknown'} • ${item.audioTags?.title ?? 'Track'}',
+                                            'ID3 : ${item.audioTags?.artistTitle ?? 'Unknown'} • ${item.audioTags?.albumTitle ?? 'Inconnu'} • ${item.audioTags?.title ?? 'Piste'}',
                                             style: theme.textTheme.bodySmall
                                                 ?.copyWith(
                                               color: cs.onSurfaceVariant,
@@ -1102,7 +1102,7 @@ class _LidarrManualImportScreenState
                                             : cs.onSurfaceVariant,
                                       ),
                                       label: Text(
-                                        item.album?.title ?? 'Select Album',
+                                        item.album?.title ?? "Sélectionner l'album",
                                         style: TextStyle(
                                           fontSize: 12.5,
                                           fontWeight: item.album != null
@@ -1197,15 +1197,15 @@ class _LidarrManualImportScreenState
                           items: const <DropdownMenuItem<String>>[
                             DropdownMenuItem(
                               value: 'auto',
-                              child: Text('Mode: Auto'),
+                              child: Text('Mode : Auto'),
                             ),
                             DropdownMenuItem(
                               value: 'move',
-                              child: Text('Mode: Move'),
+                              child: Text('Mode : Déplacer'),
                             ),
                             DropdownMenuItem(
                               value: 'copy',
-                              child: Text('Mode: Copy'),
+                              child: Text('Mode : Copier'),
                             ),
                           ],
                           onChanged: (String? val) {
@@ -1236,7 +1236,7 @@ class _LidarrManualImportScreenState
                                 child: CircularProgressIndicator(strokeWidth: 2),
                               )
                             : const Icon(Icons.download_done_rounded),
-                        label: const Text('Import Selected'),
+                        label: const Text('Importer la sélection'),
                       ),
                     ),
                   ],
@@ -1360,7 +1360,7 @@ class __DirectoryBrowserDialogState
         children: [
           Icon(Icons.folder_outlined, color: cs.primary),
           const SizedBox(width: 10),
-          const Text('Browse Server Folders'),
+          const Text('Parcourir les dossiers du serveur'),
         ],
       ),
       content: SizedBox(
@@ -1379,7 +1379,7 @@ class __DirectoryBrowserDialogState
                 children: <Widget>[
                   IconButton(
                     icon: const Icon(Icons.arrow_upward, size: 18),
-                    tooltip: 'Parent Folder',
+                    tooltip: 'Dossier parent',
                     onPressed: _currentPath.isNotEmpty ? _navigateBack : null,
                   ),
                   const SizedBox(width: 8),
@@ -1411,7 +1411,7 @@ class __DirectoryBrowserDialogState
                           ),
                         )
                       : _directories.isEmpty
-                          ? const Center(child: Text('No folders found.'))
+                          ? const Center(child: Text('Aucun dossier trouvé.'))
                           : ListView.separated(
                               itemCount: _directories.length,
                               separatorBuilder: (_, __) =>
@@ -1439,11 +1439,11 @@ class __DirectoryBrowserDialogState
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: () => Navigator.pop(context, _currentPath),
-          child: const Text('Select This Folder'),
+          child: const Text('Sélectionner ce dossier'),
         ),
       ],
     );
@@ -1495,7 +1495,7 @@ class _ArtistPickerDialogState extends State<_ArtistPickerDialog> {
 
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      title: const Text('Select Artist'),
+      title: const Text("Sélectionner l'artiste"),
       content: SizedBox(
         width: double.maxFinite,
         height: 380,
@@ -1504,7 +1504,7 @@ class _ArtistPickerDialogState extends State<_ArtistPickerDialog> {
             TextField(
               controller: _filterController,
               decoration: InputDecoration(
-                hintText: 'Search artists...',
+                hintText: 'Rechercher des artistes…',
                 prefixIcon: const Icon(Icons.search, size: 20),
                 isDense: true,
                 border: OutlineInputBorder(
@@ -1548,7 +1548,7 @@ class _ArtistPickerDialogState extends State<_ArtistPickerDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
       ],
     );
@@ -1566,12 +1566,12 @@ class _AlbumPickerDialog extends StatelessWidget {
 
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      title: const Text('Select Album'),
+      title: const Text("Sélectionner l'album"),
       content: SizedBox(
         width: double.maxFinite,
         height: 380,
         child: albums.isEmpty
-            ? const Center(child: Text('No albums found for this artist.'))
+            ? const Center(child: Text('Aucun album trouvé pour cet artiste.'))
             : ListView.builder(
                 itemCount: albums.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -1579,7 +1579,7 @@ class _AlbumPickerDialog extends StatelessWidget {
                   return ListTile(
                     leading: const Icon(Icons.album_outlined),
                     title: Text(
-                      album.title ?? 'Unknown Album',
+                      album.title ?? 'Album inconnu',
                       style: theme.textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -1596,7 +1596,7 @@ class _AlbumPickerDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
       ],
     );
@@ -1629,12 +1629,12 @@ class _TrackPickerDialogState extends State<_TrackPickerDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      title: const Text('Select Track(s)'),
+      title: const Text('Sélectionner la/les piste(s)'),
       content: SizedBox(
         width: double.maxFinite,
         height: 380,
         child: widget.tracks.isEmpty
-            ? const Center(child: Text('No tracks found for this album.'))
+            ? const Center(child: Text('Aucune piste trouvée pour cet album.'))
             : ListView.builder(
                 itemCount: widget.tracks.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -1663,7 +1663,7 @@ class _TrackPickerDialogState extends State<_TrackPickerDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: () {
@@ -1672,7 +1672,7 @@ class _TrackPickerDialogState extends State<_TrackPickerDialog> {
                 .toList();
             Navigator.pop(context, selected);
           },
-          child: const Text('Done'),
+          child: const Text('Terminé'),
         ),
       ],
     );
@@ -1688,19 +1688,19 @@ class _QualityPickerDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      title: const Text('Select Quality Profile'),
+      title: const Text('Sélectionner le profil de qualité'),
       content: SizedBox(
         width: double.maxFinite,
         height: 320,
         child: qualityProfiles.isEmpty
-            ? const Center(child: Text('No quality profiles available.'))
+            ? const Center(child: Text('Aucun profil de qualité disponible.'))
             : ListView.builder(
                 itemCount: qualityProfiles.length,
                 itemBuilder: (BuildContext context, int index) {
                   final QualityProfileResource p = qualityProfiles[index];
                   return ListTile(
                     leading: const Icon(Icons.tune_outlined),
-                    title: Text(p.name ?? 'Quality Profile'),
+                    title: Text(p.name ?? 'Profil de qualité'),
                     onTap: () {
                       final QualityModel q = QualityModel(
                         quality: Quality(id: p.id, name: p.name),
@@ -1719,7 +1719,7 @@ class _QualityPickerDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
       ],
     );

@@ -35,7 +35,7 @@ class MetadataSettingsScreen extends ConsumerWidget {
           valueListenable: enableController,
           builder: (context, enable, _) {
             return AlertDialog(
-              title: Text('Edit ${metadata['name']}'),
+              title: Text('Modifier ${metadata['name']}'),
               content: SizedBox(
                 width: double.maxFinite,
                 child: SingleChildScrollView(
@@ -44,7 +44,7 @@ class MetadataSettingsScreen extends ConsumerWidget {
                     children: [
                       SwitchListTile(
                         contentPadding: EdgeInsets.zero,
-                        title: const Text('Enable metadata creation'),
+                        title: const Text('Activer la création de métadonnées'),
                         value: enable,
                         onChanged: (val) => enableController.value = val,
                       ),
@@ -69,7 +69,7 @@ class MetadataSettingsScreen extends ConsumerWidget {
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  content: Text('Metadata consumer updated!'),
+                                  content: Text('Consommateur de métadonnées mis à jour !'),
                                 ),
                               );
                             }
@@ -105,15 +105,15 @@ class MetadataSettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Metadata Consumers'),
+        title: const Text('Consommateurs de métadonnées'),
       ),
       body: metadataListAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Error: $err')),
+        error: (err, stack) => Center(child: Text('Erreur : $err')),
         data: (configs) {
           if (configs.isEmpty) {
             return const Center(
-              child: Text('No metadata consumers configured.'),
+              child: Text('Aucun consommateur de métadonnées configuré.'),
             );
           }
 

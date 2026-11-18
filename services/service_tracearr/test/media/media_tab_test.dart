@@ -222,7 +222,7 @@ void main() {
       expect(find.text('4K: 120'), findsOneWidget);
       expect(find.text('1080P: 1430'), findsOneWidget);
       expect(find.text('720P: 100'), findsOneWidget);
-      expect(find.text('All Libraries'), findsOneWidget);
+      expect(find.text('Toutes les bibliothèques'), findsOneWidget);
       expect(find.text('PLEX Movies (1200)'), findsOneWidget);
       expect(find.text('JELLYFIN TV Shows (450)'), findsOneWidget);
     });
@@ -303,9 +303,9 @@ void main() {
       expect(find.text('IMDb'), findsOneWidget);
 
       // Lifetime stats
-      expect(find.text('TOTAL PLAYS'), findsOneWidget);
+      expect(find.text('LECTURES TOTALES'), findsOneWidget);
       expect(find.text('84'), findsOneWidget);
-      expect(find.text('WATCH TIME'), findsOneWidget);
+      expect(find.text('TEMPS DE VISIONNAGE'), findsOneWidget);
       expect(find.text('168.0h'), findsOneWidget);
 
       // Multi-Server Availability

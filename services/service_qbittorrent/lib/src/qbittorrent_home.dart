@@ -167,17 +167,17 @@ class QbittorrentHome extends ConsumerWidget {
                 NavigationDestination(
                   icon: Icon(Icons.home_outlined),
                   selectedIcon: Icon(Icons.home),
-                  label: 'Home',
+                  label: 'Accueil',
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.settings_outlined),
                   selectedIcon: Icon(Icons.settings),
-                  label: 'Settings',
+                  label: 'Paramètres',
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.article_outlined),
                   selectedIcon: Icon(Icons.article),
-                  label: 'Logs',
+                  label: 'Journaux',
                 ),
               ],
             ),
@@ -249,11 +249,11 @@ class _TorrentsTabState extends ConsumerState<_TorrentsTab> {
 
   Widget _torrentFab(BuildContext context, WidgetRef ref) {
     return ExpandableFab(
-      tooltip: 'Add torrent',
+      tooltip: 'Ajouter un torrent',
       builder: (BuildContext context, VoidCallback close) => <Widget>[
         FloatingActionButton(
           heroTag: null,
-          tooltip: 'Magnet link',
+          tooltip: 'Lien magnet',
           onPressed: () async {
             close();
             final bool added = await AddTorrentSheet.show(
@@ -269,7 +269,7 @@ class _TorrentsTabState extends ConsumerState<_TorrentsTab> {
         ),
         FloatingActionButton(
           heroTag: null,
-          tooltip: 'Torrent file',
+          tooltip: 'Fichier torrent',
           onPressed: () async {
             close();
             final bool added = await AddTorrentSheet.show(
@@ -352,7 +352,7 @@ class _TorrentsTabState extends ConsumerState<_TorrentsTab> {
                       padding: EdgeInsets.only(top: 60),
                       child: EmptyView(
                         icon: Icons.cloud_download_outlined,
-                        title: 'No torrents',
+                        title: 'Aucun torrent',
                         message:
                             'Tap + to add a magnet, URL, or .torrent file.',
                       ),
@@ -467,7 +467,7 @@ class _TopControlBarState extends ConsumerState<_TopControlBar> {
               const SizedBox(width: Insets.xs),
               Expanded(
                 child: _TransferStatBadge(
-                  label: 'Downloads',
+                  label: 'Téléchargements',
                   count: downloadingCount,
                   speed: dlActive ? '${fmtBytes(dlSpeed)}/s' : '0 B/s',
                   color: cs.primary,
@@ -517,7 +517,7 @@ class _TopControlBarState extends ConsumerState<_TopControlBar> {
                           autofocus: true,
                           style: theme.textTheme.bodyMedium,
                           decoration: const InputDecoration(
-                            hintText: 'Filter torrents...',
+                            hintText: 'Filtrer les torrents…',
                             filled: false,
                             fillColor: Colors.transparent,
                             border: InputBorder.none,
@@ -630,7 +630,7 @@ class _TopControlBarState extends ConsumerState<_TopControlBar> {
                         minimumSize: const Size(48, 48),
                         padding: EdgeInsets.zero,
                       ),
-                      tooltip: 'Resume all',
+                      tooltip: 'Tout reprendre',
                       icon: const Icon(Icons.play_arrow_rounded, size: 26),
                       onPressed: () => _setAll(ref, paused: false),
                     ),
@@ -642,7 +642,7 @@ class _TopControlBarState extends ConsumerState<_TopControlBar> {
                         minimumSize: const Size(48, 48),
                         padding: EdgeInsets.zero,
                       ),
-                      tooltip: 'Pause all',
+                      tooltip: 'Tout mettre en pause',
                       icon: const Icon(Icons.pause_rounded, size: 26),
                       onPressed: () => _setAll(ref, paused: true),
                     ),
@@ -760,7 +760,7 @@ class QbittorrentAppBarActions extends ConsumerWidget {
                         ? Icons.arrow_upward
                         : Icons.arrow_downward,
                   ),
-                  title: Text(config.ascending ? 'Ascending' : 'Descending'),
+                  title: Text(config.ascending ? 'Croissant' : 'Décroissant'),
                   onTap: () {
                     ref
                         .read(qbitSortProvider(instance).notifier)
@@ -798,12 +798,12 @@ class QbittorrentAppBarActions extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           IconButton(
-            tooltip: 'Filter Torrents',
+            tooltip: 'Filtrer les torrents',
             icon: const Icon(Icons.filter_list),
             onPressed: onFilter ?? () => Scaffold.of(context).openEndDrawer(),
           ),
           IconButton(
-            tooltip: 'Sort Torrents',
+            tooltip: 'Trier les torrents',
             icon: const Icon(Icons.sort),
             onPressed: () => _showSortMenu(context, ref),
           ),
@@ -817,11 +817,11 @@ class QbittorrentAppBarActions extends ConsumerWidget {
         Center(
           child: Padding(
             padding: const EdgeInsets.only(right: 8.0),
-            child: Text('${selectedHashes.length} Selected'),
+            child: Text('${selectedHashes.length} sélectionné(s)'),
           ),
         ),
         IconButton(
-          tooltip: 'Select All',
+          tooltip: 'Tout sélectionner',
           icon: const Icon(Icons.select_all),
           onPressed: () {
             final List<QbitTorrent>? torrents =
@@ -833,12 +833,12 @@ class QbittorrentAppBarActions extends ConsumerWidget {
           },
         ),
         IconButton(
-          tooltip: 'Select None',
+          tooltip: 'Aucune sélection',
           icon: const Icon(Icons.deselect),
           onPressed: () => ref.invalidate(qbitSelectionProvider(instance)),
         ),
         IconButton(
-          tooltip: 'Delete Selected',
+          tooltip: 'Supprimer la sélection',
           icon: const Icon(Icons.delete),
           onPressed: () => QbittorrentActionUtils.confirmDelete(
             context,
@@ -868,7 +868,7 @@ class QbittorrentAppBarActions extends ConsumerWidget {
                 await Clipboard.setData(ClipboardData(text: hashes.join('\n')));
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Hashes copied')),
+                    const SnackBar(content: Text('Hashs copiés')),
                   );
                 }
               case 'recheck':
@@ -949,14 +949,14 @@ class QbittorrentAppBarActions extends ConsumerWidget {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('Torrent exported successfully'),
+                        content: Text('Torrent exporté avec succès'),
                       ),
                     );
                   }
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Export failed: $e')),
+                      SnackBar(content: Text("Échec de l'export : $e")),
                     );
                   }
                 }
@@ -964,56 +964,56 @@ class QbittorrentAppBarActions extends ConsumerWidget {
           },
           itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
             const PopupMenuItem<String>(value: 'pause', child: Text('Pause')),
-            const PopupMenuItem<String>(value: 'resume', child: Text('Resume')),
-            const PopupMenuItem<String>(value: 'copy', child: Text('Copy')),
+            const PopupMenuItem<String>(value: 'resume', child: Text('Reprendre')),
+            const PopupMenuItem<String>(value: 'copy', child: Text('Copier')),
             const PopupMenuItem<String>(
               value: 'recheck',
-              child: Text('Force Recheck'),
+              child: Text('Forcer la revérification'),
             ),
             const PopupMenuItem<String>(
               value: 'reannounce',
-              child: Text('Force Reannounce'),
+              child: Text('Forcer le ré-annonce'),
             ),
             const PopupMenuDivider(),
             const PopupMenuItem<String>(
               value: 'queue_top',
-              child: Text('Queue to Top'),
+              child: Text('En haut de la file'),
             ),
             const PopupMenuItem<String>(
               value: 'queue_up',
-              child: Text('Queue Up'),
+              child: Text('Monter dans la file'),
             ),
             const PopupMenuItem<String>(
               value: 'queue_down',
-              child: Text('Queue Down'),
+              child: Text('Descendre dans la file'),
             ),
             const PopupMenuItem<String>(
               value: 'queue_bottom',
-              child: Text('Queue to Bottom'),
+              child: Text('En bas de la file'),
             ),
             const PopupMenuDivider(),
             const PopupMenuItem<String>(
               value: 'forcestart',
-              child: Text('Force Start'),
+              child: Text('Forcer le démarrage'),
             ),
             PopupMenuItem<String>(
               value: 'rename',
               enabled: selectedHashes.length == 1,
-              child: const Text('Rename'),
+              child: const Text('Renommer'),
             ),
             const PopupMenuItem<String>(
               value: 'savepath',
-              child: Text('Set SavePath'),
+              child: Text("Définir le chemin d'enregistrement"),
             ),
             const PopupMenuItem<String>(
               value: 'category',
-              child: Text('Set Category'),
+              child: Text('Définir la catégorie'),
             ),
-            const PopupMenuItem<String>(value: 'tags', child: Text('Set Tags')),
+            const PopupMenuItem<String>(value: 'tags', child: Text('Définir les balises')),
             PopupMenuItem<String>(
               value: 'export',
               enabled: selectedHashes.length == 1,
-              child: const Text('Export .torrent'),
+              child: const Text('Exporter le .torrent'),
             ),
           ],
         ),
@@ -1313,7 +1313,7 @@ class _TorrentTileState extends ConsumerState<_TorrentTile> {
     showGeneralDialog<void>(
       context: context,
       barrierDismissible: true,
-      barrierLabel: 'Dismiss',
+      barrierLabel: 'Ignorer',
       transitionDuration: const Duration(milliseconds: 250),
       pageBuilder: (
         BuildContext context,
@@ -1403,7 +1403,7 @@ class _TorrentTileState extends ConsumerState<_TorrentTile> {
                       <String>{hash},
                     );
                   }),
-                  buildItem(Icons.label, 'Set Category', () {
+                  buildItem(Icons.label, 'Définir la catégorie', () {
                     QbittorrentActionUtils.editCategory(
                       context,
                       ref,

@@ -21,7 +21,7 @@ class SpeedtestHistoryChart extends StatelessWidget {
     if (points.length < 2) {
       return const Padding(
         padding: EdgeInsets.symmetric(vertical: 24),
-        child: Center(child: Text('Run at least two tests to draw a history.')),
+        child: Center(child: Text('Lancez au moins deux tests pour tracer un historique.')),
       );
     }
 
@@ -61,8 +61,8 @@ enum _HistoryMetric { download, upload }
 
 extension on _HistoryMetric {
   String get title => switch (this) {
-        _HistoryMetric.download => 'Download history',
-        _HistoryMetric.upload => 'Upload history',
+        _HistoryMetric.download => 'Historique des téléchargements',
+        _HistoryMetric.upload => 'Historique des envois',
       };
 
   double? valueOf(SpeedtestResult result) => switch (this) {
@@ -99,10 +99,10 @@ class _SeriesChart extends StatelessWidget {
       container: true,
       excludeSemantics: true,
       label: scale.hasValues
-          ? '${metric.title} chart from $startDate to $endDate, scale zero, '
+          ? 'Graphique ${metric.title} de $startDate à $endDate, échelle zéro, '
               'midpoint ${scale.midpointLabel}, maximum '
               '${scale.maximumLabel} ${scale.unit}'
-          : 'No usable ${metric.title.toLowerCase()} data',
+          : 'Aucune donnée utilisable pour ${metric.title.toLowerCase()}',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -181,7 +181,7 @@ class _SeriesChart extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 28),
               child:
-                  Center(child: Text('No ${metric.title.toLowerCase()} data')),
+                  Center(child: Text('Aucune donnée de ${metric.title.toLowerCase()}')),
             ),
         ],
       ),

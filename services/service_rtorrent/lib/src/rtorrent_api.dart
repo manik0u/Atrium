@@ -178,13 +178,13 @@ class RtorrentApi {
       bytes = Uint8List.fromList(resp.data ?? const <int>[]);
     } on DioException catch (e) {
       throw NetworkBadResponseException(
-        'Could not download that .torrent (${e.message ?? e.type.name}).',
+        'Impossible de télécharger ce .torrent (${e.message ?? e.type.name}).',
         status: e.response?.statusCode ?? 0,
       );
     }
     if (bytes.isEmpty) {
       throw const NetworkBadResponseException(
-        'That URL returned nothing to add.',
+        "Cette URL n'a rien renvoyé à ajouter.",
         status: 0,
       );
     }
@@ -238,7 +238,7 @@ class RtorrentApi {
         throw NetworkAuthException(
           'rTorrent rejected the credentials (HTTP $status). Its XML-RPC has '
           'no login of its own, so this comes from the proxy in front of it: '
-          'check the username and password, or leave both empty if it is not '
+          "vérifiez le nom d'utilisateur et le mot de passe, ou laissez les deux vides si ce n'est pas "
           'protected.',
         );
       }
@@ -251,10 +251,10 @@ class RtorrentApi {
 
       return XmlRpc.parseResponse(resp.data ?? '');
     } on XmlRpcFault catch (e) {
-      throw NetworkServerException('rTorrent: ${e.message}', status: 200);
+      throw NetworkServerException('rTorrent : ${e.message}', status: 200);
     } on FormatException catch (e) {
       throw NetworkBadResponseException(
-        'rTorrent did not return XML-RPC (${e.message}). Point the URL at the '
+        "rTorrent n'a pas renvoyé de XML-RPC (${e.message}). Pointez l'URL vers le "
         'SCGI/XML-RPC endpoint - often port 8000, or /RPC2 when ruTorrent is '
         'in front - rather than at the web UI.',
         status: 200,

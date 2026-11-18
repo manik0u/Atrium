@@ -96,14 +96,14 @@ class _WantedTabState extends ConsumerState<WantedTab>
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Search started for ${ids.length} selected movies.'),
+            content: Text('Recherche lancée pour ${ids.length} films sélectionnés.'),
           ),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to start search: $e')),
+          SnackBar(content: Text('Échec du démarrage de la recherche : $e')),
         );
       }
     }
@@ -131,13 +131,13 @@ class _WantedTabState extends ConsumerState<WantedTab>
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Unmonitored ${ids.length} selected movies.')),
+          SnackBar(content: Text('${ids.length} films sélectionnés ne sont plus surveillés.')),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to update monitoring: $e')),
+          SnackBar(content: Text('Échec de la mise à jour de la surveillance : $e')),
         );
       }
     }
@@ -163,7 +163,7 @@ class _WantedTabState extends ConsumerState<WantedTab>
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to start bulk search: $e')),
+          SnackBar(content: Text('Échec du démarrage de la recherche groupée : $e')),
         );
       }
     }
@@ -241,7 +241,7 @@ class _WantedTabState extends ConsumerState<WantedTab>
                     : SearchBar(
                         focusNode: _searchFocusNode,
                         controller: _searchController,
-                        hintText: 'Search wanted...',
+                        hintText: 'Rechercher les recherchés…',
                         onTapOutside: (event) {
                           if (_searchFocusNode.hasFocus) {
                             _searchFocusNode.unfocus();
@@ -285,12 +285,12 @@ class _WantedTabState extends ConsumerState<WantedTab>
                     ? <Widget>[
                         IconButton(
                           icon: const Icon(Icons.search),
-                          tooltip: 'Search Selected',
+                          tooltip: 'Rechercher la sélection',
                           onPressed: _searchSelected,
                         ),
                         IconButton(
                           icon: const Icon(Icons.bookmark_border),
-                          tooltip: 'Unmonitor Selected',
+                          tooltip: 'Ne plus surveiller la sélection',
                           onPressed: _unmonitorSelected,
                         ),
                         const SizedBox(width: 8),
@@ -310,8 +310,8 @@ class _WantedTabState extends ConsumerState<WantedTab>
                   ),
                   unselectedLabelStyle: theme.textTheme.titleSmall,
                   tabs: const <Widget>[
-                    Tab(text: 'Missing'),
-                    Tab(text: 'Cutoff Unmet'),
+                    Tab(text: 'Manquant'),
+                    Tab(text: 'Cutoff non atteint'),
                   ],
                 ),
               ),
@@ -368,7 +368,7 @@ class _WantedListView extends ConsumerWidget {
     return listAsync.when(
       loading: () => const Center(child: ExpressiveProgressIndicator()),
       error: (e, s) => ErrorView(
-        title: 'Failed to load movies',
+        title: 'Échec du chargement des films',
         message: e.toString(),
         onRetry: () {
           if (isCutoffTab) {
@@ -391,7 +391,7 @@ class _WantedListView extends ConsumerWidget {
                 ),
                 const SizedBox(height: 16),
                 const Text(
-                  'No movies matching filter found',
+                  'Aucun film ne correspond au filtre',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
@@ -445,7 +445,7 @@ class _WantedListView extends ConsumerWidget {
                             showManualImportFlow(context, ref, instance);
                           },
                           icon: const Icon(Icons.folder_open, size: 18),
-                          label: const Text('Manual Import'),
+                          label: const Text('Import manuel'),
                         ),
                       ),
                     ],
@@ -657,13 +657,13 @@ class _WantedMovieCard extends ConsumerWidget {
       });
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Search started for movie.')),
+          const SnackBar(content: Text('Recherche lancée pour le film.')),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Search failed: $e')),
+          SnackBar(content: Text('Échec de la recherche : $e')),
         );
       }
     }

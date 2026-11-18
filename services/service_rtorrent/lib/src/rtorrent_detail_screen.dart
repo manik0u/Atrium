@@ -48,9 +48,9 @@ class RtorrentDetailScreen extends ConsumerWidget {
           bottom: const TabBar(
             isScrollable: true,
             tabs: <Widget>[
-              Tab(text: 'Overview'),
-              Tab(text: 'Files'),
-              Tab(text: 'Peers'),
+              Tab(text: "Vue d'ensemble"),
+              Tab(text: 'Fichiers'),
+              Tab(text: 'Pairs'),
               Tab(text: 'Trackers'),
             ],
           ),
@@ -96,7 +96,7 @@ class _OverviewTab extends StatelessWidget {
           ),
           const SizedBox(height: Insets.md),
           if (t.hasError) _KeyValue('Message', t.message),
-          _KeyValue('Status', t.status.label),
+          _KeyValue('Statut', t.status.label),
           _KeyValue('Progress', '${(t.progress * 100).toStringAsFixed(1)}%'),
           _KeyValue(
             'Done',
@@ -119,7 +119,7 @@ class _OverviewTab extends StatelessWidget {
           _KeyValue('Started', t.state == 1 ? 'Yes' : 'No'),
           _KeyValue('Open', t.isOpen ? 'Yes' : 'No'),
           _KeyValue('Active', t.isActive ? 'Yes' : 'No'),
-          if (t.label.isNotEmpty) _KeyValue('Label', t.label),
+          if (t.label.isNotEmpty) _KeyValue('Libellé', t.label),
           _KeyValue('Directory', t.directory),
           _KeyValue('Hash', t.hash),
         ],
@@ -161,7 +161,7 @@ class _FilesTabState extends ConsumerState<_FilesTab> {
         ),
       );
     } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text('Could not update: $e')));
+      messenger.showSnackBar(SnackBar(content: Text('Impossible de mettre à jour : $e')));
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -173,8 +173,8 @@ class _FilesTabState extends ConsumerState<_FilesTab> {
     if (files.isEmpty) {
       return const EmptyView(
         icon: Icons.insert_drive_file_outlined,
-        title: 'No files',
-        message: 'rTorrent has no file list for this torrent yet.',
+        title: 'Aucun fichier',
+        message: "rTorrent n'a pas encore la liste des fichiers de ce torrent.",
       );
     }
     return ListView.builder(
@@ -209,9 +209,9 @@ class _FilesTabState extends ConsumerState<_FilesTab> {
             icon: const Icon(Icons.more_vert),
             initialValue: f.priority,
             itemBuilder: (BuildContext context) => const <PopupMenuEntry<int>>[
-              PopupMenuItem<int>(value: 0, child: Text('Skip')),
+              PopupMenuItem<int>(value: 0, child: Text('Ignorer')),
               PopupMenuItem<int>(value: 1, child: Text('Normal')),
-              PopupMenuItem<int>(value: 2, child: Text('High')),
+              PopupMenuItem<int>(value: 2, child: Text('Élevée')),
             ],
             onSelected: (int p) => _setPriority(i, p),
           ),
@@ -231,8 +231,8 @@ class _PeersTab extends StatelessWidget {
     if (detail.peers.isEmpty) {
       return const EmptyView(
         icon: Icons.people_outline,
-        title: 'No peers',
-        message: 'Nothing is connected right now.',
+        title: 'Aucun pair',
+        message: "Rien n'est connecté pour le moment.",
       );
     }
     return ListView.builder(
@@ -271,8 +271,8 @@ class _TrackersTab extends StatelessWidget {
     if (detail.trackers.isEmpty) {
       return const EmptyView(
         icon: Icons.dns_outlined,
-        title: 'No trackers',
-        message: 'This torrent announces to no trackers.',
+        title: 'Aucun tracker',
+        message: "Ce torrent n'annonce aucun tracker.",
       );
     }
     return ListView.builder(

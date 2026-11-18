@@ -138,7 +138,7 @@ class _RadarrReleaseSearchScreenState
                 color: Theme.of(ctx).colorScheme.secondary,
               ),
               const SizedBox(width: Insets.sm),
-              const Text('Rejection Warnings'),
+              const Text('Avertissements de rejet'),
             ],
           ),
           content: Column(
@@ -157,17 +157,17 @@ class _RadarrReleaseSearchScreenState
                 ),
               ),
               const SizedBox(height: Insets.md),
-              const Text('Are you sure you want to download it anyway?'),
+              const Text('Voulez-vous vraiment le télécharger quand même ?'),
             ],
           ),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(ctx, false),
-              child: const Text('Cancel'),
+              child: const Text('Annuler'),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(ctx, true),
-              child: const Text('Proceed Download'),
+              child: const Text('Télécharger quand même'),
             ),
           ],
         ),
@@ -182,7 +182,7 @@ class _RadarrReleaseSearchScreenState
       await api.downloadRelease(release);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Release grabbed successfully!')),
+          const SnackBar(content: Text('Release grabée avec succès !')),
         );
         ref.invalidate(
           radarrMovieByIdProvider((widget.instance, widget.movie.id)),
@@ -193,7 +193,7 @@ class _RadarrReleaseSearchScreenState
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to grab release: $e')),
+          SnackBar(content: Text('Échec du grab de la release : $e')),
         );
       }
     } finally {
@@ -217,7 +217,7 @@ class _RadarrReleaseSearchScreenState
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const Text('Interactive Search'),
+            const Text('Recherche interactive'),
             Text(
               widget.movie.title,
               style: theme.textTheme.bodySmall?.copyWith(
@@ -246,7 +246,7 @@ class _RadarrReleaseSearchScreenState
                   TextField(
                     controller: _searchController,
                     decoration: InputDecoration(
-                      hintText: 'Filter by title or indexer...',
+                      hintText: 'Filtrer par titre ou indexeur…',
                       prefixIcon: const Icon(Icons.search),
                       suffixIcon: _searchQuery.isNotEmpty
                           ? IconButton(
@@ -279,7 +279,7 @@ class _RadarrReleaseSearchScreenState
                         child: DropdownButtonFormField<String>(
                           initialValue: _selectedProtocol,
                           decoration: InputDecoration(
-                            labelText: 'Protocol',
+                            labelText: 'Protocole',
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: 12,
                               vertical: 8,
@@ -289,7 +289,7 @@ class _RadarrReleaseSearchScreenState
                             ),
                           ),
                           items: const [
-                            DropdownMenuItem(value: 'All', child: Text('All')),
+                            DropdownMenuItem(value: 'Tous', child: Text('Tous')),
                             DropdownMenuItem(
                               value: 'Torrent',
                               child: Text('Torrent'),
@@ -311,7 +311,7 @@ class _RadarrReleaseSearchScreenState
                         child: DropdownButtonFormField<String>(
                           initialValue: _sortBy,
                           decoration: InputDecoration(
-                            labelText: 'Sort By',
+                            labelText: 'Trier par',
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: 12,
                               vertical: 8,
@@ -325,10 +325,10 @@ class _RadarrReleaseSearchScreenState
                               value: 'Score',
                               child: Text('Score'),
                             ),
-                            DropdownMenuItem(value: 'Age', child: Text('Age')),
+                            DropdownMenuItem(value: 'Âge', child: Text('Âge')),
                             DropdownMenuItem(
                               value: 'Size',
-                              child: Text('Size'),
+                              child: Text('Taille'),
                             ),
                             DropdownMenuItem(
                               value: 'Seeders',
@@ -355,7 +355,7 @@ class _RadarrReleaseSearchScreenState
                               ? Icons.arrow_upward
                               : Icons.arrow_downward,
                         ),
-                        tooltip: 'Toggle Sort Order',
+                        tooltip: "Inverser l'ordre de tri",
                         onPressed: () =>
                             setState(() => _sortAscending = !_sortAscending),
                       ),
@@ -364,7 +364,7 @@ class _RadarrReleaseSearchScreenState
                   const SizedBox(height: Insets.xs),
                   CheckboxListTile(
                     title: const Text(
-                      'Approved Releases Only',
+                      'Releases approuvées uniquement',
                       style: TextStyle(fontSize: 14),
                     ),
                     dense: true,
@@ -451,9 +451,9 @@ class _RadarrReleaseSearchScreenState
                   if (filtered.isEmpty) {
                     return const EmptyView(
                       icon: Icons.search_off,
-                      title: 'No releases found',
+                      title: 'Aucune release trouvée',
                       message:
-                          'Try modifying your filter settings or search query.',
+                          'Essayez de modifier vos filtres ou votre requête de recherche.',
                     );
                   }
 
@@ -463,7 +463,7 @@ class _RadarrReleaseSearchScreenState
                     itemBuilder: (context, index) {
                       final r = filtered[index];
                       final title =
-                          (r['title'] as String?) ?? 'Unknown release';
+                          (r['title'] as String?) ?? 'Release inconnue';
                       final indexer =
                           (r['indexer'] as String?) ?? 'Unknown Indexer';
                       final sizeBytes = r['size'] as int? ?? 0;
@@ -780,7 +780,7 @@ class _RadarrReleaseSearchScreenState
                                         ),
                                         const SizedBox(width: Insets.xs),
                                         Text(
-                                          'Approved for download.',
+                                          'Approuvée pour le téléchargement.',
                                           style: theme.textTheme.bodySmall
                                               ?.copyWith(
                                             color: colors.tertiary,
@@ -832,8 +832,8 @@ class _RadarrReleaseSearchScreenState
                                                       SnackBar(
                                                         content: Text(
                                                           protocol == 'usenet'
-                                                              ? 'Could not open indexer page URL'
-                                                              : 'Could not open torrent page URL',
+                                                              ? "Impossible d'ouvrir l'URL de la page de l'indexeur"
+                                                              : "Impossible d'ouvrir l'URL de la page du torrent",
                                                         ),
                                                         duration:
                                                             const Duration(
@@ -850,8 +850,8 @@ class _RadarrReleaseSearchScreenState
                                                       SnackBar(
                                                         content: Text(
                                                           protocol == 'usenet'
-                                                              ? 'Could not open indexer page URL'
-                                                              : 'Could not open torrent page URL',
+                                                              ? "Impossible d'ouvrir l'URL de la page de l'indexeur"
+                                                              : "Impossible d'ouvrir l'URL de la page du torrent",
                                                         ),
                                                         duration:
                                                             const Duration(

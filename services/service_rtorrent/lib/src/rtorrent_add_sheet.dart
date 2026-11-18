@@ -88,8 +88,8 @@ class _RtorrentAddSheetState extends ConsumerState<_RtorrentAddSheet> {
   }
 
   String get _fileLabel => switch (_files.length) {
-        0 => 'Choose .torrent files',
-        1 => _files.first.name ?? 'One torrent',
+        0 => 'Choisir des fichiers .torrent',
+        1 => _files.first.name ?? 'Un torrent',
         final int n => '$n torrents',
       };
 
@@ -111,7 +111,7 @@ class _RtorrentAddSheetState extends ConsumerState<_RtorrentAddSheet> {
       return total == 1 ? 'Sent to rTorrent' : '$total sent to rTorrent';
     }
     if (failed == total) {
-      return total == 1 ? 'Add failed' : 'All $total failed';
+      return total == 1 ? 'Add failed' : 'Les $total ajouts ont échoué';
     }
     return 'Sent ${total - failed} of $total, $failed failed';
   }
@@ -197,11 +197,11 @@ class _RtorrentAddSheetState extends ConsumerState<_RtorrentAddSheet> {
       // The `*_verbose` load commands fault on a bad URI, so reaching here
       // means rTorrent accepted it. It says nothing about the tracker yet.
       messenger.showSnackBar(
-        const SnackBar(content: Text('Sent to rTorrent')),
+        const SnackBar(content: Text('Envoyé à rTorrent')),
       );
     } catch (e) {
       if (mounted) setState(() => _busy = false);
-      messenger.showSnackBar(SnackBar(content: Text('Add failed: $e')));
+      messenger.showSnackBar(SnackBar(content: Text("Échec de l'ajout : $e")));
     }
   }
 
@@ -219,18 +219,18 @@ class _RtorrentAddSheetState extends ConsumerState<_RtorrentAddSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Text('Add torrent', style: Theme.of(context).textTheme.titleLarge),
+            Text('Ajouter un torrent', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: Insets.md),
             SegmentedButton<_AddMode>(
               segments: const <ButtonSegment<_AddMode>>[
                 ButtonSegment<_AddMode>(
                   value: _AddMode.link,
-                  label: Text('Magnet or URL'),
+                  label: Text('Lien magnet ou URL'),
                   icon: Icon(Icons.link),
                 ),
                 ButtonSegment<_AddMode>(
                   value: _AddMode.file,
-                  label: Text('File'),
+                  label: Text('Fichier'),
                   icon: Icon(Icons.attach_file),
                 ),
               ],
@@ -248,7 +248,7 @@ class _RtorrentAddSheetState extends ConsumerState<_RtorrentAddSheet> {
                 maxLines: 3,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'magnet: link or .torrent URL',
+                  labelText: 'lien magnet ou URL de .torrent',
                 ),
                 onChanged: (_) => setState(() {}),
               )
@@ -263,8 +263,8 @@ class _RtorrentAddSheetState extends ConsumerState<_RtorrentAddSheet> {
               controller: _directory,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'Download folder (optional)',
-                helperText: 'A path as the server sees it, not your phone',
+                labelText: 'Dossier de téléchargement (facultatif)',
+                helperText: 'Un chemin tel que le serveur le voit, pas votre téléphone',
               ),
             ),
             const SizedBox(height: Insets.sm),
@@ -273,7 +273,7 @@ class _RtorrentAddSheetState extends ConsumerState<_RtorrentAddSheet> {
               value: _startPaused,
               onChanged:
                   _busy ? null : (bool v) => setState(() => _startPaused = v),
-              title: const Text('Add stopped'),
+              title: const Text('Ajouté arrêté'),
             ),
             const SizedBox(height: Insets.sm),
             FilledButton.icon(

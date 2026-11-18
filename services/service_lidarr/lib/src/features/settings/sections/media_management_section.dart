@@ -87,14 +87,14 @@ class _MediaManagementSectionState
                     _renameTracks ??= naming.renameTracks ?? false;
                     _stdFormatController ??= TextEditingController(
                       text: naming.standardTrackFormat ??
-                          '{Artist Name}/{Album Title} ({Release Year})/{Track:00} - {Track Title}',
+                          "{Nom de l'artiste}/{Titre de l'album} ({Année de sortie})/{Piste:00} - {Titre de la piste}",
                     );
                     _multiDiscFormatController ??= TextEditingController(
                       text: naming.multiDiscTrackFormat ??
-                          '{Medium:00}/{Track:00} - {Track Title}',
+                          '{Support:00}/{Piste:00} - {Titre de la piste}',
                     );
                     _artistFolderFormatController ??= TextEditingController(
-                      text: naming.artistFolderFormat ?? '{Artist Name}',
+                      text: naming.artistFolderFormat ?? "{Nom de l'artiste}",
                     );
                     _colonReplacementFormat ??=
                         naming.colonReplacementFormat ?? 0;
@@ -128,7 +128,7 @@ class _MediaManagementSectionState
                         ),
                         const SizedBox(height: Insets.sm),
                         SwitchListTile(
-                          title: const Text('Rename Tracks Automatically'),
+                          title: const Text('Renommer automatiquement les pistes'),
                           value: _renameTracks ?? false,
                           contentPadding: EdgeInsets.zero,
                           onChanged: (bool val) =>
@@ -141,10 +141,10 @@ class _MediaManagementSectionState
                           runSpacing: 4,
                           children: [
                             '{Artist Name}',
-                            '{Album Title}',
+                            "{Titre de l'album}",
                             '{Release Year}',
                             '{Track:00}',
-                            '{Track Title}',
+                            '{Titre de la piste}',
                           ].map((String token) {
                             return ActionChip(
                               label: Text(
@@ -175,7 +175,7 @@ class _MediaManagementSectionState
                         TextField(
                           controller: _stdFormatController,
                           decoration: const InputDecoration(
-                            labelText: 'Standard Track Format',
+                            labelText: 'Format standard des pistes',
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -183,7 +183,7 @@ class _MediaManagementSectionState
                         TextField(
                           controller: _multiDiscFormatController,
                           decoration: const InputDecoration(
-                            labelText: 'Multi-Disc Track Format',
+                            labelText: 'Format des pistes multi-disques',
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -191,7 +191,7 @@ class _MediaManagementSectionState
                         TextField(
                           controller: _artistFolderFormatController,
                           decoration: const InputDecoration(
-                            labelText: 'Artist Folder Format',
+                            labelText: "Format des dossiers d'artiste",
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -199,33 +199,33 @@ class _MediaManagementSectionState
                         DropdownButtonFormField<int>(
                           initialValue: _colonReplacementFormat,
                           decoration: const InputDecoration(
-                            labelText: 'Colon Replacement Format',
+                            labelText: 'Format de remplacement des deux-points',
                             border: OutlineInputBorder(),
                           ),
                           items: <DropdownMenuItem<int>>[
                             const DropdownMenuItem(
                               value: 0,
-                              child: Text('Delete (:)'),
+                              child: Text('Supprimer (:)'),
                             ),
                             const DropdownMenuItem(
                               value: 1,
-                              child: Text('Dash (-)'),
+                              child: Text('Tiret (-)'),
                             ),
                             const DropdownMenuItem(
                               value: 2,
-                              child: Text('Space Dash ( -)'),
+                              child: Text('Espace tiret ( -)'),
                             ),
                             const DropdownMenuItem(
                               value: 3,
-                              child: Text('Space Dash Space ( - )'),
+                              child: Text('Espace tiret espace ( - )'),
                             ),
                             const DropdownMenuItem(
                               value: 4,
-                              child: Text('Smart Replace ( - )'),
+                              child: Text('Remplacement intelligent ( - )'),
                             ),
                             const DropdownMenuItem(
                               value: 5,
-                              child: Text('Leave As-Is (:)'),
+                              child: Text('Laisser tel quel (:)'),
                             ),
                             if (_colonReplacementFormat != null &&
                                 _colonReplacementFormat! > 5)
@@ -243,7 +243,7 @@ class _MediaManagementSectionState
                         const SizedBox(height: Insets.md),
                         FilledButton.icon(
                           icon: const Icon(Icons.save, size: 18),
-                          label: const Text('Save Naming Formats'),
+                          label: const Text('Enregistrer les formats de nommage'),
                           onPressed: () async {
                             final ScaffoldMessengerState messenger =
                                 ScaffoldMessenger.of(context);
@@ -279,12 +279,12 @@ class _MediaManagementSectionState
                               );
                               messenger.showSnackBar(
                                 const SnackBar(
-                                  content: Text('Naming configuration saved!'),
+                                  content: Text('Configuration de nommage enregistrée !'),
                                 ),
                               );
                             } catch (e) {
                               messenger.showSnackBar(
-                                SnackBar(content: Text('Error: $e')),
+                                SnackBar(content: Text('Erreur : $e')),
                               );
                             }
                           },
@@ -353,9 +353,9 @@ class _MediaManagementSectionState
                         ),
                         const SizedBox(height: Insets.sm),
                         SwitchListTile(
-                          title: const Text('Unmonitor Downloaded Tracks'),
+                          title: const Text('Ne plus surveiller les pistes téléchargées'),
                           subtitle: const Text(
-                            'Unmonitor tracks when imported or deleted',
+                            "Ne plus surveiller les pistes à l'import ou à la suppression",
                           ),
                           value: _autoUnmonitor ?? false,
                           contentPadding: EdgeInsets.zero,
@@ -363,35 +363,35 @@ class _MediaManagementSectionState
                               setState(() => _autoUnmonitor = val),
                         ),
                         SwitchListTile(
-                          title: const Text('Create Empty Artist Folders'),
+                          title: const Text("Créer les dossiers d'artiste vides"),
                           value: _createEmptyFolders ?? false,
                           contentPadding: EdgeInsets.zero,
                           onChanged: (bool val) =>
                               setState(() => _createEmptyFolders = val),
                         ),
                         SwitchListTile(
-                          title: const Text('Delete Empty Folders'),
+                          title: const Text('Supprimer les dossiers vides'),
                           value: _deleteEmptyFolders ?? false,
                           contentPadding: EdgeInsets.zero,
                           onChanged: (bool val) =>
                               setState(() => _deleteEmptyFolders = val),
                         ),
                         SwitchListTile(
-                          title: const Text('Watch Library For Changes'),
+                          title: const Text('Surveiller les changements de la bibliothèque'),
                           value: _watchLibrary ?? false,
                           contentPadding: EdgeInsets.zero,
                           onChanged: (bool val) =>
                               setState(() => _watchLibrary = val),
                         ),
                         SwitchListTile(
-                          title: const Text('Use Hardlinks instead of Copy'),
+                          title: const Text('Utiliser des liens durs au lieu de copier'),
                           value: _copyHardlinks ?? false,
                           contentPadding: EdgeInsets.zero,
                           onChanged: (bool val) =>
                               setState(() => _copyHardlinks = val),
                         ),
                         SwitchListTile(
-                          title: const Text('Analyse Audio with MediaInfo'),
+                          title: const Text("Analyser l'audio avec MediaInfo"),
                           value: _enableMediaInfo ?? true,
                           contentPadding: EdgeInsets.zero,
                           onChanged: (bool val) =>
@@ -401,15 +401,15 @@ class _MediaManagementSectionState
                         TextField(
                           controller: _extraExtensionsController,
                           decoration: const InputDecoration(
-                            labelText: 'Extra File Extensions',
-                            hintText: 'e.g. cue, nfo, log',
+                            labelText: 'Extensions de fichiers supplémentaires',
+                            hintText: 'ex. cue, nfo, log',
                             border: OutlineInputBorder(),
                           ),
                         ),
                         const SizedBox(height: Insets.md),
                         FilledButton.icon(
                           icon: const Icon(Icons.save, size: 18),
-                          label: const Text('Save Media Management'),
+                          label: const Text('Enregistrer la gestion des médias'),
                           onPressed: () async {
                             final ScaffoldMessengerState messenger =
                                 ScaffoldMessenger.of(context);
@@ -457,7 +457,7 @@ class _MediaManagementSectionState
                               );
                             } catch (e) {
                               messenger.showSnackBar(
-                                SnackBar(content: Text('Error: $e')),
+                                SnackBar(content: Text('Erreur : $e')),
                               );
                             }
                           },

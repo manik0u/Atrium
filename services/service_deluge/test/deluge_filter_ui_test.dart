@@ -18,11 +18,11 @@ const List<DelugeTorrent> torrents = <DelugeTorrent>[
   DelugeTorrent(
     id: 'a',
     name: 'Fetching ISO',
-    state: 'Downloading',
+    state: 'Téléchargement en cours',
     progress: 40,
     downloadRate: 2048,
   ),
-  DelugeTorrent(id: 'b', name: 'Finished ISO', state: 'Seeding', progress: 100),
+  DelugeTorrent(id: 'b', name: 'Finished ISO', state: 'Seed en cours', progress: 100),
 ];
 
 /// The Deluge page as the app assembles it: the drawer and its app-bar button
@@ -33,9 +33,9 @@ Widget page({List<DelugeTorrent> list = torrents}) => ProviderScope(
         delugeFilterTreeProvider(testInstance).overrideWith(
           (ref) => const DelugeFilterTree(
             states: <DelugeFilterBucket>[
-              DelugeFilterBucket(name: 'All', count: 2),
-              DelugeFilterBucket(name: 'Downloading', count: 1),
-              DelugeFilterBucket(name: 'Seeding', count: 1),
+              DelugeFilterBucket(name: 'Tous', count: 2),
+              DelugeFilterBucket(name: 'Téléchargement en cours', count: 1),
+              DelugeFilterBucket(name: 'Seed en cours', count: 1),
             ],
           ),
         ),
@@ -68,7 +68,7 @@ void main() {
     expect(find.byKey(const ValueKey<String>('deluge-active-filter')), findsNothing);
     expect(tester.widget<Badge>(find.byType(Badge)).isLabelVisible, isFalse);
 
-    await tester.tap(find.byTooltip('Filter torrents'));
+    await tester.tap(find.byTooltip('Filtrer les torrents'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Seeding (1)'));
     await tester.pumpAndSettle();
@@ -78,7 +78,7 @@ void main() {
     expect(find.byKey(const ValueKey<String>('deluge-active-filter')), findsOneWidget);
     expect(tester.widget<Badge>(find.byType(Badge)).isLabelVisible, isTrue);
 
-    await tester.tap(find.text('Clear'));
+    await tester.tap(find.text('Effacer'));
     await tester.pumpAndSettle();
 
     expect(find.text('Fetching ISO'), findsOneWidget);
@@ -91,16 +91,16 @@ void main() {
     await tester.pumpWidget(page(list: const <DelugeTorrent>[]));
     await tester.pumpAndSettle();
 
-    expect(find.text('Add one with the + button.'), findsOneWidget);
-    expect(find.text('Nothing matches this filter.'), findsNothing);
+    expect(find.text('Ajoutez-en un avec le bouton +.'), findsOneWidget);
+    expect(find.text('Rien ne correspond à ce filtre.'), findsNothing);
 
     final ProviderContainer container =
         ProviderScope.containerOf(tester.element(find.byType(DelugeHome)));
     container.read(delugeFilterProvider(testInstance).notifier).state =
-        const DelugeFilter(state: 'Paused');
+        const DelugeFilter(state: 'En pause');
     await tester.pumpAndSettle();
 
-    expect(find.text('Nothing matches this filter.'), findsOneWidget);
-    expect(find.text('Add one with the + button.'), findsNothing);
+    expect(find.text('Rien ne correspond à ce filtre.'), findsOneWidget);
+    expect(find.text('Ajoutez-en un avec le bouton +.'), findsNothing);
   });
 }

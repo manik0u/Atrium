@@ -104,12 +104,12 @@ class _SlskdLogsViewState extends ConsumerState<SlskdLogsView> {
                       ),
                       IconButton(
                         icon: const Icon(Icons.copy_rounded, size: 20),
-                        tooltip: 'Copy message',
+                        tooltip: 'Copier le message',
                         onPressed: () {
                           Clipboard.setData(ClipboardData(text: log.message));
                           ScaffoldMessenger.of(ctx).showSnackBar(
                             const SnackBar(
-                              content: Text('Log copied to clipboard'),
+                              content: Text('Journal copié dans le presse-papiers'),
                               duration: Duration(seconds: 2),
                             ),
                           );
@@ -140,7 +140,7 @@ class _SlskdLogsViewState extends ConsumerState<SlskdLogsView> {
                   const Divider(),
                   const SizedBox(height: Insets.sm),
                   Text(
-                    'Log Message',
+                    'Message du journal',
                     style: tt.titleSmall?.copyWith(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: Insets.xs),
@@ -254,7 +254,7 @@ class _SlskdLogsViewState extends ConsumerState<SlskdLogsView> {
                                 children: <Widget>[
                                   Icon(Icons.stream_rounded, size: 18),
                                   SizedBox(width: Insets.xs),
-                                  Text('Live Stream (In-Memory)'),
+                                  Text('Flux en direct (en mémoire)'),
                                 ],
                               ),
                             ),
@@ -306,7 +306,7 @@ class _SlskdLogsViewState extends ConsumerState<SlskdLogsView> {
           TextField(
             controller: _searchController,
             decoration: InputDecoration(
-              hintText: 'Search logs by message or context...',
+              hintText: 'Rechercher dans les journaux par message ou contexte…',
               prefixIcon: const Icon(Icons.search_rounded),
               suffixIcon: _searchController.text.isNotEmpty
                   ? IconButton(
@@ -426,7 +426,7 @@ class _SlskdLogsViewState extends ConsumerState<SlskdLogsView> {
                         FilledButton.tonalIcon(
                           onPressed: () => ref.invalidate(slskdLogsProvider(widget.instance)),
                           icon: const Icon(Icons.refresh),
-                          label: const Text('Retry'),
+                          label: const Text('Réessayer'),
                         ),
                       ],
                     ),
@@ -469,14 +469,14 @@ class _SlskdLogsViewState extends ConsumerState<SlskdLogsView> {
                         ),
                         const SizedBox(height: Insets.sm),
                         Text(
-                          'No Logs Found',
+                          'Aucun journal trouvé',
                           style: textTheme.titleSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: Insets.xs),
                         Text(
-                          'No log records match current severity or search query.',
+                          'Aucun enregistrement ne correspond à la gravité ou à la recherche actuelles.',
                           textAlign: TextAlign.center,
                           style: textTheme.bodySmall?.copyWith(
                             color: colorScheme.onSurfaceVariant,
@@ -639,12 +639,12 @@ class _SlskdLogsViewState extends ConsumerState<SlskdLogsView> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.copy_rounded, size: 18),
-                  tooltip: 'Copy all log content',
+                  tooltip: 'Copier tout le contenu du journal',
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: content));
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('Historical log copied to clipboard'),
+                        content: Text('Journal historique copié dans le presse-papiers'),
                         duration: Duration(seconds: 2),
                       ),
                     );
@@ -667,7 +667,7 @@ class _SlskdLogsViewState extends ConsumerState<SlskdLogsView> {
                 padding: const EdgeInsets.all(Insets.sm),
                 child: SingleChildScrollView(
                   child: SelectableText(
-                    content.isEmpty ? '(Empty log file)' : content,
+                    content.isEmpty ? '(Fichier journal vide)' : content,
                     style: textTheme.bodySmall?.copyWith(
                       fontSize: 11,
                       letterSpacing: -0.2,

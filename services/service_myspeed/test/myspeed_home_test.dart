@@ -95,8 +95,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(NavigationBar), findsOneWidget);
-    expect(find.text('Status'), findsOneWidget);
-    expect(find.text('History'), findsOneWidget);
+    expect(find.text('Statut'), findsOneWidget);
+    expect(find.text('Historique'), findsOneWidget);
     expect(find.text('Config'), findsOneWidget);
   });
 
@@ -114,8 +114,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Execution status'), findsOneWidget);
-    expect(find.text('Idle'), findsOneWidget);
-    expect(find.text('Run test'), findsOneWidget);
+    expect(find.text('Inactif'), findsOneWidget);
+    expect(find.text('Lancer le test'), findsOneWidget);
     expect(find.byIcon(Icons.bolt_rounded), findsNothing);
     expect(find.byIcon(Icons.bolt), findsNothing);
     expect(find.text('Most recent result'), findsOneWidget);
@@ -163,7 +163,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Configuration overview'), findsOneWidget);
-    expect(find.text('Storage and retention'), findsOneWidget);
+    expect(find.text('Stockage et conservation'), findsOneWidget);
     expect(find.text('1.0 MB'), findsOneWidget); // detail row
     expect(find.text('42'), findsOneWidget);
     expect(find.text('0 * * * *'), findsNWidgets(2));

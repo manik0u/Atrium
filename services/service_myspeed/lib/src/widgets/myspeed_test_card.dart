@@ -113,7 +113,7 @@ class MySpeedTestCard extends StatelessWidget {
                 Expanded(
                   child: MySpeedMetricBox(
                     icon: Icons.arrow_downward_rounded,
-                    label: 'DOWN',
+                    label: 'DESCENTE',
                     value: test.download.toStringAsFixed(1),
                     unit: 'Mbps',
                     iconColor: colors.primary,
@@ -125,7 +125,7 @@ class MySpeedTestCard extends StatelessWidget {
                 Expanded(
                   child: MySpeedMetricBox(
                     icon: Icons.arrow_upward_rounded,
-                    label: 'UP',
+                    label: 'MONTÉE',
                     value: test.upload.toStringAsFixed(1),
                     unit: 'Mbps',
                     iconColor: colors.tertiary,
@@ -150,7 +150,7 @@ class MySpeedTestCard extends StatelessWidget {
                   Expanded(
                     child: MySpeedMetricBox(
                       icon: Icons.graphic_eq_rounded,
-                      label: 'JITTER',
+                      label: 'GIGUE',
                       value: test.jitter!.toStringAsFixed(0),
                       unit: 'ms',
                       iconColor: colors.onSurfaceVariant,

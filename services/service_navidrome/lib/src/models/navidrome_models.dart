@@ -188,7 +188,7 @@ class NavidromeSong {
   factory NavidromeSong.fromJson(Map<String, dynamic> json) {
     return NavidromeSong(
       id: (json['id'] as String?) ?? '',
-      title: (json['title'] as String?) ?? 'Unknown Title',
+      title: (json['title'] as String?) ?? 'Titre inconnu',
       album: (json['album'] as String?) ?? '',
       albumId: json['albumId'] as String?,
       artist: (json['artist'] as String?) ?? 'Unknown Artist',

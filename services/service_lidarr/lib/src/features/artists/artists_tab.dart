@@ -98,13 +98,13 @@ class _ArtistsTabState extends ConsumerState<ArtistsTab>
       final ApiResponse<CommandResource> resp =
           await api.executeCommand('RefreshArtist');
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Failed to refresh artists');
+        throw Exception(resp.error?.message ?? "Échec de l'actualisation des artistes");
       }
 
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Refreshing all artists in library...'),
+            content: Text('Actualisation de tous les artistes de la bibliothèque…'),
             duration: Duration(seconds: 2),
           ),
         );
@@ -113,7 +113,7 @@ class _ArtistsTabState extends ConsumerState<ArtistsTab>
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to refresh artists: $e'),
+            content: Text("Échec de l'actualisation des artistes : $e"),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -289,7 +289,7 @@ class _ArtistsTabState extends ConsumerState<ArtistsTab>
                   leading: inSelectionMode
                       ? IconButton(
                           icon: const Icon(Icons.close),
-                          tooltip: 'Clear selection',
+                          tooltip: 'Effacer la sélection',
                           onPressed: () {
                             ref
                                 .read(
@@ -305,7 +305,7 @@ class _ArtistsTabState extends ConsumerState<ArtistsTab>
                                   _searchFocusNode.hasFocus)
                               ? IconButton(
                                   icon: const Icon(Icons.arrow_back),
-                                  tooltip: 'Back',
+                                  tooltip: 'Retour',
                                   onPressed: () {
                                     _searchFocusNode.unfocus();
                                     _searchController.clear();
@@ -319,7 +319,7 @@ class _ArtistsTabState extends ConsumerState<ArtistsTab>
                                 )
                               : IconButton(
                                   icon: const Icon(Icons.menu),
-                                  tooltip: 'Open drawer',
+                                  tooltip: 'Ouvrir le menu latéral',
                                   onPressed: () =>
                                       Scaffold.of(context).openDrawer(),
                                 ),
@@ -354,7 +354,7 @@ class _ArtistsTabState extends ConsumerState<ArtistsTab>
                                     focusNode: _searchFocusNode,
                                     style: theme.textTheme.bodyLarge,
                                     decoration: InputDecoration(
-                                      hintText: 'Search artists...',
+                                      hintText: 'Rechercher des artistes…',
                                       hintStyle:
                                           theme.textTheme.bodyLarge?.copyWith(
                                         color:
@@ -381,7 +381,7 @@ class _ArtistsTabState extends ConsumerState<ArtistsTab>
                                 if (_searchController.text.isNotEmpty)
                                   IconButton(
                                     icon: const Icon(Icons.clear, size: 22),
-                                    tooltip: 'Clear search',
+                                    tooltip: 'Effacer la recherche',
                                     visualDensity: VisualDensity.compact,
                                     onPressed: () {
                                       _searchController.clear();
@@ -414,7 +414,7 @@ class _ArtistsTabState extends ConsumerState<ArtistsTab>
                                       .map((a) => a.id!)
                                       .toSet();
                             },
-                            child: const Text('Select All'),
+                            child: const Text('Tout sélectionner'),
                           ),
                           TextButton(
                             onPressed: () {
@@ -431,13 +431,13 @@ class _ArtistsTabState extends ConsumerState<ArtistsTab>
                                   )
                                   .state = inverted;
                             },
-                            child: const Text('Invert'),
+                            child: const Text('Inverser'),
                           ),
                           const SizedBox(width: 4),
                         ]
                       : [
                           PopupMenuButton<String>(
-                            tooltip: 'More options',
+                            tooltip: "Plus d'options",
                             icon: const Icon(Icons.more_vert),
                             onSelected: (val) =>
                                 _handleMoreOption(context, val),
@@ -446,7 +446,7 @@ class _ArtistsTabState extends ConsumerState<ArtistsTab>
                                 value: 'album_studio',
                                 child: ListTile(
                                   leading: Icon(Icons.grid_on_outlined),
-                                  title: Text('Album Studio'),
+                                  title: Text("Studio d'albums"),
                                   contentPadding: EdgeInsets.zero,
                                   dense: true,
                                 ),
@@ -455,7 +455,7 @@ class _ArtistsTabState extends ConsumerState<ArtistsTab>
                                 value: 'calendar_feed',
                                 child: ListTile(
                                   leading: Icon(Icons.calendar_month_outlined),
-                                  title: Text('iCal Calendar Feed'),
+                                  title: Text('Flux calendrier iCal'),
                                   contentPadding: EdgeInsets.zero,
                                   dense: true,
                                 ),
@@ -464,7 +464,7 @@ class _ArtistsTabState extends ConsumerState<ArtistsTab>
                                 value: 'refresh_all',
                                 child: ListTile(
                                   leading: Icon(Icons.refresh),
-                                  title: Text('Refresh All Artists'),
+                                  title: Text('Actualiser tous les artistes'),
                                   contentPadding: EdgeInsets.zero,
                                   dense: true,
                                 ),
@@ -489,14 +489,14 @@ class _ArtistsTabState extends ConsumerState<ArtistsTab>
                               visualDensity: VisualDensity.compact,
                               label: Text(
                                 switch (activeFilter) {
-                                  LidarrArtistFilter.monitored => 'Monitored',
+                                  LidarrArtistFilter.monitored => 'Surveillé',
                                   LidarrArtistFilter.unmonitored =>
                                     'Unmonitored',
-                                  LidarrArtistFilter.completed => 'Completed',
+                                  LidarrArtistFilter.completed => 'Terminé',
                                   LidarrArtistFilter.missingTracks =>
                                     'Missing Tracks',
-                                  LidarrArtistFilter.continuing => 'Continuing',
-                                  LidarrArtistFilter.ended => 'Ended',
+                                  LidarrArtistFilter.continuing => 'En cours',
+                                  LidarrArtistFilter.ended => 'Terminé',
                                   LidarrArtistFilter.all => '',
                                 },
                                 style: const TextStyle(fontSize: 12),
@@ -540,9 +540,9 @@ class _ArtistsTabState extends ConsumerState<ArtistsTab>
                     child: Center(
                       child: EmptyView(
                         icon: Icons.music_off_outlined,
-                        title: 'No artists found',
+                        title: 'Aucun artiste trouvé',
                         message:
-                            'Try adjusting your search query or active filters.',
+                            "Essayez d'ajuster votre requête de recherche ou vos filtres actifs.",
                       ),
                     ),
                   )
@@ -593,7 +593,7 @@ class _ArtistsTabState extends ConsumerState<ArtistsTab>
                   heroTag: 'lidarr_sort_filter_fab',
                   backgroundColor: theme.colorScheme.secondaryContainer,
                   foregroundColor: theme.colorScheme.onSecondaryContainer,
-                  tooltip: 'Sort & Filter',
+                  tooltip: 'Trier et filtrer',
                   onPressed: () => _showSortFilterBottomSheet(context),
                   child: const Icon(Icons.tune),
                 ),
@@ -602,7 +602,7 @@ class _ArtistsTabState extends ConsumerState<ArtistsTab>
                   heroTag: 'lidarr_add_artist_fab',
                   backgroundColor: theme.colorScheme.primaryContainer,
                   foregroundColor: theme.colorScheme.onPrimaryContainer,
-                  tooltip: 'Add Artist',
+                  tooltip: 'Ajouter un artiste',
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute<void>(
@@ -657,12 +657,12 @@ class _SortFilterBottomSheet extends ConsumerWidget {
                   ButtonSegment(
                     value: LidarrViewMode.grid,
                     icon: Icon(Icons.grid_view),
-                    label: Text('Grid View'),
+                    label: Text('Vue en grille'),
                   ),
                   ButtonSegment(
                     value: LidarrViewMode.list,
                     icon: Icon(Icons.view_list),
-                    label: Text('List View'),
+                    label: Text('Vue en liste'),
                   ),
                 ],
                 selected: <LidarrViewMode>{viewMode},
@@ -685,13 +685,13 @@ class _SortFilterBottomSheet extends ConsumerWidget {
                 runSpacing: 4,
                 children: LidarrArtistFilter.values.map((f) {
                   final String label = switch (f) {
-                    LidarrArtistFilter.all => 'All',
-                    LidarrArtistFilter.monitored => 'Monitored',
-                    LidarrArtistFilter.unmonitored => 'Unmonitored',
-                    LidarrArtistFilter.completed => 'Completed (100%)',
-                    LidarrArtistFilter.missingTracks => 'Missing Tracks',
-                    LidarrArtistFilter.continuing => 'Continuing',
-                    LidarrArtistFilter.ended => 'Ended',
+                    LidarrArtistFilter.all => 'Tous',
+                    LidarrArtistFilter.monitored => 'Surveillé',
+                    LidarrArtistFilter.unmonitored => 'Non surveillé',
+                    LidarrArtistFilter.completed => 'Terminé (100 %)',
+                    LidarrArtistFilter.missingTracks => 'Pistes manquantes',
+                    LidarrArtistFilter.continuing => 'En cours',
+                    LidarrArtistFilter.ended => 'Terminé',
                   };
                   final bool selected = activeFilter == f;
                   return ChoiceChip(
@@ -722,7 +722,7 @@ class _SortFilterBottomSheet extends ConsumerWidget {
                       isAscending ? Icons.arrow_upward : Icons.arrow_downward,
                       size: 18,
                     ),
-                    label: Text(isAscending ? 'Ascending' : 'Descending'),
+                    label: Text(isAscending ? 'Croissant' : 'Décroissant'),
                     onPressed: () {
                       ref
                           .read(
@@ -740,12 +740,12 @@ class _SortFilterBottomSheet extends ConsumerWidget {
                 runSpacing: 4,
                 children: LidarrArtistSort.values.map((s) {
                   final String label = switch (s) {
-                    LidarrArtistSort.name => 'Artist Name',
-                    LidarrArtistSort.sizeOnDisk => 'Size on Disk',
-                    LidarrArtistSort.dateAdded => 'Date Added',
-                    LidarrArtistSort.albumCount => 'Album Count',
-                    LidarrArtistSort.progress => 'Progress %',
-                    LidarrArtistSort.rating => 'Rating',
+                    LidarrArtistSort.name => "Nom de l'artiste",
+                    LidarrArtistSort.sizeOnDisk => 'Taille sur le disque',
+                    LidarrArtistSort.dateAdded => "Date d'ajout",
+                    LidarrArtistSort.albumCount => "Nombre d'albums",
+                    LidarrArtistSort.progress => 'Progression %',
+                    LidarrArtistSort.rating => 'Note',
                   };
                   final bool selected = activeSort == s;
                   return ChoiceChip(

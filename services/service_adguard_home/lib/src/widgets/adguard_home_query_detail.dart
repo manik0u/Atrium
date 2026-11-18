@@ -187,9 +187,9 @@ class _AdguardHomeQueryDetailState
                 ),
                 AdguardHomeField('DNS server', entry.upstream),
                 if (entry.cached)
-                  const AdguardHomeField('Served from cache', 'Yes'),
+                  const AdguardHomeField('Servi depuis le cache', 'Yes'),
                 if (entry.dnssec)
-                  const AdguardHomeField('Validated with DNSSEC', 'Yes'),
+                  const AdguardHomeField('Validé avec DNSSEC', 'Yes'),
                 AdguardHomeField(
                   'Elapsed',
                   formatAdguardHomeElapsed(entry.elapsed),
@@ -228,7 +228,7 @@ class _AdguardHomeQueryDetailState
                       padding: const EdgeInsets.only(top: Insets.sm),
                       child: Text(
                         entry.clientDisallowedRule.isEmpty
-                            ? 'Not among the allowed clients'
+                            ? 'Pas parmi les clients autorisés'
                             : 'Disallowed by ${entry.clientDisallowedRule}',
                         style: theme.textTheme.bodyMedium
                             ?.copyWith(color: cs.error),
@@ -267,7 +267,7 @@ class _AdguardHomeQueryDetailState
                   const SizedBox(width: Insets.sm)
                 else
                   PopupMenuButton<_ClientAction>(
-                    tooltip: 'More actions',
+                    tooltip: "Plus d'actions",
                     useRootNavigator: true,
                     enabled: !_busy,
                     onSelected: (_ClientAction chosen) {
@@ -299,19 +299,19 @@ class _AdguardHomeQueryDetailState
                         <PopupMenuEntry<_ClientAction>>[
                       const PopupMenuItem<_ClientAction>(
                         value: _ClientAction.show,
-                        child: Text('Show client'),
+                        child: Text('Afficher le client'),
                       ),
                       PopupMenuItem<_ClientAction>(
                         value: _ClientAction.blockForClient,
                         enabled: named,
-                        child: Text('$action for this client only'),
+                        child: Text('$action pour ce client uniquement'),
                       ),
                       PopupMenuItem<_ClientAction>(
                         value: _ClientAction.access,
                         child: Text(
                           entry.clientDisallowed
-                              ? 'Allow this client'
-                              : 'Disallow this client',
+                              ? 'Autoriser ce client'
+                              : 'Interdire ce client',
                           style: TextStyle(color: cs.error),
                         ),
                       ),

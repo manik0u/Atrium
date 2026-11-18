@@ -14,7 +14,7 @@ const String _arrayResponse = '''
 {
   "data": {
     "array": {
-      "state": "STARTED",
+      "state": 'DÉMARRÉ',
       "capacity": {
         "kilobytes": { "free": "8487752", "used": "4195725", "total": "12683477" }
       },
@@ -61,12 +61,12 @@ const String _containersResponse = '''
          "autoStart": false, "isOrphaned": true, "isUpdateAvailable": null,
          "iconUrl": null, "webUiUrl": null, "ports": []},
         {"id": "srv:c2", "names": ["/paused-svc"], "image": "nginx:alpine",
-         "state": "PAUSED", "status": "Up 29 minutes (Paused)",
+         "state": 'EN PAUSE', "status": "Up 29 minutes (Paused)",
          "autoStart": false, "isOrphaned": true, "isUpdateAvailable": null,
          "iconUrl": null, "webUiUrl": null,
          "ports": [{"privatePort": 80, "publicPort": null, "type": "TCP"}]},
         {"id": "srv:c3", "names": ["/sonarr"], "image": "nginx:alpine",
-         "state": "RUNNING", "status": "Up 53 seconds", "autoStart": true,
+         "state": 'EN COURS', "status": "Up 53 seconds", "autoStart": true,
          "isOrphaned": false, "isUpdateAvailable": null,
          "iconUrl": "https://example.invalid/sonarr.png",
          "webUiUrl": "http://10.0.2.15:8989/",
@@ -91,7 +91,7 @@ void main() {
     setUp(() => array = _liveArray());
 
     test('reads state and every disk list', () {
-      expect(array.state, 'STARTED');
+      expect(array.state, 'DÉMARRÉ');
       expect(array.isStarted, isTrue);
       expect(array.parities, hasLength(1));
       expect(array.disks, hasLength(3));
@@ -111,8 +111,8 @@ void main() {
     });
 
     test('state is shown as a word, not the raw enum', () {
-      expect(array.stateLabel, 'Started');
-      expect(const UnraidArray(state: 'STOPPED').stateLabel, 'Stopped');
+      expect(array.stateLabel, 'Démarré');
+      expect(const UnraidArray(state: 'STOPPED').stateLabel, 'Arrêté');
       expect(
         const UnraidArray(state: 'TOO_MANY_MISSING_DISKS').stateLabel,
         'Too many missing disks',
@@ -134,7 +134,7 @@ void main() {
       // A freshly formatted array reports zero, and dividing by it would draw
       // a bar saying there is room when nothing is known.
       const UnraidArray blank =
-          UnraidArray(state: 'STARTED', totalKb: 0, usedKb: 0);
+          UnraidArray(state: 'DÉMARRÉ', totalKb: 0, usedKb: 0);
       expect(blank.usedFraction, isNull);
       expect(blank.usageLabel, isNull);
     });
@@ -145,7 +145,7 @@ void main() {
 
     test('a failed disk is picked out and named in plain words', () {
       final UnraidArray withFault = UnraidArray.fromJson(<String, dynamic>{
-        'state': 'STARTED',
+        'state': 'DÉMARRÉ',
         'disks': <dynamic>[
           <String, dynamic>{'name': 'disk1', 'status': 'DISK_OK'},
           <String, dynamic>{'name': 'disk2', 'status': 'DISK_DSBL'},
@@ -153,12 +153,12 @@ void main() {
       });
       expect(withFault.unhealthyDisks, hasLength(1));
       expect(withFault.unhealthyDisks.single.name, 'disk2');
-      expect(withFault.unhealthyDisks.single.statusLabel, 'Disabled');
+      expect(withFault.unhealthyDisks.single.statusLabel, 'Désactivé');
     });
 
     test('a fault on parity or cache counts too, not just on a data disk', () {
       final UnraidArray withFault = UnraidArray.fromJson(<String, dynamic>{
-        'state': 'STARTED',
+        'state': 'DÉMARRÉ',
         'parities': <dynamic>[
           <String, dynamic>{'name': 'parity', 'status': 'DISK_DSBL'},
         ],
@@ -215,7 +215,7 @@ void main() {
 
     test('the warmest disk is found across parity, data and cache alike', () {
       final UnraidArray mixed = UnraidArray.fromJson(<String, dynamic>{
-        'state': 'STARTED',
+        'state': 'DÉMARRÉ',
         'parities': <dynamic>[
           <String, dynamic>{'name': 'parity', 'temp': 51},
         ],
@@ -231,7 +231,7 @@ void main() {
 
     test('a disk reporting nothing cannot be the warmest', () {
       final UnraidArray idle = UnraidArray.fromJson(<String, dynamic>{
-        'state': 'STARTED',
+        'state': 'DÉMARRÉ',
         'disks': <dynamic>[
           <String, dynamic>{'name': 'disk1', 'status': 'DISK_OK'},
         ],
@@ -345,7 +345,7 @@ void main() {
 
     test('reads the last check off the array', () {
       expect(check.status, 'COMPLETED');
-      expect(check.statusLabel, 'Completed');
+      expect(check.statusLabel, 'Terminé');
       expect(check.duration, 38);
       expect(check.date?.year, 2026);
     });
@@ -360,7 +360,7 @@ void main() {
 
     test('a running check is recognised from the status alone', () {
       final UnraidParityCheck live = UnraidParityCheck.fromJson(
-        <String, dynamic>{'status': 'RUNNING', 'progress': 42},
+        <String, dynamic>{'status': 'EN COURS', 'progress': 42},
       );
       expect(live.isRunning, isTrue);
       expect(live.progress, 42);
@@ -378,7 +378,7 @@ void main() {
       final UnraidParityCheck never = UnraidParityCheck.fromJson(
         <String, dynamic>{'status': 'NEVER_RUN'},
       );
-      expect(never.statusLabel, 'Never run');
+      expect(never.statusLabel, 'Jamais exécuté');
       expect(never.foundErrors, isFalse);
     });
   });
@@ -451,7 +451,7 @@ void main() {
         <String, dynamic>{
           'id': 'x',
           'names': <dynamic>['/ok'],
-          'state': 'RUNNING',
+          'state': 'EN COURS',
           'status': 'Up 24 hours (healthy)',
         },
       );
@@ -465,7 +465,7 @@ void main() {
         <String, dynamic>{
           'id': 'x',
           'names': <dynamic>['/broken'],
-          'state': 'RUNNING',
+          'state': 'EN COURS',
           'status': 'Up 2 hours (unhealthy)',
         },
       );

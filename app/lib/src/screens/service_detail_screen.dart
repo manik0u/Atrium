@@ -254,7 +254,7 @@ class _ServiceDetailScreenState extends ConsumerState<ServiceDetailScreen> {
                   instance.kind == ServiceKind.seerr ||
                   instance.kind == ServiceKind.navidrome)
                 IconButton(
-                  tooltip: 'Search',
+                  tooltip: 'Rechercher',
                   icon: const Icon(Icons.search),
                   onPressed: () {
                     showSearch<void>(
@@ -284,7 +284,7 @@ class _ServiceDetailScreenState extends ConsumerState<ServiceDetailScreen> {
                     final AsyncValue<NavidromeScanStatus> scanAsync =
                         ref.watch(navidromeScanStatusProvider(instance));
                     return IconButton(
-                      tooltip: 'Quick scan library',
+                      tooltip: 'Analyse rapide de la bibliothèque',
                       icon: scanAsync.maybeWhen(
                         data: (NavidromeScanStatus scan) => scan.scanning
                             ? const SizedBox(
@@ -308,7 +308,7 @@ class _ServiceDetailScreenState extends ConsumerState<ServiceDetailScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text(
-                                  'Quick scan started (checking for new items)',
+                                  'Analyse rapide lancée (recherche de nouveaux éléments)',
                                 ),
                               ),
                             );
@@ -317,7 +317,7 @@ class _ServiceDetailScreenState extends ConsumerState<ServiceDetailScreen> {
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text('Failed to start scan: $e'),
+                                content: Text("Échec du démarrage de l'analyse : $e"),
                               ),
                             );
                           }
@@ -362,7 +362,7 @@ class _ServiceDetailScreenState extends ConsumerState<ServiceDetailScreen> {
               if (instance.kind == ServiceKind.emby ||
                   instance.kind == ServiceKind.jellyfin)
                 IconButton(
-                  tooltip: 'Settings',
+                  tooltip: 'Paramètres',
                   icon: const Icon(Icons.settings),
                   onPressed: () => pushScreen<void>(
                     context,
@@ -437,14 +437,14 @@ class _NotFound extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            tooltip: 'Back',
+            tooltip: 'Retour',
             icon: const Icon(Icons.arrow_back),
             onPressed: () => context.goNamed(AtriumRoutes.dashboardName),
           ),
         ),
         body: const ErrorView(
-          title: 'Service not found',
-          message: 'This instance may have been deleted.',
+          title: 'Service introuvable',
+          message: 'Cette instance a peut-être été supprimée.',
         ),
       ),
     );

@@ -56,7 +56,7 @@ class NavidromeArtistScreen extends ConsumerWidget {
               onPressed: () {
                 showNavidromeRatingModal(
                   context: context,
-                  title: 'Rate Artist',
+                  title: "Noter l'artiste",
                   subtitle: artist.name,
                   initialRating: artist.userRating ?? 0,
                   onRatingChanged: (int newRating) async {
@@ -83,7 +83,7 @@ class NavidromeArtistScreen extends ConsumerWidget {
                 color: artist.isStarred ? Colors.redAccent : null,
               ),
               tooltip: artist.isStarred
-                  ? 'Remove from favorites'
+                  ? 'Retirer des favoris'
                   : 'Add to favorites',
               onPressed: () async {
                 final bool willStar = !artist.isStarred;
@@ -101,7 +101,7 @@ class NavidromeArtistScreen extends ConsumerWidget {
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Failed to update favorite: $e')),
+                      SnackBar(content: Text('Échec de la mise à jour des favoris : $e')),
                     );
                   }
                 }
@@ -303,7 +303,7 @@ class NavidromeArtistScreen extends ConsumerWidget {
                 const SliverFillRemaining(
                   hasScrollBody: false,
                   child: Center(
-                    child: Text('No albums found for this artist'),
+                    child: Text('Aucun album trouvé pour cet artiste'),
                   ),
                 )
               else
@@ -414,13 +414,13 @@ class NavidromeArtistScreen extends ConsumerWidget {
                 color: Colors.red,
               ),
               const SizedBox(height: Insets.md),
-              Text('Failed to load artist: $err'),
+              Text("Échec du chargement de l'artiste : $err"),
               const SizedBox(height: Insets.md),
               FilledButton.tonal(
                 onPressed: () => ref.invalidate(
                   navidromeArtistDetailProvider((instance, artistId)),
                 ),
-                child: const Text('Retry'),
+                child: const Text('Réessayer'),
               ),
             ],
           ),

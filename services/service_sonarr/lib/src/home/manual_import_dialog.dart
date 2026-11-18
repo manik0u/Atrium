@@ -79,7 +79,7 @@ class __ManualImportSetupDialogState
     final String folder = _pathController.text.trim();
     if (folder.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select or enter a folder path.')),
+        const SnackBar(content: Text('Veuillez sélectionner ou saisir un chemin de dossier.')),
       );
       return;
     }
@@ -104,7 +104,7 @@ class __ManualImportSetupDialogState
                   children: <Widget>[
                     const ExpressiveProgressIndicator(),
                     const SizedBox(height: 16),
-                    const Text('Scanning folder contents...'),
+                    const Text('Analyse du contenu du dossier…'),
                     const SizedBox(height: 24),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -115,20 +115,20 @@ class __ManualImportSetupDialogState
                               context: dialogContext,
                               builder: (BuildContext confirmContext) =>
                                   AlertDialog(
-                                title: const Text('Cancel Scan?'),
+                                title: const Text("Annuler l'analyse ?"),
                                 content: const Text(
-                                  'Are you sure you want to stop scanning this folder?',
+                                  "Voulez-vous vraiment arrêter l'analyse de ce dossier ?",
                                 ),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () =>
                                         Navigator.pop(confirmContext, false),
-                                    child: const Text('No'),
+                                    child: const Text('Non'),
                                   ),
                                   TextButton(
                                     onPressed: () =>
                                         Navigator.pop(confirmContext, true),
-                                    child: const Text('Yes, Cancel'),
+                                    child: const Text('Oui, annuler'),
                                   ),
                                 ],
                               ),
@@ -137,7 +137,7 @@ class __ManualImportSetupDialogState
                               cancelToken.cancel('user_cancelled');
                             }
                           },
-                          child: const Text('Cancel'),
+                          child: const Text('Annuler'),
                         ),
                       ],
                     ),
@@ -171,11 +171,11 @@ class __ManualImportSetupDialogState
     if (error != null) {
       if (error is NetworkCancelledException) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Scan cancelled.')),
+          const SnackBar(content: Text('Analyse annulée.')),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Scan failed: $error')),
+          SnackBar(content: Text("Échec de l'analyse : $error")),
         );
       }
       return;
@@ -184,7 +184,7 @@ class __ManualImportSetupDialogState
     if (scanResults.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('No importable files found in the folder.'),
+          content: Text('Aucun fichier importable trouvé dans le dossier.'),
         ),
       );
       return;
@@ -218,7 +218,7 @@ class __ManualImportSetupDialogState
         children: <Widget>[
           Icon(Icons.folder_open, size: 28),
           SizedBox(width: 12),
-          Text('Manual Import'),
+          Text('Import manuel'),
         ],
       ),
       content: SingleChildScrollView(
@@ -239,8 +239,8 @@ class __ManualImportSetupDialogState
                   child: TextField(
                     controller: _pathController,
                     decoration: const InputDecoration(
-                      labelText: 'Folder Path',
-                      hintText: 'e.g. /data/torrents/name',
+                      labelText: 'Chemin du dossier',
+                      hintText: 'ex. /data/torrents/name',
                       border: OutlineInputBorder(),
                     ),
                     onChanged: (String val) {
@@ -257,7 +257,7 @@ class __ManualImportSetupDialogState
                 IconButton.filledTonal(
                   icon: const Icon(Icons.folder),
                   onPressed: _browseFolder,
-                  tooltip: 'Browse Folder',
+                  tooltip: 'Parcourir les dossiers',
                 ),
               ],
             ),
@@ -265,17 +265,17 @@ class __ManualImportSetupDialogState
             DropdownButtonFormField<String>(
               initialValue: mode,
               decoration: const InputDecoration(
-                labelText: 'Import Mode',
+                labelText: "Mode d'import",
                 border: OutlineInputBorder(),
               ),
               items: const <DropdownMenuItem<String>>[
                 DropdownMenuItem<String>(
                   value: 'Move',
-                  child: Text('Move (recommended)'),
+                  child: Text('Déplacer (recommandé)'),
                 ),
                 DropdownMenuItem<String>(
                   value: 'Copy',
-                  child: Text('Copy'),
+                  child: Text('Copier'),
                 ),
               ],
               onChanged: (String? val) {
@@ -292,8 +292,8 @@ class __ManualImportSetupDialogState
             const SizedBox(height: 12),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Filter Existing Files'),
-              subtitle: const Text('Do not show files already in the library'),
+              title: const Text('Filtrer les fichiers existants'),
+              subtitle: const Text('Ne pas afficher les fichiers déjà dans la bibliothèque'),
               value: filterExisting,
               onChanged: (bool val) {
                 ref
@@ -310,11 +310,11 @@ class __ManualImportSetupDialogState
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: _startScan,
-          child: const Text('Interactive Import'),
+          child: const Text('Import interactif'),
         ),
       ],
     );
@@ -421,7 +421,7 @@ class __DirectoryBrowserDialogState
         _currentPath.split(separator).where((s) => s.isNotEmpty).toList();
 
     return AlertDialog(
-      title: const Text('Browse Folder'),
+      title: const Text('Parcourir les dossiers'),
       content: SizedBox(
         width: double.maxFinite,
         height: 450,
@@ -444,7 +444,7 @@ class __DirectoryBrowserDialogState
                       onPressed: () {
                         _navigateTo('');
                       },
-                      tooltip: 'Root / Drives',
+                      tooltip: 'Racine / Disques',
                     ),
                     if (segments.isNotEmpty && !isWindows)
                       Text('/', style: theme.textTheme.bodyMedium),
@@ -479,7 +479,7 @@ class __DirectoryBrowserDialogState
             // Current path text input for manual overrides
             TextField(
               decoration: const InputDecoration(
-                labelText: 'Selected Path',
+                labelText: 'Chemin sélectionné',
                 isDense: true,
                 border: OutlineInputBorder(),
               ),
@@ -517,13 +517,13 @@ class __DirectoryBrowserDialogState
                               const SizedBox(height: 12),
                               FilledButton.tonal(
                                 onPressed: _loadDirectoryContents,
-                                child: const Text('Retry'),
+                                child: const Text('Réessayer'),
                               ),
                             ],
                           ),
                         )
                       : _directories.isEmpty
-                          ? const Center(child: Text('No directories found.'))
+                          ? const Center(child: Text('Aucun répertoire trouvé.'))
                           : ListView.builder(
                               itemCount: _directories.length +
                                   (segments.isNotEmpty ? 1 : 0),
@@ -531,7 +531,7 @@ class __DirectoryBrowserDialogState
                                 if (segments.isNotEmpty && index == 0) {
                                   return ListTile(
                                     leading: const Icon(Icons.arrow_upward),
-                                    title: const Text('.. (Parent Folder)'),
+                                    title: const Text('.. (Dossier parent)'),
                                     onTap: _navigateBack,
                                   );
                                 }
@@ -563,12 +563,12 @@ class __DirectoryBrowserDialogState
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed:
               _loading ? null : () => Navigator.pop(context, _currentPath),
-          child: const Text('Select Folder'),
+          child: const Text('Sélectionner le dossier'),
         ),
       ],
     );
@@ -727,7 +727,7 @@ class __ManualImportMappingScreenState
     final series = f['series'] as Map<String, dynamic>?;
     if (series == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select a Series first.')),
+        const SnackBar(content: Text("Veuillez d'abord sélectionner une série.")),
       );
       return;
     }
@@ -763,7 +763,7 @@ class __ManualImportMappingScreenState
     if (!mounted) return;
     if (error != null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load episodes: $error')),
+        SnackBar(content: Text('Échec du chargement des épisodes : $error')),
       );
       return;
     }
@@ -773,7 +773,7 @@ class __ManualImportMappingScreenState
 
     if (seasonEpisodes.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('No episodes found for Season $seasonNumber.')),
+        SnackBar(content: Text('Aucun épisode trouvé pour la saison $seasonNumber.')),
       );
       return;
     }
@@ -822,7 +822,7 @@ class __ManualImportMappingScreenState
     if (importList.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('No valid mapped files selected for import.'),
+          content: Text("Aucun fichier mappé valide sélectionné pour l'import."),
         ),
       );
       return;
@@ -873,7 +873,7 @@ class __ManualImportMappingScreenState
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Import failed: $e')),
+          SnackBar(content: Text("Échec de l'import : $e")),
         );
       }
     } finally {
@@ -887,14 +887,14 @@ class __ManualImportMappingScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Interactive Import'),
+        title: const Text('Import interactif'),
         actions: <Widget>[
           TextButton.icon(
             style: TextButton.styleFrom(
               foregroundColor: theme.colorScheme.onPrimaryContainer,
             ),
             icon: const Icon(Icons.select_all),
-            label: const Text('Select All'),
+            label: const Text('Tout sélectionner'),
             onPressed: () {
               setState(() {
                 for (final f in _files.cast<Map<String, dynamic>>()) {
@@ -909,7 +909,7 @@ class __ManualImportMappingScreenState
               foregroundColor: theme.colorScheme.onPrimaryContainer,
             ),
             icon: const Icon(Icons.deselect),
-            label: const Text('None'),
+            label: const Text('Aucun'),
             onPressed: () {
               setState(_selectedPaths.clear);
             },
@@ -951,7 +951,7 @@ class __ManualImportMappingScreenState
                       children: <Widget>[
                         ExpressiveProgressIndicator(),
                         SizedBox(height: 16),
-                        Text('Sending manual import instruction...'),
+                        Text("Envoi de l'instruction d'import manuel…"),
                       ],
                     ),
                   )
@@ -1187,7 +1187,7 @@ class __ManualImportMappingScreenState
                 FilledButton.icon(
                   onPressed: _importing ? null : _executeImport,
                   icon: const Icon(Icons.download),
-                  label: const Text('Import Selected'),
+                  label: const Text('Importer la sélection'),
                 ),
               ],
             ),
@@ -1240,7 +1240,7 @@ class _SeriesPickerDialogState extends State<_SeriesPickerDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Select Series'),
+      title: const Text('Sélectionner la série'),
       content: SizedBox(
         width: double.maxFinite,
         height: 350,
@@ -1249,7 +1249,7 @@ class _SeriesPickerDialogState extends State<_SeriesPickerDialog> {
             TextField(
               controller: _filterController,
               decoration: const InputDecoration(
-                hintText: 'Search series...',
+                hintText: 'Rechercher des séries…',
                 prefixIcon: Icon(Icons.search),
                 isDense: true,
                 border: OutlineInputBorder(),
@@ -1292,7 +1292,7 @@ class _SeasonPickerDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Select Season'),
+      title: const Text('Sélectionner la saison'),
       content: SizedBox(
         width: 150,
         height: 250,
@@ -1301,7 +1301,7 @@ class _SeasonPickerDialog extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             final int seasonNum = seasonNumbers[index];
             return ListTile(
-              title: Text(seasonNum == 0 ? 'Specials' : 'Season $seasonNum'),
+              title: Text(seasonNum == 0 ? 'Épisodes spéciaux' : 'Saison $seasonNum'),
               selected: seasonNum == initialSeason,
               onTap: () {
                 Navigator.pop(context, seasonNum);
@@ -1339,7 +1339,7 @@ class _EpisodePickerDialogState extends State<_EpisodePickerDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Select Episode(s)'),
+      title: const Text('Sélectionner le(s) épisode(s)'),
       content: SizedBox(
         width: double.maxFinite,
         height: 350,
@@ -1350,7 +1350,7 @@ class _EpisodePickerDialogState extends State<_EpisodePickerDialog> {
             final bool isChecked = _selectedIds.contains(ep.id);
 
             return CheckboxListTile(
-              title: Text('Ep ${ep.episodeNumber}: ${ep.title}'),
+              title: Text('Ép. ${ep.episodeNumber} : ${ep.title}'),
               value: isChecked,
               onChanged: (bool? val) {
                 setState(() {
@@ -1368,7 +1368,7 @@ class _EpisodePickerDialogState extends State<_EpisodePickerDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: () {
@@ -1378,7 +1378,7 @@ class _EpisodePickerDialogState extends State<_EpisodePickerDialog> {
                 .toList();
             Navigator.pop(context, mapped);
           },
-          child: const Text('Done'),
+          child: const Text('Terminé'),
         ),
       ],
     );

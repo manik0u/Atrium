@@ -36,7 +36,7 @@ void main() {
   testWidgets('Gluetun takes an empty API key', (WidgetTester tester) async {
     await openForm(tester, kind: ServiceKind.gluetun);
 
-    expect(keyField(tester, 'API key (optional)').validator!(''), isNull);
+    expect(keyField(tester, 'Clé API (facultatif)').validator!(''), isNull);
     expect(find.textContaining('auth turned off'), findsOneWidget);
   });
 
@@ -45,7 +45,7 @@ void main() {
     // The form opens on Sonarr.
     await openForm(tester);
 
-    expect(keyField(tester, 'API key').validator!(''), 'Required');
-    expect(find.text('API key (optional)'), findsNothing);
+    expect(keyField(tester, 'Clé API').validator!(''), 'Requis');
+    expect(find.text('Clé API (facultatif)'), findsNothing);
   });
 }

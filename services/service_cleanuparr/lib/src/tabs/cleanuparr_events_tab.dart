@@ -88,7 +88,7 @@ class _CleanuparrEventsTabState extends ConsumerState<CleanuparrEventsTab> {
                 onPressed: widget.onOpenDrawer,
               )
             : null,
-        title: const Text('Audit Events'),
+        title: const Text("Événements d'audit"),
       ),
       body: EasyRefresh(
         onRefresh: _refresh,
@@ -100,7 +100,7 @@ class _CleanuparrEventsTabState extends ConsumerState<CleanuparrEventsTab> {
             TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Search audit events',
+                hintText: "Rechercher des événements d'audit",
                 prefixIcon: const Icon(Icons.search, size: 20),
                 suffixIcon: _searchController.text.isNotEmpty
                     ? IconButton(
@@ -187,7 +187,7 @@ class _CleanuparrEventsTabState extends ConsumerState<CleanuparrEventsTab> {
               error: (err, _) => Center(
                 child: Padding(
                   padding: const EdgeInsets.all(Insets.xl),
-                  child: Text('Could not load events: ${describeCleanuparrError(err)}'),
+                  child: Text('Impossible de charger les événements : ${describeCleanuparrError(err)}'),
                 ),
               ),
               data: (List<CleanuparrEvent> events) {
@@ -205,14 +205,14 @@ class _CleanuparrEventsTabState extends ConsumerState<CleanuparrEventsTab> {
                           ),
                           const SizedBox(height: Insets.md),
                           Text(
-                            'No Events Found',
+                            'Aucun événement trouvé',
                             style: textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: Insets.xs),
                           Text(
-                            'No recent activity matching your filter',
+                            'Aucune activité récente ne correspond à votre filtre',
                             style: textTheme.bodySmall?.copyWith(
                               color: colorScheme.outline,
                             ),

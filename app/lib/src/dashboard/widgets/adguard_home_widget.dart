@@ -33,7 +33,7 @@ class DashboardAdguardHomeWidget extends StatelessWidget {
           instances.length == 1 ? () => _open(context, instances.first) : null,
       child: instances.isEmpty
           ? const DashboardIdleRow(
-              text: 'No AdGuard Home instances configured',
+              text: 'Aucune instance AdGuard Home configurée',
             )
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -270,9 +270,9 @@ class _StateRow extends StatelessWidget {
           const SizedBox(width: Insets.xs),
           Text(
             switch (state) {
-              AdguardHomeProtection.on => 'PROTECTED',
-              AdguardHomeProtection.paused => 'PAUSED',
-              AdguardHomeProtection.off => 'OFF',
+              AdguardHomeProtection.on => 'PROTÉGÉ',
+              AdguardHomeProtection.paused => 'EN PAUSE',
+              AdguardHomeProtection.off => 'DÉSACTIVÉ',
             },
             style: pillText,
           ),
@@ -308,7 +308,7 @@ class _StateRow extends StatelessWidget {
             style: _actionStyle,
             onPressed: busy ? null : () => onSet(enabled: true),
             icon: const Icon(Icons.play_arrow_rounded, size: 16),
-            label: const Text('Resume'),
+            label: const Text('Reprendre'),
           ),
       ],
     );
@@ -355,7 +355,7 @@ class _PauseButton extends StatelessWidget {
         // Zero stands for no timer: off until turned back on.
         const PopupMenuItem<Duration>(
           value: Duration.zero,
-          child: Text('Until turned back on'),
+          child: Text("Jusqu'à réactivation"),
         ),
       ],
     );
@@ -389,7 +389,7 @@ class _Summary extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: _Figure(
-            label: 'Queries',
+            label: 'Requêtes',
             value:
                 stats == null ? '-' : formatAdguardHomeCompact(stats.queries),
             color: cs.primary,
@@ -398,7 +398,7 @@ class _Summary extends StatelessWidget {
         const SizedBox(width: Insets.sm),
         Expanded(
           child: _Figure(
-            label: 'Blocked',
+            label: 'Bloquées',
             value: stats == null
                 ? '-'
                 : formatAdguardHomeCompact(stats.blockedByFilters),
@@ -610,7 +610,7 @@ class _Refused extends StatelessWidget {
                     ? 'AdGuard Home refused the sign-in. By default it '
                         'blocks an address for 15 minutes after five wrong '
                         'tries.'
-                    : 'AdGuard Home asks for a sign-in, and this instance '
+                    : 'AdGuard Home demande une connexion, et cette instance '
                         'has no username or password.',
                 style: theme.textTheme.bodySmall
                     ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
@@ -622,7 +622,7 @@ class _Refused extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: Insets.xs),
             child: Text(
-              'Refused $refusals times in a row from this app.',
+              'Refusé $refusals fois de suite depuis cette app.',
               style: theme.textTheme.bodySmall?.copyWith(
                 color: theme.colorScheme.error,
                 fontWeight: FontWeight.w600,
@@ -631,7 +631,7 @@ class _Refused extends StatelessWidget {
           ),
         Align(
           alignment: Alignment.centerRight,
-          child: TextButton(onPressed: onRetry, child: const Text('Try again')),
+          child: TextButton(onPressed: onRetry, child: const Text('Réessayer')),
         ),
       ],
     );

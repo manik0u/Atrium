@@ -22,12 +22,12 @@ Future<bool> showAdguardHomeFailure(
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: Text(refused ? 'Cancel' : 'OK'),
+          child: Text(refused ? 'Annuler' : 'OK'),
         ),
         if (refused)
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Try again'),
+            child: const Text('Réessayer'),
           ),
       ],
     ),
@@ -48,7 +48,7 @@ SnackBar adguardHomeFailureSnackBar(
       content: Text(describeAdguardHomeError(error)),
       action: error is AdguardHomeSignInRefused
           ? SnackBarAction(
-              label: 'Try again',
+              label: 'Réessayer',
               onPressed: () {
                 retrySignIn();
                 again();

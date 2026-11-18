@@ -25,7 +25,7 @@ class AdguardHomeEncryptionScreen extends ConsumerWidget {
         ref.watch(adguardHomeTlsStatusProvider(instance));
     final AdguardHomeTlsStatus? tls = read.value;
     return Scaffold(
-      appBar: AppBar(title: const Text('Encryption')),
+      appBar: AppBar(title: const Text('Chiffrement')),
       body: tls == null
           ? adguardHomeSettingsWaiting<AdguardHomeTlsStatus>(
                 context,
@@ -47,7 +47,7 @@ class AdguardHomeEncryptionScreen extends ConsumerWidget {
     return <Widget>[
       _State(
         on: tls.enabled,
-        title: tls.enabled ? 'Encryption is on' : 'Encryption is off',
+        title: tls.enabled ? 'Le chiffrement est activé' : 'Le chiffrement est désactivé',
         detail: tls.enabled
             ? null
             : 'DNS over HTTPS, TLS and QUIC are set up in AdGuard Home\'s web '
@@ -71,7 +71,7 @@ class AdguardHomeEncryptionScreen extends ConsumerWidget {
           tls.validChain
               ? 'Valid'
               : tls.validCertificate
-                  ? 'Valid, but not trusted by the system'
+                  ? 'Valide, mais non fiable pour le système'
                   : 'Not valid',
         ),
         AdguardHomeField('Subject', tls.subject),
@@ -96,7 +96,7 @@ class AdguardHomeEncryptionScreen extends ConsumerWidget {
               : 'Not valid',
         ),
         AdguardHomeField(
-          'Matches the certificate',
+          'Correspond au certificat',
           tls.validPair ? 'Yes' : 'No',
         ),
         if (tls.warning.isNotEmpty)
@@ -145,7 +145,7 @@ class AdguardHomeDhcpScreen extends ConsumerWidget {
           children: <Widget>[
             _State(
               on: false,
-              title: 'DHCP is not available on this server',
+              title: "DHCP n'est pas disponible sur ce serveur",
               detail: 'AdGuard Home cannot hand out addresses where it '
                   'runs, for example in a container without the host\'s '
                   'network.',
@@ -181,7 +181,7 @@ class AdguardHomeDhcpScreen extends ConsumerWidget {
         on: dhcp.enabled,
         title: dhcp.enabled
             ? 'Handing out addresses'
-            : 'DHCP is off on this server',
+            : 'DHCP est désactivé sur ce serveur',
         detail: dhcp.enabled
             ? null
             : 'It is set up in AdGuard Home\'s web interface.',
@@ -290,7 +290,7 @@ class _AdguardHomeAboutScreenState
         ref.watch(adguardHomeStatusProvider(widget.instance));
     final AdguardHomeStatus? status = read.value;
     return Scaffold(
-      appBar: AppBar(title: const Text('About')),
+      appBar: AppBar(title: const Text('À propos')),
       body: status == null
           ? adguardHomeSettingsWaiting<AdguardHomeStatus>(
                 context,
@@ -362,14 +362,14 @@ class _AdguardHomeAboutScreenState
     if (check.disabled) {
       return <Widget>[
         Text(
-          'Update checks are off on this server.',
+          'Les vérifications de mises à jour sont désactivées sur ce serveur.',
           style: theme.textTheme.bodyMedium,
         ),
       ];
     }
     if (!check.isNewerThan(status.version)) {
       return <Widget>[
-        Text('This is the latest version.', style: theme.textTheme.bodyMedium),
+        Text("C'est la dernière version.", style: theme.textTheme.bodyMedium),
       ];
     }
     final Uri? notes = Uri.tryParse(check.announcementUrl);
@@ -379,7 +379,7 @@ class _AdguardHomeAboutScreenState
         style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
       ),
       Text(
-        'It is installed from the server or its web interface.',
+        'Il est installé depuis le serveur ou son interface web.',
         style: theme.textTheme.bodyMedium
             ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
       ),
@@ -390,7 +390,7 @@ class _AdguardHomeAboutScreenState
             onPressed: () =>
                 launchUrl(notes, mode: LaunchMode.externalApplication),
             icon: const Icon(Icons.open_in_new),
-            label: const Text("What's new"),
+            label: const Text('Nouveautés'),
           ),
         ),
     ];

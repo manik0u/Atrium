@@ -14,24 +14,24 @@ sealed class NetworkException implements Exception {
       DioExceptionType.receiveTimeout =>
         const NetworkTimeoutException('Server took too long to respond.'),
       DioExceptionType.connectionError =>
-        NetworkUnreachableException(e.message ?? 'Could not reach the server.'),
+        NetworkUnreachableException(e.message ?? 'Impossible de joindre le serveur.'),
       DioExceptionType.badCertificate => const NetworkTlsException(
           'TLS certificate not trusted. Enable "Allow self-signed certs" '
           'in this instance\'s settings if you trust the server.',
         ),
       DioExceptionType.cancel =>
-        const NetworkCancelledException('Request was cancelled.'),
+        const NetworkCancelledException('La requête a été annulée.'),
       DioExceptionType.badResponse => _fromBadResponse(e),
       DioExceptionType.unknown ||
       _ =>
-        NetworkUnknownException(e.message ?? 'Unknown network error.'),
+        NetworkUnknownException(e.message ?? 'Erreur réseau inconnue.'),
     };
   }
 
   static NetworkException _fromBadResponse(DioException e) {
     final int? status = e.response?.statusCode;
     if (status == null) {
-      return const NetworkUnknownException('Empty response from server.');
+      return const NetworkUnknownException('Réponse vide du serveur.');
     }
     final String? detail = _bodyMessage(e.response?.data);
     if (status == 401 || status == 403) {
@@ -54,7 +54,7 @@ sealed class NetworkException implements Exception {
       );
     }
     if (status == 404) {
-      return const NetworkNotFoundException('Resource not found.');
+      return const NetworkNotFoundException('Ressource introuvable.');
     }
     if (status >= 500) {
       return NetworkServerException(

@@ -25,7 +25,7 @@ class NavidromeSearchDelegate extends SearchDelegate<void> {
   final Instance instance;
 
   @override
-  String? get searchFieldLabel => 'Search artists, albums, songs...';
+  String? get searchFieldLabel => 'Rechercher des artistes, albums, morceaux…';
 
   @override
   ThemeData appBarTheme(BuildContext context) {
@@ -136,7 +136,7 @@ class NavidromeSearchResults extends ConsumerWidget {
                 ),
                 const SizedBox(height: Insets.md),
                 Text(
-                  'No matches found for "$query"',
+                  'Aucune correspondance pour « $query »',
                   style: theme.textTheme.bodyLarge?.copyWith(
                     color: cs.onSurfaceVariant,
                   ),
@@ -427,7 +427,7 @@ class NavidromeSearchResults extends ConsumerWidget {
                       ),
                       IconButton(
                         icon: const Icon(Icons.playlist_add_rounded, size: 20),
-                        tooltip: 'Add to Playlist',
+                        tooltip: 'Ajouter à la playlist',
                         onPressed: () {
                           showNavidromePlaylistPicker(
                             context: context,
@@ -458,7 +458,7 @@ class NavidromeSearchResults extends ConsumerWidget {
       },
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (Object err, _) => Center(
-        child: Text('Search failed: $err'),
+        child: Text('Échec de la recherche : $err'),
       ),
     );
   }
@@ -512,7 +512,7 @@ class _NavidromeSearchScreenState extends ConsumerState<NavidromeSearchScreen> {
           onChanged: _onQueryChanged,
           textInputAction: TextInputAction.search,
           decoration: InputDecoration(
-            hintText: 'Search artists, albums, songs...',
+            hintText: 'Rechercher des artistes, albums, morceaux…',
             border: InputBorder.none,
             enabledBorder: InputBorder.none,
             focusedBorder: InputBorder.none,

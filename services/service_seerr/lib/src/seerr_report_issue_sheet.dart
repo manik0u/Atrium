@@ -90,13 +90,13 @@ class _SeerrReportIssueSheetState extends ConsumerState<SeerrReportIssueSheet> {
         return;
       }
       ref.invalidate(seerrIssuesProvider);
-      messenger.showSnackBar(const SnackBar(content: Text('Issue reported')));
+      messenger.showSnackBar(const SnackBar(content: Text('Problème signalé')));
       navigator.pop();
     } catch (e) {
       if (mounted) {
         setState(() => _submitting = false);
         messenger.showSnackBar(
-          SnackBar(content: Text('Could not report issue: $e')),
+          SnackBar(content: Text('Impossible de signaler le problème : $e')),
         );
       }
     }
@@ -149,8 +149,8 @@ class _SeerrReportIssueSheetState extends ConsumerState<SeerrReportIssueSheet> {
               maxLines: 6,
               onChanged: (_) => setState(() {}),
               decoration: const InputDecoration(
-                labelText: 'What is wrong?',
-                hintText: 'Describe the problem',
+                labelText: 'Quel est le problème ?',
+                hintText: 'Décrivez le problème',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -164,7 +164,7 @@ class _SeerrReportIssueSheetState extends ConsumerState<SeerrReportIssueSheet> {
                       child: ExpressiveProgressIndicator(strokeWidth: 2),
                     )
                   : const Icon(Icons.flag_outlined),
-              label: const Text('Submit'),
+              label: const Text('Envoyer'),
             ),
           ],
         ),

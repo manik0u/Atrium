@@ -126,7 +126,7 @@ class Aria2Api {
       try {
         body = jsonDecode(body);
       } on FormatException {
-        throw const Aria2RpcException('Response was not JSON');
+        throw const Aria2RpcException("La réponse n'était pas du JSON");
       }
     }
     if (body is! Map) {

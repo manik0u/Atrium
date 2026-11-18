@@ -55,10 +55,10 @@ class _ProwlarrHomeState extends State<ProwlarrHome>
           TabBar(
             controller: _tab,
             tabs: const <Widget>[
-              Tab(text: 'Indexers'),
-              Tab(text: 'History'),
-              Tab(text: 'Settings'),
-              Tab(text: 'System'),
+              Tab(text: 'Indexeurs'),
+              Tab(text: 'Historique'),
+              Tab(text: 'Paramètres'),
+              Tab(text: 'Système'),
             ],
           ),
           Expanded(
@@ -88,7 +88,7 @@ class _ProwlarrHomeState extends State<ProwlarrHome>
       children: <Widget>[
         FloatingActionButton.small(
           heroTag: 'prowlarr-search',
-          tooltip: 'Search',
+          tooltip: 'Rechercher',
           onPressed: () => Navigator.of(context, rootNavigator: true).push(
             MaterialPageRoute<void>(
               builder: (_) => ProwlarrSearchScreen(instance: widget.instance),
@@ -101,7 +101,7 @@ class _ProwlarrHomeState extends State<ProwlarrHome>
           heroTag: 'prowlarr-add',
           onPressed: _openForm,
           icon: const Icon(Icons.add),
-          label: const Text('Add indexer'),
+          label: const Text('Ajouter un indexeur'),
         ),
       ],
     );
@@ -163,8 +163,8 @@ class _IndexersTab extends ConsumerWidget {
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.travel_explore_outlined,
-              title: 'No indexers',
-              message: 'Tap "Add indexer" to configure one.',
+              title: 'Aucun indexeur',
+              message: 'Touchez « Ajouter un indexeur » pour en configurer un.',
             ),
           ],
         ),
@@ -285,7 +285,7 @@ class _IndexerCard extends StatelessWidget {
                           if (stat != null)
                             _MetaPill(
                               icon: Icons.search,
-                              label: '${stat!.numberOfQueries} queries',
+                              label: '${stat!.numberOfQueries} requêtes',
                               color: cs.primary,
                             ),
                         ],

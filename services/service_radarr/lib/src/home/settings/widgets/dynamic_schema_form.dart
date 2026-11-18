@@ -152,7 +152,7 @@ class _DynamicSchemaFormState extends State<DynamicSchemaForm> {
           if (hasAdvanced) ...[
             CheckboxListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Show Advanced Settings'),
+              title: const Text('Afficher les paramètres avancés'),
               value: _showAdvanced,
               onChanged: (val) {
                 if (val != null) {
@@ -220,18 +220,18 @@ class _DynamicSchemaFormState extends State<DynamicSchemaForm> {
                   TextButton.icon(
                     onPressed: _testConnection,
                     icon: const Icon(Icons.playlist_add_check),
-                    label: const Text('Test'),
+                    label: const Text('Tester'),
                   ),
                 const Spacer(),
               ],
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('Cancel'),
+                child: const Text('Annuler'),
               ),
               const SizedBox(width: Insets.sm),
               ElevatedButton(
                 onPressed: _submit,
-                child: const Text('Save'),
+                child: const Text('Enregistrer'),
               ),
             ],
           ),

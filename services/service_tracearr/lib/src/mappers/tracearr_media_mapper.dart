@@ -108,7 +108,7 @@ class TracearrMediaMapper {
     return TracearrMediaDetail(
       id: item.id ?? mediaRef ?? '',
       mediaType: item.mediaType ?? 'movie',
-      title: item.title ?? 'Unknown Media',
+      title: item.title ?? 'Média inconnu',
       year: item.year,
       showMediaId: item.showMediaId,
       imdbId: item.imdbId,

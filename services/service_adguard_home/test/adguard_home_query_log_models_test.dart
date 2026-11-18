@@ -180,12 +180,12 @@ void main() {
   test('a row of the list gets a name short enough to sit beside the client',
       () {
     // In full it would be cut off on a phone. The sheet has the room.
-    expect(entry('pornhub.com').chipLabel, 'Parental control');
+    expect(entry('pornhub.com').chipLabel, 'Contrôle parental');
     expect(entry('pornhub.com').resultLabel, 'Blocked by parental control');
     // The others are short as they are.
     expect(entry('example.org').chipLabel, 'Processed');
     expect(entry('www.tiktok.com').chipLabel, 'Blocked service');
-    expect(entry('www.youtube.com').chipLabel, 'Safe search');
+    expect(entry('www.youtube.com').chipLabel, 'Recherche sécurisée');
     // A block that came from the answer is still a block in the list.
     expect(
       parse(<String, dynamic>{
@@ -194,7 +194,7 @@ void main() {
           <String, dynamic>{'type': 'A', 'value': '203.0.113.5', 'ttl': 5},
         ],
       }).chipLabel,
-      'Blocked',
+      'Bloquées',
     );
     expect(
       parse(<String, dynamic>{'reason': 'FilteredSomethingNew'}).chipLabel,

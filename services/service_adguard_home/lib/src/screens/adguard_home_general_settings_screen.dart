@@ -90,7 +90,7 @@ class _AdguardHomeGeneralSettingsScreenState
         ref.watch(adguardHomeGeneralSettingsProvider(_instance));
     return Scaffold(
       appBar: AppBar(
-        title: const Text('General'),
+        title: const Text('Général'),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(4),
           child: _busy != null
@@ -144,8 +144,8 @@ class _AdguardHomeGeneralSettingsScreenState
         padding: const EdgeInsets.only(bottom: Insets.xl),
         children: <Widget>[
           SwitchListTile(
-            title: const Text('Block domains using filters and hosts files'),
-            subtitle: const Text('The blocklists, allowlists and custom rules'),
+            title: const Text('Bloquez des domaines avec les filtres et les fichiers hosts'),
+            subtitle: const Text("Les listes de blocage, d'autorisation et les règles personnalisées"),
             value: _shown('filtering', lists.enabled),
             onChanged: idle
                 ? (bool on) => _write(
@@ -156,8 +156,8 @@ class _AdguardHomeGeneralSettingsScreenState
                 : null,
           ),
           SwitchListTile(
-            title: const Text('Browsing security'),
-            subtitle: const Text('Blocks malware and phishing domains'),
+            title: const Text('Sécurité de navigation'),
+            subtitle: const Text('Bloque les domaines malveillants et de phishing'),
             value: _shown('safebrowsing', read.safeBrowsing),
             onChanged: idle
                 ? (bool on) => _write(
@@ -168,8 +168,8 @@ class _AdguardHomeGeneralSettingsScreenState
                 : null,
           ),
           SwitchListTile(
-            title: const Text('Parental control'),
-            subtitle: const Text('Blocks adult websites'),
+            title: const Text('Contrôle parental'),
+            subtitle: const Text('Bloque les sites pour adultes'),
             value: _shown('parental', read.parental),
             onChanged: idle
                 ? (bool on) => _write(
@@ -180,9 +180,9 @@ class _AdguardHomeGeneralSettingsScreenState
                 : null,
           ),
           SwitchListTile(
-            title: const Text('Safe search'),
+            title: const Text('Recherche sécurisée'),
             subtitle: const Text(
-              'Hides explicit results on the search engines below',
+              'Masque les résultats explicites sur les moteurs de recherche ci-dessous',
             ),
             value: safeSearchOn,
             onChanged: idle

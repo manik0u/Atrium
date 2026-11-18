@@ -18,7 +18,7 @@ class DashdotHome extends ConsumerWidget {
     return infoAsync.when(
       data: (info) {
         if (info == null) {
-          return const Center(child: Text('Failed to load Dashdot info.'));
+          return const Center(child: Text('Échec du chargement des infos Dashdot.'));
         }
 
         final cpu = info.cpu;
@@ -56,8 +56,8 @@ class DashdotHome extends ConsumerWidget {
             children: [
               TabBar(
                 tabs: const [
-                  Tab(text: 'Live Metrics'),
-                  Tab(text: 'System Information'),
+                  Tab(text: 'Métriques en direct'),
+                  Tab(text: 'Informations système'),
                 ],
                 labelColor: Theme.of(context).colorScheme.primary,
                 unselectedLabelColor: Theme.of(
@@ -105,7 +105,7 @@ class DashdotHome extends ConsumerWidget {
                           ),
                           _InfoBox(
                             title: 'CPU',
-                            subtitle: cpu?.cpuBrand ?? 'Unknown',
+                            subtitle: cpu?.cpuBrand ?? 'Inconnu',
                             details:
                                 '${cpu?.cores ?? '?'} Cores / ${cpu?.threads ?? '?'} Threads\n${cpu?.freq ?? '?'} GHz',
                             icon: Icons.memory,
@@ -172,8 +172,8 @@ class DashdotHome extends ConsumerWidget {
                                 }
                               }
                               return _InfoBox(
-                                title: 'Network',
-                                subtitle: network?.type ?? 'Unknown',
+                                title: 'Réseau',
+                                subtitle: network?.type ?? 'Inconnu',
                                 details: 'Speed: $speedStr',
                                 icon: Icons.network_check,
                               );
@@ -226,7 +226,7 @@ class DashdotHome extends ConsumerWidget {
                                   bottom: Insets.md,
                                 ),
                                 child: _InfoBox(
-                                  title: 'Storage ${idx + 1}',
+                                  title: 'Stockage ${idx + 1}',
                                   subtitle: subtitle,
                                   details:
                                       'Total: $capacityGB GB${usedGB < 0 ? "" : "\nUsed: ${usedGB.toStringAsFixed(1)} GB (${usedPct.toStringAsFixed(1)}%)"}',
@@ -236,8 +236,8 @@ class DashdotHome extends ConsumerWidget {
                             }),
                           ] else
                             const _InfoBox(
-                              title: 'Storage',
-                              subtitle: 'Unknown',
+                              title: 'Stockage',
+                              subtitle: 'Inconnu',
                               details: '',
                               icon: Icons.storage,
                             ),
@@ -312,7 +312,7 @@ class DashdotHome extends ConsumerWidget {
         );
       },
       loading: () => const Center(child: CircularProgressIndicatorM3E()),
-      error: (e, st) => Center(child: Text('Error: $e')),
+      error: (e, st) => Center(child: Text('Erreur : $e')),
     );
   }
 }
@@ -434,7 +434,7 @@ class DashdotRingMetrics extends ConsumerWidget {
             const SizedBox(height: Insets.md),
             _LegendItem(
               color: diskColor,
-              label: 'Disk',
+              label: 'Disque',
               value: '${diskPct.toStringAsFixed(0)}%',
             ),
           ],
@@ -838,7 +838,7 @@ class DashdotStatsRow extends ConsumerWidget {
       children: [
         Expanded(
           child: _StatBox(
-            label: 'DOWN',
+            label: 'DESCENTE',
             value: downStr[0],
             unit: downStr[1],
             valueColor: Theme.of(context).colorScheme.primary,
@@ -847,7 +847,7 @@ class DashdotStatsRow extends ConsumerWidget {
         const SizedBox(width: Insets.sm),
         Expanded(
           child: _StatBox(
-            label: 'UP',
+            label: 'MONTÉE',
             value: upStr[0],
             unit: upStr[1],
             valueColor: Theme.of(context).colorScheme.tertiary,
@@ -856,7 +856,7 @@ class DashdotStatsRow extends ConsumerWidget {
         const SizedBox(width: Insets.sm),
         Expanded(
           child: _StatBox(
-            label: 'TEMP',
+            label: 'TEMP.',
             value: '${cpuTemp.toStringAsFixed(0)}°',
             unit: 'CPU',
             valueColor: Theme.of(context).colorScheme.onSurface,

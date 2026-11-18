@@ -48,7 +48,7 @@ class _RadarrParseTitleDialogState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Parse Release Title',
+                    'Analyser le titre de la release',
                     style: theme.textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -61,7 +61,7 @@ class _RadarrParseTitleDialogState
               ),
               const SizedBox(height: Insets.sm),
               Text(
-                'Paste a release name or torrent title below to see how Radarr parses movie title, year, quality, and matching library details.',
+                "Collez un nom de release ou un titre de torrent ci-dessous pour voir comment Radarr analyse le titre du film, l'année, la qualité et les correspondances de bibliothèque.",
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -71,7 +71,7 @@ class _RadarrParseTitleDialogState
                 controller: _controller,
                 maxLines: 3,
                 decoration: InputDecoration(
-                  hintText: 'e.g. Inception.2010.1080p.BluRay.x264-GRP',
+                  hintText: 'ex. Inception.2010.1080p.BluRay.x264-GRP',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -90,7 +90,7 @@ class _RadarrParseTitleDialogState
                         _query = '';
                       });
                     },
-                    child: const Text('Clear'),
+                    child: const Text('Effacer'),
                   ),
                   const SizedBox(width: Insets.sm),
                   ElevatedButton.icon(
@@ -100,7 +100,7 @@ class _RadarrParseTitleDialogState
                       });
                     },
                     icon: const Icon(Icons.search),
-                    label: const Text('Parse'),
+                    label: const Text('Analyser'),
                   ),
                 ],
               ),
@@ -111,14 +111,14 @@ class _RadarrParseTitleDialogState
                     data: (data) {
                       if (data == null) {
                         return const Center(
-                          child: Text('Failed to parse title.'),
+                          child: Text("Échec de l'analyse du titre."),
                         );
                       }
                       final parsedInfo =
                           data['parsedMovieInfo'] as Map<String, dynamic>?;
                       if (parsedInfo == null) {
                         return const Center(
-                          child: Text('Could not extract movie details.'),
+                          child: Text("Impossible d'extraire les détails du film."),
                         );
                       }
 
@@ -164,7 +164,7 @@ class _RadarrParseTitleDialogState
                             const SizedBox(height: Insets.sm),
                             _buildInfoRow(
                               theme,
-                              'Movie Title',
+                              'Titre du film',
                               movieTitle ?? 'N/A',
                             ),
                             _buildInfoRow(
@@ -201,7 +201,7 @@ class _RadarrParseTitleDialogState
                             _buildInfoRow(
                               theme,
                               'Matches Movie',
-                              matchingMovieTitle ?? 'No match in library',
+                              matchingMovieTitle ?? 'Aucune correspondance dans la bibliothèque',
                               valueColor: matchingMovieTitle != null
                                   ? theme.colorScheme.primary
                                   : theme.colorScheme.error,
@@ -218,7 +218,7 @@ class _RadarrParseTitleDialogState
                     ),
                     error: (e, _) => Center(
                       child: Text(
-                        'Error parsing title: $e',
+                        "Erreur lors de l'analyse du titre : $e",
                         style: TextStyle(color: theme.colorScheme.error),
                       ),
                     ),

@@ -71,10 +71,10 @@ class _JellyfinIdentifyScreenState
 
       final providerIds = <String, String>{};
       if (_imdbController.text.trim().isNotEmpty) {
-        providerIds['Imdb'] = _imdbController.text.trim();
+        providerIds['IMDb'] = _imdbController.text.trim();
       }
       if (_tmdbController.text.trim().isNotEmpty) {
-        providerIds['Tmdb'] = _tmdbController.text.trim();
+        providerIds['TMDb'] = _tmdbController.text.trim();
       }
 
       final info = JellyfinRemoteSearchInfo(
@@ -108,18 +108,18 @@ class _JellyfinIdentifyScreenState
     final replace = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Replace existing images?'),
+        title: const Text('Remplacer les images existantes ?'),
         content: const Text(
-          'Would you like to replace all existing images with the ones from the selected metadata provider?',
+          'Voulez-vous remplacer toutes les images existantes par celles du fournisseur de métadonnées sélectionné ?',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('No'),
+            child: const Text('Non'),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Yes'),
+            child: const Text('Oui'),
           ),
         ],
       ),
@@ -150,7 +150,7 @@ class _JellyfinIdentifyScreenState
       if (mounted) {
         Navigator.pop(context); // close loading
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to apply: $e')),
+          SnackBar(content: Text("Échec de l'application : $e")),
         );
       }
     }
@@ -159,7 +159,7 @@ class _JellyfinIdentifyScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Identify Item')),
+      appBar: AppBar(title: const Text("Identifier l'élément")),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -171,7 +171,7 @@ class _JellyfinIdentifyScreenState
                   TextField(
                     controller: _nameController,
                     decoration: const InputDecoration(
-                      labelText: 'Name',
+                      labelText: 'Nom',
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -180,7 +180,7 @@ class _JellyfinIdentifyScreenState
                     controller: _yearController,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
-                      labelText: 'Year',
+                      labelText: 'Année',
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -191,7 +191,7 @@ class _JellyfinIdentifyScreenState
                         child: TextField(
                           controller: _imdbController,
                           decoration: const InputDecoration(
-                            labelText: 'IMDb ID',
+                            labelText: 'ID IMDb',
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -201,7 +201,7 @@ class _JellyfinIdentifyScreenState
                         child: TextField(
                           controller: _tmdbController,
                           decoration: const InputDecoration(
-                            labelText: 'TMDB ID',
+                            labelText: 'ID TMDB',
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -217,7 +217,7 @@ class _JellyfinIdentifyScreenState
                             height: 24,
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
-                        : const Text('Search'),
+                        : const Text('Rechercher'),
                   ),
                   if (_error != null) ...[
                     const SizedBox(height: Insets.md),
@@ -248,7 +248,7 @@ class _JellyfinIdentifyScreenState
                                 const Icon(Icons.image),
                           )
                         : const Icon(Icons.movie),
-                    title: Text(res.name ?? 'Unknown'),
+                    title: Text(res.name ?? 'Inconnu'),
                     subtitle: Text(
                       '${res.productionYear ?? ''} • ${res.searchProviderName ?? ''}',
                     ),

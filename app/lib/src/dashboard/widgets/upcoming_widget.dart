@@ -77,7 +77,7 @@ class DashboardUpcomingWidget extends ConsumerWidget {
         },
       );
     } else if (upcoming.isEmpty) {
-      body = const DashboardIdleRow(text: 'Nothing airing in the next 7 days');
+      body = const DashboardIdleRow(text: "Rien à l'antenne dans les 7 prochains jours");
     } else {
       final List<Widget> rows = <Widget>[];
       DateTime? lastDay;
@@ -124,7 +124,7 @@ class DashboardUpcomingWidget extends ConsumerWidget {
         rows.add(Padding(
           padding: const EdgeInsets.only(top: Insets.sm),
           child:
-              DashboardIdleRow(text: '+${upcoming.length - top.length} more'),
+              DashboardIdleRow(text: '+${upcoming.length - top.length} de plus'),
         ));
       }
       body = Column(

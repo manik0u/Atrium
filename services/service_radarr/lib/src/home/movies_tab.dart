@@ -177,7 +177,7 @@ class _MoviesTabState extends ConsumerState<MoviesTab>
                     );
                   },
                   icon: const Icon(Icons.add),
-                  label: const Text('Add Movie'),
+                  label: const Text('Ajouter un film'),
                 ),
               ],
             )
@@ -246,7 +246,7 @@ class _MoviesTabState extends ConsumerState<MoviesTab>
                         : SearchBar(
                             focusNode: _searchFocusNode,
                             controller: _searchController,
-                            hintText: 'Search movies...',
+                            hintText: 'Rechercher des films…',
                             onTapOutside: (event) {
                               if (_searchFocusNode.hasFocus) {
                                 _searchFocusNode.unfocus();
@@ -292,7 +292,7 @@ class _MoviesTabState extends ConsumerState<MoviesTab>
                           if (selection.length < list.length)
                             IconButton(
                               icon: const Icon(Icons.select_all),
-                              tooltip: 'Select all',
+                              tooltip: 'Tout sélectionner',
                               onPressed: () {
                                 ref
                                     .read(
@@ -306,7 +306,7 @@ class _MoviesTabState extends ConsumerState<MoviesTab>
                           else
                             IconButton(
                               icon: const Icon(Icons.deselect),
-                              tooltip: 'Deselect all',
+                              tooltip: 'Tout désélectionner',
                               onPressed: () {
                                 ref
                                     .read(
@@ -350,9 +350,9 @@ class _MoviesTabState extends ConsumerState<MoviesTab>
                       hasScrollBody: false,
                       child: EmptyView(
                         icon: Icons.movie_outlined,
-                        title: 'No movies found',
+                        title: 'Aucun film trouvé',
                         message:
-                            'Try adjusting your search query or active filters.',
+                            "Essayez d'ajuster votre requête de recherche ou vos filtres actifs.",
                         action: query.isNotEmpty
                             ? FilledButton.tonalIcon(
                                 onPressed: () {
@@ -371,7 +371,7 @@ class _MoviesTabState extends ConsumerState<MoviesTab>
                                 },
                                 icon: const Icon(Icons.travel_explore),
                                 label: Text(
-                                  'Search online for "$query"',
+                                  'Rechercher en ligne « $query »',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -1000,7 +1000,7 @@ class _BulkActionsBar extends StatelessWidget {
               );
             },
             icon: const Icon(Icons.edit_outlined),
-            label: const Text('Edit'),
+            label: const Text('Modifier'),
           ),
           TextButton.icon(
             style: TextButton.styleFrom(
@@ -1016,7 +1016,7 @@ class _BulkActionsBar extends StatelessWidget {
               );
             },
             icon: const Icon(Icons.delete_outline),
-            label: const Text('Delete'),
+            label: const Text('Supprimer'),
           ),
         ],
       ),
@@ -1050,7 +1050,7 @@ class _BulkEditDialogState extends ConsumerState<_BulkEditDialog> {
     final foldersAsync = ref.watch(radarrRootFoldersProvider(widget.instance));
 
     return AlertDialog(
-      title: const Text('Bulk Edit Movies'),
+      title: const Text('Modification groupée des films'),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -1059,13 +1059,13 @@ class _BulkEditDialogState extends ConsumerState<_BulkEditDialog> {
             DropdownButtonFormField<bool?>(
               initialValue: _monitored,
               decoration: const InputDecoration(
-                labelText: 'Monitored',
+                labelText: 'Surveillé',
                 border: OutlineInputBorder(),
               ),
               items: const [
-                DropdownMenuItem(child: Text('Keep current')),
-                DropdownMenuItem(value: true, child: Text('Monitored')),
-                DropdownMenuItem(value: false, child: Text('Unmonitored')),
+                DropdownMenuItem(child: Text("Conserver l'actuel")),
+                DropdownMenuItem(value: true, child: Text('Surveillé')),
+                DropdownMenuItem(value: false, child: Text('Non surveillé')),
               ],
               onChanged: (val) => setState(() => _monitored = val),
             ),
@@ -1074,11 +1074,11 @@ class _BulkEditDialogState extends ConsumerState<_BulkEditDialog> {
               data: (profiles) => DropdownButtonFormField<int?>(
                 initialValue: _qualityProfileId,
                 decoration: const InputDecoration(
-                  labelText: 'Quality Profile',
+                  labelText: 'Profil de qualité',
                   border: OutlineInputBorder(),
                 ),
                 items: [
-                  const DropdownMenuItem(child: Text('Keep current')),
+                  const DropdownMenuItem(child: Text("Conserver l'actuel")),
                   ...profiles.map(
                     (p) => DropdownMenuItem(
                       value: p['id'] as int,
@@ -1092,18 +1092,18 @@ class _BulkEditDialogState extends ConsumerState<_BulkEditDialog> {
                 height: 50,
                 child: Center(child: ExpressiveProgressIndicator()),
               ),
-              error: (_, __) => const Text('Error loading profiles'),
+              error: (_, __) => const Text('Erreur lors du chargement des profils'),
             ),
             const SizedBox(height: Insets.md),
             foldersAsync.when(
               data: (folders) => DropdownButtonFormField<String?>(
                 initialValue: _rootFolderPath,
                 decoration: const InputDecoration(
-                  labelText: 'Root Folder',
+                  labelText: 'Dossier racine',
                   border: OutlineInputBorder(),
                 ),
                 items: [
-                  const DropdownMenuItem(child: Text('Keep current')),
+                  const DropdownMenuItem(child: Text("Conserver l'actuel")),
                   ...folders.map(
                     (f) => DropdownMenuItem(
                       value: f['path'] as String,
@@ -1117,15 +1117,15 @@ class _BulkEditDialogState extends ConsumerState<_BulkEditDialog> {
                 height: 50,
                 child: Center(child: ExpressiveProgressIndicator()),
               ),
-              error: (_, __) => const Text('Error loading folders'),
+              error: (_, __) => const Text('Erreur lors du chargement des dossiers'),
             ),
             if (_rootFolderPath != null) ...[
               const SizedBox(height: Insets.sm),
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Move files to the new folder'),
+                title: const Text('Déplacer les fichiers vers le nouveau dossier'),
                 subtitle: const Text(
-                  'Off leaves the files behind in the old folder',
+                  "Désactivé laisse les fichiers dans l'ancien dossier",
                 ),
                 value: _moveFiles,
                 onChanged: (val) => setState(() => _moveFiles = val),
@@ -1137,7 +1137,7 @@ class _BulkEditDialogState extends ConsumerState<_BulkEditDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         ElevatedButton(
           onPressed: () async {
@@ -1179,7 +1179,7 @@ class _BulkEditDialogState extends ConsumerState<_BulkEditDialog> {
             if (!context.mounted) return;
             if (error != null) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Error updating movies: $error')),
+                SnackBar(content: Text('Erreur lors de la mise à jour des films : $error')),
               );
               return;
             }
@@ -1190,10 +1190,10 @@ class _BulkEditDialogState extends ConsumerState<_BulkEditDialog> {
             Navigator.pop(context); // pop dialog
 
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Successfully updated movies')),
+              const SnackBar(content: Text('Films mis à jour avec succès')),
             );
           },
-          child: const Text('Save'),
+          child: const Text('Enregistrer'),
         ),
       ],
     );
@@ -1226,7 +1226,7 @@ class _BulkDeleteDialogState extends ConsumerState<_BulkDeleteDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Delete ${widget.selectedIds.length} Movies?'),
+      title: Text('Supprimer ${widget.selectedIds.length} films ?'),
       content: RadioGroup<_DeleteMode>(
         groupValue: _mode,
         onChanged: (_DeleteMode? val) => setState(() {
@@ -1237,8 +1237,8 @@ class _BulkDeleteDialogState extends ConsumerState<_BulkDeleteDialog> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const RadioListTile<_DeleteMode>(
-              title: Text('Delete movie entry'),
-              subtitle: Text('Remove from Radarr library'),
+              title: Text('Supprimer la fiche du film'),
+              subtitle: Text('Retirer de la bibliothèque Radarr'),
               value: _DeleteMode.deleteEntry,
               contentPadding: EdgeInsets.zero,
             ),
@@ -1246,16 +1246,16 @@ class _BulkDeleteDialogState extends ConsumerState<_BulkDeleteDialog> {
               Padding(
                 padding: const EdgeInsets.only(left: Insets.lg),
                 child: CheckboxListTile(
-                  title: const Text('Also delete files from disk'),
+                  title: const Text('Supprimer aussi les fichiers du disque'),
                   value: _deleteFiles,
                   contentPadding: EdgeInsets.zero,
                   onChanged: (val) => setState(() => _deleteFiles = val ?? false),
                 ),
               ),
             const RadioListTile<_DeleteMode>(
-              title: Text('Delete files only'),
+              title: Text('Supprimer uniquement les fichiers'),
               subtitle:
-                  Text('Keep entry in Radarr library to free disk space'),
+                  Text("Conserver la fiche dans la bibliothèque Radarr pour libérer de l'espace disque"),
               value: _DeleteMode.deleteFilesOnly,
               contentPadding: EdgeInsets.zero,
             ),
@@ -1263,8 +1263,8 @@ class _BulkDeleteDialogState extends ConsumerState<_BulkDeleteDialog> {
               Padding(
                 padding: const EdgeInsets.only(left: Insets.lg),
                 child: CheckboxListTile(
-                  title: const Text('Unmonitor movie'),
-                  subtitle: const Text('Prevent automatic re-downloads'),
+                  title: const Text('Ne plus surveiller le film'),
+                  subtitle: const Text('Empêcher les re-téléchargements automatiques'),
                   value: _unmonitor,
                   contentPadding: EdgeInsets.zero,
                   onChanged: (val) => setState(() => _unmonitor = val ?? false),
@@ -1276,7 +1276,7 @@ class _BulkDeleteDialogState extends ConsumerState<_BulkDeleteDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -1345,7 +1345,7 @@ class _BulkDeleteDialogState extends ConsumerState<_BulkDeleteDialog> {
             if (!context.mounted) return;
             if (error != null) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Error: $error')),
+                SnackBar(content: Text('Erreur : $error')),
               );
               return;
             }
@@ -1360,8 +1360,8 @@ class _BulkDeleteDialogState extends ConsumerState<_BulkDeleteDialog> {
               msg = 'Successfully deleted ${widget.selectedIds.length} movie(s)';
             } else if (failedCount == 0) {
               msg = _unmonitor
-                  ? 'Successfully deleted files and unmonitored $successCount movie(s)'
-                  : 'Successfully deleted files for $successCount movie(s)';
+                  ? 'Fichiers supprimés et $successCount film(s) non surveillé(s)'
+                  : 'Fichiers supprimés pour $successCount film(s)';
             } else {
               msg = 'Deleted files for $successCount movie(s). Failed for $failedCount movie(s)';
             }
@@ -1370,7 +1370,7 @@ class _BulkDeleteDialogState extends ConsumerState<_BulkDeleteDialog> {
               SnackBar(content: Text(msg)),
             );
           },
-          child: const Text('Delete'),
+          child: const Text('Supprimer'),
         ),
       ],
     );
@@ -1414,7 +1414,7 @@ class _SortFilterBottomSheet extends ConsumerWidget {
                 runSpacing: 8,
                 children: [
                   ChoiceChip(
-                    label: const Text('All Status'),
+                    label: const Text('Tous les statuts'),
                     selected: activeCustomFilter == null &&
                         filter == RadarrMovieFilter.all,
                     onSelected: (val) {
@@ -1429,7 +1429,7 @@ class _SortFilterBottomSheet extends ConsumerWidget {
                     },
                   ),
                   ChoiceChip(
-                    label: const Text('Downloaded Only'),
+                    label: const Text('Téléchargés uniquement'),
                     selected: activeCustomFilter == null &&
                         filter == RadarrMovieFilter.downloaded,
                     onSelected: (val) {
@@ -1444,7 +1444,7 @@ class _SortFilterBottomSheet extends ConsumerWidget {
                     },
                   ),
                   ChoiceChip(
-                    label: const Text('Missing Only'),
+                    label: const Text('Manquants uniquement'),
                     selected: activeCustomFilter == null &&
                         filter == RadarrMovieFilter.missing,
                     onSelected: (val) {
@@ -1459,7 +1459,7 @@ class _SortFilterBottomSheet extends ConsumerWidget {
                     },
                   ),
                   ChoiceChip(
-                    label: const Text('Monitored Only'),
+                    label: const Text('Surveillés uniquement'),
                     selected: activeCustomFilter == null &&
                         filter == RadarrMovieFilter.monitoredOnly,
                     onSelected: (val) {
@@ -1474,7 +1474,7 @@ class _SortFilterBottomSheet extends ConsumerWidget {
                     },
                   ),
                   ChoiceChip(
-                    label: const Text('Unmonitored Only'),
+                    label: const Text('Non surveillés uniquement'),
                     selected: activeCustomFilter == null &&
                         filter == RadarrMovieFilter.unmonitoredOnly,
                     onSelected: (val) {
@@ -1536,7 +1536,7 @@ class _SortFilterBottomSheet extends ConsumerWidget {
                 runSpacing: 8,
                 children: [
                   ChoiceChip(
-                    label: const Text('Title'),
+                    label: const Text('Titre'),
                     selected: sortOption == RadarrMovieSortField.title,
                     onSelected: (val) {
                       if (val) {
@@ -1564,7 +1564,7 @@ class _SortFilterBottomSheet extends ConsumerWidget {
                     },
                   ),
                   ChoiceChip(
-                    label: const Text('Year'),
+                    label: const Text('Année'),
                     selected: sortOption == RadarrMovieSortField.year,
                     onSelected: (val) {
                       if (val) {
@@ -1592,7 +1592,7 @@ class _SortFilterBottomSheet extends ConsumerWidget {
                     },
                   ),
                   ChoiceChip(
-                    label: const Text('Date Added'),
+                    label: const Text("Date d'ajout"),
                     selected: sortOption == RadarrMovieSortField.added,
                     onSelected: (val) {
                       if (val) {
@@ -1620,7 +1620,7 @@ class _SortFilterBottomSheet extends ConsumerWidget {
                     },
                   ),
                   ChoiceChip(
-                    label: const Text('Size on Disk'),
+                    label: const Text('Taille sur le disque'),
                     selected: sortOption == RadarrMovieSortField.sizeOnDisk,
                     onSelected: (val) {
                       if (val) {
@@ -1648,7 +1648,7 @@ class _SortFilterBottomSheet extends ConsumerWidget {
                     },
                   ),
                   ChoiceChip(
-                    label: const Text('Monitored Status'),
+                    label: const Text('Statut de surveillance'),
                     selected:
                         sortOption == RadarrMovieSortField.monitoredStatus,
                     onSelected: (val) {
@@ -1684,12 +1684,12 @@ class _SortFilterBottomSheet extends ConsumerWidget {
                 segments: const <ButtonSegment<bool>>[
                   ButtonSegment<bool>(
                     value: true,
-                    label: Text('Ascending'),
+                    label: Text('Croissant'),
                     icon: Icon(Icons.arrow_upward),
                   ),
                   ButtonSegment<bool>(
                     value: false,
-                    label: Text('Descending'),
+                    label: Text('Décroissant'),
                     icon: Icon(Icons.arrow_downward),
                   ),
                 ],

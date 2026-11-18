@@ -63,7 +63,7 @@ class _MediaTabState extends ConsumerState<MediaTab> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.menu),
-          tooltip: 'Open menu',
+          tooltip: 'Ouvrir le menu',
           onPressed: () => Scaffold.of(context).openDrawer(),
         ),
         title: Column(
@@ -104,7 +104,7 @@ class _MediaTabState extends ConsumerState<MediaTab> {
           processingText: 'Loading more media...',
           processedText: 'Loaded',
           failedText: 'Failed to load',
-          noMoreText: 'All media loaded',
+          noMoreText: 'Tous les médias sont chargés',
         ),
         onRefresh: _refreshAll,
         onLoad: () async {

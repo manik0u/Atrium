@@ -111,14 +111,14 @@ class OmbiSearchService {
         return ombiTitleStateFromMovie(
           requireData(
             await _rawSearchApi.getSearchMovieByMovieDbId(movieDbId: id),
-            'Loading the movie',
+            'Chargement du film',
           ),
         );
       case OmbiMediaKind.tv:
         return ombiTitleStateFromTv(
           requireData(
             await _rawSearchApi.getSearchTvMoviedbByMoviedbid(moviedbid: id),
-            'Loading the show',
+            'Chargement de la série',
           ),
         );
       case OmbiMediaKind.music:

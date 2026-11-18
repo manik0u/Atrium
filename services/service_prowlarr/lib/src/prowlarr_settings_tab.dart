@@ -24,39 +24,39 @@ class ProwlarrSettingsTab extends StatelessWidget {
         const SizedBox(height: Insets.sm),
         _SettingsTile(
           icon: Icons.apps_outlined,
-          title: 'Apps',
-          subtitle: 'Sonarr, Radarr, and other sync targets',
+          title: 'Applications',
+          subtitle: 'Sonarr, Radarr et autres cibles de synchro',
           onTap: () => _push(context, ProwlarrAppsScreen(instance: instance)),
         ),
         _SettingsTile(
           icon: Icons.download_outlined,
-          title: 'Download Clients',
-          subtitle: 'qBittorrent, SABnzbd, Transmission, ...',
+          title: 'Clients de téléchargement',
+          subtitle: 'qBittorrent, SABnzbd, Transmission, …',
           onTap: () => _pushProvider(context, _downloadClientConfig),
         ),
         _SettingsTile(
           icon: Icons.notifications_outlined,
           title: 'Notifications',
-          subtitle: 'Discord, Telegram, email, and more',
+          subtitle: 'Discord, Telegram, e-mail, et plus',
           onTap: () => _pushProvider(context, _notificationConfig),
         ),
         _SettingsTile(
           icon: Icons.vpn_lock_outlined,
-          title: 'Indexer Proxies',
+          title: "Proxys d'indexeurs",
           subtitle: 'FlareSolverr, HTTP, SOCKS',
           onTap: () => _pushProvider(context, _indexerProxyConfig),
         ),
         _SettingsTile(
           icon: Icons.tune_outlined,
-          title: 'Sync Profiles',
-          subtitle: 'RSS / search modes and minimum seeders',
+          title: 'Profils de synchro',
+          subtitle: 'Modes RSS/recherche et seeders minimum',
           onTap: () =>
               _push(context, ProwlarrSyncProfilesScreen(instance: instance)),
         ),
         _SettingsTile(
           icon: Icons.label_outline,
-          title: 'Tags',
-          subtitle: 'Organise indexers, apps, and clients',
+          title: 'Balises',
+          subtitle: 'Organisez indexeurs, applications et clients',
           onTap: () => _push(context, ProwlarrTagsScreen(instance: instance)),
         ),
       ],
@@ -152,7 +152,7 @@ class _SettingsTile extends StatelessWidget {
 
 final ProwlarrProviderConfig _downloadClientConfig = ProwlarrProviderConfig(
   endpoint: 'downloadclient',
-  title: 'Download Clients',
+  title: 'Clients de téléchargement',
   resourceLabel: 'download client',
   icon: Icons.download_outlined,
   topLevel: (
@@ -162,7 +162,7 @@ final ProwlarrProviderConfig _downloadClientConfig = ProwlarrProviderConfig(
   ) =>
       <Widget>[
     ProwlarrSwitchTile(
-      label: 'Enabled',
+      label: 'Activé',
       value: raw['enable'] != false,
       onChanged: (bool v) {
         raw['enable'] = v;
@@ -170,8 +170,8 @@ final ProwlarrProviderConfig _downloadClientConfig = ProwlarrProviderConfig(
       },
     ),
     ProwlarrIntField(
-      label: 'Priority',
-      helperText: 'Lower is higher priority (1-50)',
+      label: 'Priorité',
+      helperText: 'Plus la valeur est basse, plus la priorité est haute (1-50)',
       value: (raw['priority'] as num?)?.toInt() ?? 1,
       onChanged: (int v) => raw['priority'] = v,
     ),
@@ -213,7 +213,7 @@ final ProwlarrProviderConfig _notificationConfig = ProwlarrProviderConfig(
         'On Application Update',
       ),
       ProwlarrSwitchTile(
-        label: 'Include Health Warnings',
+        label: 'Inclure les avertissements de santé',
         value: raw['includeHealthWarnings'] == true,
         onChanged: (bool v) {
           raw['includeHealthWarnings'] = v;
@@ -226,7 +226,7 @@ final ProwlarrProviderConfig _notificationConfig = ProwlarrProviderConfig(
 
 final ProwlarrProviderConfig _indexerProxyConfig = ProwlarrProviderConfig(
   endpoint: 'indexerproxy',
-  title: 'Indexer Proxies',
+  title: "Proxys d'indexeurs",
   resourceLabel: 'indexer proxy',
   icon: Icons.vpn_lock_outlined,
   topLevel: (
@@ -237,7 +237,7 @@ final ProwlarrProviderConfig _indexerProxyConfig = ProwlarrProviderConfig(
       <Widget>[
     if (raw['supportsOnHealthIssue'] == true)
       ProwlarrSwitchTile(
-        label: 'On Health Issue',
+        label: 'En cas de problème de santé',
         value: raw['onHealthIssue'] == true,
         onChanged: (bool v) {
           raw['onHealthIssue'] = v;
@@ -245,7 +245,7 @@ final ProwlarrProviderConfig _indexerProxyConfig = ProwlarrProviderConfig(
         },
       ),
     ProwlarrSwitchTile(
-      label: 'Include Health Warnings',
+      label: 'Inclure les avertissements de santé',
       value: raw['includeHealthWarnings'] == true,
       onChanged: (bool v) {
         raw['includeHealthWarnings'] = v;

@@ -164,7 +164,7 @@ class _AdguardHomeHomeTabState extends ConsumerState<AdguardHomeHomeTab> {
         ),
         const SizedBox(height: Insets.sm),
         AdguardHomeChartCard(
-          label: 'DNS queries',
+          label: 'Requêtes DNS',
           value: formatAdguardHomeCount(stats.queries),
           // The average belongs with the queries it is an average of.
           detail: 'avg '
@@ -174,7 +174,7 @@ class _AdguardHomeHomeTabState extends ConsumerState<AdguardHomeHomeTab> {
         ),
         const SizedBox(height: Insets.sm),
         AdguardHomeChartCard(
-          label: 'Blocked by filters',
+          label: 'Bloquées par les filtres',
           value: formatAdguardHomeCount(stats.blockedByFilters),
           detail: formatAdguardHomePercent(stats.blockedPercent),
           color: cs.error,
@@ -183,13 +183,13 @@ class _AdguardHomeHomeTabState extends ConsumerState<AdguardHomeHomeTab> {
         const SizedBox(height: Insets.sm),
         _TileRow(
           AdguardHomeStatTile(
-            label: 'Blocked malware and phishing',
+            label: 'Malwares et phishing bloqués',
             value: formatAdguardHomeCount(stats.blockedThreats),
             color: cs.tertiary,
             series: stats.threatsSeries,
           ),
           AdguardHomeStatTile(
-            label: 'Blocked adult websites',
+            label: 'Sites pour adultes bloqués',
             value: formatAdguardHomeCount(stats.blockedAdult),
             color: cs.secondary,
             series: stats.adultSeries,
@@ -198,14 +198,14 @@ class _AdguardHomeHomeTabState extends ConsumerState<AdguardHomeHomeTab> {
         const SizedBox(height: Insets.sm),
         _TileRow(
           AdguardHomeStatTile(
-            label: 'Enforced safe search',
+            label: 'Recherche sécurisée appliquée',
             value: formatAdguardHomeCount(stats.safeSearchEnforced),
             color: cs.primary,
           ),
           // Not a figure of the period like the others: how much the
           // blocklists that are switched on hold right now.
           AdguardHomeStatTile(
-            label: 'Rules on blocklists',
+            label: 'Règles sur les listes de blocage',
             value: filtering == null
                 ? '-'
                 : formatAdguardHomeCount(filtering.rulesOnBlocklists),

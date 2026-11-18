@@ -24,17 +24,17 @@ ConnectionTestResult connectionResultFromHealth(Health health) {
     case Health.warning:
       return const ConnectionTestResult(
         ConnectionOutcome.authFailed,
-        'Reachable, but the check did not pass',
+        'Joignable, mais la vérification a échoué',
       );
     case Health.error:
       return const ConnectionTestResult(
         ConnectionOutcome.unreachable,
-        'Could not reach the server',
+        'Impossible de joindre le serveur',
       );
     case Health.unknown:
       return const ConnectionTestResult(
         ConnectionOutcome.unreachable,
-        'Could not determine the connection',
+        'Impossible de déterminer la connexion',
       );
   }
 }
@@ -51,7 +51,7 @@ ConnectionTestResult connectionResultFromError(Object error) {
   if (unwrapped is NetworkAuthException) {
     return const ConnectionTestResult(
       ConnectionOutcome.authFailed,
-      'Reachable, but the credentials were rejected',
+      'Joignable, mais les identifiants ont été rejetés',
     );
   }
   final String errStr = unwrapped.toString().toLowerCase();
@@ -64,11 +64,11 @@ ConnectionTestResult connectionResultFromError(Object error) {
   if (errStr.contains('401') || errStr.contains('403') || errStr.contains('unauthorized')) {
     return const ConnectionTestResult(
       ConnectionOutcome.authFailed,
-      'Reachable, but the credentials were rejected',
+      'Joignable, mais les identifiants ont été rejetés',
     );
   }
   return const ConnectionTestResult(
     ConnectionOutcome.unreachable,
-    'Could not reach the server',
+    'Impossible de joindre le serveur',
   );
 }

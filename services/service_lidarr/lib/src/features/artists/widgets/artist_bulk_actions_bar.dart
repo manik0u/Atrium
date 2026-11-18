@@ -39,7 +39,7 @@ class ArtistBulkActionsBar extends ConsumerWidget {
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             onPressed: () => Navigator.of(ctx).pop(true),
@@ -62,7 +62,7 @@ class ArtistBulkActionsBar extends ConsumerWidget {
 
       if (!resp.isSuccess) {
         throw Exception(
-          resp.error?.message ?? 'Failed to execute $commandName',
+          resp.error?.message ?? "Échec de l'exécution de $commandName",
         );
       }
 
@@ -72,7 +72,7 @@ class ArtistBulkActionsBar extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('$actionTitle command queued for selected artists.'),
+            content: Text("Commande $actionTitle mise en file d'attente pour les artistes sélectionnés."),
           ),
         );
       }
@@ -80,7 +80,7 @@ class ArtistBulkActionsBar extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed: $e'),
+            content: Text('Échec : $e'),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -123,7 +123,7 @@ class ArtistBulkActionsBar extends ConsumerWidget {
                   );
                 },
                 icon: const Icon(Icons.edit_outlined, size: 20),
-                label: const Text('Edit'),
+                label: const Text('Modifier'),
               ),
               TextButton.icon(
                 style: TextButton.styleFrom(
@@ -143,10 +143,10 @@ class ArtistBulkActionsBar extends ConsumerWidget {
                   );
                 },
                 icon: const Icon(Icons.delete_outline, size: 20),
-                label: const Text('Delete'),
+                label: const Text('Supprimer'),
               ),
               Tooltip(
-                message: 'More bulk actions',
+                message: "Plus d'actions groupées",
                 child: TextButton.icon(
                   style: TextButton.styleFrom(
                     visualDensity: VisualDensity.compact,
@@ -155,7 +155,7 @@ class ArtistBulkActionsBar extends ConsumerWidget {
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                   ),
                   icon: const Icon(Icons.more_horiz, size: 20),
-                  label: const Text('More'),
+                  label: const Text('Plus'),
                   onPressed: () {
                     showModalBottomSheet<void>(
                       context: context,
@@ -168,7 +168,7 @@ class ArtistBulkActionsBar extends ConsumerWidget {
                             children: [
                               ListTile(
                                 leading: const Icon(Icons.grid_on_outlined),
-                                title: const Text('Album Studio'),
+                                title: const Text("Studio d'albums"),
                                 subtitle: Text(
                                   'Configure album monitoring for ${selectedIds.length} selected ${selectedIds.length == 1 ? 'artist' : 'artists'}',
                                 ),
@@ -186,8 +186,8 @@ class ArtistBulkActionsBar extends ConsumerWidget {
                               ),
                               ListTile(
                                 leading: const Icon(Icons.label_outlined),
-                                title: const Text('Edit Tags'),
-                                subtitle: const Text('Apply or modify tags'),
+                                title: const Text('Modifier les balises'),
+                                subtitle: const Text('Appliquer ou modifier des balises'),
                                 onTap: () {
                                   Navigator.pop(ctx);
                                   showDialog<void>(
@@ -204,8 +204,8 @@ class ArtistBulkActionsBar extends ConsumerWidget {
                               ListTile(
                                 leading:
                                     const Icon(Icons.drive_file_rename_outline),
-                                title: const Text('Rename Files'),
-                                subtitle: const Text('Rename tracks on disk'),
+                                title: const Text('Renommer les fichiers'),
+                                subtitle: const Text('Renommer les pistes sur le disque'),
                                 onTap: () {
                                   Navigator.pop(ctx);
                                   _confirmAndExecuteCommand(
@@ -220,7 +220,7 @@ class ArtistBulkActionsBar extends ConsumerWidget {
                               ),
                               ListTile(
                                 leading: const Icon(Icons.sell_outlined),
-                                title: const Text('Write Audio Tags'),
+                                title: const Text('Écrire les balises audio'),
                                 subtitle: const Text(
                                   'Sync metadata to audio tags on disk',
                                 ),

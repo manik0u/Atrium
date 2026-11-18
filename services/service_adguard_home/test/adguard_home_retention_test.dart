@@ -6,7 +6,7 @@ import 'support/adguard_home_test_instance.dart';
 import 'support/pump.dart';
 
 void main() {
-  final Finder save = find.widgetWithText(FilledButton, 'Save');
+  final Finder save = find.widgetWithText(FilledButton, 'Enregistrer');
   final Finder hours = find.byKey(const Key('adguard-retention-hours'));
   final Finder ignored = find.byKey(const Key('adguard-retention-ignored'));
 
@@ -59,16 +59,16 @@ void main() {
       (WidgetTester tester) async {
     await open(tester, AdguardHomeRetentionKind.queryLog);
 
-    expect(find.text('Query log'), findsOneWidget);
+    expect(find.text('Journal des requêtes'), findsOneWidget);
     expect(
       tester
           .widget<SwitchListTile>(
-            find.widgetWithText(SwitchListTile, 'Keep a query log'),
+            find.widgetWithText(SwitchListTile, 'Conserver un journal des requêtes'),
           )
           .value,
       isTrue,
     );
-    expect(find.text('Anonymize client IP'), findsOneWidget);
+    expect(find.text("Anonymiser l'IP du client"), findsOneWidget);
     expect(picked(tester, '90 days'), isTrue);
     expect(find.text('6 hours'), findsOneWidget);
     expect(tester.widget<FilledButton>(save).onPressed, isNull);
@@ -78,10 +78,10 @@ void main() {
       (WidgetTester tester) async {
     await open(tester, AdguardHomeRetentionKind.statistics);
 
-    expect(find.text('Anonymize client IP'), findsNothing);
+    expect(find.text("Anonymiser l'IP du client"), findsNothing);
     expect(find.text('6 hours'), findsNothing);
     expect(picked(tester, '24 hours'), isTrue);
-    expect(find.text('Reset statistics'), findsOneWidget);
+    expect(find.text('Réinitialiser les statistiques'), findsOneWidget);
   });
 
   testWidgets('a shorter retention asks first, then saves and closes',
@@ -93,11 +93,11 @@ void main() {
     await tester.tap(save);
     await tester.pumpAndSettle();
 
-    expect(find.text('Keep the log for less time?'), findsOneWidget);
+    expect(find.text('Conserver le journal moins longtemps ?'), findsOneWidget);
     expect(find.textContaining('older than 7 days'), findsOneWidget);
     expect(pumped.actions.calls, isEmpty);
 
-    await tester.tap(find.widgetWithText(FilledButton, 'Save').last);
+    await tester.tap(find.widgetWithText(FilledButton, 'Enregistrer').last);
     await tester.pumpAndSettle();
 
     expect(pumped.actions.calls, <String>['querylog settings']);
@@ -117,7 +117,7 @@ void main() {
     await tester.pump();
     await tester.tap(save);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Cancel'));
+    await tester.tap(find.text('Annuler'));
     await tester.pumpAndSettle();
 
     expect(pumped.actions.calls, isEmpty);
@@ -143,7 +143,7 @@ void main() {
     final Pumped pumped =
         await open(tester, AdguardHomeRetentionKind.statistics);
 
-    await tester.tap(find.text('Custom'));
+    await tester.tap(find.text('Personnalisé'));
     await tester.pump();
     expect(tester.widget<TextField>(hours).controller!.text, '24');
 
@@ -176,7 +176,7 @@ void main() {
       ),
     );
 
-    expect(picked(tester, 'Custom'), isTrue);
+    expect(picked(tester, 'Personnalisé'), isTrue);
     expect(tester.widget<TextField>(hours).controller!.text, '5');
   });
 
@@ -184,11 +184,11 @@ void main() {
       (WidgetTester tester) async {
     final Pumped pumped = await open(tester, AdguardHomeRetentionKind.queryLog);
 
-    await tester.tap(find.text('Leave out these domains'));
+    await tester.tap(find.text('Exclure ces domaines'));
     await tester.pump();
     await tester.enterText(ignored, 'a.example\n\n *.b.example \n');
     await tester.pump();
-    await tester.tap(find.text('Anonymize client IP'));
+    await tester.tap(find.text("Anonymiser l'IP du client"));
     await tester.pump();
     await tester.tap(save);
     await tester.pumpAndSettle();
@@ -203,13 +203,13 @@ void main() {
   testWidgets('leaving with a change asks first', (WidgetTester tester) async {
     await open(tester, AdguardHomeRetentionKind.queryLog);
 
-    await tester.tap(find.text('Keep a query log'));
+    await tester.tap(find.text('Conserver un journal des requêtes'));
     await tester.pump();
     await tester.pageBack();
     await tester.pumpAndSettle();
 
-    expect(find.text('Discard changes?'), findsOneWidget);
-    await tester.tap(find.text('Discard'));
+    expect(find.text('Ignorer les modifications ?'), findsOneWidget);
+    await tester.tap(find.text('Ignorer'));
     await tester.pumpAndSettle();
     expect(find.byType(AdguardHomeRetentionScreen), findsNothing);
   });
@@ -220,11 +220,11 @@ void main() {
         await open(tester, AdguardHomeRetentionKind.statistics);
     pumped.actions.writeFailure = const AdguardHomeSignInRefused();
 
-    await tester.tap(find.text('Keep statistics'));
+    await tester.tap(find.text('Conserver les statistiques'));
     await tester.pump();
     await tester.tap(save);
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(FilledButton, 'Try again'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Réessayer'));
     await tester.pumpAndSettle();
 
     expect(
@@ -243,12 +243,12 @@ void main() {
     await tester.pump();
     await tester.tap(save);
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(FilledButton, 'Save').last);
+    await tester.tap(find.widgetWithText(FilledButton, 'Enregistrer').last);
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(FilledButton, 'Try again'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Réessayer'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Keep the log for less time?'), findsNothing);
+    expect(find.text('Conserver le journal moins longtemps ?'), findsNothing);
     expect(
       pumped.actions.calls,
       <String>['querylog settings', 'retry', 'querylog settings'],
@@ -264,10 +264,10 @@ void main() {
       stats: const AdguardHomeRetention(interval: odd),
     );
 
-    expect(picked(tester, 'Custom'), isTrue);
+    expect(picked(tester, 'Personnalisé'), isTrue);
     expect(tester.widget<FilledButton>(save).onPressed, isNull);
 
-    await tester.tap(find.text('Keep statistics'));
+    await tester.tap(find.text('Conserver les statistiques'));
     await tester.pump();
     await tester.tap(save);
     await tester.pumpAndSettle();
@@ -289,10 +289,10 @@ void main() {
       }),
     );
 
-    expect(find.text('Leave out these domains'), findsNothing);
+    expect(find.text('Exclure ces domaines'), findsNothing);
     expect(
       find.text(
-        'Queries matching these rules are not written to the query log',
+        'Les requêtes correspondant à ces règles ne sont pas écrites dans le journal',
       ),
       findsOneWidget,
     );
@@ -302,15 +302,15 @@ void main() {
       (WidgetTester tester) async {
     final Pumped pumped = await open(tester, AdguardHomeRetentionKind.queryLog);
 
-    await tester.tap(find.text('Clear query log'));
+    await tester.tap(find.text('Effacer le journal des requêtes'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Cancel'));
+    await tester.tap(find.text('Annuler'));
     await tester.pumpAndSettle();
     expect(pumped.actions.calls, isEmpty);
 
-    await tester.tap(find.text('Clear query log'));
+    await tester.tap(find.text('Effacer le journal des requêtes'));
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(FilledButton, 'Clear'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Effacer'));
     await tester.pumpAndSettle();
 
     expect(pumped.actions.calls, <String>['clear log']);
@@ -323,19 +323,19 @@ void main() {
         await open(tester, AdguardHomeRetentionKind.statistics);
     pumped.actions.writeFailure = const AdguardHomeSignInRefused();
 
-    await tester.tap(find.text('Reset statistics'));
+    await tester.tap(find.text('Réinitialiser les statistiques'));
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(FilledButton, 'Reset'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Réinitialiser'));
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(SnackBarAction, 'Try again'));
+    await tester.tap(find.widgetWithText(SnackBarAction, 'Réessayer'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Reset statistics?'), findsNothing);
+    expect(find.text('Réinitialiser les statistiques ?'), findsNothing);
     expect(
       pumped.actions.calls,
       <String>['reset stats', 'retry', 'reset stats'],
     );
-    expect(find.text('Statistics reset'), findsOneWidget);
+    expect(find.text('Statistiques réinitialisées'), findsOneWidget);
   });
 
   testWidgets('a clear of the log refused for the sign-in offers Try again',
@@ -343,11 +343,11 @@ void main() {
     final Pumped pumped = await open(tester, AdguardHomeRetentionKind.queryLog);
     pumped.actions.writeFailure = const AdguardHomeSignInRefused();
 
-    await tester.tap(find.text('Clear query log'));
+    await tester.tap(find.text('Effacer le journal des requêtes'));
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(FilledButton, 'Clear'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Effacer'));
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(SnackBarAction, 'Try again'));
+    await tester.tap(find.widgetWithText(SnackBarAction, 'Réessayer'));
     await tester.pumpAndSettle();
 
     expect(
@@ -361,19 +361,19 @@ void main() {
     final Pumped pumped =
         await open(tester, AdguardHomeRetentionKind.statistics);
 
-    await tester.tap(find.text('Reset statistics'));
+    await tester.tap(find.text('Réinitialiser les statistiques'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Cancel'));
+    await tester.tap(find.text('Annuler'));
     await tester.pumpAndSettle();
     expect(pumped.actions.calls, isEmpty);
 
-    await tester.tap(find.text('Reset statistics'));
+    await tester.tap(find.text('Réinitialiser les statistiques'));
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(FilledButton, 'Reset'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Réinitialiser'));
     await tester.pumpAndSettle();
 
     expect(pumped.actions.calls, <String>['reset stats']);
-    expect(find.text('Statistics reset'), findsOneWidget);
+    expect(find.text('Statistiques réinitialisées'), findsOneWidget);
   });
 
   for (final double width in <double>[320, 411]) {
@@ -386,7 +386,7 @@ void main() {
           size: Size(width, 2400),
           textScale: scale,
         );
-        await tester.tap(find.text('Custom'));
+        await tester.tap(find.text('Personnalisé'));
         await tester.pump();
 
         expect(tester.takeException(), isNull);

@@ -87,14 +87,14 @@ class _UiSettingsScreenState extends ConsumerState<UiSettingsScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('UI configuration settings saved!')),
+          const SnackBar(content: Text("Paramètres de configuration de l'interface enregistrés !")),
         );
         Navigator.pop(context);
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to save UI configuration: $e')),
+          SnackBar(content: Text("Échec de l'enregistrement de la configuration de l'interface : $e")),
         );
       }
     } finally {
@@ -109,7 +109,7 @@ class _UiSettingsScreenState extends ConsumerState<UiSettingsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('UI Settings'),
+        title: const Text("Paramètres d'interface"),
         actions: [
           if (_saving)
             const Padding(
@@ -129,7 +129,7 @@ class _UiSettingsScreenState extends ConsumerState<UiSettingsScreen> {
       ),
       body: uiConfigAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Error: $err')),
+        error: (err, stack) => Center(child: Text('Erreur : $err')),
         data: (config) {
           _initializeValues(config);
 
@@ -162,20 +162,20 @@ class _UiSettingsScreenState extends ConsumerState<UiSettingsScreen> {
                         DropdownButtonFormField<int>(
                           initialValue: _firstDayOfWeek,
                           decoration: const InputDecoration(
-                            labelText: 'First Day of Week',
+                            labelText: 'Premier jour de la semaine',
                             border: OutlineInputBorder(),
                           ),
                           items: const [
-                            DropdownMenuItem(value: 0, child: Text('Sunday')),
-                            DropdownMenuItem(value: 1, child: Text('Monday')),
-                            DropdownMenuItem(value: 2, child: Text('Tuesday')),
+                            DropdownMenuItem(value: 0, child: Text('Dimanche')),
+                            DropdownMenuItem(value: 1, child: Text('Lundi')),
+                            DropdownMenuItem(value: 2, child: Text('Mardi')),
                             DropdownMenuItem(
                               value: 3,
-                              child: Text('Wednesday'),
+                              child: Text('Mercredi'),
                             ),
-                            DropdownMenuItem(value: 4, child: Text('Thursday')),
-                            DropdownMenuItem(value: 5, child: Text('Friday')),
-                            DropdownMenuItem(value: 6, child: Text('Saturday')),
+                            DropdownMenuItem(value: 4, child: Text('Jeudi')),
+                            DropdownMenuItem(value: 5, child: Text('Vendredi')),
+                            DropdownMenuItem(value: 6, child: Text('Samedi')),
                           ],
                           onChanged: (val) {
                             if (val != null) {
@@ -186,7 +186,7 @@ class _UiSettingsScreenState extends ConsumerState<UiSettingsScreen> {
                         const SizedBox(height: Insets.sm),
                         SwitchListTile(
                           contentPadding: EdgeInsets.zero,
-                          title: const Text('Show Relative Dates'),
+                          title: const Text('Afficher les dates relatives'),
                           subtitle: const Text(
                             'Show relative terms like "Yesterday", "Today", or "In 2 days"',
                           ),
@@ -223,7 +223,7 @@ class _UiSettingsScreenState extends ConsumerState<UiSettingsScreen> {
                         TextFormField(
                           controller: _shortDateFormatController,
                           decoration: const InputDecoration(
-                            labelText: 'Short Date Format',
+                            labelText: 'Format de date court',
                             border: OutlineInputBorder(),
                           ),
                           validator: (val) =>
@@ -235,7 +235,7 @@ class _UiSettingsScreenState extends ConsumerState<UiSettingsScreen> {
                         TextFormField(
                           controller: _longDateFormatController,
                           decoration: const InputDecoration(
-                            labelText: 'Long Date Format',
+                            labelText: 'Format de date long',
                             border: OutlineInputBorder(),
                           ),
                           validator: (val) =>
@@ -247,7 +247,7 @@ class _UiSettingsScreenState extends ConsumerState<UiSettingsScreen> {
                         TextFormField(
                           controller: _timeFormatController,
                           decoration: const InputDecoration(
-                            labelText: 'Time Format',
+                            labelText: "Format de l'heure",
                             border: OutlineInputBorder(),
                           ),
                           validator: (val) =>
@@ -283,7 +283,7 @@ class _UiSettingsScreenState extends ConsumerState<UiSettingsScreen> {
                         const SizedBox(height: Insets.md),
                         SwitchListTile(
                           contentPadding: EdgeInsets.zero,
-                          title: const Text('Enable Color-Impaired Mode'),
+                          title: const Text('Activer le mode daltonien'),
                           subtitle: const Text(
                             'Uses high-contrast borders and symbols instead of green/red/orange',
                           ),

@@ -92,7 +92,7 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Regenerate API Key?'),
+        title: const Text('Régénérer la clé API ?'),
         content: const Text(
           'This replaces the Sonarr API key. The server key changes '
           'immediately once you save, and this app will lose access to this '
@@ -101,11 +101,11 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(dialogContext, true),
-            child: const Text('Regenerate'),
+            child: const Text('Régénérer'),
           ),
         ],
       ),
@@ -148,7 +148,7 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('General configuration settings saved!'),
+            content: Text('Paramètres généraux enregistrés !'),
           ),
         );
         Navigator.pop(context);
@@ -156,7 +156,7 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to save general configuration: $e')),
+          SnackBar(content: Text("Échec de l'enregistrement des paramètres généraux : $e")),
         );
       }
     } finally {
@@ -172,7 +172,7 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('General Settings'),
+        title: const Text('Paramètres généraux'),
         actions: [
           if (_saving)
             const Padding(
@@ -192,7 +192,7 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
       ),
       body: hostConfigAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Error: $err')),
+        error: (err, stack) => Center(child: Text('Erreur : $err')),
         data: (config) {
           _initializeValues(config);
 
@@ -225,9 +225,9 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
                         TextFormField(
                           controller: _bindAddressController,
                           decoration: const InputDecoration(
-                            labelText: 'Bind Address',
+                            labelText: 'Adresse de liaison',
                             border: OutlineInputBorder(),
-                            helperText: 'Use * to bind to all interfaces',
+                            helperText: 'Utilisez * pour écouter sur toutes les interfaces',
                           ),
                           validator: (val) =>
                               (val == null || val.trim().isEmpty)
@@ -242,7 +242,7 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
                                 controller: _portController,
                                 keyboardType: TextInputType.number,
                                 decoration: const InputDecoration(
-                                  labelText: 'Port Number',
+                                  labelText: 'Numéro de port',
                                   border: OutlineInputBorder(),
                                 ),
                                 validator: (val) => (val == null ||
@@ -257,7 +257,7 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
                                 controller: _sslPortController,
                                 keyboardType: TextInputType.number,
                                 decoration: const InputDecoration(
-                                  labelText: 'SSL Port Number',
+                                  labelText: 'Numéro de port SSL',
                                   border: OutlineInputBorder(),
                                 ),
                                 validator: (val) => (val == null ||
@@ -271,7 +271,7 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
                         const SizedBox(height: Insets.sm),
                         SwitchListTile(
                           contentPadding: EdgeInsets.zero,
-                          title: const Text('Enable SSL'),
+                          title: const Text('Activer SSL'),
                           value: _enableSsl,
                           onChanged: (val) => setState(() => _enableSsl = val),
                         ),
@@ -304,7 +304,7 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
                         TextFormField(
                           controller: _usernameController,
                           decoration: const InputDecoration(
-                            labelText: 'Username',
+                            labelText: "Nom d'utilisateur",
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -313,8 +313,8 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
                           controller: _passwordController,
                           obscureText: true,
                           decoration: const InputDecoration(
-                            labelText: 'Password',
-                            helperText: 'Leave empty to keep existing password',
+                            labelText: 'Mot de passe',
+                            helperText: 'Laissez vide pour conserver le mot de passe existant',
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -326,7 +326,7 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
                                 controller: _apiKeyController,
                                 readOnly: true,
                                 decoration: const InputDecoration(
-                                  labelText: 'API Key',
+                                  labelText: 'Clé API',
                                   border: OutlineInputBorder(),
                                 ),
                               ),
@@ -334,12 +334,12 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
                             const SizedBox(width: Insets.sm),
                             IconButton.filledTonal(
                               icon: const Icon(Icons.refresh),
-                              tooltip: 'Regenerate API Key',
+                              tooltip: 'Régénérer la clé API',
                               onPressed: _regenerateApiKey,
                             ),
                             IconButton(
                               icon: const Icon(Icons.copy),
-                              tooltip: 'Copy API Key',
+                              tooltip: 'Copier la clé API',
                               onPressed: () {
                                 Clipboard.setData(
                                   ClipboardData(
@@ -349,7 +349,7 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content:
-                                        Text('API Key copied to clipboard!'),
+                                        Text('Clé API copiée dans le presse-papiers !'),
                                   ),
                                 );
                               },
@@ -385,29 +385,29 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
                         DropdownButtonFormField<String>(
                           initialValue: _logLevel,
                           decoration: const InputDecoration(
-                            labelText: 'Log Level',
+                            labelText: 'Niveau de journalisation',
                             border: OutlineInputBorder(),
                           ),
                           items: [
                             const DropdownMenuItem(
                               value: 'fatal',
-                              child: Text('Fatal'),
+                              child: Text('Critique'),
                             ),
                             const DropdownMenuItem(
                               value: 'error',
-                              child: Text('Error'),
+                              child: Text('Erreur'),
                             ),
                             const DropdownMenuItem(
                               value: 'warn',
-                              child: Text('Warn'),
+                              child: Text('Avertissement'),
                             ),
                             const DropdownMenuItem(
                               value: 'info',
-                              child: Text('Info'),
+                              child: Text('Infos'),
                             ),
                             const DropdownMenuItem(
                               value: 'debug',
-                              child: Text('Debug'),
+                              child: Text('Débogage'),
                             ),
                             const DropdownMenuItem(
                               value: 'trace',
@@ -431,7 +431,7 @@ class _GeneralSettingsScreenState extends ConsumerState<GeneralSettingsScreen> {
                         TextFormField(
                           controller: _branchController,
                           decoration: const InputDecoration(
-                            labelText: 'Update Branch',
+                            labelText: 'Branche de mise à jour',
                             border: OutlineInputBorder(),
                             helperText:
                                 'Branch used for server updates, e.g. main or develop',

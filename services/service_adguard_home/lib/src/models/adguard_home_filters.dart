@@ -102,12 +102,12 @@ String? adguardHomeScheduleProblem(Duration start, Duration end) {
   const Duration day = Duration(hours: 24);
   if (start.inMicroseconds % Duration.microsecondsPerMinute != 0 ||
       end.inMicroseconds % Duration.microsecondsPerMinute != 0) {
-    return 'Times are in whole minutes.';
+    return 'Les durées sont en minutes entières.';
   }
   if (start.isNegative || end > day) {
-    return 'A pause has to fit in one day.';
+    return 'Une pause doit tenir dans une journée.';
   }
-  if (end <= start) return 'The end has to be after the start.';
+  if (end <= start) return 'La fin doit être après le début.';
   return null;
 }
 

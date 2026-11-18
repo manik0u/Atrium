@@ -53,7 +53,7 @@ Future<bool?> showLidarrDeleteAlbumDialog(
           final ColorScheme cs = theme.colorScheme;
 
           return AlertDialog(
-            title: Text('Delete ${album.title ?? 'Album'}?'),
+            title: Text('Supprimer ${album.title ?? 'Album'}?'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,16 +73,16 @@ Future<bool?> showLidarrDeleteAlbumDialog(
                 ],
                 const SizedBox(height: 12),
                 CheckboxListTile(
-                  title: const Text('Delete files from disk'),
-                  subtitle: const Text('Permanently remove audio files'),
+                  title: const Text('Supprimer les fichiers du disque'),
+                  subtitle: const Text('Supprimer définitivement les fichiers audio'),
                   value: deleteFiles,
                   contentPadding: EdgeInsets.zero,
                   onChanged: (bool? val) =>
                       setState(() => deleteFiles = val ?? false),
                 ),
                 CheckboxListTile(
-                  title: const Text('Add import list exclusion'),
-                  subtitle: const Text('Prevent re-adding by automated lists'),
+                  title: const Text("Ajouter une exclusion de liste d'import"),
+                  subtitle: const Text('Empêcher le rajout par les listes automatiques'),
                   value: addImportListExclusion,
                   contentPadding: EdgeInsets.zero,
                   onChanged: (bool? val) =>
@@ -93,7 +93,7 @@ Future<bool?> showLidarrDeleteAlbumDialog(
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.of(ctx).pop(false),
-                child: const Text('Cancel'),
+                child: const Text('Annuler'),
               ),
               FilledButton(
                 style: FilledButton.styleFrom(
@@ -101,7 +101,7 @@ Future<bool?> showLidarrDeleteAlbumDialog(
                   foregroundColor: cs.onError,
                 ),
                 onPressed: () => Navigator.of(ctx).pop(true),
-                child: const Text('Delete'),
+                child: const Text('Supprimer'),
               ),
             ],
           );
@@ -121,7 +121,7 @@ Future<bool?> showLidarrDeleteAlbumDialog(
     );
 
     if (!resp.isSuccess) {
-      throw Exception(resp.error?.message ?? 'Failed to delete album');
+      throw Exception(resp.error?.message ?? "Échec de la suppression de l'album");
     }
 
     ref.invalidate(lidarrAlbumsForArtistProvider((instance, artistId)));
@@ -136,7 +136,7 @@ Future<bool?> showLidarrDeleteAlbumDialog(
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Deleted "${album.title ?? 'Album'}"'),
+          content: Text('Supprimé « ${album.title ?? 'Album'}"'),
         ),
       );
     }
@@ -145,7 +145,7 @@ Future<bool?> showLidarrDeleteAlbumDialog(
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Delete failed: $e'),
+          content: Text('Échec de la suppression : $e'),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
@@ -228,7 +228,7 @@ class _LidarrEditAlbumSheetState extends ConsumerState<LidarrEditAlbumSheet> {
       );
 
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Failed to update album');
+        throw Exception(resp.error?.message ?? "Échec de la mise à jour de l'album");
       }
 
       if (!mounted) return;
@@ -249,7 +249,7 @@ class _LidarrEditAlbumSheetState extends ConsumerState<LidarrEditAlbumSheet> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Updated "${widget.album.title ?? 'Album'}" settings'),
+          content: Text('Modifié « ${widget.album.title ?? 'Album'}" settings'),
         ),
       );
       Navigator.of(context).pop(true);
@@ -257,7 +257,7 @@ class _LidarrEditAlbumSheetState extends ConsumerState<LidarrEditAlbumSheet> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Update failed: $e'),
+            content: Text('Échec de la mise à jour : $e'),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -302,7 +302,7 @@ class _LidarrEditAlbumSheetState extends ConsumerState<LidarrEditAlbumSheet> {
             ),
             actions: <Widget>[
               IconButton(
-                tooltip: 'Delete Album',
+                tooltip: "Supprimer l'album",
                 icon: Icon(Icons.delete_outline, color: cs.error),
                 onPressed: () async {
                   final bool? deleted = await showLidarrDeleteAlbumDialog(
@@ -329,9 +329,9 @@ class _LidarrEditAlbumSheetState extends ConsumerState<LidarrEditAlbumSheet> {
                     // Monitored Toggle
                     SwitchListTile(
                       contentPadding: EdgeInsets.zero,
-                      title: const Text('Monitored'),
+                      title: const Text('Surveillé'),
                       subtitle: const Text(
-                        'Search for and monitor tracks for this album',
+                        'Rechercher et surveiller les pistes de cet album',
                       ),
                       value: _monitored,
                       onChanged: (bool val) => setState(() => _monitored = val),
@@ -341,7 +341,7 @@ class _LidarrEditAlbumSheetState extends ConsumerState<LidarrEditAlbumSheet> {
                     // Automatically Switch Release
                     SwitchListTile(
                       contentPadding: EdgeInsets.zero,
-                      title: const Text('Automatically Switch Release'),
+                      title: const Text('Changer automatiquement de release'),
                       subtitle: const Text(
                         'Allow Lidarr to match audio files against any available release of this album',
                       ),
@@ -432,7 +432,7 @@ class _LidarrEditAlbumSheetState extends ConsumerState<LidarrEditAlbumSheet> {
                               child:
                                   ExpressiveProgressIndicator(strokeWidth: 2),
                             )
-                          : const Text('Save Changes'),
+                          : const Text('Enregistrer les modifications'),
                     ),
                   ),
                 ),

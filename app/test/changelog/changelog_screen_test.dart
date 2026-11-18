@@ -39,7 +39,7 @@ void main() {
     // the installed one, and hardcoding it here means every release breaks
     // this test for no reason.
     expect(find.text('v$appVersion'), findsOneWidget);
-    expect(find.text('Installed'), findsOneWidget);
-    expect(find.text('New'), findsWidgets);
+    expect(find.text('Installée'), findsOneWidget);
+    expect(find.text('Nouveau'), findsWidgets);
   });
 }

@@ -115,10 +115,10 @@ class StreamDiagnosticsSheet extends StatelessWidget {
 
                   // Video Stream Diagnostics
                   const _SectionHeader(
-                      title: 'VIDEO TELEMETRY', icon: Icons.videocam_outlined,),
+                      title: 'TÉLÉMÉTRIE VIDÉO', icon: Icons.videocam_outlined,),
                   const SizedBox(height: Insets.sm),
                   _TelemetryRow(
-                    label: 'Decision',
+                    label: 'Décision',
                     value: videoDecision,
                     highlight: stream.isTranscode,
                   ),
@@ -128,10 +128,10 @@ class StreamDiagnosticsSheet extends StatelessWidget {
                         value: stream.videoCodec!.toUpperCase(),),
                   if (stream.resolution != null)
                     _TelemetryRow(
-                        label: 'Resolution', value: stream.resolution!,),
+                        label: 'Résolution', value: stream.resolution!,),
                   if (isHw) ...[
                     _TelemetryRow(
-                      label: 'Hardware Acceleration',
+                      label: 'Accélération matérielle',
                       value:
                           'Active (${stream.hwDecoding ?? stream.hwEncoding ?? "Hardware"})',
                       badgeColor: const Color(0xFF2196F3),
@@ -139,12 +139,12 @@ class StreamDiagnosticsSheet extends StatelessWidget {
                   ],
                   if (stream.transcodeSpeed != null)
                     _TelemetryRow(
-                      label: 'Transcode Speed',
+                      label: 'Vitesse de transcodage',
                       value: '${stream.transcodeSpeed!.toStringAsFixed(1)}x',
                     ),
                   if (stream.isThrottled != null)
                     _TelemetryRow(
-                      label: 'Throttled',
+                      label: 'Ralenti',
                       value: stream.isThrottled! ? 'Yes (CPU Saved)' : 'No',
                     ),
                   if (stream.transcodeReasons.isNotEmpty)
@@ -178,20 +178,20 @@ class StreamDiagnosticsSheet extends StatelessWidget {
 
                   // Audio Stream Diagnostics
                   const _SectionHeader(
-                      title: 'AUDIO & SUBTITLES',
+                      title: 'AUDIO ET SOUS-TITRES',
                       icon: Icons.audiotrack_outlined,),
                   const SizedBox(height: Insets.sm),
-                  _TelemetryRow(label: 'Audio Decision', value: audioDecision),
+                  _TelemetryRow(label: 'Décision audio', value: audioDecision),
                   if (stream.audioCodec != null)
                     _TelemetryRow(
-                        label: 'Audio Codec',
+                        label: 'Codec audio',
                         value: stream.audioCodec!.toUpperCase(),),
                   if (stream.audioChannels != null)
                     _TelemetryRow(
-                        label: 'Audio Channels', value: stream.audioChannels!,),
+                        label: 'Canaux audio', value: stream.audioChannels!,),
                   if (stream.subtitleLanguage != null)
                     _TelemetryRow(
-                      label: 'Subtitles',
+                      label: 'Sous-titres',
                       value:
                           '${stream.subtitleLanguage} (${stream.subtitleCodec ?? "Standard"})',
                     ),
@@ -202,20 +202,20 @@ class StreamDiagnosticsSheet extends StatelessWidget {
 
                   // Client & Bandwidth Telemetry
                   const _SectionHeader(
-                      title: 'CLIENT & BANDWIDTH',
+                      title: 'CLIENT ET BANDE PASSANTE',
                       icon: Icons.devices_outlined,),
                   const SizedBox(height: Insets.sm),
                   if (stream.player != null)
-                    _TelemetryRow(label: 'Player', value: stream.player!),
+                    _TelemetryRow(label: 'Lecteur', value: stream.player!),
                   if (stream.product != null)
-                    _TelemetryRow(label: 'Product', value: stream.product!),
+                    _TelemetryRow(label: 'Produit', value: stream.product!),
                   if (stream.device != null)
-                    _TelemetryRow(label: 'Device', value: stream.device!),
+                    _TelemetryRow(label: 'Appareil', value: stream.device!),
                   if (stream.platform != null)
-                    _TelemetryRow(label: 'Platform', value: stream.platform!),
+                    _TelemetryRow(label: 'Plateforme', value: stream.platform!),
                   if (stream.bitrate != null)
                     _TelemetryRow(
-                      label: 'Stream Bitrate',
+                      label: 'Débit du flux',
                       value: stream.bitrate! >= 1000
                           ? '${(stream.bitrate! / 1000).toStringAsFixed(1)} Mbps'
                           : '${stream.bitrate} kbps',
@@ -231,7 +231,7 @@ class StreamDiagnosticsSheet extends StatelessWidget {
                       padding: const EdgeInsets.all(Insets.md),
                     ),
                     icon: const Icon(Icons.stop_circle_outlined),
-                    label: const Text('Terminate Stream'),
+                    label: const Text('Interrompre le flux'),
                     onPressed: () {
                       Navigator.of(context).pop();
                       TerminateStreamDialog.show(

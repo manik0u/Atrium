@@ -90,7 +90,7 @@ class _AdguardHomeServicePickerState extends State<AdguardHomeServicePicker> {
         service.id,
     };
     add(
-      'No longer offered by the server',
+      "N'est plus proposé par le serveur",
       <AdguardHomeBlockedService>[
         for (final String id in widget.selected)
           if (!known.contains(id)) AdguardHomeBlockedService(id: id, name: id),
@@ -107,7 +107,7 @@ class _AdguardHomeServicePickerState extends State<AdguardHomeServicePicker> {
     if (catalogue.services.isEmpty && widget.selected.isEmpty) {
       return const EmptyView(
         icon: Icons.block,
-        title: 'The server offers no services to block',
+        title: "Le serveur n'offre aucun service à bloquer",
       );
     }
 
@@ -130,13 +130,13 @@ class _AdguardHomeServicePickerState extends State<AdguardHomeServicePicker> {
             textInputAction: TextInputAction.search,
             autocorrect: false,
             decoration: InputDecoration(
-              hintText: 'Search services',
+              hintText: 'Rechercher des services',
               prefixIcon: const Icon(Icons.search),
               suffixIcon: _search.text.isEmpty
                   ? null
                   : IconButton(
                       icon: const Icon(Icons.close),
-                      tooltip: 'Clear search',
+                      tooltip: 'Effacer la recherche',
                       onPressed: _clearSearch,
                     ),
               isDense: true,
@@ -163,14 +163,14 @@ class _AdguardHomeServicePickerState extends State<AdguardHomeServicePicker> {
                           in catalogue.services)
                         service.id,
                     }),
-                    child: const Text('Block all'),
+                    child: const Text('Tout bloquer'),
                   ),
                 ),
                 const SizedBox(width: Insets.sm),
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () => widget.onChanged(const <String>{}),
-                    child: const Text('Unblock all'),
+                    child: const Text('Tout débloquer'),
                   ),
                 ),
               ],
@@ -181,7 +181,7 @@ class _AdguardHomeServicePickerState extends State<AdguardHomeServicePicker> {
               ? const SingleChildScrollView(
                   child: EmptyView(
                     icon: Icons.search_off,
-                    title: 'No service matches',
+                    title: 'Aucun service ne correspond',
                   ),
                 )
               : ListView.builder(

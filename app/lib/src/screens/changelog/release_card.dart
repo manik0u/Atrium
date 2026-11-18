@@ -5,9 +5,9 @@ import 'release_notes.dart';
 
 /// The label shown for a change category.
 String categoryLabel(ChangeCategory category) => switch (category) {
-      ChangeCategory.added => 'New',
-      ChangeCategory.improved => 'Improved',
-      ChangeCategory.fixed => 'Fixed',
+      ChangeCategory.added => 'Nouveau',
+      ChangeCategory.improved => 'Amélioré',
+      ChangeCategory.fixed => 'Corrigé',
     };
 
 /// The dynamic color for a change category, taken from the color scheme.

@@ -116,7 +116,7 @@ void showLidarrAlbumActionSheet(
                   Expanded(
                     child: FilledButton.tonalIcon(
                       icon: const Icon(Icons.search, size: 18),
-                      label: const Text('Auto Search'),
+                      label: const Text('Recherche automatique'),
                       onPressed: () async {
                         Navigator.pop(ctx);
                         final int? albumId = album.id;
@@ -132,14 +132,14 @@ void showLidarrAlbumActionSheet(
                           );
                           if (!resp.isSuccess) {
                             throw Exception(
-                              resp.error?.message ?? 'Failed to search album',
+                              resp.error?.message ?? "Échec de la recherche de l'album",
                             );
                           }
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content:
-                                    Text('Searching for "${album.title}"...'),
+                                    Text('Recherche de « ${album.title} »…'),
                                 duration: const Duration(seconds: 2),
                               ),
                             );
@@ -148,7 +148,7 @@ void showLidarrAlbumActionSheet(
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text('Failed to search album: $e'),
+                                content: Text("Échec de la recherche de l'album : $e"),
                                 backgroundColor: cs.error,
                               ),
                             );
@@ -161,7 +161,7 @@ void showLidarrAlbumActionSheet(
                   Expanded(
                     child: FilledButton.tonalIcon(
                       icon: const Icon(Icons.manage_search_outlined, size: 18),
-                      label: const Text('Interactive'),
+                      label: const Text('Interactif'),
                       onPressed: () {
                         Navigator.pop(ctx);
                         LidarrInteractiveSearchScreen.show(
@@ -183,7 +183,7 @@ void showLidarrAlbumActionSheet(
               ListTile(
                 dense: true,
                 leading: const Icon(Icons.edit_outlined),
-                title: const Text('Edit Album'),
+                title: const Text("Modifier l'album"),
                 contentPadding: EdgeInsets.zero,
                 onTap: () {
                   Navigator.pop(ctx);
@@ -199,7 +199,7 @@ void showLidarrAlbumActionSheet(
               ListTile(
                 dense: true,
                 leading: const Icon(Icons.audio_file_outlined),
-                title: const Text('Track Files Editor'),
+                title: const Text('Éditeur de fichiers de pistes'),
                 contentPadding: EdgeInsets.zero,
                 onTap: () {
                   Navigator.pop(ctx);
@@ -215,7 +215,7 @@ void showLidarrAlbumActionSheet(
               ListTile(
                 dense: true,
                 leading: const Icon(Icons.drive_file_rename_outline),
-                title: const Text('Rename Files'),
+                title: const Text('Renommer les fichiers'),
                 contentPadding: EdgeInsets.zero,
                 onTap: () {
                   Navigator.pop(ctx);
@@ -231,7 +231,7 @@ void showLidarrAlbumActionSheet(
               ListTile(
                 dense: true,
                 leading: const Icon(Icons.label_outlined),
-                title: const Text('Retag Files'),
+                title: const Text('Re-tagger les fichiers'),
                 contentPadding: EdgeInsets.zero,
                 onTap: () {
                   Navigator.pop(ctx);
@@ -312,7 +312,7 @@ class _AlbumCardState extends ConsumerState<AlbumCard> {
         ),
       );
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Failed to toggle album');
+        throw Exception(resp.error?.message ?? "Échec du basculement de l'album");
       }
 
       ref.invalidate(
@@ -326,7 +326,7 @@ class _AlbumCardState extends ConsumerState<AlbumCard> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to toggle album: $e'),
+            content: Text("Échec du basculement de l'album : $e"),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -435,7 +435,7 @@ class _AlbumCardState extends ConsumerState<AlbumCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.album.title ?? 'Unknown Album',
+                      widget.album.title ?? 'Album inconnu',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.titleSmall?.copyWith(
@@ -519,7 +519,7 @@ class _AlbumCardState extends ConsumerState<AlbumCard> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      tooltip: isMonitored ? 'Monitored' : 'Unmonitored',
+                      tooltip: isMonitored ? 'Surveillé' : 'Non surveillé',
                       visualDensity: VisualDensity.compact,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(
@@ -534,7 +534,7 @@ class _AlbumCardState extends ConsumerState<AlbumCard> {
                       onPressed: _toggleMonitored,
                     ),
                     IconButton(
-                      tooltip: 'Album options',
+                      tooltip: "Options de l'album",
                       visualDensity: VisualDensity.compact,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(

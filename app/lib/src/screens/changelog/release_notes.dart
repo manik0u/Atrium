@@ -31,12 +31,12 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-11-18',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        'Share a movie or show to Atrium from another app to add it to Radarr or Sonarr. IMDb, TMDB, Letterboxd and Trakt links work, and so does a plain title. If it is already in your library its screen opens, otherwise the usual add sheet.',
-        'atrium:// links open Atrium at a service, a movie or a show, so a ntfy notification, a Tasker task or a shell command can take you straight there. For example atrium://sonarr/series?tvdb=81189. A link only ever opens a screen; adding still takes your tap.',
-        'The Radarr, Sonarr and Lidarr add sheets start from the choices you made on the last add to the same instance: root folder, quality profile, monitoring, search on add and the rest. Tags are not carried over.',
+        "Partagez un film ou une série vers Atrium depuis une autre app pour l'ajouter à Radarr ou Sonarr. Les liens IMDb, TMDB, Letterboxd et Trakt fonctionnent, et un simple titre aussi. S'il est déjà dans votre bibliothèque, son écran s'ouvre, sinon la feuille d'ajout habituelle.",
+        "Les liens atrium:// ouvrent Atrium sur un service, un film ou une série, donc une notification ntfy, une tâche Tasker ou une commande shell peuvent vous y emmener directement. Par exemple atrium://sonarr/series?tvdb=81189. Un lien ne fait qu'ouvrir un écran ; l'ajout demande toujours votre geste.",
+        "Les feuilles d'ajout de Radarr, Sonarr et Lidarr reprennent les choix faits lors du dernier ajout sur la même instance : dossier racine, profil de qualité, surveillance, recherche à l'ajout et le reste. Les balises ne sont pas reportées.",
       ]),
       ChangeGroup(ChangeCategory.improved, <String>[
-        "The Radarr and Sonarr search screens close themselves after an add, and opening a title that is already in your library no longer holds up the next share or link.",
+        "Les écrans de recherche de Radarr et Sonarr se ferment d'eux-mêmes après un ajout, et ouvrir un titre déjà dans votre bibliothèque n'attend plus la fin du prochain partage ou lien.",
       ]),
     ],
   ),
@@ -45,13 +45,13 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-11-09',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        "Seerr can sign in with one person's own account instead of the API key: a Seerr account, or a Jellyfin or Emby one. The screens then follow that account's Seerr permissions, so friends and family can request without being handed the admin key.",
-        "qBittorrent can edit a torrent's trackers. Edit trackers opens them as text, one URL per line with a blank line between tiers, and shows what Save will add and remove. Each tracker's menu can copy, edit or remove it, and rows show their tier.",
+        "Seerr peut se connecter avec le compte propre d'une personne au lieu de la clé API : un compte Seerr, ou un compte Jellyfin ou Emby. Les écrans suivent alors les permissions Seerr de ce compte, donc vos proches peuvent demander sans recevoir la clé admin.",
+        "qBittorrent permet de modifier les trackers d'un torrent. Modifier les trackers les ouvre en texte, une URL par ligne avec une ligne vide entre les niveaux, et montre ce que Enregistrer ajoutera et retirera. Le menu de chaque tracker permet de copier, modifier ou supprimer, et les lignes indiquent leur niveau.",
       ]),
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'Lidarr artwork loads when Lidarr runs under a URL Base or behind a sign-in portal that only lets /api through, and it comes from the address Atrium is connected to, so covers show away from home too.',
-        "Seerr's Test connection and status check that the API key actually works. Before, any key passed.",
-        "qBittorrent's Tracker error and Unreachable states no longer show as Unknown.",
+        "Les pochettes Lidarr se chargent quand Lidarr tourne sous une base d'URL ou derrière un portail de connexion qui ne sert que l'interface web.",
+        "Le test de connexion et le contrôle de statut de Seerr vérifient que la clé API fonctionne réellement. Auparavant, n'importe quelle clé passait.",
+        "Les états Erreur de tracker et Injoignable de qBittorrent ne s'affichent plus comme Inconnu.",
       ]),
     ],
   ),
@@ -60,17 +60,17 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-11-02',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.improved, <String>[
-        'Deluge is redesigned to match qBittorrent and Transmission. Download, upload and free space sit on three tiles with the session pause and speed limits under them, and adding a torrent moves to a floating button. The state filters move into a side drawer, with a Filtered strip and a dot on the filter button while one is on. Torrents show as cards with their speeds, ratio and ETA, with the actions on a long press, and the detail screen is built from panels, with peer country flags and a menu holding every torrent action.',
-        "The calendar's downloaded marker follows your theme's colours.",
+        "Deluge est repensé pour ressembler à qBittorrent et Transmission. Téléchargement, envoi et espace libre tiennent sur trois tuiles, avec la pause de session et les limites de vitesse dessous, et l'ajout d'un torrent passe par un bouton flottant. Les filtres d'état passent dans un tiroir latéral, avec une bande « Filtré » et un point sur le bouton de filtre tant qu'un filtre est actif. Les torrents s'affichent en cartes avec leurs vitesses, ratio et ETA, les actions au appui long, et l'écran de détail est composé de panneaux, avec les drapeaux de pays des pairs et un menu regroupant toutes les actions.",
+        'Le marqueur « téléchargé » du calendrier suit les couleurs de votre thème.',
       ]),
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'On the slskd Transfers and Search tabs, pull to refresh shows below the search bar instead of over it.',
-        "slskd's version shows as 0.26.2 rather than 0.26.2.0.",
-        "slskd's Logs tab explains that the API key needs the Administrator role instead of showing a raw error.",
-        "Deluge's Active filter lists the torrents that are moving, and a paused or finished torrent no longer shows a fading speed and an ETA.",
-        "Closing Transmission's add sheet while a torrent is still being added no longer reports the add as failed.",
-        "Cleanuparr's error messages are readable on their red background.",
-        'The service form rejects a malformed second URL even when the first one is valid.',
+        'Sur les onglets Transferts et Recherche de slskd, le tirage pour actualiser apparaît sous la barre de recherche et non plus par-dessus.',
+        "La version de slskd s'affiche 0.26.2 au lieu de 0.26.2.0.",
+        "L'onglet Journaux de slskd explique que la clé API doit avoir le rôle Administrateur au lieu d'afficher une erreur brute.",
+        "Le filtre Actif de Deluge liste les torrents qui avancent, et un torrent en pause ou terminé n'affiche plus une vitesse estompée et un ETA.",
+        "Fermer la feuille d'ajout de Transmission pendant qu'un torrent est encore ajouté ne signale plus l'ajout comme échoué.",
+        "Les messages d'erreur de Cleanuparr sont lisibles sur leur fond rouge.",
+        'Le formulaire de service rejette une seconde URL mal formée même si la première est valide.',
       ]),
     ],
   ),
@@ -79,21 +79,21 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-11-02',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        "slskd, the Soulseek client, is a supported service, in beta. Transfers lists downloads and uploads by peer and folder or as one list. Search shows results as albums or tracks, with format, bitrate and free slot filters and a one-tap album download. Browse opens a peer's shares as a folder tree, Community holds direct messages and chat rooms, and System covers the server connection, shares, logs and transfer statistics.",
-        "aria2 is a supported service, in beta. Downloads can be filtered by state, searched, sorted, and paused, resumed or removed in bulk, and a download opens with its files, peers, mirrors and its own speed limits. Add by link, magnet, .torrent or .metalink, and edit the daemon's settings. aria2 also shows in Active downloads and Activity, and takes shared torrents.",
-        'Cleanuparr is a supported service, in beta, listed under a new Extra group in the sidebar and when adding a service. Overview shows malware blocked, active strikes, cleaned torrents and the background tasks, Strikes lists the downloads holding strikes, and Events is the audit log. A dashboard widget says whether the queues are clean.',
-        'AdGuard Home has a Filters tab, with blocklists and allowlists, custom rules, blocked services with their schedule, DNS rewrites and Check a host, and a Settings tab, with the DNS servers, caching, access, query log and statistics retention, encryption, DHCP and the update check.',
-        'Seerr requests can be filtered by status: Pending, Approved, Completed, Declined and Failed.',
-        'qBittorrent shows its external IPv4 and IPv6 address in Settings > System, on qBittorrent 5.0 and later.',
+        "slskd, le client Soulseek, est un service pris en charge, en bêta. Transferts liste les téléchargements et envois par pair et dossier ou en une seule liste. La recherche affiche les résultats en albums ou pistes, avec des filtres de format, débit et emplacement libre, et le téléchargement d'un album en un toucher. Parcourir ouvre les partages d'un pair en arbre de dossiers, Communauté regroupe les messages privés et les salons de discussion, et Système couvre la connexion au serveur, les partages, les journaux et les statistiques de transferts.",
+        "aria2 est un service pris en charge, en bêta. Les téléchargements peuvent être filtrés par état, recherchés, triés, et mis en pause, repris ou supprimés en masse, et un téléchargement s'ouvre avec ses fichiers, pairs, miroirs et ses propres limites de vitesse. Ajoutez par lien, magnet, .torrent ou .metalink, et modifiez les paramètres du démon. aria2 apparaît aussi dans Téléchargements actifs et Activité, et accepte les torrents partagés.",
+        "Cleanuparr est un service pris en charge, en bêta, listé sous un nouveau groupe Divers dans la barre latérale et lors de l'ajout d'un service. Vue d'ensemble montre les malwares bloqués, les strikes actifs, les torrents nettoyés et les tâches en arrière-plan, Strikes liste les téléchargements porteurs de strikes, et Événements est le journal d'audit. Un widget du tableau de bord indique si les files sont propres.",
+        "AdGuard Home a un onglet Filtres, avec listes de blocage et d'autorisation, règles personnalisées, services bloqués avec leur planning, réécritures DNS et Vérifier un hôte, et un onglet Paramètres, avec les serveurs DNS, le cache, l'accès, le journal des requêtes et la conservation des statistiques, le chiffrement, DHCP et la vérification des mises à jour.",
+        'Les demandes Seerr peuvent être filtrées par statut : En attente, Approuvée, Terminée, Refusée et Échouée.',
+        'qBittorrent affiche son adresse IPv4 et IPv6 externe dans Paramètres > Système, sur qBittorrent 5.0 et ultérieur.',
       ]),
       ChangeGroup(ChangeCategory.improved, <String>[
-        'Adding a service starts from a searchable grid of every service, grouped by category, and the form opens set up for the one you pick.',
-        "Transmission is rebuilt around a filter drawer with the web UI's state filters plus trackers and labels.",
-        'The calendar remembers whether you last used the list or the month view.',
-        'AdGuard Home is out of beta.',
+        "L'ajout d'un service part d'une grille interrogeable de tous les services, groupés par catégorie, et le formulaire s'ouvre prérempli pour celui que vous choisissez.",
+        "Transmission est reconstruit autour d'un tiroir de filtres avec les filtres d'état de l'interface web plus les trackers et labels.",
+        'Le calendrier se souvient si vous utilisiez la liste ou la vue mois la dernière fois.',
+        'AdGuard Home sort de bêta.',
       ]),
       ChangeGroup(ChangeCategory.fixed, <String>[
-        "The qBittorrent Delete action uses the theme's error colour in light and dark mode.",
+        "L'action Supprimer de qBittorrent utilise la couleur d'erreur du thème en mode clair comme sombre.",
       ]),
     ],
   ),
@@ -102,11 +102,11 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-10-19',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.improved, <String>[
-        'The qBittorrent torrent list asks only for what changed since the last refresh, the way the qBittorrent web UI does, so a large library loads faster and uses far less data. How often it refreshes is now set per instance in its form, 5 seconds by default (it was 3).',
+        "La liste des torrents de qBittorrent ne demande que ce qui a changé depuis la dernière actualisation, comme le fait l'interface web de qBittorrent, donc une grande bibliothèque se charge plus vite et consomme beaucoup moins de données. La fréquence d'actualisation se règle maintenant par instance dans son formulaire, 5 secondes par défaut (c'était 3).",
       ]),
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'The Seerr requests list no longer reloads forever on servers with many requests.',
-        'Posters and other artwork load from an instance with "Allow self-signed certificates" turned on.',
+        'La liste des demandes Seerr ne se recharge plus indéfiniment sur les serveurs qui en ont beaucoup.',
+        'Les affiches et autres illustrations se chargent depuis une instance avec « Autoriser les certificats auto-signés » activé.',
       ]),
     ],
   ),
@@ -115,12 +115,12 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-10-08',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        'AdGuard Home is a supported service, in beta. Home turns protection on or off, or pauses it for a time, and shows the DNS statistics with the top clients, domains and upstreams, where a domain can be blocked or unblocked from its row. The Query log is searched and filtered the way the web UI does it, and a query opens in full, to block or unblock its name for everyone or for one client, or to disallow the client. Clients lists the persistent and runtime clients, and a persistent client can be added, changed or deleted, with its own protection settings, blocked services and upstream servers. A dashboard widget shows the state, with Pause and Resume. The filter lists and the settings of the server are still to come.',
-        'AdGuard Home locks an address out after a few wrong sign-ins, so a wrong password is tried once and nothing more is sent until you tap Try again.',
-        'Sonarr and Radarr offer the custom filters saved on your server in the sort and filter sheet.',
+        "AdGuard Home est un service pris en charge, en bêta. Accueil active ou désactive la protection, ou la met en pause pour un temps, et affiche les statistiques DNS avec les principaux clients, domaines et serveurs amont, où un domaine peut être bloqué ou débloqué depuis sa ligne. Le journal des requêtes est recherché et filtré comme dans l'interface web, et une requête s'ouvre en entier, pour bloquer ou débloquer son nom pour tout le monde ou pour un seul client, ou pour interdire le client. Clients liste les clients persistants et ceux en cours d'exécution, et un client persistant peut être ajouté, modifié ou supprimé, avec ses propres paramètres de protection, services bloqués et serveurs amont. Un widget du tableau de bord montre l'état, avec Pause et Reprendre. Les listes de filtres et les paramètres du serveur restent à venir.",
+        "AdGuard Home verrouille une adresse après quelques connexions échouées, donc un mauvais mot de passe n'est essayé qu'une fois et rien d'autre n'est envoyé jusqu'à ce que vous touchiez Réessayer.",
+        'Sonarr et Radarr proposent les filtres personnalisés enregistrés sur votre serveur dans la feuille de tri et filtrage.',
       ]),
       ChangeGroup(ChangeCategory.improved, <String>[
-        'Ombi is out of beta.',
+        'Ombi sort de bêta.',
       ]),
     ],
   ),
@@ -129,20 +129,20 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-10-03',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        'Radarr monitors collections. Adding a movie that belongs to one offers to monitor the whole collection, and the movie screen shows the collection with a button to monitor or unmonitor it.',
-        'qBittorrent marks torrents as private or public. The badge is in the list on qBittorrent 5.0 and later, and on the torrent screen from 4.5.1.',
-        'A profile can be renamed from its card.',
+        "Radarr surveille les collections. L'ajout d'un film appartenant à une collection propose de surveiller toute la collection, et l'écran du film montre la collection avec un bouton pour la surveiller ou non.",
+        "qBittorrent marque les torrents comme privés ou publics. Le badge est dans la liste sur qBittorrent 5.0 et ultérieur, et sur l'écran du torrent depuis la 4.5.1.",
+        'Un profil peut être renommé depuis sa carte.',
       ]),
       ChangeGroup(ChangeCategory.improved, <String>[
-        'Ombi has a new look: Requests and Discover as its two tabs, a count on each filter chip, request cards with the poster, status and who asked, richer Discover and search cards, and a sheet for a title with its details and the request button.',
-        'Navidrome is out of beta. Playlists are a grid of covers like the albums, and an album opens with the artist across the banner and the cover beside the title.',
-        'Lidarr and Unraid are out of beta.',
+        "Ombi a un nouveau look : Demandes et Découvrir comme deux onglets, un compteur sur chaque puce de filtre, des cartes de demande avec l'affiche, le statut et qui a demandé, des cartes Découvrir et recherche plus riches, et une feuille pour un titre avec ses détails et le bouton de demande.",
+        "Navidrome sort de bêta. Les playlists sont une grille de pochettes comme les albums, et un album s'ouvre avec l'artiste en bannière et la pochette à côté du titre.",
+        'Lidarr et Unraid sortent de bêta.',
       ]),
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'Ombi request times are no longer off by your timezone.',
-        'An Ombi request shows its denial reason only while it is denied, not after it has been approved again.',
-        'Navidrome artist section headers fit the longer group names a server uses, such as X-Z and [Unknown].',
-        'The Navidrome album and playlist grids no longer overflow at large text sizes.',
+        'Les heures des demandes Ombi ne sont plus décalées par votre fuseau horaire.',
+        "Une demande Ombi n'affiche son motif de refus que tant qu'elle est refusée, pas après une nouvelle approbation.",
+        "Les en-têtes de section d'artistes de Navidrome accueillent les noms de groupe plus longs utilisés par un serveur, comme X-Z et [Inconnu].",
+        "Les grilles d'albums et de playlists de Navidrome ne débordent plus avec les grandes tailles de texte.",
       ]),
     ],
   ),
@@ -151,23 +151,23 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-09-21',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        'MySpeed is a supported service. Its Status tab shows whether a test is running and can start one, with the last day of results beneath; History lists every test with averages and a search by id; Config shows the schedule, the provider and the storage figures. Password-protected instances work, and a dashboard widget shows the latest figures and runs a test from the board.',
-        'Ombi is a supported service, in beta. Requests for movies, TV and music are listed the way the Requests page in Ombi lists them, with approve, deny with a reason, and delete. Search and a Discover tab of popular and upcoming titles let you request from the app, and the requests appear on the Requests widget of the dashboard.',
-        'Navidrome is a supported service, in beta. Browse artists and albums with banners and biographies, rate them and mark favourites, keep playlists, search the library and start a quick scan.',
-        'Gluetun is a supported service. See the public address, location and forwarded port of the VPN, reconnect it in one tap, and stop the VPN or DNS behind a confirmation. A dashboard widget shows its status, and a control server that runs without an API key can be added without one.',
-        'A dashdot dashboard widget: CPU, memory and disk rings with network up and down, temperature and uptime, one block per instance.',
-        'Transmission does everything its web UI does and is out of beta: the nine filters, tracker and label chips, search, ten sort orders, compact rows, selection with bulk actions, every torrent action including set location, rename, labels and queue moves, a detail screen with everything the inspector shows plus a folder tree, peer flags and tracker tiers, and a Settings tab for the Torrents, Speed, Peers and Network preferences with statistics, a port test and a blocklist update. Adding a torrent fills in the folder the server uses and shows its free space.',
-        'qBittorrent has an execution log tab, read when you open it, with copy.',
-        'The Plex form can sign in at plex.tv and fill in a server that answers, instead of asking for a token.',
-        'The search typed in the Sonarr or Radarr list carries over to the Add screen.',
+        "MySpeed est un service pris en charge. Son onglet Statut indique si un test est en cours et permet d'en lancer un, avec les résultats du dernier jour en dessous ; Historique liste chaque test avec les moyennes et une recherche par id ; Config montre le planning, le fournisseur et les chiffres de stockage. Les instances protégées par mot de passe fonctionnent, et un widget du tableau de bord montre les derniers chiffres et lance un test depuis le tableau.",
+        "Ombi est un service pris en charge, en bêta. Les demandes de films, séries et musique sont listées comme la page Demandes d'Ombi, avec approuver, refuser avec un motif, et supprimer. La recherche et un onglet Découvrir de titres populaires et à venir permettent de demander depuis l'app, et les demandes apparaissent sur le widget Demandes du tableau de bord.",
+        'Navidrome est un service pris en charge, en bêta. Parcourez les artistes et albums avec bannières et biographies, notez-les et marquez vos favoris, gardez des playlists, recherchez dans la bibliothèque et lancez une analyse rapide.',
+        "Gluetun est un service pris en charge. Voyez l'adresse publique, la localisation et le port ouvert du VPN, reconnectez-le en un toucher, et arrêtez le VPN ou le DNS derrière une confirmation. Un widget du tableau de bord montre son état, et un serveur de contrôle sans clé API peut être ajouté sans.",
+        'Un widget de tableau de bord dashdot : anneaux CPU, mémoire et disque avec réseau montant et descendant, température et disponibilité, un bloc par instance.',
+        "Transmission fait tout ce que fait son interface web et sort de bêta : les neuf filtres, les puces de tracker et label, la recherche, dix ordres de tri, les lignes compactes, la sélection avec actions groupées, chaque action de torrent dont définir l'emplacement, renommer, labels et déplacements dans la file, un écran de détail avec tout ce que montre l'inspecteur plus un arbre de dossiers, les drapeaux de pairs et les niveaux de trackers, et un onglet Paramètres pour les préférences Torrents, Vitesse, Pairs et Réseau avec statistiques, un test de port et une mise à jour de la liste de blocage. L'ajout d'un torrent préremplit le dossier utilisé par le serveur et montre son espace libre.",
+        "qBittorrent a un onglet de journal d'exécution, lu à l'ouverture, avec copie.",
+        'Le formulaire Plex peut se connecter sur plex.tv et remplir un serveur qui répond, au lieu de demander un jeton.',
+        "La recherche tapée dans la liste Sonarr ou Radarr est reprise sur l'écran d'ajout.",
       ]),
       ChangeGroup(ChangeCategory.improved, <String>[
-        'The Transmission screens follow the same look as qBittorrent, and back unwinds a selection, then the tab, then the drawer before it leaves the screen.',
+        "Les écrans de Transmission suivent le même look que qBittorrent, et retour défait d'abord une sélection, puis l'onglet, puis le tiroir avant de quitter l'écran.",
       ]),
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'Saving an instance no longer drops the custom headers set for it.',
-        'The qBittorrent settings list the network interfaces the server actually has.',
-        'Navidrome signs its requests the way Subsonic expects and reports a rejected password instead of hiding it.',
+        'Enregistrer une instance ne supprime plus les en-têtes personnalisés définis pour elle.',
+        'Les paramètres de qBittorrent listent les interfaces réseau que le serveur possède réellement.',
+        "Navidrome signe ses requêtes comme Subsonic l'attend et signale un mot de passe refusé au lieu de le cacher.",
       ]),
     ],
   ),
@@ -176,18 +176,18 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-09-11',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        'A Wake-on-LAN widget for the dashboard. The machines you have set up can be woken with one tap from the board, without going into settings to find them. It tells you the magic packet was sent rather than that the machine woke, since nothing answers one and a machine takes a while to come up.',
-        'Adding a torrent in qBittorrent fills in the save path from the server, using its default location or the path the chosen category defines, so it no longer has to be typed out for every torrent.',
-        'The sidebar can be pulled down to refresh the health of every service. It also checks again when you open it if the last check is more than a minute old, and keeps them current every 30 seconds while it stays open.',
+        "Un widget Wake-on-LAN pour le tableau de bord. Les machines que vous avez configurées peuvent être réveillées en un toucher depuis le tableau, sans aller les chercher dans les paramètres. Il vous dit que le paquet magique a été envoyé plutôt que la machine réveillée, puisque rien ne répond à un tel paquet et qu'une machine met un moment à démarrer.",
+        "L'ajout d'un torrent dans qBittorrent préremplit le chemin d'enregistrement depuis le serveur, en utilisant son emplacement par défaut ou le chemin défini par la catégorie choisie, donc plus besoin de le retaper pour chaque torrent.",
+        "La barre latérale peut être tirée vers le bas pour actualiser la santé de chaque service. Elle vérifie aussi à l'ouverture si la dernière vérification date de plus d'une minute, et les maintient à jour toutes les 30 secondes tant qu'elle reste ouverte.",
       ]),
       ChangeGroup(ChangeCategory.improved, <String>[
-        'Custom headers warn you when a header will not survive the trip. Several services use Authorization for their own sign-in and overwrite yours, and qBittorrent refuses one it did not issue, so the warning names the affected services and suggests Proxy-Authorization, which works wherever your proxy accepts it.',
-        'The health check no longer mistakes the login page of a reverse proxy for a working server. It used to follow the redirect to a sign-in page, get a normal answer back, and report the service as online. It now recognises a login page and shows a warning instead.',
+        "Les en-têtes personnalisés avertissent quand un en-tête ne survivra pas au trajet. Plusieurs services utilisent Authorization pour leur propre connexion et écrasent le vôtre, et qBittorrent refuse celui qu'il n'a pas émis, donc l'avertissement nomme les services concernés et suggère Proxy-Authorization, qui fonctionne partout où votre proxy l'accepte.",
+        "Le contrôle de santé ne prend plus la page de connexion d'un proxy inverse pour un serveur fonctionnel. Il suivait auparavant la redirection vers une page de connexion, recevait une réponse normale, et déclarait le service en ligne. Il reconnaît maintenant une page de connexion et affiche un avertissement à la place.",
       ]),
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'Posters and backdrops load behind a reverse proxy. Artwork never carried your custom headers, so behind Authelia, Cloudflare Access or similar every image was refused and came up blank while the rest of the app worked.',
-        'Headers set for the whole profile now reach every request. Test connection, the health dot on each service, and the Beszel, dashdot and Glances clients all dropped them, which is why Test connection could fail while the app itself worked fine.',
-        'The Active downloads widget shows what is actually downloading. It sorted purely by progress, so a queue of nearly finished torrents could push the one live download off the card.',
+        "Les affiches et fonds se chargent derrière un proxy inverse. Les illustrations n'emportaient jamais vos en-têtes personnalisés, donc derrière Authelia, Cloudflare Access ou similaire, chaque image était refusée et apparaissait vide pendant que le reste de l'app fonctionnait.",
+        "Les en-têtes définis pour tout le profil atteignent maintenant chaque requête. Le test de connexion, le point de santé de chaque service et les clients Beszel, dashdot et Glances les perdaient, c'est pourquoi le test de connexion pouvait échouer pendant que l'app elle-même fonctionnait.",
+        'Le widget Téléchargements actifs montre ce qui est réellement en téléchargement. Il triait uniquement par progression, donc une file de torrents presque terminés pouvait pousser le seul téléchargement en cours hors de la carte.',
       ]),
     ],
   ),
@@ -196,16 +196,16 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-08-30',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        'Unraid is now a supported service. The array tab shows parity and data disks with per-disk usage, temperature and health, alongside the state of the last parity check. The system tab covers per-core CPU load, memory, network, and an About card naming the processor, uptime, kernel, memory slots and hostname. Docker containers list with their ports and uptime, open to a detail sheet, and can be started, stopped, paused and resumed. Virtual machines can be started, shut down, paused, resumed, rebooted, force stopped and reset. It is marked beta while it settles in.',
-        'Radarr and Sonarr interactive search can open a release on its torrent or indexer page, so you can look it over before grabbing it, and copy its download URL or magnet link.',
+        "Unraid est désormais un service pris en charge. L'onglet du tableau montre les disques de parité et de données avec l'utilisation, la température et la santé de chacun, ainsi que l'état de la dernière vérification de parité. L'onglet système couvre la charge CPU par cœur, la mémoire, le réseau, et une carte À propos nommant le processeur, la disponibilité, le noyau, les emplacements mémoire et le nom d'hôte. Les conteneurs Docker sont listés avec leurs ports et leur disponibilité, ouvrent une feuille de détail, et peuvent être démarrés, arrêtés, mis en pause et repris. Les machines virtuelles peuvent être démarrées, arrêtées, mises en pause, reprises, redémarrées, arrêtées de force et réinitialisées. Il est marqué bêta le temps de se stabiliser.",
+        "La recherche interactive de Radarr et Sonarr peut ouvrir une release sur sa page torrent ou indexeur, pour l'examiner avant de la grabber, et copier son URL de téléchargement ou son lien magnet.",
       ]),
       ChangeGroup(ChangeCategory.improved, <String>[
-        'qBittorrent remembers how you sorted the list. Whatever you last chose is what you get next time you open the app, kept separately for each server, rather than resetting to newest first on every launch.',
-        'The dashboard only offers widgets something you have configured can actually fill, and says which service a widget is waiting on rather than adding an empty card.',
+        "qBittorrent se souvient de la façon dont vous avez trié la liste. Ce que vous avez choisi en dernier est ce que vous retrouvez à la prochaine ouverture de l'app, conservé séparément pour chaque serveur, au lieu de revenir au plus récent à chaque lancement.",
+        "Le tableau de bord n'offre que des widgets que quelque chose de configuré peut réellement remplir, et indique quel service un widget attend plutôt que d'ajouter une carte vide.",
       ]),
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'The filter button on the qBittorrent screen opens the filter drawer again. It had been asking the wrong part of the screen, which answered by doing nothing at all, so the button looked dead while swiping in from the edge still worked.',
-        'When a server refuses a request with 401 or 403, Atrium now shows the reason the server gave instead of replacing it with a generic authentication message. A refusal that turns out to be a cross-site check rather than a bad key now says so.',
+        "Le bouton de filtre de l'écran qBittorrent rouvre le tiroir de filtres. Il interrogeait la mauvaise partie de l'écran, qui répondait en ne faisant rien, donc le bouton semblait mort alors que le balayage depuis le bord fonctionnait toujours.",
+        "Quand un serveur refuse une requête avec 401 ou 403, Atrium affiche maintenant la raison donnée par le serveur au lieu de la remplacer par un message d'authentification générique. Un refus qui s'avère être une vérification intersite plutôt qu'une mauvaise clé le dit aussi.",
       ]),
     ],
   ),
@@ -214,12 +214,12 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-08-26',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'Adding things in Lidarr works again. Adding an artist, indexer, download client, import list, notification, tag, root folder, custom format or any of the profiles was refused by the server, as was grabbing a release from an interactive search. Atrium was sending empty fields that Lidarr will not accept, and it rejected the whole request without saying which part it disliked.',
-        'Interactive search no longer fails on Lidarr nightly and on builds with plugins installed. Those versions name their download protocols differently, and a single name Atrium did not recognise discarded the entire list of results rather than that one field.',
-        'Lidarr screens no longer run off the edge at large system text sizes, in the track file editor, the unmapped files list and artist history.',
+        "L'ajout de choses dans Lidarr fonctionne à nouveau. L'ajout d'un artiste, indexeur, client de téléchargement, liste d'import, notification, balise, dossier racine, format personnalisé ou de l'un des profils était refusé par le serveur, tout comme le grab d'une release depuis une recherche interactive. Atrium envoyait des champs vides que Lidarr n'accepte pas, et il rejetait la requête entière sans dire quelle partie lui déplaisait.",
+        'La recherche interactive ne plante plus sur les versions nightly de Lidarr et sur les builds avec des plugins installés. Ces versions nomment leurs protocoles de téléchargement différemment, et un seul nom non reconnu par Atrium écartait toute la liste de résultats au lieu de ce seul champ.',
+        "Les écrans de Lidarr ne débordent plus du bord avec les grandes tailles de texte système, dans l'éditeur de fichiers de pistes, la liste des fichiers non mappés et l'historique de l'artiste.",
       ]),
       ChangeGroup(ChangeCategory.improved, <String>[
-        'Lidarr activity history keeps loading as you scroll instead of stopping at the first page.',
+        "L'historique d'activité de Lidarr continue de se charger au défilement au lieu de s'arrêter à la première page.",
       ]),
     ],
   ),
@@ -228,16 +228,16 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-08-23',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        'Lidarr is now a supported service: artists and discography, album and track detail, wanted, queue and history, the full settings tree, an in-app log reader, and album releases in the calendar. It is marked beta while it settles in.',
-        'qBittorrent gained a settings page covering what its own web interface offers, across system, behaviour, downloads, connection, speed, BitTorrent, RSS, web UI and advanced.',
-        'qBittorrent torrents can be moved around the queue, to the top, up, down or to the bottom, one at a time or several at once, and the list can be sorted by queue position.',
-        'The app icon now follows your system palette when Android themed icons are switched on.',
+        "Lidarr est désormais un service pris en charge : artistes et discographie, détail d'album et de piste, recherchés, file d'attente et historique, l'arbre complet des paramètres, un lecteur de journal intégré, et les sorties d'albums dans le calendrier. Il est marqué bêta le temps de se stabiliser.",
+        "qBittorrent a gagné une page de paramètres couvrant ce qu'offre sa propre interface web, sur système, comportement, téléchargements, connexion, vitesse, BitTorrent, RSS, interface web et avancé.",
+        'Les torrents de qBittorrent peuvent être déplacés dans la file, en haut, vers le haut, vers le bas ou en bas, un par un ou plusieurs à la fois, et la liste peut être triée par position dans la file.',
+        "L'icône de l'app suit maintenant la palette de votre système quand les icônes thématiques Android sont activées.",
       ]),
       ChangeGroup(ChangeCategory.improved, <String>[
-        'The qBittorrent screen leads with your totals, active downloads and what is seeding, with search and start or stop everything to hand, and splits the torrent list and settings across two tabs.',
+        "L'écran de qBittorrent mène avec vos totaux, les téléchargements actifs et ce qui est en seed, avec la recherche et démarrer/arrêter tout à portée, et répartit la liste des torrents et les paramètres sur deux onglets.",
       ]),
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'Changing a qBittorrent setting that would cut Atrium off from the server now asks first. Moving the web UI address or port leaves the app unable to reach it, and turning off CSRF or clickjacking protection weakens the server, so each explains what it will do before going ahead.',
+        "Modifier un paramètre qBittorrent qui couperait Atrium du serveur demande maintenant d'abord. Déplacer l'adresse ou le port de l'interface web rend l'app incapable de le joindre, et désactiver la protection CSRF ou anti-clickjacking affaiblit le serveur, donc chacun explique ce qu'il va faire avant de continuer.",
       ]),
     ],
   ),
@@ -246,17 +246,17 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-08-21',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        'qBittorrent can skip the hash check when you add a torrent whose files are already on disk, instead of rechecking the whole thing.',
-        'qBittorrent torrents can be filtered by tracker, with a count next to each one.',
-        'The calendar can show unmonitored releases as well as monitored ones, and remembers which you chose.',
+        'qBittorrent peut ignorer la vérification du hash quand vous ajoutez un torrent dont les fichiers sont déjà sur le disque, au lieu de tout revérifier.',
+        'Les torrents de qBittorrent peuvent être filtrés par tracker, avec un compte à côté de chacun.',
+        'Le calendrier peut afficher les sorties non surveillées aussi bien que surveillées, et se souvient de votre choix.',
       ]),
       ChangeGroup(ChangeCategory.improved, <String>[
-        'Tapping a transfer in Activity opens that torrent, movie or series directly instead of dropping you on the service to find it again. Works for qBittorrent, Deluge, Transmission, rTorrent, Sonarr and Radarr.',
-        'A tracker message in qBittorrent now wraps instead of being cut off, so you can read why a tracker is not working.',
+        'Toucher un transfert dans Activité ouvre directement ce torrent, film ou série au lieu de vous déposer sur le service pour le chercher. Fonctionne pour qBittorrent, Deluge, Transmission, rTorrent, Sonarr et Radarr.',
+        "Un message de tracker dans qBittorrent passe maintenant à la ligne au lieu d'être coupé, pour que vous puissiez lire pourquoi un tracker ne fonctionne pas.",
       ]),
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'Cover art is no longer blank when Sonarr or Radarr is served from a subpath with a URL Base configured.',
-        'The calendar no longer labels an episode as monitored when the series it belongs to is not.',
+        "Les pochettes ne sont plus vides quand Sonarr ou Radarr est servi depuis un sous-chemin avec une base d'URL configurée.",
+        "Le calendrier n'étiquette plus un épisode comme surveillé quand la série à laquelle il appartient ne l'est pas.",
       ]),
     ],
   ),
@@ -265,18 +265,18 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-08-15',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        'Interactive search in Sonarr and Radarr now shows the custom format score and the formats each release matched, sorted best match first.',
+        "La recherche interactive dans Sonarr et Radarr affiche maintenant le score de format personnalisé et les formats correspondus par chaque release, triés de la meilleure correspondance d'abord.",
       ]),
       ChangeGroup(ChangeCategory.improved, <String>[
-        'Tracearr has been rebuilt: an overview of your whole fleet, live streams with playback diagnostics, a media catalog with per-server availability, user profiles, and a security ledger.',
-        'Tracearr is no longer marked beta.',
-        'When a server asks you to slow down, Atrium now waits the time it asked for and retries instead of showing an error.',
-        'Lists that load more as you scroll now tell you when you have reached the end.',
+        "Tracearr a été reconstruit : une vue d'ensemble de toute votre flotte, les flux en direct avec les diagnostics de lecture, un catalogue de médias avec la disponibilité par serveur, les profils utilisateurs, et un registre de sécurité.",
+        "Tracearr n'est plus marqué bêta.",
+        "Quand un serveur demande de ralentir, Atrium attend maintenant le temps demandé et réessaie au lieu d'afficher une erreur.",
+        'Les listes qui se chargent au défilement indiquent maintenant quand vous avez atteint la fin.',
       ]),
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'Tracearr no longer keeps polling a screen you have left, and its artwork cache no longer grows without limit.',
-        'Marking a Tracearr security incident as reviewed now says plainly that it is only stored on this device.',
-        'One unreadable item no longer blanks a whole Tracearr list.',
+        "Tracearr n'interroge plus un écran que vous avez quitté, et son cache d'illustrations ne grossit plus sans limite.",
+        "Marquer un incident de sécurité Tracearr comme examiné dit maintenant clairement que c'est stocké uniquement sur cet appareil.",
+        "Un seul élément illisible n'efface plus toute une liste Tracearr.",
       ]),
     ],
   ),
@@ -285,19 +285,19 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-08-13',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        'Beszel is now a supported service: see your systems, their live metrics, and a detailed screen for each one.',
-        'dashdot is now a supported service too, with live CPU, memory, disk, and GPU rings and a system information tab.',
-        'qBittorrent gained tag management: filter your torrents by tag, and copy a tracker URL straight from the trackers list.',
+        'Beszel est désormais un service pris en charge : voyez vos systèmes, leurs métriques en direct, et un écran détaillé pour chacun.',
+        "dashdot est désormais un service pris en charge aussi, avec des anneaux en direct pour CPU, mémoire, disque et GPU et un onglet d'informations système.",
+        "qBittorrent a gagné la gestion des balises : filtrez vos torrents par balise, et copiez l'URL d'un tracker directement depuis la liste des trackers.",
       ]),
       ChangeGroup(ChangeCategory.improved, <String>[
-        'The Files tab now shows the full file name instead of cutting it off.',
-        'rTorrent, Deluge, Transmission, SABnzbd, and Speedtest Tracker now use their own icons.',
-        'Tracearr, Transmission, Deluge, and rTorrent are marked as beta so you know what is still settling in.',
+        "L'onglet Fichiers affiche maintenant le nom de fichier complet au lieu de le tronquer.",
+        'rTorrent, Deluge, Transmission, SABnzbd et Speedtest Tracker utilisent désormais leurs propres icônes.',
+        'Tracearr, Transmission, Deluge et rTorrent sont marqués comme bêta pour que vous sachiez ce qui est encore en rodage.',
       ]),
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'Testing a connection now checks your credentials for Beszel and for qBittorrent API keys, instead of only checking that the server answers.',
-        'The Deluge torrent detail screen no longer crashes on some torrents.',
-        'Scrolling is smoother in Emby, Jellyfin, and Beszel.',
+        'Le test de connexion vérifie maintenant vos identifiants pour Beszel et pour les clés API de qBittorrent, au lieu de seulement vérifier que le serveur répond.',
+        "L'écran de détail d'un torrent Deluge ne plante plus sur certains torrents.",
+        'Le défilement est plus fluide dans Emby, Jellyfin et Beszel.',
       ]),
     ],
   ),
@@ -306,13 +306,13 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-08-07',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        'Delete a film or an episode from disk while keeping it in your library, so you free the space without losing the entry. Tick unmonitor at the same time and it will not simply download again.',
-        'The same thing in bulk: select several films or series, choose Delete files only, and the entries stay behind.',
-        'Radarr can be sorted ascending or descending.',
+        "La recherche de films ou d'épisodes sur le disque en les gardant dans votre bibliothèque, pour libérer de l'espace sans perdre la fiche. Cochez « ne plus surveiller » en même temps et il ne se retéléchargera pas tout seul.",
+        'La même chose en masse : sélectionnez plusieurs films ou séries, choisissez « Supprimer uniquement les fichiers », et les fiches restent.',
+        'Radarr peut être trié par ordre croissant ou décroissant.',
       ]),
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'Lists no longer run underneath the system navigation buttons at the bottom of the screen.',
-        'The buttons on a film or series detail screen no longer wrap onto a second line on narrower phones.',
+        "Les listes ne passent plus sous les boutons de navigation système en bas de l'écran.",
+        "Les boutons d'un écran de détail de film ou de série ne passent plus sur une seconde ligne sur les téléphones plus étroits.",
       ]),
     ],
   ),
@@ -321,19 +321,19 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-08-07',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        'Share a whole batch of .torrent files at once and Atrium adds them together, rather than one share at a time.',
-        'Tracearr gained detail screens: tap a title to see its statistics and who has been watching it, or tap an account to see what they have played.',
+        "Partagez tout un lot de fichiers .torrent d'un coup et Atrium les ajoute ensemble, plutôt qu'un seul partage à la fois.",
+        "Tracearr a gagné des écrans de détail : touchez un titre pour voir ses statistiques et qui l'a regardé, ou touchez un compte pour voir ce qu'il a joué.",
       ]),
       ChangeGroup(ChangeCategory.improved, <String>[
-        'Tracearr now talks to its public API and asks for an API key instead of a username and password. Open Tracearr, go to Settings, API Key, Generate Key, and paste that into the instance. If you had Tracearr set up before, you will need to do this once.',
-        'That public API covers less than the one Atrium used before, so if there is something from Tracearr you want here and cannot find, open a feature request on GitHub and we will see what we can reach.',
-        'Sonarr and Radarr remember whether you left them in grid or list view.',
+        "Tracearr parle maintenant à son API publique et demande une clé API au lieu d'un nom d'utilisateur et d'un mot de passe. Ouvrez Tracearr, allez dans Paramètres, Clé API, Générer une clé, et collez-la dans l'instance. Si vous aviez déjà Tracearr configuré, vous devrez le refaire une fois.",
+        "Cette API publique couvre moins que celle qu'utilisait Atrium auparavant, donc si quelque chose de Tracearr vous manque ici, ouvrez une demande de fonctionnalité sur GitHub et nous verrons ce que nous pouvons atteindre.",
+        'Sonarr et Radarr se souviennent si vous les laissiez en vue grille ou liste.',
       ]),
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'The bottom navigation bar no longer has its icons clipped on phones using three-button navigation.',
-        'Recently Downloaded no longer repeats the same episode or film several times, and a season that arrived in one go now reads as a single entry.',
-        'Tracearr instances that were answering perfectly no longer report that the server could not be reached when you test the connection.',
-        'The Emby search bar lines up with the rest of the screen.',
+        "La barre de navigation du bas n'a plus ses icônes rognées sur les téléphones en navigation à trois boutons.",
+        "Téléchargés récemment ne répète plus plusieurs fois le même épisode ou film, et une saison arrivée d'un coup se lit comme une seule entrée.",
+        'Les instances Tracearr qui répondaient parfaitement ne signalent plus que le serveur est injoignable lors du test de connexion.',
+        "La barre de recherche d'Emby est alignée avec le reste de l'écran.",
       ]),
     ],
   ),
@@ -342,10 +342,10 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-08-06',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        'Atrium now turns up in the list when you tap a .torrent file or open a magnet link, and in the share sheet when you share either from another app.',
-        'If you have more than one torrent client set up it asks which one to send it to, otherwise it goes straight there.',
-        'Either way the usual add sheet opens with the link or file already filled in, so the save path, category and start-paused choices are still yours.',
-        'Share several in a row and they queue up one after another rather than only the first arriving.',
+        "L'app Atrium apparaît maintenant dans la liste quand vous touchez un fichier .torrent ou ouvrez un lien magnet, et dans la feuille de partage quand vous partagez l'un ou l'autre depuis une autre app.",
+        'Si vous avez plusieurs clients torrent configurés, elle demande lequel utiliser, sinon le torrent y part directement.',
+        "Dans les deux cas, la feuille d'ajout habituelle s'ouvre avec le lien ou le fichier déjà rempli, donc le chemin d'enregistrement, la catégorie et le choix « démarrer en pause » restent à vous.",
+        "Partagez-en plusieurs à la suite et ils s'enchaînent un par un plutôt que seul le premier n'arrive.",
       ]),
     ],
   ),
@@ -354,20 +354,20 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-08-04',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        'Deluge, Transmission and rTorrent are now services you can add, so every common torrent client is covered alongside qBittorrent.',
-        'Each one gives you a live torrent list with start, stop, remove, recheck and reannounce, filter chips, sorting, global speed limits, and a detail screen with files, peers and trackers.',
-        'Add a torrent by magnet link, .torrent URL or file, and pick where it lands.',
-        'Tracearr is now a service you can add: who is streaming right now, watch and library statistics, history, and a map of where accounts are being used from.',
-        'Atrium builds for iOS. There is no download, since the licence rules out the App Store, so you build and sideload it yourself. It has not run on real hardware yet, so expect rough edges.',
+        'Deluge, Transmission et rTorrent sont désormais des services que vous pouvez ajouter, donc chaque client torrent courant est couvert aux côtés de qBittorrent.',
+        'Chacun offre une liste de torrents en direct avec démarrer, arrêter, retirer, revérifier et ré-annoncer, des puces de filtre, le tri, les limites de vitesse globales, et un écran de détail avec fichiers, pairs et trackers.',
+        'Ajoutez un torrent par lien magnet, URL de .torrent ou fichier, et choisissez où il atterrit.',
+        "Tracearr est désormais un service que vous pouvez ajouter : qui regarde en ce moment, statistiques de visionnage et de bibliothèque, historique, et une carte d'où les comptes sont utilisés.",
+        "Atrium se compile pour iOS. Il n'y a pas de téléchargement, la licence excluant l'App Store, donc vous le compilez et l'installez vous-même. Il n'a pas encore tourné sur du vrai matériel, donc attendez-vous à des angles rugueux.",
       ]),
       ChangeGroup(ChangeCategory.improved, <String>[
-        'The torrent screens lead with the two live speeds, and a transfer that is actually moving gets a wavy progress bar so you can tell at a glance which ones are running.',
-        'A finished torrent shows its share ratio in the progress bar instead of sitting at 100 percent saying nothing.',
-        'Detail screens now open over the whole screen rather than inside the tab.',
+        "Les écrans de torrents mènent avec les deux vitesses en direct, et un transfert qui avance réellement a une barre de progression ondulée pour distinguer d'un coup d'œil ceux qui tournent.",
+        'Un torrent terminé affiche son ratio de partage dans la barre de progression au lieu de rester à 100 pourcent sans rien dire.',
+        "Les écrans de détail s'ouvrent maintenant sur tout l'écran plutôt qu'à l'intérieur de l'onglet.",
       ]),
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'Screens that took longer to load than their refresh interval could restart forever and never finish loading. They now wait for a refresh to finish before scheduling the next, and back off when a server is not answering.',
-        'A server that stays unreachable no longer flashes a spinner over the error every few seconds.',
+        "Les écrans qui mettaient plus longtemps à se charger que leur intervalle d'actualisation pouvaient redémarrer en boucle sans jamais finir. Ils attendent maintenant qu'une actualisation se termine avant d'en programmer une autre, et ralentissent quand un serveur ne répond pas.",
+        "Un serveur qui reste injoignable n'affiche plus un spinner par-dessus l'erreur toutes les quelques secondes.",
       ]),
     ],
   ),
@@ -376,13 +376,13 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-07-29',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        'NZBGet is now a service you can add, with a live queue you can drag to reorder, pause and resume item by item, and delete from.',
-        'Add an NZB from the app by pasting a URL or picking an .nzb file, and change an item\'s priority or category once it is queued.',
-        'Set a download speed limit, or lift it, without leaving the queue.',
-        'NZBGet history lists completed and failed downloads, with retry on the ones that failed.',
+        'NZBGet est désormais un service que vous pouvez ajouter, avec une file en direct que vous pouvez réordonner par glisser-déposer, mettre en pause et reprendre élément par élément, et supprimer.',
+        "Ajoutez un NZB depuis l'app en collant une URL ou en choisissant un fichier .nzb, et changez la priorité ou la catégorie d'un élément une fois en file.",
+        'Définissez une limite de vitesse de téléchargement, ou levez-la, sans quitter la file.',
+        "L'historique de NZBGet liste les téléchargements terminés et échoués, avec une nouvelle tentative sur ceux qui ont échoué.",
       ]),
       ChangeGroup(ChangeCategory.improved, <String>[
-        'NZBGet downloads show up in the Active downloads widget and the Activity tab alongside your other download clients.',
+        "Les téléchargements NZBGet apparaissent dans le widget Téléchargements actifs et l'onglet Activité aux côtés de vos autres clients de téléchargement.",
       ]),
     ],
   ),
@@ -391,11 +391,11 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-07-24',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        'Check for updates from Settings, About. See whether a newer version is out and open its release page. Atrium never installs updates itself.',
-        'When an update is available, the Change log shows it at the top with the release notes read inline.',
+        "Recherchez des mises à jour depuis Paramètres, À propos. Voyez si une version plus récente existe et ouvrez sa page de version. Atrium n'installe jamais les mises à jour lui-même.",
+        'Quand une mise à jour est disponible, le Journal des modifications la montre en haut avec les notes de version lues en ligne.',
       ]),
       ChangeGroup(ChangeCategory.improved, <String>[
-        'The Change log is now per-version cards with New, Improved and Fixed labels in your accent colors, dates, and an Installed marker.',
+        "Le Journal des modifications est maintenant des cartes par version avec les libellés Nouveau, Amélioré et Corrigé dans vos couleurs d'accent, les dates, et un marqueur Installée.",
       ]),
     ],
   ),
@@ -404,8 +404,8 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-07-23',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        'Speedtest Tracker service, follow your download, upload and ping speeds from the dashboard.',
-        'Test Connection button on every service, check the URL and login before you save.',
+        "Service Speedtest Tracker, suivez vos vitesses de téléchargement, d'envoi et de ping depuis le tableau de bord.",
+        "Bouton Tester la connexion sur chaque service, vérifiez l'URL et la connexion avant d'enregistrer.",
       ]),
     ],
   ),
@@ -414,17 +414,17 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-07-19',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        'Radarr settings now match Sonarr\'s, configurable to the same depth.',
+        'Les paramètres de Radarr correspondent maintenant à ceux de Sonarr, configurables à la même profondeur.',
       ]),
       ChangeGroup(ChangeCategory.improved, <String>[
-        'New theming engine with a cleaner, flatter look and a live-updating Settings preview.',
-        'Glances gauges follow your theme instead of fixed colors.',
-        'Logs keep loading as you scroll instead of stopping after the first page.',
-        'Series and movie detail screens scroll noticeably more smoothly.',
+        'Nouveau moteur de thèmes avec un look plus épuré et plat et un aperçu des paramètres qui se met à jour en direct.',
+        'Les jauges Glances suivent votre thème au lieu de couleurs fixes.',
+        'Les jauges Glances suivent votre thème au lieu de couleurs fixes.',
+        "Les journaux continuent de se charger au défilement au lieu de s'arrêter après la première page.",
       ]),
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'Scrolling no longer over-stretches at the edges.',
-        'Dashboard widgets keep their state as you move around.',
+        "Le défilement ne s'étire plus exagérément aux bords.",
+        'Les widgets du tableau de bord conservent leur état quand vous naviguez.',
       ]),
     ],
   ),
@@ -433,12 +433,12 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-07-17',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.improved, <String>[
-        'Unified pull to refresh across every screen, smoother and more responsive.',
-        'Detail screens fade their title into the app bar, and the bottom bar hides as you scroll down.',
-        'Seerr posters, backdrops and cast now load from your own Seerr server rather than TMDB.',
+        'Les écrans de détail de séries et films défilent nettement plus fluidement.',
+        'Le tirage pour actualiser est unifié sur tous les écrans, plus fluide et réactif.',
+        'Les affiches, fonds et distributions de Seerr se chargent maintenant depuis votre propre serveur Seerr plutôt que TMDB.',
       ]),
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'Pull to refresh no longer fires when you swipe a poster row sideways.',
+        "Le tirage pour actualiser ne se déclenche plus quand vous balayez une rangée d'affiches sur le côté.",
       ]),
     ],
   ),
@@ -447,7 +447,7 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-07-17',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'Build numbers now follow F-Droid\'s scheme. If you came from an earlier GitHub build, Android needs a one-time reinstall, so export your profiles from Settings first. Nothing after this is affected.',
+        "Les numéros de build suivent maintenant le schéma de F-Droid. Si vous venez d'une build GitHub antérieure, Android demande une réinstallation unique, donc exportez d'abord vos profils depuis les Paramètres. Rien après cela n'est affecté.",
       ]),
     ],
   ),
@@ -456,7 +456,7 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-07-17',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'Reproducible builds now match F-Droid\'s byte for byte, a library had carried a build-path fingerprint.',
+        'Les builds reproductibles correspondent maintenant octet par octet à ceux de F-Droid, une bibliothèque embarquait une empreinte de chemin de build.',
       ]),
     ],
   ),
@@ -465,7 +465,7 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-07-17',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.improved, <String>[
-        'Releases are now built by a server so F-Droid can rebuild and verify them, letting the two share one signature so you can move between them without reinstalling.',
+        "Les versions sont maintenant construites par un serveur pour que F-Droid puisse les reconstruire et vérifier, ce qui permet aux deux de partager une même signature pour passer de l'une à l'autre sans réinstaller.",
       ]),
     ],
   ),
@@ -474,7 +474,7 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-07-17',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'Removed an encrypted dependency list the Android tools embedded in every APK, it was Play only and never sent anywhere.',
+        "Suppression d'une liste de dépendances chiffrée que les outils Android intégraient dans chaque APK, elle était propre à Play et n'était jamais envoyée nulle part.",
       ]),
     ],
   ),
@@ -483,8 +483,8 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-07-16',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.fixed, <String>[
-        'Security, 1.0.0 attached your Sonarr or Radarr API key to poster requests sent to TheTVDB, TMDB and Fanart.tv. If you ran 1.0.0, consider rotating those keys.',
-        'Posters and backdrops now load from your own Sonarr and Radarr instances, so the artwork sites no longer see your address or what you are browsing.',
+        "Sécurité, la 1.0.0 joignait votre clé API Sonarr ou Radarr aux requêtes d'affiches envoyées à TheTVDB, TMDB et Fanart.tv. Si vous avez fait tourner la 1.0.0, envisagez de renouveler ces clés.",
+        "Les affiches et fonds se chargent maintenant depuis vos propres instances Sonarr et Radarr, donc les sites d'illustrations ne voient plus votre adresse ni ce que vous consultez.",
       ]),
     ],
   ),
@@ -493,12 +493,12 @@ const List<ReleaseNote> releaseNotes = <ReleaseNote>[
     date: '2026-07-16',
     groups: <ChangeGroup>[
       ChangeGroup(ChangeCategory.added, <String>[
-        'Dashboard of at-a-glance widgets (downloads, now streaming, upcoming, recently added and downloaded, requests, server info), reorderable.',
-        'Sonarr and Radarr management across library, queue, wanted, history, blocklist, system and settings.',
-        'qBittorrent, SABnzbd, Prowlarr, Bazarr, Seerr, Tautulli and Glances modules.',
-        'Jellyfin, Emby and Plex browsing with resume rows, item detail and now-playing sessions.',
-        'Multiple profiles, each instance with a local and an external URL, plus import and export.',
-        'Material 3 Expressive theming with dynamic color, custom palettes and an optional biometric lock.',
+        "Tableau de bord de widgets d'un coup d'œil (téléchargements, en cours de lecture, à venir, ajouts et téléchargements récents, demandes, infos serveur), réorganisables.",
+        "Gestion de Sonarr et Radarr sur bibliothèque, file d'attente, recherchés, historique, liste de blocage, système et paramètres.",
+        'Modules qBittorrent, SABnzbd, Prowlarr, Bazarr, Seerr, Tautulli et Glances.',
+        'Navigation dans Jellyfin, Emby et Plex avec les reprises, le détail des éléments et les sessions en cours de lecture.',
+        'Plusieurs profils, chaque instance avec une URL locale et une URL externe, plus import et export.',
+        'Thème Material 3 Expressive avec couleur dynamique, palettes personnalisées et verrou biométrique facultatif.',
       ]),
     ],
   ),

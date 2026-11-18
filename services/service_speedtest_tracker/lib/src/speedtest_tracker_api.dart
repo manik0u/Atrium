@@ -200,12 +200,12 @@ SpeedtestTrackerException _mapDio(
         ),
       _Operation.result => const SpeedtestTrackerException(
           SpeedtestErrorKind.notFound,
-          'The queued speed test result is no longer available.',
+          "Le résultat du speedtest en file n'est plus disponible.",
           statusCode: 404,
         ),
       _Operation.health => const SpeedtestTrackerException(
           SpeedtestErrorKind.other,
-          'The Speedtest Tracker health endpoint was not found.',
+          'Le point de santé de Speedtest Tracker est introuvable.',
           statusCode: 404,
         ),
     };

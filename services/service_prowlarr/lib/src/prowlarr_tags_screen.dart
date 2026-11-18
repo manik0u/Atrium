@@ -22,12 +22,12 @@ class ProwlarrTagsScreen extends ConsumerWidget {
     final AsyncValue<List<Map<String, dynamic>>> tags =
         ref.watch(prowlarrProvidersProvider(_args));
     return Scaffold(
-      appBar: AppBar(title: const Text('Tags')),
+      appBar: AppBar(title: const Text('Balises')),
       floatingActionButton: FloatingActionButton.extended(
         heroTag: 'prowlarr-add-tag',
         onPressed: () => _editLabel(context, ref, null),
         icon: const Icon(Icons.add),
-        label: const Text('Add'),
+        label: const Text('Ajouter'),
       ),
       body: AsyncValueView<List<Map<String, dynamic>>>(
           value: tags,
@@ -52,8 +52,8 @@ class ProwlarrTagsScreen extends ConsumerWidget {
             SizedBox(height: 100),
             EmptyView(
                 icon: Icons.label_outline,
-                title: 'No tags',
-                message: 'Tap Add to create a tag.',
+                title: 'Aucune balise',
+                message: 'Touchez Ajouter pour créer une balise.',
               ),
           ],
         ),
@@ -87,7 +87,7 @@ class ProwlarrTagsScreen extends ConsumerWidget {
                   leading: const Icon(Icons.label_outline),
                   title: Text((tag['label'] as String?) ?? ''),
                   trailing: IconButton(
-                    tooltip: 'Delete',
+                    tooltip: 'Supprimer',
                     icon: const Icon(Icons.delete_outline),
                     onPressed: () => _confirmDelete(context, ref, tag),
                   ),
@@ -113,12 +113,12 @@ class ProwlarrTagsScreen extends ConsumerWidget {
     final String? label = await showDialog<String>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: Text(existing == null ? 'New tag' : 'Rename tag'),
+        title: Text(existing == null ? 'Nouvelle balise' : 'Renommer la balise'),
         content: TextField(
           controller: controller,
           autofocus: true,
           decoration: const InputDecoration(
-            labelText: 'Label',
+            labelText: 'Libellé',
             border: OutlineInputBorder(),
           ),
           onSubmitted: (String v) => Navigator.pop(ctx, v.trim()),
@@ -126,11 +126,11 @@ class ProwlarrTagsScreen extends ConsumerWidget {
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(ctx, controller.text.trim()),
-            child: const Text('Save'),
+            child: const Text('Enregistrer'),
           ),
         ],
       ),
@@ -152,11 +152,11 @@ class ProwlarrTagsScreen extends ConsumerWidget {
       }
       ref.invalidate(prowlarrProvidersProvider(_args));
       messenger.showSnackBar(
-        SnackBar(content: Text(existing == null ? 'Tag added' : 'Tag renamed')),
+        SnackBar(content: Text(existing == null ? 'Balise ajoutée' : 'Balise renommée')),
       );
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Failed: ${_err(e)}')),
+        SnackBar(content: Text('Échec : ${_err(e)}')),
       );
     }
   }
@@ -170,12 +170,12 @@ class ProwlarrTagsScreen extends ConsumerWidget {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Delete tag?'),
-        content: Text('Remove "${tag['label']}" from Prowlarr?'),
+        title: const Text('Supprimer la balise ?'),
+        content: Text('Retirer « ${tag['label']}" from Prowlarr?'),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -183,7 +183,7 @@ class ProwlarrTagsScreen extends ConsumerWidget {
               foregroundColor: Theme.of(ctx).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Delete'),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
@@ -196,10 +196,10 @@ class ProwlarrTagsScreen extends ConsumerWidget {
           await ref.read(prowlarrApiProvider(instance).future);
       await api.deleteProvider('tag', (tag['id'] as num).toInt());
       ref.invalidate(prowlarrProvidersProvider(_args));
-      messenger.showSnackBar(const SnackBar(content: Text('Tag deleted')));
+      messenger.showSnackBar(const SnackBar(content: Text('Balise supprimée')));
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Delete failed: ${_err(e)}')),
+        SnackBar(content: Text('Échec de la suppression : ${_err(e)}')),
       );
     }
   }

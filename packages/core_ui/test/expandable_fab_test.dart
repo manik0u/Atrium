@@ -12,11 +12,11 @@ void main() {
   Widget wrap() => MaterialApp(
         home: Scaffold(
           floatingActionButton: ExpandableFab(
-            tooltip: 'Add torrent',
+            tooltip: 'Ajouter un torrent',
             builder: (BuildContext context, VoidCallback close) => <Widget>[
               FloatingActionButton(
                 heroTag: null,
-                tooltip: 'Magnet link',
+                tooltip: 'Lien magnet',
                 onPressed: () {
                   taps++;
                   close();
@@ -50,27 +50,27 @@ void main() {
   testWidgets('the main button is labelled, and says Close while open',
       (WidgetTester tester) async {
     await tester.pumpWidget(wrap());
-    expect(find.byTooltip('Add torrent'), findsOneWidget);
+    expect(find.byTooltip('Ajouter un torrent'), findsOneWidget);
 
-    await tester.tap(find.byTooltip('Add torrent'));
+    await tester.tap(find.byTooltip('Ajouter un torrent'));
     await tester.pumpAndSettle();
-    expect(find.byTooltip('Close'), findsOneWidget);
+    expect(find.byTooltip('Fermer'), findsOneWidget);
   });
 
   testWidgets('folded actions are hidden from a screen reader',
       (WidgetTester tester) async {
     final SemanticsHandle semantics = tester.ensureSemantics();
     await tester.pumpWidget(wrap());
-    expect(announced(tester, 'Magnet link'), isFalse);
+    expect(announced(tester, 'Lien magnet'), isFalse);
 
-    await tester.tap(find.byTooltip('Add torrent'));
+    await tester.tap(find.byTooltip('Ajouter un torrent'));
     await tester.pumpAndSettle();
-    expect(announced(tester, 'Magnet link'), isTrue);
+    expect(announced(tester, 'Lien magnet'), isTrue);
 
-    await tester.tap(find.byTooltip('Magnet link'));
+    await tester.tap(find.byTooltip('Lien magnet'));
     await tester.pumpAndSettle();
     expect(taps, 1);
-    expect(announced(tester, 'Magnet link'), isFalse);
+    expect(announced(tester, 'Lien magnet'), isFalse);
     semantics.dispose();
   });
 }

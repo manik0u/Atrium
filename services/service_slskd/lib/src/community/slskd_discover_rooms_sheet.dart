@@ -104,7 +104,7 @@ class _SlskdDiscoverRoomsSheetState extends ConsumerState<SlskdDiscoverRoomsShee
               padding: const EdgeInsets.fromLTRB(Insets.md, Insets.sm, Insets.md, Insets.xs),
               child: SearchBar(
                 controller: _searchController,
-                hintText: 'Search public rooms...',
+                hintText: 'Rechercher des salons publics…',
                 elevation: const WidgetStatePropertyAll<double>(0),
                 backgroundColor: WidgetStatePropertyAll<Color>(colorScheme.surfaceContainerHigh),
                 padding: const WidgetStatePropertyAll<EdgeInsets>(
@@ -135,7 +135,7 @@ class _SlskdDiscoverRoomsSheetState extends ConsumerState<SlskdDiscoverRoomsShee
                       controller: _customRoomController,
                       decoration: InputDecoration(
                         isDense: true,
-                        hintText: 'Join custom room by name...',
+                        hintText: 'Rejoindre un salon personnalisé par son nom…',
                         prefixIcon: const Icon(Icons.tag_rounded, size: 20),
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: Insets.sm,
@@ -156,7 +156,7 @@ class _SlskdDiscoverRoomsSheetState extends ConsumerState<SlskdDiscoverRoomsShee
                     onPressed: _isJoining
                         ? null
                         : () => _handleJoin(_customRoomController.text),
-                    child: const Text('Join'),
+                    child: const Text('Rejoindre'),
                   ),
                 ],
               ),
@@ -171,7 +171,7 @@ class _SlskdDiscoverRoomsSheetState extends ConsumerState<SlskdDiscoverRoomsShee
                   // A failed load must not read as "No public rooms found".
                   : !availableRoomsAsync.hasValue
                       ? ErrorView(
-                          title: 'Could not load rooms',
+                          title: 'Impossible de charger les salons',
                           message: '${availableRoomsAsync.error}',
                           onRetry: () =>
                               ref.invalidate(slskdAvailableRoomsProvider(widget.instance)),
@@ -187,8 +187,8 @@ class _SlskdDiscoverRoomsSheetState extends ConsumerState<SlskdDiscoverRoomsShee
                                 const SizedBox(height: Insets.sm),
                                 Text(
                                   _searchQuery.isEmpty
-                                      ? 'No public rooms found.'
-                                      : 'No rooms matching "$_searchQuery".',
+                                      ? 'Aucun salon public trouvé.'
+                                      : 'Aucun salon ne correspond à « $_searchQuery ».',
                                   style: textTheme.bodyMedium?.copyWith(color: colorScheme.outline),
                                 ),
                               ],
@@ -261,7 +261,7 @@ class _SlskdDiscoverRoomsSheetState extends ConsumerState<SlskdDiscoverRoomsShee
                               trailing: isJoined
                                   ? Chip(
                                       avatar: Icon(Icons.check_rounded, size: 14, color: colorScheme.primary),
-                                      label: const Text('Joined'),
+                                      label: const Text('Rejoint'),
                                       labelStyle: TextStyle(
                                         fontSize: 11,
                                         fontWeight: FontWeight.bold,
@@ -273,7 +273,7 @@ class _SlskdDiscoverRoomsSheetState extends ConsumerState<SlskdDiscoverRoomsShee
                                     )
                                   : FilledButton.tonal(
                                       onPressed: _isJoining ? null : () => _handleJoin(room.name),
-                                      child: const Text('Join'),
+                                      child: const Text('Rejoindre'),
                                     ),
                             );
                           },

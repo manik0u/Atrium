@@ -247,7 +247,7 @@ class _LockScreen extends StatelessWidget {
             Icon(Icons.lock_outline,
                 size: 64, color: theme.colorScheme.primary),
             const SizedBox(height: 16),
-            Text('Atrium is locked', style: theme.textTheme.titleLarge),
+            Text('Atrium est verrouillé', style: theme.textTheme.titleLarge),
             const SizedBox(height: 8),
             Text(
               'Unlock to continue',
@@ -261,7 +261,7 @@ class _LockScreen extends StatelessWidget {
               FilledButton.icon(
                 onPressed: onUnlock,
                 icon: const Icon(Icons.fingerprint),
-                label: const Text('Unlock'),
+                label: const Text('Déverrouiller'),
               ),
           ],
         ),

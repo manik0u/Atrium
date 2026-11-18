@@ -57,7 +57,7 @@ abstract class SeerrDiscoverResult with _$SeerrDiscoverResult {
   factory SeerrDiscoverResult.fromJson(Map<String, dynamic> json) =>
       _$SeerrDiscoverResultFromJson(json);
 
-  String get displayTitle => title ?? name ?? originalTitle ?? 'Unknown';
+  String get displayTitle => title ?? name ?? originalTitle ?? 'Inconnu';
   String? get displayDate => releaseDate ?? firstAirDate;
 
   /// Four-digit year from the release/air date, when present.

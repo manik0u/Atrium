@@ -87,7 +87,7 @@ final lidarrArtistHistoryProvider =
     );
     return unwrapLidarrApiResponse(
       resp,
-      'Failed to load history for artist $artistId',
+      "Échec du chargement de l'historique pour l'artiste $artistId",
     );
   },
 );

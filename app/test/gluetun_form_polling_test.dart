@@ -32,23 +32,23 @@ void main() {
       (WidgetTester tester) async {
     await openFormFor(tester, ServiceKind.gluetun);
     await tester.scrollUntilVisible(
-      find.text('Polling Interval (seconds)'),
+      find.text("Intervalle d'interrogation (secondes)"),
       200,
       scrollable: find.byType(Scrollable).first,
     );
 
-    expect(find.text('Polling Interval (seconds)'), findsOneWidget);
+    expect(find.text("Intervalle d'interrogation (secondes)"), findsOneWidget);
   });
 
   testWidgets('qBittorrent offers the polling interval',
       (WidgetTester tester) async {
     await openFormFor(tester, ServiceKind.qbittorrent);
     await tester.scrollUntilVisible(
-      find.text('Polling Interval (seconds)'),
+      find.text("Intervalle d'interrogation (secondes)"),
       200,
       scrollable: find.byType(Scrollable).first,
     );
 
-    expect(find.text('Polling Interval (seconds)'), findsOneWidget);
+    expect(find.text("Intervalle d'interrogation (secondes)"), findsOneWidget);
   });
 }

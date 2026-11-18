@@ -155,9 +155,9 @@ abstract class RtorrentTorrent with _$RtorrentTorrent {
   }
 
   String get priorityLabel => switch (priority) {
-        0 => 'Off',
-        1 => 'Low',
-        3 => 'High',
+        0 => 'Désactivé',
+        1 => 'Basse',
+        3 => 'Élevée',
         _ => 'Normal',
       };
 }

@@ -127,7 +127,7 @@ final RegExp _listPath = RegExp(r'^([a-zA-Z]:)?[\\/]\S*[^\\/]$');
 /// server, as the web UI accepts.
 String? adguardHomeListUrlProblem(String url) {
   final String address = url.trim();
-  if (address.isEmpty) return 'Enter the address of the list.';
+  if (address.isEmpty) return "Saisissez l'adresse de la liste.";
   if (_listUrl.hasMatch(address) || _listPath.hasMatch(address)) return null;
   return 'An address starting with http:// or https://, or the full path of '
       'a file on the server.';

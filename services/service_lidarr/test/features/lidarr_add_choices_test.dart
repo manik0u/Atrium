@@ -139,7 +139,7 @@ Future<void> _openAndAdd(
     await tester.pump(const Duration(milliseconds: 100));
   }
   await beforeAdd?.call();
-  await tester.tap(find.widgetWithText(FilledButton, 'Add Artist'));
+  await tester.tap(find.widgetWithText(FilledButton, 'Ajouter un artiste'));
   if (whileAdding != null) {
     // The add button spins while the request is held, so no settling here.
     for (int i = 0; i < 50 && server.posted == null; i++) {
@@ -263,7 +263,7 @@ void main() {
       metadata: late.future,
       beforeAdd: () async {
         await tester.tap(
-          find.widgetWithText(SwitchListTile, 'Search for Missing Albums'),
+          find.widgetWithText(SwitchListTile, 'Rechercher les albums manquants'),
         );
         await tester.pump();
         await tester.tap(find.text('Any'));
@@ -323,7 +323,7 @@ void main() {
       whileAdding: () async {
         expect(server.posted, isNotNull);
         final Finder tile =
-            find.widgetWithText(SwitchListTile, 'Search for Missing Albums');
+            find.widgetWithText(SwitchListTile, 'Rechercher les albums manquants');
         await tester.ensureVisible(tile);
         await tester.pump();
         await tester.tap(tile);

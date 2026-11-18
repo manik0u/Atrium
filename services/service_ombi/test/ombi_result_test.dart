@@ -135,11 +135,11 @@ void main() {
     test('no answer at all says Ombi could not be reached', () {
       expect(
         describeOmbiFailure(const OmbiException('timeout')),
-        'Ombi could not be reached.',
+        'Ombi est injoignable.',
       );
       expect(
         describeOmbiFailure(StateError('x')),
-        'Ombi could not be reached.',
+        'Ombi est injoignable.',
       );
     });
   });

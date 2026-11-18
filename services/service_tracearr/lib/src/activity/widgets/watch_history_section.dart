@@ -71,15 +71,15 @@ class _WatchHistorySectionState extends State<WatchHistorySection> {
                   segments: const [
                     ButtonSegment(
                       value: HistoryFilter.all,
-                      label: Text('All', style: TextStyle(fontSize: 11)),
+                      label: Text('Tous', style: TextStyle(fontSize: 11)),
                     ),
                     ButtonSegment(
                       value: HistoryFilter.completed,
-                      label: Text('Completed', style: TextStyle(fontSize: 11)),
+                      label: Text('Terminé', style: TextStyle(fontSize: 11)),
                     ),
                     ButtonSegment(
                       value: HistoryFilter.partial,
-                      label: Text('Partial', style: TextStyle(fontSize: 11)),
+                      label: Text('Partiel', style: TextStyle(fontSize: 11)),
                     ),
                   ],
                   selected: {_selectedFilter},
@@ -124,7 +124,7 @@ class _WatchHistorySectionState extends State<WatchHistorySection> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.refresh),
-                      tooltip: 'Retry',
+                      tooltip: 'Réessayer',
                       onPressed: notifier.refresh,
                     ),
                   ],
@@ -144,7 +144,7 @@ class _WatchHistorySectionState extends State<WatchHistorySection> {
                 child: Center(
                   child: Text(
                     _selectedFilter == HistoryFilter.all
-                        ? 'No watch history recorded yet.'
+                        ? 'Aucun historique de visionnage enregistré pour le moment.'
                         : 'No ${_selectedFilter.name} history matches filter.',
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant,

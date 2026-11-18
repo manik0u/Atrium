@@ -16,11 +16,11 @@ class TagsSettingsScreen extends ConsumerWidget {
     final bool? ok = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Add New Tag'),
+        title: const Text('Ajouter une balise'),
         content: TextField(
           controller: controller,
           decoration: const InputDecoration(
-            labelText: 'Tag Label',
+            labelText: 'Libellé de la balise',
             border: OutlineInputBorder(),
           ),
           autofocus: true,
@@ -28,11 +28,11 @@ class TagsSettingsScreen extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Add'),
+            child: const Text('Ajouter'),
           ),
         ],
       ),
@@ -46,7 +46,7 @@ class TagsSettingsScreen extends ConsumerWidget {
       } catch (e) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to add tag: $e')),
+            SnackBar(content: Text("Échec de l'ajout de la balise : $e")),
           );
         }
       }
@@ -59,7 +59,7 @@ class TagsSettingsScreen extends ConsumerWidget {
     int id,
     String label,
   ) async {
-    final ok = await confirmDelete(context, 'Tag "$label"');
+    final ok = await confirmDelete(context, 'Balise « $label »');
     if (ok) {
       try {
         final api = await ref.read(radarrApiProvider(instance).future);
@@ -68,7 +68,7 @@ class TagsSettingsScreen extends ConsumerWidget {
       } catch (e) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to delete tag: $e')),
+            SnackBar(content: Text('Échec de la suppression de la balise : $e')),
           );
         }
       }
@@ -82,7 +82,7 @@ class TagsSettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tags'),
+        title: const Text('Balises'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddTagDialog(context, ref),
@@ -90,11 +90,11 @@ class TagsSettingsScreen extends ConsumerWidget {
       ),
       body: tagsAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, _) => Center(child: Text('Error: $err')),
+        error: (err, _) => Center(child: Text('Erreur : $err')),
         data: (tags) {
           if (tags.isEmpty) {
             return const Center(
-              child: Text('No tags defined. Tap + to add one.'),
+              child: Text('Aucune balise définie. Touchez + pour en ajouter une.'),
             );
           }
 

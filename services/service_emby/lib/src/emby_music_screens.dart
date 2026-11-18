@@ -374,7 +374,7 @@ class EmbyAlbumScreen extends ConsumerWidget {
                         BlendMode.srcIn,
                       ),
                     ),
-                    label: const Text('Play Now'),
+                    label: const Text('Lire maintenant'),
                   ),
                 ),
                 const SizedBox(height: Insets.xs),

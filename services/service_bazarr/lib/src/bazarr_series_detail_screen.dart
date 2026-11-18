@@ -54,8 +54,8 @@ class BazarrSeriesDetailScreen extends ConsumerWidget {
             SizedBox(height: 100),
             EmptyView(
                 icon: Icons.subtitles_outlined,
-                title: 'No episodes',
-                message: 'This series has no episode files in Bazarr.',
+                title: 'Aucun épisode',
+                message: "Cette série n'a aucun fichier d'épisode dans Bazarr.",
               ),
           ],
         ),
@@ -156,18 +156,18 @@ class _HeaderCard extends StatelessWidget {
                       icon: series.monitored
                           ? Icons.bookmark
                           : Icons.bookmark_border,
-                      label: series.monitored ? 'Monitored' : 'Unmonitored',
+                      label: series.monitored ? 'Surveillé' : 'Non surveillé',
                       color: series.monitored ? cs.primary : cs.outline,
                     ),
                     _MetaPill(
                       icon: Icons.video_library_outlined,
-                      label: '${series.episodeFileCount} files',
+                      label: '${series.episodeFileCount} fichiers',
                       color: cs.tertiary,
                     ),
                     if (series.episodeMissingCount > 0)
                       _MetaPill(
                         icon: Icons.report_outlined,
-                        label: '${series.episodeMissingCount} missing',
+                        label: '${series.episodeMissingCount} manquants',
                         color: cs.error,
                       ),
                   ],
@@ -216,7 +216,7 @@ class _EpisodeCard extends ConsumerWidget {
                 ),
               ),
               IconButton(
-                tooltip: 'Search subtitles',
+                tooltip: 'Rechercher des sous-titres',
                 visualDensity: VisualDensity.compact,
                 icon: const Icon(Icons.subtitles_outlined),
                 onPressed: () =>
@@ -256,7 +256,7 @@ class _EpisodeCard extends ConsumerWidget {
       messenger.showSnackBar(
         const SnackBar(
           content: Text(
-            'This subtitle is embedded in the video and cannot be removed here.',
+            'Ce sous-titre est intégré à la vidéo et ne peut pas être supprimé ici.',
           ),
         ),
       );
@@ -265,15 +265,15 @@ class _EpisodeCard extends ConsumerWidget {
     final bool? ok = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Delete subtitle?'),
+        title: const Text('Supprimer le sous-titre ?'),
         content: Text(
           'Remove the ${s.name.isNotEmpty ? s.name : s.code2.toUpperCase()} '
-          'subtitle for $_code?',
+          'sous-titre pour $_code ?',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -281,7 +281,7 @@ class _EpisodeCard extends ConsumerWidget {
               foregroundColor: Theme.of(ctx).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Delete'),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
@@ -303,10 +303,10 @@ class _EpisodeCard extends ConsumerWidget {
       );
       ref.invalidate(bazarrWantedProvider(instance));
       ref.invalidate(bazarrBadgesProvider(instance));
-      messenger.showSnackBar(const SnackBar(content: Text('Subtitle deleted')));
+      messenger.showSnackBar(const SnackBar(content: Text('Sous-titre supprimé')));
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Delete failed: ${_err(e)}')),
+        SnackBar(content: Text('Échec de la suppression : ${_err(e)}')),
       );
     }
   }

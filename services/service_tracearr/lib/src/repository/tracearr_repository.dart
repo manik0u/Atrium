@@ -348,7 +348,7 @@ class TracearrRepository {
           (u) =>
               u.username?.toLowerCase() == userId.toLowerCase() ||
               u.id?.toLowerCase() == userId.toLowerCase(),
-          orElse: () => throw TracearrException('User not found: $userId'),
+          orElse: () => throw TracearrException('Utilisateur introuvable : $userId'),
         );
         effectiveId = match.id ?? userId;
         identity = match;

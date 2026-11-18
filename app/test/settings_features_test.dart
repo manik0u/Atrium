@@ -18,7 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 /// pumpAndSettle).
 Profile _profile() => const Profile(
       id: 'p1',
-      name: 'Default',
+      name: 'Par défaut',
       instances: <Instance>[
         Instance(
           id: 'i1',
@@ -33,7 +33,7 @@ Profile _profile() => const Profile(
       ],
       globalHeaders: <String, String>{'X-Test': '1'},
       wolDevices: <WolDevice>[
-        WolDevice(id: 'w1', name: 'Server', mac: 'AA:BB:CC:DD:EE:FF'),
+        WolDevice(id: 'w1', name: 'Serveur', mac: 'AA:BB:CC:DD:EE:FF'),
       ],
     );
 
@@ -78,8 +78,8 @@ void main() {
       const WakeOnLanScreen(),
     );
 
-    expect(find.text('Server'), findsOneWidget);
-    expect(find.text('Wake'), findsOneWidget);
+    expect(find.text('Serveur'), findsOneWidget);
+    expect(find.text('Réveiller'), findsOneWidget);
     expect(find.text('AA:BB:CC:DD:EE:FF - 255.255.255.255:9'), findsOneWidget);
   });
 
@@ -126,6 +126,6 @@ void main() {
 
     expect(wol, findsOneWidget);
     expect(find.text('1 device configured'), findsOneWidget);
-    expect(find.text('Custom Headers'), findsOneWidget);
+    expect(find.text('En-têtes personnalisés'), findsOneWidget);
   });
 }

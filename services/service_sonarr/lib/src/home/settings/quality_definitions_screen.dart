@@ -42,7 +42,7 @@ class _QualityDefinitionsScreenState
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Quality definitions updated successfully!'),
+            content: Text('Définitions de qualité mises à jour avec succès !'),
           ),
         );
         Navigator.pop(context);
@@ -50,7 +50,7 @@ class _QualityDefinitionsScreenState
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to update quality definitions: $e')),
+          SnackBar(content: Text('Échec de la mise à jour des définitions de qualité : $e')),
         );
       }
     } finally {
@@ -66,7 +66,7 @@ class _QualityDefinitionsScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Quality Definitions'),
+        title: const Text('Définitions de qualité'),
         actions: [
           if (_saving)
             const Padding(
@@ -86,7 +86,7 @@ class _QualityDefinitionsScreenState
       ),
       body: definitionsAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Error: $err')),
+        error: (err, stack) => Center(child: Text('Erreur : $err')),
         data: (data) {
           _initializeValues(data);
 
@@ -185,7 +185,7 @@ class _QualityDefinitionsScreenState
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Text('Unlimited'),
+                              const Text('Illimité'),
                               Checkbox(
                                 value: isUnlimited,
                                 onChanged: (checked) {

@@ -24,18 +24,18 @@ class TasksAndMaintenanceView extends ConsumerWidget {
       final LidarrApi api = await ref.read(lidarrApiProvider(instance).future);
       final ApiResponse<CommandResource> resp = await api.executeCommand(name);
       if (!resp.isSuccess) {
-        throw Exception(resp.error?.message ?? 'Command failed');
+        throw Exception(resp.error?.message ?? 'Échec de la commande');
       }
 
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Started $label')),
+          SnackBar(content: Text('$label démarré')),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to run $label: $e')),
+          SnackBar(content: Text("Échec de l'exécution de $label : $e")),
         );
       }
     }
@@ -68,7 +68,7 @@ class TasksAndMaintenanceView extends ConsumerWidget {
             children: [
               ActionChip(
                 avatar: const Icon(Icons.health_and_safety_outlined, size: 18),
-                label: const Text('Check Health'),
+                label: const Text('Vérifier la santé'),
                 onPressed: () => _executeCommand(
                   context,
                   ref,
@@ -78,7 +78,7 @@ class TasksAndMaintenanceView extends ConsumerWidget {
               ),
               ActionChip(
                 avatar: const Icon(Icons.sync_outlined, size: 18),
-                label: const Text('Rescan Folders'),
+                label: const Text('Re-analyser les dossiers'),
                 onPressed: () => _executeCommand(
                   context,
                   ref,
@@ -88,7 +88,7 @@ class TasksAndMaintenanceView extends ConsumerWidget {
               ),
               ActionChip(
                 avatar: const Icon(Icons.backup_outlined, size: 18),
-                label: const Text('Backup DB'),
+                label: const Text('Sauvegarder la base'),
                 onPressed: () => _executeCommand(
                   context,
                   ref,
@@ -98,7 +98,7 @@ class TasksAndMaintenanceView extends ConsumerWidget {
               ),
               ActionChip(
                 avatar: const Icon(Icons.cleaning_services_outlined, size: 18),
-                label: const Text('Housekeeping'),
+                label: const Text('Nettoyage'),
                 onPressed: () => _executeCommand(
                   context,
                   ref,
@@ -108,7 +108,7 @@ class TasksAndMaintenanceView extends ConsumerWidget {
               ),
               ActionChip(
                 avatar: const Icon(Icons.system_update_alt_outlined, size: 18),
-                label: const Text('Check Update'),
+                label: const Text('Vérifier les mises à jour'),
                 onPressed: () => _executeCommand(
                   context,
                   ref,
@@ -132,7 +132,7 @@ class TasksAndMaintenanceView extends ConsumerWidget {
             value: asyncTasks,
             data: (tasks) {
               if (tasks.isEmpty) {
-                return const Text('No scheduled tasks registered.');
+                return const Text('Aucune tâche planifiée enregistrée.');
               }
 
               return Column(
@@ -195,7 +195,7 @@ class TasksAndMaintenanceView extends ConsumerWidget {
                           ),
                           IconButton(
                             icon: const Icon(Icons.play_arrow_outlined),
-                            tooltip: 'Run task now',
+                            tooltip: 'Exécuter la tâche maintenant',
                             onPressed: t.taskName != null
                                 ? () => _executeCommand(
                                       context,

@@ -57,11 +57,11 @@ void main() {
         artistsJson(<String, List<String>>{
           '#': <String>['2Pac'],
           'P': <String>['Pink Floyd'],
-          'X-Z': <String>['X Japan', 'Yes', 'ZZ Top'],
+          'X-Z': <String>['X Japan', 'Oui', 'ZZ Top'],
           '[Unknown]': <String>['[Unknown Artist]'],
         }),
       );
-      await open(tester, 'Artists');
+      await open(tester, 'Artistes');
 
       expect(find.text('ZZ Top'), findsOneWidget);
       expect(find.text('P'), findsOneWidget);
@@ -81,7 +81,7 @@ void main() {
           '[Unknown]': <String>['[Unknown Artist]'],
         }),
       );
-      await open(tester, 'Artists');
+      await open(tester, 'Artistes');
 
       expect(tester.takeException(), isNull);
       // As tall as the single letter beside it, so not wrapped.
@@ -103,7 +103,7 @@ void main() {
           'The': <String>['The The'],
         }),
       );
-      await open(tester, 'Artists');
+      await open(tester, 'Artistes');
 
       expect(find.text('К'), findsOneWidget);
       expect(find.text('Å'), findsOneWidget);

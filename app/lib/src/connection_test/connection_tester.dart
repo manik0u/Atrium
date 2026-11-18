@@ -138,7 +138,7 @@ class ConnectionTester {
         _now().difference(refusedAt) < _adguardHomeRefusalMemory) {
       return const ConnectionTestResult(
         ConnectionOutcome.authFailed,
-        'Not tried, because this sign-in was refused a moment ago',
+        'Non testé, car cette connexion a été refusée il y a un instant',
       );
     }
     Dio? dio;
@@ -175,7 +175,7 @@ class ConnectionTester {
         // proxy's sign-in page, or a wrong base path.
         return const ConnectionTestResult(
           ConnectionOutcome.authFailed,
-          'Reachable, but AdGuard Home did not answer at this address',
+          "Joignable, mais AdGuard Home n'a pas répondu à cette adresse",
         );
       }
       return connectionResultFromError(error);
@@ -210,7 +210,7 @@ class ConnectionTester {
       if (response.statusCode == 200) {
         return ConnectionTestResult(
           ConnectionOutcome.connected,
-          key.isEmpty ? 'Connected (no auth required)' : 'Connected',
+          key.isEmpty ? 'Connecté (aucune authentification requise)' : 'Connected',
         );
       }
       return const ConnectionTestResult(

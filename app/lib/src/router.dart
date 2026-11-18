@@ -32,15 +32,15 @@ Widget addInstanceFormPage(BuildContext context, GoRouterState state) {
   if (kind == null) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Unknown service'),
+        title: const Text('Service inconnu'),
       ),
       body: EmptyView(
         icon: Icons.error_outline,
-        title: 'Unknown service',
-        message: 'No service matching "$kindStr" was found.',
+        title: 'Service inconnu',
+        message: "Aucun service correspondant à « $kindStr » n'a été trouvé.",
         action: FilledButton(
           onPressed: () => context.goNamed(AtriumRoutes.addInstanceName),
-          child: const Text('Select a service'),
+          child: const Text('Sélectionner un service'),
         ),
       ),
     );

@@ -135,7 +135,7 @@ class _AdguardHomeClientsTabState extends ConsumerState<AdguardHomeClientsTab> {
                   ),
                   ButtonSegment<_Kind>(
                     value: _Kind.runtime,
-                    label: _SegmentLabel('Runtime (${view.runtime.length})'),
+                    label: _SegmentLabel('Exécution (${view.runtime.length})'),
                   ),
                 ],
                 selected: <_Kind>{_kind},
@@ -161,8 +161,8 @@ class _AdguardHomeClientsTabState extends ConsumerState<AdguardHomeClientsTab> {
         onRefresh: _refresh,
         child: const EmptyView(
           icon: Icons.devices_other,
-          title: 'No persistent clients',
-          message: 'A persistent client is a device with a name and, if it '
+          title: 'Aucun client persistant',
+          message: "Un client persistant est un appareil avec un nom et, s'il "
               'needs them, settings of its own. Add one below, or from the '
               'runtime clients.',
         ),
@@ -196,8 +196,8 @@ class _AdguardHomeClientsTabState extends ConsumerState<AdguardHomeClientsTab> {
         onRefresh: _refresh,
         child: const EmptyView(
           icon: Icons.sensors_off,
-          title: 'No runtime clients',
-          message: 'AdGuard Home has not seen a device yet.',
+          title: 'Aucun client en exécution',
+          message: "AdGuard Home n'a encore vu aucun appareil.",
         ),
       );
     }

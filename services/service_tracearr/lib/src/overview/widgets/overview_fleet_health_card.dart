@@ -48,7 +48,7 @@ class OverviewFleetHealthCard extends StatelessWidget {
             const SizedBox(width: Insets.md),
             Expanded(
               child: Text(
-                'Could not fetch server health status',
+                "Impossible de récupérer l'état de santé du serveur",
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: colorScheme.onErrorContainer,
                 ),
@@ -57,7 +57,7 @@ class OverviewFleetHealthCard extends StatelessWidget {
             if (onRetry != null)
               IconButton(
                 icon: const Icon(Icons.refresh),
-                tooltip: 'Retry',
+                tooltip: 'Réessayer',
                 onPressed: onRetry,
               ),
           ],
@@ -76,12 +76,12 @@ class OverviewFleetHealthCard extends StatelessWidget {
                 : colorScheme.error;
 
         final String statusLabel = allOnline
-            ? 'All Systems Operational'
+            ? 'Tous les systèmes sont opérationnels'
             : partialOnline
                 ? 'Degraded Performance'
                 : totalServers == 0
-                    ? 'No Servers Configured'
-                    : 'All Servers Offline';
+                    ? 'Aucun serveur configuré'
+                    : 'Tous les serveurs sont hors ligne';
 
         return Container(
           padding: const EdgeInsets.all(Insets.md),

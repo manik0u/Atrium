@@ -13,8 +13,8 @@ import '../../../lidarr_providers.dart';
 enum ArtistHistorySort {
   dateDesc('Newest First', Icons.schedule),
   dateAsc('Oldest First', Icons.history),
-  titleAsc('Title (A–Z)', Icons.sort_by_alpha),
-  titleDesc('Title (Z–A)', Icons.sort_by_alpha),
+  titleAsc('Titre (A-Z)', Icons.sort_by_alpha),
+  titleDesc('Titre (Z-A)', Icons.sort_by_alpha),
   qualityDesc('Quality', Icons.high_quality_outlined),
   eventType('Event Type', Icons.category_outlined);
 
@@ -152,21 +152,21 @@ class _ArtistHistoryViewState extends ConsumerState<ArtistHistoryView>
     final bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Mark as Failed?'),
+        title: const Text('Marquer comme échoué ?'),
         content: Text(
           'Mark "${item.sourceTitle ?? 'item'}" as failed and blocklist this release?',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
               backgroundColor: Theme.of(ctx).colorScheme.error,
             ),
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Mark Failed'),
+            child: const Text('Marquer comme échoué'),
           ),
         ],
       ),
@@ -182,7 +182,7 @@ class _ArtistHistoryViewState extends ConsumerState<ArtistHistoryView>
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Marked as failed and added to blocklist'),
+              content: Text('Marquée comme échouée et ajoutée à la liste de blocage'),
               behavior: SnackBarBehavior.floating,
             ),
           );
@@ -197,7 +197,7 @@ class _ArtistHistoryViewState extends ConsumerState<ArtistHistoryView>
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content:
-                  Text('Failed: ${resp.error?.message ?? 'Unknown error'}'),
+                  Text('Échec : ${resp.error?.message ?? 'Unknown error'}'),
               backgroundColor: Theme.of(context).colorScheme.error,
               behavior: SnackBarBehavior.floating,
             ),
@@ -208,7 +208,7 @@ class _ArtistHistoryViewState extends ConsumerState<ArtistHistoryView>
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error: $e'),
+            content: Text('Erreur : $e'),
             backgroundColor: Theme.of(context).colorScheme.error,
             behavior: SnackBarBehavior.floating,
           ),
@@ -272,7 +272,7 @@ class _ArtistHistoryViewState extends ConsumerState<ArtistHistoryView>
                               });
                               setSheetState(() {});
                             },
-                            child: const Text('Reset'),
+                            child: const Text('Réinitialiser'),
                           ),
                         IconButton(
                           icon: const Icon(Icons.close, size: 20),
@@ -396,7 +396,7 @@ class _ArtistHistoryViewState extends ConsumerState<ArtistHistoryView>
                       width: double.infinity,
                       child: FilledButton(
                         onPressed: () => Navigator.of(sheetCtx).pop(),
-                        child: const Text('Apply'),
+                        child: const Text('Appliquer'),
                       ),
                     ),
                   ],
@@ -481,7 +481,7 @@ class _ArtistHistoryViewState extends ConsumerState<ArtistHistoryView>
                         foregroundColor: cs.error,
                       ),
                       icon: const Icon(Icons.error_outline, size: 18),
-                      label: const Text('Mark Failed'),
+                      label: const Text('Marquer comme échoué'),
                       onPressed: () {
                         Navigator.of(ctx).pop();
                         _markFailed(item);
@@ -491,7 +491,7 @@ class _ArtistHistoryViewState extends ConsumerState<ArtistHistoryView>
               ),
               const SizedBox(height: 12),
               Text(
-                item.sourceTitle ?? item.album?.title ?? 'Unknown Release',
+                item.sourceTitle ?? item.album?.title ?? 'Release inconnue',
                 style: theme.textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
@@ -508,7 +508,7 @@ class _ArtistHistoryViewState extends ConsumerState<ArtistHistoryView>
               if (item.album?.title != null) ...[
                 const SizedBox(height: 2),
                 Text(
-                  'Album: ${item.album?.title}',
+                  'Album : ${item.album?.title}',
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: cs.onSurfaceVariant,
                   ),
@@ -621,7 +621,7 @@ class _ArtistHistoryViewState extends ConsumerState<ArtistHistoryView>
                 IconButton(
                   icon:
                       Icon(_isSearchVisible ? Icons.search_off : Icons.search),
-                  tooltip: 'Search History',
+                  tooltip: 'Historique de recherche',
                   onPressed: () {
                     setState(() {
                       _isSearchVisible = !_isSearchVisible;
@@ -670,7 +670,7 @@ class _ArtistHistoryViewState extends ConsumerState<ArtistHistoryView>
                     controller: _searchController,
                     focusNode: _searchFocusNode,
                     decoration: InputDecoration(
-                      hintText: 'Filter artist history...',
+                      hintText: "Filtrer l'historique de l'artiste…",
                       hintStyle: TextStyle(
                         fontSize: 13,
                         color: cs.onSurfaceVariant.withValues(alpha: 0.7),
@@ -731,7 +731,7 @@ class _ArtistHistoryViewState extends ConsumerState<ArtistHistoryView>
                 child: Row(
                   children: [
                     Text(
-                      'Sort: ${_sortOption.label}',
+                      'Tri : ${_sortOption.label}',
                       style: TextStyle(
                         fontSize: 11.5,
                         fontWeight: FontWeight.w600,
@@ -809,7 +809,7 @@ class _ArtistHistoryViewState extends ConsumerState<ArtistHistoryView>
                         const SizedBox(height: 16),
                         FilledButton.icon(
                           icon: const Icon(Icons.refresh),
-                          label: const Text('Retry'),
+                          label: const Text('Réessayer'),
                           onPressed: () => ref.invalidate(
                             lidarrArtistHistoryProvider(
                               (widget.instance, widget.artistId),
@@ -825,9 +825,9 @@ class _ArtistHistoryViewState extends ConsumerState<ArtistHistoryView>
                     return const Center(
                       child: EmptyView(
                         icon: Icons.history_outlined,
-                        title: 'No History',
+                        title: 'Aucun historique',
                         message:
-                            'No activity history recorded for this artist.',
+                            "Aucun historique d'activité enregistré pour cet artiste.",
                       ),
                     );
                   }
@@ -936,14 +936,14 @@ class _ArtistHistoryViewState extends ConsumerState<ArtistHistoryView>
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              'No Matching Events',
+                              'Aucun événement correspondant',
                               style: theme.textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                             const SizedBox(height: 6),
                             Text(
-                              'Try changing or resetting your active filters.',
+                              'Essayez de modifier ou réinitialiser vos filtres actifs.',
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: cs.onSurfaceVariant,
                               ),
@@ -951,7 +951,7 @@ class _ArtistHistoryViewState extends ConsumerState<ArtistHistoryView>
                             const SizedBox(height: 16),
                             OutlinedButton.icon(
                               icon: const Icon(Icons.refresh, size: 18),
-                              label: const Text('Reset Filters'),
+                              label: const Text('Réinitialiser les filtres'),
                               onPressed: () {
                                 setState(() {
                                   _filterQuery = '';
@@ -1104,7 +1104,7 @@ class _ArtistHistoryViewState extends ConsumerState<ArtistHistoryView>
                                         size: 20,
                                         color: cs.error.withValues(alpha: 0.8),
                                       ),
-                                      tooltip: 'Mark as Failed',
+                                      tooltip: 'Marquer comme échoué',
                                       onPressed: () => _markFailed(item),
                                     ),
                                   ] else ...[

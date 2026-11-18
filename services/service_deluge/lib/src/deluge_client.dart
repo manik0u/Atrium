@@ -29,7 +29,7 @@ class _DelugeRpcException implements Exception {
   final String message;
 
   @override
-  String toString() => 'Deluge RPC error $code: $message';
+  String toString() => 'Erreur RPC Deluge $code : $message';
 }
 
 /// Client for the Deluge 2.x Web UI JSON-RPC API.
@@ -413,7 +413,7 @@ class DelugeClient {
         final Object? code = error['code'];
         throw _DelugeRpcException(
           code is num ? code.toInt() : -1,
-          (error['message'] as String?) ?? 'unknown error',
+          (error['message'] as String?) ?? 'erreur inconnue',
         );
       }
       return body['result'];
@@ -456,8 +456,8 @@ class DelugeClient {
   NetworkException _asNetworkException(_DelugeRpcException e) =>
       switch (e.code) {
         _notAuthenticated => NetworkAuthException(
-            'Deluge refused the session: ${e.message}',
+            'Deluge a refusé la session : ${e.message}',
           ),
-        _ => NetworkServerException('Deluge: ${e.message}', status: 200),
+        _ => NetworkServerException('Deluge : ${e.message}', status: 200),
       };
 }

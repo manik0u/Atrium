@@ -243,7 +243,7 @@ class _AdguardHomeDnsUpstreamsScreenState
     // Filled once. A later read must not replace what is being typed.
     if (_before == null && value != null) _fill(value);
     return AdguardHomeSettingsForm(
-      title: 'Upstreams',
+      title: 'Serveurs amont',
       busy: _busy,
       changed: _changed,
       onSave: _save,
@@ -294,7 +294,7 @@ class _AdguardHomeDnsUpstreamsScreenState
                     child: ExpressiveProgressIndicator(),
                   )
                 : const Icon(Icons.network_check),
-            label: const Text('Test upstreams'),
+            label: const Text('Tester les serveurs amont'),
           ),
         ),
         const AdguardHomeHeading('Mode'),
@@ -340,23 +340,23 @@ class _AdguardHomeDnsUpstreamsScreenState
           helper: defaults.isEmpty
               ? 'For names of local addresses. The server found no default '
                   'to use.'
-              : 'For names of local addresses. Empty, the server uses '
+              : 'Pour les noms des adresses locales. Vide, le serveur utilise '
                   '${defaults.join(', ')}.',
         ),
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
-          title: const Text('Use private reverse DNS resolvers'),
+          title: const Text('Utiliser des résolveurs DNS inverses privés'),
           subtitle: const Text(
-            'Off, lookups of local addresses are answered with NXDOMAIN',
+            "Désactivé, les recherches d'adresses locales reçoivent NXDOMAIN",
           ),
           value: _usePrivate,
           onChanged: (bool on) => setState(() => _usePrivate = on),
         ),
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
-          title: const Text("Look up clients' names"),
+          title: const Text('Résoudre les noms des clients'),
           subtitle: const Text(
-            'Find the hostname of each client from its IP address',
+            "Trouver le nom d'hôte de chaque client depuis son adresse IP",
           ),
           value: _resolveClients,
           onChanged: (bool on) => setState(() => _resolveClients = on),
@@ -372,7 +372,7 @@ class _AdguardHomeDnsUpstreamsScreenState
           ],
           onChanged: (_) => setState(() {}),
           decoration: InputDecoration(
-            labelText: 'Seconds',
+            labelText: 'Secondes',
             border: const OutlineInputBorder(),
             errorText: (_checked || _timeout.text.isNotEmpty) &&
                     _timeoutSeconds == null
@@ -388,9 +388,9 @@ class _AdguardHomeDnsUpstreamsScreenState
 
   static String _modeHelp(AdguardHomeUpstreamMode mode) => switch (mode) {
         AdguardHomeUpstreamMode.loadBalance =>
-          'One server at a time, the fastest and most reliable most often',
+          'Un serveur à la fois, le plus rapide et fiable le plus souvent',
         AdguardHomeUpstreamMode.parallel =>
-          'All servers at once, the first answer wins',
+          "Tous les serveurs en même temps, la première réponse l'emporte",
         AdguardHomeUpstreamMode.fastestAddress =>
           'All servers, then the address that connects fastest. Slow when '
               'a server does not answer',
@@ -455,7 +455,7 @@ class _UpstreamResults extends StatelessWidget {
         : all.isEmpty
             ? 'Nothing to test'
             : failed == 0
-                ? 'Every server answered'
+                ? 'Tous les serveurs ont répondu'
                 : failed == 1
                     ? '1 server did not answer'
                     : '$failed servers did not answer';
@@ -471,7 +471,7 @@ class _UpstreamResults extends StatelessWidget {
         const SizedBox(height: Insets.sm),
         if (upstreamsFile.isNotEmpty)
           Text(
-            'The upstreams in $upstreamsFile are read by the server alone '
+            'Les serveurs amont de $upstreamsFile ne sont lus que par le serveur '
             'and cannot be tested from here.',
             style: theme.textTheme.bodyMedium
                 ?.copyWith(color: cs.onSurfaceVariant),
@@ -489,7 +489,7 @@ class _UpstreamResults extends StatelessWidget {
               child: FilledButton.tonalIcon(
                 onPressed: onTryAgain,
                 icon: const Icon(Icons.refresh),
-                label: const Text('Try again'),
+                label: const Text('Réessayer'),
               ),
             ),
           ),

@@ -32,7 +32,7 @@ class _SystemBody extends ConsumerWidget {
     final UnraidMetrics? metrics = async.value;
     if (metrics == null) {
       return UnraidSectionHeader(
-        title: 'System',
+        title: 'Système',
         trailing: async.hasError ? 'Unavailable' : 'Reading...',
       );
     }
@@ -45,7 +45,7 @@ class _SystemBody extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         UnraidSectionHeader(
-          title: 'System',
+          title: 'Système',
           trailing: cores == 0
               ? null
               : cores == 1
@@ -73,7 +73,7 @@ class _SystemBody extends ConsumerWidget {
             const SizedBox(width: Insets.sm),
             Expanded(
               child: _LoadCard(
-                label: 'MEMORY',
+                label: 'MÉMOIRE',
                 percent: memory?.usedFraction == null
                     ? null
                     : memory!.usedFraction! * 100,
@@ -385,7 +385,7 @@ class _CoreBars extends StatelessWidget {
                   if (i > 0) const SizedBox(width: 3),
                   Expanded(
                     child: Tooltip(
-                      message: 'Core $i: '
+                      message: 'Cœur $i : '
                           '${(cores[i].percentTotal ?? 0).toStringAsFixed(0)}%',
                       child: _Bar(
                         percent: (cores[i].percentTotal ?? 0).clamp(0, 100),

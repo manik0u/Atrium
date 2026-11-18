@@ -113,7 +113,7 @@ class SlskdRoomCard extends StatelessWidget {
               if (isJoined) ...<Widget>[
                 if (onLeave != null)
                   IconButton(
-                    tooltip: 'Leave room',
+                    tooltip: 'Quitter le salon',
                     visualDensity: VisualDensity.compact,
                     icon: Icon(Icons.logout_rounded, size: 18, color: colorScheme.outline),
                     onPressed: onLeave,
@@ -135,7 +135,7 @@ class SlskdRoomCard extends StatelessWidget {
                     children: <Widget>[
                       Icon(Icons.login_rounded, size: 14),
                       SizedBox(width: 4),
-                      Text('Join'),
+                      Text('Rejoindre'),
                     ],
                   ),
                 ),

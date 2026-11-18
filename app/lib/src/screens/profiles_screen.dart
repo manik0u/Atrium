@@ -18,11 +18,11 @@ class ProfilesScreen extends ConsumerWidget {
         ref.watch(activeProfileProvider)?.id;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Profiles')),
+      appBar: AppBar(title: const Text('Profils')),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _create(context, ref),
         icon: const Icon(Icons.add),
-        label: const Text('New profile'),
+        label: const Text('Nouveau profil'),
       ),
       body: AsyncValueView<List<Profile>>(
         value: profiles,
@@ -31,8 +31,8 @@ class ProfilesScreen extends ConsumerWidget {
           if (list.isEmpty) {
             return const EmptyView(
               icon: Icons.switch_account_outlined,
-              title: 'No profiles',
-              message: 'Create a profile to start adding services.',
+              title: 'Aucun profil',
+              message: 'Créez un profil pour commencer à ajouter des services.',
             );
           }
           return RadioGroup<String>(
@@ -52,7 +52,7 @@ class ProfilesScreen extends ConsumerWidget {
                         'service${p.instances.length == 1 ? '' : 's'}',
                       ),
                       secondary: PopupMenuButton<_ProfileAction>(
-                        tooltip: 'Profile actions',
+                        tooltip: 'Actions sur le profil',
                         onSelected: (_ProfileAction action) =>
                             switch (action) {
                           _ProfileAction.rename => _rename(context, ref, p),
@@ -64,14 +64,14 @@ class ProfilesScreen extends ConsumerWidget {
                             <PopupMenuEntry<_ProfileAction>>[
                           const PopupMenuItem<_ProfileAction>(
                             value: _ProfileAction.rename,
-                            child: Text('Rename'),
+                            child: Text('Renommer'),
                           ),
                           // The last profile stays: the app needs one to
                           // hold its instances.
                           PopupMenuItem<_ProfileAction>(
                             value: _ProfileAction.delete,
                             enabled: list.length > 1,
-                            child: const Text('Delete'),
+                            child: const Text('Supprimer'),
                           ),
                         ],
                       ),
@@ -89,7 +89,7 @@ class ProfilesScreen extends ConsumerWidget {
     final String? name = await showDialog<String>(
       context: context,
       builder: (BuildContext _) => const _ProfileNameDialog(
-        title: 'New profile',
+        title: 'Nouveau profil',
         confirm: 'Create',
       ),
     );
@@ -108,7 +108,7 @@ class ProfilesScreen extends ConsumerWidget {
     final String? name = await showDialog<String>(
       context: context,
       builder: (BuildContext _) => _ProfileNameDialog(
-        title: 'Rename profile',
+        title: 'Renommer le profil',
         confirm: 'Rename',
         initial: profile.name,
       ),
@@ -157,13 +157,13 @@ class _ProfileNameDialogState extends State<_ProfileNameDialog> {
       content: TextField(
         controller: _controller,
         autofocus: true,
-        decoration: const InputDecoration(hintText: 'Profile name'),
+        decoration: const InputDecoration(hintText: 'Nom du profil'),
         onSubmitted: (String v) => Navigator.of(context).pop(v),
       ),
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(_controller.text),

@@ -174,12 +174,12 @@ void main() {
       await tester.pumpAndSettle();
 
       // Tap on quality badge 'Direct Play'
-      await tester.tap(find.text('Direct Play'));
+      await tester.tap(find.text('Lecture directe'));
       await tester.pumpAndSettle();
 
       expect(find.byType(HistorySessionDiagnosticsSheet), findsOneWidget);
-      expect(find.text('SESSION & CHAIN HISTORY'), findsOneWidget);
-      expect(find.text('VIDEO PIPELINE TELEMETRY'), findsOneWidget);
+      expect(find.text('HISTORIQUE DES SESSIONS ET CHAÎNES'), findsOneWidget);
+      expect(find.text('TÉLÉMÉTRIE DU PIPELINE VIDÉO'), findsOneWidget);
     });
   });
 
@@ -201,7 +201,7 @@ void main() {
       await tester.pumpWidget(createCardWidget(copyItem));
       await tester.pumpAndSettle();
 
-      expect(find.text('Direct Stream'), findsOneWidget);
+      expect(find.text('Flux direct'), findsOneWidget);
     });
 
     testWidgets('labels video transcode with hardware acceleration as HW Transcode',
@@ -221,7 +221,7 @@ void main() {
       await tester.pumpWidget(createCardWidget(hwItem));
       await tester.pumpAndSettle();
 
-      expect(find.text('HW Transcode'), findsOneWidget);
+      expect(find.text('Transcodage HW'), findsOneWidget);
     });
 
     testWidgets('labels video transcode without hardware acceleration as CPU Transcode',
@@ -240,7 +240,7 @@ void main() {
       await tester.pumpWidget(createCardWidget(cpuItem));
       await tester.pumpAndSettle();
 
-      expect(find.text('CPU Transcode'), findsOneWidget);
+      expect(find.text('Transcodage CPU'), findsOneWidget);
     });
 
     testWidgets('labels directplay as Direct Play',
@@ -260,7 +260,7 @@ void main() {
       await tester.pumpWidget(createCardWidget(dpItem));
       await tester.pumpAndSettle();
 
-      expect(find.text('Direct Play'), findsOneWidget);
+      expect(find.text('Lecture directe'), findsOneWidget);
     });
   });
 }

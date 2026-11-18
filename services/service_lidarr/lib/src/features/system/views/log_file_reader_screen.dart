@@ -130,7 +130,7 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'Copied "${widget.file.filename ?? 'Log'}" (${content.length} chars)',
+            '« ${widget.file.filename ?? 'Log'}" (${content.length} chars)',
           ),
           behavior: SnackBarBehavior.floating,
         ),
@@ -165,7 +165,7 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
       if (!launched && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Could not open download URL: $downloadUrl'),
+            content: Text("Impossible d'ouvrir l'URL de téléchargement : $downloadUrl"),
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -174,7 +174,7 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to trigger download: $e'),
+            content: Text('Échec du déclenchement du téléchargement : $e'),
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -233,7 +233,7 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
                 autofocus: true,
                 style: TextStyle(color: cs.onSurface),
                 decoration: InputDecoration(
-                  hintText: 'Search in log...',
+                  hintText: 'Rechercher dans le journal…',
                   border: InputBorder.none,
                   hintStyle: TextStyle(
                     color: cs.onSurfaceVariant.withValues(alpha: 0.7),
@@ -280,7 +280,7 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
               ),
             IconButton(
               icon: const Icon(Icons.keyboard_arrow_up),
-              tooltip: 'Previous match',
+              tooltip: 'Correspondance précédente',
               onPressed: () {
                 asyncContent.whenData((String content) {
                   _previousMatch(content.split('\n').length);
@@ -289,7 +289,7 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
             ),
             IconButton(
               icon: const Icon(Icons.keyboard_arrow_down),
-              tooltip: 'Next match',
+              tooltip: 'Correspondance suivante',
               onPressed: () {
                 asyncContent.whenData((String content) {
                   _nextMatch(content.split('\n').length);
@@ -298,7 +298,7 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
             ),
             IconButton(
               icon: const Icon(Icons.close),
-              tooltip: 'Close search',
+              tooltip: 'Fermer la recherche',
               onPressed: () {
                 setState(() {
                   _isSearching = false;
@@ -311,26 +311,26 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
           ] else ...[
             IconButton(
               icon: const Icon(Icons.search),
-              tooltip: 'Search in log',
+              tooltip: 'Rechercher dans le journal',
               onPressed: () {
                 setState(() => _isSearching = true);
               },
             ),
             IconButton(
               icon: const Icon(Icons.copy),
-              tooltip: 'Copy all to clipboard',
+              tooltip: 'Tout copier dans le presse-papiers',
               onPressed: () {
                 asyncContent.whenData(_copyFullLog);
               },
             ),
             IconButton(
               icon: const Icon(Icons.download),
-              tooltip: 'Download log file',
+              tooltip: 'Télécharger le fichier journal',
               onPressed: _downloadLogFile,
             ),
             IconButton(
               icon: const Icon(Icons.refresh),
-              tooltip: 'Refresh',
+              tooltip: 'Actualiser',
               onPressed: () {
                 ref.invalidate(
                   lidarrLogFileContentProvider(
@@ -354,8 +354,8 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
             return const Center(
               child: EmptyView(
                 icon: Icons.article_outlined,
-                title: 'Empty Log File',
-                message: 'This log file contains no entries yet.',
+                title: 'Fichier journal vide',
+                message: 'Ce fichier journal ne contient encore aucune entrée.',
               ),
             );
           }
@@ -519,7 +519,7 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
                           FloatingActionButton.small(
                             heroTag: 'log_scroll_top',
                             onPressed: _jumpToTop,
-                            tooltip: 'Jump to top',
+                            tooltip: 'Aller en haut',
                             backgroundColor: cs.surfaceContainerHigh,
                             foregroundColor: cs.onSurface,
                             child: const Icon(Icons.arrow_upward, size: 18),
@@ -528,7 +528,7 @@ class _LogFileReaderScreenState extends ConsumerState<LogFileReaderScreen> {
                           FloatingActionButton.small(
                             heroTag: 'log_scroll_bottom',
                             onPressed: _jumpToBottom,
-                            tooltip: 'Jump to bottom',
+                            tooltip: 'Aller en bas',
                             backgroundColor: cs.primaryContainer,
                             foregroundColor: cs.onPrimaryContainer,
                             child: const Icon(Icons.arrow_downward, size: 18),

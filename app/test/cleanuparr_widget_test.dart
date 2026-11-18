@@ -112,7 +112,7 @@ void main() {
     await tester.pump();
 
     expect(find.text('Cleanuparr'), findsOneWidget);
-    expect(find.text('All queues clean'), findsOneWidget);
+    expect(find.text('Toutes les files sont propres'), findsOneWidget);
   });
 
   Future<void> pumpWith(
@@ -155,7 +155,7 @@ void main() {
 
     expect(tester.takeException(), isNull);
     expect(find.text('1 strikes'), findsOneWidget);
-    expect(find.text('All queues clean'), findsNothing);
+    expect(find.text('Toutes les files sont propres'), findsNothing);
   });
 
   testWidgets('an item Cleanuparr already removed is not an active strike',
@@ -174,6 +174,6 @@ void main() {
     );
 
     expect(find.text('Removed.Release.2026'), findsNothing);
-    expect(find.text('All queues clean'), findsOneWidget);
+    expect(find.text('Toutes les files sont propres'), findsOneWidget);
   });
 }

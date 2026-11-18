@@ -52,7 +52,7 @@ class DelugeFilterDrawer extends ConsumerWidget {
             else if (tree.states.isEmpty)
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: Insets.xl),
-                child: Text('No filters available.'),
+                child: Text('Aucun filtre disponible.'),
               )
             else
               for (final DelugeFilterBucket bucket in tree.states)
@@ -107,7 +107,7 @@ class DelugeFilterAppBarAction extends ConsumerWidget {
     final bool filtered =
         ref.watch(delugeFilterProvider(instance)).state != 'All';
     return IconButton(
-      tooltip: 'Filter torrents',
+      tooltip: 'Filtrer les torrents',
       icon: Badge(
         isLabelVisible: filtered,
         smallSize: 8,

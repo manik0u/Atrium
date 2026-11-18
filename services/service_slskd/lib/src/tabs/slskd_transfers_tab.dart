@@ -20,11 +20,11 @@ enum SlskdTransferSort {
   size;
 
   String get label => switch (this) {
-        SlskdTransferSort.activeFirst => 'Active First',
-        SlskdTransferSort.speed => 'Fastest Speed',
-        SlskdTransferSort.peerName => 'Peer Name (A-Z)',
-        SlskdTransferSort.progress => 'Progress (%)',
-        SlskdTransferSort.size => 'File Size (Largest)',
+        SlskdTransferSort.activeFirst => "Actifs d'abord",
+        SlskdTransferSort.speed => 'Vitesse la plus rapide',
+        SlskdTransferSort.peerName => 'Nom du pair (A-Z)',
+        SlskdTransferSort.progress => 'Progression (%)',
+        SlskdTransferSort.size => 'Taille du fichier (la plus grande)',
       };
 }
 
@@ -160,7 +160,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
               titleSpacing: Insets.xs,
               title: SearchBar(
                 controller: _searchController,
-                hintText: 'Search transfers or peers...',
+                hintText: 'Rechercher des transferts ou des pairs…',
                 elevation: const WidgetStatePropertyAll<double>(0),
                 backgroundColor: WidgetStatePropertyAll<Color>(
                   colorScheme.surfaceContainerHigh,
@@ -189,7 +189,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
               ),
               actions: <Widget>[
                 IconButton(
-                  tooltip: _isGrouped ? 'Switch to plain list' : 'Switch to grouped view',
+                  tooltip: _isGrouped ? 'Passer à la liste simple' : 'Passer à la vue groupée',
                   icon: Icon(
                     _isGrouped ? Icons.format_list_bulleted_rounded : Icons.group_work_outlined,
                   ),
@@ -231,7 +231,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
                         const SizedBox(height: Insets.md),
                         FilledButton.tonalIcon(
                           icon: const Icon(Icons.refresh_rounded),
-                          label: const Text('Retry'),
+                          label: const Text('Réessayer'),
                           onPressed: () {
                             ref.invalidate(slskdDownloadsProvider(widget.instance));
                             ref.invalidate(slskdUploadsProvider(widget.instance));
@@ -263,7 +263,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
 
     return FloatingActionButton.small(
       heroTag: 'slskd_transfers_sort_filter_fab',
-      tooltip: 'Sort & Filter',
+      tooltip: 'Trier et filtrer',
       elevation: 0,
       highlightElevation: 0,
       focusElevation: 0,
@@ -373,7 +373,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
                 TextButton(
                   style: TextButton.styleFrom(visualDensity: VisualDensity.compact),
                   onPressed: _resetFilters,
-                  child: const Text('Reset'),
+                  child: const Text('Réinitialiser'),
                 ),
               ],
             ),
@@ -485,7 +485,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
                             _resetFilters();
                             setModalState(() {});
                           },
-                          child: const Text('Reset All'),
+                          child: const Text('Tout réinitialiser'),
                         ),
                       ],
                     ),
@@ -504,7 +504,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
                       spacing: Insets.xs,
                       children: <Widget>[
                         ChoiceChip(
-                          label: Text('All ($totalCount)'),
+                          label: Text('Tous ($totalCount)'),
                           selected: _directionFilter == null,
                           onSelected: (_) {
                             setModalState(() => _directionFilter = null);
@@ -513,7 +513,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
                         ),
                         ChoiceChip(
                           avatar: const Icon(Icons.download_rounded, size: 16),
-                          label: Text('Downloads ($dlCount)'),
+                          label: Text('Téléchargements ($dlCount)'),
                           selected: _directionFilter == TransferDirection.download,
                           onSelected: (_) {
                             setModalState(() => _directionFilter = TransferDirection.download);
@@ -522,7 +522,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
                         ),
                         ChoiceChip(
                           avatar: const Icon(Icons.upload_rounded, size: 16),
-                          label: Text('Uploads ($ulCount)'),
+                          label: Text('Envois ($ulCount)'),
                           selected: _directionFilter == TransferDirection.upload,
                           onSelected: (_) {
                             setModalState(() => _directionFilter = TransferDirection.upload);
@@ -547,7 +547,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
                       runSpacing: Insets.xs,
                       children: <Widget>[
                         ChoiceChip(
-                          label: const Text('All States'),
+                          label: const Text('Tous les états'),
                           selected: _selectedCategory == null,
                           onSelected: (_) {
                             setModalState(() => _selectedCategory = null);
@@ -555,7 +555,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
                           },
                         ),
                         ChoiceChip(
-                          label: const Text('Active'),
+                          label: const Text('Actif'),
                           selected: _selectedCategory == TransferCategory.inProgress,
                           onSelected: (_) {
                             setModalState(() => _selectedCategory = TransferCategory.inProgress);
@@ -563,7 +563,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
                           },
                         ),
                         ChoiceChip(
-                          label: const Text('Queued'),
+                          label: const Text("En file d'attente"),
                           selected: _selectedCategory == TransferCategory.queued,
                           onSelected: (_) {
                             setModalState(() => _selectedCategory = TransferCategory.queued);
@@ -571,7 +571,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
                           },
                         ),
                         ChoiceChip(
-                          label: const Text('Completed'),
+                          label: const Text('Terminé'),
                           selected: _selectedCategory == TransferCategory.completed,
                           onSelected: (_) {
                             setModalState(() => _selectedCategory = TransferCategory.completed);
@@ -579,7 +579,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
                           },
                         ),
                         ChoiceChip(
-                          label: const Text('Failed'),
+                          label: const Text('Échec'),
                           selected: _selectedCategory == TransferCategory.failed,
                           onSelected: (_) {
                             setModalState(() => _selectedCategory = TransferCategory.failed);
@@ -620,7 +620,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
                       width: double.infinity,
                       child: FilledButton(
                         onPressed: () => Navigator.of(sheetContext).pop(),
-                        child: const Text('Done'),
+                        child: const Text('Terminé'),
                       ),
                     ),
                   ],
@@ -648,7 +648,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
               Icon(Icons.search_off_rounded, size: 56, color: colorScheme.outline),
               const SizedBox(height: Insets.md),
               Text(
-                'No transfers match "$_searchQuery"',
+                'Aucun transfert ne correspond à « $_searchQuery »',
                 textAlign: TextAlign.center,
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -657,7 +657,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
               ),
               const SizedBox(height: Insets.xs),
               Text(
-                'Check your spelling or try searching with different keywords.',
+                "Vérifiez l'orthographe ou essayez d'autres mots-clés.",
                 textAlign: TextAlign.center,
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: colorScheme.onSurfaceVariant,
@@ -666,7 +666,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
               const SizedBox(height: Insets.md),
               OutlinedButton.icon(
                 icon: const Icon(Icons.clear, size: 18),
-                label: const Text('Clear Search'),
+                label: const Text('Effacer la recherche'),
                 onPressed: () {
                   setState(() {
                     _searchController.clear();
@@ -691,7 +691,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
               Icon(Icons.filter_alt_off_rounded, size: 56, color: colorScheme.outline),
               const SizedBox(height: Insets.md),
               Text(
-                'No transfers match active filters',
+                'Aucun transfert ne correspond aux filtres actifs',
                 textAlign: TextAlign.center,
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -709,7 +709,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
               const SizedBox(height: Insets.md),
               OutlinedButton.icon(
                 icon: const Icon(Icons.filter_alt_off_rounded, size: 18),
-                label: const Text('Reset All Filters'),
+                label: const Text('Réinitialiser tous les filtres'),
                 onPressed: _resetFilters,
               ),
             ],
@@ -728,7 +728,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
             Icon(Icons.cloud_download_outlined, size: 64, color: colorScheme.outline),
             const SizedBox(height: Insets.md),
             Text(
-              'No transfers in queue',
+              'Aucun transfert dans la file',
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: colorScheme.onSurface,
@@ -736,7 +736,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
             ),
             const SizedBox(height: Insets.xs),
             Text(
-              'Search Soulseek to find music, albums, and tracks.',
+              'Recherchez sur Soulseek de la musique, des albums et des pistes.',
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: colorScheme.onSurfaceVariant,
@@ -745,7 +745,7 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
             const SizedBox(height: Insets.md),
             FilledButton.icon(
               icon: const Icon(Icons.search_rounded, size: 18),
-              label: const Text('Search Music'),
+              label: const Text('Rechercher de la musique'),
               onPressed: () {
                 ref.read(slskdActiveTabProvider(widget.instance).notifier).state = 1;
               },
@@ -757,10 +757,10 @@ class _SlskdTransfersTabState extends ConsumerState<SlskdTransfersTab> {
   }
 
   static String _categoryLabel(TransferCategory category) => switch (category) {
-        TransferCategory.inProgress => 'Active',
-        TransferCategory.queued => 'Queued',
-        TransferCategory.completed => 'Completed',
-        TransferCategory.failed => 'Failed',
+        TransferCategory.inProgress => 'Actif',
+        TransferCategory.queued => "En file d'attente",
+        TransferCategory.completed => 'Terminé',
+        TransferCategory.failed => 'Échec',
       };
 
   /// Flattens all matching peer transfer groups into a flat list of individual files.

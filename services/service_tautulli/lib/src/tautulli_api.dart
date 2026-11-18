@@ -56,7 +56,7 @@ class TautulliApi {
       if (tString(envelope['result']) != 'success') {
         final String message = tString(envelope['message']);
         throw NetworkUnknownException(
-          message.isEmpty ? 'Tautulli: $cmd failed.' : message,
+          message.isEmpty ? 'Tautulli : échec de $cmd.' : message,
         );
       }
       return envelope['data'];
@@ -124,7 +124,7 @@ class TautulliApi {
   /// surfaced by [_cmd].
   Future<void> terminateSession(
     TautulliSession session, {
-    String message = 'Stream stopped by the server owner.',
+    String message = 'Flux arrêté par le propriétaire du serveur.',
   }) async {
     await _cmd('terminate_session', <String, dynamic>{
       if (session.sessionKey.isNotEmpty) 'session_key': session.sessionKey,

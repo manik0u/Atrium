@@ -48,8 +48,8 @@ class _DockerBodyState extends State<_DockerBody> {
           UnraidSectionHeader(title: 'Docker'),
           SizedBox(height: Insets.sm),
           EmptyView(
-            title: 'No containers',
-            message: 'This server is not running any Docker containers.',
+            title: 'Aucun conteneur',
+            message: "Ce serveur n'exécute aucun conteneur Docker.",
           ),
         ],
       );
@@ -99,10 +99,10 @@ class _DockerBodyState extends State<_DockerBody> {
 
   String _filterLabel(_DockerFilter f, int total, int running, int issues) =>
       switch (f) {
-        _DockerFilter.all => 'All $total',
-        _DockerFilter.running => 'Running $running',
-        _DockerFilter.stopped => 'Stopped ${total - running}',
-        _DockerFilter.issues => 'Issues $issues',
+        _DockerFilter.all => 'Tous : $total',
+        _DockerFilter.running => 'En cours : $running',
+        _DockerFilter.stopped => 'Arrêtés : ${total - running}',
+        _DockerFilter.issues => 'Problèmes : $issues',
       };
 }
 
@@ -178,7 +178,7 @@ class _ContainerRowState extends ConsumerState<_ContainerRow> {
       if (!mounted) return;
       messenger.showSnackBar(
         SnackBar(
-          content: Text(e is NetworkException ? e.message : 'Action failed.'),
+          content: Text(e is NetworkException ? e.message : "Échec de l'action."),
         ),
       );
     } finally {
@@ -235,7 +235,7 @@ class _ContainerRowState extends ConsumerState<_ContainerRow> {
                     if (c.isUpdateAvailable == true) ...<Widget>[
                       const SizedBox(width: Insets.xs),
                       Tooltip(
-                        message: 'Update available',
+                        message: 'Mise à jour disponible',
                         child: Icon(
                           Icons.arrow_circle_up_rounded,
                           size: 16,
@@ -270,7 +270,7 @@ class _ContainerRowState extends ConsumerState<_ContainerRow> {
           if (c.autoStart) ...<Widget>[
             const SizedBox(width: Insets.sm),
             Tooltip(
-              message: 'Starts with the array',
+              message: 'Démarre avec le tableau',
               child: Icon(Icons.bolt, size: 18, color: cs.onSurfaceVariant),
             ),
           ],

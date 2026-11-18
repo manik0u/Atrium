@@ -64,7 +64,7 @@ abstract class PlexSession with _$PlexSession {
       (transcode!.videoDecision == 'transcode' ||
           transcode!.audioDecision == 'transcode');
 
-  String get decisionLabel => isTranscode ? 'Transcode' : 'Direct Play';
+  String get decisionLabel => isTranscode ? 'Transcodage' : 'Lecture directe';
 }
 
 @freezed

@@ -42,7 +42,7 @@ class _SpeedDialogContentState extends State<_SpeedDialogContent> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Speed limit'),
+      title: const Text('Limite de vitesse'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -55,7 +55,7 @@ class _SpeedDialogContentState extends State<_SpeedDialogContent> {
           TextField(
             controller: _custom,
             keyboardType: TextInputType.number,
-            decoration: const InputDecoration(labelText: 'Custom (KB/s)'),
+            decoration: const InputDecoration(labelText: 'Personnalisée (Ko/s)'),
             onSubmitted: (String value) {
               final int? kb = int.tryParse(value.trim());
               if (kb != null && kb >= 0) {
@@ -68,7 +68,7 @@ class _SpeedDialogContentState extends State<_SpeedDialogContent> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: () {
@@ -77,7 +77,7 @@ class _SpeedDialogContentState extends State<_SpeedDialogContent> {
               Navigator.of(context).pop(kb);
             }
           },
-          child: const Text('Set'),
+          child: const Text('Définir'),
         ),
       ],
     );

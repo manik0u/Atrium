@@ -199,12 +199,12 @@ void showLidarrArtistInfoSheet(
                 children: [
                   Chip(
                     avatar: const Icon(Icons.high_quality, size: 16),
-                    label: Text('Quality: $qualityName'),
+                    label: Text('Qualité : $qualityName'),
                     visualDensity: VisualDensity.compact,
                   ),
                   Chip(
                     avatar: const Icon(Icons.library_music, size: 16),
-                    label: Text('Metadata: $metadataName'),
+                    label: Text('Métadonnées : $metadataName'),
                     visualDensity: VisualDensity.compact,
                   ),
                   if (artist.status != null)
@@ -226,7 +226,7 @@ void showLidarrArtistInfoSheet(
                   contentPadding: EdgeInsets.zero,
                   dense: true,
                   leading: const Icon(Icons.folder_outlined),
-                  title: const Text('Disk Path'),
+                  title: const Text('Chemin du disque'),
                   subtitle: Text(
                     artist.path!,
                     style: theme.textTheme.bodySmall?.copyWith(
@@ -239,7 +239,7 @@ void showLidarrArtistInfoSheet(
                 alignment: Alignment.centerLeft,
                 child: TextButton.icon(
                   icon: const Icon(Icons.edit_outlined, size: 16),
-                  label: const Text('Edit Artist Settings'),
+                  label: const Text("Modifier les paramètres de l'artiste"),
                   onPressed: () {
                     Navigator.pop(ctx);
                     LidarrEditArtistSheet.show(

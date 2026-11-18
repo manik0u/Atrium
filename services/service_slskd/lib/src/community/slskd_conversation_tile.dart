@@ -29,9 +29,9 @@ class SlskdConversationTile extends StatelessWidget {
 
     final String timeStr = last != null ? slskdFormatTime(last.timestamp) : '';
     final String preview = last != null
-        ? (last.isOutbound ? 'You: ${last.message}' : last.message)
+        ? (last.isOutbound ? 'Vous : ${last.message}' : last.message)
         : (hasUnread
-            ? '$unreadCount unread message${unreadCount > 1 ? 's' : ''}'
+            ? '$unreadCount message(s) non lu(s)${unreadCount > 1 ? 's' : ''}'
             : 'Tap to chat');
 
     return Card(
@@ -136,7 +136,7 @@ class SlskdConversationTile extends StatelessWidget {
 
               if (onClose != null)
                 IconButton(
-                  tooltip: 'Close conversation',
+                  tooltip: 'Fermer la conversation',
                   visualDensity: VisualDensity.compact,
                   icon: Icon(Icons.close_rounded, size: 18, color: colorScheme.outline),
                   onPressed: onClose,

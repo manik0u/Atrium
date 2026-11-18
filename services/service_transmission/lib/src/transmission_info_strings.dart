@@ -75,14 +75,14 @@ String trOrigin(TransmissionDetail d) {
 /// 3 active.
 String trAnnounceState(TransmissionTracker tr, {required int now}) =>
     switch (tr.announceState) {
-      3 => 'Announce in progress',
-      1 => 'Next announce in '
+      3 => 'Annonce en cours',
+      1 => 'Prochaine annonce dans '
           '${trTimeInterval((tr.nextAnnounceTime - now).clamp(0, 1 << 31))}',
-      2 => 'Announce is queued',
+      2 => "Annonce en file d'attente",
       0 => tr.isBackup
-          ? 'Tracker will be used as a backup'
-          : 'Announce not scheduled',
-      _ => 'Unknown announce state: ${tr.announceState}',
+          ? 'Le tracker sera utilisé en secours'
+          : 'Annonce non planifiée',
+      _ => "État d'annonce inconnu : ${tr.announceState}",
     };
 
 /// A label and its value, since a failed announce changes the label too.

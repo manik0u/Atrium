@@ -43,7 +43,7 @@ class SeerrDiscoverScreen extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(vertical: Insets.lg),
         children: <Widget>[
           _DiscoverSection(
-            title: 'Watchlist',
+            title: 'Liste de suivi',
             provider: seerrWatchlistProvider(instance),
             instance: instance,
             // Optional row: most servers have an empty watchlist, and the
@@ -53,38 +53,38 @@ class SeerrDiscoverScreen extends ConsumerWidget {
             hideWhenEmpty: true,
           ),
           _DiscoverSection(
-            title: 'Trending',
+            title: 'Tendances',
             provider: seerrTrendingProvider(instance),
             instance: instance,
           ),
           _DiscoverSection(
-            title: 'Popular Movies',
+            title: 'Films populaires',
             provider: seerrDiscoverMoviesProvider(instance),
             instance: instance,
           ),
           _DiscoverSection(
-            title: 'Upcoming Movies',
+            title: 'Films à venir',
             provider: seerrUpcomingMoviesProvider(instance),
             instance: instance,
           ),
           _GenreSection(
-            title: 'Movie Genres',
+            title: 'Genres de films',
             isMovie: true,
             provider: seerrMovieGenresProvider(instance),
             instance: instance,
           ),
           _DiscoverSection(
-            title: 'Popular TV Shows',
+            title: 'Séries populaires',
             provider: seerrDiscoverTvProvider(instance),
             instance: instance,
           ),
           _DiscoverSection(
-            title: 'Upcoming TV Shows',
+            title: 'Séries à venir',
             provider: seerrUpcomingTvProvider(instance),
             instance: instance,
           ),
           _GenreSection(
-            title: 'TV Genres',
+            title: 'Genres de séries',
             isMovie: false,
             provider: seerrTvGenresProvider(instance),
             instance: instance,
@@ -157,7 +157,7 @@ class _DiscoverSection extends ConsumerWidget {
             onRetry: () => ref.invalidate(provider),
             data: (List<SeerrDiscoverResult> list) {
               if (list.isEmpty) {
-                return const Center(child: Text('No results.'));
+                return const Center(child: Text('Aucun résultat.'));
               }
               return ListView.builder(
                 scrollDirection: Axis.horizontal,

@@ -41,8 +41,8 @@ class BazarrSeriesTab extends ConsumerWidget {
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.live_tv_outlined,
-              title: 'No series',
-              message: 'Bazarr has no series from Sonarr yet.',
+              title: 'Aucune série',
+              message: "Bazarr n'a pas encore de séries de Sonarr.",
             ),
           ],
         ),

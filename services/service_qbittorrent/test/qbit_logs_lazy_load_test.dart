@@ -54,7 +54,7 @@ void main() {
     await tester.pump();
 
     expect(logFetches, 1);
-    expect(find.text('No logs available'), findsOneWidget);
+    expect(find.text('Aucun journal disponible'), findsOneWidget);
 
     // The tab is kept once built, so going back to it does not fetch again.
     selectTab(0);

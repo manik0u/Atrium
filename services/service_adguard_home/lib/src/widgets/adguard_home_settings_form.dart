@@ -34,16 +34,16 @@ class AdguardHomeSettingsForm extends StatelessWidget {
     final bool? discard = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Discard changes?'),
-        content: const Text('What was changed here has not been saved.'),
+        title: const Text('Ignorer les modifications ?'),
+        content: const Text("Les modifications apportées ici n'ont pas été enregistrées."),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Keep editing'),
+            child: const Text("Continuer l'édition"),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Discard'),
+            child: const Text('Ignorer'),
           ),
         ],
       ),
@@ -64,7 +64,7 @@ class AdguardHomeSettingsForm extends StatelessWidget {
             actions: <Widget>[
               FilledButton(
                 onPressed: busy || !changed ? null : onSave,
-                child: const Text('Save'),
+                child: const Text('Enregistrer'),
               ),
               const SizedBox(width: Insets.md),
             ],
@@ -140,7 +140,7 @@ Future<bool> adguardHomeSaveSettings(
     setBusy(false);
     final bool again = await showAdguardHomeFailure(
       context,
-      title: 'Not saved',
+      title: 'Non enregistré',
       error: error,
     );
     if (again && context.mounted) {

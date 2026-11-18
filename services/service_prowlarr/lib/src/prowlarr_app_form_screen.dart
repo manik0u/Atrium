@@ -114,10 +114,10 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
       final ProwlarrApi api =
           await ref.read(prowlarrApiProvider(widget.instance).future);
       await api.testApplicationRaw(_buildPayload());
-      messenger.showSnackBar(const SnackBar(content: Text('Test passed')));
+      messenger.showSnackBar(const SnackBar(content: Text('Test réussi')));
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Test failed: ${_errorMessage(e)}')),
+        SnackBar(content: Text('Échec du test : ${_errorMessage(e)}')),
       );
     } finally {
       if (mounted) {
@@ -145,13 +145,13 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
       ref.invalidate(prowlarrApplicationsProvider(widget.instance));
       messenger.showSnackBar(
         SnackBar(
-          content: Text(_isEdit ? 'Application saved' : 'Application added'),
+          content: Text(_isEdit ? 'Application enregistrée' : 'Application ajoutée'),
         ),
       );
       nav.pop();
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Save failed: ${_errorMessage(e)}')),
+        SnackBar(content: Text("Échec de l'enregistrement : ${_errorMessage(e)}")),
       );
       if (mounted) {
         setState(() => _saving = false);
@@ -163,12 +163,12 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Delete application?'),
-        content: Text('Remove "${_nameController.text}" from Prowlarr?'),
+        title: const Text("Supprimer l'application ?"),
+        content: Text('Retirer « ${_nameController.text} » de Prowlarr ?'),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -176,7 +176,7 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
               foregroundColor: Theme.of(context).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Delete'),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
@@ -193,12 +193,12 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
       await api.deleteApplication(widget.appId!);
       ref.invalidate(prowlarrApplicationsProvider(widget.instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Application deleted')),
+        const SnackBar(content: Text('Application supprimée')),
       );
       nav.pop();
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Delete failed: ${_errorMessage(e)}')),
+        SnackBar(content: Text('Échec de la suppression : ${_errorMessage(e)}')),
       );
       if (mounted) {
         setState(() => _deleting = false);
@@ -210,10 +210,10 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
   Widget build(BuildContext context) {
     if (_isEdit && _selected == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Edit application')),
+        appBar: AppBar(title: const Text("Modifier l'application")),
         body: _loadError != null
             ? ErrorView(
-                title: 'Could not load application',
+                title: "Impossible de charger l'application",
                 message: _loadError!,
                 onRetry: _loadRaw,
               )
@@ -252,7 +252,7 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
         actions: <Widget>[
           if (_isEdit)
             IconButton(
-              tooltip: 'Delete',
+              tooltip: 'Supprimer',
               icon: _deleting
                   ? const SizedBox(
                       width: 18,
@@ -265,7 +265,7 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const Text('Advanced', style: TextStyle(fontSize: 12)),
+              const Text('Avancé', style: TextStyle(fontSize: 12)),
               Switch(
                 value: _showAdvanced,
                 onChanged: (bool v) => setState(() => _showAdvanced = v),
@@ -282,7 +282,7 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
             TextFormField(
               controller: _nameController,
               decoration: const InputDecoration(
-                labelText: 'Name',
+                labelText: 'Nom',
                 border: OutlineInputBorder(),
               ),
               validator: (String? v) =>
@@ -293,22 +293,22 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
               initialValue: _syncLevel,
               isExpanded: true,
               decoration: const InputDecoration(
-                labelText: 'Sync level',
-                helperText: 'How Prowlarr keeps this app indexers in sync',
+                labelText: 'Niveau de synchro',
+                helperText: 'Comment Prowlarr maintient à jour les indexeurs de cette application',
                 border: OutlineInputBorder(),
               ),
               items: const <DropdownMenuItem<String>>[
                 DropdownMenuItem<String>(
                   value: 'disabled',
-                  child: Text('Disabled'),
+                  child: Text('Désactivé'),
                 ),
                 DropdownMenuItem<String>(
                   value: 'addOnly',
-                  child: Text('Add and Remove Only'),
+                  child: Text('Ajout et suppression uniquement'),
                 ),
                 DropdownMenuItem<String>(
                   value: 'fullSync',
-                  child: Text('Full Sync'),
+                  child: Text('Synchro complète'),
                 ),
               ],
               onChanged: (String? v) =>
@@ -334,7 +334,7 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
                             child: ExpressiveProgressIndicator(strokeWidth: 2),
                           )
                         : const Icon(Icons.science_outlined),
-                    label: const Text('Test'),
+                    label: const Text('Tester'),
                   ),
                 ),
                 const SizedBox(width: Insets.md),
@@ -348,7 +348,7 @@ class _ProwlarrAppFormScreenState extends ConsumerState<ProwlarrAppFormScreen> {
                             child: ExpressiveProgressIndicator(strokeWidth: 2),
                           )
                         : const Icon(Icons.save_outlined),
-                    label: Text(_isEdit ? 'Save' : 'Add'),
+                    label: Text(_isEdit ? 'Enregistrer' : 'Ajouter'),
                   ),
                 ),
               ],
@@ -373,7 +373,7 @@ class _AppSchemaPicker extends ConsumerWidget {
     final AsyncValue<List<Map<String, dynamic>>> schemas =
         ref.watch(prowlarrApplicationSchemasProvider(instance));
     return Scaffold(
-      appBar: AppBar(title: const Text('Add application')),
+      appBar: AppBar(title: const Text('Ajouter une application')),
       body: AsyncValueView<List<Map<String, dynamic>>>(
         value: schemas,
         onRetry: () =>
@@ -382,8 +382,8 @@ class _AppSchemaPicker extends ConsumerWidget {
           if (list.isEmpty) {
             return const EmptyView(
               icon: Icons.apps_outlined,
-              title: 'No applications',
-              message: 'Prowlarr returned no application definitions.',
+              title: 'Aucune application',
+              message: "Prowlarr n'a renvoyé aucune définition d'application.",
             );
           }
           return ListView.builder(

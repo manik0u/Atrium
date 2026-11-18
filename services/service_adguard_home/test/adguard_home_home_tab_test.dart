@@ -44,21 +44,21 @@ void main() {
       filtering: AdguardHomeFiltering.fromJson(filteringJson()),
     );
 
-    expect(find.text('Protection is on'), findsOneWidget);
+    expect(find.text('La protection est activée'), findsOneWidget);
     expect(find.text('Last 24 hours'), findsOneWidget);
 
-    expect(find.text('DNS queries'), findsOneWidget);
+    expect(find.text('Requêtes DNS'), findsOneWidget);
     expect(find.text('68'), findsWidgets);
-    expect(find.text('Blocked by filters'), findsOneWidget);
+    expect(find.text('Bloquées par les filtres'), findsOneWidget);
     expect(find.text('24'), findsWidgets);
     expect(find.text('35.29%'), findsOneWidget);
-    expect(find.text('Blocked malware and phishing'), findsOneWidget);
-    expect(find.text('Blocked adult websites'), findsOneWidget);
-    expect(find.text('Enforced safe search'), findsOneWidget);
+    expect(find.text('Malwares et phishing bloqués'), findsOneWidget);
+    expect(find.text('Sites pour adultes bloqués'), findsOneWidget);
+    expect(find.text('Recherche sécurisée appliquée'), findsOneWidget);
     // The average processing time sits with the queries it is about.
     expect(find.text('avg 67 ms'), findsOneWidget);
     // Only the blocklist that is switched on counts.
-    expect(find.text('Rules on blocklists'), findsOneWidget);
+    expect(find.text('Règles sur les listes de blocage'), findsOneWidget);
     expect(find.text('179,185'), findsOneWidget);
 
     expect(find.text('Top clients'), findsOneWidget);
@@ -79,7 +79,7 @@ void main() {
 
     expect(find.text('0%'), findsOneWidget);
     expect(find.text('avg 0 ms'), findsOneWidget);
-    expect(find.text('Nothing yet'), findsNWidgets(4));
+    expect(find.text('Rien pour le moment'), findsNWidgets(4));
     expect(tester.takeException(), isNull);
   });
 
@@ -184,7 +184,7 @@ void main() {
 
     // An overflow would have been thrown as a layout error.
     expect(tester.takeException(), isNull);
-    expect(find.text('Protection is paused'), findsOneWidget);
+    expect(find.text('La protection est en pause'), findsOneWidget);
   });
 
   testWidgets('the switch and the pause chips ask for the right change',
@@ -226,7 +226,7 @@ void main() {
       ),
     );
 
-    expect(find.text('Protection is paused'), findsOneWidget);
+    expect(find.text('La protection est en pause'), findsOneWidget);
     await tester.tap(find.byType(Switch));
     await tester.pump();
     await tester.pump();
@@ -262,7 +262,7 @@ void main() {
       ),
     );
 
-    expect(find.text('Protection is paused'), findsOneWidget);
+    expect(find.text('La protection est en pause'), findsOneWidget);
     expect(find.text('0:30'), findsOneWidget);
     expect(pumped.statusReads, 1);
 
@@ -288,7 +288,7 @@ void main() {
       (WidgetTester tester) async {
     await pumpAdguardHome(tester, tab(), status: statusWith(enabled: false));
 
-    expect(find.text('Protection is off'), findsOneWidget);
+    expect(find.text('La protection est désactivée'), findsOneWidget);
     expect(find.byType(AdguardHomeCountdown), findsNothing);
   });
 
@@ -301,13 +301,13 @@ void main() {
       statsError: const AdguardHomeSignInRefused(),
     );
 
-    expect(find.text('AdGuard Home refused the sign-in'), findsOneWidget);
+    expect(find.text('AdGuard Home a refusé la connexion'), findsOneWidget);
     expect(find.text(AdguardHomeRefusedView.explanation), findsOneWidget);
     expect(find.textContaining('15 minutes'), findsOneWidget);
-    expect(find.text('Protection is on'), findsNothing);
+    expect(find.text('La protection est activée'), findsNothing);
     expect(pumped.actions.calls, isEmpty);
 
-    await tester.tap(find.text('Try again'));
+    await tester.tap(find.text('Réessayer'));
     await tester.pump();
 
     expect(pumped.actions.calls, <String>['retry']);
@@ -379,11 +379,11 @@ void main() {
       statusError: const AdguardHomeSignInRefused(),
     );
 
-    expect(find.text('AdGuard Home asks for a sign-in'), findsOneWidget);
+    expect(find.text('AdGuard Home demande une connexion'), findsOneWidget);
     expect(find.text(AdguardHomeRefusedView.noCredentials), findsOneWidget);
     expect(find.textContaining('15 minutes'), findsNothing);
-    expect(find.text('Edit instance'), findsOneWidget);
-    expect(find.text('Try again'), findsOneWidget);
+    expect(find.text("Modifier l'instance"), findsOneWidget);
+    expect(find.text('Réessayer'), findsOneWidget);
   });
 
   testWidgets('any other failure shows its message and a retry',
@@ -397,7 +397,7 @@ void main() {
     expect(find.byType(ErrorView), findsOneWidget);
     expect(find.text('No route to host'), findsOneWidget);
 
-    await tester.tap(find.text('Retry'));
+    await tester.tap(find.text('Réessayer'));
     await tester.pump();
 
     expect(pumped.actions.calls, <String>['refresh']);
@@ -412,9 +412,9 @@ void main() {
       statsError: const NetworkTimeoutException('Server took too long.'),
     );
 
-    expect(find.text('Protection is on'), findsOneWidget);
+    expect(find.text('La protection est activée'), findsOneWidget);
     expect(find.text('Server took too long.'), findsOneWidget);
-    expect(find.text('DNS queries'), findsNothing);
+    expect(find.text('Requêtes DNS'), findsNothing);
   });
 
   testWidgets('a queried domain can be blocked and a blocked one unblocked',
@@ -483,8 +483,8 @@ void main() {
     expect(find.text('Others'), findsOneWidget);
     expect(find.text('4'), findsOneWidget);
 
-    await tester.ensureVisible(find.text('View all'));
-    await tester.tap(find.text('View all'));
+    await tester.ensureVisible(find.text('Tout voir'));
+    await tester.tap(find.text('Tout voir'));
     await tester.pumpAndSettle();
 
     expect(find.text('Top queried domains'), findsOneWidget);
@@ -518,9 +518,9 @@ void main() {
     await tester.tap(find.byTooltip('Block github.com'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 750));
-    expect(find.text('Undo'), findsOneWidget);
+    expect(find.text('Annuler'), findsOneWidget);
 
-    await tester.tap(find.text('Undo'));
+    await tester.tap(find.text('Annuler'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 750));
 
@@ -530,7 +530,7 @@ void main() {
     ]);
     // Taking it back is itself said, and is not offered to be taken back.
     expect(find.textContaining('@@||github.com'), findsOneWidget);
-    expect(find.text('Undo'), findsNothing);
+    expect(find.text('Annuler'), findsNothing);
   });
 
   testWidgets('a rule that was already there offers nothing to take back',
@@ -551,7 +551,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 750));
 
     expect(find.textContaining('is already in the custom rules'), findsOneWidget);
-    expect(find.text('Undo'), findsNothing);
+    expect(find.text('Annuler'), findsNothing);
   });
 
   testWidgets('a top client opens the client behind the address',
@@ -577,7 +577,7 @@ void main() {
       ),
       findsOneWidget,
     );
-    expect(find.text('Add as persistent client'), findsOneWidget);
+    expect(find.text('Ajouter comme client persistant'), findsOneWidget);
   });
 
   testWidgets('a top domain is not something that opens',
@@ -626,6 +626,6 @@ void main() {
 
     expect(find.text('AdGuard Home'), findsOneWidget);
     expect(find.byType(BetaBadge), findsNothing);
-    expect(find.text('Protection is on'), findsOneWidget);
+    expect(find.text('La protection est activée'), findsOneWidget);
   });
 }

@@ -81,7 +81,7 @@ class _UserDirectorySectionState extends ConsumerState<UserDirectorySection> {
               child: TextField(
                 controller: _searchController,
                 decoration: InputDecoration(
-                  hintText: 'Search fleet users...',
+                  hintText: 'Rechercher des utilisateurs de la flotte…',
                   prefixIcon: const Icon(Icons.search, size: 20),
                   suffixIcon: _searchController.text.isNotEmpty
                       ? IconButton(
@@ -113,21 +113,21 @@ class _UserDirectorySectionState extends ConsumerState<UserDirectorySection> {
                 Icons.sort,
                 color: colorScheme.onSurfaceVariant,
               ),
-              tooltip: 'Sort Users',
+              tooltip: 'Trier les utilisateurs',
               initialValue: _selectedSort,
               onSelected: (option) => setState(() => _selectedSort = option),
               itemBuilder: (context) => [
                 const PopupMenuItem(
                   value: UserSortOption.mostPlays,
-                  child: Text('Most Plays'),
+                  child: Text('Plus de lectures'),
                 ),
                 const PopupMenuItem(
                   value: UserSortOption.mostWatchTime,
-                  child: Text('Most Watch Time'),
+                  child: Text('Plus de temps de visionnage'),
                 ),
                 const PopupMenuItem(
                   value: UserSortOption.name,
-                  child: Text('Username (A-Z)'),
+                  child: Text("Nom d'utilisateur (A-Z)"),
                 ),
               ],
             ),
@@ -165,7 +165,7 @@ class _UserDirectorySectionState extends ConsumerState<UserDirectorySection> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.refresh),
-                  tooltip: 'Retry',
+                  tooltip: 'Réessayer',
                   onPressed: () =>
                       ref.invalidate(tracearrUsersProvider(widget.instance)),
                 ),
@@ -214,8 +214,8 @@ class _UserDirectorySectionState extends ConsumerState<UserDirectorySection> {
                     child: Center(
                       child: Text(
                         _searchController.text.isNotEmpty
-                            ? 'No users match "${_searchController.text}".'
-                            : 'No users found in fleet directory.',
+                            ? 'Aucun utilisateur ne correspond à « ${_searchController.text} ».'
+                            : "Aucun utilisateur trouvé dans l'annuaire de la flotte.",
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),

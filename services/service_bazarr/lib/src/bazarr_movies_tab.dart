@@ -41,8 +41,8 @@ class BazarrMoviesTab extends ConsumerWidget {
             SizedBox(height: 100),
             EmptyView(
               icon: Icons.movie_outlined,
-              title: 'No movies',
-              message: 'Bazarr has no movies from Radarr yet.',
+              title: 'Aucun film',
+              message: "Bazarr n'a pas encore de films de Radarr.",
             ),
           ],
         ),
@@ -86,7 +86,7 @@ class _MovieCard extends StatelessWidget {
     final bool allDone = movie.missingSubtitles.isEmpty;
     final String status = allDone
         ? (movie.subtitles.isEmpty
-            ? 'No subtitles needed'
+            ? 'Aucun sous-titre nécessaire'
             : '${movie.subtitles.length} subtitles')
         : '${movie.missingSubtitles.length} missing subtitles';
     final String title =

@@ -15,7 +15,7 @@ class XmlRpcFault implements Exception {
   final String message;
 
   @override
-  String toString() => 'XML-RPC fault $code: $message';
+  String toString() => 'Faute XML-RPC $code : $message';
 }
 
 /// Minimal XML-RPC codec, covering exactly what rTorrent speaks.
@@ -116,7 +116,7 @@ abstract final class XmlRpc {
     try {
       doc = XmlDocument.parse(body);
     } on XmlException catch (e) {
-      throw FormatException('not XML: ${e.message}');
+      throw FormatException('pas du XML : ${e.message}');
     }
     final XmlElement? root = doc.getElement('methodResponse');
     if (root == null) {

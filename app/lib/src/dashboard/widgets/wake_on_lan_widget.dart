@@ -42,12 +42,12 @@ class _DashboardWakeOnLanWidgetState
       // takes a while to come up. Saying "sent" is the honest claim; saying
       // "woken" would be a promise this cannot keep.
       messenger.showSnackBar(
-        SnackBar(content: Text('Magic packet sent to ${device.name}')),
+        SnackBar(content: Text('Paquet magique envoyé à ${device.name}')),
       );
     } on Object {
       if (!mounted) return;
       messenger.showSnackBar(
-        SnackBar(content: Text('Could not reach the network for '
+        SnackBar(content: Text('Impossible de joindre le réseau pour '
             '${device.name}')),
       );
     } finally {
@@ -68,7 +68,7 @@ class _DashboardWakeOnLanWidgetState
       // Managing devices stays where it was; this only shortcuts to it.
       onTap: () => pushScreen<void>(context, const WakeOnLanScreen()),
       child: devices.isEmpty
-          ? const DashboardIdleRow(text: 'No devices yet')
+          ? const DashboardIdleRow(text: 'Aucun appareil pour le moment')
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -81,7 +81,7 @@ class _DashboardWakeOnLanWidgetState
                     onWake: _sendingId == null ? () => _wake(d) : null,
                   ),
                 if (devices.length > 4)
-                  DashboardIdleRow(text: '+${devices.length - 4} more'),
+                  DashboardIdleRow(text: '+${devices.length - 4} de plus'),
               ],
             ),
     );
@@ -143,7 +143,7 @@ class _WakeRow extends StatelessWidget {
             FilledButton.tonalIcon(
               onPressed: onWake,
               icon: const Icon(Icons.power_settings_new_rounded, size: 18),
-              label: const Text('Wake'),
+              label: const Text('Réveiller'),
               style: FilledButton.styleFrom(
                 visualDensity: VisualDensity.compact,
               ),

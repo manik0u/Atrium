@@ -150,7 +150,7 @@ class _GeneralSettingsSectionState
                         TextField(
                           controller: _instanceNameController,
                           decoration: const InputDecoration(
-                            labelText: 'Instance Name',
+                            labelText: "Nom de l'instance",
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -168,13 +168,13 @@ class _GeneralSettingsSectionState
                           controller: _sslPortController,
                           keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
-                            labelText: 'SSL Port',
+                            labelText: 'Port SSL',
                             border: OutlineInputBorder(),
                           ),
                         ),
                         const SizedBox(height: Insets.xs),
                         SwitchListTile(
-                          title: const Text('Enable SSL'),
+                          title: const Text('Activer SSL'),
                           value: _enableSsl ?? false,
                           contentPadding: EdgeInsets.zero,
                           onChanged: (bool val) =>
@@ -184,8 +184,8 @@ class _GeneralSettingsSectionState
                         TextField(
                           controller: _urlBaseController,
                           decoration: const InputDecoration(
-                            labelText: 'URL Base',
-                            hintText: 'e.g. /lidarr',
+                            labelText: "Base de l'URL",
+                            hintText: 'ex. /lidarr',
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -193,13 +193,13 @@ class _GeneralSettingsSectionState
                         TextField(
                           controller: _branchController,
                           decoration: const InputDecoration(
-                            labelText: 'Branch',
+                            labelText: 'Branche',
                             border: OutlineInputBorder(),
                           ),
                         ),
                         const SizedBox(height: Insets.xs),
                         SwitchListTile(
-                          title: const Text('Update Automatically'),
+                          title: const Text('Mettre à jour automatiquement'),
                           value: _updateAutomatically ?? false,
                           contentPadding: EdgeInsets.zero,
                           onChanged: (bool val) =>
@@ -240,7 +240,7 @@ class _GeneralSettingsSectionState
                                 ),
                                 IconButton(
                                   icon: const Icon(Icons.copy, size: 18),
-                                  tooltip: 'Copy API Key',
+                                  tooltip: 'Copier la clé API',
                                   onPressed: () {
                                     Clipboard.setData(
                                       ClipboardData(text: host.apiKey!),
@@ -261,7 +261,7 @@ class _GeneralSettingsSectionState
                         ],
                         FilledButton.icon(
                           icon: const Icon(Icons.save, size: 18),
-                          label: const Text('Save Host Settings'),
+                          label: const Text("Enregistrer les paramètres de l'hôte"),
                           onPressed: () async {
                             final ScaffoldMessengerState messenger =
                                 ScaffoldMessenger.of(context);
@@ -298,12 +298,12 @@ class _GeneralSettingsSectionState
                               );
                               messenger.showSnackBar(
                                 const SnackBar(
-                                  content: Text('Host settings saved!'),
+                                  content: Text("Paramètres de l'hôte enregistrés !"),
                                 ),
                               );
                             } catch (e) {
                               messenger.showSnackBar(
-                                SnackBar(content: Text('Error: $e')),
+                                SnackBar(content: Text('Erreur : $e')),
                               );
                             }
                           },

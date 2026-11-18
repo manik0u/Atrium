@@ -82,7 +82,7 @@ class EmptyView extends StatelessWidget {
 class ErrorView extends StatelessWidget {
   const ErrorView({
     required this.message,
-    this.title = 'Something went wrong',
+    this.title = 'Un problème est survenu',
     this.onRetry,
     super.key,
   });
@@ -101,7 +101,7 @@ class ErrorView extends StatelessWidget {
             : FilledButton.tonalIcon(
                 onPressed: onRetry,
                 icon: const Icon(Icons.refresh),
-                label: const Text('Retry'),
+                label: const Text('Réessayer'),
               ),
       );
 }

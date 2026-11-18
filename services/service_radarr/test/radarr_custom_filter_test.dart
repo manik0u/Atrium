@@ -58,7 +58,7 @@ Map<String, Object?> _filterJson(
 
 RadarrCustomFilter _filter(List<Map<String, Object?>> rules) =>
     RadarrCustomFilter.fromJson(
-      _filterJson('Test', rules).cast<String, dynamic>(),
+      _filterJson('Tester', rules).cast<String, dynamic>(),
     );
 
 /// The moment the relative date rules are measured from.
@@ -629,7 +629,7 @@ void main() {
           .map((ChoiceChip chip) => (chip.label as Text).data!)
           .toList();
       expect(
-        chips.sublist(chips.indexOf('Unmonitored Only') + 1).take(2),
+        chips.sublist(chips.indexOf('Non surveillés uniquement') + 1).take(2),
         <String>['Has a file', 'No file'],
       );
       expect(find.text('eng'), findsNothing);
@@ -641,14 +641,14 @@ void main() {
       await tester.tap(find.widgetWithText(ChoiceChip, 'No file'));
       await tester.pumpAndSettle();
       expect(selected('No file'), isTrue);
-      expect(selected('All Status'), isFalse);
+      expect(selected('Tous les statuts'), isFalse);
       expect(shown(container), <String>['Avatar: Fire and Ash']);
 
       // A built-in filter takes over from the custom one.
-      await tester.tap(find.widgetWithText(ChoiceChip, 'Monitored Only'));
+      await tester.tap(find.widgetWithText(ChoiceChip, 'Surveillés uniquement'));
       await tester.pumpAndSettle();
       expect(selected('No file'), isFalse);
-      expect(selected('Monitored Only'), isTrue);
+      expect(selected('Surveillés uniquement'), isTrue);
       expect(shown(container), <String>['The Matrix']);
 
       // Tapping the active custom filter again goes back to everything.
@@ -657,7 +657,7 @@ void main() {
       expect(shown(container), <String>['The Matrix']);
       await tester.tap(find.widgetWithText(ChoiceChip, 'Has a file'));
       await tester.pumpAndSettle();
-      expect(selected('All Status'), isTrue);
+      expect(selected('Tous les statuts'), isTrue);
       expect(shown(container), <String>['Avatar: Fire and Ash', 'The Matrix']);
     });
   });

@@ -208,11 +208,11 @@ class _ProwlarrDynamicFieldState extends State<ProwlarrDynamicField> {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text('Cancel'),
+              child: const Text('Annuler'),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(ctx, sel.toList()),
-              child: const Text('Done'),
+              child: const Text('Terminé'),
             ),
           ],
         );

@@ -198,14 +198,14 @@ void main() {
             ),
           );
 
-      expect(chip('adservice.google.com').label, 'Blocked');
+      expect(chip('adservice.google.com').label, 'Bloquées');
       expect(chip('adservice.google.com').tone, AdguardHomeResultTone.blocked);
       expect(chip('en.wikipedia.org').label, 'Allowed');
       expect(chip('en.wikipedia.org').tone, AdguardHomeResultTone.allowed);
       expect(chip('nas.home.example').tone, AdguardHomeResultTone.rewritten);
       expect(chip('www.youtube.com').tone, AdguardHomeResultTone.restricted);
       // Shortened, so it is not cut off beside the client.
-      expect(chip('adult.example').label, 'Parental control');
+      expect(chip('adult.example').label, 'Contrôle parental');
       // One this app has no name for reads as the server wrote it.
       expect(chip('new.example').label, 'FilteredSomethingNew');
       expect(chip('new.example').tone, AdguardHomeResultTone.plain);
@@ -214,7 +214,7 @@ void main() {
     testWidgets('the end of the log is said', (WidgetTester tester) async {
       await pumpTab(tester, all(<AdguardHomeQueryLogEntry>[entry()]));
 
-      expect(find.text('End of the query log'), findsOneWidget);
+      expect(find.text('Fin du journal des requêtes'), findsOneWidget);
     });
 
     testWidgets('older entries are asked for when the end comes into view, '
@@ -230,7 +230,7 @@ void main() {
       await tester.pump();
 
       expect(pumped.log.calls, <String>['more']);
-      expect(find.text('End of the query log'), findsNothing);
+      expect(find.text('Fin du journal des requêtes'), findsNothing);
     });
 
     testWidgets('a read that ran out of requests waits to be asked on',
@@ -250,7 +250,7 @@ void main() {
       expect(find.text('Searched back to 5 Oct 14:20:11'), findsOneWidget);
       expect(pumped.log.calls, isEmpty);
 
-      await tester.tap(find.text('Keep searching'));
+      await tester.tap(find.text('Continuer la recherche'));
       await tester.pump();
 
       expect(pumped.log.calls, <String>['more']);
@@ -271,12 +271,12 @@ void main() {
       // The entries stay, and nothing is asked for by itself.
       expect(find.text('example.org'), findsOneWidget);
       expect(
-        find.text('This address answered, but not as AdGuard Home.'),
+        find.text('Cette adresse a répondu, mais pas comme AdGuard Home.'),
         findsOneWidget,
       );
       expect(pumped.log.calls, isEmpty);
 
-      await tester.tap(find.text('Retry'));
+      await tester.tap(find.text('Réessayer'));
       await tester.pump();
 
       expect(pumped.log.calls, <String>['more']);
@@ -294,7 +294,7 @@ void main() {
         ),
       );
 
-      expect(find.text('End of the query log'), findsNothing);
+      expect(find.text('Fin du journal des requêtes'), findsNothing);
       expect(find.byType(ExpressiveProgressIndicator), findsOneWidget);
     });
 
@@ -328,7 +328,7 @@ void main() {
       );
 
       expect(find.text('parsing params: invalid value'), findsOneWidget);
-      await tester.tap(find.text('Retry'));
+      await tester.tap(find.text('Réessayer'));
       await tester.pump();
 
       expect(pumped.log.calls, <String>['reload']);
@@ -346,7 +346,7 @@ void main() {
         ),
       );
 
-      await tester.tap(find.text('Retry'));
+      await tester.tap(find.text('Réessayer'));
       await tester.pump();
 
       expect(pumped.log.calls, <String>['more']);
@@ -386,7 +386,7 @@ void main() {
     testWidgets('an empty log says so', (WidgetTester tester) async {
       await pumpTab(tester, all(const <AdguardHomeQueryLogEntry>[]));
 
-      expect(find.text('Nothing in the query log yet'), findsOneWidget);
+      expect(find.text('Rien dans le journal des requêtes pour le moment'), findsOneWidget);
     });
 
     testWidgets('an empty log can be pulled down to read it again',
@@ -397,7 +397,7 @@ void main() {
           await pumpTab(tester, all(const <AdguardHomeQueryLogEntry>[]));
 
       await tester.drag(
-        find.text('Nothing in the query log yet'),
+        find.text('Rien dans le journal des requêtes pour le moment'),
         const Offset(0, 320),
       );
       await tester.pumpAndSettle();
@@ -412,7 +412,7 @@ void main() {
         const AdguardHomeQueryLogState(search: 'zzz', reachedEnd: true),
       );
 
-      await tester.drag(find.text('Nothing found'), const Offset(0, 320));
+      await tester.drag(find.text('Rien trouvé'), const Offset(0, 320));
       await tester.pumpAndSettle();
 
       expect(pumped.log.calls, <String>['reload']);
@@ -426,8 +426,8 @@ void main() {
         config: const AdguardHomeQueryLogConfig(enabled: false),
       );
 
-      expect(find.text('The query log is off'), findsOneWidget);
-      expect(find.text('Nothing in the query log yet'), findsNothing);
+      expect(find.text('Le journal des requêtes est désactivé'), findsOneWidget);
+      expect(find.text('Rien dans le journal des requêtes pour le moment'), findsNothing);
     });
 
     testWidgets('nothing under a search offers to clear it',
@@ -441,12 +441,12 @@ void main() {
         ),
       );
 
-      expect(find.text('Nothing found'), findsOneWidget);
+      expect(find.text('Rien trouvé'), findsOneWidget);
       expect(
         tester.widget<TextField>(find.byType(TextField)).controller!.text,
         'zzz',
       );
-      await tester.tap(find.text('Clear search and filter'));
+      await tester.tap(find.text('Effacer la recherche et le filtre'));
       await tester.pump();
 
       // Both at once, as one read, and the box is emptied with them.
@@ -469,9 +469,9 @@ void main() {
         ),
       );
 
-      expect(find.text('Nothing found yet'), findsOneWidget);
+      expect(find.text('Rien trouvé pour le moment'), findsOneWidget);
       expect(find.text('Searched back to 5 Oct 14:20:11'), findsOneWidget);
-      await tester.tap(find.text('Keep searching'));
+      await tester.tap(find.text('Continuer la recherche'));
       await tester.pump();
 
       expect(pumped.log.calls, <String>['more']);
@@ -498,7 +498,7 @@ void main() {
           await pumpTab(tester, all(<AdguardHomeQueryLogEntry>[entry()]));
 
       // The ten do not fit side by side: this one is scrolled to.
-      final Finder chip = find.widgetWithText(ChoiceChip, 'Blocked');
+      final Finder chip = find.widgetWithText(ChoiceChip, 'Bloquées');
       await tester.ensureVisible(chip);
       await tester.pump();
       await tester.tap(chip);
@@ -558,11 +558,11 @@ void main() {
     testWidgets('the cross empties the search', (WidgetTester tester) async {
       final Pumped pumped =
           await pumpTab(tester, all(<AdguardHomeQueryLogEntry>[entry()]));
-      expect(find.byTooltip('Clear search'), findsNothing);
+      expect(find.byTooltip('Effacer la recherche'), findsNothing);
 
       await tester.enterText(find.byType(TextField), 'tiktok');
       await tester.pump(const Duration(milliseconds: 400));
-      await tester.tap(find.byTooltip('Clear search'));
+      await tester.tap(find.byTooltip('Effacer la recherche'));
       await tester.pump();
 
       expect(pumped.log.calls, <String>['search tiktok', 'search ']);
@@ -581,7 +581,7 @@ void main() {
         const AdguardHomeQueryLogState(error: AdguardHomeSignInRefused()),
       );
 
-      expect(find.text('AdGuard Home refused the sign-in'), findsOneWidget);
+      expect(find.text('AdGuard Home a refusé la connexion'), findsOneWidget);
       expect(find.byType(TextField), findsNothing);
       expect(find.byType(ChoiceChip), findsNothing);
     });
@@ -593,7 +593,7 @@ void main() {
         const AdguardHomeQueryLogState(error: AdguardHomeSignInRefused()),
       );
 
-      await tester.tap(find.text('Try again'));
+      await tester.tap(find.text('Réessayer'));
       await tester.pump();
 
       // One call. The log listens for it and reads itself again, as the
@@ -643,7 +643,7 @@ void main() {
         ),
       );
 
-      expect(find.text('AdGuard Home asks for a sign-in'), findsOneWidget);
+      expect(find.text('AdGuard Home demande une connexion'), findsOneWidget);
     });
   });
 
@@ -677,7 +677,7 @@ void main() {
       expect(inSheet('7 Oct 2026, 20:29:32.377'), findsOneWidget);
       expect(inSheet('Type'), findsOneWidget);
       expect(inSheet('A'), findsOneWidget);
-      expect(inSheet('Plain DNS'), findsOneWidget);
+      expect(inSheet('DNS simple'), findsOneWidget);
       expect(inSheet('NOERROR'), findsOneWidget);
       expect(
         inSheet('https://dns10.quad9.net:443/dns-query'),
@@ -688,7 +688,7 @@ void main() {
       expect(inSheet('172.17.0.1'), findsOneWidget);
       expect(inSheet('Laptop'), findsOneWidget);
       // Nothing came from the cache, so that line is left out.
-      expect(inSheet('Served from cache'), findsNothing);
+      expect(inSheet('Servi depuis le cache'), findsNothing);
       expect(tester.takeException(), isNull);
     });
 
@@ -712,7 +712,7 @@ void main() {
           .dx;
 
       expect(left('a.io'), 16);
-      expect(left('Request'), 16);
+      expect(left('Demande'), 16);
       expect(left('OK'), 16);
     });
 
@@ -728,7 +728,7 @@ void main() {
         (WidgetTester tester) async {
       await open(tester, entry(cached: true));
 
-      expect(find.text('Served from cache'), findsOneWidget);
+      expect(find.text('Servi depuis le cache'), findsOneWidget);
     });
 
     testWidgets('names the blocked service', (WidgetTester tester) async {
@@ -815,7 +815,7 @@ void main() {
 
     /// Opens the menu beside the main action and picks [item] from it.
     Future<void> more(WidgetTester tester, String item) async {
-      await tester.tap(find.byTooltip('More actions'));
+      await tester.tap(find.byTooltip("Plus d'actions"));
       await tester.pumpAndSettle();
       await tester.tap(find.text(item));
       await tester.pumpAndSettle();
@@ -840,7 +840,7 @@ void main() {
 
       // Not at the end of a scroll: on the screen as the sheet opens.
       final Rect button =
-          tester.getRect(find.widgetWithText(FilledButton, 'Block'));
+          tester.getRect(find.widgetWithText(FilledButton, 'Bloquer'));
       expect(button.bottom, lessThanOrEqualTo(640));
       expect(button.top, greaterThan(0));
       // And the last rule is there to scroll to.
@@ -855,7 +855,7 @@ void main() {
         (WidgetTester tester) async {
       final Pumped pumped = await open(tester, entry());
 
-      await tester.tap(find.widgetWithText(FilledButton, 'Block'));
+      await tester.tap(find.widgetWithText(FilledButton, 'Bloquer'));
       await tester.pumpAndSettle();
 
       expect(pumped.actions.calls, <String>['block example.org']);
@@ -869,8 +869,8 @@ void main() {
     testWidgets('a filtered one can be unblocked', (WidgetTester tester) async {
       final Pumped pumped = await open(tester, blocked);
 
-      expect(find.widgetWithText(FilledButton, 'Block'), findsNothing);
-      await tester.tap(find.widgetWithText(FilledButton, 'Unblock'));
+      expect(find.widgetWithText(FilledButton, 'Bloquer'), findsNothing);
+      await tester.tap(find.widgetWithText(FilledButton, 'Débloquer'));
       await tester.pumpAndSettle();
 
       expect(pumped.actions.calls, <String>['unblock adservice.google.com']);
@@ -883,7 +883,7 @@ void main() {
         entry(domain: 'xn--mnchen-3ya.example', unicodeName: 'münchen.example'),
       );
 
-      await tester.tap(find.widgetWithText(FilledButton, 'Block'));
+      await tester.tap(find.widgetWithText(FilledButton, 'Bloquer'));
       await tester.pumpAndSettle();
 
       expect(pumped.actions.calls, <String>['block xn--mnchen-3ya.example']);
@@ -917,14 +917,14 @@ void main() {
         (WidgetTester tester) async {
       final Pumped pumped = await open(tester, entry());
 
-      await more(tester, 'Disallow this client');
+      await more(tester, 'Interdire ce client');
 
-      expect(find.text('Disallow this client?'), findsOneWidget);
+      expect(find.text('Interdire ce client ?'), findsOneWidget);
       expect(
         find.textContaining('drop every DNS query from 172.17.0.1'),
         findsOneWidget,
       );
-      await tester.tap(find.text('Cancel'));
+      await tester.tap(find.text('Annuler'));
       await tester.pumpAndSettle();
 
       expect(pumped.actions.calls, <String>['read access']);
@@ -937,8 +937,8 @@ void main() {
         (WidgetTester tester) async {
       final Pumped pumped = await open(tester, entry());
 
-      await more(tester, 'Disallow this client');
-      await tester.tap(find.widgetWithText(FilledButton, 'Disallow'));
+      await more(tester, 'Interdire ce client');
+      await tester.tap(find.widgetWithText(FilledButton, 'Refuser'));
       await tester.pumpAndSettle();
 
       // No rule is named for a client that is not shut out: what the server
@@ -959,18 +959,18 @@ void main() {
         entry(clientDisallowed: true, clientDisallowedRule: '172.17.0.0/16'),
       );
 
-      await tester.tap(find.byTooltip('More actions'));
+      await tester.tap(find.byTooltip("Plus d'actions"));
       await tester.pumpAndSettle();
-      expect(find.text('Disallow this client'), findsNothing);
-      await tester.tap(find.text('Allow this client'));
+      expect(find.text('Interdire ce client'), findsNothing);
+      await tester.tap(find.text('Autoriser ce client'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Allow this client?'), findsOneWidget);
+      expect(find.text('Autoriser ce client ?'), findsOneWidget);
       expect(
         find.textContaining('172.17.0.0/16 from the disallowed clients'),
         findsOneWidget,
       );
-      await tester.tap(find.widgetWithText(FilledButton, 'Allow'));
+      await tester.tap(find.widgetWithText(FilledButton, 'Autoriser'));
       await tester.pumpAndSettle();
 
       expect(
@@ -993,7 +993,7 @@ void main() {
       await tester.tap(find.byType(AdguardHomeQueryLogRow));
       await tester.pumpAndSettle();
 
-      await more(tester, 'Disallow this client');
+      await more(tester, 'Interdire ce client');
 
       expect(
         find.textContaining('takes 172.17.0.1 off the allowed clients'),
@@ -1014,9 +1014,9 @@ void main() {
       await tester.tap(find.byType(AdguardHomeQueryLogRow));
       await tester.pumpAndSettle();
 
-      await more(tester, 'Disallow this client');
+      await more(tester, 'Interdire ce client');
 
-      expect(find.text('Disallow this client?'), findsNothing);
+      expect(find.text('Interdire ce client ?'), findsNothing);
       expect(find.text(AdguardHomeLastAllowedClient.message), findsOneWidget);
       expect(pumped.actions.calls, <String>['read access']);
     });
@@ -1033,8 +1033,8 @@ void main() {
       await tester.tap(find.byType(AdguardHomeQueryLogRow));
       await tester.pumpAndSettle();
 
-      await more(tester, 'Disallow this client');
-      await tester.tap(find.widgetWithText(FilledButton, 'Disallow'));
+      await more(tester, 'Interdire ce client');
+      await tester.tap(find.widgetWithText(FilledButton, 'Refuser'));
       await tester.pumpAndSettle();
 
       expect(find.text('bad ip, cidr, or clientid'), findsOneWidget);
@@ -1057,9 +1057,9 @@ void main() {
       await tester.tap(find.byType(AdguardHomeQueryLogRow));
       await tester.pumpAndSettle();
 
-      await more(tester, 'Disallow this client');
+      await more(tester, 'Interdire ce client');
 
-      expect(find.text('Disallow this client?'), findsNothing);
+      expect(find.text('Interdire ce client ?'), findsNothing);
       expect(find.text(AdguardHomeAllowedByWiderEntry.message), findsOneWidget);
       expect(pumped.actions.calls, <String>['read access']);
       expect(find.textContaining('is now disallowed'), findsNothing);
@@ -1070,14 +1070,14 @@ void main() {
       final Pumped pumped = await open(tester, entry());
       pumped.actions.writeHold = Completer<void>();
 
-      await more(tester, 'Disallow this client');
-      await tester.tap(find.widgetWithText(FilledButton, 'Disallow'));
+      await more(tester, 'Interdire ce client');
+      await tester.tap(find.widgetWithText(FilledButton, 'Refuser'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 400));
 
       expect(
         tester
-            .widget<FilledButton>(find.widgetWithText(FilledButton, 'Block'))
+            .widget<FilledButton>(find.widgetWithText(FilledButton, 'Bloquer'))
             .onPressed,
         isNull,
       );
@@ -1103,8 +1103,8 @@ void main() {
       // which with the sheet gone was the screen itself.
       final Pumped pumped = await open(tester, entry());
       pumped.actions.writeHold = Completer<void>();
-      await more(tester, 'Disallow this client');
-      await tester.tap(find.widgetWithText(FilledButton, 'Disallow'));
+      await more(tester, 'Interdire ce client');
+      await tester.tap(find.widgetWithText(FilledButton, 'Refuser'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 400));
 
@@ -1130,8 +1130,8 @@ void main() {
         ..writeHold = Completer<void>()
         ..writeFailure =
             const AdguardHomeRequestRefused('bad ip, cidr, or clientid');
-      await more(tester, 'Disallow this client');
-      await tester.tap(find.widgetWithText(FilledButton, 'Disallow'));
+      await more(tester, 'Interdire ce client');
+      await tester.tap(find.widgetWithText(FilledButton, 'Refuser'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 400));
 
@@ -1151,11 +1151,11 @@ void main() {
 
       expect(
         tester
-            .widget<FilledButton>(find.widgetWithText(FilledButton, 'Block'))
+            .widget<FilledButton>(find.widgetWithText(FilledButton, 'Bloquer'))
             .onPressed,
         isNull,
       );
-      await tester.tap(find.byTooltip('More actions'));
+      await tester.tap(find.byTooltip("Plus d'actions"));
       await tester.pumpAndSettle();
       expect(
         tester
@@ -1171,22 +1171,22 @@ void main() {
         isFalse,
       );
       // What is done to the client does not depend on the name.
-      expect(find.text('Disallow this client'), findsOneWidget);
+      expect(find.text('Interdire ce client'), findsOneWidget);
     });
 
     testWidgets('an entry with no client has nothing to do to a client',
         (WidgetTester tester) async {
       await open(tester, entry(client: '', clientName: ''));
 
-      expect(find.widgetWithText(FilledButton, 'Block'), findsOneWidget);
-      expect(find.byTooltip('More actions'), findsNothing);
+      expect(find.widgetWithText(FilledButton, 'Bloquer'), findsOneWidget);
+      expect(find.byTooltip("Plus d'actions"), findsNothing);
     });
 
     testWidgets('Show client opens the client behind the query, over the '
         'query', (WidgetTester tester) async {
       final Pumped pumped = await open(tester, entry());
 
-      await more(tester, 'Show client');
+      await more(tester, 'Afficher le client');
 
       expect(pumped.actions.calls, <String>['find 172.17.0.1']);
       expect(find.byType(AdguardHomeClientSheet), findsOneWidget);
@@ -1210,7 +1210,7 @@ void main() {
         ),
       );
 
-      await more(tester, 'Show client');
+      await more(tester, 'Afficher le client');
 
       expect(pumped.actions.calls, <String>['find work-phone']);
     });

@@ -91,8 +91,8 @@ class _ProwlarrHistoryTabState extends ConsumerState<ProwlarrHistoryTab> {
             SizedBox(height: 100),
             EmptyView(
                     icon: Icons.history,
-                    title: 'No history',
-                    message: 'Nothing matches this filter yet.',
+                    title: 'Aucun historique',
+                    message: 'Rien ne correspond à ce filtre pour le moment.',
                   ),
           ],
         ),

@@ -105,22 +105,22 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
 
   String _monitorLabel(MonitorTypes type) {
     return switch (type) {
-      MonitorTypes.all => 'All Albums',
-      MonitorTypes.future => 'Future Albums',
-      MonitorTypes.missing => 'Missing Albums',
-      MonitorTypes.existing => 'Existing Albums',
-      MonitorTypes.first => 'First Album',
-      MonitorTypes.latest => 'Latest Album',
-      MonitorTypes.none => 'None',
+      MonitorTypes.all => 'Tous les albums',
+      MonitorTypes.future => 'Albums à venir',
+      MonitorTypes.missing => 'Albums manquants',
+      MonitorTypes.existing => 'Albums existants',
+      MonitorTypes.first => 'Premier album',
+      MonitorTypes.latest => 'Dernier album',
+      MonitorTypes.none => 'Aucun',
       _ => type.value,
     };
   }
 
   String _monitorNewItemsLabel(NewItemMonitorTypes type) {
     return switch (type) {
-      NewItemMonitorTypes.all => 'All',
-      NewItemMonitorTypes.none => 'None',
-      NewItemMonitorTypes.newVal => 'New',
+      NewItemMonitorTypes.all => 'Tous',
+      NewItemMonitorTypes.none => 'Aucun',
+      NewItemMonitorTypes.newVal => 'Nouveau',
     };
   }
 
@@ -257,7 +257,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
             scrolledUnderElevation: 0.0,
             backgroundColor: cs.surface,
             automaticallyImplyLeading: false,
-            title: const Text('Add Artist Options'),
+            title: const Text("Options d'ajout de l'artiste"),
             centerTitle: true,
             actions: [
               IconButton(
@@ -400,7 +400,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                                   initialValue: selectedVal,
                                   isExpanded: true,
                                   decoration: InputDecoration(
-                                    labelText: 'Root Folder',
+                                    labelText: 'Dossier racine',
                                     contentPadding: const EdgeInsets.symmetric(
                                       horizontal: 12,
                                       vertical: 12,
@@ -465,7 +465,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                               loading: () =>
                                   const ExpressiveProgressIndicator(),
                               error: (e, _) =>
-                                  Text('Failed to load root folders: $e'),
+                                  Text('Échec du chargement des dossiers racine : $e'),
                             ),
                             const SizedBox(height: Insets.md),
                             // Quality profile selector
@@ -473,7 +473,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                               data: (List<QualityProfileResource> profiles) {
                                 if (profiles.isEmpty) {
                                   return const Text(
-                                    'No quality profiles found.',
+                                    'Aucun profil de qualité trouvé.',
                                   );
                                 }
                                 final int selectedVal =
@@ -492,7 +492,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                                   initialValue: selectedVal,
                                   isExpanded: true,
                                   decoration: InputDecoration(
-                                    labelText: 'Quality Profile',
+                                    labelText: 'Profil de qualité',
                                     contentPadding: const EdgeInsets.symmetric(
                                       horizontal: 12,
                                       vertical: 12,
@@ -522,7 +522,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                               loading: () =>
                                   const ExpressiveProgressIndicator(),
                               error: (e, _) =>
-                                  Text('Failed to load quality profiles: $e'),
+                                  Text('Échec du chargement des profils de qualité : $e'),
                             ),
                             const SizedBox(height: Insets.md),
                             // Metadata profile selector (Lidarr-specific)
@@ -530,7 +530,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                               data: (List<MetadataProfileResource> profiles) {
                                 if (profiles.isEmpty) {
                                   return const Text(
-                                    'No metadata profiles found.',
+                                    'Aucun profil de métadonnées trouvé.',
                                   );
                                 }
                                 final int selectedVal =
@@ -549,7 +549,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                                   initialValue: selectedVal,
                                   isExpanded: true,
                                   decoration: InputDecoration(
-                                    labelText: 'Metadata Profile',
+                                    labelText: 'Profil de métadonnées',
                                     contentPadding: const EdgeInsets.symmetric(
                                       horizontal: 12,
                                       vertical: 12,
@@ -579,7 +579,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                               loading: () =>
                                   const ExpressiveProgressIndicator(),
                               error: (e, _) =>
-                                  Text('Failed to load metadata profiles: $e'),
+                                  Text('Échec du chargement des profils de métadonnées : $e'),
                             ),
                           ],
                         ),
@@ -619,7 +619,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                               initialValue: _selectedMonitor,
                               isExpanded: true,
                               decoration: InputDecoration(
-                                labelText: 'Monitor Albums',
+                                labelText: 'Surveiller les albums',
                                 contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 12,
                                   vertical: 12,
@@ -660,7 +660,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                               initialValue: _selectedMonitorNewItems,
                               isExpanded: true,
                               decoration: InputDecoration(
-                                labelText: 'Monitor New Items',
+                                labelText: 'Surveiller les nouveaux éléments',
                                 contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 12,
                                   vertical: 12,
@@ -708,9 +708,9 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                       child: Column(
                         children: [
                           SwitchListTile(
-                            title: const Text('Monitored'),
+                            title: const Text('Surveillé'),
                             subtitle: const Text(
-                              'Monitor this artist for new and missing releases',
+                              'Surveiller cet artiste pour les sorties nouvelles et manquantes',
                             ),
                             value: _monitored,
                             onChanged: (bool val) {
@@ -722,9 +722,9 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                           ),
                           const Divider(height: 1),
                           SwitchListTile(
-                            title: const Text('Search for Missing Albums'),
+                            title: const Text('Rechercher les albums manquants'),
                             subtitle: const Text(
-                              'Start searching indexers immediately after adding',
+                              "Lancer la recherche sur les indexeurs immédiatement après l'ajout",
                             ),
                             value: _searchForMissingAlbums,
                             onChanged: (bool val) {
@@ -772,7 +772,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
                                     children: tags.map((TagResource tag) {
                                       final int id = tag.id ?? 0;
                                       final String label =
-                                          tag.label ?? 'Tag $id';
+                                          tag.label ?? 'Balise $id';
                                       final bool isSelected =
                                           _selectedTagIds.contains(id);
                                       return FilterChip(
@@ -932,7 +932,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
     if (rootFolder == null || rootFolder.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Please select a root folder.'),
+          content: const Text('Veuillez sélectionner un dossier racine.'),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
@@ -1009,7 +1009,7 @@ class _LidarrAddArtistSheetState extends ConsumerState<LidarrAddArtistSheet> {
         final String cleanMsg = e.toString().replaceFirst('Exception: ', '');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to add artist: $cleanMsg'),
+            content: Text("Échec de l'ajout de l'artiste : $cleanMsg"),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );

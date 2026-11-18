@@ -117,7 +117,7 @@ class WantedAlbumCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      album.title ?? 'Unknown Album',
+                      album.title ?? 'Album inconnu',
                       style: theme.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
@@ -159,7 +159,7 @@ class WantedAlbumCard extends StatelessWidget {
               if (!isSelectionMode) ...[
                 const SizedBox(width: 4),
                 IconButton(
-                  tooltip: isMonitored ? 'Monitored' : 'Unmonitored',
+                  tooltip: isMonitored ? 'Surveillé' : 'Non surveillé',
                   visualDensity: VisualDensity.compact,
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(
@@ -176,7 +176,7 @@ class WantedAlbumCard extends StatelessWidget {
                   onPressed: onToggleMonitored,
                 ),
                 IconButton(
-                  tooltip: 'Interactive Search',
+                  tooltip: 'Recherche interactive',
                   visualDensity: VisualDensity.compact,
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(
@@ -191,7 +191,7 @@ class WantedAlbumCard extends StatelessWidget {
                   onPressed: onInteractiveSearch,
                 ),
                 IconButton(
-                  tooltip: 'Auto Search',
+                  tooltip: 'Recherche automatique',
                   visualDensity: VisualDensity.compact,
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(

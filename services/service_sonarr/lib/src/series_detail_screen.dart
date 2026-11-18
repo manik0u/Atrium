@@ -112,7 +112,7 @@ class _SeriesDetailBodyState extends ConsumerState<_SeriesDetailBody> {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to refresh: $e')),
+          SnackBar(content: Text("Échec de l'actualisation : $e")),
         );
       }
     } finally {
@@ -325,7 +325,7 @@ class _SeriesDetailBodyState extends ConsumerState<_SeriesDetailBody> {
                           child: Row(
                             children: [
                               ActionChip(
-                                label: const Text('All'),
+                                label: const Text('Tous'),
                                 onPressed: () {
                                   if (_seasonsHeaderKey.currentContext !=
                                       null) {
@@ -421,7 +421,7 @@ class _SeriesDetailBodyState extends ConsumerState<_SeriesDetailBody> {
                                     (widget.instance, widget.series.id),
                                   ),
                                 ),
-                                child: const Text('Retry'),
+                                child: const Text('Réessayer'),
                               ),
                             ],
                           ),
@@ -719,7 +719,7 @@ class _ActionsRow extends ConsumerWidget {
                     shape: const StadiumBorder(),
                   ),
                   icon: const Icon(Icons.bookmark_border, size: 20),
-                  label: const Text('Unmonitored'),
+                  label: const Text('Non surveillé'),
                   onPressed: () => _toggleMonitored(context, ref),
                 ),
         ),
@@ -764,7 +764,7 @@ class _ActionsRow extends ConsumerWidget {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to update monitoring: $e')),
+          SnackBar(content: Text('Échec de la mise à jour de la surveillance : $e')),
         );
       }
     }
@@ -779,13 +779,13 @@ class _ActionsRow extends ConsumerWidget {
       });
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Search started for series.')),
+          const SnackBar(content: Text('Recherche lancée pour la série.')),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to trigger search: $e')),
+          SnackBar(content: Text('Échec du déclenchement de la recherche : $e')),
         );
       }
     }
@@ -897,7 +897,7 @@ class _InfoSection extends StatelessWidget {
           if (series.path != null) ...<Widget>[
             _InfoRow(
               icon: Icons.folder_outlined,
-              label: 'Path',
+              label: 'Chemin',
               value: series.path!,
             ),
           ],
@@ -905,7 +905,7 @@ class _InfoSection extends StatelessWidget {
             if (series.path != null) const SizedBox(height: Insets.sm),
             _InfoRow(
               icon: Icons.schedule,
-              label: 'Next Airing',
+              label: 'Prochaine diffusion',
               value: _formatDateTime(series.nextAiring!),
             ),
           ],
@@ -913,7 +913,7 @@ class _InfoSection extends StatelessWidget {
             const SizedBox(height: Insets.sm),
             _InfoRow(
               icon: Icons.history,
-              label: 'Previous Airing',
+              label: 'Diffusion précédente',
               value: _formatDateTime(series.previousAiring!),
             ),
           ],
@@ -1336,7 +1336,7 @@ class _SeasonCard extends ConsumerWidget {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to update monitoring: $e')),
+          SnackBar(content: Text('Échec de la mise à jour de la surveillance : $e')),
         );
       }
     }
@@ -1352,19 +1352,19 @@ class _SeasonCard extends ConsumerWidget {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: Text('Delete Season $seasonNumber Files'),
+          title: Text('Supprimer les fichiers de la saison $seasonNumber'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'Are you sure you want to delete all episode files for Season $seasonNumber? This will delete the files from disk and cannot be undone.',
+                'Voulez-vous vraiment supprimer tous les fichiers des épisodes de la saison $seasonNumber ? Cela supprimera les fichiers du disque et est irréversible.',
               ),
               const SizedBox(height: Insets.sm),
               CheckboxListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Unmonitor season'),
-                subtitle: const Text('Prevent automatic re-downloads'),
+                title: const Text('Ne plus surveiller la saison'),
+                subtitle: const Text('Empêcher les re-téléchargements automatiques'),
                 value: unmonitor,
                 onChanged: (v) => setState(() => unmonitor = v ?? false),
               ),
@@ -1373,7 +1373,7 @@ class _SeasonCard extends ConsumerWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('Cancel'),
+              child: const Text('Annuler'),
             ),
             FilledButton(
               style: FilledButton.styleFrom(
@@ -1381,7 +1381,7 @@ class _SeasonCard extends ConsumerWidget {
                 foregroundColor: theme.colorScheme.onError,
               ),
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('Delete'),
+              child: const Text('Supprimer'),
             ),
           ],
         ),
@@ -1393,7 +1393,7 @@ class _SeasonCard extends ConsumerWidget {
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Deleting season files...'),
+          content: Text('Suppression des fichiers de la saison…'),
           duration: Duration(seconds: 1),
         ),
       );
@@ -1438,7 +1438,7 @@ class _SeasonCard extends ConsumerWidget {
       } catch (e) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to delete season files: $e')),
+            SnackBar(content: Text('Échec de la suppression des fichiers de la saison : $e')),
           );
         }
         return;
@@ -1464,7 +1464,7 @@ class _SeasonCard extends ConsumerWidget {
             SnackBar(
               content: Text(
                 unmonitored
-                    ? 'Successfully deleted $deletedCount file(s) and unmonitored season.'
+                    ? '$deletedCount fichier(s) supprimé(s) et saison non surveillée.'
                     : 'Successfully deleted $deletedCount file(s).',
               ),
             ),
@@ -1496,13 +1496,13 @@ class _SeasonCard extends ConsumerWidget {
       });
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Search queued for Season $seasonNum.')),
+          SnackBar(content: Text("Recherche en file d'attente pour la saison $seasonNum.")),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed: $e')),
+          SnackBar(content: Text('Échec : $e')),
         );
       }
     }
@@ -1551,7 +1551,7 @@ class _EpisodeRow extends ConsumerWidget {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to update: $e')),
+          SnackBar(content: Text('Échec de la mise à jour : $e')),
         );
       }
     }
@@ -1728,7 +1728,7 @@ class _EpisodeRow extends ConsumerWidget {
                 size: 20,
                 color: episode.monitored ? cs.primary : cs.outline,
               ),
-              tooltip: episode.monitored ? 'Unmonitor' : 'Monitor',
+              tooltip: episode.monitored ? 'Ne plus surveiller' : 'Surveiller',
               onPressed: () => _toggleEpisodeMonitored(context, ref),
               visualDensity: VisualDensity.compact,
             ),
@@ -1792,11 +1792,11 @@ void _showEpisodeBottomSheet({
                   runSpacing: Insets.xs,
                   children: <Widget>[
                     if (episode.airDate != null)
-                      _MetaChip(label: 'Aired: ${episode.airDate}'),
+                      _MetaChip(label: 'Diffusé le : ${episode.airDate}'),
                     if (quality != null) _MetaChip(label: quality),
                     if (sizeStr != null) _MetaChip(label: sizeStr),
                     _MetaChip(
-                      label: episode.monitored ? 'Monitored' : 'Unmonitored',
+                      label: episode.monitored ? 'Surveillé' : 'Non surveillé',
                     ),
                   ],
                 ),
@@ -1812,7 +1812,7 @@ void _showEpisodeBottomSheet({
                 Text(
                   episode.overview != null && episode.overview!.isNotEmpty
                       ? episode.overview!
-                      : 'No overview available.',
+                      : 'Aucun résumé disponible.',
                   style: theme.textTheme.bodyMedium
                       ?.copyWith(color: cs.onSurfaceVariant),
                 ),
@@ -1858,7 +1858,7 @@ void _showEpisodeBottomSheet({
                           } catch (e) {
                             if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Failed: $e')),
+                                SnackBar(content: Text('Échec : $e')),
                               );
                             }
                           }
@@ -1906,7 +1906,7 @@ void _showEpisodeBottomSheet({
                             if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  content: Text('Search queued for episode.'),
+                                  content: Text("Recherche en file d'attente pour l'épisode."),
                                 ),
                               );
                             }
@@ -1914,7 +1914,7 @@ void _showEpisodeBottomSheet({
                             if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text('Failed to queue search: $e'),
+                                  content: Text("Échec de la mise en file d'attente de la recherche : $e"),
                                 ),
                               );
                             }
@@ -1978,7 +1978,7 @@ void _showEpisodeBottomSheet({
                     if (episode.hasFile && episode.episodeFileId != null) ...[
                       const SizedBox(width: Insets.xs),
                       Tooltip(
-                        message: 'Delete File',
+                        message: 'Supprimer le fichier',
                         child: IconButton.filledTonal(
                           icon: Icon(Icons.delete_outline, color: cs.error),
                           onPressed: () async {
@@ -1988,19 +1988,19 @@ void _showEpisodeBottomSheet({
                               context: context,
                               builder: (context) => StatefulBuilder(
                                 builder: (context, setState) => AlertDialog(
-                                  title: const Text('Delete Episode File'),
+                                  title: const Text("Supprimer le fichier de l'épisode"),
                                   content: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
                                       const Text(
-                                        'Are you sure? This will delete the file from disk and cannot be undone.',
+                                        'Voulez-vous vraiment ? Cela supprimera le fichier du disque et est irréversible.',
                                       ),
                                       const SizedBox(height: Insets.sm),
                                       CheckboxListTile(
                                         contentPadding: EdgeInsets.zero,
-                                        title: const Text('Unmonitor episode'),
-                                        subtitle: const Text('Prevent automatic re-downloads'),
+                                        title: const Text("Ne plus surveiller l'épisode"),
+                                        subtitle: const Text('Empêcher les re-téléchargements automatiques'),
                                         value: unmonitor,
                                         onChanged: (v) => setState(() => unmonitor = v ?? false),
                                       ),
@@ -2010,7 +2010,7 @@ void _showEpisodeBottomSheet({
                                     TextButton(
                                       onPressed: () =>
                                           Navigator.pop(context, false),
-                                      child: const Text('Cancel'),
+                                      child: const Text('Annuler'),
                                     ),
                                     FilledButton(
                                       style: FilledButton.styleFrom(
@@ -2018,7 +2018,7 @@ void _showEpisodeBottomSheet({
                                         foregroundColor: cs.onError,
                                       ),
                                       onPressed: () => Navigator.pop(context, true),
-                                      child: const Text('Delete'),
+                                      child: const Text('Supprimer'),
                                     ),
                                   ],
                                 ),
@@ -2063,7 +2063,7 @@ void _showEpisodeBottomSheet({
                                       SnackBar(
                                         content: Text(
                                           unmonitored
-                                              ? 'File deleted and episode unmonitored.'
+                                              ? 'Fichier supprimé et épisode non surveillé.'
                                               : 'File deleted.',
                                         ),
                                       ),
@@ -2074,7 +2074,7 @@ void _showEpisodeBottomSheet({
                                 if (context.mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      content: Text('Failed to delete: $e'),
+                                      content: Text('Échec de la suppression : $e'),
                                     ),
                                   );
                                 }
@@ -2122,7 +2122,7 @@ class _OverflowMenu extends ConsumerWidget {
           value: 'edit',
           child: ListTile(
             leading: Icon(Icons.edit_outlined),
-            title: Text('Edit Series'),
+            title: Text('Modifier la série'),
             contentPadding: EdgeInsets.zero,
           ),
         ),
@@ -2130,7 +2130,7 @@ class _OverflowMenu extends ConsumerWidget {
           value: 'rename',
           child: ListTile(
             leading: Icon(Icons.drive_file_rename_outline),
-            title: Text('Rename Files'),
+            title: Text('Renommer les fichiers'),
             contentPadding: EdgeInsets.zero,
           ),
         ),
@@ -2138,7 +2138,7 @@ class _OverflowMenu extends ConsumerWidget {
           value: 'monitoring_options',
           child: ListTile(
             leading: Icon(Icons.settings_suggest_outlined),
-            title: Text('Monitoring Options'),
+            title: Text('Options de surveillance'),
             contentPadding: EdgeInsets.zero,
           ),
         ),
@@ -2146,7 +2146,7 @@ class _OverflowMenu extends ConsumerWidget {
           value: 'history',
           child: ListTile(
             leading: Icon(Icons.history),
-            title: Text('History'),
+            title: Text('Historique'),
             contentPadding: EdgeInsets.zero,
           ),
         ),
@@ -2218,12 +2218,12 @@ class _OverflowMenu extends ConsumerWidget {
       context: context,
       builder: (BuildContext ctx) => StatefulBuilder(
         builder: (BuildContext ctx, StateSetter setState) => AlertDialog(
-          title: const Text('Delete Series'),
+          title: const Text('Supprimer la série'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('Are you sure you want to delete "${series.title}"?'),
+              Text('Voulez-vous vraiment supprimer « ${series.title} » ?'),
               const SizedBox(height: Insets.md),
               CheckboxListTile(
                 title: const Text(
@@ -2242,7 +2242,7 @@ class _OverflowMenu extends ConsumerWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(ctx, false),
-              child: const Text('Cancel'),
+              child: const Text('Annuler'),
             ),
             FilledButton(
               style: FilledButton.styleFrom(
@@ -2250,7 +2250,7 @@ class _OverflowMenu extends ConsumerWidget {
                 foregroundColor: Theme.of(ctx).colorScheme.onError,
               ),
               onPressed: () => Navigator.pop(ctx, true),
-              child: const Text('Delete'),
+              child: const Text('Supprimer'),
             ),
           ],
         ),
@@ -2264,13 +2264,13 @@ class _OverflowMenu extends ConsumerWidget {
         if (!context.mounted) return;
         ref.invalidate(sonarrSeriesProvider(instance));
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Series deleted.')),
+          const SnackBar(content: Text('Série supprimée.')),
         );
         Navigator.pop(context);
       } catch (e) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to delete: $e')),
+            SnackBar(content: Text('Échec de la suppression : $e')),
           );
         }
       }
@@ -2299,7 +2299,7 @@ void _showMonitorSeriesDialog({
     'recent': 'Recent Episodes',
     'monitorSpecials': 'Monitor Specials',
     'unmonitorSpecials': 'Unmonitor Specials',
-    'none': 'None (Unmonitor All)',
+    'none': 'Aucun (ne plus rien surveiller)',
   };
 
   showDialog<void>(
@@ -2322,14 +2322,14 @@ void _showMonitorSeriesDialog({
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Choose which episodes of "${series.title}" should be monitored by Sonarr:',
+                  'Choisissez quels épisodes de « ${series.title} » doivent être surveillés par Sonarr :',
                   style: theme.textTheme.bodyMedium,
                 ),
                 const SizedBox(height: 20),
                 DropdownButtonFormField<String>(
                   initialValue: selectedType,
                   decoration: InputDecoration(
-                    labelText: 'Monitoring',
+                    labelText: 'Surveillance',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -2357,7 +2357,7 @@ void _showMonitorSeriesDialog({
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Cancel'),
+                child: const Text('Annuler'),
               ),
               FilledButton(
                 onPressed: () async {
@@ -2385,13 +2385,13 @@ void _showMonitorSeriesDialog({
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Failed to update monitoring: $e'),
+                          content: Text('Échec de la mise à jour de la surveillance : $e'),
                         ),
                       );
                     }
                   }
                 },
-                child: const Text('Save'),
+                child: const Text('Enregistrer'),
               ),
             ],
           );
@@ -2443,7 +2443,7 @@ class _StatusPill extends StatelessWidget {
     final bool isContinuing = status?.toLowerCase() == 'continuing';
     final Color tint =
         isContinuing ? theme.colorScheme.tertiary : theme.colorScheme.outline;
-    final String label = status ?? 'Unknown';
+    final String label = status ?? 'Inconnu';
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -2724,13 +2724,13 @@ class SonarrSeriesHistoryScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${series.title} - History'),
+        title: Text('${series.title} - Historique'),
         surfaceTintColor: Colors.transparent,
       ),
       body: historyAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
         error: (Object error, StackTrace? _) => ErrorView(
-          title: 'Failed to load history',
+          title: "Échec du chargement de l'historique",
           message: error.toString(),
           onRetry: () => ref.invalidate(sonarrSeriesHistoryProvider((instance, series.id))),
         ),
@@ -2747,7 +2747,7 @@ class SonarrSeriesHistoryScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: Insets.lg),
                   Text(
-                    'No history items found.',
+                    "Aucun élément dans l'historique.",
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: cs.outline,
                     ),
@@ -2938,14 +2938,14 @@ void _showHistoryDetails(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              _DetailRow(label: 'Event Type', value: eventType.toUpperCase()),
+              _DetailRow(label: "Type d'événement", value: eventType.toUpperCase()),
               _DetailRow(label: 'Date', value: _formatDateTime(item.date)),
               _DetailRow(
-                label: 'Source Title',
+                label: 'Titre source',
                 value: item.sourceTitle ?? 'None',
               ),
               if (item.downloadId != null)
-                _DetailRow(label: 'Download ID', value: item.downloadId!),
+                _DetailRow(label: 'ID de téléchargement', value: item.downloadId!),
               if (item.data != null && item.data!.isNotEmpty) ...[
                 const SizedBox(height: 12),
                 Text(
@@ -3004,16 +3004,16 @@ void _showHistoryDetails(
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Failed to flag release: $e')),
+                      SnackBar(content: Text('Échec du marquage de la release : $e')),
                     );
                   }
                 }
               },
-              child: const Text('Mark Failed'),
+              child: const Text('Marquer comme échoué'),
             ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
+            child: const Text('Fermer'),
           ),
         ],
       );

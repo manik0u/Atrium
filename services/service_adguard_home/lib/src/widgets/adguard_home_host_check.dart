@@ -153,7 +153,7 @@ class _AdguardHomeHostCheckSheetState
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   leading: const Icon(Icons.devices_other),
-                  title: const Text('Checked for'),
+                  title: const Text('Vérifié pour'),
                   subtitle: Text(_client.description),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: _pickClient,
@@ -170,7 +170,7 @@ class _AdguardHomeHostCheckSheetState
                   FilledButton.tonalIcon(
                     onPressed: _retry,
                     icon: const Icon(Icons.refresh),
-                    label: const Text('Retry'),
+                    label: const Text('Réessayer'),
                   ),
                 ] else
                   const Padding(
@@ -189,7 +189,7 @@ class _AdguardHomeHostCheckSheetState
               padding: const EdgeInsets.all(Insets.lg),
               child: FilledButton.tonal(
                 onPressed: () => _toggle(check),
-                child: Text(check.isFiltered ? 'Unblock' : 'Block'),
+                child: Text(check.isFiltered ? 'Débloquer' : 'Bloquer'),
               ),
             ),
           ),
@@ -250,7 +250,7 @@ class _AdguardHomeHostCheckSheetState
         Padding(
           padding: const EdgeInsets.only(top: Insets.sm),
           child: Text(
-            'No rule matches this name.',
+            'Aucune règle ne correspond à ce nom.',
             style: theme.textTheme.bodyMedium,
           ),
         ),

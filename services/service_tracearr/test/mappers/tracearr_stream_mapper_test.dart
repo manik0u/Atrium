@@ -72,7 +72,7 @@ void main() {
 
       final domain = TracearrStreamMapper.fromDto(dto, baseUrl: baseUrl);
       expect(domain.percentComplete, isNull);
-      expect(domain.userUsername, equals('Unknown'));
+      expect(domain.userUsername, equals('Inconnu'));
       expect(domain.isTranscode, isFalse);
     });
   });

@@ -961,7 +961,7 @@ class EmbyClient {
 
         // Explicitly check if the GET request returns an empty Images array before attempting the POST request
         if (result.images.isEmpty) {
-          throw Exception('No remote images found for item $itemId.');
+          throw Exception("Aucune image distante trouvée pour l'élément $itemId.");
         }
 
         final String? imageUrl =

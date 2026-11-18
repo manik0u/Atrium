@@ -155,7 +155,7 @@ class MediaTvHierarchyView extends StatelessWidget {
                                   error: (err, _) => Padding(
                                     padding: const EdgeInsets.all(Insets.sm),
                                     child: Text(
-                                      'Failed to load episodes for $titleText',
+                                      'Échec du chargement des épisodes pour $titleText',
                                       style:
                                           theme.textTheme.bodySmall?.copyWith(
                                         color: colorScheme.error,
@@ -168,7 +168,7 @@ class MediaTvHierarchyView extends StatelessWidget {
                                         padding:
                                             const EdgeInsets.all(Insets.sm),
                                         child: Text(
-                                          'No episodes listed',
+                                          'Aucun épisode listé',
                                           style: theme.textTheme.bodySmall
                                               ?.copyWith(
                                             color: colorScheme.onSurfaceVariant,

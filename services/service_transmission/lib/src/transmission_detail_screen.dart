@@ -64,7 +64,7 @@ class TransmissionDetailScreen extends ConsumerWidget {
           actions: <Widget>[
             if (torrent != null)
               PopupMenuButton<TransmissionTorrentAction>(
-                tooltip: 'Torrent actions',
+                tooltip: 'Actions sur le torrent',
                 itemBuilder: (BuildContext _) => transmissionActionMenuItems(
                   anyStopped: torrent.status.isStopped,
                   single: true,
@@ -95,9 +95,9 @@ class TransmissionDetailScreen extends ConsumerWidget {
           ],
           bottom: const TabBar(
             tabs: <Widget>[
-              Tab(text: 'Info'),
-              Tab(text: 'Files'),
-              Tab(text: 'Peers'),
+              Tab(text: 'Infos'),
+              Tab(text: 'Fichiers'),
+              Tab(text: 'Pairs'),
               Tab(text: 'Trackers'),
             ],
           ),
@@ -146,8 +146,8 @@ class _InfoTab extends StatelessWidget {
     if (t == null) {
       return const EmptyView(
         icon: Icons.hourglass_empty_rounded,
-        title: 'Not in the list yet',
-        message: 'The torrent list has not answered for this one.',
+        title: 'Pas encore dans la liste',
+        message: "La liste des torrents n'a pas répondu pour celui-ci.",
       );
     }
     final TransmissionVisual v = transmissionVisualFor(cs, t);
@@ -232,7 +232,7 @@ class _InfoTab extends StatelessWidget {
                   const SizedBox(width: Insets.sm),
                   TransmissionPill(
                     icon: Icons.people_outline,
-                    label: '${t.peersSendingToUs}/${t.peersConnected} peers',
+                    label: '${t.peersSendingToUs}/${t.peersConnected} pairs',
                     foreground: cs.onSurfaceVariant,
                     background: cs.surfaceContainerHighest,
                   ),
@@ -295,7 +295,7 @@ class _InfoTab extends StatelessWidget {
                 trailing: d.magnetLink.isEmpty
                     ? null
                     : IconButton.filledTonal(
-                        tooltip: 'Copy magnet link',
+                        tooltip: 'Copier le lien magnet',
                         icon: const Icon(Icons.copy, size: 18),
                         onPressed: () async {
                           await Clipboard.setData(
@@ -304,7 +304,7 @@ class _InfoTab extends StatelessWidget {
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('Magnet link copied'),
+                                content: Text('Lien magnet copié'),
                               ),
                             );
                           }
@@ -352,8 +352,8 @@ class _FilesTabState extends ConsumerState<_FilesTab> {
     if (files.isEmpty) {
       return const EmptyView(
         icon: Icons.insert_drive_file_outlined,
-        title: 'No files',
-        message: 'Transmission has no file list for this torrent yet.',
+        title: 'Aucun fichier',
+        message: "Transmission n'a pas encore la liste des fichiers de ce torrent.",
       );
     }
     final List<int> all = <int>[for (int i = 0; i < files.length; i++) i];
@@ -380,7 +380,7 @@ class _FilesTabState extends ConsumerState<_FilesTab> {
                             ),
                           ),
                   icon: const Icon(Icons.select_all),
-                  label: const Text('Select all'),
+                  label: const Text('Tout sélectionner'),
                 ),
               ),
               const SizedBox(width: Insets.sm),
@@ -396,7 +396,7 @@ class _FilesTabState extends ConsumerState<_FilesTab> {
                             ),
                           ),
                   icon: const Icon(Icons.deselect),
-                  label: const Text('Select none'),
+                  label: const Text('Tout désélectionner'),
                 ),
               ),
             ],
@@ -453,7 +453,7 @@ class _PeersTab extends StatelessWidget {
                 visualDensity: VisualDensity.compact,
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                tooltip: 'Peer flags',
+                tooltip: 'Drapeaux de pairs',
                 icon: Icon(
                   Icons.help_outline_rounded,
                   size: 20,
@@ -466,7 +466,7 @@ class _PeersTab extends StatelessWidget {
         ),
         if (detail.peers.isEmpty)
           const TransmissionPanel(
-            child: Text('Nothing is connected right now.'),
+            child: Text("Rien n'est connecté pour le moment."),
           ),
         for (final TransmissionPeer p in detail.peers)
           TransmissionPanel(
@@ -601,8 +601,8 @@ class _TrackersTab extends StatelessWidget {
     if (detail.trackers.isEmpty) {
       return const EmptyView(
         icon: Icons.dns_outlined,
-        title: 'No trackers',
-        message: 'This torrent announces to no trackers.',
+        title: 'Aucun tracker',
+        message: "Ce torrent n'annonce aucun tracker.",
       );
     }
     final int now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
@@ -707,7 +707,7 @@ class _TrackersTab extends StatelessWidget {
                   ),
                   TransmissionPill(
                     icon: Icons.check_circle_outline,
-                    label: '${trFmtPeerCount(tr.downloadCount)} downloads',
+                    label: '${trFmtPeerCount(tr.downloadCount)} téléchargements',
                     foreground: cs.onSurfaceVariant,
                     background: cs.surfaceContainerHighest,
                   ),

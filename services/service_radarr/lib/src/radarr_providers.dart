@@ -478,7 +478,7 @@ final radarrManualImportPathProvider =
 
 /// Selected import mode for Radarr Manual Import ('Move' or 'Copy').
 final radarrManualImportModeProvider =
-    StateProvider.family<String, Instance>((ref, instance) => 'Move');
+    StateProvider.family<String, Instance>((ref, instance) => 'Déplacer');
 
 /// Filter existing files flag for Radarr Manual Import.
 final radarrManualImportFilterProvider =

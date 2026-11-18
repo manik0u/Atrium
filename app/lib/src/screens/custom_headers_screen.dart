@@ -25,27 +25,27 @@ class _CustomHeadersScreenState extends ConsumerState<CustomHeadersScreen> {
     final Profile? profile = ref.watch(activeProfileProvider);
     if (profile == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Custom Headers')),
+        appBar: AppBar(title: const Text('En-têtes personnalisés')),
         body: const EmptyView(
           icon: Icons.language_outlined,
-          title: 'No profile',
-          message: 'Create a profile before adding headers.',
+          title: 'Aucun profil',
+          message: "Créez un profil avant d'ajouter des en-têtes.",
         ),
       );
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Custom Headers')),
+      appBar: AppBar(title: const Text('En-têtes personnalisés')),
       body: ListView(
         padding: const EdgeInsets.only(bottom: Insets.xl),
         children: <Widget>[
           _HeadersSectionHeader(
             'Global headers',
-            subtitle: 'Sent with every request, all instances',
+            subtitle: 'Envoyés avec chaque requête, toutes les instances',
             onAdd: _editGlobalHeader,
           ),
           if (profile.globalHeaders.isEmpty)
-            const _NoHeadersHint('No global headers')
+            const _NoHeadersHint('Aucun en-tête global')
           else
             Padding(
               padding: Insets.pageH,
@@ -64,10 +64,10 @@ class _CustomHeadersScreenState extends ConsumerState<CustomHeadersScreen> {
             ),
           const _HeadersSectionHeader(
             'Per instance',
-            subtitle: 'Override or extend global headers for one instance',
+            subtitle: 'Remplacer ou étendre les en-têtes globaux pour une instance',
           ),
           if (profile.instances.isEmpty)
-            const _NoHeadersHint('No instances in this profile')
+            const _NoHeadersHint('Aucune instance dans ce profil')
           else
             Padding(
               padding: Insets.pageH,
@@ -148,11 +148,11 @@ class _InstanceHeadersScreenState
         ref.watch(instanceByIdProvider(widget.instanceId));
     if (instance == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Instance headers')),
+        appBar: AppBar(title: const Text("En-têtes de l'instance")),
         body: const EmptyView(
           icon: Icons.language_outlined,
-          title: 'Instance not found',
-          message: 'It may have been removed from the profile.',
+          title: 'Instance introuvable',
+          message: 'Elle a peut-être été retirée du profil.',
         ),
       );
     }
@@ -164,11 +164,11 @@ class _InstanceHeadersScreenState
         children: <Widget>[
           _HeadersSectionHeader(
             'Headers',
-            subtitle: 'Sent with every request to this instance',
+            subtitle: 'Envoyés avec chaque requête à cette instance',
             onAdd: _editHeader,
           ),
           if (instance.customHeaders.isEmpty)
-            const _NoHeadersHint('No headers for this instance')
+            const _NoHeadersHint('Aucun en-tête pour cette instance')
           else
             Padding(
               padding: Insets.pageH,
@@ -277,7 +277,7 @@ class _HeadersSectionHeader extends StatelessWidget {
           if (onAdd != null)
             IconButton(
               icon: const Icon(Icons.add),
-              tooltip: 'Add header',
+              tooltip: 'Ajouter un en-tête',
               onPressed: onAdd,
             ),
         ],
@@ -366,7 +366,7 @@ class _HeaderCard extends StatelessWidget {
               ),
               IconButton(
                 icon: const Icon(Icons.delete_outline),
-                tooltip: 'Delete header',
+                tooltip: "Supprimer l'en-tête",
                 onPressed: onDelete,
               ),
             ],
@@ -516,7 +516,7 @@ class _HeaderDialogState extends State<_HeaderDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(widget.initial == null ? 'Add header' : 'Edit header'),
+      title: Text(widget.initial == null ? 'Ajouter un en-tête' : "Modifier l'en-tête"),
       content: Form(
         key: _formKey,
         child: Column(
@@ -530,17 +530,17 @@ class _HeaderDialogState extends State<_HeaderDialog> {
               // for reverse-proxy auth, and it is the one name no service in
               // the stack overwrites or refuses.
               decoration: const InputDecoration(
-                labelText: 'Header name',
+                labelText: "Nom de l'en-tête",
                 hintText: proxyAuthHeaderName,
               ),
               onChanged: (String _) => setState(() {}),
               validator: (String? v) {
                 final String name = (v ?? '').trim();
                 if (name.isEmpty) {
-                  return 'Enter a header name';
+                  return "Saisissez un nom d'en-tête";
                 }
                 if (!_tokenPattern.hasMatch(name)) {
-                  return 'No spaces or colons allowed';
+                  return 'Espaces et deux-points interdits';
                 }
                 return null;
               },
@@ -571,7 +571,7 @@ class _HeaderDialogState extends State<_HeaderDialog> {
             TextFormField(
               controller: _value,
               textInputAction: TextInputAction.done,
-              decoration: const InputDecoration(labelText: 'Value'),
+              decoration: const InputDecoration(labelText: 'Valeur'),
               onFieldSubmitted: (String _) => _submit(),
               validator: (String? v) =>
                   (v ?? '').trim().isEmpty ? 'Enter a value' : null,
@@ -582,11 +582,11 @@ class _HeaderDialogState extends State<_HeaderDialog> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         FilledButton(
           onPressed: _submit,
-          child: const Text('Save'),
+          child: const Text('Enregistrer'),
         ),
       ],
     );

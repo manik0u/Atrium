@@ -210,7 +210,7 @@ class PlexApi {
   /// a NetworkException the UI turns into a "needs Plex Pass" message.
   Future<void> terminateSession(
     String sessionId, {
-    String reason = 'Stopped from Atrium',
+    String reason = 'Arrêté depuis Atrium',
   }) async {
     try {
       await _dio.get<dynamic>(

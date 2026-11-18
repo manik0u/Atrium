@@ -129,7 +129,7 @@ class _LidarrAlbumStudioScreenState
       if (studioPayload.isEmpty) {
         if (mounted) {
           messenger.showSnackBar(
-            const SnackBar(content: Text('No changes to save.')),
+            const SnackBar(content: Text('Aucune modification à enregistrer.')),
           );
         }
         return;
@@ -141,7 +141,7 @@ class _LidarrAlbumStudioScreenState
 
       if (!resp.isSuccess) {
         throw Exception(
-          resp.error?.message ?? 'Failed to update Album Studio',
+          resp.error?.message ?? "Échec de la mise à jour du studio d'albums",
         );
       }
 
@@ -168,7 +168,7 @@ class _LidarrAlbumStudioScreenState
       if (mounted) {
         messenger.showSnackBar(
           SnackBar(
-            content: Text('Save error: $e'),
+            content: Text("Erreur d'enregistrement : $e"),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -284,7 +284,7 @@ class _LidarrAlbumStudioScreenState
                       ),
                     )
                   : const Icon(Icons.save_outlined, size: 18),
-              label: const Text('Save'),
+              label: const Text('Enregistrer'),
             ),
           ),
         ],
@@ -316,7 +316,7 @@ class _LidarrAlbumStudioScreenState
                         controller: _searchController,
                         focusNode: _searchFocusNode,
                         decoration: InputDecoration(
-                          hintText: 'Filter artists by name...',
+                          hintText: 'Filtrer les artistes par nom…',
                           hintStyle: TextStyle(
                             color: cs.onSurfaceVariant.withValues(alpha: 0.8),
                             fontSize: 14,
@@ -333,7 +333,7 @@ class _LidarrAlbumStudioScreenState
                     if (_searchQuery.isNotEmpty)
                       IconButton(
                         icon: const Icon(Icons.clear, size: 18),
-                        tooltip: 'Clear search',
+                        tooltip: 'Effacer la recherche',
                         visualDensity: VisualDensity.compact,
                         onPressed: () {
                           _searchController.clear();
@@ -389,9 +389,9 @@ class _LidarrAlbumStudioScreenState
                     return const Center(
                       child: EmptyView(
                         icon: Icons.search_off_outlined,
-                        title: 'No Artists Found',
+                        title: 'Aucun artiste trouvé',
                         message:
-                            'No artists in your library match the current filter.',
+                            'Aucun artiste de votre bibliothèque ne correspond au filtre actuel.',
                       ),
                     );
                   }

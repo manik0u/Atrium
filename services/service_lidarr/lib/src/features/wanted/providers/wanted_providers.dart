@@ -10,7 +10,7 @@ import '../../../state/api_providers.dart';
 enum WantedSortKey {
   releaseDate('releaseDate', 'Release Date'),
   artistName('artist.artistName', 'Artist Name'),
-  title('title', 'Album Title');
+  title('title', "Titre de l'album");
 
   const WantedSortKey(this.value, this.label);
   final String value;

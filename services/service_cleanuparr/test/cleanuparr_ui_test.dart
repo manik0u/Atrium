@@ -78,7 +78,7 @@ void main() {
       id: 'ev-1',
       timestamp: DateTime.now().subtract(const Duration(minutes: 10)),
       eventType: 'MalwareBlocked',
-      severity: 'Error',
+      severity: 'Erreur',
       message: 'Blocked download matching malicious pattern: crack.exe',
       downloadItemTitle: 'Sample.Release.Malware.exe',
       downloadClientName: 'qBittorrent',
@@ -114,9 +114,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify Tab 0: Overview
-      expect(find.text('Overview'), findsWidgets);
+      expect(find.text("Vue d'ensemble"), findsWidgets);
       expect(find.text('Strikes'), findsWidgets);
-      expect(find.text('Events'), findsWidgets);
+      expect(find.text('Événements'), findsWidgets);
       expect(find.byType(EasyRefresh), findsOneWidget);
 
       // System Status & Metrics
@@ -126,11 +126,11 @@ void main() {
       expect(find.text('Radarr'), findsOneWidget);
       expect(find.text('qBittorrent'), findsOneWidget);
 
-      expect(find.text('Malware Blocked'), findsOneWidget);
+      expect(find.text('Malwares bloqués'), findsOneWidget);
       expect(find.text('3'), findsOneWidget); // malware count
-      expect(find.text('Active Strikes'), findsOneWidget);
-      expect(find.text('Cleaned Torrents'), findsOneWidget);
-      expect(find.text('Seeker Searches'), findsOneWidget);
+      expect(find.text('Strikes actifs'), findsOneWidget);
+      expect(find.text('Torrents nettoyés'), findsOneWidget);
+      expect(find.text('Recherches des seekers'), findsOneWidget);
 
       // Background Tasks
       expect(find.text('Background Tasks'), findsOneWidget);
@@ -142,18 +142,18 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(EasyRefresh), findsOneWidget);
-      expect(find.text('Strikes Ledger'), findsOneWidget);
+      expect(find.text('Journal des strikes'), findsOneWidget);
       expect(find.text('Severance.S02E01.1080p.WEB-DL'), findsOneWidget);
       expect(find.text('2 strikes'), findsOneWidget);
       expect(find.text('4A5B6C7D'), findsOneWidget);
       expect(find.text('StalledStrike'), findsOneWidget);
 
       // Switch to Tab 2: Events
-      await tester.tap(find.text('Events').last);
+      await tester.tap(find.text('Événements').last);
       await tester.pumpAndSettle();
 
       expect(find.byType(EasyRefresh), findsOneWidget);
-      expect(find.text('Audit Events'), findsOneWidget);
+      expect(find.text("Événements d'audit"), findsOneWidget);
       expect(find.text('MalwareBlocked'), findsOneWidget);
       expect(find.text('Sample.Release.Malware.exe'), findsOneWidget);
 
@@ -161,7 +161,7 @@ void main() {
       await tester.tap(find.text('MalwareBlocked'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Release Title'), findsOneWidget);
+      expect(find.text('Titre de la release'), findsOneWidget);
       expect(find.text('abc12345'), findsOneWidget); // Hash
     },
   );
@@ -221,7 +221,7 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
 
     const NetworkException down =
-        NetworkUnreachableException('Could not reach the server.');
+        NetworkUnreachableException('Impossible de joindre le serveur.');
     await tester.pumpWidget(
       ProviderScope(
         overrides: [

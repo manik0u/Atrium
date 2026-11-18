@@ -67,7 +67,7 @@ class BeszelSystemCard extends ConsumerWidget {
             statsAsync.when(
               data: (statsList) {
                 if (statsList.isEmpty) {
-                  return const Center(child: Text('No historical data'));
+                  return const Center(child: Text('Aucune donnée historique'));
                 }
                 final latest = statsList.first;
                 
@@ -101,7 +101,7 @@ class BeszelSystemCard extends ConsumerWidget {
                 height: 100,
                 child: Center(child: CircularProgressIndicator()),
               ),
-              error: (e, st) => Text('Error: $e'),
+              error: (e, st) => Text('Erreur : $e'),
             ),
           ],
         ),

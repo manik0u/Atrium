@@ -29,7 +29,7 @@ void main() {
       });
   });
 
-  Future<void> open(WidgetTester tester, {String tab = 'Info'}) async {
+  Future<void> open(WidgetTester tester, {String tab = 'Infos'}) async {
     tester.view.physicalSize = const Size(1080, 2400);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
@@ -60,19 +60,19 @@ void main() {
   testWidgets('Info shows the inspector lines', (WidgetTester tester) async {
     await open(tester);
 
-    expect(find.text('Activity'), findsOneWidget);
-    expect(find.text('Details'), findsOneWidget);
+    expect(find.text('Activité'), findsOneWidget);
+    expect(find.text('Détails'), findsOneWidget);
     expect(find.textContaining('Unverified'), findsOneWidget);
     expect(find.text('100%'), findsOneWidget);
     expect(find.text('Public torrent'), findsOneWidget);
     expect(find.textContaining('Created by mktorrent 1.1 on'), findsOneWidget);
     expect(find.textContaining('1000 pieces @'), findsOneWidget);
-    expect(find.byTooltip('Copy magnet link'), findsOneWidget);
+    expect(find.byTooltip('Copier le lien magnet'), findsOneWidget);
   });
 
   testWidgets('Files groups by folder and writes wanted and priority',
       (WidgetTester tester) async {
-    await open(tester, tab: 'Files');
+    await open(tester, tab: 'Fichiers');
 
     expect(find.text('debian'), findsOneWidget);
     expect(find.text('iso'), findsOneWidget);
@@ -86,13 +86,13 @@ void main() {
       'files-unwanted': <int>[0, 1],
     });
 
-    await tester.tap(find.byTooltip('Priority').last);
+    await tester.tap(find.byTooltip('Priorité').last);
     await settle(tester);
-    await tester.tap(find.text('Low'));
+    await tester.tap(find.text('Basse'));
     await settle(tester);
     expect(fake.to('torrent-set').last.arguments['priority-low'], <int>[1]);
 
-    await tester.tap(find.text('Select none'));
+    await tester.tap(find.text('Tout désélectionner'));
     await settle(tester);
     expect(
       fake.to('torrent-set').last.arguments['files-unwanted'],
@@ -102,14 +102,14 @@ void main() {
 
   testWidgets('Peers shows flags, a legend and web seeds',
       (WidgetTester tester) async {
-    await open(tester, tab: 'Peers');
+    await open(tester, tab: 'Pairs');
 
     expect(find.text('10.0.0.5:51413'), findsOneWidget);
     expect(find.text('DEI'), findsOneWidget);
     expect(find.text('Web seeds'), findsOneWidget);
     expect(find.text('https://cdimage.debian.org/'), findsOneWidget);
 
-    await tester.tap(find.byTooltip('Peer flags'));
+    await tester.tap(find.byTooltip('Drapeaux de pairs'));
     await settle(tester);
     expect(find.text('Encrypted connection'), findsOneWidget);
   });
@@ -132,7 +132,7 @@ void main() {
       (WidgetTester tester) async {
     await open(tester);
 
-    await tester.tap(find.byTooltip('Torrent actions'));
+    await tester.tap(find.byTooltip('Actions sur le torrent'));
     await settle(tester);
     await tester.tap(find.text('Verify local data'));
     await settle(tester);
@@ -144,9 +144,9 @@ void main() {
       (WidgetTester tester) async {
     await open(tester);
 
-    final Finder infoTab = find.widgetWithText(Tab, 'Info');
-    final Finder filesTab = find.widgetWithText(Tab, 'Files');
-    final Finder peersTab = find.widgetWithText(Tab, 'Peers');
+    final Finder infoTab = find.widgetWithText(Tab, 'Infos');
+    final Finder filesTab = find.widgetWithText(Tab, 'Fichiers');
+    final Finder peersTab = find.widgetWithText(Tab, 'Pairs');
     final Finder trackersTab = find.widgetWithText(Tab, 'Trackers');
 
     expect(infoTab, findsOneWidget);
@@ -189,14 +189,14 @@ void main() {
 
   testWidgets('files action buttons are evenly spaced with equal widths',
       (WidgetTester tester) async {
-    await open(tester, tab: 'Files');
+    await open(tester, tab: 'Fichiers');
 
     final Finder selectAllBtn = find.ancestor(
-      of: find.text('Select all'),
+      of: find.text('Tout sélectionner'),
       matching: find.byType(FilledButton),
     );
     final Finder selectNoneBtn = find.ancestor(
-      of: find.text('Select none'),
+      of: find.text('Tout désélectionner'),
       matching: find.byType(FilledButton),
     );
 
@@ -216,7 +216,7 @@ void main() {
   testWidgets(
       'peer card pills are evenly spaced with equal widths and height 28',
       (WidgetTester tester) async {
-    await open(tester, tab: 'Peers');
+    await open(tester, tab: 'Pairs');
 
     final Finder downPill = find.byWidgetPredicate(
       (Widget w) => w is TransmissionSpeedPill && w.icon == Icons.south,
@@ -239,7 +239,7 @@ void main() {
   });
   testWidgets('a file name sits against its progress bar',
       (WidgetTester tester) async {
-    await open(tester, tab: 'Files');
+    await open(tester, tab: 'Fichiers');
 
     final Finder name = find.text('README.txt');
     expect(name, findsOneWidget);

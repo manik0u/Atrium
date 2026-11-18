@@ -50,7 +50,7 @@ class _NavidromeArtistsTabState extends ConsumerState<NavidromeArtistsTab> {
               indexes.where((NavidromeArtistIndex g) => g.artists.isNotEmpty).toList();
 
           if (nonEmptyGroups.isEmpty) {
-            return const Center(child: Text('No artists found'));
+            return const Center(child: Text('Aucun artiste trouvé'));
           }
 
           return CustomScrollView(
@@ -91,7 +91,7 @@ class _NavidromeArtistsTabState extends ConsumerState<NavidromeArtistsTab> {
         },
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (Object err, _) => Center(
-          child: Text('Failed to load artists: $err'),
+          child: Text('Échec du chargement des artistes : $err'),
         ),
       ),
     );

@@ -61,7 +61,7 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
       );
       await action(api);
     } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text('Action failed: $e')));
+      messenger.showSnackBar(SnackBar(content: Text("Échec de l'action : $e")));
     } finally {
       if (mounted) _refresh();
     }
@@ -88,29 +88,29 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
   String _decodeError(int code, String rawMessage) {
     if (rawMessage.isNotEmpty) return rawMessage;
     return switch (code) {
-      1 => 'Unknown error',
-      2 => 'Time out',
-      3 => 'Resource not found',
-      4 => 'Resource not found (max file size exceeded)',
-      5 => 'Download speed was too slow',
-      6 => 'Network problem occurred',
-      7 => 'Unfinished download',
-      8 => 'Remote server did not support resume',
-      9 => 'Status 404 Not Found',
-      10 => 'Redirection limit exceeded',
-      11 => 'Could not parse Metalink document',
-      12 => 'File already exists',
-      13 => 'Renaming file failed',
-      14 => 'Could not open existing file',
-      15 => 'Could not create new file or truncate existing file',
-      16 => 'File I/O error occurred',
-      17 => 'Could not create directory',
-      18 => 'Name resolution failed',
-      19 => 'Could not parse Torrent file',
-      24 => 'HTTP authorization failed',
-      28 => 'BitTorrent info-hash error',
-      32 => 'Checksum verification failed',
-      _ => 'Error code $code',
+      1 => 'Erreur inconnue',
+      2 => 'Délai dépassé',
+      3 => 'Ressource introuvable',
+      4 => 'Ressource introuvable (taille de fichier max dépassée)',
+      5 => 'Vitesse de téléchargement trop lente',
+      6 => 'Un problème réseau est survenu',
+      7 => 'Téléchargement inachevé',
+      8 => 'Le serveur distant ne gère pas la reprise',
+      9 => 'Statut 404 : introuvable',
+      10 => 'Limite de redirections dépassée',
+      11 => "Impossible d'analyser le document Metalink",
+      12 => 'Le fichier existe déjà',
+      13 => 'Échec du renommage du fichier',
+      14 => "Impossible d'ouvrir le fichier existant",
+      15 => 'Impossible de créer ou de tronquer le fichier',
+      16 => "Erreur d'E/S sur le fichier",
+      17 => 'Impossible de créer le répertoire',
+      18 => 'Échec de la résolution de nom',
+      19 => "Impossible d'analyser le fichier torrent",
+      24 => "Échec de l'autorisation HTTP",
+      28 => "Erreur d'info-hash BitTorrent",
+      32 => 'Échec de la vérification de la somme de contrôle',
+      _ => "Code d'erreur $code",
     };
   }
 
@@ -247,10 +247,10 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
                       <String>{};
                 },
               ),
-              title: Text('${selection.length} selected'),
+              title: Text('${selection.length} sélectionné(s)'),
               actions: <Widget>[
                 IconButton(
-                  tooltip: 'Select all',
+                  tooltip: 'Tout sélectionner',
                   icon: const Icon(Icons.select_all),
                   onPressed: () {
                     final Aria2Snapshot? s = snapshot.value;
@@ -265,7 +265,7 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
                   },
                 ),
                 IconButton(
-                  tooltip: 'Pause selected',
+                  tooltip: 'Mettre la sélection en pause',
                   icon: const Icon(Icons.pause),
                   onPressed: () => _run(context, (Aria2Api api) async {
                     final Aria2Snapshot? s = snapshot.value;
@@ -276,7 +276,7 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
                     if (targets.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('No active downloads in selection'),
+                          content: Text('Aucun téléchargement actif dans la sélection'),
                         ),
                       );
                       return;
@@ -296,7 +296,7 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
                   }),
                 ),
                 IconButton(
-                  tooltip: 'Resume selected',
+                  tooltip: 'Reprendre la sélection',
                   icon: const Icon(Icons.play_arrow),
                   onPressed: () => _run(context, (Aria2Api api) async {
                     final Aria2Snapshot? s = snapshot.value;
@@ -313,7 +313,7 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
                     if (targets.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('No resumable downloads in selection'),
+                          content: Text('Aucun téléchargement reprisable dans la sélection'),
                         ),
                       );
                       return;
@@ -333,24 +333,24 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
                   }),
                 ),
                 IconButton(
-                  tooltip: 'Remove selected',
+                  tooltip: 'Supprimer la sélection',
                   icon: const Icon(Icons.delete_outline),
                   onPressed: () async {
                     final bool? confirmed = await showDialog<bool>(
                       context: context,
                       builder: (BuildContext ctx) => AlertDialog(
-                        title: const Text('Remove downloads'),
+                        title: const Text('Supprimer les téléchargements'),
                         content: Text(
                           'Remove ${selection.length} selected download(s)?',
                         ),
                         actions: <Widget>[
                           TextButton(
                             onPressed: () => Navigator.of(ctx).pop(false),
-                            child: const Text('Cancel'),
+                            child: const Text('Annuler'),
                           ),
                           FilledButton(
                             onPressed: () => Navigator.of(ctx).pop(true),
-                            child: const Text('Remove'),
+                            child: const Text('Retirer'),
                           ),
                         ],
                       ),
@@ -396,7 +396,7 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
                       controller: _searchController,
                       autofocus: true,
                       decoration: InputDecoration(
-                        hintText: 'Search all downloads...',
+                        hintText: 'Rechercher dans tous les téléchargements…',
                         border: InputBorder.none,
                         suffixIcon: IconButton(
                           icon: const Icon(Icons.clear),
@@ -446,7 +446,7 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
               actions: <Widget>[
                 if (!isSearchActive)
                   IconButton(
-                    tooltip: 'Search',
+                    tooltip: 'Rechercher',
                     icon: const Icon(Icons.search),
                     onPressed: () {
                       ref
@@ -459,7 +459,7 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
                     },
                   ),
                 PopupMenuButton<Aria2SortField>(
-                  tooltip: 'Sort by',
+                  tooltip: 'Trier par',
                   icon: const Icon(Icons.sort),
                   onSelected: (Aria2SortField field) {
                     if (sortField == field) {
@@ -536,7 +536,7 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
                           value: 'pause_all',
                           child: ListTile(
                             leading: Icon(Icons.pause),
-                            title: Text('Pause all'),
+                            title: Text('Tout mettre en pause'),
                             dense: true,
                             contentPadding: EdgeInsets.zero,
                           ),
@@ -545,7 +545,7 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
                           value: 'resume_all',
                           child: ListTile(
                             leading: Icon(Icons.play_arrow),
-                            title: Text('Resume all'),
+                            title: Text('Tout reprendre'),
                             dense: true,
                             contentPadding: EdgeInsets.zero,
                           ),
@@ -554,7 +554,7 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
                           value: 'speed_limit',
                           child: ListTile(
                             leading: Icon(Icons.speed),
-                            title: Text('Speed limit'),
+                            title: Text('Limite de vitesse'),
                             dense: true,
                             contentPadding: EdgeInsets.zero,
                           ),
@@ -564,7 +564,7 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
                           value: 'purge_completed',
                           child: ListTile(
                             leading: Icon(Icons.cleaning_services_outlined),
-                            title: Text('Clear finished results'),
+                            title: Text('Effacer les résultats terminés'),
                             dense: true,
                             contentPadding: EdgeInsets.zero,
                           ),
@@ -574,7 +574,7 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
               ],
             ),
       floatingActionButton: FloatingActionButton(
-        tooltip: 'Add download',
+        tooltip: 'Ajouter un téléchargement',
         onPressed: () => showAria2AddSheet(context, widget.instance),
         child: const Icon(Icons.add),
       ),
@@ -634,7 +634,7 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
                                   child: _HeroMetric(
                                     icon: Icons.arrow_downward_rounded,
                                     value: aria2FmtRate(data.stat.downloadSpeed),
-                                    label: 'Download',
+                                    label: 'Télécharger',
                                     color: cs.primary,
                                   ),
                                 ),
@@ -642,7 +642,7 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
                                   child: _HeroMetric(
                                     icon: Icons.arrow_upward_rounded,
                                     value: aria2FmtRate(data.stat.uploadSpeed),
-                                    label: 'Upload',
+                                    label: 'Téléverser',
                                     color: cs.tertiary,
                                   ),
                                 ),
@@ -753,17 +753,17 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
                           Aria2TransfersFilter.error => Icons.error_outline,
                         },
                         title: switch (filter) {
-                          Aria2TransfersFilter.all => 'No downloads yet',
+                          Aria2TransfersFilter.all => 'Aucun téléchargement pour le moment',
                           Aria2TransfersFilter.active =>
-                            'Nothing downloading right now',
-                          Aria2TransfersFilter.waiting => 'Queue is empty',
+                            'Aucun téléchargement en cours pour le moment',
+                          Aria2TransfersFilter.waiting => "La file d'attente est vide",
                           Aria2TransfersFilter.completed =>
-                            'No completed downloads',
-                          Aria2TransfersFilter.paused => 'No paused downloads',
-                          Aria2TransfersFilter.error => 'No errored downloads',
+                            'Aucun téléchargement terminé',
+                          Aria2TransfersFilter.paused => 'Aucun téléchargement en pause',
+                          Aria2TransfersFilter.error => 'Aucun téléchargement en erreur',
                         },
                         message: query.isNotEmpty
-                            ? 'No downloads match "$query".'
+                            ? 'Aucun téléchargement ne correspond à « $query ».'
                             : 'Tap "+" below to add a direct URL, magnet, or torrent file.',
                       ),
                     ),
@@ -856,7 +856,7 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
                                 final bool? confirmed = await showDialog<bool>(
                                   context: context,
                                   builder: (BuildContext ctx) => AlertDialog(
-                                    title: const Text('Remove download?'),
+                                    title: const Text('Supprimer le téléchargement ?'),
                                     content: Text(
                                       'Are you sure you want to stop and remove "${download.displayName}"?',
                                     ),
@@ -864,12 +864,12 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
                                       TextButton(
                                         onPressed: () =>
                                             Navigator.of(ctx).pop(false),
-                                        child: const Text('Cancel'),
+                                        child: const Text('Annuler'),
                                       ),
                                       FilledButton(
                                         onPressed: () =>
                                             Navigator.of(ctx).pop(true),
-                                        child: const Text('Remove'),
+                                        child: const Text('Retirer'),
                                       ),
                                     ],
                                   ),
@@ -958,7 +958,7 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                       content: Text(
-                                        'Cannot retry this download here. Add it again instead.',
+                                        'Impossible de réessayer ce téléchargement ici. Ajoutez-le à nouveau.',
                                       ),
                                     ),
                                   );
@@ -976,7 +976,7 @@ class _Aria2DownloadsTabState extends ConsumerState<Aria2DownloadsTab> {
                               if (context.mounted) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                    content: Text('Download restarted'),
+                                    content: Text('Téléchargement redémarré'),
                                   ),
                                 );
                               }
@@ -1234,18 +1234,18 @@ class _UnifiedTransferCard extends StatelessWidget {
                   if (download.isError)
                     TextButton.icon(
                       icon: const Icon(Icons.refresh, size: 16),
-                      label: const Text('Retry'),
+                      label: const Text('Réessayer'),
                       onPressed: onRetry,
                     ),
                   if (download.isWaiting)
                     IconButton(
-                      tooltip: 'Move to top of queue',
+                      tooltip: "En haut de la file d'attente",
                       icon: const Icon(Icons.vertical_align_top, size: 18),
                       onPressed: onMoveTop,
                     ),
                   if (download.canPause || download.canResume)
                     IconButton(
-                      tooltip: download.canResume ? 'Resume' : 'Pause',
+                      tooltip: download.canResume ? 'Reprendre' : 'Pause',
                       icon: Icon(
                         download.canResume ? Icons.play_arrow : Icons.pause,
                         size: 20,
@@ -1253,7 +1253,7 @@ class _UnifiedTransferCard extends StatelessWidget {
                       onPressed: onPauseResume,
                     ),
                   IconButton(
-                    tooltip: download.isStopped ? 'Clear from list' : 'Remove',
+                    tooltip: download.isStopped ? 'Retirer de la liste' : 'Retirer',
                     icon: Icon(
                       download.isStopped
                           ? Icons.cleaning_services_outlined

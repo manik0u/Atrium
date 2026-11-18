@@ -15,7 +15,7 @@ class OmbiSettingsService {
     }
     if (response.error != null) {
       throw OmbiException(
-        response.error!.message ?? 'Failed to fetch Ombi settings',
+        response.error!.message ?? "Échec de la récupération des paramètres d'Ombi",
         statusCode: response.statusCode,
         error: response.error,
       );

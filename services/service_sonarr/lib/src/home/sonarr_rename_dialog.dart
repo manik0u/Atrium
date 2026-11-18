@@ -38,13 +38,13 @@ class _SonarrRenameDialogState extends ConsumerState<SonarrRenameDialog> {
       );
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Files renamed successfully!')),
+        const SnackBar(content: Text('Fichiers renommés avec succès !')),
       );
       Navigator.pop(context);
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Rename failed: $e')),
+          SnackBar(content: Text('Échec du renommage : $e')),
         );
       }
     } finally {
@@ -60,14 +60,14 @@ class _SonarrRenameDialogState extends ConsumerState<SonarrRenameDialog> {
     final colors = theme.colorScheme;
 
     return AlertDialog(
-      title: const Text('Rename Files'),
+      title: const Text('Renommer les fichiers'),
       content: SizedBox(
         width: double.maxFinite,
         height: 350,
         child: previewAsync.when(
           loading: () => const Center(child: ExpressiveProgressIndicator()),
           error: (err, stack) =>
-              Center(child: Text('Error loading rename preview: $err')),
+              Center(child: Text("Erreur lors du chargement de l'aperçu du renommage : $err")),
           data: (files) {
             if (files.isEmpty) {
               return Center(
@@ -81,7 +81,7 @@ class _SonarrRenameDialogState extends ConsumerState<SonarrRenameDialog> {
                     ),
                     const SizedBox(height: Insets.sm),
                     const Text(
-                      'All files are correctly named.',
+                      'Tous les fichiers sont correctement nommés.',
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -138,7 +138,7 @@ class _SonarrRenameDialogState extends ConsumerState<SonarrRenameDialog> {
       actions: [
         TextButton(
           onPressed: _renaming ? null : () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         previewAsync.maybeWhen(
           data: (files) => files.isEmpty
@@ -158,7 +158,7 @@ class _SonarrRenameDialogState extends ConsumerState<SonarrRenameDialog> {
                           height: 16,
                           child: ExpressiveProgressIndicator(strokeWidth: 2),
                         )
-                      : const Text('Rename'),
+                      : const Text('Renommer'),
                 ),
           orElse: () => const SizedBox.shrink(),
         ),

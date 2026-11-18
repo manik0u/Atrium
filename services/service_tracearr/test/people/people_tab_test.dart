@@ -280,13 +280,13 @@ void main() {
       expect(find.text('Plex Account ID: plex_acc_99'), findsOneWidget);
 
       // Lifetime stats
-      expect(find.text('TOTAL PLAYS'), findsOneWidget);
+      expect(find.text('LECTURES TOTALES'), findsOneWidget);
       expect(find.text('240'), findsOneWidget);
-      expect(find.text('WATCH TIME'), findsOneWidget);
+      expect(find.text('TEMPS DE VISIONNAGE'), findsOneWidget);
       expect(find.text('400.0h'), findsOneWidget);
-      expect(find.text('30D PLAYS'), findsOneWidget);
+      expect(find.text('LECTURES 30 J'), findsOneWidget);
       expect(find.text('32'), findsOneWidget);
-      expect(find.text('7D PLAYS'), findsOneWidget);
+      expect(find.text('LECTURES 7 J'), findsOneWidget);
       expect(find.text('8'), findsOneWidget);
 
       // Linked Server Identities

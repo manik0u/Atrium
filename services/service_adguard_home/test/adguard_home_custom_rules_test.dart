@@ -10,7 +10,7 @@ import 'support/pump.dart';
 void main() {
   final AdguardHomeFiltering filtering =
       AdguardHomeFiltering.fromJson(filterStatusJson());
-  final Finder save = find.widgetWithText(FilledButton, 'Save');
+  final Finder save = find.widgetWithText(FilledButton, 'Enregistrer');
   final Finder editor = find.byKey(const Key('adguard-rules'));
 
   String text(WidgetTester tester) =>
@@ -98,7 +98,7 @@ void main() {
             'since you opened them.'),
         findsOneWidget,
       );
-      await tester.tap(find.text('Overwrite'));
+      await tester.tap(find.text('Écraser'));
       await tester.pumpAndSettle();
 
       expect(pumped.actions.calls, <String>['rules 1', 'rules 1 overwrite']);
@@ -115,7 +115,7 @@ void main() {
       await tester.pump();
       await tester.tap(save);
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Load theirs'));
+      await tester.tap(find.text('Charger les leurs'));
       await tester.pumpAndSettle();
 
       expect(text(tester), '||theirs.example^');
@@ -149,8 +149,8 @@ void main() {
       await tester.pump();
       await tester.tap(save);
       await tester.pumpAndSettle();
-      expect(find.text('AdGuard Home refused the sign-in.'), findsOneWidget);
-      await tester.tap(find.widgetWithText(FilledButton, 'Try again'));
+      expect(find.text('AdGuard Home a refusé la connexion.'), findsOneWidget);
+      await tester.tap(find.widgetWithText(FilledButton, 'Réessayer'));
       await tester.pumpAndSettle();
 
       expect(pumped.actions.calls, <String>['rules 1', 'retry', 'rules 1']);
@@ -200,7 +200,7 @@ void main() {
       expect(onOneLine(), isFalse);
       expect(find.byType(SingleChildScrollView), findsNothing);
 
-      await tester.tap(find.byTooltip('Stop wrapping lines'));
+      await tester.tap(find.byTooltip('Ne plus replier les lignes'));
       await tester.pump();
 
       expect(onOneLine(), isTrue);
@@ -212,7 +212,7 @@ void main() {
       );
       expect(text(tester), '$long\n||b.example^');
 
-      await tester.tap(find.byTooltip('Wrap lines'));
+      await tester.tap(find.byTooltip('Replier les lignes'));
       await tester.pump();
       expect(onOneLine(), isFalse);
     });
@@ -225,7 +225,7 @@ void main() {
       await tester.binding.handlePopRoute();
       await tester.pumpAndSettle();
 
-      expect(find.text('Discard changes?'), findsOneWidget);
+      expect(find.text('Ignorer les modifications ?'), findsOneWidget);
     });
 
     for (final double width in <double>[320, 411]) {
@@ -284,8 +284,8 @@ void main() {
       // From the catalogue, not the id.
       expect(find.text('TikTok'), findsOneWidget);
       expect(find.text('||tiktok.com^'), findsOneWidget);
-      expect(find.text('Blocked services'), findsOneWidget);
-      expect(find.widgetWithText(FilledButton, 'Unblock'), findsOneWidget);
+      expect(find.text('Services bloqués'), findsOneWidget);
+      expect(find.widgetWithText(FilledButton, 'Débloquer'), findsOneWidget);
     });
 
     testWidgets('let through by an allowlist names the list',
@@ -294,7 +294,7 @@ void main() {
 
       expect(find.text('Allowed'), findsOneWidget);
       expect(find.text('Allow common services'), findsOneWidget);
-      expect(find.widgetWithText(FilledButton, 'Block'), findsOneWidget);
+      expect(find.widgetWithText(FilledButton, 'Bloquer'), findsOneWidget);
     });
 
     testWidgets('of a name nothing matched says so, and offers Block',
@@ -302,14 +302,14 @@ void main() {
       await openCheck(tester, 'example.com');
 
       expect(find.text('Processed'), findsOneWidget);
-      expect(find.text('No rule matches this name.'), findsOneWidget);
+      expect(find.text('Aucune règle ne correspond à ce nom.'), findsOneWidget);
     });
 
     testWidgets('Block writes the rule and closes',
         (WidgetTester tester) async {
       final Pumped pumped = await openCheck(tester, 'example.com');
 
-      await tester.tap(find.widgetWithText(FilledButton, 'Block'));
+      await tester.tap(find.widgetWithText(FilledButton, 'Bloquer'));
       await tester.pumpAndSettle();
 
       expect(pumped.actions.calls.last, 'block example.com');
@@ -335,18 +335,18 @@ void main() {
       await tester.tap(find.text('Open'));
       await tester.pumpAndSettle();
 
-      expect(find.text('AdGuard Home refused the sign-in.'), findsOneWidget);
+      expect(find.text('AdGuard Home a refusé la connexion.'), findsOneWidget);
 
       // Retry has to ask for the sign-in to be tried again, or the session
       // would only refuse it again without a word to the server.
-      await tester.tap(find.text('Retry'));
+      await tester.tap(find.text('Réessayer'));
       await tester.pumpAndSettle();
 
       expect(
         pumped.actions.calls,
         <String>['check a.example', 'retry', 'check a.example'],
       );
-      expect(find.text('No rule matches this name.'), findsOneWidget);
+      expect(find.text('Aucune règle ne correspond à ce nom.'), findsOneWidget);
     });
 
     testWidgets('a check that fails otherwise asks again, sign-in left be',
@@ -369,7 +369,7 @@ void main() {
       await tester.tap(find.text('Open'));
       await tester.pumpAndSettle();
       pumped.actions.lookupFailure = null;
-      await tester.tap(find.text('Retry'));
+      await tester.tap(find.text('Réessayer'));
       await tester.pumpAndSettle();
 
       expect(

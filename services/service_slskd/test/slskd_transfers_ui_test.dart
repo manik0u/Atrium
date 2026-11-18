@@ -252,10 +252,10 @@ void main() {
       expect(find.byIcon(Icons.format_list_bulleted_rounded), findsOneWidget);
 
       // Verify Stats Bar metrics
-      expect(find.text('Active'), findsWidgets);
-      expect(find.text('Queued'), findsWidgets);
-      expect(find.text('Completed'), findsWidgets);
-      expect(find.text('Failed'), findsWidgets);
+      expect(find.text('Actif'), findsWidgets);
+      expect(find.text("En file d'attente"), findsWidgets);
+      expect(find.text('Terminé'), findsWidgets);
+      expect(find.text('Échec'), findsWidgets);
 
       // Verify Mini FAB (Sort & Filter) in bottom-right
       expect(find.byType(FloatingActionButton), findsOneWidget);
@@ -299,7 +299,7 @@ void main() {
       expect(find.text('Timeline'), findsOneWidget);
       expect(find.text('AudioPhile99'), findsWidgets);
       expect(find.text('InProgress'), findsOneWidget);
-      expect(find.text('Cancel'), findsOneWidget);
+      expect(find.text('Annuler'), findsOneWidget);
 
       // Capture Screenshot: Transfer Details Modal Bottom Sheet
       await _capture(tester, repaintKey, 'slskd_transfers_details_sheet.png');
@@ -317,11 +317,11 @@ void main() {
       await tester.tap(find.byType(FloatingActionButton));
       await tester.pumpAndSettle();
 
-      expect(find.text('Sort & Filter'), findsOneWidget);
+      expect(find.text('Trier et filtrer'), findsOneWidget);
       expect(find.text('Direction'), findsOneWidget);
       expect(find.text('Downloads (5)'), findsOneWidget);
       expect(find.text('Uploads (1)'), findsOneWidget);
-      expect(find.text('Peer Name (A-Z)'), findsOneWidget);
+      expect(find.text('Nom du pair (A-Z)'), findsOneWidget);
 
       // Capture Screenshot: Modal Bottom Sheet
       await _capture(tester, repaintKey, 'slskd_transfers_filter_sheet.png');
@@ -329,7 +329,7 @@ void main() {
       // 4. Select Uploads filter and tap Done
       await tester.tap(find.text('Uploads (1)'));
       await tester.pump();
-      await tester.tap(find.text('Done'));
+      await tester.tap(find.text('Terminé'));
       await tester.pumpAndSettle();
 
       // Verify filtered state: only GrooveRider is shown
@@ -342,7 +342,7 @@ void main() {
       await _capture(tester, repaintKey, 'slskd_transfers_filtered.png');
 
       // 5. Reset filters via active filters pill
-      await tester.tap(find.text('Reset'));
+      await tester.tap(find.text('Réinitialiser'));
       await tester.pumpAndSettle();
       expect(find.text('AudioPhile99'), findsOneWidget);
 
@@ -362,10 +362,10 @@ void main() {
       await tester.enterText(find.byType(SearchBar), 'NonExistentXYZ');
       await tester.pump();
       expect(find.text('No transfers match "NonExistentXYZ"'), findsOneWidget);
-      expect(find.text('Clear Search'), findsOneWidget);
+      expect(find.text('Effacer la recherche'), findsOneWidget);
 
       // Tap Clear Search button
-      await tester.tap(find.text('Clear Search'));
+      await tester.tap(find.text('Effacer la recherche'));
       await tester.pumpAndSettle();
       expect(find.text('AudioPhile99'), findsOneWidget);
     });
@@ -395,8 +395,8 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('No transfers in queue'), findsOneWidget);
-      expect(find.text('Search Music'), findsOneWidget);
+      expect(find.text('Aucun transfert dans la file'), findsOneWidget);
+      expect(find.text('Rechercher de la musique'), findsOneWidget);
     });
 
     testWidgets('keeps an empty queue and its filter row through a poll', (WidgetTester tester) async {
@@ -418,26 +418,26 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byTooltip('Sort & Filter'));
+      await tester.tap(find.byTooltip('Trier et filtrer'));
       await tester.pumpAndSettle();
       await tester.tap(find.textContaining('Downloads ('));
-      await tester.tap(find.text('Completed').last);
-      await tester.tap(find.text('File Size (Largest)'));
+      await tester.tap(find.text('Terminé').last);
+      await tester.tap(find.text('Taille du fichier (la plus grande)'));
       await tester.pump();
-      await tester.tap(find.text('Done'));
+      await tester.tap(find.text('Terminé'));
       await tester.pumpAndSettle();
 
       // The chips overflow the row, so scroll it along.
-      await tester.drag(find.text('Downloads').first, const Offset(-300, 0));
+      await tester.drag(find.text('Téléchargements').first, const Offset(-300, 0));
       await tester.pumpAndSettle();
-      final double scrolledX = tester.getTopLeft(find.text('Reset')).dx;
+      final double scrolledX = tester.getTopLeft(find.text('Réinitialiser')).dx;
 
       ProviderScope.containerOf(tester.element(find.byType(SlskdHome)))
           .invalidate(slskdDownloadsProvider(testInstance));
       await tester.pump();
-      expect(find.text('Reset'), findsOneWidget);
+      expect(find.text('Réinitialiser'), findsOneWidget);
       await tester.pumpAndSettle();
-      expect(tester.getTopLeft(find.text('Reset')).dx, scrolledX);
+      expect(tester.getTopLeft(find.text('Réinitialiser')).dx, scrolledX);
     });
 
     testWidgets('renders SlskdAnalyticsSheet with KPIs, leaderboard, and Pareto failure charts',
@@ -514,8 +514,8 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            slskdTransferLeaderboardProvider((testInstance, 'Download')).overrideWith((ref) => mockLeaderboard),
-            slskdTransferExceptionsParetoProvider((testInstance, 'Download')).overrideWith((ref) => mockPareto),
+            slskdTransferLeaderboardProvider((testInstance, 'Télécharger')).overrideWith((ref) => mockLeaderboard),
+            slskdTransferExceptionsParetoProvider((testInstance, 'Télécharger')).overrideWith((ref) => mockPareto),
             slskdTransferDirectoriesProvider(testInstance).overrideWith((ref) => mockDirs),
             slskdPrometheusKpisProvider(testInstance).overrideWith((ref) => mockKpis),
           ],
@@ -542,7 +542,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Transfer Analytics & KPIs'), findsOneWidget);
-      expect(find.text('Resident Memory'), findsOneWidget);
+      expect(find.text('Mémoire résidente'), findsOneWidget);
       expect(find.text('VinylVault'), findsOneWidget);
       expect(find.text('Cancelled by remote peer'), findsOneWidget);
 
@@ -634,11 +634,11 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byTooltip('Sort & Filter'));
+      await tester.tap(find.byTooltip('Trier et filtrer'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Fastest Speed'));
+      await tester.tap(find.text('Vitesse la plus rapide'));
       await tester.pump();
-      await tester.tap(find.text('Done'));
+      await tester.tap(find.text('Terminé'));
       await tester.pumpAndSettle();
 
       expect(

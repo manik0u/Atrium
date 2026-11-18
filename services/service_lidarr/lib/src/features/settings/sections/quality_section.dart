@@ -31,7 +31,7 @@ class QualitySection extends ConsumerWidget {
       builder: (BuildContext dCtx) {
         return AlertDialog(
           title: Text(
-            'Edit ${item.title ?? item.quality?.name ?? 'Quality Definition'}',
+            'Modifier ${item.title ?? item.quality?.name ?? 'Quality Definition'}',
           ),
           content: SizedBox(
             width: double.maxFinite,
@@ -46,7 +46,7 @@ class QualitySection extends ConsumerWidget {
                       decimal: true,
                     ),
                     decoration: const InputDecoration(
-                      labelText: 'Min Size (MB/min)',
+                      labelText: 'Taille min (Mo/min)',
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -57,7 +57,7 @@ class QualitySection extends ConsumerWidget {
                       decimal: true,
                     ),
                     decoration: const InputDecoration(
-                      labelText: 'Max Size (MB/min - 0 for unlimited)',
+                      labelText: 'Taille max (Mo/min - 0 pour illimité)',
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -68,7 +68,7 @@ class QualitySection extends ConsumerWidget {
                       decimal: true,
                     ),
                     decoration: const InputDecoration(
-                      labelText: 'Preferred Size (MB/min)',
+                      labelText: 'Taille préférée (Mo/min)',
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -79,7 +79,7 @@ class QualitySection extends ConsumerWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(dCtx),
-              child: const Text('Cancel'),
+              child: const Text('Annuler'),
             ),
             FilledButton(
               onPressed: () async {
@@ -116,18 +116,18 @@ class QualitySection extends ConsumerWidget {
                     Navigator.pop(dCtx);
                     messenger.showSnackBar(
                       const SnackBar(
-                        content: Text('Quality definition updated!'),
+                        content: Text('Définition de qualité mise à jour !'),
                       ),
                     );
                   }
                 } catch (e) {
                   if (dCtx.mounted) {
                     messenger
-                        .showSnackBar(SnackBar(content: Text('Error: $e')));
+                        .showSnackBar(SnackBar(content: Text('Erreur : $e')));
                   }
                 }
               },
-              child: const Text('Save'),
+              child: const Text('Enregistrer'),
             ),
           ],
         );
@@ -153,7 +153,7 @@ class QualitySection extends ConsumerWidget {
               return const Center(
                 child: EmptyView(
                   icon: Icons.tune,
-                  title: 'No Quality Definitions',
+                  title: 'Aucune définition de qualité',
                   message:
                       'Quality definitions control file size bitrate boundaries.',
                 ),
@@ -199,7 +199,7 @@ class QualitySection extends ConsumerWidget {
                       ),
                     ),
                     title: Text(
-                      item.title ?? item.quality?.name ?? 'Quality',
+                      item.title ?? item.quality?.name ?? 'Qualité',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.w600,
                             fontSize: 15,

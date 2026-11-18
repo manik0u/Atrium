@@ -41,9 +41,9 @@ class AdguardHomeProtectionCard extends StatelessWidget {
       AdguardHomeProtection.off => Icons.gpp_bad_outlined,
     };
     final String title = switch (state) {
-      AdguardHomeProtection.on => 'Protection is on',
-      AdguardHomeProtection.paused => 'Protection is paused',
-      AdguardHomeProtection.off => 'Protection is off',
+      AdguardHomeProtection.on => 'La protection est activée',
+      AdguardHomeProtection.paused => 'La protection est en pause',
+      AdguardHomeProtection.off => 'La protection est désactivée',
     };
     final TextStyle? quiet =
         theme.textTheme.bodySmall?.copyWith(color: cs.onSurfaceVariant);
@@ -83,7 +83,7 @@ class AdguardHomeProtectionCard extends StatelessWidget {
                         Wrap(
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: <Widget>[
-                            Text('Back on in ', style: quiet),
+                            Text('Réactivé dans ', style: quiet),
                             AdguardHomeCountdown(
                               until: pausedUntil,
                               onDone: onPauseEnded,
@@ -113,7 +113,7 @@ class AdguardHomeProtectionCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: Insets.md),
-            Text('Pause for', style: theme.textTheme.labelMedium),
+            Text('Mettre en pause pour', style: theme.textTheme.labelMedium),
             const SizedBox(height: Insets.xs),
             Wrap(
               spacing: Insets.sm,

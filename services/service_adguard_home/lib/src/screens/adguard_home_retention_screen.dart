@@ -21,8 +21,8 @@ enum AdguardHomeRetentionKind {
   statistics;
 
   String get title => switch (this) {
-        queryLog => 'Query log',
-        statistics => 'Statistics',
+        queryLog => 'Journal des requêtes',
+        statistics => 'Statistiques',
       };
 }
 
@@ -128,7 +128,7 @@ class _AdguardHomeRetentionScreenState
         context: context,
         builder: (BuildContext context) => AlertDialog(
           title: Text(
-            _log ? 'Keep the log for less time?' : 'Keep statistics for '
+            _log ? 'Conserver le journal moins longtemps ?' : 'Conserver les statistiques pour '
                 'less time?',
           ),
           content: Text(
@@ -138,11 +138,11 @@ class _AdguardHomeRetentionScreenState
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('Cancel'),
+              child: const Text('Annuler'),
             ),
             FilledButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('Save'),
+              child: const Text('Enregistrer'),
             ),
           ],
         ),
@@ -173,14 +173,14 @@ class _AdguardHomeRetentionScreenState
   }
 
   String get _ignoredHelp => _log
-      ? 'Queries matching these rules are not written to the query log'
-      : 'Queries matching these rules are not counted in the statistics';
+      ? 'Les requêtes correspondant à ces règles ne sont pas écrites dans le journal'
+      : 'Les requêtes correspondant à ces règles ne sont pas comptées dans les statistiques';
 
   Future<void> _reset() async {
     final bool? reset = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Reset statistics?'),
+        title: const Text('Réinitialiser les statistiques ?'),
         content: const Text(
           'Every count and chart starts again from nothing. This cannot be '
           'undone.',
@@ -188,7 +188,7 @@ class _AdguardHomeRetentionScreenState
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -196,7 +196,7 @@ class _AdguardHomeRetentionScreenState
               foregroundColor: Theme.of(context).colorScheme.onError,
             ),
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Reset'),
+            child: const Text('Réinitialiser'),
           ),
         ],
       ),
@@ -212,7 +212,7 @@ class _AdguardHomeRetentionScreenState
     final AdguardHomeActions actions =
         ref.read(adguardHomeActionsProvider(_instance));
     setState(() => _busy = true);
-    SnackBar said = const SnackBar(content: Text('Statistics reset'));
+    SnackBar said = const SnackBar(content: Text('Statistiques réinitialisées'));
     try {
       await actions.resetStats();
     } on Object catch (error) {
@@ -259,23 +259,23 @@ class _AdguardHomeRetentionScreenState
       padding: const EdgeInsets.only(bottom: Insets.xl),
       children: <Widget>[
         SwitchListTile(
-          title: Text(_log ? 'Keep a query log' : 'Keep statistics'),
+          title: Text(_log ? 'Conserver un journal des requêtes' : 'Conserver les statistiques'),
           value: _draft.enabled,
           onChanged: (bool on) =>
               setState(() => _draft = _draft.copyWith(enabled: on)),
         ),
         if (_log)
           SwitchListTile(
-            title: const Text('Anonymize client IP'),
+            title: const Text("Anonymiser l'IP du client"),
             subtitle: const Text(
-              "Don't save the client's full IP address to logs or statistics",
+              "Ne pas enregistrer l'adresse IP complète du client dans les journaux ni les statistiques",
             ),
             value: _draft.anonymizeClientIp ?? false,
             onChanged: (bool on) => setState(
               () => _draft = _draft.copyWith(anonymizeClientIp: on),
             ),
           ),
-        _Inset(child: AdguardHomeHeading(_log ? 'Keep queries for' : 'Keep for')),
+        _Inset(child: AdguardHomeHeading(_log ? 'Conserver les requêtes pour' : 'Keep for')),
         // Hours, and -1 for Custom.
         RadioGroup<int>(
           groupValue: _custom ? -1 : _draft.interval.inHours,
@@ -299,7 +299,7 @@ class _AdguardHomeRetentionScreenState
                   value: choice.inHours,
                 ),
               const RadioListTile<int>(
-                title: Text('Custom'),
+                title: Text('Personnalisé'),
                 value: -1,
               ),
             ],
@@ -322,8 +322,8 @@ class _AdguardHomeRetentionScreenState
               ],
               onChanged: (_) => setState(() {}),
               decoration: InputDecoration(
-                labelText: 'Hours',
-                helperText: 'From 1 to $adguardHomeRetentionMaxHours',
+                labelText: 'Heures',
+                helperText: 'De 1 à $adguardHomeRetentionMaxHours',
                 border: const OutlineInputBorder(),
                 errorText:
                     _checked || _hours.text.isNotEmpty
@@ -336,7 +336,7 @@ class _AdguardHomeRetentionScreenState
         // A server from before the switch always leaves these out.
         if (_draft.hasIgnoredSwitch)
           SwitchListTile(
-            title: const Text('Leave out these domains'),
+            title: const Text('Exclure ces domaines'),
             subtitle: Text(_ignoredHelp),
             value: _draft.ignoredEnabled,
             onChanged: (bool on) =>
@@ -358,7 +358,7 @@ class _AdguardHomeRetentionScreenState
             style: theme.textTheme.bodyMedium
                 ?.copyWith(fontFamily: 'monospace'),
             decoration: const InputDecoration(
-              helperText: 'One rule per line, such as example.org or '
+              helperText: 'Une règle par ligne, par ex. example.org ou '
                   '*.example.com',
               helperMaxLines: 2,
               border: OutlineInputBorder(),
@@ -380,7 +380,7 @@ class _AdguardHomeRetentionScreenState
                       )
                   : _reset,
               icon: const Icon(Icons.delete_sweep_outlined),
-              label: Text(_log ? 'Clear query log' : 'Reset statistics'),
+              label: Text(_log ? 'Effacer le journal des requêtes' : 'Réinitialiser les statistiques'),
             ),
           ),
         ),

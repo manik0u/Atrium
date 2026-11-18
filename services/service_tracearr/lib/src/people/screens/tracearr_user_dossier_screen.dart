@@ -90,7 +90,7 @@ class TracearrUserDossierScreen extends ConsumerWidget {
                 const SizedBox(height: Insets.md),
                 FilledButton.icon(
                   icon: const Icon(Icons.refresh),
-                  label: const Text('Retry'),
+                  label: const Text('Réessayer'),
                   onPressed: () => ref.invalidate(
                     tracearrUserDetailProvider((instance, userId)),
                   ),
@@ -205,22 +205,22 @@ class TracearrUserDossierScreen extends ConsumerWidget {
                 child: Row(
                   children: [
                     _UserStatTile(
-                      label: 'TOTAL PLAYS',
+                      label: 'LECTURES TOTALES',
                       value: '${detail.allTimePlays}',
                       color: colorScheme.primary,
                     ),
                     _UserStatTile(
-                      label: 'WATCH TIME',
+                      label: 'TEMPS DE VISIONNAGE',
                       value: _formatWatchTime(detail.allTimeWatchTimeMs),
                       color: const Color(0xFF4CAF50),
                     ),
                     _UserStatTile(
-                      label: '30D PLAYS',
+                      label: 'LECTURES 30 J',
                       value: '${detail.last30DaysPlays}',
                       color: const Color(0xFF2196F3),
                     ),
                     _UserStatTile(
-                      label: '7D PLAYS',
+                      label: 'LECTURES 7 J',
                       value: '${detail.last7DaysPlays}',
                       color: const Color(0xFFFF9800),
                     ),

@@ -79,7 +79,7 @@ void main() {
     );
     expect(find.text('Blade Runner'), findsOneWidget);
     expect(find.textContaining('Living Room'), findsOneWidget);
-    expect(find.text('Direct Play'), findsOneWidget);
+    expect(find.text('Lecture directe'), findsOneWidget);
     // Controllable -> transport controls present.
     expect(find.byIcon(Icons.pause), findsOneWidget);
   });
@@ -124,7 +124,7 @@ void main() {
             .overrideWith((Ref ref) async => PlexApi(Dio(), token: 'tok')),
         plexLibrariesProvider(instance).overrideWith(
           (Ref ref) async => const <PlexLibrary>[
-            PlexLibrary(key: '1', title: 'Movies', type: 'movie'),
+            PlexLibrary(key: '1', title: 'Films', type: 'movie'),
           ],
         ),
         plexSessionsProvider(instance).overrideWith(
@@ -152,7 +152,7 @@ void main() {
       PlexHome(instance: instance),
       pumps: 4,
     );
-    expect(find.text('Now Streaming'), findsOneWidget);
+    expect(find.text('En cours de lecture'), findsOneWidget);
     expect(find.text('Dune'), findsOneWidget);
   });
 
@@ -183,7 +183,7 @@ void main() {
       pumps: 4,
     );
     expect(find.text('The Wire'), findsWidgets); // header title
-    expect(find.text('Seasons'), findsOneWidget); // inline section header
+    expect(find.text('Saisons'), findsOneWidget); // inline section header
     expect(find.text('Season 1'), findsOneWidget); // season card
   });
 
@@ -224,7 +224,7 @@ void main() {
             .overrideWith((Ref ref) async => PlexApi(Dio(), token: 'tok')),
         plexLibrariesProvider(instance).overrideWith(
           (Ref ref) async => const <PlexLibrary>[
-            PlexLibrary(key: '1', title: 'Movies', type: 'movie'),
+            PlexLibrary(key: '1', title: 'Films', type: 'movie'),
           ],
         ),
         plexSessionsProvider(instance)
@@ -256,12 +256,12 @@ void main() {
     // Open the Movies library: unfiltered grid plus the genre strip. 'Movies'
     // appears twice on the hub (chip + library row header), so target the
     // chip.
-    await tester.tap(find.widgetWithText(ChoiceChip, 'Movies'));
+    await tester.tap(find.widgetWithText(ChoiceChip, 'Films'));
     for (int i = 0; i < 3; i++) {
       await tester.pump();
     }
     expect(find.text('Heat'), findsOneWidget);
-    expect(find.text('All'), findsOneWidget);
+    expect(find.text('Tous'), findsOneWidget);
     expect(find.text('Action'), findsOneWidget);
 
     // Selecting a genre swaps the grid to the genre-filtered source.
@@ -283,7 +283,7 @@ void main() {
             .overrideWith((Ref ref) async => PlexApi(Dio(), token: 'tok')),
         plexLibrariesProvider(instance).overrideWith(
           (Ref ref) async => const <PlexLibrary>[
-            PlexLibrary(key: '1', title: 'Movies', type: 'movie'),
+            PlexLibrary(key: '1', title: 'Films', type: 'movie'),
           ],
         ),
         plexSessionsProvider(instance)
@@ -308,7 +308,7 @@ void main() {
       pumps: 5,
     );
     expect(find.text('Blade Runner'), findsWidgets); // hero (+ maybe row)
-    expect(find.text('Resume'), findsOneWidget); // viewOffset>0 -> Resume
+    expect(find.text('Reprendre'), findsOneWidget); // viewOffset>0 -> Resume
   });
 
   testWidgets('PlexHome hub shows a per-library row without a chip tap',
@@ -321,7 +321,7 @@ void main() {
             .overrideWith((Ref ref) async => PlexApi(Dio(), token: 'tok')),
         plexLibrariesProvider(instance).overrideWith(
           (Ref ref) async => const <PlexLibrary>[
-            PlexLibrary(key: '7', title: 'TV Shows', type: 'show'),
+            PlexLibrary(key: '7', title: 'Séries', type: 'show'),
           ],
         ),
         plexSessionsProvider(instance)
@@ -339,7 +339,7 @@ void main() {
       PlexHome(instance: instance),
       pumps: 5,
     );
-    expect(find.text('TV Shows'), findsWidgets); // library row header (+ chip)
+    expect(find.text('Séries'), findsWidgets); // library row header (+ chip)
     expect(find.text('The Wire'), findsOneWidget); // row item, no chip tap
   });
 
@@ -372,7 +372,7 @@ void main() {
       PlexHome(instance: instance),
       pumps: 5,
     );
-    expect(find.text('Now Streaming'), findsOneWidget);
+    expect(find.text('En cours de lecture'), findsOneWidget);
     expect(find.text('Dune'), findsWidgets);
   });
 }

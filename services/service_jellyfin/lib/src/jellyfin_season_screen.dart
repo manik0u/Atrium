@@ -45,8 +45,8 @@ class JellyfinSeasonScreen extends ConsumerWidget {
           if (episodes.isEmpty) {
             return const EmptyView(
               icon: Icons.tv,
-              title: 'No Episodes',
-              message: 'This season has no episodes.',
+              title: 'Aucun épisode',
+              message: "Cette saison n'a aucun épisode.",
             );
           }
           return ListView.separated(

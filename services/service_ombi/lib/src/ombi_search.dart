@@ -12,7 +12,7 @@ import 'widgets/ombi_visuals.dart';
 /// Searches Ombi for movies and shows; tapping one opens its title sheet.
 class OmbiSearchDelegate extends SearchDelegate<void> {
   OmbiSearchDelegate({required this.instance})
-      : super(searchFieldLabel: 'Search movies and shows');
+      : super(searchFieldLabel: 'Rechercher des films et séries');
 
   final Instance instance;
 
@@ -24,7 +24,7 @@ class OmbiSearchDelegate extends SearchDelegate<void> {
       ? const <Widget>[]
       : <Widget>[
           IconButton(
-            tooltip: 'Clear',
+            tooltip: 'Effacer',
             icon: const Icon(Icons.clear),
             onPressed: () => query = '',
           ),
@@ -32,7 +32,7 @@ class OmbiSearchDelegate extends SearchDelegate<void> {
 
   @override
   Widget? buildLeading(BuildContext context) => IconButton(
-        tooltip: 'Back',
+        tooltip: 'Retour',
         icon: const Icon(Icons.arrow_back),
         onPressed: () => close(context, null),
       );
@@ -58,14 +58,14 @@ class _OmbiSearchResults extends ConsumerWidget {
     if (q.length < 2) {
       return const EmptyView(
         icon: Icons.search,
-        title: 'Search for a movie or a show.',
+        title: 'Rechercher un film ou une série.',
       );
     }
     final OmbiSearchKey key = (instance: instance, query: q);
     return ref.watch(ombiSearchProvider(key)).when(
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (Object error, StackTrace _) => ErrorView(
-            title: 'Search failed',
+            title: 'Échec de la recherche',
             message: describeOmbiFailure(error, lookup: OmbiLookup.search),
             onRetry: () => ref.invalidate(ombiSearchProvider(key)),
           ),
@@ -73,8 +73,8 @@ class _OmbiSearchResults extends ConsumerWidget {
             if (hits.isEmpty) {
               return EmptyView(
                 icon: Icons.search_off,
-                title: 'No results',
-                message: 'Nothing on Ombi matches "$q".',
+                title: 'Aucun résultat',
+                message: 'Rien sur Ombi ne correspond à « $q ».',
               );
             }
             return ListView.separated(

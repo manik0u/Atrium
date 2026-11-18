@@ -76,19 +76,19 @@ void main() {
       expect(find.text('@Bhavya on Plex Cloud (PLEX)'), findsOneWidget);
 
       // Section 1: Session & Chain
-      expect(find.text('SESSION & CHAIN HISTORY'), findsOneWidget);
-      expect(find.text('Completed'), findsOneWidget);
+      expect(find.text('HISTORIQUE DES SESSIONS ET CHAÎNES'), findsOneWidget);
+      expect(find.text('Terminé'), findsOneWidget);
       expect(find.text('2h'), findsOneWidget);
       expect(find.text('3 sessions merged'), findsOneWidget);
 
       // Section 2: Video Pipeline
-      expect(find.text('VIDEO PIPELINE TELEMETRY'), findsOneWidget);
+      expect(find.text('TÉLÉMÉTRIE DU PIPELINE VIDÉO'), findsOneWidget);
       expect(find.text('TRANSCODE'), findsOneWidget);
       expect(find.text('HEVC'), findsOneWidget);
       expect(find.text('3840x2160 → 1920x1080'), findsOneWidget);
-      expect(find.text('Source Dynamic Range'), findsOneWidget);
+      expect(find.text('Plage dynamique source'), findsOneWidget);
       expect(find.text('HDR10'), findsOneWidget);
-      expect(find.text('Stream Dynamic Range'), findsOneWidget);
+      expect(find.text('Plage dynamique du flux'), findsOneWidget);
       expect(find.text('SDR (Tone-Mapped)'), findsOneWidget);
       expect(find.text('MKV → MPEGTS'), findsOneWidget);
       expect(find.text('Active (NVENC)'), findsOneWidget);
@@ -97,7 +97,7 @@ void main() {
       expect(find.text('• Container not supported by client'), findsOneWidget);
 
       // Section 3: Audio & Subtitles
-      expect(find.text('AUDIO & SUBTITLES'), findsOneWidget);
+      expect(find.text('AUDIO ET SOUS-TITRES'), findsOneWidget);
       expect(find.text('DIRECTPLAY'), findsOneWidget);
       expect(find.text('EAC3'), findsOneWidget);
       expect(find.text('5.1'), findsOneWidget);
@@ -105,7 +105,7 @@ void main() {
       expect(find.text('BURN'), findsOneWidget);
 
       // Section 4: Client & Environment
-      expect(find.text('CLIENT & PLAYBACK ENVIRONMENT'), findsOneWidget);
+      expect(find.text('ENVIRONNEMENT CLIENT ET LECTURE'), findsOneWidget);
       expect(find.text('Plex for Android'), findsOneWidget);
       expect(find.text('Pixel 8 Pro'), findsOneWidget);
       expect(find.text('Android'), findsOneWidget);
@@ -135,10 +135,10 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Dynamic Range'), findsOneWidget);
+      expect(find.text('Plage dynamique'), findsOneWidget);
       expect(find.text('HDR10'), findsOneWidget);
-      expect(find.text('Source Dynamic Range'), findsNothing);
-      expect(find.text('Stream Dynamic Range'), findsNothing);
+      expect(find.text('Plage dynamique source'), findsNothing);
+      expect(find.text('Plage dynamique du flux'), findsNothing);
     });
 
     testWidgets(
@@ -173,30 +173,30 @@ void main() {
       ); // video & audio default
 
       // Optional rows MUST be absent
-      expect(find.text('Watch Time'), findsNothing);
-      expect(find.text('Resume Chain'), findsNothing);
-      expect(find.text('Started At'), findsNothing);
-      expect(find.text('Stopped At'), findsNothing);
-      expect(find.text('Video Codec'), findsNothing);
-      expect(find.text('Resolution'), findsNothing);
+      expect(find.text('Temps de visionnage'), findsNothing);
+      expect(find.text('Chaîne de reprise'), findsNothing);
+      expect(find.text('Débuté à'), findsNothing);
+      expect(find.text('Arrêté à'), findsNothing);
+      expect(find.text('Codec vidéo'), findsNothing);
+      expect(find.text('Résolution'), findsNothing);
       expect(find.text('Dimensions'), findsNothing);
-      expect(find.text('Dynamic Range'), findsNothing);
-      expect(find.text('Source Dynamic Range'), findsNothing);
-      expect(find.text('Stream Dynamic Range'), findsNothing);
-      expect(find.text('Container'), findsNothing);
-      expect(find.text('Hardware Acceleration'), findsNothing);
-      expect(find.text('Transcode Speed'), findsNothing);
-      expect(find.text('Throttled'), findsNothing);
+      expect(find.text('Plage dynamique'), findsNothing);
+      expect(find.text('Plage dynamique source'), findsNothing);
+      expect(find.text('Plage dynamique du flux'), findsNothing);
+      expect(find.text('Conteneur'), findsNothing);
+      expect(find.text('Accélération matérielle'), findsNothing);
+      expect(find.text('Vitesse de transcodage'), findsNothing);
+      expect(find.text('Ralenti'), findsNothing);
       expect(find.text('Transcode Reasons:'), findsNothing);
-      expect(find.text('Audio Codec'), findsNothing);
-      expect(find.text('Audio Channels'), findsNothing);
-      expect(find.text('Subtitles'), findsNothing);
-      expect(find.text('Subtitle Mode'), findsNothing);
-      expect(find.text('Player'), findsNothing);
-      expect(find.text('Device'), findsNothing);
-      expect(find.text('Product'), findsNothing);
-      expect(find.text('Platform'), findsNothing);
-      expect(find.text('Average Bitrate'), findsNothing);
+      expect(find.text('Codec audio'), findsNothing);
+      expect(find.text('Canaux audio'), findsNothing);
+      expect(find.text('Sous-titres'), findsNothing);
+      expect(find.text('Mode des sous-titres'), findsNothing);
+      expect(find.text('Lecteur'), findsNothing);
+      expect(find.text('Appareil'), findsNothing);
+      expect(find.text('Produit'), findsNothing);
+      expect(find.text('Plateforme'), findsNothing);
+      expect(find.text('Débit moyen'), findsNothing);
     });
   });
 }

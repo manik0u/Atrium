@@ -133,7 +133,7 @@ IconData delugeStateIcon(String state) => switch (state) {
 /// libtorrent file priority as a word. Deluge writes 4 for "normal" on a fresh
 /// add, but any value from 1 to 6 is a middling priority in libtorrent's scale.
 String delugeFilePriorityLabel(int priority) => switch (priority) {
-      0 => 'Skip',
-      7 => 'High',
+      0 => 'Ignorer',
+      7 => 'Élevée',
       _ => 'Normal',
     };

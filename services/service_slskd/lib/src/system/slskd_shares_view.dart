@@ -37,7 +37,7 @@ class _SlskdSharesViewState extends ConsumerState<SlskdSharesView> {
       await api.scanShares();
       messenger.showSnackBar(
         const SnackBar(
-          content: Text('Scanning local shares...'),
+          content: Text('Analyse des partages locaux…'),
           duration: Duration(seconds: 2),
         ),
       );
@@ -66,7 +66,7 @@ class _SlskdSharesViewState extends ConsumerState<SlskdSharesView> {
       await api.cancelShareScan();
       messenger.showSnackBar(
         const SnackBar(
-          content: Text('Share scan cancelled'),
+          content: Text('Analyse des partages annulée'),
           duration: Duration(seconds: 2),
         ),
       );
@@ -255,7 +255,7 @@ class _SlskdSharesViewState extends ConsumerState<SlskdSharesView> {
                       ),
                       onPressed: _isActionInProgress ? null : _handleCancelScan,
                       icon: const Icon(Icons.close_rounded, size: 18),
-                      label: const Text('Cancel Scan'),
+                      label: const Text("Annuler l'analyse"),
                     ),
                   ),
                 ] else ...<Widget>[
@@ -269,7 +269,7 @@ class _SlskdSharesViewState extends ConsumerState<SlskdSharesView> {
                           ),
                           onPressed: _isActionInProgress ? null : _handleScanShares,
                           icon: const Icon(Icons.refresh_rounded, size: 18),
-                          label: const Text('Rescan Shares'),
+                          label: const Text("Relancer l'analyse des partages"),
                         ),
                       ),
                       const SizedBox(width: Insets.sm),
@@ -282,11 +282,11 @@ class _SlskdSharesViewState extends ConsumerState<SlskdSharesView> {
                             SlskdShareContentsSheet.show(
                               context,
                               instance: widget.instance,
-                              title: 'All Shared Library',
+                              title: 'Toute la bibliothèque partagée',
                             );
                           },
                           icon: const Icon(Icons.folder_open_rounded, size: 18),
-                          label: const Text('Browse All'),
+                          label: const Text('Tout parcourir'),
                         ),
                       ),
                     ],
@@ -345,7 +345,7 @@ class _SlskdSharesViewState extends ConsumerState<SlskdSharesView> {
                         ),
                         const SizedBox(height: Insets.sm),
                         Text(
-                          'No Shared Folders Configured',
+                          'Aucun dossier partagé configuré',
                           style: textTheme.titleSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),

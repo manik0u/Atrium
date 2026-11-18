@@ -96,7 +96,7 @@ class _DiscoverRow extends ConsumerWidget {
                       TextButton(
                         onPressed: () =>
                             ref.invalidate(ombiDiscoverProvider(key)),
-                        child: const Text('Retry'),
+                        child: const Text('Réessayer'),
                       ),
                     ],
                   ),
@@ -104,7 +104,7 @@ class _DiscoverRow extends ConsumerWidget {
                 data: (List<OmbiSearchHit> hits) => hits.isEmpty
                     ? Center(
                         child: Text(
-                          'Nothing here right now',
+                          'Rien ici pour le moment',
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: theme.colorScheme.onSurfaceVariant,
                           ),
@@ -186,13 +186,13 @@ class _DiscoverCard extends StatelessWidget {
                       alignment: Alignment.topRight,
                       child: hit.available
                           ? OmbiPill(
-                              label: 'Available',
+                              label: 'Disponible',
                               icon: Icons.check_circle_outline_rounded,
                               foreground: cs.onTertiaryContainer,
                               background: cs.tertiaryContainer,
                             )
                           : OmbiPill(
-                              label: 'Requested',
+                              label: 'Demandé',
                               icon: Icons.schedule_rounded,
                               foreground: cs.onPrimaryContainer,
                               background: cs.primaryContainer,

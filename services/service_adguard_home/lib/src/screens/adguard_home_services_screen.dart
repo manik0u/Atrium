@@ -51,7 +51,7 @@ class _AdguardHomeServicesScreenState
         appBar: AppBar(
           title: Text(widget.title),
           actions: <Widget>[
-            TextButton(onPressed: _done, child: const Text('Done')),
+            TextButton(onPressed: _done, child: const Text('Terminé')),
             const SizedBox(width: Insets.sm),
           ],
         ),

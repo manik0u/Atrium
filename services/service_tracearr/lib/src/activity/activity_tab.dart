@@ -63,7 +63,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.menu),
-          tooltip: 'Open menu',
+          tooltip: 'Ouvrir le menu',
           onPressed: () => Scaffold.of(context).openDrawer(),
         ),
         title: Column(
@@ -104,7 +104,7 @@ class _ActivityTabState extends ConsumerState<ActivityTab> {
           processingText: 'Loading more history...',
           processedText: 'Loaded',
           failedText: 'Failed to load',
-          noMoreText: 'All history loaded',
+          noMoreText: "Tout l'historique est chargé",
         ),
         onRefresh: _refreshAll,
         onLoad: () async {

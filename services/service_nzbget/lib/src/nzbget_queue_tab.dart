@@ -24,10 +24,10 @@ String nzbgetFmtRate(int bytesPerSec) {
 
 /// Human label for a group status.
 String nzbgetStatusLabel(String status) => switch (status) {
-      'DOWNLOADING' => 'Downloading',
-      'QUEUED' => 'Queued',
-      'PAUSED' => 'Paused',
-      'FETCHING' => 'Fetching',
+      'DOWNLOADING' => 'Téléchargement en cours',
+      'QUEUED' => "En file d'attente",
+      'PAUSED' => 'En pause',
+      'FETCHING' => 'Récupération en cours',
       _ when status.startsWith('PP_') ||
               status == 'UNPACKING' ||
               status == 'MOVING' ||
@@ -38,7 +38,7 @@ String nzbgetStatusLabel(String status) => switch (status) {
               status == 'LOADING_PARS' ||
               status == 'EXECUTING_SCRIPT' =>
         'Processing',
-      '' => 'Queued',
+      '' => "En file d'attente",
       _ => status[0] + status.substring(1).toLowerCase(),
     };
 
@@ -78,7 +78,7 @@ class _NzbgetQueueTabState extends ConsumerState<NzbgetQueueTab> {
           await ref.read(nzbgetApiProvider(widget.instance).future);
       await action(api);
     } catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text('Action failed: $e')));
+      messenger.showSnackBar(SnackBar(content: Text("Échec de l'action : $e")));
     } finally {
       if (context.mounted) {
         _refresh(ref);
@@ -125,8 +125,8 @@ class _NzbgetQueueTabState extends ConsumerState<NzbgetQueueTab> {
                 const SizedBox(height: Insets.xl),
                 const EmptyView(
                   icon: Icons.download_done_outlined,
-                  title: 'Queue is empty',
-                  message: 'Nothing downloading right now.',
+                  title: "La file d'attente est vide",
+                  message: 'Aucun téléchargement en cours pour le moment.',
                 ),
               ],
             ),
@@ -223,7 +223,7 @@ class _NzbgetQueueTabState extends ConsumerState<NzbgetQueueTab> {
             ),
             ListTile(
               leading: Icon(group.isPaused ? Icons.play_arrow : Icons.pause),
-              title: Text(group.isPaused ? 'Resume' : 'Pause'),
+              title: Text(group.isPaused ? 'Reprendre' : 'Pause'),
               onTap: () {
                 Navigator.of(sheetContext).pop();
                 _run(
@@ -237,7 +237,7 @@ class _NzbgetQueueTabState extends ConsumerState<NzbgetQueueTab> {
             ),
             ListTile(
               leading: const Icon(Icons.low_priority),
-              title: const Text('Priority'),
+              title: const Text('Priorité'),
               onTap: () {
                 Navigator.of(sheetContext).pop();
                 _showPriorityPicker(context, ref, group);
@@ -245,7 +245,7 @@ class _NzbgetQueueTabState extends ConsumerState<NzbgetQueueTab> {
             ),
             ListTile(
               leading: const Icon(Icons.folder_outlined),
-              title: const Text('Category'),
+              title: const Text('Catégorie'),
               onTap: () {
                 Navigator.of(sheetContext).pop();
                 _showCategoryPicker(context, ref, group);
@@ -253,7 +253,7 @@ class _NzbgetQueueTabState extends ConsumerState<NzbgetQueueTab> {
             ),
             ListTile(
               leading: const Icon(Icons.vertical_align_top),
-              title: const Text('Move to top'),
+              title: const Text('En haut'),
               onTap: () {
                 Navigator.of(sheetContext).pop();
                 _run(
@@ -265,7 +265,7 @@ class _NzbgetQueueTabState extends ConsumerState<NzbgetQueueTab> {
             ),
             ListTile(
               leading: const Icon(Icons.vertical_align_bottom),
-              title: const Text('Move to bottom'),
+              title: const Text('En bas'),
               onTap: () {
                 Navigator.of(sheetContext).pop();
                 _run(
@@ -280,22 +280,22 @@ class _NzbgetQueueTabState extends ConsumerState<NzbgetQueueTab> {
                 Icons.delete_outline,
                 color: Theme.of(sheetContext).colorScheme.error,
               ),
-              title: const Text('Delete'),
+              title: const Text('Supprimer'),
               onTap: () async {
                 Navigator.of(sheetContext).pop();
                 final bool? confirmed = await showDialog<bool>(
                   context: context,
                   builder: (BuildContext dialogContext) => AlertDialog(
-                    title: const Text('Delete download?'),
+                    title: const Text('Supprimer le téléchargement ?'),
                     content: Text(group.name),
                     actions: <Widget>[
                       TextButton(
                         onPressed: () => Navigator.of(dialogContext).pop(false),
-                        child: const Text('Cancel'),
+                        child: const Text('Annuler'),
                       ),
                       FilledButton(
                         onPressed: () => Navigator.of(dialogContext).pop(true),
-                        child: const Text('Delete'),
+                        child: const Text('Supprimer'),
                       ),
                     ],
                   ),
@@ -378,13 +378,13 @@ class _NzbgetQueueTabState extends ConsumerState<NzbgetQueueTab> {
               ),
               error: (Object e, StackTrace _) => Padding(
                 padding: const EdgeInsets.all(Insets.xl),
-                child: Text('Could not load categories: $e'),
+                child: Text('Impossible de charger les catégories : $e'),
               ),
               data: (List<String> names) => Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   if (names.isEmpty)
-                    const ListTile(title: Text('No categories configured')),
+                    const ListTile(title: Text('Aucune catégorie configurée')),
                   for (final String name in names)
                     ListTile(
                       title: Text(name),
@@ -479,7 +479,7 @@ class _QueueSummary extends ConsumerWidget {
             ),
           ),
           IconButton.filledTonal(
-            tooltip: 'Add NZB',
+            tooltip: 'Ajouter un NZB',
             onPressed: onAdd,
             icon: const Icon(Icons.add),
           ),
@@ -490,7 +490,7 @@ class _QueueSummary extends ConsumerWidget {
               foregroundColor: cs.onSecondaryContainer,
             ),
             icon: Icon(paused ? Icons.play_arrow : Icons.pause),
-            label: Text(paused ? 'Resume' : 'Pause'),
+            label: Text(paused ? 'Reprendre' : 'Pause'),
             onPressed: () => onPauseResume(paused),
           ),
         ],

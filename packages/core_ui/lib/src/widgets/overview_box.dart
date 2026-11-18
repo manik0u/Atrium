@@ -6,7 +6,7 @@ import '../design_tokens.dart';
 class OverviewBox extends StatefulWidget {
   const OverviewBox({
     required this.overview,
-    this.title = 'Overview',
+    this.title = "Vue d'ensemble",
     super.key,
   });
 

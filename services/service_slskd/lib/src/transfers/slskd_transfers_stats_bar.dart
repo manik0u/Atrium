@@ -167,7 +167,7 @@ class SlskdTransfersStatsBar extends ConsumerWidget {
                       padding: const EdgeInsets.symmetric(horizontal: Insets.sm),
                     ),
                     icon: const Icon(Icons.cleaning_services_outlined, size: 16),
-                    label: const Text('Clear'),
+                    label: const Text('Effacer'),
                     onPressed: () async {
                       try {
                         final api = await ref.read(slskdApiProvider(instance).future);
@@ -188,7 +188,7 @@ class SlskdTransfersStatsBar extends ConsumerWidget {
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text('Cleared completed transfers'),
+                              content: Text('Transferts terminés effacés'),
                               duration: Duration(seconds: 2),
                             ),
                           );
@@ -217,22 +217,22 @@ class SlskdTransfersStatsBar extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 _StatBadge(
-                  label: 'Active',
+                  label: 'Actif',
                   count: activeCount,
                   color: activeCount > 0 ? colorScheme.primary : colorScheme.onSurfaceVariant,
                 ),
                 _StatBadge(
-                  label: 'Queued',
+                  label: "En file d'attente",
                   count: queuedCount,
                   color: queuedCount > 0 ? colorScheme.secondary : colorScheme.onSurfaceVariant,
                 ),
                 _StatBadge(
-                  label: 'Completed',
+                  label: 'Terminé',
                   count: completedCount,
                   color: completedCount > 0 ? colorScheme.tertiary : colorScheme.onSurfaceVariant,
                 ),
                 _StatBadge(
-                  label: 'Failed',
+                  label: 'Échec',
                   count: failedCount,
                   color: failedCount > 0 ? colorScheme.error : colorScheme.onSurfaceVariant,
                 ),

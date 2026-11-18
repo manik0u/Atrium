@@ -22,7 +22,7 @@ String describeGluetunFailure(Object error, String route) {
     if (status != null) {
       return 'Gluetun answered HTTP $status.';
     }
-    return 'Gluetun could not be reached.';
+    return 'Gluetun est injoignable.';
   }
   return 'Something went wrong.';
 }

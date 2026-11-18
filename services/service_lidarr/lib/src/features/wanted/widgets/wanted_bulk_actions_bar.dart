@@ -40,20 +40,20 @@ class WantedBulkActionsBar extends StatelessWidget {
             Expanded(
               child: FilledButton.icon(
                 icon: const Icon(Icons.search, size: 18),
-                label: Text('Search ($selectedCount)'),
+                label: Text('Rechercher ($selectedCount)'),
                 onPressed: onSearch,
               ),
             ),
             const SizedBox(width: Insets.sm),
             OutlinedButton.icon(
               icon: const Icon(Icons.bookmark_add_outlined, size: 18),
-              label: const Text('Monitor'),
+              label: const Text('Surveiller'),
               onPressed: onMonitor,
             ),
             const SizedBox(width: Insets.sm),
             OutlinedButton.icon(
               icon: const Icon(Icons.bookmark_remove_outlined, size: 18),
-              label: const Text('Unmonitor'),
+              label: const Text('Ne plus surveiller'),
               onPressed: onUnmonitor,
             ),
           ],

@@ -29,7 +29,7 @@ Future<void> openExternal(ScaffoldMessengerState messenger, String url) async {
   }
   if (!opened) {
     messenger.showSnackBar(
-      const SnackBar(content: Text('Could not open the browser')),
+      const SnackBar(content: Text("Impossible d'ouvrir le navigateur")),
     );
   }
 }

@@ -54,7 +54,7 @@ Future<void> launchJellyfinDeepLink(
 void _showNotInstalled(BuildContext context) {
   ScaffoldMessenger.of(context).showSnackBar(
     const SnackBar(
-      content: Text('Could not open the Jellyfin item.'),
+      content: Text("Impossible d'ouvrir l'élément Jellyfin."),
       behavior: SnackBarBehavior.floating,
       duration: Duration(seconds: 3),
     ),

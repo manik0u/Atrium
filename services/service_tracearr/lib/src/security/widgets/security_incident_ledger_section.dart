@@ -81,7 +81,7 @@ class _SecurityIncidentLedgerSectionState
       SnackBar(
         content: Text(
           'Marked reviewed on this device: ${item.rule} (@${item.username}). '
-          'Tracearr still lists it as unresolved.',
+          'Tracearr le signale toujours comme non résolu.',
         ),
         behavior: SnackBarBehavior.floating,
       ),
@@ -100,7 +100,7 @@ class _SecurityIncidentLedgerSectionState
         ),
         behavior: SnackBarBehavior.floating,
         action: SnackBarAction(
-          label: 'Undo',
+          label: 'Annuler',
           onPressed: () {
             setState(() {
               _locallyDismissedIds.remove(item.id);
@@ -146,7 +146,7 @@ class _SecurityIncidentLedgerSectionState
             if (widget.onRetry != null)
               IconButton(
                 icon: const Icon(Icons.refresh),
-                tooltip: 'Retry',
+                tooltip: 'Réessayer',
                 onPressed: widget.onRetry,
               ),
           ],
@@ -175,7 +175,7 @@ class _SecurityIncidentLedgerSectionState
               child: Row(
                 children: [
                   FilterChip(
-                    label: Text('All ($activeItemsCount)'),
+                    label: Text('Tous ($activeItemsCount)'),
                     selected: _selectedFilter == SecurityFilterOption.all,
                     onSelected: (selected) {
                       if (selected) {
@@ -213,7 +213,7 @@ class _SecurityIncidentLedgerSectionState
                   ),
                   const SizedBox(width: Insets.xs),
                   FilterChip(
-                    label: const Text('Critical / High'),
+                    label: const Text('Critique / Élevé'),
                     selected:
                         _selectedFilter == SecurityFilterOption.criticalHigh,
                     onSelected: (selected) {
@@ -227,7 +227,7 @@ class _SecurityIncidentLedgerSectionState
                   ),
                   const SizedBox(width: Insets.xs),
                   FilterChip(
-                    label: const Text('Reviewed'),
+                    label: const Text('Examinés'),
                     selected: _selectedFilter == SecurityFilterOption.resolved,
                     onSelected: (selected) {
                       if (selected) {
@@ -273,8 +273,8 @@ class _SecurityIncidentLedgerSectionState
                     const SizedBox(height: 2),
                     Text(
                       _selectedFilter == SecurityFilterOption.all
-                          ? 'No security policy violations recorded in the Sentinel audit ledger.'
-                          : 'No incidents match the active filter.',
+                          ? "Aucune violation de politique de sécurité enregistrée dans le registre d'audit Sentinel."
+                          : 'Aucun incident ne correspond au filtre actif.',
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: colorScheme.onSurfaceVariant,
                       ),

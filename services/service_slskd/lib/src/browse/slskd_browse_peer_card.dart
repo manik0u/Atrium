@@ -176,7 +176,7 @@ class SlskdBrowsePeerCard extends StatelessWidget {
 
             // Bio / Info action button
             IconButton.filledTonal(
-              tooltip: 'View Peer Profile & Bio',
+              tooltip: 'Voir le profil et la bio du pair',
               visualDensity: VisualDensity.compact,
               icon: const Icon(Icons.info_outline_rounded, size: 18),
               onPressed: (userInfo == null && userStatus == null)

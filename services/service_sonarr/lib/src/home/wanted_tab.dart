@@ -109,14 +109,14 @@ class _WantedTabState extends ConsumerState<WantedTab>
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content:
-                Text('Search started for ${ids.length} selected episodes.'),
+                Text('Recherche lancée pour ${ids.length} épisodes sélectionnés.'),
           ),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to start search: $e')),
+          SnackBar(content: Text('Échec du démarrage de la recherche : $e')),
         );
       }
     }
@@ -139,12 +139,12 @@ class _WantedTabState extends ConsumerState<WantedTab>
       ref.invalidate(sonarrWantedCutoffProvider(widget.instance));
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Unmonitored ${ids.length} selected episodes.')),
+        SnackBar(content: Text('${ids.length} épisodes sélectionnés ne sont plus surveillés.')),
       );
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to update monitoring: $e')),
+          SnackBar(content: Text('Échec de la mise à jour de la surveillance : $e')),
         );
       }
     }
@@ -172,7 +172,7 @@ class _WantedTabState extends ConsumerState<WantedTab>
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to start bulk search: $e')),
+          SnackBar(content: Text('Échec du démarrage de la recherche groupée : $e')),
         );
       }
     }
@@ -264,7 +264,7 @@ class _WantedTabState extends ConsumerState<WantedTab>
                     : SearchBar(
                         focusNode: _searchFocusNode,
                         controller: _searchController,
-                        hintText: 'Search wanted...',
+                        hintText: 'Rechercher les recherchés…',
                         onTapOutside: (event) {
                           if (_searchFocusNode.hasFocus) {
                             _searchFocusNode.unfocus();
@@ -308,12 +308,12 @@ class _WantedTabState extends ConsumerState<WantedTab>
                     ? <Widget>[
                         IconButton(
                           icon: const Icon(Icons.search),
-                          tooltip: 'Search Selected',
+                          tooltip: 'Rechercher la sélection',
                           onPressed: _searchSelected,
                         ),
                         IconButton(
                           icon: const Icon(Icons.bookmark_border),
-                          tooltip: 'Unmonitor Selected',
+                          tooltip: 'Ne plus surveiller la sélection',
                           onPressed: _unmonitorSelected,
                         ),
                         const SizedBox(width: 8),
@@ -350,8 +350,8 @@ class _WantedTabState extends ConsumerState<WantedTab>
                   ),
                   unselectedLabelStyle: theme.textTheme.titleSmall,
                   tabs: const <Widget>[
-                    Tab(text: 'Missing'),
-                    Tab(text: 'Cutoff Unmet'),
+                    Tab(text: 'Manquant'),
+                    Tab(text: 'Cutoff non atteint'),
                   ],
                 ),
               ),
@@ -474,13 +474,13 @@ class _EpisodeListLayout extends ConsumerWidget {
       await api.performEpisodeSearch([episodeId]);
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Search started for episode.')),
+          const SnackBar(content: Text("Recherche lancée pour l'épisode.")),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Search failed: $e')),
+          SnackBar(content: Text('Échec de la recherche : $e')),
         );
       }
     }
@@ -546,7 +546,7 @@ class _EpisodeListLayout extends ConsumerWidget {
               const SizedBox(height: 16),
               FilledButton.tonal(
                 onPressed: onRefresh,
-                child: const Text('Retry'),
+                child: const Text('Réessayer'),
               ),
             ],
           ),
@@ -566,8 +566,8 @@ class _EpisodeListLayout extends ConsumerWidget {
                 const SizedBox(height: 16),
                 Text(
                   isCutoffTab
-                      ? 'No cutoff unmet episodes'
-                      : 'No missing episodes',
+                      ? 'Aucun épisode au cutoff non atteint'
+                      : 'Aucun épisode manquant',
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                     fontWeight: FontWeight.bold,
@@ -728,7 +728,7 @@ class _EpisodeListLayout extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                episode.series?.title ?? 'Unknown Series',
+                                episode.series?.title ?? 'Série inconnue',
                                 style: theme.textTheme.titleMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -822,7 +822,7 @@ class _EpisodeListLayout extends ConsumerWidget {
                           children: <Widget>[
                             IconButton(
                               icon: const Icon(Icons.search, size: 20),
-                              tooltip: 'Automatic Search',
+                              tooltip: 'Recherche automatique',
                               onPressed: () => _triggerSingleSearch(
                                 context,
                                 ref,
@@ -834,7 +834,7 @@ class _EpisodeListLayout extends ConsumerWidget {
                                 Icons.person_search_outlined,
                                 size: 20,
                               ),
-                              tooltip: 'Interactive Search',
+                              tooltip: 'Recherche interactive',
                               onPressed: () {
                                 pushScreen<void>(
                                   context,
@@ -896,7 +896,7 @@ class _EpisodeListLayout extends ConsumerWidget {
                             showManualImportFlow(context, ref, instance);
                           },
                           icon: const Icon(Icons.folder_open, size: 18),
-                          label: const Text('Manual Import'),
+                          label: const Text('Import manuel'),
                         ),
                       ),
                     ],
@@ -1271,7 +1271,7 @@ class _GroupedEpisodeCardState extends ConsumerState<_GroupedEpisodeCard> {
                             const SizedBox(width: 8),
                             IconButton(
                               icon: const Icon(Icons.search, size: 18),
-                              tooltip: 'Automatic Search',
+                              tooltip: 'Recherche automatique',
                               onPressed: () =>
                                   widget.onSearchTriggered(episode.id),
                             ),
@@ -1409,9 +1409,9 @@ class _EpisodeDetailsSheetState extends ConsumerState<_EpisodeDetailsSheet> {
                   theme.colorScheme.outlineVariant.withValues(alpha: 0.3),
               indicatorSize: TabBarIndicatorSize.tab,
               tabs: const <Widget>[
-                Tab(text: 'Details'),
-                Tab(text: 'History'),
-                Tab(text: 'Search'),
+                Tab(text: 'Détails'),
+                Tab(text: 'Historique'),
+                Tab(text: 'Rechercher'),
               ],
             ),
             Expanded(
@@ -1477,7 +1477,7 @@ class _EpisodeDetailsSheetState extends ConsumerState<_EpisodeDetailsSheet> {
                           widget.episode.overview != null &&
                                   widget.episode.overview!.isNotEmpty
                               ? widget.episode.overview!
-                              : 'No overview details are available for this episode.',
+                              : 'Aucun détail de résumé disponible pour cet épisode.',
                           style: theme.textTheme.bodyMedium?.copyWith(
                             height: 1.4,
                           ),
@@ -1496,7 +1496,7 @@ class _EpisodeDetailsSheetState extends ConsumerState<_EpisodeDetailsSheet> {
                               Navigator.of(context).pop();
                             },
                             icon: const Icon(Icons.launch, size: 18),
-                            label: const Text('Close'),
+                            label: const Text('Fermer'),
                           ),
                         ),
                       ],
@@ -1515,7 +1515,7 @@ class _EpisodeDetailsSheetState extends ConsumerState<_EpisodeDetailsSheet> {
                           : _history.isEmpty
                               ? const Center(
                                   child: Text(
-                                    'No history items for this episode.',
+                                    "Aucun élément d'historique pour cet épisode.",
                                   ),
                                 )
                               : ListView.builder(

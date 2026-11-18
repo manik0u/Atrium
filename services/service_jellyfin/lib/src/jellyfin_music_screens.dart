@@ -371,7 +371,7 @@ class JellyfinAlbumScreen extends ConsumerWidget {
                       }
                     },
                     icon: const Icon(Icons.play_circle_fill),
-                    label: const Text('Play Now'),
+                    label: const Text('Lire maintenant'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       foregroundColor: Theme.of(context).colorScheme.onPrimary,

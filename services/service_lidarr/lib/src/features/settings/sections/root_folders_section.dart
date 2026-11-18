@@ -25,13 +25,13 @@ class RootFoldersSection extends ConsumerWidget {
       context: context,
       builder: (BuildContext ctx) {
         return AlertDialog(
-          title: const Text('Add Root Folder'),
+          title: const Text('Ajouter un dossier racine'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               const Text(
-                'Enter the absolute path where music albums should be stored.',
+                'Saisissez le chemin absolu où les albums musicaux doivent être stockés.',
                 style: TextStyle(fontSize: 13),
               ),
               const SizedBox(height: Insets.md),
@@ -39,7 +39,7 @@ class RootFoldersSection extends ConsumerWidget {
                 controller: pathController,
                 autofocus: true,
                 decoration: const InputDecoration(
-                  labelText: 'Folder Path',
+                  labelText: 'Chemin du dossier',
                   hintText: '/data/media/music',
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.folder_outlined),
@@ -50,7 +50,7 @@ class RootFoldersSection extends ConsumerWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(),
-              child: const Text('Cancel'),
+              child: const Text('Annuler'),
             ),
             FilledButton(
               onPressed: () async {
@@ -66,15 +66,15 @@ class RootFoldersSection extends ConsumerWidget {
                   );
                   ref.invalidate(lidarrRootFoldersProvider(instance));
                   messenger.showSnackBar(
-                    SnackBar(content: Text('Added root folder: $path')),
+                    SnackBar(content: Text('Dossier racine ajouté : $path')),
                   );
                 } catch (e) {
                   messenger.showSnackBar(
-                    SnackBar(content: Text('Failed to add root folder: $e')),
+                    SnackBar(content: Text("Échec de l'ajout du dossier racine : $e")),
                   );
                 }
               },
-              child: const Text('Add'),
+              child: const Text('Ajouter'),
             ),
           ],
         );
@@ -92,22 +92,22 @@ class RootFoldersSection extends ConsumerWidget {
       context: context,
       builder: (BuildContext ctx) {
         return AlertDialog(
-          title: const Text('Remove Root Folder'),
+          title: const Text('Retirer le dossier racine'),
           content: Text(
             'Are you sure you want to remove "${folder.path}" from Lidarr? '
-            'Files on disk will not be deleted.',
+            'Les fichiers sur le disque ne seront pas supprimés.',
           ),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(false),
-              child: const Text('Cancel'),
+              child: const Text('Annuler'),
             ),
             FilledButton(
               style: FilledButton.styleFrom(
                 backgroundColor: Theme.of(ctx).colorScheme.error,
               ),
               onPressed: () => Navigator.of(ctx).pop(true),
-              child: const Text('Remove'),
+              child: const Text('Retirer'),
             ),
           ],
         );
@@ -121,11 +121,11 @@ class RootFoldersSection extends ConsumerWidget {
       await api.rootFolder.deleteRootfolderById(id: folder.id!);
       ref.invalidate(lidarrRootFoldersProvider(instance));
       messenger.showSnackBar(
-        const SnackBar(content: Text('Root folder removed.')),
+        const SnackBar(content: Text('Dossier racine retiré.')),
       );
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Failed to remove root folder: $e')),
+        SnackBar(content: Text('Échec du retrait du dossier racine : $e')),
       );
     }
   }
@@ -141,7 +141,7 @@ class RootFoldersSection extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         heroTag: 'root_folder_add_fab',
         onPressed: () => _showAddRootFolderDialog(context, ref),
-        tooltip: 'Add Root Folder',
+        tooltip: 'Ajouter un dossier racine',
         child: const Icon(Icons.add),
       ),
       body: EasyRefresh(
@@ -155,12 +155,12 @@ class RootFoldersSection extends ConsumerWidget {
               return Center(
                 child: EmptyView(
                   icon: Icons.folder_open_outlined,
-                  title: 'No Root Folders',
-                  message: 'No root folders configured in Lidarr.',
+                  title: 'Aucun dossier racine',
+                  message: 'Aucun dossier racine configuré dans Lidarr.',
                   action: FilledButton.icon(
                     onPressed: () => _showAddRootFolderDialog(context, ref),
                     icon: const Icon(Icons.add),
-                    label: const Text('Add Root Folder'),
+                    label: const Text('Ajouter un dossier racine'),
                   ),
                 ),
               );
@@ -256,7 +256,7 @@ class RootFoldersSection extends ConsumerWidget {
                         ),
                         IconButton(
                           icon: const Icon(Icons.delete_outline, size: 20),
-                          tooltip: 'Remove Root Folder',
+                          tooltip: 'Retirer le dossier racine',
                           onPressed: () =>
                               _deleteRootFolder(context, ref, folder),
                         ),

@@ -60,7 +60,7 @@ class _SlskdOptionsSheetState extends ConsumerState<SlskdOptionsSheet>
       if (!mounted) return;
       messenger.showSnackBar(
         const SnackBar(
-          content: Text('.NET CLR Garbage Collection completed'),
+          content: Text('Nettoyage de la mémoire .NET CLR terminé'),
           duration: Duration(seconds: 2),
         ),
       );
@@ -99,7 +99,7 @@ class _SlskdOptionsSheetState extends ConsumerState<SlskdOptionsSheet>
       await api.loopbackTest(testPayload);
       messenger.showSnackBar(
         const SnackBar(
-          content: Text('Loopback echo test succeeded (HTTP 200 OK)'),
+          content: Text("Test d'écho en boucle locale réussi (HTTP 200 OK)"),
           duration: Duration(seconds: 2),
         ),
       );
@@ -208,7 +208,7 @@ class _SlskdOptionsSheetState extends ConsumerState<SlskdOptionsSheet>
                 ),
                 unselectedLabelStyle: textTheme.titleSmall,
                 tabs: const <Widget>[
-                  Tab(text: 'Overview'),
+                  Tab(text: "Vue d'ensemble"),
                   Tab(text: 'Diagnostics'),
                 ],
               ),
@@ -366,7 +366,7 @@ class _SlskdOptionsSheetState extends ConsumerState<SlskdOptionsSheet>
                     ),
                     const SizedBox(height: Insets.sm),
                     _buildConfigRow('Debug Mode', (options['debug'] ?? false).toString()),
-                    _buildConfigRow('No Config Watch', (flags['noConfigWatch'] ?? false).toString()),
+                    _buildConfigRow('Aucune surveillance de config', (flags['noConfigWatch'] ?? false).toString()),
                     _buildConfigRow('Dumpable', (flags['dumpable'] ?? false).toString()),
                   ],
                 ),
@@ -438,11 +438,11 @@ class _SlskdOptionsSheetState extends ConsumerState<SlskdOptionsSheet>
           ),
           child: ListTile(
             leading: Icon(Icons.cleaning_services_rounded, color: colorScheme.primary),
-            title: const Text('Force Garbage Collection'),
-            subtitle: const Text('Triggers .NET CLR runtime memory cleanup immediately.'),
+            title: const Text('Forcer le nettoyage de la mémoire'),
+            subtitle: const Text("Déclenche immédiatement le nettoyage de la mémoire d'exécution .NET CLR."),
             trailing: FilledButton.tonal(
               onPressed: _isActionInProgress ? null : _triggerGarbageCollection,
-              child: const Text('Run GC'),
+              child: const Text('Lancer le GC'),
             ),
           ),
         ),
@@ -459,8 +459,8 @@ class _SlskdOptionsSheetState extends ConsumerState<SlskdOptionsSheet>
           ),
           child: ListTile(
             leading: Icon(Icons.repeat_rounded, color: colorScheme.secondary),
-            title: const Text('Loopback Echo Test'),
-            subtitle: const Text('Verifies daemon REST API ingress and JSON payload roundtrip.'),
+            title: const Text("Test d'écho en boucle locale"),
+            subtitle: const Text("Vérifie l'entrée de l'API REST du démon et l'aller-retour des données JSON."),
             trailing: FilledButton.tonal(
               onPressed: _isActionInProgress ? null : _triggerLoopbackTest,
               child: const Text('Ping'),
@@ -485,7 +485,7 @@ class _SlskdOptionsSheetState extends ConsumerState<SlskdOptionsSheet>
             color: colorScheme.surfaceContainerLow,
             child: Padding(
               padding: const EdgeInsets.all(Insets.md),
-              child: Text('Debug state unavailable: $err'),
+              child: Text('État de débogage indisponible : $err'),
             ),
           ),
           data: (debugData) {
@@ -499,7 +499,7 @@ class _SlskdOptionsSheetState extends ConsumerState<SlskdOptionsSheet>
               child: Padding(
                 padding: const EdgeInsets.all(Insets.md),
                 child: SelectableText(
-                  debugData.isEmpty ? 'No active debug handles.' : debugData.toString(),
+                  debugData.isEmpty ? 'Aucune poignée de débogage active.' : debugData.toString(),
                   style: textTheme.bodySmall?.copyWith(fontSize: 11),
                 ),
               ),

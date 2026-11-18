@@ -58,9 +58,9 @@ void main() {
 
     expect(find.textContaining('Arrival'), findsOneWidget);
     expect(find.textContaining('alice'), findsOneWidget);
-    expect(find.text('Pending Approval'), findsOneWidget);
-    expect(find.widgetWithText(FilledButton, 'Approve'), findsOneWidget);
-    expect(find.widgetWithText(OutlinedButton, 'Deny'), findsOneWidget);
+    expect(find.text("En attente d'approbation"), findsOneWidget);
+    expect(find.widgetWithText(FilledButton, 'Approuver'), findsOneWidget);
+    expect(find.widgetWithText(OutlinedButton, 'Refuser'), findsOneWidget);
   });
 
   testWidgets('rows read like Ombi request list, 4K tag included',
@@ -78,13 +78,13 @@ void main() {
       );
     await open(tester);
 
-    expect(find.text('Pending Approval'), findsOneWidget);
+    expect(find.text("En attente d'approbation"), findsOneWidget);
     expect(find.text('4K'), findsOneWidget);
 
     await tester.tap(find.widgetWithText(ChoiceChip, 'Processing (2)'));
     await settle(tester);
 
-    expect(find.text('Processing Request'), findsOneWidget);
+    expect(find.text('Demande en cours de traitement'), findsOneWidget);
     expect(find.text('4K'), findsNothing);
   });
 
@@ -127,7 +127,7 @@ void main() {
       await open(tester);
 
       expect(chosen(tester, 'All (3)'), isTrue);
-      expect(find.text('Processing Request'), findsOneWidget);
+      expect(find.text('Demande en cours de traitement'), findsOneWidget);
       expect(fake.to('GET', _pendingMovies), isEmpty);
     });
 
@@ -140,11 +140,11 @@ void main() {
         ..onCounts('movie', all: 4, processing: 3, available: 1)
         ..on('GET', _pendingMovies, pageJson(<Map<String, dynamic>>[]));
 
-      await tester.tap(find.widgetWithText(FilledButton, 'Approve'));
+      await tester.tap(find.widgetWithText(FilledButton, 'Approuver'));
       await settle(tester, frames: 10);
 
       expect(chosen(tester, 'Pending (0)'), isTrue);
-      expect(find.text('Nothing waiting for approval'), findsOneWidget);
+      expect(find.text("Rien n'attend une approbation"), findsOneWidget);
       expect(fake.to('GET', _allMovies), isEmpty);
     });
 
@@ -204,9 +204,9 @@ void main() {
       );
       await open(tester);
 
-      expect(find.widgetWithText(ChoiceChip, 'Pending'), findsOneWidget);
-      expect(chosen(tester, 'All'), isTrue);
-      expect(find.text('Processing Request'), findsOneWidget);
+      expect(find.widgetWithText(ChoiceChip, 'En attente'), findsOneWidget);
+      expect(chosen(tester, 'Tous'), isTrue);
+      expect(find.text('Demande en cours de traitement'), findsOneWidget);
     });
   });
 
@@ -216,7 +216,7 @@ void main() {
       (WidgetTester tester) async {
     await open(tester);
 
-    expect(find.text('Music'), findsNothing);
+    expect(find.text('Musique'), findsNothing);
   });
 
   testWidgets('with Lidarr there is a Music segment',
@@ -224,21 +224,21 @@ void main() {
     fake.on('GET', '/api/v1/Lidarr/enabled', true);
     await open(tester);
 
-    expect(find.text('Music'), findsOneWidget);
+    expect(find.text('Musique'), findsOneWidget);
   });
 
   testWidgets('Approve approves that request', (WidgetTester tester) async {
     fake.on('POST', '/api/v1/Request/movie/approve', engineOk());
     await open(tester);
 
-    await tester.tap(find.widgetWithText(FilledButton, 'Approve'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Approuver'));
     await settle(tester);
 
     expect(
       fake.to('POST', '/api/v1/Request/movie/approve').single.body,
       <String, dynamic>{'id': 11, 'is4K': false},
     );
-    expect(find.text('Approved'), findsOneWidget);
+    expect(find.text('Approuvé'), findsOneWidget);
   });
 
   testWidgets('Deny sends the reason typed into the dialog',
@@ -246,10 +246,10 @@ void main() {
     fake.on('PUT', '/api/v1/Request/movie/deny', engineOk());
     await open(tester);
 
-    await tester.tap(find.widgetWithText(OutlinedButton, 'Deny'));
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Refuser'));
     await settle(tester);
     await tester.enterText(find.byType(TextField), 'Already on Plex');
-    await tester.tap(find.widgetWithText(FilledButton, 'Deny'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Refuser'));
     await settle(tester);
 
     expect(
@@ -262,13 +262,13 @@ void main() {
     fake.on('DELETE', '/api/v1/Request/movie/11', engineOk());
     await open(tester);
 
-    await tester.tap(find.byTooltip('More'));
+    await tester.tap(find.byTooltip('Plus'));
     await settle(tester);
-    await tester.tap(find.text('Delete').last);
+    await tester.tap(find.text('Supprimer').last);
     await settle(tester);
     expect(fake.to('DELETE', '/api/v1/Request/movie/11'), isEmpty);
 
-    await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Supprimer'));
     await settle(tester);
     expect(fake.to('DELETE', '/api/v1/Request/movie/11'), hasLength(1));
   });
@@ -282,7 +282,7 @@ void main() {
     );
     await open(tester);
 
-    await tester.tap(find.widgetWithText(FilledButton, 'Approve'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Approuver'));
     await settle(tester);
 
     expect(find.text('Request not found'), findsOneWidget);
@@ -334,7 +334,7 @@ void main() {
 
       expect(fake.to('GET', '/api/v2/Search/movie/329865'), hasLength(1));
       // The title sheet, which says where the title stands.
-      expect(find.text('Requested'), findsOneWidget);
+      expect(find.text('Demandé'), findsOneWidget);
     });
 
     testWidgets('for a show says which seasons and how many episodes are in',
@@ -378,7 +378,7 @@ void main() {
       await tester.tap(find.widgetWithText(ChoiceChip, 'Denied (1)'));
       await settle(tester);
 
-      expect(find.text('Denied'), findsOneWidget);
+      expect(find.text('Refusée'), findsOneWidget);
       expect(find.text('Already on Plex'), findsOneWidget);
     });
 
@@ -398,7 +398,7 @@ void main() {
       await tester.tap(find.widgetWithText(ChoiceChip, 'Processing (2)'));
       await settle(tester);
 
-      expect(find.text('Processing Request'), findsOneWidget);
+      expect(find.text('Demande en cours de traitement'), findsOneWidget);
       expect(find.text('Already on Plex'), findsNothing);
     });
   });
@@ -425,11 +425,11 @@ void main() {
       await open(tester);
       expect(fake.to('GET', '/api/v2/Search/movie/popular/0/20'), isEmpty);
 
-      await tester.tap(find.text('Discover'));
+      await tester.tap(find.text('Découvrir'));
       await settle(tester, frames: 10);
 
       expect(fake.to('GET', '/api/v2/Search/movie/popular/0/20'), hasLength(1));
-      expect(find.text('Popular movies'), findsOneWidget);
+      expect(find.text('Films populaires'), findsOneWidget);
       expect(tab(tester), 1);
     });
 
@@ -437,7 +437,7 @@ void main() {
         (WidgetTester tester) async {
       discover();
       await open(tester);
-      await tester.tap(find.text('Discover'));
+      await tester.tap(find.text('Découvrir'));
       await settle(tester, frames: 10);
 
       // The system back, as Android delivers it.
@@ -452,10 +452,10 @@ void main() {
         (WidgetTester tester) async {
       await open(tester);
 
-      await tester.tap(find.byTooltip('Search'));
+      await tester.tap(find.byTooltip('Rechercher'));
       await settle(tester);
 
-      expect(find.text('Search movies and shows'), findsOneWidget);
+      expect(find.text('Rechercher des films et séries'), findsOneWidget);
     });
   });
 }

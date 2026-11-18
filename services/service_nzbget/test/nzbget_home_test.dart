@@ -54,7 +54,7 @@ void main() {
 
     expect(find.text('Linux.ISO'), findsOneWidget);
     expect(find.text('2.0 MB/s'), findsOneWidget);
-    expect(find.textContaining('Downloading'), findsOneWidget);
+    expect(find.textContaining('Téléchargement en cours'), findsOneWidget);
     expect(find.byIcon(Icons.drag_handle), findsOneWidget);
   });
 
@@ -87,11 +87,11 @@ void main() {
       ),
     );
     await tester.pump();
-    await tester.tap(find.text('History'));
+    await tester.tap(find.text('Historique'));
     await tester.pumpAndSettle();
 
     expect(find.text('Broken.Download'), findsOneWidget);
-    expect(find.byTooltip('Retry'), findsOneWidget);
+    expect(find.byTooltip('Réessayer'), findsOneWidget);
   });
 
   testWidgets('add sheet loads server categories into its dropdown',
@@ -131,12 +131,12 @@ void main() {
     await tester.pump();
     await tester.pump();
 
-    await tester.tap(find.byTooltip('Add NZB'));
+    await tester.tap(find.byTooltip('Ajouter un NZB'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Add NZB'), findsOneWidget);
+    expect(find.text('Ajouter un NZB'), findsOneWidget);
 
-    await tester.tap(find.text('Category (optional)'));
+    await tester.tap(find.text('Catégorie (facultatif)'));
     await tester.pumpAndSettle();
 
     expect(find.text('movies'), findsWidgets);

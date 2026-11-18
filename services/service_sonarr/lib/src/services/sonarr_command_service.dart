@@ -47,7 +47,7 @@ class SonarrCommandService {
     }
     if (response.error != null) {
       throw SonarrException(
-        response.error!.message ?? 'Command execution failed',
+        response.error!.message ?? "Échec de l'exécution de la commande",
         statusCode: response.statusCode,
         error: response.error,
       );

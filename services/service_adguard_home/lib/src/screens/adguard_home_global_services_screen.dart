@@ -58,7 +58,7 @@ class _AdguardHomeGlobalServicesScreenState
       context,
       AdguardHomeServicesScreen(
         instance: _instance,
-        title: 'Blocked for everyone',
+        title: 'Bloqué pour tout le monde',
         selected: blocked.toSet(),
       ),
     );
@@ -93,7 +93,7 @@ class _AdguardHomeGlobalServicesScreenState
         ref.watch(adguardHomeGlobalServicesProvider(_instance));
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Blocked services'),
+        title: const Text('Services bloqués'),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(4),
           child: _busy
@@ -154,7 +154,7 @@ class _AdguardHomeGlobalServicesScreenState
                   0,
                 ),
                 child: Text(
-                  'Clients with their own list of blocked services are not '
+                  'Les clients avec leur propre liste de services bloqués ne sont pas '
                   'covered by this one.',
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
@@ -187,8 +187,8 @@ class _AdguardHomeGlobalServicesScreenState
                 child: Text(
                   services.ids.isEmpty
                       ? 'Nothing is blocked now, so there is nothing to pause. '
-                          'The schedule is kept for when something is.'
-                      : 'While paused, the services above are let through.',
+                          'Le planning est conservé pour quand quelque chose est.'
+                      : 'En pause, les services ci-dessus sont laissés passer.',
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                 ),

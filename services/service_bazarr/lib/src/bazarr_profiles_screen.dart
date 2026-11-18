@@ -21,12 +21,12 @@ class BazarrProfilesScreen extends ConsumerWidget {
     final AsyncValue<List<BazarrLanguageProfile>> profiles =
         ref.watch(bazarrProfilesProvider(instance));
     return Scaffold(
-      appBar: AppBar(title: const Text('Language Profiles')),
+      appBar: AppBar(title: const Text('Profils de langue')),
       floatingActionButton: FloatingActionButton.extended(
         heroTag: 'bazarr-add-profile',
         onPressed: () => _openEditor(context),
         icon: const Icon(Icons.add),
-        label: const Text('Add'),
+        label: const Text('Ajouter'),
       ),
       body: AsyncValueView<List<BazarrLanguageProfile>>(
           value: profiles,
@@ -51,8 +51,8 @@ class BazarrProfilesScreen extends ConsumerWidget {
             SizedBox(height: 100),
             EmptyView(
                 icon: Icons.tune_outlined,
-                title: 'No language profiles',
-                message: 'Tap Add to create one (enable languages first).',
+                title: 'Aucun profil de langue',
+                message: "Touchez Ajouter pour en créer un (activez d'abord des langues).",
               ),
           ],
         ),
@@ -82,9 +82,9 @@ class BazarrProfilesScreen extends ConsumerWidget {
                   child: ListTile(
                     leading: const Icon(Icons.tune_outlined),
                     title: Text(p.name),
-                    subtitle: Text(langs.isEmpty ? 'No languages' : langs),
+                    subtitle: Text(langs.isEmpty ? 'Aucune langue' : langs),
                     trailing: IconButton(
-                      tooltip: 'Delete',
+                      tooltip: 'Supprimer',
                       icon: const Icon(Icons.delete_outline),
                       onPressed: () => _delete(context, ref, list, p),
                     ),
@@ -121,12 +121,12 @@ class BazarrProfilesScreen extends ConsumerWidget {
     final bool? ok = await showDialog<bool>(
       context: context,
       builder: (BuildContext ctx) => AlertDialog(
-        title: const Text('Delete profile?'),
-        content: Text('Remove "${p.name}"?'),
+        title: const Text('Supprimer le profil ?'),
+        content: Text('Retirer « ${p.name} » ?'),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: const Text('Annuler'),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -134,7 +134,7 @@ class BazarrProfilesScreen extends ConsumerWidget {
               foregroundColor: Theme.of(ctx).colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Delete'),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
@@ -150,10 +150,10 @@ class BazarrProfilesScreen extends ConsumerWidget {
             .toList(),
       );
       ref.invalidate(bazarrProfilesProvider(instance));
-      messenger.showSnackBar(const SnackBar(content: Text('Profile deleted')));
+      messenger.showSnackBar(const SnackBar(content: Text('Profil supprimé')));
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Delete failed: ${_err(e)}')),
+        SnackBar(content: Text('Échec de la suppression : ${_err(e)}')),
       );
     }
   }
@@ -202,13 +202,13 @@ class _BazarrProfileEditScreenState
     final String name = _name.text.trim();
     if (name.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Enter a profile name')),
+        const SnackBar(content: Text('Saisissez un nom de profil')),
       );
       return;
     }
     if (_langs.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Select at least one language')),
+        const SnackBar(content: Text('Sélectionnez au moins une langue')),
       );
       return;
     }
@@ -248,11 +248,11 @@ class _BazarrProfileEditScreenState
           await ref.read(bazarrApiProvider(widget.instance).future);
       await api.setProfiles(next);
       ref.invalidate(bazarrProfilesProvider(widget.instance));
-      messenger.showSnackBar(const SnackBar(content: Text('Profile saved')));
+      messenger.showSnackBar(const SnackBar(content: Text('Profil enregistré')));
       nav.pop();
     } on Object catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Save failed: ${_err(e)}')),
+        SnackBar(content: Text("Échec de l'enregistrement : ${_err(e)}")),
       );
       if (mounted) {
         setState(() => _saving = false);
@@ -266,7 +266,7 @@ class _BazarrProfileEditScreenState
         ref.watch(bazarrLanguagesProvider(widget.instance));
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.existing == null ? 'New profile' : 'Edit profile'),
+        title: Text(widget.existing == null ? 'Nouveau profil' : 'Modifier le profil'),
         actions: <Widget>[
           if (_saving)
             const Padding(
@@ -281,7 +281,7 @@ class _BazarrProfileEditScreenState
             )
           else
             IconButton(
-              tooltip: 'Save',
+              tooltip: 'Enregistrer',
               icon: const Icon(Icons.save_outlined),
               onPressed: _save,
             ),
@@ -299,7 +299,7 @@ class _BazarrProfileEditScreenState
               TextField(
                 controller: _name,
                 decoration: const InputDecoration(
-                  labelText: 'Profile name',
+                  labelText: 'Nom du profil',
                   border: OutlineInputBorder(),
                 ),
               ),

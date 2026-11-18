@@ -100,14 +100,14 @@ class _ProwlarrSearchScreenState extends ConsumerState<ProwlarrSearchScreen> {
           autofocus: true,
           textInputAction: TextInputAction.search,
           decoration: const InputDecoration(
-            hintText: 'Search all indexers...',
+            hintText: 'Rechercher dans tous les indexeurs…',
             border: InputBorder.none,
           ),
           onSubmitted: _search,
         ),
         actions: <Widget>[
           PopupMenuButton<_SortBy>(
-            tooltip: 'Sort',
+            tooltip: 'Trier',
             icon: const Icon(Icons.sort),
             initialValue: _sortBy,
             onSelected: (_SortBy v) => setState(() => _sortBy = v),
@@ -119,11 +119,11 @@ class _ProwlarrSearchScreenState extends ConsumerState<ProwlarrSearchScreen> {
               ),
               PopupMenuItem<_SortBy>(
                 value: _SortBy.size,
-                child: Text('Size'),
+                child: Text('Taille'),
               ),
               PopupMenuItem<_SortBy>(
                 value: _SortBy.age,
-                child: Text('Age'),
+                child: Text('Âge'),
               ),
             ],
           ),
@@ -142,7 +142,7 @@ class _ProwlarrSearchScreenState extends ConsumerState<ProwlarrSearchScreen> {
             const ExpressiveProgressIndicator(),
             const SizedBox(height: Insets.lg),
             Text(
-              'Searching your indexers...\nSlow trackers can take a while.',
+              'Recherche dans vos indexeurs…\nLes trackers lents peuvent prendre un moment.',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodySmall,
             ),
@@ -152,7 +152,7 @@ class _ProwlarrSearchScreenState extends ConsumerState<ProwlarrSearchScreen> {
     }
     if (_error != null) {
       return ErrorView(
-        title: 'Search failed',
+        title: 'Échec de la recherche',
         message: _error!,
         onRetry: () => _search(_controller.text),
       );
@@ -161,16 +161,16 @@ class _ProwlarrSearchScreenState extends ConsumerState<ProwlarrSearchScreen> {
     if (results == null) {
       return const EmptyView(
         icon: Icons.travel_explore_outlined,
-        title: 'Search your indexers',
-        message: 'One query hits every enabled indexer and lets you '
+        title: 'Recherchez dans vos indexeurs',
+        message: 'Une requête interroge tous les indexeurs actifs et vous permet de '
             'grab a release straight to your download client.',
       );
     }
     if (results.isEmpty) {
       return const EmptyView(
         icon: Icons.search_off_outlined,
-        title: 'No results',
-        message: 'No indexer returned anything for that query.',
+        title: 'Aucun résultat',
+        message: "Aucun indexeur n'a rien renvoyé pour cette requête.",
       );
     }
     final List<ProwlarrRelease> sorted = _sorted(results);
@@ -203,7 +203,7 @@ class _ProwlarrSearchScreenState extends ConsumerState<ProwlarrSearchScreen> {
   Future<void> _grab(BuildContext context, ProwlarrRelease release) async {
     final ScaffoldMessengerState messenger = ScaffoldMessenger.of(context);
     messenger.showSnackBar(
-      SnackBar(content: Text('Grabbing "${release.title}"...')),
+      SnackBar(content: Text('Grab de « ${release.title} »…')),
     );
     try {
       final ProwlarrApi api =
@@ -211,14 +211,14 @@ class _ProwlarrSearchScreenState extends ConsumerState<ProwlarrSearchScreen> {
       await api.grabRelease(release);
       messenger.hideCurrentSnackBar();
       messenger.showSnackBar(
-        const SnackBar(content: Text('Sent to download client')),
+        const SnackBar(content: Text('Envoyé au client de téléchargement')),
       );
     } on Object catch (e) {
       messenger.hideCurrentSnackBar();
       messenger.showSnackBar(
         SnackBar(
           content: Text(
-            e is NetworkException ? 'Grab failed: ${e.message}' : 'Grab failed',
+            e is NetworkException ? 'Échec du grab : ${e.message}' : 'Échec du grab',
           ),
         ),
       );
@@ -322,7 +322,7 @@ class _ReleaseTile extends StatelessWidget {
                         if (torrent)
                           _MetaPill(
                             icon: Icons.arrow_upward,
-                            label: 'S:${release.seeders ?? '?'} '
+                            label: 'S : ${release.seeders ?? '?'} '
                                 'L:${release.leechers ?? '?'}',
                             color: cs.tertiary,
                           )
@@ -415,20 +415,20 @@ class _ReleaseSheet extends StatelessWidget {
           children: <Widget>[
             Text(release.title, style: theme.textTheme.titleMedium),
             const SizedBox(height: Insets.md),
-            _DetailRow(label: 'Indexer', value: release.indexer ?? '-'),
-            _DetailRow(label: 'Protocol', value: release.protocol ?? '-'),
-            _DetailRow(label: 'Size', value: fmtReleaseBytes(release.size)),
-            _DetailRow(label: 'Age', value: release.ageLabel),
+            _DetailRow(label: 'Indexeur', value: release.indexer ?? '-'),
+            _DetailRow(label: 'Protocole', value: release.protocol ?? '-'),
+            _DetailRow(label: 'Taille', value: fmtReleaseBytes(release.size)),
+            _DetailRow(label: 'Âge', value: release.ageLabel),
             if (release.isTorrent)
               _DetailRow(
-                label: 'Peers',
+                label: 'Pairs',
                 value: '${release.seeders ?? '?'} seeders / '
                     '${release.leechers ?? '?'} leechers',
               ),
             if (release.grabs != null)
               _DetailRow(label: 'Grabs', value: '${release.grabs}'),
             if (categories.isNotEmpty)
-              _DetailRow(label: 'Categories', value: categories),
+              _DetailRow(label: 'Catégories', value: categories),
             const SizedBox(height: Insets.lg),
             FilledButton.icon(
               onPressed: onGrab,

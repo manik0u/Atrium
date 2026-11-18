@@ -103,14 +103,14 @@ void main() {
           const Duration(hours: 9),
           const Duration(hours: 9),
         ),
-        'The end has to be after the start.',
+        'La fin doit être après le début.',
       );
       expect(
         adguardHomeScheduleProblem(
           const Duration(hours: 10),
           const Duration(hours: 9),
         ),
-        'The end has to be after the start.',
+        'La fin doit être après le début.',
       );
       expect(
         adguardHomeScheduleProblem(

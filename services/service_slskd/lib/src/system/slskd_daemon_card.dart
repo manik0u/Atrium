@@ -36,10 +36,10 @@ class _SlskdDaemonCardState extends ConsumerState<SlskdDaemonCard> {
         SnackBar(
           content: Text(
             switch (version.isUpdateAvailable) {
-              true => 'Update available: ${version.latest}',
-              false => 'slskd is up to date (${version.current})',
+              true => 'Mise à jour disponible : ${version.latest}',
+              false => 'slskd est à jour (${version.current})',
               // slskd did not find out, for example with version checks off.
-              null => 'slskd could not tell whether an update is available',
+              null => "slskd n'a pas pu dire si une mise à jour est disponible",
             },
           ),
         ),
@@ -48,7 +48,7 @@ class _SlskdDaemonCardState extends ConsumerState<SlskdDaemonCard> {
       if (mounted) {
         final msg = (e is DioException && e.response?.statusCode == 403)
             ? 'Forcing an update check requires an API key with Administrator or ReadWrite role in slskd.yml'
-            : 'Failed to check for updates: $e';
+            : 'Échec de la vérification des mises à jour : $e';
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(msg),
@@ -118,7 +118,7 @@ class _SlskdDaemonCardState extends ConsumerState<SlskdDaemonCard> {
                   onTap: _isActionInProgress ? null : _handleCheckUpdate,
                   borderRadius: BorderRadius.circular(12),
                   child: Tooltip(
-                    message: 'Tap to check for updates',
+                    message: 'Touchez pour rechercher des mises à jour',
                     child: widget.version.isUpdateAvailable == true
                         ? Container(
                             padding: const EdgeInsets.symmetric(

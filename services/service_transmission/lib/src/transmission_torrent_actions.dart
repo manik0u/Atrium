@@ -14,7 +14,7 @@ enum TransmissionTorrentAction {
   resumeNow('Resume now', Icons.flash_on),
   pause('Pause', Icons.pause),
   verify('Verify local data', Icons.fact_check_outlined),
-  reannounce('Ask tracker for more peers', Icons.campaign_outlined),
+  reannounce('Demander plus de pairs au tracker', Icons.campaign_outlined),
   setLocation('Set location', Icons.drive_file_move_outline),
   rename('Rename', Icons.drive_file_rename_outline),
   editLabels('Edit labels', Icons.label_outline),
@@ -23,8 +23,8 @@ enum TransmissionTorrentAction {
   queueUp('Queue up', Icons.arrow_upward),
   queueDown('Queue down', Icons.arrow_downward),
   queueBottom('Queue to bottom', Icons.vertical_align_bottom),
-  remove('Remove from list', Icons.delete_outline),
-  trash('Trash data and remove from list', Icons.delete_forever_outlined);
+  remove('Retirer de la liste', Icons.delete_outline),
+  trash('Mettre les données à la corbeille et retirer de la liste', Icons.delete_forever_outlined);
 
   const TransmissionTorrentAction(this.label, this.icon);
 
@@ -94,7 +94,7 @@ Future<bool> runTransmissionAction(
       messenger.showSnackBar(SnackBar(content: Text(done)));
     }
   } catch (e) {
-    messenger.showSnackBar(SnackBar(content: Text('Action failed: $e')));
+    messenger.showSnackBar(SnackBar(content: Text("Échec de l'action : $e")));
   } finally {
     // The raw provider owns the fetch; invalidating only the derived filtered
     // one would re-filter stale data without going back to the server.

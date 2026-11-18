@@ -91,7 +91,7 @@ class AdguardHomeScheduleEditor extends StatelessWidget {
         ListTile(
           enabled: enabled,
           leading: const Icon(Icons.public),
-          title: const Text('Time zone'),
+          title: const Text('Fuseau horaire'),
           subtitle: Text(adguardHomeTimeZoneLabel(schedule.timeZone)),
           trailing: const Icon(Icons.chevron_right),
           onTap: () => _pickTimeZone(context),
@@ -206,16 +206,16 @@ class _AdguardHomePauseSheetState extends State<AdguardHomePauseSheet> {
                   ),
                 ),
                 SwitchListTile(
-                  title: const Text('Pause blocking'),
+                  title: const Text('Mettre le blocage en pause'),
                   subtitle: const Text(
-                    'The blocked services are let through for this time',
+                    'Les services bloqués sont laissés passer pour cette durée',
                   ),
                   value: _paused,
                   onChanged: (bool on) => setState(() => _paused = on),
                 ),
                 ListTile(
                   enabled: _paused,
-                  title: const Text('From'),
+                  title: const Text('De'),
                   trailing: Text(
                     formatAdguardHomeClock(_start),
                     style: theme.textTheme.titleMedium,
@@ -224,7 +224,7 @@ class _AdguardHomePauseSheetState extends State<AdguardHomePauseSheet> {
                 ),
                 ListTile(
                   enabled: _paused && !_toEndOfDay,
-                  title: const Text('To'),
+                  title: const Text('À'),
                   trailing: Text(
                     formatAdguardHomeClock(_end),
                     style: theme.textTheme.titleMedium,
@@ -232,7 +232,7 @@ class _AdguardHomePauseSheetState extends State<AdguardHomePauseSheet> {
                   onTap: () => _pick(start: false),
                 ),
                 SwitchListTile(
-                  title: const Text('Until the end of the day'),
+                  title: const Text("Jusqu'à la fin de la journée"),
                   value: _toEndOfDay,
                   onChanged: _paused
                       ? (bool on) => setState(
@@ -310,7 +310,7 @@ class _AdguardHomePauseSheetState extends State<AdguardHomePauseSheet> {
               children: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Cancel'),
+                  child: const Text('Annuler'),
                 ),
                 FilledButton(
                   onPressed: problem == null ? _save : null,
@@ -358,7 +358,7 @@ class _AdguardHomeTimeZoneScreenState extends State<AdguardHomeTimeZoneScreen> {
         ? adguardHomeServerTimeZone
         : widget.selected;
     return Scaffold(
-      appBar: AppBar(title: const Text('Time zone')),
+      appBar: AppBar(title: const Text('Fuseau horaire')),
       body: Column(
         children: <Widget>[
           Padding(
@@ -373,7 +373,7 @@ class _AdguardHomeTimeZoneScreenState extends State<AdguardHomeTimeZoneScreen> {
               onChanged: (String _) => setState(() {}),
               autocorrect: false,
               decoration: InputDecoration(
-                hintText: 'Search time zones',
+                hintText: 'Rechercher des fuseaux horaires',
                 prefixIcon: const Icon(Icons.search),
                 isDense: true,
                 filled: true,
@@ -390,7 +390,7 @@ class _AdguardHomeTimeZoneScreenState extends State<AdguardHomeTimeZoneScreen> {
                 ? const SingleChildScrollView(
                     child: EmptyView(
                       icon: Icons.search_off,
-                      title: 'No time zone matches',
+                      title: 'Aucun fuseau horaire ne correspond',
                     ),
                   )
                 : ListView.builder(

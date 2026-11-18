@@ -143,7 +143,7 @@ class _SonarrAddSeriesSearchScreenState
             child: SearchBar(
               focusNode: _searchFocusNode,
               controller: _searchController,
-              hintText: 'Search online catalog...',
+              hintText: 'Rechercher dans le catalogue en ligne…',
               onTapOutside: (event) {
                 if (_searchFocusNode.hasFocus) {
                   _searchFocusNode.unfocus();
@@ -185,7 +185,7 @@ class _SonarrAddSeriesSearchScreenState
                     ),
                     const SizedBox(height: Insets.md),
                     Text(
-                      'Search for a TV show to add',
+                      'Rechercher une série à ajouter',
                       style: theme.textTheme.bodyLarge?.copyWith(
                         color: cs.onSurfaceVariant,
                       ),
@@ -206,9 +206,9 @@ class _SonarrAddSeriesSearchScreenState
                   if (results.isEmpty) {
                     return const EmptyView(
                       icon: Icons.search_off_outlined,
-                      title: 'No series found',
+                      title: 'Aucune série trouvée',
                       message:
-                          'We couldn\'t find any series matching your query.',
+                          "Nous n'avons trouvé aucune série correspondant à votre requête.",
                     );
                   }
 

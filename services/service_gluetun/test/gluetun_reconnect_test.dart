@@ -105,7 +105,7 @@ void main() {
     testWidgets('is offered while the VPN runs', (WidgetTester tester) async {
       await pumpHome(tester, vpnRunning: true);
 
-      expect(find.text('Reconnect'), findsOneWidget);
+      expect(find.text('Se reconnecter'), findsOneWidget);
       expect(find.text('Stop VPN'), findsOneWidget);
     });
 
@@ -113,7 +113,7 @@ void main() {
         (WidgetTester tester) async {
       await pumpHome(tester, vpnRunning: false);
 
-      expect(find.text('Reconnect'), findsNothing);
+      expect(find.text('Se reconnecter'), findsNothing);
       expect(find.text('Start VPN'), findsOneWidget);
     });
 
@@ -121,23 +121,23 @@ void main() {
         (WidgetTester tester) async {
       final _Gluetun gluetun = await pumpHome(tester, vpnRunning: true);
 
-      await tester.tap(find.text('Reconnect'));
+      await tester.tap(find.text('Se reconnecter'));
       await settle(tester);
 
-      expect(find.text('Reconnect the VPN?'), findsOneWidget);
+      expect(find.text('Reconnecter le VPN ?'), findsOneWidget);
       expect(gluetun.changes, isEmpty, reason: 'nothing before a yes');
 
-      await tester.tap(inDialog('Cancel'));
+      await tester.tap(inDialog('Annuler'));
       await settle(tester);
       expect(gluetun.changes, isEmpty, reason: 'Cancel must not stop it');
 
-      await tester.tap(find.text('Reconnect'));
+      await tester.tap(find.text('Se reconnecter'));
       await settle(tester);
-      await tester.tap(inDialog('Reconnect'));
+      await tester.tap(inDialog('Se reconnecter'));
       await settle(tester);
 
       expect(gluetun.changes, <String>['stopped', 'running']);
-      expect(find.text('Reconnecting VPN...'), findsOneWidget);
+      expect(find.text('Reconnexion du VPN…'), findsOneWidget);
     });
 
     testWidgets('says the VPN is down when it stopped but did not start',
@@ -148,16 +148,16 @@ void main() {
         putAnswers: <int>[200, 500],
       );
 
-      await tester.tap(find.text('Reconnect'));
+      await tester.tap(find.text('Se reconnecter'));
       await settle(tester);
-      await tester.tap(inDialog('Reconnect'));
+      await tester.tap(inDialog('Se reconnecter'));
       await settle(tester);
 
       expect(
         find.textContaining('The VPN stopped but did not start again.'),
         findsOneWidget,
       );
-      expect(find.text('Reconnecting VPN...'), findsNothing);
+      expect(find.text('Reconnexion du VPN…'), findsNothing);
     });
   });
 }

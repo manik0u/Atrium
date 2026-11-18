@@ -21,18 +21,18 @@ class TagsSettingsScreen extends ConsumerWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Add Tag'),
+          title: const Text('Ajouter une balise'),
           content: TextField(
             controller: labelController,
             decoration: const InputDecoration(
-              labelText: 'Tag Label',
+              labelText: 'Libellé de la balise',
               border: OutlineInputBorder(),
             ),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
+              child: const Text('Annuler'),
             ),
             ElevatedButton(
               onPressed: () async {
@@ -47,18 +47,18 @@ class TagsSettingsScreen extends ConsumerWidget {
                   if (context.mounted) {
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Tag added!')),
+                      const SnackBar(content: Text('Balise ajoutée !')),
                     );
                   }
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Failed to add tag: $e')),
+                      SnackBar(content: Text("Échec de l'ajout de la balise : $e")),
                     );
                   }
                 }
               },
-              child: const Text('Save'),
+              child: const Text('Enregistrer'),
             ),
           ],
         );
@@ -74,13 +74,13 @@ class TagsSettingsScreen extends ConsumerWidget {
       ref.invalidate(sonarrTagsProvider(instance));
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Tag deleted!')),
+          const SnackBar(content: Text('Balise supprimée !')),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to delete tag: $e')),
+          SnackBar(content: Text('Échec de la suppression de la balise : $e')),
         );
       }
     }
@@ -93,7 +93,7 @@ class TagsSettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tags'),
+        title: const Text('Balises'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddTagDialog(context, ref),
@@ -101,10 +101,10 @@ class TagsSettingsScreen extends ConsumerWidget {
       ),
       body: tagsAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Error: $err')),
+        error: (err, stack) => Center(child: Text('Erreur : $err')),
         data: (tags) {
           if (tags.isEmpty) {
-            return const Center(child: Text('No tags configured.'));
+            return const Center(child: Text('Aucune balise configurée.'));
           }
 
           return ListView.builder(

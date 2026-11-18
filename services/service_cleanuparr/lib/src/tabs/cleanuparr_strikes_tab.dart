@@ -83,7 +83,7 @@ class _CleanuparrStrikesTabState extends ConsumerState<CleanuparrStrikesTab> {
                 onPressed: widget.onOpenDrawer,
               )
             : null,
-        title: const Text('Strikes Ledger'),
+        title: const Text('Journal des strikes'),
       ),
       body: EasyRefresh(
         onRefresh: _refresh,
@@ -95,7 +95,7 @@ class _CleanuparrStrikesTabState extends ConsumerState<CleanuparrStrikesTab> {
             TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Search strikes by title or hash',
+                hintText: 'Rechercher des strikes par titre ou hash',
                 prefixIcon: const Icon(Icons.search, size: 20),
                 suffixIcon: _searchController.text.isNotEmpty
                     ? IconButton(
@@ -154,7 +154,7 @@ class _CleanuparrStrikesTabState extends ConsumerState<CleanuparrStrikesTab> {
               error: (err, _) => Center(
                 child: Padding(
                   padding: const EdgeInsets.all(Insets.xl),
-                  child: Text('Could not load strikes: ${describeCleanuparrError(err)}'),
+                  child: Text('Impossible de charger les strikes : ${describeCleanuparrError(err)}'),
                 ),
               ),
               data: (List<CleanuparrStrikeItem> strikes) {
@@ -173,14 +173,14 @@ class _CleanuparrStrikesTabState extends ConsumerState<CleanuparrStrikesTab> {
                             ),
                             const SizedBox(height: Insets.md),
                             Text(
-                              'No Strikes Found',
+                              'Aucun strike trouvé',
                               style: textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             const SizedBox(height: Insets.xs),
                             Text(
-                              "No strikes matching '$appliedSearch'",
+                              'Aucun strike ne correspond à « $appliedSearch »',
                               style: textTheme.bodySmall?.copyWith(
                                 color: colorScheme.outline,
                               ),
@@ -213,14 +213,14 @@ class _CleanuparrStrikesTabState extends ConsumerState<CleanuparrStrikesTab> {
                           ),
                           const SizedBox(height: Insets.md),
                           Text(
-                            'All Queues Clean',
+                            'Toutes les files sont propres',
                             style: textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: Insets.xs),
                           Text(
-                            'No downloads currently hold strikes',
+                            'Aucun téléchargement ne porte de strikes actuellement',
                             style: textTheme.bodySmall?.copyWith(
                               color: colorScheme.outline,
                             ),

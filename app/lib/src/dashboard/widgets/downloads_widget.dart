@@ -381,14 +381,14 @@ class DashboardDownloadsWidget extends ConsumerWidget {
     } else if (rows.isEmpty && anyError) {
       body = DashboardErrorRow(onRetry: () => _refresh(ref));
     } else if (rows.isEmpty) {
-      body = const DashboardIdleRow(text: 'Nothing downloading');
+      body = const DashboardIdleRow(text: 'Aucun téléchargement en cours');
     } else {
       body = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           for (final _DownloadRow row in top) _ItemRow(row: row),
           if (rows.length > top.length)
-            DashboardIdleRow(text: '+${rows.length - top.length} more'),
+            DashboardIdleRow(text: '+${rows.length - top.length} de plus'),
         ],
       );
     }

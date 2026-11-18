@@ -58,8 +58,8 @@ List<String> ombiTitleFacts({
 }) =>
     <String>[
       switch (kind) {
-        OmbiMediaKind.movie => 'Movie',
-        OmbiMediaKind.tv => 'TV show',
+        OmbiMediaKind.movie => 'Film',
+        OmbiMediaKind.tv => 'Série',
         OmbiMediaKind.music => 'Album',
       },
       if (year != null) '$year',

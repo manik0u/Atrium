@@ -26,7 +26,7 @@ class MetadataSettingsScreen extends ConsumerWidget {
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
-          title: Text('Edit ${metadata['name']}'),
+          title: Text('Modifier ${metadata['name']}'),
           content: SizedBox(
             width: double.maxFinite,
             child: SingleChildScrollView(
@@ -58,7 +58,7 @@ class MetadataSettingsScreen extends ConsumerWidget {
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Failed to save metadata settings: $e'),
+                          content: Text("Échec de l'enregistrement des paramètres de métadonnées : $e"),
                         ),
                       );
                     }
@@ -79,14 +79,14 @@ class MetadataSettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Metadata Consumers'),
+        title: const Text('Consommateurs de métadonnées'),
       ),
       body: configsAsync.when(
         loading: () => const Center(child: ExpressiveProgressIndicator()),
-        error: (err, _) => Center(child: Text('Error: $err')),
+        error: (err, _) => Center(child: Text('Erreur : $err')),
         data: (configs) {
           if (configs.isEmpty) {
-            return const Center(child: Text('No metadata consumers found.'));
+            return const Center(child: Text('Aucun consommateur de métadonnées trouvé.'));
           }
 
           return ListView.builder(
@@ -105,7 +105,7 @@ class MetadataSettingsScreen extends ConsumerWidget {
                     name,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text('Status: ${enable ? "Enabled" : "Disabled"}'),
+                  subtitle: Text('Statut : ${enable ? "Activé" : "Désactivé"}'),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -127,7 +127,7 @@ class MetadataSettingsScreen extends ConsumerWidget {
                           } catch (e) {
                             if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Error: $e')),
+                                SnackBar(content: Text('Erreur : $e')),
                               );
                             }
                           }
